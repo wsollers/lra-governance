@@ -6,6 +6,8 @@ by the Learning Real Analysis split-repo workspace.
 ## Source Of Truth
 
 - `DESIGN.md`
+- `REPOSITORY_STRUCTURE.md`
+- `.gitignore`
 - `constitution/`
 
 These files are synced one-way into the monorepo, volume repos, and shared
