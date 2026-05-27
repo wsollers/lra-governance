@@ -1,0 +1,62 @@
+# =============================================================
+# sync-governance.yml
+# Syncs DESIGN.md and constitution/ one-way into all LRA repos.
+#
+# Required secret:
+#   SYNC_PAT: GitHub PAT with repo scope for the target repositories.
+# =============================================================
+
+name: Sync governance files
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'DESIGN.md'
+      - 'constitution/**'
+      - '.github/workflows/sync-governance.yml'
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        repo:
+          - Learning-Real-Analysis
+          - lra-common
+          - lra-volume-i
+          - lra-volume-ii
+          - lra-volume-iii
+          - lra-volume-iv
+          - lra-volume-v
+
+    steps:
+      - name: Checkout governance source
+        uses: actions/checkout@v4
+        with:
+          path: governance
+
+      - name: Checkout target repo
+        uses: actions/checkout@v4
+        with:
+          repository: wsollers/${{ matrix.repo }}
+          token: ${{ secrets.SYNC_PAT }}
+          path: target
+
+      - name: Sync governance files
+        run: |
+          rsync -av --delete governance/constitution/ target/constitution/
+          cp governance/DESIGN.md target/DESIGN.md
+
+      - name: Commit and push if changed
+        run: |
+          cd target
+          git config user.name  "lra-governance-bot"
+          git config user.email "governance-bot@noreply.github.com"
+          git add DESIGN.md constitution/
+          git diff --cached --quiet && echo "No governance changes for ${{ matrix.repo }}" && exit 0
+          git commit -m "chore: sync governance files"
+          git push
