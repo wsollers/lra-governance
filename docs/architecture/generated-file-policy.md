@@ -37,3 +37,8 @@ Generated files must not contain secrets or machine-local credentials.
 
 The generated file source list must be sufficient for a reviewer to identify
 which global rules, architecture rules, and repo overlay were used.
+
+Downstream generated wrappers are full-replaced only by the governed wrapper
+sync tool. Downstream wrapper edits are emergency-only and must be ported
+upstream before the next sync. Generated wrappers should be committed in
+downstream PRs or controlled downstream commits only after review.

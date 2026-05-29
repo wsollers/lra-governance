@@ -23,6 +23,10 @@ Phase 4 generated wrapper work is preview-only. Full-replace downstream sync is
 a later phase. Generated wrapper previews must be reviewed before any write mode
 or downstream sync mode exists.
 
+Phase 7 introduces controlled, repo-selected wrapper sync planning. The first
+planned pilot target is `lra-numerical-analysis`. All-repo wrapper sync remains
+blocked until pilot results are reviewed.
+
 ## Emergency Local Edits
 
 Emergency downstream edits are temporary. The fix must be ported back to the
