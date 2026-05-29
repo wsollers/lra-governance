@@ -39,11 +39,38 @@ VOLUME_REPOS = {
 }
 SPECIALIST_KEYWORDS = [
     "Lean-specific",
+    "Lean",
     "Vulkan",
     "NURBS",
     "benchmark",
     "plotting",
     "PDF extraction",
+]
+NEGATIVE_CONTEXT_PATTERNS = [
+    "do not",
+    "does not",
+    "must not",
+    "should not",
+    "not apply",
+    "not receive",
+    "belongs only",
+    "belong only",
+    "elsewhere",
+    "exclude",
+    "excluded",
+    "volume-content only",
+]
+FORBIDDEN_SPECIALIST_PATTERNS = [
+    "run Lean",
+    "use Lean",
+    "Lean CI",
+    "Vulkan build",
+    "NURBS implementation",
+    "benchmark workflow",
+    "plotting workflow",
+    "PDF extraction workflow",
+    "apply PDF extraction",
+    "numerical benchmark",
 ]
 
 
@@ -60,6 +87,33 @@ def governance_root() -> Path:
 def require(condition: bool, message: str, errors: list[str]) -> None:
     if not condition:
         errors.append(message)
+
+
+def has_negative_context(line: str) -> bool:
+    lowered = line.lower()
+    return any(pattern in lowered for pattern in NEGATIVE_CONTEXT_PATTERNS)
+
+
+def volume_specialist_leaks(text: str) -> list[tuple[int, str, str]]:
+    leaks: list[tuple[int, str, str]] = []
+    negative_continuation = False
+    for line_number, line in enumerate(text.splitlines(), start=1):
+        line_has_negative_context = has_negative_context(line)
+        line_has_keyword = any(keyword in line for keyword in SPECIALIST_KEYWORDS)
+        if line_has_negative_context:
+            negative_continuation = True
+        elif not line.strip():
+            negative_continuation = False
+
+        if not line_has_keyword:
+            continue
+        if any(pattern in line for pattern in FORBIDDEN_SPECIALIST_PATTERNS):
+            leaks.append((line_number, "positive_specialist_instruction", line.strip()))
+            continue
+        if line_has_negative_context or negative_continuation:
+            continue
+        leaks.append((line_number, "ambiguous_specialist_context", line.strip()))
+    return leaks
 
 
 def validate_sources(root: Path, errors: list[str]) -> None:
@@ -88,9 +142,10 @@ def validate_preview(preview: Path, errors: list[str]) -> None:
                 errors,
             )
             if repo in VOLUME_REPOS:
-                for keyword in SPECIALIST_KEYWORDS:
-                    if keyword in text:
-                        errors.append(f"volume preview contains specialist keyword '{keyword}': {path}")
+                for line_number, code, line in volume_specialist_leaks(text):
+                    errors.append(
+                        f"volume preview contains {code} at {path}:{line_number}: {line}"
+                    )
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -112,4 +167,3 @@ def main(argv: list[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

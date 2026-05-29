@@ -85,31 +85,6 @@ def provider_notes(template_name: str) -> str:
     return "## Provider Notes\n\nKeep provider-specific guidance concise and defer durable policy to governance docs."
 
 
-def generated_overlay_text(repo: str, overlay_text: str) -> str:
-    if not repo.startswith("lra-volume-"):
-        return overlay_text
-    lines = overlay_text.splitlines()
-    filtered: list[str] = []
-    skip_continuation = False
-    for line in lines:
-        if skip_continuation:
-            skip_continuation = bool(line.startswith(" ") or line.startswith("-"))
-            if skip_continuation:
-                continue
-        if any(
-            keyword in line
-            for keyword in ("Lean-specific", "Vulkan", "NURBS", "benchmark", "plotting", "PDF extraction")
-        ):
-            skip_continuation = True
-            if filtered and filtered[-1].startswith("This overlay must not contain"):
-                filtered[-1] = "This overlay must contain only volume-content guidance."
-            elif "This overlay must not contain" in line:
-                filtered.append("This overlay must contain only volume-content guidance.")
-            continue
-        filtered.append(line)
-    return "\n".join(filtered)
-
-
 def render_template(template: str, values: dict[str, str]) -> str:
     rendered = template
     for key, value in values.items():
@@ -128,7 +103,7 @@ def write_preview(root: Path, repo: str, out_dir: Path, commit: str) -> list[Pat
         values = {
             "GENERATED_HEADER": generated_header(overlay_name, commit),
             "GLOBAL_AGENT_RULES": global_rules(),
-            "REPO_OVERLAY": "## Repo Overlay\n\n" + generated_overlay_text(repo, overlay_text).strip(),
+            "REPO_OVERLAY": "## Repo Overlay\n\n" + overlay_text.strip(),
             "PROVIDER_NOTES": provider_notes(template_name),
         }
         rendered = render_template(template_text, values)
