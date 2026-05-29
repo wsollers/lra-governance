@@ -11,6 +11,8 @@ Planned tools:
   definition decoration compliance.
 - `generate_agent_wrappers.py`
 - `merge_repo_overlays.py`
+- `report_wrapper_drift.py` - read-only comparison tool for generated wrapper
+  previews versus downstream files.
 - `validate_repo_rules.py`
 - `audit_task_scope.py`
 - `dry_run_sync.py`
