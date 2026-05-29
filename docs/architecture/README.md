@@ -1,9 +1,9 @@
 # LRA Architecture
 
-This directory will hold canonical architecture documents for the LRA
-repository family.
+This directory holds canonical architecture documents for the LRA repository
+family.
 
-Planned modules:
+Modules:
 
 - `repository-layout.md`
 - `volume-layout.md`
@@ -11,3 +11,6 @@ Planned modules:
 - `theorem-explorer-pipeline.md`
 - `canonical-yaml.md`
 - `generated-file-policy.md`
+
+`REPOSITORY_STRUCTURE.md` remains the compatibility source during Phase 3. The
+documents here are the target modular architecture sources.

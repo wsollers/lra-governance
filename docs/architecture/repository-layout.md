@@ -1,4 +1,21 @@
 # Repository Layout
 
-Stub for the canonical repository ownership and layout map currently captured
-in `REPOSITORY_STRUCTURE.md`.
+Source: `REPOSITORY_STRUCTURE.md`.
+
+## Source Of Truth Map
+
+| Repository | Canonical ownership | Sync direction |
+| --- | --- | --- |
+| `lra-governance` | Governance docs, architecture docs, repo overlays, prompts, schemas, generators, sync policy. | source for generated governance artifacts |
+| `Learning-Real-Analysis` | Assembled monorepo, omnibus builds, canonical YAML sources, docker, cross-volume integration. | receives volume/common/governance syncs |
+| `lra-common` | Shared LaTeX infrastructure: `common/`, `bibliography/`. | to volume repos and monorepo |
+| `lra-volume-i` through `lra-volume-v` | Volume content under `volume-N/`. | to monorepo `volume-N/` |
+| `lra-lean` | Lean 4 formalization workspace. | to monorepo `lean/` |
+| `lra-nurbs` | C++ / Vulkan / geometry / simulation workspace. | to monorepo `nurbs_dde/` |
+| `lra-knowledge-explorer` | Extraction pipeline and HTML theorem explorer. | receives rebuild dispatch from monorepo |
+| `lra-numerical-analysis` | Numerical methods, computational experiments, benchmarks, plots, numerical reports. | independent/specialized |
+
+## Downstream Governance Copies
+
+Downstream governance files should be generated from `lra-governance`, not
+edited as independent sources.

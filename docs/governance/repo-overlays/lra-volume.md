@@ -11,3 +11,11 @@ Owned concerns:
 
 This overlay must not contain Lean-specific, C++ / Vulkan / simulation, or
 numerical-analysis / benchmark / plotting rules.
+
+## Agent Scope
+
+Volume agents may edit only the owning `volume-N/` content unless a task
+explicitly says otherwise. They should not edit synced `common/`,
+`bibliography/`, generated governance wrappers, or canonical YAML.
+
+Volume tasks should preserve Overleaf readiness and monorepo sync shape.
