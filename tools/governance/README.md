@@ -7,6 +7,8 @@ No generator or sync tool is implemented yet.
 
 Planned tools:
 
+- `audit_latex_decoration.py` - inventory-only scanner for volume theorem and
+  definition decoration compliance.
 - `generate_agent_wrappers.py`
 - `merge_repo_overlays.py`
 - `validate_repo_rules.py`
