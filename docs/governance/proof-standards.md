@@ -38,5 +38,31 @@ file level according to the current compatibility rule.
 
 ## Dependency Rule
 
-Dependency remarks list mathematical dependencies, not proof labels. They are
-extraction infrastructure and should use stable `\hyperref` links.
+Dependency remarks record mathematical dependencies, not proof-file
+dependencies.
+
+A dependency item must target a mathematical statement label such as `def:`,
+`ax:`, `thm:`, `lem:`, `prop:`, or `cor:`.
+
+Dependency items should be human-readable in the PDF and machine-readable for
+extraction. The preferred form is:
+
+```latex
+\begin{remark*}[Dependencies]
+\begin{itemize}
+  \item \hyperref[def:supremum]{Supremum}
+  \item \hyperref[ax:least-upper-bound-property]{Least Upper Bound Property}
+  \item \hyperref[thm:epsilon-characterization-of-supremum]{Epsilon Characterization of Supremum}
+\end{itemize}
+\end{remark*}
+```
+
+The machine-readable dependency target is the label inside the `\hyperref[...]`
+brackets.
+
+Proof labels such as `prf:` identify proof files or proof locations. They may
+be used for theorem-proof navigation and theorem-proof association, but they
+must not appear as mathematical dependency targets.
+
+If a dependency cannot be linked because the target statement has not yet been
+formalized, write a TODO dependency note rather than inventing a label.

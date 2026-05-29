@@ -11,10 +11,34 @@ preserve those structures unless the extraction pipeline is explicitly updated.
 
 ## Dependency Blocks
 
-Every definition, axiom, theorem, lemma, proposition, and corollary carries an
-attached `remark*` titled `Dependencies` after its interpretation/logical block
-sequence. Foundational items may state that no prior formal dependencies are
-required within the current extraction scope.
+Dependency blocks must be readable in the PDF and extractable by tooling.
+
+The preferred dependency item form is:
+
+```latex
+\item \hyperref[label]{Readable Name}
+```
+
+where `label` is a mathematical statement label with one of these prefixes:
+
+- `def:`
+- `ax:`
+- `thm:`
+- `lem:`
+- `prop:`
+- `cor:`
+
+The extractor should treat the label inside `\hyperref[...]` as the graph-edge
+target.
+
+Do not use `prf:` labels as dependency targets. A `prf:` label identifies a
+proof file or proof location, not a mathematical dependency.
+
+Dependency blocks should not contain prose-only dependencies such as "uses
+completeness" when a formal label exists. Use a linked statement label instead.
+
+If the target has not yet been formalized, write a TODO dependency note and do
+not invent a label.
 
 ## Logical Blocks
 

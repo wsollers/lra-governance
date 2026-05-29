@@ -16,10 +16,26 @@ definition or result does mathematically and how it fits the local structure.
 
 ## Boxes
 
-Boxes are structural, not decorative. Box first appearances of major
-definitions, theorems, propositions, lemmas, corollaries, axioms, examples, and
-toolkits according to the current house style. Remarks, examples, proofs, and
-second appearances do not receive boxes unless a specific rule says otherwise.
+Boxes are structural, not decorative.
+
+Box a definition, axiom, or theorem only when it introduces a structural,
+load-bearing concept or result. A boxed item should be central to the local
+section, reused later, important for future learning, or expected to carry
+dependency weight in the knowledge graph.
+
+Do not box merely because an item is a first appearance.
+
+Box-worthy examples include structural concepts and results such as
+`Supremum`, `Least Upper Bound Property`, `Sequential Limit`, `Cauchy Sequence`,
+`Continuity`, `Derivative`, `Partition`, and `Riemann Integrability`.
+
+Minor auxiliary notions, routine variants, examples, remarks, lemmas,
+propositions, corollaries, computational rules, and one-off conveniences are
+normally unboxed unless the section explicitly treats them as structural and
+load-bearing.
+
+Each section begins with exactly one gray Toolkit box at the top. Chapter
+entries use the required breadcrumb and roadmap structure.
 
 ## Chapter Entries
 
