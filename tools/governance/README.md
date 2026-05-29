@@ -13,6 +13,9 @@ Planned tools:
 - `merge_repo_overlays.py`
 - `report_wrapper_drift.py` - read-only comparison tool for generated wrapper
   previews versus downstream files.
+- `sync_agent_wrappers.py` - guarded wrapper sync tool; dry-run by default,
+  requires explicit repo selection, and write mode is not used until a pilot is
+  approved.
 - `validate_repo_rules.py`
 - `audit_task_scope.py`
 - `dry_run_sync.py`
