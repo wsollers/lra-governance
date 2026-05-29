@@ -20,6 +20,12 @@ Stop and ask before:
 - editing downstream synced copies instead of their owning source repo,
 - inventing mathematical predicates or theorem content.
 
+## Generated Wrapper Scope
+
+During Phase 4, generated agent wrapper work is preview-only. Agents may create
+preview outputs under requested report directories, but must not write generated
+wrappers into downstream repos until a later explicit write/sync phase exists.
+
 ## Protected Local Directory
 
 Do not touch `Learning-Real-Analysis/scripts/` during governance migration
