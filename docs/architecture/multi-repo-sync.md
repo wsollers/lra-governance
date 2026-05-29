@@ -19,6 +19,10 @@ Existing workflows use `rsync --delete` for full-replace sync. Future
 governance generation must include dry-run output and drift checks before any
 full replacement.
 
+Phase 4 generated wrapper work is preview-only. Full-replace downstream sync is
+a later phase. Generated wrapper previews must be reviewed before any write mode
+or downstream sync mode exists.
+
 ## Emergency Local Edits
 
 Emergency downstream edits are temporary. The fix must be ported back to the
