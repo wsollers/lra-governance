@@ -12,3 +12,6 @@ Planned groups:
 - `copilot/`
 - `gemini/`
 - `local/`
+
+Provider prompt directories should contain source prompts, not generated
+downstream instruction files.

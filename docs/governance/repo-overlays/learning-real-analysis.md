@@ -12,3 +12,12 @@ Owned concerns:
 
 Do not touch the intentionally untracked `scripts/` directory as part of this
 governance migration.
+
+## Agent Scope
+
+Agents working here may coordinate across integrated content, canonical YAML,
+and extraction dispatch, but must not treat downstream synced copies as their
+own source of truth.
+
+Canonical YAML edits are allowed only when the task explicitly targets
+`predicates.yaml`, `notation.yaml`, or `relations.yaml`.

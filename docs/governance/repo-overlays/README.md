@@ -12,3 +12,7 @@ Specialist rule placement:
 - Numerical-analysis / benchmark / plotting rules belong only in
   `lra-numerical-analysis.md`.
 - Volume repos receive only volume-content guidance.
+
+Each generated downstream wrapper should combine the global rules with exactly
+the matching overlay. Overlays should link to local README or workflow files
+for operational details instead of copying large local technical manuals.

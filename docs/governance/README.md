@@ -15,7 +15,7 @@ Future generators will combine:
 Repo overlays are additive. They refine the global rules for a repository's
 owned work, but they do not fork or weaken the global rules.
 
-## Planned Modules
+## Modules
 
 - `agent-instruction-policy.md`
 - `task-scope-limits.md`
@@ -28,3 +28,15 @@ owned work, but they do not fork or weaken the global rules.
 - `model-view-standards.md`
 - `build-render-standards.md`
 - `repo-overlays/`
+
+## Source Compatibility
+
+`DESIGN.md` remains the compatibility source during Phase 3. The modular files
+in this directory are the target canonical structure and summarize the current
+rules without deleting or rewriting `DESIGN.md`.
+
+## Rule Boundaries
+
+Global rules apply to every repository unless an additive repo overlay narrows
+the operational context. Overlays may add repository-specific validation,
+build, or ownership rules, but they must not contradict the global rules.
