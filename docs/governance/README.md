@@ -1,6 +1,8 @@
 # LRA Governance
 
 This directory is the canonical source for project-wide governance rules.
+`DESIGN.md` is now a lightweight router into these modular sources, not the
+full governance manual.
 
 Agent-specific files such as `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`,
 `.github/copilot-instructions.md`, and `.github/instructions/*.instructions.md`
@@ -27,13 +29,14 @@ owned work, but they do not fork or weaken the global rules.
 - `refactoring-standards.md`
 - `model-view-standards.md`
 - `build-render-standards.md`
+- `decoration-audit-standards.md`
 - `repo-overlays/`
 
 ## Source Compatibility
 
-`DESIGN.md` remains the compatibility source during Phase 3. The modular files
-in this directory are the target canonical structure and summarize the current
-rules without deleting or rewriting `DESIGN.md`.
+Current policy should be added to the smallest applicable modular document in
+this directory or in `docs/architecture/`, `docs/governance/repo-overlays/`, or
+`docs/workflows/`. Do not add large rule blocks to `DESIGN.md`.
 
 ## Rule Boundaries
 
