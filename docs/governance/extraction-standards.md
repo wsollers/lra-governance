@@ -13,6 +13,21 @@ preserve those structures unless the extraction pipeline is explicitly updated.
 
 Dependency blocks must be readable in the PDF and extractable by tooling.
 
+Dependency blocks must use the shared LaTeX `dependencies` environment, not a
+raw `remark*` environment with a `Dependencies` title. The shared environment
+preserves consistent heading/body alignment across volume builds while keeping
+dependency items extractable.
+
+The preferred dependency block form is:
+
+```latex
+\begin{dependencies}
+\begin{itemize}
+  \item \hyperref[label]{Readable Name}
+\end{itemize}
+\end{dependencies}
+```
+
 The preferred dependency item form is:
 
 ```latex

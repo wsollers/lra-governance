@@ -48,17 +48,21 @@ Dependency items should be human-readable in the PDF and machine-readable for
 extraction. The preferred form is:
 
 ```latex
-\begin{remark*}[Dependencies]
+\begin{dependencies}
 \begin{itemize}
   \item \hyperref[def:supremum]{Supremum}
   \item \hyperref[ax:least-upper-bound-property]{Least Upper Bound Property}
   \item \hyperref[thm:epsilon-characterization-of-supremum]{Epsilon Characterization of Supremum}
 \end{itemize}
-\end{remark*}
+\end{dependencies}
 ```
 
 The machine-readable dependency target is the label inside the `\hyperref[...]`
 brackets.
+
+Use the shared `dependencies` environment for dependency blocks. Do not write
+dependency blocks as raw `remark*` environments with a `Dependencies` title;
+that bypasses the shared alignment rule used by volume builds.
 
 Proof labels such as `prf:` identify proof files or proof locations. They may
 be used for theorem-proof navigation and theorem-proof association, but they
