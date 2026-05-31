@@ -1,6 +1,6 @@
 # =============================================================
 # sync-governance.yml
-# Syncs governance files one-way into all LRA repos.
+# Syncs governance files and rule docs one-way into all LRA repos.
 #
 # Required secret:
 #   SYNC_PAT: GitHub PAT with repo scope for the target repositories.
@@ -16,6 +16,7 @@ on:
       - 'REPOSITORY_STRUCTURE.md'
       - '.gitignore'
       - 'constitution/**'
+      - 'docs/**'
       - '.github/workflows/sync-governance.yml'
   workflow_dispatch:
 
@@ -51,6 +52,7 @@ jobs:
       - name: Sync governance files
         run: |
           rsync -av --delete governance/constitution/ target/constitution/
+          rsync -av --delete governance/docs/ target/docs/
           cp governance/.gitignore target/.gitignore
           cp governance/DESIGN.md target/DESIGN.md
           cp governance/REPOSITORY_STRUCTURE.md target/REPOSITORY_STRUCTURE.md
@@ -60,7 +62,7 @@ jobs:
           cd target
           git config user.name  "lra-governance-bot"
           git config user.email "governance-bot@noreply.github.com"
-          git add .gitignore DESIGN.md REPOSITORY_STRUCTURE.md constitution/
+          git add .gitignore DESIGN.md REPOSITORY_STRUCTURE.md constitution/ docs/
           git diff --cached --quiet && echo "No governance changes for ${{ matrix.repo }}" && exit 0
           git commit -m "chore: sync governance files"
           git push
