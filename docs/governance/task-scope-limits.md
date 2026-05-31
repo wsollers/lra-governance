@@ -22,9 +22,10 @@ Stop and ask before:
 
 ## Generated Wrapper Scope
 
-During Phase 4, generated agent wrapper work is preview-only. Agents may create
-preview outputs under requested report directories, but must not write generated
-wrappers into downstream repos until a later explicit write/sync phase exists.
+Generated wrapper work follows the controlled workflow in
+`docs/workflows/generated-wrapper-sync.md`. Preview and drift reports are safe
+when requested. Downstream writes require explicit repo selection and explicit
+authorization for the write step.
 
 ## Protected Local Directory
 

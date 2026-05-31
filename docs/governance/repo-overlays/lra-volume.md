@@ -9,8 +9,10 @@ Owned concerns:
 - local copies of synced `common/` and `bibliography/`,
 - volume-to-monorepo content sync.
 
-This overlay must not contain Lean-specific, C++ / Vulkan / simulation, or
-numerical-analysis / benchmark / plotting rules.
+This overlay may contain negative guard rails that say specialist rules do not
+apply to volume repos. It must not contain positive Lean-specific, C++ /
+Vulkan / simulation, numerical-analysis / benchmark / plotting, or PDF
+extraction workflow rules.
 
 ## Agent Scope
 
