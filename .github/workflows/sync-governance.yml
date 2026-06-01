@@ -35,6 +35,9 @@ jobs:
           - lra-volume-iii
           - lra-volume-iv
           - lra-volume-v
+          - lra-volume-vi
+          - lra-volume-vii
+          - lra-volume-viii
 
     steps:
       - name: Checkout governance source

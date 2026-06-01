@@ -24,6 +24,9 @@ lra-governance -> lra-volume-ii
 lra-governance -> lra-volume-iii
 lra-governance -> lra-volume-iv
 lra-governance -> lra-volume-v
+lra-governance -> lra-volume-vi
+lra-governance -> lra-volume-vii
+lra-governance -> lra-volume-viii
 ```
 
 Do not edit synced governance files in downstream repos. Make changes here and
