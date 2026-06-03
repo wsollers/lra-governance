@@ -10,6 +10,7 @@ Modules:
 - `add-theorem-with-proof-stub.md`
 - `populate-proof-stub.md`
 - `proof-stub-invariant-migration.md`
+- `proof-layout-audit.md`
 - `volume-cleanup.md`
 - `generated-wrapper-sync.md`
 - `decoration-audit.md`

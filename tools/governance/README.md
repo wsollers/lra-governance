@@ -9,6 +9,8 @@ Planned tools:
 
 - `audit_latex_decoration.py` - inventory-only scanner for volume theorem and
   definition decoration compliance.
+- `audit_proof_layout.py` - deterministic scanner for proof file layout,
+  proof-stub status, topic-mirrored proof folders, and proof index reachability.
 - `generate_agent_wrappers.py`
 - `merge_repo_overlays.py`
 - `report_wrapper_drift.py` - read-only comparison tool for generated wrapper
@@ -26,3 +28,15 @@ Planned tools:
 Future tools must support dry-run operation before writing downstream files.
 They must refuse to touch `Learning-Real-Analysis/scripts/` and must not print
 secret values.
+
+## Proof Layout Audit
+
+Run from `lra-governance` against a leaf repo, volume root, or chapter root:
+
+```powershell
+python tools\governance\audit_proof_layout.py --root F:\repos\lra-volume-ii --refactor-mode
+```
+
+Use `--strict` when the target is expected to satisfy the current
+topic-mirrored proof architecture. Use `--format json` for machine-readable
+reports.

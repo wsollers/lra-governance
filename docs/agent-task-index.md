@@ -22,7 +22,7 @@ default. Select the smallest file set that matches the task.
 | --- | --- | --- |
 | Add a theorem with a proof obligation | `docs/workflows/add-theorem-with-proof-stub.md`, `docs/governance/proof-standards.md` | `docs/governance/dependency-standards.md`, `docs/governance/atomic-artifact-standards.md`, `docs/architecture/volume-layout.md` |
 | Populate an existing proof stub | `docs/workflows/populate-proof-stub.md`, `docs/governance/proof-standards.md`, nearby populated proof files | `docs/governance/dependency-standards.md`, `docs/governance/handwritten-proof-vault-standards.md` |
-| Validate or migrate proof stubs | `docs/workflows/proof-stub-invariant-migration.md`, `docs/governance/proof-standards.md` | `docs/governance/refactoring-standards.md`, `docs/architecture/volume-layout.md` |
+| Validate or migrate proof stubs | `docs/workflows/proof-stub-invariant-migration.md`, `docs/workflows/proof-layout-audit.md`, `docs/governance/proof-standards.md`, `constitution/schema/file-schema.yaml` | `docs/governance/refactoring-standards.md`, `docs/architecture/volume-layout.md` |
 | Generate or validate theorem routes | `docs/workflows/knowledge-extraction.md`, `docs/governance/extraction-standards.md` | `docs/architecture/knowledge-pipeline.md`, `docs/architecture/theorem-explorer-pipeline.md` |
 | Refactor volume folders or source layout | `docs/governance/refactoring-standards.md`, `docs/architecture/volume-layout.md` | `docs/workflows/volume-cleanup.md`, `docs/governance/file-splitting-standards.md` |
 | Sync generated wrappers or downstream docs | `docs/workflows/generated-wrapper-sync.md`, `docs/governance/agent-instruction-policy.md` | `docs/governance/repo-overlays/README.md`, the one relevant repo overlay |
@@ -61,4 +61,3 @@ prompted generation or audit mode.
 4. Inspect nearby source examples before editing.
 5. Load optional files only when the required files leave a concrete question
    unresolved.
-

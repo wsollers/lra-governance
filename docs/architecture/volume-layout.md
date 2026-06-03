@@ -19,6 +19,9 @@ lra-volume-N/
       proofs/
 ```
 
+Topic-level note/proof folder pairing and proof router reachability are
+machine-readable in `constitution/schema/file-schema.yaml`.
+
 `common/` and `bibliography/` are synced copies from `lra-common`. They are not
 owned by volume repos.
 

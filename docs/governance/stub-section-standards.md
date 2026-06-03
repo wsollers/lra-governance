@@ -65,6 +65,9 @@ This section is planned for the governance rebuild. No mathematical content has 
 Do not add definitions, theorems, examples, dependencies, topic lists, or
 labels unless they are already supplied by a canonical registry or by the task.
 
+The machine-readable authority for matched `notes/{topic}/` and
+`proofs/{topic}/` section architecture is `constitution/schema/file-schema.yaml`.
+
 ## Required Proof Structure
 
 For every notes section created, create the matching proof section:
@@ -227,4 +230,3 @@ proofs/
 ```
 
 and all parent index files should be updated automatically.
-
