@@ -14,6 +14,7 @@ Modules:
 - `volume-layout-audit.md`
 - `volume-cleanup.md`
 - `generated-wrapper-sync.md`
+- `governance-audit.md`
 - `decoration-audit.md`
 
 Use these files when a task asks how to run or review a process. Use

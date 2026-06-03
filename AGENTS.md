@@ -1,7 +1,8 @@
 # lra-governance Agent Router
 
 `lra-governance` is the source of truth for LRA governance docs, architecture
-docs, repo overlays, prompts, schemas, generators, and sync policy.
+docs, repo overlays, prompts, schemas, governance tools, generators, and sync
+policy.
 
 Detailed rules live under:
 
@@ -9,6 +10,8 @@ Detailed rules live under:
 - `docs/governance/`
 - `docs/architecture/`
 - `docs/governance/repo-overlays/`
+- `constitution/schema/`
+- `tools/governance/`
 
 When working from a local multi-repo checkout such as `F:\repos`, use
 `docs/agent-task-index.md` to choose the smallest relevant set of canonical
