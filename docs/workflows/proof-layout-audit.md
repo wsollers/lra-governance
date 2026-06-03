@@ -25,20 +25,8 @@ Use JSON output for generated reports:
 python tools\governance\audit_proof_layout.py --root F:\repos\lra-volume-ii --format json
 ```
 
-The audit checks:
-
-- proof file location under `proofs/{topic}/`,
-- legacy `proofs/notes/` use,
-- proof label,
-- `\LRAProofFor{...}`,
-- return navigation,
-- optional proof-vault backlink placement,
-- theorem restatement,
-- professional standard proof body,
-- detailed learning proof body,
-- proof-structure remark,
-- dependency block,
-- proof/topic index reachability,
-- TODO consistency for proof stubs.
+The audited rule set is the proof-file and proof-status portion of
+`constitution/schema/file-schema.yaml`, with human-facing context in
+`docs/governance/proof-standards.md`.
 
 The audit does not judge mathematical correctness.

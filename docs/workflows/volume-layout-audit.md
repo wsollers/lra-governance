@@ -25,15 +25,8 @@ Use JSON output for generated reports:
 python tools\governance\audit_volume_layout.py --root F:\repos\lra-volume-ii --format json
 ```
 
-The audit checks:
-
-- chapter `index.tex` and `chapter.yaml`,
-- `notes/index.tex`,
-- `proofs/index.tex`,
-- matched `notes/{topic}/` and `proofs/{topic}/` directories,
-- topic `index.tex` files,
-- topic routing from parent index files,
-- legacy flat `notes/*.tex`,
-- legacy `proofs/notes/`.
+The audited rule set is the volume/chapter/topic layout portion of
+`constitution/schema/file-schema.yaml`, with human-facing context in
+`docs/architecture/volume-layout.md`.
 
 The audit does not move files or modify source.
