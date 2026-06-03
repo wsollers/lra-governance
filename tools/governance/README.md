@@ -11,6 +11,8 @@ Planned tools:
   definition decoration compliance.
 - `audit_proof_layout.py` - deterministic scanner for proof file layout,
   proof-stub status, topic-mirrored proof folders, and proof index reachability.
+- `audit_volume_layout.py` - deterministic scanner for volume, chapter, topic,
+  and router layout.
 - `generate_agent_wrappers.py`
 - `merge_repo_overlays.py`
 - `report_wrapper_drift.py` - read-only comparison tool for generated wrapper
@@ -39,4 +41,16 @@ python tools\governance\audit_proof_layout.py --root F:\repos\lra-volume-ii --re
 
 Use `--strict` when the target is expected to satisfy the current
 topic-mirrored proof architecture. Use `--format json` for machine-readable
+reports.
+
+## Volume Layout Audit
+
+Run from `lra-governance` against a leaf repo, volume root, or chapter root:
+
+```powershell
+python tools\governance\audit_volume_layout.py --root F:\repos\lra-volume-ii --refactor-mode
+```
+
+Use `--strict` when the target is expected to satisfy the current
+volume/chapter/topic architecture. Use `--format json` for machine-readable
 reports.

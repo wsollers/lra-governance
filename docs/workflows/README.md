@@ -11,6 +11,7 @@ Modules:
 - `populate-proof-stub.md`
 - `proof-stub-invariant-migration.md`
 - `proof-layout-audit.md`
+- `volume-layout-audit.md`
 - `volume-cleanup.md`
 - `generated-wrapper-sync.md`
 - `decoration-audit.md`

@@ -73,6 +73,7 @@ volume_repo_root:
 # ---------------------------------------------------------------------------
 
 volume:
+  location: volume-{n}/
   required_files:
     - index.tex
     - chapter.yaml        # chapter registry for this volume in dependency order
@@ -82,6 +83,51 @@ volume:
     Registry order is structural, not alphabetical. Canonical chapter subjects
     are authoritative — a chapter must use a subject from the registry.
     Chapter subject names are repository identifiers, not display titles.
+
+volume_chapter_topic_layout:
+  volume_root: volume-{n}/
+  chapter_location: volume-{n}/{chapter}/
+  topic_location:
+    notes: volume-{n}/{chapter}/notes/{topic}/
+    proofs: volume-{n}/{chapter}/proofs/{topic}/
+  required_volume_files:
+    - index.tex
+    - chapter.yaml
+  required_chapter_files:
+    - index.tex
+    - chapter.yaml
+  required_chapter_directories:
+    - notes/
+    - proofs/
+    - proofs/exercises/
+  required_topic_files:
+    notes/{topic}/:
+      - index.tex
+    proofs/{topic}/:
+      - index.tex
+  router_files:
+    volume_index: volume-{n}/index.tex
+    chapter_index: volume-{n}/{chapter}/index.tex
+    notes_index: volume-{n}/{chapter}/notes/index.tex
+    proofs_index: volume-{n}/{chapter}/proofs/index.tex
+    proofs_topic_index: volume-{n}/{chapter}/proofs/{topic}/index.tex
+  router_rules:
+    - volume index.tex inputs chapter/index.tex files in chapter order when local convention requires explicit routing
+    - chapter index.tex inputs notes/index.tex and proofs/index.tex
+    - notes/index.tex inputs each notes/{topic}/index.tex
+    - proofs/index.tex inputs each proofs/{topic}/index.tex
+    - proofs/{topic}/index.tex inputs proof files for that topic
+  topic_pair_rule: >
+    Every active notes topic directory must have a matching proofs topic
+    directory with the same topic identifier. A proofs topic directory without
+    a matching notes topic directory is orphaned unless explicit
+    migration/refactor mode is active.
+  legacy_topic_rule: >
+    Legacy flat notes files directly under notes/ and legacy flat proof files
+    under proofs/notes/ may be recognized only under explicit
+    migration/refactor mode. New active topics use notes/{topic}/ and
+    proofs/{topic}/.
+  audit_tool: tools/governance/audit_volume_layout.py
 
 # ---------------------------------------------------------------------------
 # Chapter Structure (full)
