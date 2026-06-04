@@ -17,11 +17,16 @@ lra-volume-N/
       chapter.yaml
       notes/
       proofs/
+      exercises/
 ```
 
 Volume, chapter, topic-level note/proof folder pairing, and proof router
 reachability are machine-readable in `constitution/schema/file-schema.yaml`.
 Use `tools/governance/audit_volume_layout.py` for deterministic layout audits.
+
+Top-level `exercises/` is reserved for the chapter exercise vault. It is
+separate from theorem proof material under `proofs/`; stable exercise IDs are
+canonical, while exercise paths are mutable routing details.
 
 `common/` are synced copies from `lra-common`. They are not
 owned by volume repos.
