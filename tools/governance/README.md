@@ -91,6 +91,10 @@ index ordering, proof stub/full TODO placement, box discipline, source
 crosswalk citations, exercise-ledger consistency, predicate/relation review
 warnings, and offline figure rules.
 
+The notes/proofs topic-pairing rule allows `notes/notation` as a notes-only
+topic, since notation ledgers are expected in notation-heavy chapters and do
+not require mirrored proof folders.
+
 Voice validation rejects classroom, workbook, motivational, and direct-address
 prose in `remark*`, `example*`, and `exposition` blocks. Examples include
 first-person plural wording (`we`, `us`, `our`), direct reader address (`you`,

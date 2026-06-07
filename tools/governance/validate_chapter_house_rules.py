@@ -45,6 +45,7 @@ ALLOWED_PROOF_TOP_ENVS = {
 }
 LABEL_PREFIXES = {"def", "ax", "thm", "lem", "prop", "cor", "prf", "ex", "fig", "cap"}
 DEPENDENCY_PREFIXES = {"def", "ax", "thm", "lem", "prop", "cor"}
+NOTE_ONLY_TOPICS = {"notation"}
 BEGIN_ENV_RE = re.compile(r"\\begin\{([^{}]+)\}(?:\[[^\]]*\])?")
 END_ENV_RE = re.compile(r"\\end\{([^{}]+)\}")
 INPUT_RE = re.compile(r"\\(?:input|include)\{([^{}]+)\}")
@@ -738,7 +739,7 @@ def validate_chapter_layout(chapter: Path, findings: list[Finding], generate_mis
 
     notes_topics = topic_dirs(chapter / "notes")
     proofs_topics = topic_dirs(chapter / "proofs")
-    for topic in sorted(notes_topics - proofs_topics):
+    for topic in sorted((notes_topics - proofs_topics) - NOTE_ONLY_TOPICS):
         add(findings, chapter, chapter / "notes" / topic, "missing_matching_proofs_topic", f"notes/{topic}/ has no matching proofs/{topic}/.")
     for topic in sorted(proofs_topics - notes_topics):
         add(findings, chapter, chapter / "proofs" / topic, "orphan_proofs_topic", f"proofs/{topic}/ has no matching notes/{topic}/.")
