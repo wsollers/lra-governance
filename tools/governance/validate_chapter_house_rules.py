@@ -51,6 +51,10 @@ INPUT_RE = re.compile(r"\\(?:input|include)\{([^{}]+)\}")
 LABEL_RE = re.compile(r"\\label\{([^{}]+)\}")
 HYPERREF_RE = re.compile(r"\\hyperref\[([^\]]+)\]")
 PROOF_FOR_RE = re.compile(r"\\LRAProofFor\{([^{}]+)\}")
+OPERATORNAME_RE = re.compile(r"\\operatorname\{([^{}]+)\}")
+BEGIN_ARTIFACT_RE = re.compile(r"%\s*BEGIN GENERATED ARTIFACT:\s*([A-Za-z0-9:-]+)")
+END_ARTIFACT_RE = re.compile(r"%\s*END GENERATED ARTIFACT:\s*([A-Za-z0-9:-]+)")
+CITE_OR_LABEL_RE = re.compile(r"\\(?:label|cite|citet|citep)\b")
 PLAIN_BLOCK_RE = re.compile(r"\\begin\{(remark|example)\}(?!\*)")
 ONLINE_GRAPHICS_RE = re.compile(r"\\(?:includegraphics|input)\{https?://", re.IGNORECASE)
 SECTION_RE = re.compile(r"\\(?:sub)*section\*?(?:\[[^\]]*\])?\{[^{}]+\}")
@@ -182,6 +186,7 @@ PROHIBITED_PROOF_MACROS = (
 )
 PROOF_BODY_RE = re.compile(r"\\begin\{proof\}([\s\S]*?)\\end\{proof\}")
 RESTATEMENT_RE = re.compile(r"\\begin\{(?P<env>theorem\*|lemma\*|proposition\*|corollary\*)\}([\s\S]*?)\\end\{(?P=env)\}")
+DISPLAY_MATH_RE = re.compile(r"\\\[(.*?)\\\]", re.DOTALL)
 VOICE_BANNED_PATTERNS = {
     r"\bwe\b": "first-person plural",
     r"\bus\b": "first-person plural",
@@ -270,8 +275,16 @@ def tex_files(root: Path) -> list[Path]:
     )
 
 
-def add(findings: list[Finding], root: Path, path: Path, code: str, message: str, line: int = 1) -> None:
-    findings.append(Finding(code=code, message=message, path=rel(path, root), line=line))
+def add(
+    findings: list[Finding],
+    root: Path,
+    path: Path,
+    code: str,
+    message: str,
+    line: int = 1,
+    severity: str = "error",
+) -> None:
+    findings.append(Finding(code=code, message=message, path=rel(path, root), line=line, severity=severity))
 
 
 def normalized_inputs(path: Path) -> set[str]:
@@ -370,6 +383,134 @@ def tex_siblings(directory: Path, exclude_index: bool = True) -> list[Path]:
     )
 
 
+def repo_root_for_chapter(chapter: Path) -> Path:
+    for parent in [chapter, *chapter.parents]:
+        if (parent / "main.tex").exists() or (parent / "predicates.yaml").exists():
+            return parent
+    return chapter.parent
+
+
+def simple_yaml_terms(path: Path) -> set[str]:
+    if not path.exists():
+        return set()
+    text = read(path)
+    terms: set[str] = set()
+    for match in re.finditer(r"^\s*[-]?\s*([A-Za-z][A-Za-z0-9_-]*)\s*:", text, re.MULTILINE):
+        terms.add(match.group(1).lower())
+    for match in re.finditer(r"\\operatorname\{([^{}]+)\}", text):
+        terms.add(match.group(1).lower())
+    return terms
+
+
+def canonical_terms(chapter: Path) -> set[str]:
+    root = repo_root_for_chapter(chapter)
+    terms: set[str] = set()
+    for name in ("predicates.yaml", "relations.yaml", "notation.yaml"):
+        terms |= simple_yaml_terms(root / name)
+    if not terms:
+        fallback = root.parent / "Learning-Real-Analysis"
+        for name in ("predicates.yaml", "relations.yaml", "notation.yaml"):
+            terms |= simple_yaml_terms(fallback / name)
+    return terms
+
+
+def all_labels(chapter: Path) -> set[str]:
+    labels: set[str] = set()
+    for path in tex_files(chapter):
+        labels.update(LABEL_RE.findall(uncommented(read(path))))
+    return labels
+
+
+def validate_latex_integrity(chapter: Path, path: Path, findings: list[Finding]) -> None:
+    text = uncommented(read(path))
+    stack: list[tuple[str, int]] = []
+    for match in re.finditer(r"\\(begin|end)\{([^{}]+)\}", text):
+        kind, env = match.group(1), match.group(2)
+        if kind == "begin":
+            stack.append((env, match.start()))
+        elif not stack:
+            add(findings, chapter, path, "unmatched_environment_end", f"Unmatched \\end{{{env}}}.", line_at(text, match.start()))
+        else:
+            open_env, open_pos = stack.pop()
+            if open_env != env:
+                add(findings, chapter, path, "mismatched_environment", f"Opened {open_env} but closed {env}.", line_at(text, match.start()))
+    for env, pos in stack:
+        add(findings, chapter, path, "unclosed_environment", f"Unclosed environment {env}.", line_at(text, pos))
+    if text.count("\\[") != text.count("\\]"):
+        add(findings, chapter, path, "unbalanced_display_math", "Display math delimiters \\[ and \\] are not balanced.")
+    for display in DISPLAY_MATH_RE.finditer(text):
+        if CITE_OR_LABEL_RE.search(display.group(1)):
+            add(findings, chapter, path, "label_or_cite_inside_display_math", "Move labels and citations outside display math.", line_at(text, display.start()))
+
+
+def validate_generated_artifacts(chapter: Path, path: Path, findings: list[Finding]) -> None:
+    text = read(path)
+    begins = list(BEGIN_ARTIFACT_RE.finditer(text))
+    ends = list(END_ARTIFACT_RE.finditer(text))
+    if len(begins) != len(ends):
+        add(findings, chapter, path, "generated_artifact_marker_count", "Generated artifact BEGIN/END marker counts differ.")
+    for begin, end in zip(begins, ends):
+        begin_label = begin.group(1)
+        end_label = end.group(1)
+        if begin_label != end_label:
+            add(findings, chapter, path, "generated_artifact_marker_mismatch", f"Generated artifact begins as {begin_label} but ends as {end_label}.", line_at(text, begin.start()))
+        body = text[begin.end() : end.start()]
+        labels = LABEL_RE.findall(body)
+        if ":" in begin_label and begin_label not in labels:
+            add(findings, chapter, path, "generated_artifact_label_mismatch", f"Generated artifact {begin_label} does not contain a matching label.", line_at(text, begin.start()))
+
+
+def validate_box_discipline(chapter: Path, path: Path, findings: list[Finding]) -> None:
+    text = uncommented(read(path))
+    open_boxes = [match.start() for match in re.finditer(r"\\begin\{tcolorbox\}", text)]
+    close_boxes = [match.start() for match in re.finditer(r"\\end\{tcolorbox\}", text)]
+    if len(open_boxes) != len(close_boxes):
+        add(findings, chapter, path, "unbalanced_tcolorbox", "tcolorbox begin/end count is not balanced.")
+    if len(open_boxes) > 1:
+        events = sorted([(pos, 1) for pos in open_boxes] + [(pos, -1) for pos in close_boxes])
+        depth = 0
+        for pos, delta in events:
+            depth += delta
+            if depth > 1:
+                add(findings, chapter, path, "nested_tcolorbox", "Nested tcolorbox environments are not allowed.", line_at(text, pos))
+                break
+    for boxed in re.finditer(r"\\begin\{tcolorbox\}[\s\S]*?\\end\{tcolorbox\}", text):
+        body = boxed.group(0)
+        if re.search(r"\\begin\{(?:remark\*?|example\*?|proof)\}", body):
+            add(findings, chapter, path, "boxed_nonformal_content", "Remarks, examples, and proofs must not be boxed.", line_at(text, boxed.start()))
+
+
+def validate_predicate_relation_scan(chapter: Path, path: Path, terms: set[str], findings: list[Finding]) -> None:
+    if not terms:
+        return
+    text = uncommented(read(path))
+    for match in OPERATORNAME_RE.finditer(text):
+        name = match.group(1).strip()
+        normalized = name.lower().replace("\\", "")
+        if normalized and normalized not in terms:
+            add(
+                findings,
+                chapter,
+                path,
+                "unknown_predicate_or_relation",
+                f"Predicate/relation operator '{name}' is not in canonical YAML; ask for guidance because it may be acceptable.",
+                line_at(text, match.start()),
+                severity="warning",
+            )
+
+
+def validate_unique_labels(chapter: Path, findings: list[Finding]) -> None:
+    seen: dict[str, Path] = {}
+    for path in tex_files(chapter):
+        text = uncommented(read(path))
+        for match in LABEL_RE.finditer(text):
+            label = match.group(1)
+            if label in seen:
+                add(findings, chapter, path, "duplicate_label", f"Duplicate label {label}; first seen in {rel(seen[label], chapter)}.", line_at(text, match.start()))
+            else:
+                seen[label] = path
+
+
 def validate_chapter_registry(chapter: Path, findings: list[Finding]) -> None:
     registry = chapter.parent / "chapter.yaml"
     if not registry.exists():
@@ -427,6 +568,29 @@ def validate_note_structure(chapter: Path, findings: list[Finding]) -> None:
             for body in body_files:
                 if not is_routed(index, body, chapter):
                     add(findings, chapter, body, "unrouted_notes_topic_body", f"{rel(body, chapter)} is not routed from notes/{topic}/index.tex.")
+                if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*\.tex", body.name):
+                    add(findings, chapter, body, "invalid_note_filename", "Note body filename must be lowercase, hyphen-separated ASCII.", severity="warning")
+
+
+def validate_index_order(chapter: Path, note_blocks: dict[str, FormalBlock], findings: list[Finding]) -> None:
+    notes_index = chapter / "notes" / "index.tex"
+    proofs_index = chapter / "proofs" / "index.tex"
+    notes_inputs = [Path(target).name for target in ordered_inputs(notes_index)]
+    proofs_inputs = [Path(target).name for target in ordered_inputs(proofs_index) if Path(target).name != "exercises"]
+    if notes_inputs and proofs_inputs and notes_inputs != proofs_inputs:
+        add(findings, chapter, proofs_index, "proof_topic_order_mismatch", "proofs/index.tex topic order must mirror notes/index.tex topic order.")
+    proof_label_order = [
+        f"prf:{block.label.split(':', 1)[1]}"
+        for block in sorted(note_blocks.values(), key=lambda block: (rel(block.path, chapter), block.line))
+        if block.env in PROOF_ENVS and block.label
+    ]
+    for topic in topic_dirs(chapter / "proofs"):
+        index = chapter / "proofs" / topic / "index.tex"
+        routed_roots = {Path(target).stem.removeprefix("prf-") for target in ordered_inputs(index)}
+        expected = [label for label in proof_label_order if label.split(":", 1)[1] in routed_roots]
+        actual = [f"prf:{Path(target).stem.removeprefix('prf-')}" for target in ordered_inputs(index)]
+        if expected and actual and actual != expected:
+            add(findings, chapter, index, "proof_file_order_mismatch", "Proof files must be routed in source theorem order.")
 
 
 def validate_proof_structure(chapter: Path, findings: list[Finding]) -> None:
@@ -796,6 +960,12 @@ def validate_formal_blocks(chapter: Path, blocks: list[FormalBlock], findings: l
                     prefix = target.split(":", 1)[0]
                     if prefix not in DEPENDENCY_PREFIXES:
                         add(findings, chapter, block.path, "invalid_dependency_target", f"{block.label} dependency targets non-statement label {target}.", block.line)
+        if re.search(r"\\begin\{remark\*\}\[(Historical note|Comparison with Feferman)\]", block.decoration) and not re.search(r"\\cite[t|p]?\{", block.decoration):
+            add(findings, chapter, block.path, "source_crosswalk_without_citation", f"{block.label} has a source/provenance block without a citation.", block.line)
+        for examples in re.finditer(r"\\begin\{remark\*\}\[(Examples|Non-Examples|Exposition)\]([\s\S]*?)\\end\{remark\*\}", block.decoration):
+            body = examples.group(2)
+            if LABEL_RE.search(body) or re.search(r"\\begin\{(?:definition|axiom|theorem|lemma|proposition|corollary)\}", body):
+                add(findings, chapter, block.path, "formal_claim_inside_expository_block", f"{examples.group(1)} block must not introduce labels or formal theorem-like environments.", block.line + line_at(block.decoration, examples.start()) - 1)
         block_window = block.text + "\n" + block.decoration
         if block.env in PROOF_ENVS and block.label:
             proof_target = f"prf:{block.label.split(':', 1)[1]}"
@@ -836,6 +1006,26 @@ def validate_formal_blocks(chapter: Path, blocks: list[FormalBlock], findings: l
                     block.line + line_at(block.decoration, right_pos) - 1,
                 )
     return by_label
+
+
+def validate_dependency_targets(chapter: Path, findings: list[Finding]) -> None:
+    labels = all_labels(chapter)
+    for path in tex_files(chapter):
+        text = uncommented(read(path))
+        for dep in re.finditer(r"\\begin\{dependencies\}([\s\S]*?)\\end\{dependencies\}", text):
+            for target in HYPERREF_RE.findall(dep.group(1)):
+                if target.split(":", 1)[0] not in DEPENDENCY_PREFIXES:
+                    continue
+                if target not in labels:
+                    add(
+                        findings,
+                        chapter,
+                        path,
+                        "dependency_target_not_in_chapter",
+                        f"Dependency target {target} is not defined in this chapter; verify prior-scope dependency or add the missing artifact.",
+                        line_at(text, dep.start()),
+                        severity="warning",
+                    )
 
 
 def validate_proofs(chapter: Path, note_blocks: dict[str, FormalBlock], findings: list[Finding]) -> None:
@@ -913,6 +1103,10 @@ def validate_proofs(chapter: Path, note_blocks: dict[str, FormalBlock], findings
             trailer = "\n".join(line.strip() for line in text[clearpage_pos + len("\\clearpage") :].splitlines() if line.strip() and not line.strip().startswith("%"))
             if trailer:
                 add(findings, chapter, path, "content_after_clearpage", "Proof file must not contain source content after terminal \\clearpage.", line_at(text, clearpage_pos))
+        if proof_label_match:
+            expected_name = f"prf-{proof_label_match.group(1)}.tex"
+            if path.name != expected_name:
+                add(findings, chapter, path, "proof_filename_label_mismatch", f"Proof filename must be {expected_name}.")
         validate_order(
             chapter,
             path,
@@ -968,6 +1162,17 @@ def validate_proofs(chapter: Path, note_blocks: dict[str, FormalBlock], findings
             add(findings, chapter, path, "invalid_detailed_learning_layer_count", "Proof file must contain exactly one Detailed Learning/Instructional Proof layer.")
         if professional_markers and detailed_markers and professional_markers[0].start() > detailed_markers[0].start():
             add(findings, chapter, path, "proof_layer_order", "Professional proof layer must precede detailed instructional proof layer.", line_at(text, detailed_markers[0].start()))
+        todo_matches = list(re.finditer(r"\bTODO\b", text, re.IGNORECASE))
+        if todo_matches:
+            allowed_spans: list[tuple[int, int]] = []
+            allowed_spans.extend((match.start(), match.end()) for match in proof_env_matches)
+            for match in re.finditer(r"\\begin\{remark\*\}\[Proof structure\]([\s\S]*?)\\end\{remark\*\}", text):
+                allowed_spans.append((match.start(), match.end()))
+            for match in re.finditer(r"\\begin\{dependencies\}([\s\S]*?)\\end\{dependencies\}", text):
+                allowed_spans.append((match.start(), match.end()))
+            for match in todo_matches:
+                if not any(start <= match.start() <= end for start, end in allowed_spans):
+                    add(findings, chapter, path, "todo_outside_stub_layers", "Proof stubs may use TODO only in proof bodies, proof-structure, or dependencies.", line_at(text, match.start()))
     for label, block in note_blocks.items():
         if block.env not in PROOF_ENVS:
             continue
@@ -983,6 +1188,16 @@ def validate_exercises(chapter: Path, findings: list[Finding]) -> None:
     if exercises.exists():
         if not (exercises / "index.tex").exists():
             add(findings, chapter, exercises / "index.tex", "missing_exercises_index", "Missing exercises/index.tex.")
+        ledger = exercises / "exercise-ledger.yaml"
+        ledger_text = read(ledger) if ledger.exists() else ""
+        ledger_paths = [
+            match.group(1).strip()
+            for match in re.finditer(r"^\s*path:\s*([^#\n]+)", ledger_text, re.MULTILINE)
+        ]
+        for ledger_path in ledger_paths:
+            target = exercises / ledger_path.replace("/", "\\")
+            if not target.exists():
+                add(findings, chapter, ledger, "ledger_path_missing", f"Exercise ledger path does not exist: {ledger_path}.")
         for path in tex_files(exercises):
             if path.name == "index.tex":
                 continue
@@ -995,6 +1210,11 @@ def validate_exercises(chapter: Path, findings: list[Finding]) -> None:
                 add(findings, chapter, path, "missing_exercise_environment", "Exercise file must use the house exercise environment or macro.")
             if not is_routed(exercises / "index.tex", path, chapter):
                 add(findings, chapter, path, "unrouted_exercise_file", "Exercise file is not routed from exercises/index.tex.")
+            if ledger.exists():
+                exercise_ids = LABEL_RE.findall(text)
+                for exercise_id in exercise_ids:
+                    if exercise_id.startswith("ex:") and exercise_id not in ledger_text:
+                        add(findings, chapter, path, "exercise_label_missing_from_ledger", f"Exercise label {exercise_id} is not present in exercise-ledger.yaml.", severity="warning")
     proof_exercises = chapter / "proofs" / "exercises"
     if proof_exercises.exists():
         proof_index = proof_exercises / "index.tex"
@@ -1071,25 +1291,36 @@ def main() -> int:
     if not chapter.exists():
         findings.append(Finding("missing_chapter", "Chapter path does not exist.", str(chapter)))
     else:
+        terms = canonical_terms(chapter)
         validate_chapter_registry(chapter, findings)
         validate_chapter_layout(chapter, findings, generate_missing_capstone=args.generate_missing_capstone)
+        validate_unique_labels(chapter, findings)
         for path in tex_files(chapter):
+            validate_latex_integrity(chapter, path, findings)
+            validate_generated_artifacts(chapter, path, findings)
+            validate_box_discipline(chapter, path, findings)
             validate_block_discipline(chapter, path, findings)
             validate_figures(chapter, path, findings)
             validate_labels(chapter, path, findings)
             validate_voice(chapter, path, findings)
+            validate_predicate_relation_scan(chapter, path, terms, findings)
         validate_note_structure(chapter, findings)
         validate_proof_structure(chapter, findings)
         validate_toolkits(chapter, findings)
         note_blocks = validate_formal_blocks(chapter, extract_formal_blocks(chapter), findings)
+        validate_index_order(chapter, note_blocks, findings)
+        validate_dependency_targets(chapter, findings)
         validate_proofs(chapter, note_blocks, findings)
         validate_exercises(chapter, findings)
         validate_capstone(chapter, findings)
 
+    error_count = sum(1 for finding in findings if finding.severity == "error")
+    warning_count = sum(1 for finding in findings if finding.severity == "warning")
     summary = {
         "chapter": str(chapter),
-        "status": "FAIL" if findings else "PASS",
-        "error_count": len(findings),
+        "status": "FAIL" if error_count else "PASS",
+        "error_count": error_count,
+        "warning_count": warning_count,
         "findings": [asdict(finding) for finding in findings],
     }
     if args.format == "json":
@@ -1097,11 +1328,12 @@ def main() -> int:
     else:
         print("Chapter house-rule validation summary")
         print(f"chapter: {chapter}")
-        print(f"error_count: {len(findings)}")
+        print(f"error_count: {error_count}")
+        print(f"warning_count: {warning_count}")
         print(f"status: {summary['status']}")
         for finding in findings:
-            print(f"ERROR {finding.code} {finding.path}:{finding.line} - {finding.message}")
-    return 1 if findings else 0
+            print(f"{finding.severity.upper()} {finding.code} {finding.path}:{finding.line} - {finding.message}")
+    return 1 if error_count else 0
 
 
 if __name__ == "__main__":

@@ -86,7 +86,10 @@ structure, note/proof/exercise router structure, notes/proofs topic pairing,
 Toolkit boxes, prose block discipline, formal block decoration and order,
 dependency references, proof navigation, proof-file layers, labels, exercise
 routing, capstone structure, reference-voice discipline in remark/example/
-exposition blocks, and offline figure rules.
+exposition blocks, LaTeX structural balance, generated artifact boundaries,
+index ordering, proof stub/full TODO placement, box discipline, source
+crosswalk citations, exercise-ledger consistency, predicate/relation review
+warnings, and offline figure rules.
 
 Voice validation rejects classroom, workbook, motivational, and direct-address
 prose in `remark*`, `example*`, and `exposition` blocks. Examples include
@@ -111,6 +114,11 @@ python tools\governance\validate_chapter_house_rules.py --chapter F:\repos\lra-v
 
 The generator writes a compile-safe placeholder only. It does not invent the
 mathematical capstone problem.
+
+Predicate/relation scanning reports unknown `\operatorname{...}` terms as
+warnings rather than errors. Those warnings require author guidance: the term
+may be a legitimate new predicate/relation that should be added to canonical
+YAML, or it may be an invented/unreviewed symbol that should be removed.
 
 ### Schema Coverage Rule
 
