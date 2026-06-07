@@ -38,6 +38,7 @@ jobs:
           - lra-volume-vi
           - lra-volume-vii
           - lra-volume-viii
+          - lra-source-profiles
 
     steps:
       - name: Checkout governance source
