@@ -20,6 +20,8 @@ Planned tools:
 - `sync_agent_wrappers.py` - guarded wrapper sync tool; dry-run by default,
   requires explicit repo selection, and write mode is not used until a pilot is
   approved.
+- `validate_chapter_house_rules.py` - chapter-scoped acceptance validator for
+  current LRA house rules.
 - `validate_note_blocks.py` - path-scoped validator for generated note prose
   block discipline.
 - `validate_repo_rules.py`
@@ -68,3 +70,18 @@ python tools\governance\validate_note_blocks.py --root F:\repos\lra-volume-i F:\
 
 This validator is intentionally path-scoped because older notes may predate
 the current prose-block discipline.
+
+## Chapter House-Rule Validation
+
+Run from `lra-governance` against a single chapter root when a chapter is
+expected to satisfy current house rules:
+
+```powershell
+python tools\governance\validate_chapter_house_rules.py --chapter F:\repos\lra-volume-i\volume-i\propositional-logic
+```
+
+Use `--format json` for machine-readable reports. The validator is intentionally
+strict: it checks chapter routing, capstone presence, breadcrumb and roadmap
+structure, notes/proofs topic pairing, Toolkit boxes, prose block discipline,
+formal block decoration and order, dependency references, proof navigation,
+proof-file layers, labels, exercise routing, and offline figure rules.
