@@ -85,7 +85,14 @@ strict: it checks chapter routing, capstone presence, breadcrumb and roadmap
 structure, note/proof/exercise router structure, notes/proofs topic pairing,
 Toolkit boxes, prose block discipline, formal block decoration and order,
 dependency references, proof navigation, proof-file layers, labels, exercise
-routing, capstone structure, and offline figure rules.
+routing, capstone structure, reference-voice discipline in remark/example/
+exposition blocks, and offline figure rules.
+
+Voice validation rejects classroom, workbook, motivational, and direct-address
+prose in `remark*`, `example*`, and `exposition` blocks. Examples include
+first-person plural wording (`we`, `us`, `our`), direct reader address (`you`,
+`your`), and classroom roles (`student`, `reader`, `learner`, `instructor`,
+`course`, `lecture`, `homework`). Use impersonal reference prose instead.
 
 For proof files, the validator checks that each file has exactly one proof
 label before all environments, exactly one `\LRAProofFor{...}` association,

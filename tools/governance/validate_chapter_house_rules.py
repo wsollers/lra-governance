@@ -28,6 +28,7 @@ STARRED_RESTATEMENT_ENVS = {"theorem*", "lemma*", "proposition*", "corollary*"}
 ALLOWED_NOTE_TOP_ENVS = FORMAL_ENVS.keys() | {
     "remark*",
     "example*",
+    "exposition",
     "dependencies",
     "tcolorbox",
     "longtable",
@@ -57,6 +58,10 @@ TOOLKIT_RE = re.compile(r"\\begin\{tcolorbox\}(?:\[[\s\S]*?\])?[\s\S]{0,1200}?To
 TCOLORBOX_RE = re.compile(r"\\begin\{tcolorbox\}(?:\[[\s\S]*?\])?")
 DECORATION_BLOCK_RE = re.compile(
     r"\\begin\{(?P<env>remark\*|example\*|dependencies)\}(?:\[(?P<title>[^\]]+)\])?",
+    re.IGNORECASE,
+)
+VOICE_BLOCK_RE = re.compile(
+    r"\\begin\{(?P<env>remark\*|example\*|exposition)\}(?:\[(?P<title>[^\]]+)\])?(?P<body>[\s\S]*?)\\end\{(?P=env)\}",
     re.IGNORECASE,
 )
 EXERCISE_ENV_RE = re.compile(r"\\begin\{(?:exercise|exerciseproblem|exerciseitem|generatedexercise|sourcedexercise)\b|\\(?:Exercise|GeneratedExercise|SourcedExercise)\b")
@@ -177,6 +182,30 @@ PROHIBITED_PROOF_MACROS = (
 )
 PROOF_BODY_RE = re.compile(r"\\begin\{proof\}([\s\S]*?)\\end\{proof\}")
 RESTATEMENT_RE = re.compile(r"\\begin\{(?P<env>theorem\*|lemma\*|proposition\*|corollary\*)\}([\s\S]*?)\\end\{(?P=env)\}")
+VOICE_BANNED_PATTERNS = {
+    r"\bwe\b": "first-person plural",
+    r"\bus\b": "first-person plural",
+    r"\bour\b": "first-person plural",
+    r"\bours\b": "first-person plural",
+    r"\bourselves\b": "first-person plural",
+    r"\byou\b": "direct reader address",
+    r"\byour\b": "direct reader address",
+    r"\byours\b": "direct reader address",
+    r"\byourself\b": "direct reader address",
+    r"\byourselves\b": "direct reader address",
+    r"\bstudents?\b": "classroom voice",
+    r"\breaders?\b": "reader-address voice",
+    r"\blearners?\b": "classroom voice",
+    r"\binstructors?\b": "classroom voice",
+    r"\bteachers?\b": "classroom voice",
+    r"\bclass(?:room)?\b": "classroom voice",
+    r"\bcourse\b": "course-transcript voice",
+    r"\blecture\b": "course-transcript voice",
+    r"\blesson\b": "workbook voice",
+    r"\bworkbook\b": "workbook voice",
+    r"\bworksheet\b": "workbook voice",
+    r"\bhomework\b": "workbook voice",
+}
 
 
 @dataclass(frozen=True)
@@ -696,6 +725,33 @@ def validate_labels(chapter: Path, path: Path, findings: list[Finding]) -> None:
         validate_label(chapter, path, match.group(1), line_at(text, match.start()), findings)
 
 
+def voice_text(body: str) -> str:
+    text = re.sub(r"\\(?:label|hyperref|ref|citep?|url|href)\b(?:\[[^\]]*\])?(?:\{[^{}]*\}){0,2}", " ", body)
+    text = re.sub(r"\\[a-zA-Z]+\*?(?:\[[^\]]*\])?", " ", text)
+    text = re.sub(r"[{}$^_\\]", " ", text)
+    return re.sub(r"\s+", " ", text)
+
+
+def validate_voice(chapter: Path, path: Path, findings: list[Finding]) -> None:
+    if path.name.startswith("figure-"):
+        return
+    text = uncommented(read(path))
+    for block in VOICE_BLOCK_RE.finditer(text):
+        block_text = voice_text(block.group("body"))
+        for pattern, reason in VOICE_BANNED_PATTERNS.items():
+            match = re.search(pattern, block_text, re.IGNORECASE)
+            if match:
+                title = (block.group("title") or block.group("env")).strip()
+                add(
+                    findings,
+                    chapter,
+                    path,
+                    "non_reference_voice",
+                    f"{title} block uses {reason}: '{match.group(0)}'. Use impersonal reference voice.",
+                    line_at(text, block.start("body")),
+                )
+
+
 def dependency_bodies(decoration: str) -> list[str]:
     return re.findall(r"\\begin\{dependencies\}(.*?)\\end\{dependencies\}", decoration, re.DOTALL)
 
@@ -1021,6 +1077,7 @@ def main() -> int:
             validate_block_discipline(chapter, path, findings)
             validate_figures(chapter, path, findings)
             validate_labels(chapter, path, findings)
+            validate_voice(chapter, path, findings)
         validate_note_structure(chapter, findings)
         validate_proof_structure(chapter, findings)
         validate_toolkits(chapter, findings)
