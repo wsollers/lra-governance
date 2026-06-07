@@ -107,10 +107,30 @@ DECORATION_ORDER = {
     "contrapositive quantified statement": 80,
     "contrapositive predicate reading": 90,
     "interpretation": 100,
+    "historical note": 105,
+    "comparison with feferman": 105,
     "exposition": 110,
     "examples": 120,
     "non-examples": 130,
     "dependencies": 140,
+}
+DEPENDENT_DECORATION_PARENTS = {
+    "negation predicate reading": "negated quantified statement",
+    "failure mode decomposition": "failure modes",
+    "contrapositive predicate reading": "contrapositive quantified statement",
+}
+FORBIDDEN_DECORATION_BY_ENV = {
+    "definition": {"contrapositive quantified statement", "contrapositive predicate reading"},
+    "axiom": {
+        "contrapositive quantified statement",
+        "contrapositive predicate reading",
+        "examples",
+        "non-examples",
+    },
+    "theorem": {"examples", "non-examples"},
+    "lemma": {"examples", "non-examples"},
+    "proposition": {"examples", "non-examples"},
+    "corollary": {"examples", "non-examples"},
 }
 BAD_LABEL_PARTS = {
     "the",
@@ -142,6 +162,13 @@ TOP_LEVEL_COMMANDS = (
     "\\LRAProofFor",
 )
 IGNORED_LABEL_PREFIXES = {"ch", "sec", "subsec", "toc"}
+PROHIBITED_PROOF_MACROS = (
+    "\\flash",
+    "\\Flash",
+    "\\ProofStep",
+    "\\Step",
+    "\\proofstep",
+)
 
 
 @dataclass(frozen=True)
@@ -306,6 +333,35 @@ def tex_siblings(directory: Path, exclude_index: bool = True) -> list[Path]:
     )
 
 
+def validate_chapter_registry(chapter: Path, findings: list[Finding]) -> None:
+    registry = chapter.parent / "chapter.yaml"
+    if not registry.exists():
+        return
+    text = read(registry)
+    if not re.search(rf"(^|[\s:/-]){re.escape(chapter.name)}($|[\s:#,])", text):
+        add(findings, chapter, registry, "chapter_missing_from_registry", "Chapter directory name is not present in the parent chapter registry.")
+
+
+def note_topic_for_path(chapter: Path, path: Path) -> str | None:
+    try:
+        rel_parts = path.relative_to(chapter).parts
+    except ValueError:
+        return None
+    if len(rel_parts) >= 3 and rel_parts[0] == "notes":
+        return rel_parts[1]
+    return None
+
+
+def proof_topic_for_path(chapter: Path, path: Path) -> str | None:
+    try:
+        rel_parts = path.relative_to(chapter).parts
+    except ValueError:
+        return None
+    if len(rel_parts) >= 3 and rel_parts[0] == "proofs":
+        return rel_parts[1]
+    return None
+
+
 def validate_note_structure(chapter: Path, findings: list[Finding]) -> None:
     notes_root = chapter / "notes"
     notes_index = notes_root / "index.tex"
@@ -357,6 +413,8 @@ def validate_proof_structure(chapter: Path, findings: list[Finding]) -> None:
             if "\\begin{proof}" in text or "\\LRAProofFor{" in text:
                 add(findings, chapter, index, "proofs_topic_index_contains_proof_content", f"proofs/{topic}/index.tex must route proof files, not contain proof content.")
             for proof_file in proof_files:
+                if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*\.tex", proof_file.name):
+                    add(findings, chapter, proof_file, "invalid_proof_filename", "Proof filename must be lowercase, hyphen-separated ASCII.")
                 if not is_routed(index, proof_file, chapter):
                     add(findings, chapter, proof_file, "unrouted_proof_topic_file", f"{rel(proof_file, chapter)} is not routed from proofs/{topic}/index.tex.")
 
@@ -409,7 +467,7 @@ def generate_capstone_stub(chapter: Path, findings: list[Finding]) -> None:
             encoding="utf-8",
         )
 def validate_chapter_layout(chapter: Path, findings: list[Finding], generate_missing_capstone: bool = False) -> None:
-    for relative in ("index.tex", "chapter.yaml", "notes/index.tex", "proofs/index.tex"):
+    for relative in ("index.tex", "chapter.yaml", "notes/index.tex", "proofs/index.tex", "proofs/exercises/index.tex"):
         path = chapter / relative
         if not path.exists():
             add(findings, chapter, path, "missing_chapter_artifact", f"Missing {relative}.")
@@ -496,6 +554,10 @@ def validate_chapter_layout(chapter: Path, findings: list[Finding], generate_mis
             add(findings, chapter, index, "missing_proofs_topic_index", f"Missing proofs/{topic}/index.tex.")
         elif not is_routed(chapter / "proofs" / "index.tex", index, chapter):
             add(findings, chapter, index, "unrouted_proofs_topic", f"proofs/{topic}/index.tex is not routed from proofs/index.tex.")
+
+    proof_exercises_index = chapter / "proofs" / "exercises" / "index.tex"
+    if proof_exercises_index.exists() and not is_routed(chapter / "proofs" / "index.tex", proof_exercises_index, chapter):
+        add(findings, chapter, proof_exercises_index, "unrouted_proof_exercises_index", "proofs/exercises/index.tex is not routed from proofs/index.tex.")
 
 
 def validate_toolkits(chapter: Path, findings: list[Finding]) -> None:
@@ -645,6 +707,12 @@ def validate_formal_blocks(chapter: Path, blocks: list[FormalBlock], findings: l
             add(findings, chapter, block.path, "missing_formal_label", f"{block.env} has no label.", block.line)
             continue
         by_label[block.label] = block
+        if block.env in {"definition", "axiom"}:
+            source = uncommented(read(block.path))
+            block_start = source.find(block.text)
+            wrapper_context = source[max(0, block_start - 500) : block_start] if block_start >= 0 else ""
+            if "\\begin{tcolorbox}" not in wrapper_context:
+                add(findings, chapter, block.path, "missing_required_box", f"{block.label} must be wrapped in a tcolorbox by artifact-matrix box rules.", block.line)
         if not block.label.startswith(f"{block.prefix}:"):
             add(findings, chapter, block.path, "label_prefix_mismatch", f"{block.env} label should start with {block.prefix}:.", block.line)
         if not re.search(r"\\begin\{remark\*\}\[Standard quantified statement\]", block.decoration):
@@ -686,7 +754,13 @@ def validate_formal_blocks(chapter: Path, blocks: list[FormalBlock], findings: l
             if key not in DECORATION_ORDER:
                 add(findings, chapter, block.path, "unknown_decoration_block", f"{block.label} has nonstandard decoration block '{key}'.", block.line + line_at(block.decoration, match.start()) - 1)
                 continue
+            if key in FORBIDDEN_DECORATION_BY_ENV.get(block.env, set()):
+                add(findings, chapter, block.path, "forbidden_decoration_block", f"{block.env} must not use decoration block '{key}' by artifact-matrix rules.", block.line + line_at(block.decoration, match.start()) - 1)
             seen_blocks.append((key, DECORATION_ORDER[key], match.start()))
+        seen_keys = {key for key, _, _ in seen_blocks}
+        for child, parent in DEPENDENT_DECORATION_PARENTS.items():
+            if child in seen_keys and parent not in seen_keys:
+                add(findings, chapter, block.path, "missing_dependent_parent_block", f"{child} requires parent block {parent} for {block.label}.", block.line)
         for (left_key, left_rank, _), (right_key, right_rank, right_pos) in zip(seen_blocks, seen_blocks[1:]):
             if right_rank < left_rank:
                 add(
@@ -713,6 +787,38 @@ def validate_proofs(chapter: Path, note_blocks: dict[str, FormalBlock], findings
                 proof_labels[label] = path
         for label in PROOF_FOR_RE.findall(text):
             proof_for[label] = path
+        for macro in PROHIBITED_PROOF_MACROS:
+            if macro in text:
+                add(findings, chapter, path, "prohibited_proof_macro", f"Proof file uses prohibited proof-structuring macro {macro}.")
+        first_env = re.search(r"\\begin\{", text)
+        proof_label_match = re.search(r"\\label\{prf:([^{}]+)\}", text)
+        proof_for_match = PROOF_FOR_RE.search(text)
+        if proof_label_match and first_env and proof_label_match.start() > first_env.start():
+            add(findings, chapter, path, "proof_label_after_environment", "Proof label must appear outside and before all environments.", line_at(text, proof_label_match.start()))
+        for env_match in re.finditer(r"\\begin\{(?:theorem|lemma|proposition|corollary)\*\}([\s\S]*?)\\end\{(?:theorem|lemma|proposition|corollary)\*\}", text):
+            if LABEL_RE.search(env_match.group(1)):
+                add(findings, chapter, path, "label_inside_restatement", "Starred theorem-like restatement must not contain labels.", line_at(text, env_match.start()))
+        for proof_match in re.finditer(r"\\begin\{proof\}([\s\S]*?)\\end\{proof\}", text):
+            if LABEL_RE.search(proof_match.group(1)):
+                add(findings, chapter, path, "label_inside_proof_environment", "Proof environments must not contain labels.", line_at(text, proof_match.start()))
+        if proof_label_match and proof_for_match:
+            proof_root = proof_label_match.group(1)
+            proof_for_label = proof_for_match.group(1)
+            if ":" in proof_for_label and proof_root != proof_for_label.split(":", 1)[1]:
+                add(findings, chapter, path, "proof_label_mismatch", "Proof label root must match the associated theorem-like label root.", line_at(text, proof_label_match.start()))
+            note_block = note_blocks.get(proof_for_label)
+            if note_block:
+                note_topic = note_topic_for_path(chapter, note_block.path)
+                proof_topic = proof_topic_for_path(chapter, path)
+                if note_topic and proof_topic and note_topic != proof_topic:
+                    add(findings, chapter, path, "proof_topic_mismatch", f"Proof topic {proof_topic} does not match source note topic {note_topic}.")
+        if proof_for_match and "\\begin{remark*}[Return]" in text:
+            expected_ref = proof_for_match.group(1)
+            return_start = text.find("\\begin{remark*}[Return]")
+            return_end = text.find("\\end{remark*}", return_start)
+            return_block = text[return_start:return_end] if return_end >= 0 else text[return_start:]
+            if expected_ref not in HYPERREF_RE.findall(return_block):
+                add(findings, chapter, path, "return_navigation_mismatch", "Return navigation must hyperref to the associated source label.", line_at(text, return_start))
         validate_order(
             chapter,
             path,
@@ -860,6 +966,7 @@ def main() -> int:
     if not chapter.exists():
         findings.append(Finding("missing_chapter", "Chapter path does not exist.", str(chapter)))
     else:
+        validate_chapter_registry(chapter, findings)
         validate_chapter_layout(chapter, findings, generate_missing_capstone=args.generate_missing_capstone)
         for path in tex_files(chapter):
             validate_block_discipline(chapter, path, findings)

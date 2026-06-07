@@ -96,3 +96,20 @@ python tools\governance\validate_chapter_house_rules.py --chapter F:\repos\lra-v
 
 The generator writes a compile-safe placeholder only. It does not invent the
 mathematical capstone problem.
+
+### Schema Coverage Rule
+
+The chapter house-rule validator is the deterministic acceptance gate for
+chapter-local requirements from:
+
+- `constitution/schema/file-schema.yaml`;
+- `constitution/schema/block-registry.yaml`;
+- `constitution/schema/artifact-matrix.yaml`.
+
+When those schema files change, the same change must update this validator or
+document why a requirement is handled by another deterministic tool. Repo-wide
+requirements such as monorepo root shape, volume repository root shape,
+canonical YAML locations, and source-of-truth repository roles are outside the
+chapter validator and belong to repo/layout audits. Semantic requirements such
+as whether a capstone truly avoids later chapter material require source or
+knowledge-graph audits in addition to this structural validator.
