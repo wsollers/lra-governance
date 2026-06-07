@@ -82,6 +82,17 @@ python tools\governance\validate_chapter_house_rules.py --chapter F:\repos\lra-v
 
 Use `--format json` for machine-readable reports. The validator is intentionally
 strict: it checks chapter routing, capstone presence, breadcrumb and roadmap
-structure, notes/proofs topic pairing, Toolkit boxes, prose block discipline,
-formal block decoration and order, dependency references, proof navigation,
-proof-file layers, labels, exercise routing, and offline figure rules.
+structure, note/proof/exercise router structure, notes/proofs topic pairing,
+Toolkit boxes, prose block discipline, formal block decoration and order,
+dependency references, proof navigation, proof-file layers, labels, exercise
+routing, capstone structure, and offline figure rules.
+
+Normal validation is read-only. To create the standardized planned capstone
+stub when `proofs/exercises/capstone-{chapter}.tex` is missing, run:
+
+```powershell
+python tools\governance\validate_chapter_house_rules.py --chapter F:\repos\lra-volume-i\volume-i\propositional-logic --generate-missing-capstone
+```
+
+The generator writes a compile-safe placeholder only. It does not invent the
+mathematical capstone problem.
