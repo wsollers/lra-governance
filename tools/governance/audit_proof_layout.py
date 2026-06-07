@@ -24,7 +24,12 @@ PROOF_STRUCTURE_RE = re.compile(
     r"\\begin\{remark\*\}\[Proof structure\](.*?)\\end\{remark\*\}",
     re.DOTALL,
 )
-DEPENDENCIES_RE = re.compile(r"\\begin\{dependencies\}(.*?)\\end\{dependencies\}", re.DOTALL)
+DEPENDENCIES_RE = re.compile(
+    r"(?:\\begin\{dependencies\}(.*?)\\end\{dependencies\}"
+    r"|\\begin\{remark\*\}\[Dependencies\](.*?)\\end\{remark\*\}"
+    r"|\\NoLocalDependencies)",
+    re.DOTALL,
+)
 ASCII_HYPHEN_FILENAME_RE = re.compile(r"^[a-z0-9-]+\.tex$")
 
 
@@ -156,7 +161,10 @@ def index_inputs(index_path: Path, target: Path, chapter_root: Path) -> bool:
 
 def block(text: str, regex: re.Pattern[str]) -> str:
     match = regex.search(text)
-    return match.group(1) if match else ""
+    if not match:
+        return ""
+    groups = [group for group in match.groups() if group is not None]
+    return groups[0] if groups else match.group(0)
 
 
 def proof_blocks(text: str) -> tuple[str, str]:
@@ -190,7 +198,7 @@ def validate_order(text: str, audit: ProofAudit) -> None:
         ("professional_standard_proof", r"Professional Standard Proof"),
         ("detailed_learning_proof", r"Detailed Learning Proof"),
         ("proof_structure", r"\\begin\{remark\*\}\[Proof structure\]"),
-        ("dependencies", r"\\begin\{dependencies\}"),
+        ("dependencies", r"(?:\\begin\{dependencies\}|\\begin\{remark\*\}\[Dependencies\]|\\NoLocalDependencies)"),
         ("clearpage", r"\\clearpage"),
     ]
     positions = [(name, position(text, pattern)) for name, pattern in layers]
@@ -296,7 +304,7 @@ def audit_proof(path: Path, chapter_root: Path, root: Path, notes: dict[str, str
     if not structure_body:
         add(audit, "error", "missing_proof_structure_body", "Missing Proof structure remark.")
     if not dependencies_body:
-        add(audit, "error", "missing_dependencies_body", "Missing dependencies environment.")
+        add(audit, "error", "missing_dependencies_body", "Missing dependencies block.")
 
     for target, _ in HYPERREF_RE.findall(dependencies_body):
         if target.startswith("prf:"):
