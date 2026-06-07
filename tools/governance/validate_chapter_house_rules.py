@@ -119,6 +119,12 @@ DEPENDENT_DECORATION_PARENTS = {
     "failure mode decomposition": "failure modes",
     "contrapositive predicate reading": "contrapositive quantified statement",
 }
+RESTATEMENT_ENV_BY_PREFIX = {
+    "thm": "theorem*",
+    "lem": "lemma*",
+    "prop": "proposition*",
+    "cor": "corollary*",
+}
 FORBIDDEN_DECORATION_BY_ENV = {
     "definition": {"contrapositive quantified statement", "contrapositive predicate reading"},
     "axiom": {
@@ -169,6 +175,8 @@ PROHIBITED_PROOF_MACROS = (
     "\\Step",
     "\\proofstep",
 )
+PROOF_BODY_RE = re.compile(r"\\begin\{proof\}([\s\S]*?)\\end\{proof\}")
+RESTATEMENT_RE = re.compile(r"\\begin\{(?P<env>theorem\*|lemma\*|proposition\*|corollary\*)\}([\s\S]*?)\\end\{(?P=env)\}")
 
 
 @dataclass(frozen=True)
@@ -787,18 +795,28 @@ def validate_proofs(chapter: Path, note_blocks: dict[str, FormalBlock], findings
                 proof_labels[label] = path
         for label in PROOF_FOR_RE.findall(text):
             proof_for[label] = path
+        proof_label_matches = list(re.finditer(r"\\label\{prf:([^{}]+)\}", text))
+        proof_for_matches = list(PROOF_FOR_RE.finditer(text))
+        if len(proof_label_matches) != 1:
+            add(findings, chapter, path, "invalid_proof_label_count", "Proof file must contain exactly one proof-level prf: label.")
+        if len(proof_for_matches) != 1:
+            add(findings, chapter, path, "invalid_lra_proof_for_count", "Proof file must contain exactly one \\LRAProofFor{...} association.")
         for macro in PROHIBITED_PROOF_MACROS:
             if macro in text:
                 add(findings, chapter, path, "prohibited_proof_macro", f"Proof file uses prohibited proof-structuring macro {macro}.")
         first_env = re.search(r"\\begin\{", text)
-        proof_label_match = re.search(r"\\label\{prf:([^{}]+)\}", text)
-        proof_for_match = PROOF_FOR_RE.search(text)
+        proof_label_match = proof_label_matches[0] if proof_label_matches else None
+        proof_for_match = proof_for_matches[0] if proof_for_matches else None
         if proof_label_match and first_env and proof_label_match.start() > first_env.start():
             add(findings, chapter, path, "proof_label_after_environment", "Proof label must appear outside and before all environments.", line_at(text, proof_label_match.start()))
-        for env_match in re.finditer(r"\\begin\{(?:theorem|lemma|proposition|corollary)\*\}([\s\S]*?)\\end\{(?:theorem|lemma|proposition|corollary)\*\}", text):
-            if LABEL_RE.search(env_match.group(1)):
+        if proof_label_match and proof_for_match and proof_label_match.start() > proof_for_match.start():
+            add(findings, chapter, path, "proof_label_after_proof_for", "Proof label must appear before \\LRAProofFor{...}.", line_at(text, proof_label_match.start()))
+        restatement_matches = list(RESTATEMENT_RE.finditer(text))
+        for env_match in restatement_matches:
+            if LABEL_RE.search(env_match.group(2)):
                 add(findings, chapter, path, "label_inside_restatement", "Starred theorem-like restatement must not contain labels.", line_at(text, env_match.start()))
-        for proof_match in re.finditer(r"\\begin\{proof\}([\s\S]*?)\\end\{proof\}", text):
+        proof_env_matches = list(PROOF_BODY_RE.finditer(text))
+        for proof_match in proof_env_matches:
             if LABEL_RE.search(proof_match.group(1)):
                 add(findings, chapter, path, "label_inside_proof_environment", "Proof environments must not contain labels.", line_at(text, proof_match.start()))
         if proof_label_match and proof_for_match:
@@ -812,6 +830,10 @@ def validate_proofs(chapter: Path, note_blocks: dict[str, FormalBlock], findings
                 proof_topic = proof_topic_for_path(chapter, path)
                 if note_topic and proof_topic and note_topic != proof_topic:
                     add(findings, chapter, path, "proof_topic_mismatch", f"Proof topic {proof_topic} does not match source note topic {note_topic}.")
+            proof_for_prefix = proof_for_label.split(":", 1)[0] if ":" in proof_for_label else ""
+            expected_env = RESTATEMENT_ENV_BY_PREFIX.get(proof_for_prefix)
+            if expected_env and restatement_matches and restatement_matches[0].group("env") != expected_env:
+                add(findings, chapter, path, "restatement_type_mismatch", f"Proof restatement must use {expected_env} for {proof_for_label}.", line_at(text, restatement_matches[0].start()))
         if proof_for_match and "\\begin{remark*}[Return]" in text:
             expected_ref = proof_for_match.group(1)
             return_start = text.find("\\begin{remark*}[Return]")
@@ -819,6 +841,22 @@ def validate_proofs(chapter: Path, note_blocks: dict[str, FormalBlock], findings
             return_block = text[return_start:return_end] if return_end >= 0 else text[return_start:]
             if expected_ref not in HYPERREF_RE.findall(return_block):
                 add(findings, chapter, path, "return_navigation_mismatch", "Return navigation must hyperref to the associated source label.", line_at(text, return_start))
+        dep_bodies = dependency_bodies(text)
+        if dep_bodies:
+            for dep_body in dep_bodies:
+                if "\\NoLocalDependencies" in dep_body:
+                    continue
+                refs = HYPERREF_RE.findall(dep_body)
+                if not refs:
+                    add(findings, chapter, path, "proof_dependencies_without_hyperref", "Proof dependencies must contain hyperref links or \\NoLocalDependencies.")
+                for target in refs:
+                    if target.split(":", 1)[0] not in DEPENDENCY_PREFIXES:
+                        add(findings, chapter, path, "invalid_proof_dependency_target", f"Proof dependency targets non-statement label {target}.")
+        clearpage_pos = text.rfind("\\clearpage")
+        if clearpage_pos >= 0:
+            trailer = "\n".join(line.strip() for line in text[clearpage_pos + len("\\clearpage") :].splitlines() if line.strip() and not line.strip().startswith("%"))
+            if trailer:
+                add(findings, chapter, path, "content_after_clearpage", "Proof file must not contain source content after terminal \\clearpage.", line_at(text, clearpage_pos))
         validate_order(
             chapter,
             path,
@@ -834,7 +872,7 @@ def validate_proofs(chapter: Path, note_blocks: dict[str, FormalBlock], findings
                     ("proof_vault", r"\\ProofVaultURL\{"),
                     ("restatement", r"\\begin\{(?:theorem|lemma|proposition|corollary)\*\}"),
                     ("professional", r"Professional Standard Proof"),
-                    ("detailed", r"Detailed Learning Proof"),
+                    ("detailed", r"Detailed (?:Learning|Instructional) Proof"),
                     ("proof_structure", r"\\begin\{remark\*\}\[Proof structure\]"),
                     ("dependencies", r"\\begin\{dependencies\}"),
                     ("clearpage", r"\\clearpage"),
@@ -850,19 +888,30 @@ def validate_proofs(chapter: Path, note_blocks: dict[str, FormalBlock], findings
             ("\\LRAProofFor{", "missing_lra_proof_for"),
             ("\\begin{remark*}[Return]", "missing_return_navigation"),
             ("Professional Standard Proof", "missing_professional_proof_layer"),
-            ("Detailed Learning Proof", "missing_detailed_learning_layer"),
             ("\\begin{remark*}[Proof structure]", "missing_proof_structure"),
             ("\\begin{dependencies}", "missing_proof_dependencies"),
             ("\\clearpage", "missing_proof_clearpage"),
         ]:
             if token not in text:
                 add(findings, chapter, path, code, f"Proof file missing {token}.")
+        if not re.search(r"Detailed (?:Learning|Instructional) Proof", text, re.IGNORECASE):
+            add(findings, chapter, path, "missing_detailed_learning_layer", "Proof file missing Detailed Learning/Instructional Proof.")
         if not re.search(r"\\begin\{(?:theorem|lemma|proposition|corollary)\*\}", text):
             add(findings, chapter, path, "missing_restatement", "Proof file missing starred theorem-like restatement.")
-        if len(re.findall(r"\\textbf\{Professional Standard Proof\.?\}", text, re.IGNORECASE)) != 1:
+        if len(restatement_matches) != 1:
+            add(findings, chapter, path, "invalid_restatement_count", "Proof file must contain exactly one starred theorem-like restatement.")
+        professional_markers = [match for match in proof_env_matches if re.search(r"\\textbf\{Professional Standard Proof\.?\}", match.group(1), re.IGNORECASE)]
+        detailed_markers = [
+            match
+            for match in proof_env_matches
+            if re.search(r"\\textbf\{Detailed (?:Learning|Instructional) Proof\.?\}", match.group(1), re.IGNORECASE)
+        ]
+        if len(professional_markers) != 1:
             add(findings, chapter, path, "invalid_professional_proof_layer_count", "Proof file must contain exactly one Professional Standard Proof layer.")
-        if len(re.findall(r"\\textbf\{Detailed Learning Proof\.?\}", text, re.IGNORECASE)) != 1:
-            add(findings, chapter, path, "invalid_detailed_learning_layer_count", "Proof file must contain exactly one Detailed Learning Proof layer.")
+        if len(detailed_markers) != 1:
+            add(findings, chapter, path, "invalid_detailed_learning_layer_count", "Proof file must contain exactly one Detailed Learning/Instructional Proof layer.")
+        if professional_markers and detailed_markers and professional_markers[0].start() > detailed_markers[0].start():
+            add(findings, chapter, path, "proof_layer_order", "Professional proof layer must precede detailed instructional proof layer.", line_at(text, detailed_markers[0].start()))
     for label, block in note_blocks.items():
         if block.env not in PROOF_ENVS:
             continue

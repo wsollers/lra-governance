@@ -87,6 +87,14 @@ Toolkit boxes, prose block discipline, formal block decoration and order,
 dependency references, proof navigation, proof-file layers, labels, exercise
 routing, capstone structure, and offline figure rules.
 
+For proof files, the validator checks that each file has exactly one proof
+label before all environments, exactly one `\LRAProofFor{...}` association,
+correct return navigation, the correct starred theorem-like restatement type,
+one professional proof layer marker, one detailed learning/instructional proof
+layer marker, a proof-structure remark, dependencies with statement-target
+hyperrefs or `\NoLocalDependencies`, no labels inside restatement/proof
+environments, and terminal `\clearpage`.
+
 Normal validation is read-only. To create the standardized planned capstone
 stub when `proofs/exercises/capstone-{chapter}.tex` is missing, run:
 
