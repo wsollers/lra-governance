@@ -27,6 +27,29 @@ default. Select the smallest file set that matches the task.
 External repository references are marked with `[external:<repo>]`. They are
 task inputs, not local `lra-governance` files.
 
+## Governance Tool Resolution
+
+Governance tool implementations are canonical in
+`lra-governance/tools/governance/`.
+
+Leaf repositories may provide same-path wrapper scripts such as
+`tools/governance/validate_note_blocks.py` and
+`tools/governance/validate_chapter_house_rules.py`. These wrappers must delegate
+to the canonical `lra-governance` implementation. They must not copy or fork the
+tool logic.
+
+When a task requires a governance validator:
+
+1. Run the leaf-local wrapper if it exists.
+2. If no wrapper exists and an adjacent `lra-governance` checkout exists, run
+   the canonical tool from `lra-governance/tools/governance/`.
+3. If neither is available, stop the task and report that `lra-governance` is
+   not present, so governance compliance cannot be certified.
+
+Wrappers may locate the canonical repo through `LRA_GOVERNANCE_ROOT`; otherwise
+they should look for a sibling `lra-governance` checkout in a local multi-repo
+workspace.
+
 ## Loading Discipline
 
 1. Read `AGENTS.md`.

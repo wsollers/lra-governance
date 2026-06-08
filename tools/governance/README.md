@@ -1,11 +1,15 @@
 # Governance Tools
 
-This directory will hold governance generation, sync, validation, drift-check,
-and task-scope audit tools.
+This directory contains the canonical implementations of governance generation,
+sync, validation, drift-check, and task-scope audit tools.
 
-No generator or sync tool is implemented yet.
+Leaf repositories may carry wrapper scripts with matching paths, but those
+wrappers must delegate back here. They must not copy or fork the implementation.
+If a wrapper cannot locate `lra-governance`, it should fail with a clear error
+message such as "lra-governance is not present" and should not silently skip the
+required check.
 
-Planned tools:
+Available and planned tools:
 
 - `audit_latex_decoration.py` - inventory-only scanner for volume theorem and
   definition decoration compliance.

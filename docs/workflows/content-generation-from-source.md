@@ -229,8 +229,12 @@ validator:
 python tools\governance\validate_note_blocks.py --root <target-repo> <new-notes-directory>
 ```
 
-When running inside a leaf volume repo that carries a synced local copy of the
-tool, the equivalent command is:
+When running inside a leaf volume repo, this path may be a local wrapper. The
+wrapper must delegate to the canonical implementation in
+`lra-governance/tools/governance/`; if `lra-governance` is not available, it
+must fail with a clear error instead of skipping validation.
+
+The legacy convenience command is:
 
 ```powershell
 python scripts\validate_note_blocks.py --root . <new-notes-directory>

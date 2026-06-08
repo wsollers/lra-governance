@@ -20,9 +20,7 @@ from typing import Iterable
 BEGIN_ENV_RE = re.compile(r"^\s*\\begin\{([^{}]+)\}")
 END_ENV_RE = re.compile(r"^\s*\\end\{([^{}]+)\}")
 PLAIN_BLOCK_RE = re.compile(r"\\begin\{(remark|example)\}(?!\*)")
-DISALLOWED_BLOCK_RE = re.compile(
-    r"\\begin\{(exposition|examplebox|workedexamples)\}"
-)
+DISALLOWED_BLOCK_RE = re.compile(r"\\begin\{(examplebox|workedexamples)\}")
 
 ALLOWED_TOP_LEVEL_COMMANDS = (
     "\\chapter",
@@ -108,7 +106,7 @@ def validate_file(path: Path, root: Path) -> list[Finding]:
             findings.append(
                 Finding(
                     code="non_house_block_environment",
-                    message="Use remark* or example* instead of this block environment.",
+                    message="Use a current house block environment instead of this block.",
                     path=rel,
                     line=line_no,
                 )
@@ -122,7 +120,7 @@ def validate_file(path: Path, root: Path) -> list[Finding]:
             findings.append(
                 Finding(
                     code="top_level_prose",
-                    message="Prose in notes must be inside a formal, remark*, example*, or dependency block.",
+                    message="Prose in notes must be inside a formal, exposition, remark*, example*, or dependency block.",
                     path=rel,
                     line=line_no,
                 )
@@ -147,7 +145,7 @@ def validate_file(path: Path, root: Path) -> list[Finding]:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Validate note files use starred example/exposition blocks and no top-level prose."
+        description="Validate note files use approved prose blocks and no top-level prose."
     )
     parser.add_argument(
         "paths",
