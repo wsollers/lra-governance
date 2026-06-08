@@ -10,6 +10,8 @@ import sys
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
+from _targeting import discovery_lines, resolve_target, target_chapters
+
 
 INPUT_RE = re.compile(r"\\(?:input|include)\{([^}]+)\}")
 VOLUME_RE = re.compile(r"^volume-(?:i|ii|iii|iv|v|vi|vii|viii)$")
@@ -47,6 +49,17 @@ class LayoutSummary:
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Audit LRA volume/chapter/topic layout.")
     parser.add_argument("--root", required=True, help="Leaf repo, volume root, or chapter root.")
+    parser.add_argument("--volume", help="Audit a discovered volume, such as volume-ii.")
+    parser.add_argument("--chapter", help="Audit a discovered chapter, such as whole-numbers.")
+    parser.add_argument(
+        "--section",
+        help="Audit the chapter containing a discovered section. Use --chapter if ambiguous.",
+    )
+    parser.add_argument(
+        "--list-targets",
+        action="store_true",
+        help="List discovered volumes, chapters, and sections, then exit.",
+    )
     parser.add_argument("--format", choices=("text", "json"), default="text")
     parser.add_argument("--strict", action="store_true", help="Fail if any chapter is non-compliant.")
     parser.add_argument(
@@ -206,10 +219,10 @@ def audit_chapter(chapter: Path, root: Path, refactor_mode: bool) -> ChapterAudi
     return audit
 
 
-def audit_root(root: Path, refactor_mode: bool) -> LayoutSummary:
+def audit_root(root: Path, refactor_mode: bool, chapters: list[Path] | None = None) -> LayoutSummary:
     root = root.resolve()
     summary = LayoutSummary(root=str(root), refactor_mode=refactor_mode)
-    for chapter in find_chapter_roots(root):
+    for chapter in chapters if chapters is not None else find_chapter_roots(root):
         audit = audit_chapter(chapter, root, refactor_mode)
         summary.audits.append(audit)
         summary.chapters += 1
@@ -240,7 +253,16 @@ def print_text(summary: LayoutSummary) -> None:
 
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
-    summary = audit_root(Path(args.root), args.refactor_mode)
+    root = Path(args.root).resolve()
+    if args.list_targets:
+        print("\n".join(discovery_lines(root)))
+        return 0
+    try:
+        target = resolve_target(root, args.volume, args.chapter, args.section)
+    except ValueError as exc:
+        print(f"ERROR target_resolution - {exc}", file=sys.stderr)
+        return 2
+    summary = audit_root(root, args.refactor_mode, target_chapters(target))
     if args.format == "json":
         print(json.dumps(asdict(summary), indent=2))
     else:

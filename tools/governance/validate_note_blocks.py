@@ -16,6 +16,8 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Iterable
 
+from _targeting import discovery_lines, note_validation_paths, resolve_target
+
 
 BEGIN_ENV_RE = re.compile(r"^\s*\\begin\{([^{}]+)\}")
 END_ENV_RE = re.compile(r"^\s*\\end\{([^{}]+)\}")
@@ -159,6 +161,17 @@ def parse_args() -> argparse.Namespace:
         default=Path("."),
         help="Repository root used for relative paths.",
     )
+    parser.add_argument("--volume", help="Validate notes under a discovered volume, such as volume-ii.")
+    parser.add_argument("--chapter", help="Validate notes under a discovered chapter, such as whole-numbers.")
+    parser.add_argument(
+        "--section",
+        help="Validate one discovered notes topic, such as extending-addition. Use --chapter if ambiguous.",
+    )
+    parser.add_argument(
+        "--list-targets",
+        action="store_true",
+        help="List discovered volumes, chapters, and sections, then exit.",
+    )
     parser.add_argument("--json", action="store_true", help="Emit JSON findings.")
     return parser.parse_args()
 
@@ -166,8 +179,22 @@ def parse_args() -> argparse.Namespace:
 def main() -> int:
     args = parse_args()
     root = args.root.resolve()
-    paths = args.paths or sorted(root.glob("volume-*"))
-    paths = [p if p.is_absolute() else root / p for p in paths]
+    if args.list_targets:
+        print("\n".join(discovery_lines(root)))
+        return 0
+
+    try:
+        target = resolve_target(root, args.volume, args.chapter, args.section)
+    except ValueError as exc:
+        print(f"ERROR target_resolution - {exc}", file=sys.stderr)
+        return 2
+
+    if args.paths:
+        paths = [p if p.is_absolute() else root / p for p in args.paths]
+        target_scope = "paths"
+    else:
+        paths = note_validation_paths(target)
+        target_scope = target.scope
 
     findings: list[Finding] = []
     files = list(dict.fromkeys(iter_tex_files(paths)))
@@ -179,6 +206,13 @@ def main() -> int:
     else:
         print("Note block validation summary")
         print(f"root: {root}")
+        print(f"target_scope: {target_scope}")
+        if target.volume:
+            print(f"volume: {target.volume.name}")
+        if target.chapter:
+            print(f"chapter: {target.chapter.name}")
+        if target.section:
+            print(f"section: {target.section}")
         print(f"file_count: {len(files)}")
         print(f"error_count: {len(findings)}")
         print(f"status: {'FAIL' if findings else 'PASS'}")

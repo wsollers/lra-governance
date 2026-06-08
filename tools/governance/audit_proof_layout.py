@@ -11,6 +11,8 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any
 
+from _targeting import discovery_lines, proof_validation_paths, resolve_target, target_chapters
+
 
 PROOF_EXTENSIONS = {".tex"}
 THEOREM_LABEL_RE = re.compile(r"\\label\{((?:thm|lem|prop|cor):[a-z0-9-]+)\}")
@@ -69,6 +71,17 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         description="Audit proof files for LRA proof layout compliance."
     )
     parser.add_argument("--root", required=True, help="Leaf repo, volume, or chapter root.")
+    parser.add_argument("--volume", help="Audit proofs under a discovered volume, such as volume-ii.")
+    parser.add_argument("--chapter", help="Audit proofs under a discovered chapter, such as whole-numbers.")
+    parser.add_argument(
+        "--section",
+        help="Audit proofs under one discovered topic, such as extending-addition. Use --chapter if ambiguous.",
+    )
+    parser.add_argument(
+        "--list-targets",
+        action="store_true",
+        help="List discovered volumes, chapters, and sections, then exit.",
+    )
     parser.add_argument("--format", choices=("text", "json"), default="text")
     parser.add_argument("--strict", action="store_true", help="Fail if any proof is non-compliant.")
     parser.add_argument(
@@ -110,6 +123,20 @@ def proof_files(chapter_root: Path) -> list[Path]:
             continue
         files.append(path)
     return sorted(files)
+
+
+def proof_files_under(paths: list[Path]) -> list[Path]:
+    files: list[Path] = []
+    for root in paths:
+        if not root.exists():
+            continue
+        for path in root.rglob("*.tex"):
+            if path.name == "index.tex":
+                continue
+            if "exercises" in path.parts:
+                continue
+            files.append(path)
+    return sorted(set(path.resolve() for path in files))
 
 
 def topic_after(anchor: str, path: Path, chapter_root: Path) -> str | None:
@@ -334,12 +361,20 @@ def audit_proof(path: Path, chapter_root: Path, root: Path, notes: dict[str, str
     return audit
 
 
-def audit_root(root: Path, refactor_mode: bool) -> AuditSummary:
+def audit_root(
+    root: Path,
+    refactor_mode: bool,
+    chapters: list[Path] | None = None,
+    scoped_proof_dirs: list[Path] | None = None,
+) -> AuditSummary:
     root = root.resolve()
     summary = AuditSummary(root=str(root), refactor_mode=refactor_mode)
-    for chapter_root in find_chapter_roots(root):
+    for chapter_root in chapters if chapters is not None else find_chapter_roots(root):
         notes = note_topics(chapter_root)
-        for path in proof_files(chapter_root):
+        files = proof_files_under(scoped_proof_dirs) if scoped_proof_dirs is not None else proof_files(chapter_root)
+        for path in files:
+            if not path.is_relative_to(chapter_root):
+                continue
             audit = audit_proof(path, chapter_root, root, notes, refactor_mode)
             summary.audits.append(audit)
             summary.proof_files += 1
@@ -377,7 +412,17 @@ def to_json(summary: AuditSummary) -> str:
 
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
-    summary = audit_root(Path(args.root), args.refactor_mode)
+    root = Path(args.root).resolve()
+    if args.list_targets:
+        print("\n".join(discovery_lines(root)))
+        return 0
+    try:
+        target = resolve_target(root, args.volume, args.chapter, args.section)
+    except ValueError as exc:
+        print(f"ERROR target_resolution - {exc}", file=sys.stderr)
+        return 2
+    scoped_dirs = proof_validation_paths(target) if target.scope == "section" else None
+    summary = audit_root(root, args.refactor_mode, target_chapters(target), scoped_dirs)
     if args.format == "json":
         print(to_json(summary))
     else:

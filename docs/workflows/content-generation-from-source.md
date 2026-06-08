@@ -223,11 +223,15 @@ Before returning output, check:
 - labels are semantic and stable.
 
 For newly generated note files or note directories, run the note-block
-validator:
+validator at the narrowest generated scope:
 
 ```powershell
-python tools\governance\validate_note_blocks.py --root <target-repo> <new-notes-directory>
+python tools\governance\validate_note_blocks.py --root <target-repo> --chapter <chapter-name> --section <topic-name>
 ```
+
+If the target names are not obvious, discover them first with
+`python tools\governance\validate_note_blocks.py --root <target-repo> --list-targets`.
+Explicit paths are still accepted for ad hoc checks.
 
 When running inside a leaf volume repo, this path may be a local wrapper. The
 wrapper must delegate to the canonical implementation in
