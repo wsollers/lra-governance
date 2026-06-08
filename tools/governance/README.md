@@ -81,6 +81,10 @@ This validator still accepts explicit paths for ad hoc checks, but target flags
 are preferred because `--chapter` means the chapter's `notes/` tree and
 `--section` means one `notes/{topic}/` tree.
 
+The summary also reports `formalization_record_count` and
+`unverified_formalization_count`. `\Unverified` markers are inventory markers
+only; they render nothing in the PDF and do not make note-block validation fail.
+
 ## Chapter House-Rule Validation
 
 Run from `lra-governance` against a single chapter root when a chapter is

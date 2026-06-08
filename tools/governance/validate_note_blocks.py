@@ -23,6 +23,8 @@ BEGIN_ENV_RE = re.compile(r"^\s*\\begin\{([^{}]+)\}")
 END_ENV_RE = re.compile(r"^\s*\\end\{([^{}]+)\}")
 PLAIN_BLOCK_RE = re.compile(r"\\begin\{(remark|example)\}(?!\*)")
 DISALLOWED_BLOCK_RE = re.compile(r"\\begin\{(examplebox|workedexamples)\}")
+FORMALIZATION_RECORD_RE = re.compile(r"\\begin\{formalizationrecord\}")
+UNVERIFIED_RE = re.compile(r"\\Unverified(?:\[[^\]]*\])?")
 
 ALLOWED_TOP_LEVEL_COMMANDS = (
     "\\chapter",
@@ -145,6 +147,16 @@ def validate_file(path: Path, root: Path) -> list[Finding]:
     return findings
 
 
+def count_source_markers(path: Path) -> tuple[int, int]:
+    formalization_records = 0
+    unverified = 0
+    for raw_line in path.read_text(encoding="utf-8").splitlines():
+        line = strip_comment(raw_line)
+        formalization_records += len(FORMALIZATION_RECORD_RE.findall(line))
+        unverified += len(UNVERIFIED_RE.findall(line))
+    return formalization_records, unverified
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Validate note files use approved prose blocks and no top-level prose."
@@ -198,11 +210,25 @@ def main() -> int:
 
     findings: list[Finding] = []
     files = list(dict.fromkeys(iter_tex_files(paths)))
+    formalization_record_count = 0
+    unverified_formalization_count = 0
     for path in files:
         findings.extend(validate_file(path.resolve(), root))
+        record_count, unverified_count = count_source_markers(path)
+        formalization_record_count += record_count
+        unverified_formalization_count += unverified_count
 
     if args.json:
-        print(json.dumps([asdict(f) for f in findings], indent=2))
+        print(
+            json.dumps(
+                {
+                    "formalization_record_count": formalization_record_count,
+                    "unverified_formalization_count": unverified_formalization_count,
+                    "findings": [asdict(f) for f in findings],
+                },
+                indent=2,
+            )
+        )
     else:
         print("Note block validation summary")
         print(f"root: {root}")
@@ -214,6 +240,8 @@ def main() -> int:
         if target.section:
             print(f"section: {target.section}")
         print(f"file_count: {len(files)}")
+        print(f"formalization_record_count: {formalization_record_count}")
+        print(f"unverified_formalization_count: {unverified_formalization_count}")
         print(f"error_count: {len(findings)}")
         print(f"status: {'FAIL' if findings else 'PASS'}")
         for finding in findings:
