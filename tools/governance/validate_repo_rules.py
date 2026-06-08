@@ -36,6 +36,9 @@ VOLUME_REPOS = {
     "lra-volume-iii",
     "lra-volume-iv",
     "lra-volume-v",
+    "lra-volume-vi",
+    "lra-volume-vii",
+    "lra-volume-viii",
 }
 SPECIALIST_KEYWORDS = [
     "Lean-specific",
