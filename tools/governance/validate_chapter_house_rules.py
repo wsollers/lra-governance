@@ -58,9 +58,15 @@ END_ARTIFACT_RE = re.compile(r"%\s*END GENERATED ARTIFACT:\s*([A-Za-z0-9:-]+)")
 CITE_OR_LABEL_RE = re.compile(r"\\(?:label|cite|citet|citep)\b")
 PLAIN_BLOCK_RE = re.compile(r"\\begin\{(remark|example)\}(?!\*)")
 ONLINE_GRAPHICS_RE = re.compile(r"\\(?:includegraphics|input)\{https?://", re.IGNORECASE)
-SECTION_RE = re.compile(r"\\(?:sub)*section\*?(?:\[[^\]]*\])?\{[^{}]+\}")
+STARRED_CHAPTER_RE = re.compile(r"\\chapter\*(?:\[[^\]]*\])?\{[^{}]+\}")
+SECTION_HEADING_RE = re.compile(r"\\section(?:\[[^\]]*\])?\{[^{}]+\}")
+STARRED_SECTION_RE = re.compile(r"\\section\*(?:\[[^\]]*\])?\{[^{}]+\}")
+UNSTARRED_SUBSECTION_RE = re.compile(r"\\sub(?:sub)?section(?:\[[^\]]*\])?\{[^{}]+\}")
+STARRED_SUBSECTION_RE = re.compile(r"\\sub(?:sub)?section\*(?:\[[^\]]*\])?\{[^{}]+\}")
 TOOLKIT_RE = re.compile(r"\\begin\{tcolorbox\}(?:\[[\s\S]*?\])?[\s\S]{0,1200}?Toolkit", re.IGNORECASE)
 TCOLORBOX_RE = re.compile(r"\\begin\{tcolorbox\}(?:\[[\s\S]*?\])?")
+EXPOSITION_RE = re.compile(r"\\begin\{remark\*\}\[Exposition\](?P<body>[\s\S]*?)\\end\{remark\*\}", re.IGNORECASE)
+EXPOSITION_BEGIN_RE = re.compile(r"\s*\\begin\{remark\*\}\[Exposition\]", re.IGNORECASE)
 DECORATION_BLOCK_RE = re.compile(
     r"\\begin\{(?P<env>remark\*|example\*|dependencies)\}(?:\[(?P<title>[^\]]+)\])?",
     re.IGNORECASE,
@@ -262,6 +268,20 @@ def uncommented(text: str) -> str:
 
 def line_at(text: str, pos: int) -> int:
     return text.count("\n", 0, pos) + 1
+
+
+def latex_word_count(text: str) -> int:
+    without_commands = re.sub(r"\\[A-Za-z]+(?:\[[^\]]*\])?(?:\{[^{}]*\})?", " ", text)
+    plain = re.sub(r"[^A-Za-z0-9]+", " ", without_commands)
+    return len(plain.split())
+
+
+def begins_with_section_exposition(text: str) -> re.Match[str] | None:
+    body = text.lstrip()
+    heading = STARRED_SUBSECTION_RE.match(body)
+    if heading:
+        body = body[heading.end() :].lstrip()
+    return EXPOSITION_BEGIN_RE.match(body)
 
 
 def read(path: Path) -> str:
@@ -566,11 +586,144 @@ def validate_note_structure(chapter: Path, findings: list[Finding]) -> None:
             text = uncommented(read(index))
             if any(token in text for token in formal_tokens):
                 add(findings, chapter, index, "notes_topic_index_contains_formal_content", f"notes/{topic}/index.tex must route topic files, not contain formal artifacts.")
+            first_input = text.find("\\input")
+            pre_inputs = text if first_input == -1 else text[:first_input]
+            section_heading = SECTION_HEADING_RE.search(text)
+            starred_section = STARRED_SECTION_RE.search(text)
+            if starred_section:
+                add(
+                    findings,
+                    chapter,
+                    index,
+                    "starred_section_router_heading",
+                    "Section routers must use non-starred \\section{...} so sections appear in the table of contents.",
+                    line_at(text, starred_section.start()),
+                )
+            if not section_heading:
+                add(findings, chapter, index, "missing_section_router_heading", f"notes/{topic}/index.tex must begin routed content with \\section{{...}}.")
+            elif text[: section_heading.start()].strip():
+                add(
+                    findings,
+                    chapter,
+                    index,
+                    "section_router_heading_not_first",
+                    "Section routers must begin with the non-starred \\section{...} heading.",
+                    line_at(text, section_heading.start()),
+                )
+            elif first_input >= 0 and section_heading.start() > first_input:
+                add(
+                    findings,
+                    chapter,
+                    index,
+                    "section_heading_after_input",
+                    "Section router heading must appear before routed body inputs.",
+                    line_at(text, section_heading.start()),
+                )
+            if UNSTARRED_SUBSECTION_RE.search(text):
+                match = UNSTARRED_SUBSECTION_RE.search(text)
+                if match:
+                    add(
+                        findings,
+                        chapter,
+                        index,
+                        "unstarred_subsection_router_heading",
+                        "Section routers must not introduce unstarred subsection headings.",
+                        line_at(text, match.start()),
+                    )
+            if section_heading:
+                prelude = pre_inputs[section_heading.end() :]
+                box_matches = list(TCOLORBOX_RE.finditer(prelude))
+                toolkit_matches = list(TOOLKIT_RE.finditer(prelude))
+                exposition_matches = list(EXPOSITION_RE.finditer(prelude))
+                if len(box_matches) != 1 or len(toolkit_matches) != 1:
+                    add(
+                        findings,
+                        chapter,
+                        index,
+                        "invalid_section_toolkit_count",
+                        "Section router prelude must contain exactly one Toolkit tcolorbox after the section heading.",
+                        line_at(text, section_heading.start()),
+                    )
+                elif prelude[: toolkit_matches[0].start()].strip():
+                    add(
+                        findings,
+                        chapter,
+                        index,
+                        "section_toolkit_not_immediate",
+                        "The Toolkit must immediately follow the section heading in the section router.",
+                        line_at(text, section_heading.end() + toolkit_matches[0].start()),
+                    )
+                if len(exposition_matches) != 1:
+                    add(
+                        findings,
+                        chapter,
+                        index,
+                        "invalid_section_exposition_count",
+                        "Section router prelude must contain exactly one short remark* block titled Exposition after the Toolkit.",
+                        line_at(text, section_heading.start()),
+                    )
+                elif toolkit_matches:
+                    toolkit_end = prelude.find("\\end{tcolorbox}", toolkit_matches[0].start())
+                    if toolkit_end < 0:
+                        add(findings, chapter, index, "unclosed_section_toolkit", "Section router Toolkit tcolorbox is not closed.", line_at(text, section_heading.end() + toolkit_matches[0].start()))
+                    else:
+                        after_toolkit = toolkit_end + len("\\end{tcolorbox}")
+                        if exposition_matches[0].start() < after_toolkit:
+                            add(
+                                findings,
+                                chapter,
+                                index,
+                                "section_router_order",
+                                "Section router order must be section heading, Toolkit, Exposition, then routed inputs.",
+                                line_at(text, section_heading.end() + exposition_matches[0].start()),
+                            )
+                        elif prelude[after_toolkit : exposition_matches[0].start()].strip():
+                            add(
+                                findings,
+                                chapter,
+                                index,
+                                "section_exposition_not_immediate",
+                                "The Exposition remark must immediately follow the Toolkit in the section router.",
+                                line_at(text, section_heading.end() + exposition_matches[0].start()),
+                            )
+                    exposition_body = exposition_matches[0].group("body").strip()
+                    if not exposition_body:
+                        add(findings, chapter, index, "empty_section_exposition", "Section router Exposition must contain substantive prose.", line_at(text, section_heading.end() + exposition_matches[0].start()))
+                    elif latex_word_count(exposition_body) > 100:
+                        add(
+                            findings,
+                            chapter,
+                            index,
+                            "section_exposition_too_long",
+                            "Section router Exposition should be brief and must not exceed 100 words.",
+                            line_at(text, section_heading.end() + exposition_matches[0].start()),
+                        )
             for body in body_files:
                 if not is_routed(index, body, chapter):
                     add(findings, chapter, body, "unrouted_notes_topic_body", f"{rel(body, chapter)} is not routed from notes/{topic}/index.tex.")
                 if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*\.tex", body.name):
                     add(findings, chapter, body, "invalid_note_filename", "Note body filename must be lowercase, hyphen-separated ASCII.", severity="warning")
+                body_text = uncommented(read(body))
+                unstarred_subsection = UNSTARRED_SUBSECTION_RE.search(body_text)
+                if unstarred_subsection:
+                    add(
+                        findings,
+                        chapter,
+                        body,
+                        "unstarred_subsection_body_heading",
+                        "Topic body files must use starred subsection headings so the table of contents remains a chapter-section spine.",
+                        line_at(body_text, unstarred_subsection.start()),
+                    )
+                body_exposition = begins_with_section_exposition(body_text)
+                if body_exposition:
+                    add(
+                        findings,
+                        chapter,
+                        body,
+                        "subsection_starts_with_exposition",
+                        "Topic body files should not open with section-level Exposition; put the section orientation in notes/<section>/index.tex.",
+                        line_at(body_text, body_exposition.start()),
+                    )
 
 
 def validate_index_order(chapter: Path, note_blocks: dict[str, FormalBlock], findings: list[Finding]) -> None:
@@ -691,6 +844,16 @@ def validate_chapter_layout(chapter: Path, findings: list[Finding], generate_mis
     chapter_index = chapter / "index.tex"
     if chapter_index.exists():
         chapter_text = uncommented(read(chapter_index))
+        starred_chapter = STARRED_CHAPTER_RE.search(chapter_text)
+        if starred_chapter:
+            add(
+                findings,
+                chapter,
+                chapter_index,
+                "starred_chapter_heading",
+                "Chapter routers must use non-starred \\chapter{...}; chapters must appear in the table of contents.",
+                line_at(chapter_text, starred_chapter.start()),
+            )
         if "\\chapter" not in chapter_text:
             add(findings, chapter, chapter_index, "missing_chapter_heading", "Missing chapter heading.")
         if "\\label{ch:" not in chapter_text:
@@ -720,10 +883,13 @@ def validate_chapter_layout(chapter: Path, findings: list[Finding], generate_mis
         )
         first_input = chapter_text.find("\\input")
         pre_inputs = chapter_text if first_input == -1 else chapter_text[:first_input]
-        breadcrumb = TCOLORBOX_RE.search(pre_inputs)
-        if not breadcrumb:
+        breadcrumb_matches = list(TCOLORBOX_RE.finditer(pre_inputs))
+        if not breadcrumb_matches:
             add(findings, chapter, chapter_index, "missing_breadcrumb", "Chapter index must contain a breadcrumb tcolorbox before routed inputs.")
+        elif len(breadcrumb_matches) > 1:
+            add(findings, chapter, chapter_index, "invalid_breadcrumb_count", "Chapter index must contain exactly one breadcrumb tcolorbox before routed inputs.", line_at(chapter_text, breadcrumb_matches[1].start()))
         else:
+            breadcrumb = breadcrumb_matches[0]
             breadcrumb_block = pre_inputs[breadcrumb.start() : pre_inputs.find("\\end{tcolorbox}", breadcrumb.start())]
             if "\\textbf" not in breadcrumb_block or "\\;\\to\\;" not in breadcrumb_block:
                 add(findings, chapter, chapter_index, "invalid_breadcrumb", "Breadcrumb must bold the current chapter and use the arrow-chain form.", line_at(chapter_text, breadcrumb.start()))
@@ -768,25 +934,16 @@ def validate_toolkits(chapter: Path, findings: list[Finding]) -> None:
         if path.name == "index.tex":
             continue
         text = uncommented(read(path))
-        heading = SECTION_RE.search(text)
-        if not heading:
-            continue
-        first_formal_positions = [
-            match.start()
-            for match in BEGIN_ENV_RE.finditer(text)
-            if match.group(1) in FORMAL_ENVS
-        ]
-        first_formal = min(first_formal_positions) if first_formal_positions else len(text)
-        section_prelude = text[heading.end() : first_formal]
-        toolkit_matches = list(TOOLKIT_RE.finditer(section_prelude))
-        if len(toolkit_matches) != 1:
-            add(findings, chapter, path, "missing_or_duplicate_toolkit", "Each notes section must begin with exactly one Toolkit tcolorbox before formal artifacts.", line_at(text, heading.start()))
-            continue
-        first_box = TCOLORBOX_RE.search(section_prelude)
-        if first_box and first_box.start() != toolkit_matches[0].start():
-            add(findings, chapter, path, "toolkit_not_first_box", "The Toolkit must be the first tcolorbox in the section prelude.", line_at(text, heading.end() + toolkit_matches[0].start()))
-        if re.search(r"\\begin\{(?:definition|axiom|theorem|lemma|proposition|corollary|proof)\}", section_prelude):
-            add(findings, chapter, path, "formal_content_inside_toolkit_region", "Section prelude before first formal artifact must not contain formal theorem/proof environments.", line_at(text, heading.start()))
+        toolkit = TOOLKIT_RE.search(text)
+        if toolkit:
+            add(
+                findings,
+                chapter,
+                path,
+                "toolkit_in_topic_body",
+                "Toolkit boxes belong in notes/<section>/index.tex, not subsection/topic body files.",
+                line_at(text, toolkit.start()),
+            )
 
 
 def top_level_allowed_line(line: str) -> bool:
