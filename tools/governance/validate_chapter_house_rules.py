@@ -23,9 +23,17 @@ FORMAL_ENVS = {
     "proposition": "prop",
     "corollary": "cor",
 }
+FORMAL_BOX_ENVS = {
+    "definitionbox": "definition",
+    "axiombox": "axiom",
+    "theorembox": "theorem",
+    "lemmabox": "lemma",
+    "propositionbox": "proposition",
+    "corollarybox": "corollary",
+}
 PROOF_ENVS = {"theorem", "lemma", "proposition", "corollary"}
 STARRED_RESTATEMENT_ENVS = {"theorem*", "lemma*", "proposition*", "corollary*"}
-ALLOWED_NOTE_TOP_ENVS = FORMAL_ENVS.keys() | {
+ALLOWED_NOTE_TOP_ENVS = set(FORMAL_BOX_ENVS) | {
     "remark*",
     "example*",
     "exposition",
@@ -65,6 +73,17 @@ UNSTARRED_SUBSECTION_RE = re.compile(r"\\sub(?:sub)?section(?:\[[^\]]*\])?\{[^{}
 STARRED_SUBSECTION_RE = re.compile(r"\\sub(?:sub)?section\*(?:\[[^\]]*\])?\{[^{}]+\}")
 TOOLKIT_RE = re.compile(r"\\begin\{tcolorbox\}(?:\[[\s\S]*?\])?[\s\S]{0,1200}?Toolkit", re.IGNORECASE)
 TCOLORBOX_RE = re.compile(r"\\begin\{tcolorbox\}(?:\[[\s\S]*?\])?")
+TCOLORBOX_FORMAL_RE = re.compile(
+    r"\\begin\{tcolorbox\}(?P<options>\[[\s\S]*?\])?\s*"
+    r"\\begin\{(?P<env>definition|axiom|theorem|lemma|proposition|corollary)\}",
+    re.IGNORECASE,
+)
+FORMAL_BOX_RE = re.compile(
+    r"\\begin\{(?P<wrapper>definitionbox|axiombox|theorembox|lemmabox|propositionbox|corollarybox)\}"
+    r"(?:\{[^{}]*\})?\s*"
+    r"\\begin\{(?P<env>definition|axiom|theorem|lemma|proposition|corollary)\}",
+    re.IGNORECASE,
+)
 EXPOSITION_RE = re.compile(r"\\begin\{remark\*\}\[Exposition\](?P<body>[\s\S]*?)\\end\{remark\*\}", re.IGNORECASE)
 EXPOSITION_BEGIN_RE = re.compile(r"\s*\\begin\{remark\*\}\[Exposition\]", re.IGNORECASE)
 DECORATION_BLOCK_RE = re.compile(
@@ -153,6 +172,14 @@ FORBIDDEN_DECORATION_BY_ENV = {
     "lemma": {"examples", "non-examples"},
     "proposition": {"examples", "non-examples"},
     "corollary": {"examples", "non-examples"},
+}
+TCOLORBOX_STYLE_BY_ENV = {
+    "definition": ("defbox", "defborder"),
+    "axiom": ("axiombox", "axiomborder"),
+    "theorem": ("thmbox", "thmborder"),
+    "lemma": ("lembox", "lemborder"),
+    "proposition": ("propbox", "propborder"),
+    "corollary": ("corbox", "corborder"),
 }
 BAD_LABEL_PARTS = {
     "the",
@@ -991,6 +1018,52 @@ def validate_figures(chapter: Path, path: Path, findings: list[Finding]) -> None
                 add(findings, chapter, path, "invalid_figure_source", f"Figure source contains forbidden token {token}.")
 
 
+def validate_formal_tcolorbox_styles(chapter: Path, path: Path, findings: list[Finding]) -> None:
+    text = uncommented(read(path))
+    for match in TCOLORBOX_FORMAL_RE.finditer(text):
+        env = match.group("env").lower()
+        expected = TCOLORBOX_STYLE_BY_ENV.get(env)
+        options = match.group("options") or ""
+        back_match = re.search(r"colback\s*=\s*([A-Za-z0-9!]+)", options)
+        frame_match = re.search(r"colframe\s*=\s*([A-Za-z0-9!]+)", options)
+        actual_back = back_match.group(1) if back_match else None
+        actual_frame = frame_match.group(1) if frame_match else None
+        if expected:
+            expected_back, expected_frame = expected
+            if actual_back != expected_back or actual_frame != expected_frame:
+                actual = f"colback={actual_back or '<missing>'}, colframe={actual_frame or '<missing>'}"
+                expected_text = f"colback={expected_back}, colframe={expected_frame}"
+                add(
+                    findings,
+                    chapter,
+                    path,
+                    "formal_box_style_mismatch",
+                    f"{env} tcolorbox must use {expected_text}; found {actual}.",
+                    line_at(text, match.start()),
+                )
+        add(
+            findings,
+            chapter,
+            path,
+            "raw_formal_tcolorbox",
+            f"Use \\begin{{{env}box}}{{...}} around {env} instead of a raw formal tcolorbox.",
+            line_at(text, match.start()),
+        )
+    for match in FORMAL_BOX_RE.finditer(text):
+        wrapper = match.group("wrapper").lower()
+        env = match.group("env").lower()
+        expected_env = FORMAL_BOX_ENVS[wrapper]
+        if env != expected_env:
+            add(
+                findings,
+                chapter,
+                path,
+                "formal_box_environment_mismatch",
+                f"{wrapper} must wrap {expected_env}, not {env}.",
+                line_at(text, match.start()),
+            )
+
+
 def extract_formal_blocks(chapter: Path) -> list[FormalBlock]:
     blocks: list[FormalBlock] = []
     note_root = chapter / "notes"
@@ -1097,8 +1170,9 @@ def validate_formal_blocks(chapter: Path, blocks: list[FormalBlock], findings: l
             source = uncommented(read(block.path))
             block_start = source.find(block.text)
             wrapper_context = source[max(0, block_start - 500) : block_start] if block_start >= 0 else ""
-            if "\\begin{tcolorbox}" not in wrapper_context:
-                add(findings, chapter, block.path, "missing_required_box", f"{block.label} must be wrapped in a tcolorbox by artifact-matrix box rules.", block.line)
+            expected_wrapper = next((box for box, env in FORMAL_BOX_ENVS.items() if env == block.env), "")
+            if f"\\begin{{{expected_wrapper}}}" not in wrapper_context:
+                add(findings, chapter, block.path, "missing_required_box", f"{block.label} must be wrapped in {expected_wrapper} by artifact-matrix box rules.", block.line)
         if not block.label.startswith(f"{block.prefix}:"):
             add(findings, chapter, block.path, "label_prefix_mismatch", f"{block.env} label should start with {block.prefix}:.", block.line)
         if not re.search(r"\\begin\{remark\*\}\[Standard quantified statement\]", block.decoration):
@@ -1457,6 +1531,7 @@ def main() -> int:
             validate_latex_integrity(chapter, path, findings)
             validate_generated_artifacts(chapter, path, findings)
             validate_box_discipline(chapter, path, findings)
+            validate_formal_tcolorbox_styles(chapter, path, findings)
             validate_block_discipline(chapter, path, findings)
             validate_figures(chapter, path, findings)
             validate_labels(chapter, path, findings)
