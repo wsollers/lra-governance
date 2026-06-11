@@ -17,24 +17,7 @@ import re
 import decoration_rules as dr
 import _targeting as tg
 
-EXCLUDED = {".git","common","bibliography","build","dist","out","output","outputs",
-            ".venv","venv","node_modules","__pycache__",".history","reports","archive"}
-EXCLUDED_RELATIVE_DIRS = {
-    "volume-i/proof-techniques",
-    "volume-ii/lean",
-    "volume-iii/analysis/real-analysis",
-}
-
-def _posix_relative(path: Path, root: Path) -> str:
-    try:
-        return path.resolve().relative_to(root.resolve()).as_posix()
-    except ValueError:
-        return path.resolve().as_posix()
-
-def _is_excluded_relative_dir(path: Path, root: Path) -> bool:
-    rel = _posix_relative(path, root)
-    full = path.resolve().as_posix()
-    return any(rel == excluded or full.endswith("/" + excluded) for excluded in EXCLUDED_RELATIVE_DIRS)
+EXCLUDED = {"bibliography", *tg.IGNORED_DIR_NAMES}
 
 def classify(path: Path) -> str:
     if path.name == "index.tex" and tg.is_chapter_root(path.parent):
@@ -55,7 +38,7 @@ def iter_tex(roots: list[Path]):
                 d for d in dns
                 if d not in EXCLUDED
                 and not d.startswith(".")
-                and not _is_excluded_relative_dir(dp_path / d, root)
+                and not tg.is_ignored_path(dp_path / d, root)
             ]
             for f in fns:
                 if f.endswith(".tex"):

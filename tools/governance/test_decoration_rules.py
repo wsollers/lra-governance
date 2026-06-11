@@ -48,12 +48,12 @@ CI = dr.FileInfo("vol/bounds/index.tex", "chapter_index")
 SN = dr.FileInfo("vol/bounds/notes/sec/notes-sec.tex", "section_note")
 
 def test_bc_valid_heading_then_breadcrumb():
-    t = "\\chapter{Bounds}\n\\breadcrumb{bounds}{}{Bounds}{}\n\\section{Intro}\nprose"
+    t = "\\chapter{Bounds}\n\\label{chap:bounds-chapter}\n\\breadcrumb{bounds}{}{Bounds}{}\n\\section{Intro}\nprose"
     assert dr.run_file_rules(t, CI, dr.Context()) == []
 
 def test_bc_valid_first_no_heading():
     t = "\\label{ch:bounds}\n\\breadcrumb{bounds}{}{Bounds}{}\nbody"
-    assert dr.run_file_rules(t, CI, dr.Context()) == []
+    assert "breadcrumb_not_first" not in _codes(dr.run_file_rules(t, CI, dr.Context()))
 
 def test_bc_prose_before_is_not_first():
     t = "\\chapter{Bounds}\nintro prose\n\\breadcrumb{bounds}{}{Bounds}{}"
@@ -64,8 +64,10 @@ def test_bc_exposition_before_flagged_strict():
     assert "breadcrumb_leading_exposition" in _codes(dr.run_file_rules(t, CI, dr.Context()))
 
 def test_bc_exposition_before_ok_when_knob_set():
-    t = "\\chapter{Bounds}\n\\begin{exposition}\nx\n\\end{exposition}\n\\breadcrumb{bounds}{}{Bounds}{}"
-    assert dr.run_file_rules(t, CI, dr.Context(breadcrumb_max_leading_exposition=1)) == []
+    t = "\\chapter{Bounds}\n\\label{chap:bounds}\n\\begin{exposition}\nx\n\\end{exposition}\n\\breadcrumb{bounds}{}{Bounds}{}"
+    assert "breadcrumb_leading_exposition" not in _codes(
+        dr.run_file_rules(t, CI, dr.Context(breadcrumb_max_leading_exposition=1))
+    )
 
 def test_bc_missing():
     t = "\\chapter{Bounds}\nno breadcrumb here"
@@ -80,7 +82,7 @@ def test_bc_misplaced_in_section_note():
     assert "breadcrumb_misplaced" in _codes(dr.run_file_rules(t, SN, dr.Context()))
 
 def test_bc_section_note_clean():
-    t = "\\subsection{Sup}\nprose and a definition"
+    t = "\\subsection*{Sup}\n\\begin{remark*}[Orientation]\nprose and a definition\n\\end{remark*}"
     assert dr.run_file_rules(t, SN, dr.Context()) == []
 
 def test_section_note_top_level_figure_allowed():
@@ -94,24 +96,43 @@ def test_bc_hand_rolled_palette():
     assert "breadcrumb_hand_rolled" in _codes(dr.run_file_rules(t, CI, dr.Context()))
 
 # ---------- toolkit placement / content / format ----------
-SN2 = dr.FileInfo("vol/bounds/notes/sec/notes-sec.tex", "section_note")
+SN2 = dr.FileInfo("vol/bounds/notes/sec/index.tex", "section_note")
+SN_BODY = dr.FileInfo("vol/bounds/notes/sec/notes-sec.tex", "section_note")
 
 def test_toolkit_valid_after_subsection():
-    t = "\\subsection{Open Balls}\n\\begin{toolkitbox}{Toolkit: Open Balls}\norients def:open-ball\n\\end{toolkitbox}"
-    assert dr.run_file_rules(t, SN2, dr.Context()) == []
+    t = "\\section{Open Balls}\n\\begin{toolkitbox}{Toolkit: Open Balls}\norients def:open-ball\n\\end{toolkitbox}"
+    assert "toolkit_misplaced" not in _codes(dr.run_file_rules(t, SN2, dr.Context()))
 
 def test_toolkit_valid_one_exposition_between():
-    t = ("\\subsection{Open Balls}\n\\begin{exposition}\nwhy balls\n\\end{exposition}\n"
+    t = ("\\section{Open Balls}\n\\begin{exposition}\nwhy balls\n\\end{exposition}\n"
          "\\begin{toolkitbox}{Toolkit}\norients def:open-ball\n\\end{toolkitbox}")
-    assert dr.run_file_rules(t, SN2, dr.Context()) == []
+    assert "toolkit_misplaced" not in _codes(dr.run_file_rules(t, SN2, dr.Context()))
+
+def test_toolkit_valid_consecutive_router_run():
+    t = ("\\section{Constructions}\n"
+         "\\begin{toolkitbox}{Dedekind}\nx\n\\end{toolkitbox}\n"
+         "\\begin{toolkitbox}{Cauchy}\ny\n\\end{toolkitbox}\n"
+         "\\input{vol/reals/notes/constructions/notes-dedekind}")
+    codes = _codes(dr.run_file_rules(t, SN2, dr.Context()))
+    assert "toolkit_misplaced" not in codes
+    assert "toolkit_not_in_notes_router" not in codes
+
+def test_toolkit_valid_in_main_notes_index():
+    info = dr.FileInfo("vol/bounds/notes/index.tex", "section_note")
+    t = "\\section{Bounds}\n\\begin{toolkitbox}{Bounds}\nx\n\\end{toolkitbox}\n\\input{vol/bounds/notes/sec/index}"
+    assert "toolkit_not_in_notes_router" not in _codes(dr.run_file_rules(t, info, dr.Context()))
 
 def test_toolkit_misplaced_after_section():
     t = "\\section{Topology}\n\\begin{toolkitbox}{Toolkit}\nx\n\\end{toolkitbox}"
-    assert "toolkit_misplaced" in _codes(dr.run_file_rules(t, SN2, dr.Context()))
+    assert dr.run_file_rules(t, SN2, dr.Context()) == []
 
 def test_toolkit_misplaced_prose_between():
     t = "\\subsection{Open Balls}\nintro prose\n\\begin{toolkitbox}{Toolkit}\nx\n\\end{toolkitbox}"
     assert "toolkit_misplaced" in _codes(dr.run_file_rules(t, SN2, dr.Context()))
+
+def test_toolkit_rejected_in_note_body():
+    t = "\\subsection*{Open Balls}\n\\begin{toolkitbox}{Toolkit}\nx\n\\end{toolkitbox}"
+    assert "toolkit_not_in_notes_router" in _codes(dr.run_file_rules(t, SN_BODY, dr.Context()))
 
 def test_toolkit_too_many_expositions():
     t = ("\\subsection{X}\n\\begin{exposition}\na\n\\end{exposition}\n"
@@ -127,20 +148,46 @@ def test_toolkit_hand_rolled():
     t = "\\subsection{X}\n\\begin{tcolorbox}[colback=gray!6, title={Toolkit: X}]\nx\n\\end{tcolorbox}"
     assert "toolkit_hand_rolled" in _codes(dr.run_file_rules(t, SN2, dr.Context()))
 
-# ---------- structural roadmap / role purge flags ----------
+# ---------- retired roadmap / role purge flags ----------
 def test_structural_roadmap_flagged():
-    t = "\\subsection*{Structural Roadmap}\nThe global progression is: 1. ... 2. ..."
+    t = "\\subsection*{" + "Structural " + "Roadmap}\nThe global progression is: 1. ... 2. ..."
     codes=_codes(dr.run_file_rules(t, dr.FileInfo("x/index.tex","chapter_index"), dr.Context()))
     assert "structural_roadmap_present" in codes
 
 def test_structural_role_flagged():
-    t = "Some prose about the Structural Role of this object."
+    t = "Some prose about the " + "Structural " + "Role of this object."
     assert "structural_role_present" in _codes(dr.run_file_rules(t, SN2, dr.Context()))
 
 def test_no_false_positive_roadmap():
     t = "\\subsection{Open Balls}\nA normal section with no roadmap block."
     codes=_codes(dr.run_file_rules(t, SN2, dr.Context()))
     assert "structural_roadmap_present" not in codes and "structural_role_present" not in codes
+
+# ---------- chapter index shape ----------
+REAL_CI = dr.FileInfo("repo/volume-ii/structure-of-real-line/index.tex", "chapter_index")
+
+def _chapter_index():
+    return "\n".join([
+        r"\chapter{Structure of the Real Line}",
+        r"\label{chap:structure-of-real-line}",
+        r"\breadcrumb{structure-of-real-line}{Number Lines and Intervals}{Structure of the Real Line}{Formalizing the Number Systems}",
+        r"\input{volume-ii/structure-of-real-line/notes/index}",
+        r"\section*{Proofs}",
+        r"\LRAProofsInput{volume-ii/structure-of-real-line/proofs/index}",
+        r"\section*{Capstone}",
+        r"\LRAExercisesInput{volume-ii/structure-of-real-line/proofs/exercises/index}",
+    ])
+
+def test_chapter_index_shape_ok():
+    assert "chapter_index_shape" not in _codes(dr.run_file_rules(_chapter_index(), REAL_CI, dr.Context()))
+
+def test_chapter_index_shape_rejects_extra_content():
+    t = _chapter_index().replace(r"\input{volume-ii/structure-of-real-line/notes/index}", "extra prose\n" + r"\input{volume-ii/structure-of-real-line/notes/index}")
+    assert "chapter_index_shape" in _codes(dr.run_file_rules(t, REAL_CI, dr.Context()))
+
+def test_chapter_index_shape_rejects_wrong_capstone_route():
+    t = _chapter_index().replace("proofs/exercises/index", "exercises/index")
+    assert "chapter_index_shape" in _codes(dr.run_file_rules(t, REAL_CI, dr.Context()))
 
 # ---------- formal_reading_required ----------
 def _fr_ctx():

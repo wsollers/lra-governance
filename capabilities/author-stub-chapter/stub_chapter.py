@@ -1,8 +1,8 @@
 r"""author-stub-chapter (pure Python, no LLM).
 
 Scaffolds a layout-validator-compliant chapter and, when section titles are given,
-invokes stub_section for each (in order) directly in Python. Emits \breadcrumb +
-\stubstatus + \chapterroadmap as first content (no Structural Roadmap), no capstone.
+invokes stub_section for each (in order) directly in Python. Emits the thin
+chapter router shape: chapter, label, breadcrumb, notes, proofs, capstone.
 Routes the chapter into both volume routers (index.tex monorepo, main.tex local).
 """
 from __future__ import annotations
@@ -19,13 +19,10 @@ from stub_section import stub_section, slugify, append_once, write_new
 def _tex(value: str) -> str:
     return (value or "").replace("\\", r"\textbackslash{}").replace("{", r"\{").replace("}", r"\}")
 
-def render_breadcrumb(subject: str, display_title: str, registry: list[dict], is_stub: bool = True) -> str:
+def render_breadcrumb(subject: str, display_title: str, registry: list[dict]) -> str:
     prior_t, _, next_t, _ = _neighbors(subject, registry)
-    out = (f"\\breadcrumb{{{_tex(subject)}}}{{{_tex(prior_t)}}}"
-           f"{{{_tex(display_title)}}}{{{_tex(next_t)}}}")
-    if is_stub:
-        out += "\n\\stubstatus"
-    return out
+    return (f"\\breadcrumb{{{_tex(subject)}}}{{{_tex(prior_t)}}}"
+            f"{{{_tex(display_title)}}}{{{_tex(next_t)}}}")
 
 def _neighbors(subject, registry):
     subs = [e["subject"] for e in registry]; titles = [e["display_title"] for e in registry]
@@ -45,12 +42,21 @@ def stub_chapter(volume_root, subject, display_title, registry, section_titles):
     write_new(chap / "proofs" / "exercises" / ".gitkeep", "")
 
     prior_t, prior_s, next_t, next_s = _neighbors(subject, registry)
-    bc = render_breadcrumb(subject, display_title, registry, is_stub=True)
-    topics = ", ".join(section_titles) if section_titles else "topics to be studied"
-    roadmap = (f"\\chapterroadmap{{{prior_t or 'the prior development'}}}"
-               f"{{{next_t or 'the next chapter'}}}{{{topics}}}")
+    bc = render_breadcrumb(subject, display_title, registry)
+    volume_name = volume_root.name
+    chapter_route = f"{volume_name}/{subject}"
     write_new(chap / "index.tex",
-        f"\\chapter{{{display_title}}}\n{bc}\n{roadmap}\n\\input{{notes/index}}\n\\LRAProofsInput{{proofs/index}}\n",
+        "% =========================================================\n"
+        f"% Chapter: {display_title}\n"
+        "% =========================================================\n"
+        f"\\chapter{{{display_title}}}\n"
+        f"\\label{{chap:{subject}}}\n\n"
+        f"{bc}\n\n"
+        f"\\input{{{chapter_route}/notes/index}}\n\n"
+        "\\section*{Proofs}\n"
+        f"\\LRAProofsInput{{{chapter_route}/proofs/index}}\n\n"
+        "\\section*{Capstone}\n"
+        f"\\LRAExercisesInput{{{chapter_route}/proofs/exercises/index}}\n",
     )
 
     if section_titles:
@@ -68,6 +74,8 @@ def stub_chapter(volume_root, subject, display_title, registry, section_titles):
     write_new(chap / "proofs" / "index.tex",
         f"% Proofs index for chapter: {display_title}\n"
         f"% Proof topics \\input here, matching notes sections in dependency order.\n")
+    write_new(chap / "proofs" / "exercises" / "index.tex",
+        f"% Capstone index for chapter: {display_title}\n")
 
     for router in ("index.tex", "main.tex"):
         rp = volume_root / router

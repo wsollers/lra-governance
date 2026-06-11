@@ -8,6 +8,27 @@ from pathlib import Path
 
 
 VOLUME_RE = re.compile(r"^volume-(?:i|ii|iii|iv|v|vi|vii|viii)$")
+IGNORED_DIR_NAMES = {
+    ".git",
+    ".history",
+    ".venv",
+    "__pycache__",
+    "archive",
+    "build",
+    "common",
+    "dist",
+    "lean",
+    "node_modules",
+    "out",
+    "output",
+    "outputs",
+    "reports",
+    "venv",
+}
+IGNORED_RELATIVE_DIRS = {
+    "volume-i/proof-techniques",
+    "volume-iii/analysis/real-analysis",
+}
 
 
 @dataclass(frozen=True)
@@ -29,16 +50,37 @@ def is_chapter_root(path: Path) -> bool:
     return path.is_dir() and (path / "notes").is_dir() and (path / "proofs").is_dir()
 
 
+def relative_posix(path: Path, root: Path) -> str:
+    try:
+        return path.resolve().relative_to(root.resolve()).as_posix()
+    except ValueError:
+        return path.resolve().as_posix()
+
+
+def is_ignored_path(path: Path, root: Path | None = None) -> bool:
+    if any(part in IGNORED_DIR_NAMES for part in path.parts):
+        return True
+    if root is None:
+        return False
+    rel = relative_posix(path, root)
+    full = path.resolve().as_posix()
+    return any(rel == ignored or full.endswith("/" + ignored) for ignored in IGNORED_RELATIVE_DIRS)
+
+
 def volume_roots(root: Path) -> list[Path]:
     root = root.resolve()
     if is_volume_root(root):
         return [root]
     if not root.is_dir():
         return []
-    direct = [path for path in root.iterdir() if is_volume_root(path)]
+    direct = [path for path in root.iterdir() if not is_ignored_path(path, root) and is_volume_root(path)]
     if direct:
         return sorted(path.resolve() for path in direct)
-    return sorted(path.resolve() for path in root.rglob("volume-*") if is_volume_root(path))
+    return sorted(
+        path.resolve()
+        for path in root.rglob("volume-*")
+        if not is_ignored_path(path, root) and is_volume_root(path)
+    )
 
 
 def chapter_roots(root: Path, volume: Path | None = None) -> list[Path]:
@@ -53,7 +95,7 @@ def chapter_roots(root: Path, volume: Path | None = None) -> list[Path]:
         roots.extend(
             path.resolve()
             for path in volume_root.iterdir()
-            if path.is_dir() and is_chapter_root(path)
+            if path.is_dir() and not is_ignored_path(path, root) and is_chapter_root(path)
         )
     return sorted(set(roots))
 
@@ -108,7 +150,10 @@ def section_names(chapter: Path) -> set[str]:
         names.update(
             path.name
             for path in parent.iterdir()
-            if path.is_dir() and not path.name.startswith(".") and path.name not in {"exercises", "notes"}
+            if path.is_dir()
+            and not path.name.startswith(".")
+            and path.name not in {"exercises", "notes"}
+            and not is_ignored_path(path)
         )
     return names
 

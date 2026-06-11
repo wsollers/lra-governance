@@ -10,7 +10,7 @@ import sys
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
-from _targeting import discovery_lines, resolve_target, target_chapters
+from _targeting import discovery_lines, is_ignored_path, resolve_target, target_chapters
 
 
 INPUT_RE = re.compile(r"\\(?:input|include)\{([^}]+)\}")
@@ -89,10 +89,10 @@ def find_volume_roots(root: Path) -> list[Path]:
     root = root.resolve()
     if is_volume_root(root):
         return [root]
-    direct = [path for path in root.iterdir() if is_volume_root(path)] if root.is_dir() else []
+    direct = [path for path in root.iterdir() if not is_ignored_path(path, root) and is_volume_root(path)] if root.is_dir() else []
     if direct:
         return sorted(direct)
-    return sorted(path for path in root.rglob("volume-*") if is_volume_root(path))
+    return sorted(path for path in root.rglob("volume-*") if not is_ignored_path(path, root) and is_volume_root(path))
 
 
 def find_chapter_roots(root: Path) -> list[Path]:
@@ -102,7 +102,7 @@ def find_chapter_roots(root: Path) -> list[Path]:
     chapters: list[Path] = []
     for volume in find_volume_roots(root):
         for path in volume.iterdir():
-            if path.is_dir() and (path / "notes").is_dir() and (path / "proofs").is_dir():
+            if path.is_dir() and not is_ignored_path(path, root) and (path / "notes").is_dir() and (path / "proofs").is_dir():
                 chapters.append(path)
     return sorted(set(path.resolve() for path in chapters))
 
@@ -144,7 +144,10 @@ def topic_dirs(parent: Path) -> set[str]:
     return {
         path.name
         for path in parent.iterdir()
-        if path.is_dir() and not path.name.startswith(".") and path.name != "exercises"
+        if path.is_dir()
+        and not path.name.startswith(".")
+        and path.name != "exercises"
+        and not is_ignored_path(path)
     }
 
 

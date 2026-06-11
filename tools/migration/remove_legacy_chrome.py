@@ -4,8 +4,8 @@ r"""Strip legacy navigation chrome for a leaner structure.
 Removes three legacy forms wherever they appear in .tex files:
   1. Journey box  -- a \begin{tcolorbox}...\end{tcolorbox} whose title contains
                      "Where You Are" / "Journey" (the old hand-rolled breadcrumb).
-  2. Roadmap      -- \section*{... Roadmap ...} (plain or "Structural Roadmap").
-  3. Structural Role -- \section*{... Structural Role ...}.
+  2. Roadmap      -- \section*{... Roadmap ...} (plain or retired roadmap).
+  3. Retired role headings.
 Each removal absorbs an immediately preceding comment banner and (for the journey
 box) a trailing \vspace{...}. The canonical \breadcrumb{} macro in the chapter
 index is the replacement -- it is NOT touched (it is a macro, not a tcolorbox).

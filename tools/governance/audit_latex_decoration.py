@@ -35,6 +35,7 @@ EXCLUDED_DIRS = {
     "bibliography",
     "build",
     "dist",
+    "lean",
     "out",
     "output",
     "outputs",

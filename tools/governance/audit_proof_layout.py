@@ -11,7 +11,7 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any
 
-from _targeting import discovery_lines, proof_validation_paths, resolve_target, target_chapters
+from _targeting import discovery_lines, is_ignored_path, proof_validation_paths, resolve_target, target_chapters
 
 
 PROOF_EXTENSIONS = {".tex"}
@@ -103,6 +103,8 @@ def add(audit: ProofAudit, severity: str, code: str, message: str) -> None:
 def find_chapter_roots(root: Path) -> list[Path]:
     roots = []
     for proofs_dir in root.rglob("proofs"):
+        if is_ignored_path(proofs_dir, root):
+            continue
         if proofs_dir.is_dir() and (proofs_dir.parent / "notes").is_dir():
             roots.append(proofs_dir.parent)
     if root.name != "proofs" and (root / "proofs").is_dir() and (root / "notes").is_dir():
@@ -116,6 +118,8 @@ def proof_files(chapter_root: Path) -> list[Path]:
         return []
     files = []
     for path in proofs_root.rglob("*.tex"):
+        if is_ignored_path(path, chapter_root):
+            continue
         rel = path.relative_to(proofs_root).parts
         if path.name == "index.tex":
             continue
@@ -131,6 +135,8 @@ def proof_files_under(paths: list[Path]) -> list[Path]:
         if not root.exists():
             continue
         for path in root.rglob("*.tex"):
+            if is_ignored_path(path, root):
+                continue
             if path.name == "index.tex":
                 continue
             if "exercises" in path.parts:
@@ -158,6 +164,8 @@ def note_topics(chapter_root: Path) -> dict[str, str]:
     if not notes.exists():
         return topics
     for path in sorted(notes.rglob("*.tex")):
+        if is_ignored_path(path, chapter_root):
+            continue
         if path.name == "index.tex":
             continue
         topic = topic_after("notes", path, chapter_root)

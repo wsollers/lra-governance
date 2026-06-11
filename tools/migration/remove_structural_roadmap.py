@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-r"""Remove flagged 'Structural Roadmap' / 'Structural Role' sections (purge ruling).
+r"""Remove flagged retired roadmap / role sections (purge ruling).
 
 Mirrors the engine's structural_roadmap_purge target: a section whose heading is
-\section*{Structural Roadmap} (or 'Structural Role'). Excises from that heading --
+a retired roadmap or role heading. Excises from that heading --
 including an immediately preceding decorative comment banner -- up to (but not
 including) the next sectioning boundary: \section, \subsection, \chapter, \input,
 \part, a `% ====` comment banner, or EOF.

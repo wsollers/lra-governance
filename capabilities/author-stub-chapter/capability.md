@@ -19,13 +19,14 @@ Run `stub_chapter.py`. It creates the chapter router, `chapter.yaml`,
 section stubs, and routes the chapter from `index.tex` and `main.tex` when those
 routers exist.
 
-The chapter starts with `\chapter`, `\breadcrumb`, `\stubstatus`, and
-`\chapterroadmap`. No capstone is generated here.
+The chapter router uses the thin canonical shape: `\chapter`, chapter label,
+`\breadcrumb`, notes input, proof section, print-aware proofs input, capstone
+section, and print-aware capstone input.
 
 ## Success Gates
 
+- `python tools/governance/validate_decoration.py --root <volume-root> --chapter <subject> --fail-on-errors`
 - `python tools/governance/audit_volume_layout.py --root <volume-root> --chapter <subject> --strict`
-- `python tools/governance/validate_decoration.py --root <volume-root> --chapter <subject>`
 - `cd <volume-root> && latexmk -lualatex main.tex`
 
 Stop if a target chapter already exists with content that would be overwritten,

@@ -16,7 +16,7 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Iterable
 
-from _targeting import discovery_lines, note_validation_paths, resolve_target
+from _targeting import discovery_lines, is_ignored_path, note_validation_paths, resolve_target
 
 
 BEGIN_ENV_RE = re.compile(r"^\s*\\begin\{([^{}]+)\}")
@@ -57,6 +57,7 @@ def iter_tex_files(paths: list[Path]) -> Iterable[Path]:
                 p
                 for p in path.rglob("*.tex")
                 if not any(part.startswith(".") for part in p.parts)
+                and not is_ignored_path(p)
             )
         elif path.suffix == ".tex":
             yield path

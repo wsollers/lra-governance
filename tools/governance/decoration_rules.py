@@ -264,22 +264,85 @@ def breadcrumb_format(text: str, info: FileInfo, ctx: Context):
         yield Issue("breadcrumb_hand_rolled",
             "Breadcrumb is a hand-rolled tcolorbox (breadcrumb palette) instead of the \\breadcrumb{...} macro.","error")
 
-# ---------- toolkit: may exist only right after a \subsection (<=1 exposition) ----------
+# ---------- chapter index: chapter, label, breadcrumb, notes, proofs, capstone ----------
+_CHAPTER_LINE_RE = re.compile(r"\\chapter(?!\*)(?:\[[^\]]*\])?\{.*\}$")
+_LABEL_LINE_RE = re.compile(r"\\label\{(?:ch|chap):[a-z0-9-]+\}$")
+_BREADCRUMB_LINE_RE = re.compile(r"\\breadcrumb\{.*\}\{.*\}\{.*\}\{.*\}$")
+
+def _chapter_root_from_index(posix: str) -> str | None:
+    parts = posix.split("/")
+    if len(parts) < 3 or parts[-1] != "index.tex":
+        return None
+    for i, part in enumerate(parts[:-2]):
+        if re.fullmatch(r"volume-(?:i|ii|iii|iv|v|vi|vii|viii)", part):
+            return "/".join(parts[i:i + 2])
+    return None
+
+def _significant_lines(text: str):
+    for line_no, raw in enumerate(text.splitlines(), 1):
+        stripped = _strip_comment(raw).strip()
+        if stripped:
+            yield line_no, stripped
+
+@file_rule("chapter_index_shape")
+def chapter_index_shape(text: str, info: FileInfo, ctx: Context):
+    if info.kind != "chapter_index":
+        return
+    root = _chapter_root_from_index(_posix(info))
+    if root is None:
+        return
+    expected = [
+        ("chapter", _CHAPTER_LINE_RE, "non-starred \\chapter{...}"),
+        ("label", _LABEL_LINE_RE, "\\label{chap:...} or \\label{ch:...}"),
+        ("breadcrumb", _BREADCRUMB_LINE_RE, "\\breadcrumb{...}{...}{...}{...}"),
+        ("notes_input", re.compile(rf"\\input\{{{re.escape(root)}/notes/index\}}$"), f"\\input{{{root}/notes/index}}"),
+        ("proofs_heading", re.compile(r"\\section\*\{Proofs\}$"), "\\section*{Proofs}"),
+        ("proofs_input", re.compile(rf"\\LRAProofsInput\{{{re.escape(root)}/proofs/index\}}$"), f"\\LRAProofsInput{{{root}/proofs/index}}"),
+        ("capstone_heading", re.compile(r"\\section\*\{Capstone\}$"), "\\section*{Capstone}"),
+        ("capstone_input", re.compile(rf"\\LRAExercisesInput\{{{re.escape(root)}/proofs/exercises/index\}}$"), f"\\LRAExercisesInput{{{root}/proofs/exercises/index}}"),
+    ]
+    lines = list(_significant_lines(text))
+    if len(lines) != len(expected):
+        detail = "; ".join(pattern for _, _, pattern in expected)
+        line = lines[min(len(lines), len(expected))][0] if len(lines) > len(expected) else 0
+        yield Issue(
+            "chapter_index_shape",
+            f"Chapter index must contain exactly this skeleton, with no extra rendered content: {detail}.",
+            "error",
+            line,
+        )
+        return
+    for (line_no, line), (name, pattern, expected_text) in zip(lines, expected):
+        if not pattern.fullmatch(line):
+            yield Issue(
+                "chapter_index_shape",
+                f"Chapter index layer {name} should be {expected_text}.",
+                "error",
+                line_no,
+            )
+
+# ---------- toolkit: may exist only in notes routers, right after heading (<=1 exposition) ----------
 @file_rule("toolkit_placement")
 def toolkit_placement(text: str, info: FileInfo, ctx: Context):
+    topic, role = _notes_topic_and_role(_posix(info))
     ev=_events(text)
     for i,(kind,ln,lvl) in enumerate(ev):
         if kind != "toolkit": continue
+        if role not in {"topic_index", "notes_index"}:
+            yield Issue("toolkit_not_in_notes_router",
+                "Toolkit boxes belong in notes/<topic>/index.tex routers, not note body files or chapter routers.",
+                "error", ln)
+            continue
         j=i-1; expos=0
-        while j>=0 and ev[j][0]=="exposition":
-            expos+=1; j-=1
+        while j>=0 and ev[j][0] in {"exposition", "toolkit"}:
+            if ev[j][0] == "exposition":
+                expos+=1
+            j-=1
         prev = ev[j] if j>=0 else None
         if expos > ctx.toolkit_max_leading_exposition:
             yield Issue("toolkit_leading_exposition",
                 f"{expos} exposition block(s) between subsection and toolkit; max allowed is "
                 f"{ctx.toolkit_max_leading_exposition}.","error",ln)
-        if prev is None and info.kind == "section_note":
-            continue
         if prev is None or not (prev[0]=="heading" and prev[2] in ("section", "subsection")):
             yield Issue("toolkit_misplaced",
                 "Toolkit must sit at the top of a section or \\subsection (at most one exposition between); "
@@ -301,7 +364,7 @@ def toolkit_format(text: str, info: FileInfo, ctx: Context):
                 "Toolkit rendered as a raw tcolorbox; use \\begin{toolkitbox}{...} from structural-presentations.tex.",
                 "error", text.count("\n",0,m.start())+1)
 
-# ---------- structural roadmap / role: flag for human purge (never auto-delete) ----------
+# ---------- retired roadmap / role: removed globally ----------
 _ROADMAP = re.compile(r"[Ss]tructural\s+[Rr]oadmap")
 _ROLE    = re.compile(r"[Ss]tructural\s+[Rr]ole")
 @file_rule("structural_roadmap_purge")
@@ -309,12 +372,10 @@ def structural_roadmap_purge(text: str, info: FileInfo, ctx: Context):
     for n,line in enumerate(text.splitlines(),1):
         if _ROADMAP.search(line):
             yield Issue("structural_roadmap_present",
-                "Structural Roadmap block present; slated for removal. Flagged for human purge "
-                "(not auto-deleted).","review",n)
+                "Retired roadmap text is present; remove the block or wording.","error",n)
         if _ROLE.search(line):
             yield Issue("structural_role_present",
-                "Structural Role block present; slated for removal. Flagged for human purge "
-                "(not auto-deleted).","review",n)
+                "Retired role text is present; remove the block or wording.","error",n)
 
 # ============================================================
 # Folded in from validate_chapter_house_rules.py (logic moved, not rewritten).
@@ -451,7 +512,7 @@ def capstone_structure(text: str, info: FileInfo, ctx: Context):
 #                             unstarred_subsection_router_heading
 #   note_body_heading      -> unstarred_subsection_body_heading
 # Stale-chrome checks from the same monster functions (breadcrumb/toolkit
-# tcolorbox, structural roadmap, chapter-structure prose) are intentionally NOT
+# tcolorbox, retired roadmap, chapter-structure prose) are intentionally NOT
 # ported: the engine supersedes them via the \breadcrumb{}/\toolkitbox macros and
 # structural_roadmap_purge. Routing checks remain in audit_volume_layout.
 # ============================================================
@@ -471,6 +532,8 @@ def _notes_topic_and_role(posix: str):
     if "notes" not in parts:
         return (None, None)
     i = parts.index("notes")
+    if len(parts) - i == 2 and parts[i + 1] == "index.tex":
+        return ("", "notes_index")
     if len(parts) - i != 3:            # need exactly notes/<topic>/<file>
         return (None, None)
     topic, fname = parts[i + 1], parts[i + 2]
