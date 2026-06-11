@@ -41,8 +41,9 @@ def iter_tex(roots: list[Path]):
                 and not tg.is_ignored_path(dp_path / d, root)
             ]
             for f in fns:
-                if f.endswith(".tex"):
-                    yield Path(dp) / f
+                path = Path(dp) / f
+                if f.endswith(".tex") and not tg.is_ignored_path(path, root):
+                    yield path
 
 def walk_roots_for(target: tg.Target, root: Path) -> list[Path]:
     if target.scope == "section":

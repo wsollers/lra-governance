@@ -90,13 +90,15 @@ def test_iter_tex_excludes_print_technique_folders():
         (root_i / "sets").mkdir(parents=True)
         (root_ii / "lean").mkdir(parents=True)
         (root_ii / "natural-numbers").mkdir(parents=True)
-        (root_iii / "analysis" / "real-analysis").mkdir(parents=True)
+        (root_iii / "analysis" / "real-analysis" / "notes" / "proof-techniques").mkdir(parents=True)
+        (root_iii / "analysis" / "real-analysis" / "notes" / "standard-topic").mkdir(parents=True)
         (root_iii / "analysis" / "functions").mkdir(parents=True)
         (root_i / "proof-techniques" / "skip.tex").write_text("% skip\n", encoding="utf-8")
         (root_i / "sets" / "keep.tex").write_text("% keep\n", encoding="utf-8")
         (root_ii / "lean" / "skip.tex").write_text("% skip\n", encoding="utf-8")
         (root_ii / "natural-numbers" / "keep.tex").write_text("% keep\n", encoding="utf-8")
-        (root_iii / "analysis" / "real-analysis" / "skip.tex").write_text("% skip\n", encoding="utf-8")
+        (root_iii / "analysis" / "real-analysis" / "notes" / "proof-techniques" / "skip.tex").write_text("% skip\n", encoding="utf-8")
+        (root_iii / "analysis" / "real-analysis" / "notes" / "standard-topic" / "keep.tex").write_text("% keep\n", encoding="utf-8")
         (root_iii / "analysis" / "functions" / "keep.tex").write_text("% keep\n", encoding="utf-8")
 
         files = {
@@ -106,7 +108,8 @@ def test_iter_tex_excludes_print_technique_folders():
 
         assert "lra-volume-i/volume-i/proof-techniques/skip.tex" not in files
         assert "lra-volume-ii/volume-ii/lean/skip.tex" not in files
-        assert "lra-volume-iii/volume-iii/analysis/real-analysis/skip.tex" not in files
+        assert "lra-volume-iii/volume-iii/analysis/real-analysis/notes/proof-techniques/skip.tex" not in files
+        assert "lra-volume-iii/volume-iii/analysis/real-analysis/notes/standard-topic/keep.tex" in files
         assert "lra-volume-i/volume-i/sets/keep.tex" in files
         assert "lra-volume-ii/volume-ii/natural-numbers/keep.tex" in files
         assert "lra-volume-iii/volume-iii/analysis/functions/keep.tex" in files

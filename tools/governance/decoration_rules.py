@@ -189,7 +189,9 @@ def run_file_rules(text: str, info: FileInfo, ctx: Context) -> list[Issue]:
 # --- positional event scan (shared by breadcrumb + toolkit placement) ---
 # Events are (kind, line, level). Machinery/comments/blank skipped. exposition and
 # toolkitbox collapse to a single ('exposition'|'toolkit', start_line, '') event.
-_MACHINERY = re.compile(r"\\(input|include|label|index|phantomsection|addcontentsline|clearpage|newpage|FloatBarrier)\b")
+_MACHINERY = re.compile(
+    r"\\(input|include|LRAProofsInput|LRAExercisesInput|label|index|phantomsection|addcontentsline|clearpage|newpage|FloatBarrier)\b"
+)
 _HEADING   = re.compile(r"\\(chapter|section|subsection|subsubsection)\b")
 _ENV_BEG   = re.compile(r"\\begin\{(exposition|toolkitbox)\}")
 _ENV_END   = re.compile(r"\\end\{(exposition|toolkitbox)\}")
@@ -273,9 +275,9 @@ def _chapter_root_from_index(posix: str) -> str | None:
     parts = posix.split("/")
     if len(parts) < 3 or parts[-1] != "index.tex":
         return None
-    for i, part in enumerate(parts[:-2]):
+    for i, part in enumerate(parts[:-1]):
         if re.fullmatch(r"volume-(?:i|ii|iii|iv|v|vi|vii|viii)", part):
-            return "/".join(parts[i:i + 2])
+            return "/".join(parts[i:-1])
     return None
 
 def _significant_lines(text: str):
@@ -393,7 +395,7 @@ _STARRED_RESTATEMENT_ENVS = {"theorem*","lemma*","proposition*","corollary*"}
 _ALLOWED_NOTE_TOP_ENVS = _FORMAL_BOX_ENVS | {
     "remark*","example*","exposition","dependencies","tcolorbox","toolkitbox",
     "signaturebox","topicbox","figure","longtable","tabular","tabularx","itemize",
-    "enumerate","description","quote","center","tikzpicture",
+    "enumerate","description","quote","center","tikzpicture","lra-not-visible",
 } | set(AUDITED_ENVS)
 _ALLOWED_PROOF_TOP_ENVS = {"remark*", *_STARRED_RESTATEMENT_ENVS, "proof", "dependencies"}
 _BEGIN_ENV_RE = re.compile(r"\\begin\{([^{}]+)\}(?:\[[^\]]*\])?")
@@ -402,7 +404,8 @@ _PLAIN_BLOCK_RE = re.compile(r"\\begin\{(remark|example)\}(?!\*)")
 _TOP_LEVEL_COMMANDS = ("\\chapter","\\section","\\subsection","\\subsubsection",
     "\\paragraph","\\input","\\include","\\label","\\newpage","\\clearpage",
     "\\phantomsection","\\noindent","\\FloatBarrier","\\LRAProofFor",
-    "\\NoLocalDependencies")
+    "\\LRAProofsInput","\\LRAExercisesInput","\\NoLocalDependencies",
+    "\\medskip","\\smallskip","\\bigskip","\\vspace")
 _IGNORED_LABEL_PREFIXES = {"ch","sec","subsec","toc"}
 _BAD_LABEL_PARTS = {"the","following","this","with","therefore","and","or","let","denote","page"}
 _TCOLORBOX_RE = re.compile(r"\\begin\{tcolorbox\}(?:\[[\s\S]*?\])?")
@@ -433,6 +436,8 @@ def _top_level_allowed_line(line: str) -> bool:
 @file_rule("block_discipline")
 def block_discipline(text: str, info: FileInfo, ctx: Context):
     posix = info.path.replace("\\","/")
+    if posix.split("/")[-1].startswith("figure-"):
+        return
     is_note  = "/notes/" in posix
     is_proof = "/proofs/" in posix and "/proofs/exercises/" not in posix
     if not (is_note or is_proof):

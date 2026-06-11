@@ -91,6 +91,23 @@ def test_section_note_top_level_figure_allowed():
         dr.run_file_rules(t, SN, dr.Context())
     )
 
+def test_standalone_figure_file_skips_block_discipline():
+    info = dr.FileInfo("vol/chapter/notes/topic/figure-picture.tex", "section_note")
+    t = "\\definecolor{x}{RGB}{1,2,3}\n\\tikzset{box/.style={draw}}\n\\draw (0,0) -- (1,1);"
+    assert "top_level_prose" not in _codes(dr.run_file_rules(t, info, dr.Context()))
+
+def test_route_macros_are_machinery_not_top_level_prose():
+    info = dr.FileInfo("vol/chapter/proofs/topic/index.tex", "other")
+    t = (
+        "\\LRAProofsInput{vol/chapter/proofs/topic/prf-a}\n"
+        "\\LRAExercisesInput{vol/chapter/proofs/exercises/index}\n"
+    )
+    assert "top_level_prose" not in _codes(dr.run_file_rules(t, info, dr.Context()))
+
+def test_spacing_commands_are_machinery_not_top_level_prose():
+    t = "\\subsection{Table}\n\\medskip\n\\vspace{1em}\n\\bigskip\n"
+    assert "top_level_prose" not in _codes(dr.run_file_rules(t, SN, dr.Context()))
+
 def test_bc_hand_rolled_palette():
     t = "\\chapter{Bounds}\n\\begin{tcolorbox}[colback=breadcrumb,colframe=breadcrumbborder]\nx\n\\end{tcolorbox}"
     assert "breadcrumb_hand_rolled" in _codes(dr.run_file_rules(t, CI, dr.Context()))
@@ -165,6 +182,7 @@ def test_no_false_positive_roadmap():
 
 # ---------- chapter index shape ----------
 REAL_CI = dr.FileInfo("repo/volume-ii/structure-of-real-line/index.tex", "chapter_index")
+NESTED_CI = dr.FileInfo("repo/volume-iii/analysis/sequences/index.tex", "chapter_index")
 
 def _chapter_index():
     return "\n".join([
@@ -180,6 +198,19 @@ def _chapter_index():
 
 def test_chapter_index_shape_ok():
     assert "chapter_index_shape" not in _codes(dr.run_file_rules(_chapter_index(), REAL_CI, dr.Context()))
+
+def test_chapter_index_shape_ok_for_nested_chapter():
+    t = "\n".join([
+        r"\chapter{Sequences}",
+        r"\label{chap:sequences}",
+        r"\breadcrumb{sequences}{Functions}{Sequences}{Continuity}",
+        r"\input{volume-iii/analysis/sequences/notes/index}",
+        r"\section*{Proofs}",
+        r"\LRAProofsInput{volume-iii/analysis/sequences/proofs/index}",
+        r"\section*{Capstone}",
+        r"\LRAExercisesInput{volume-iii/analysis/sequences/proofs/exercises/index}",
+    ])
+    assert "chapter_index_shape" not in _codes(dr.run_file_rules(t, NESTED_CI, dr.Context()))
 
 def test_chapter_index_shape_rejects_extra_content():
     t = _chapter_index().replace(r"\input{volume-ii/structure-of-real-line/notes/index}", "extra prose\n" + r"\input{volume-ii/structure-of-real-line/notes/index}")

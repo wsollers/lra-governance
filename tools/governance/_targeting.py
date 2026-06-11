@@ -27,7 +27,9 @@ IGNORED_DIR_NAMES = {
 }
 IGNORED_RELATIVE_DIRS = {
     "volume-i/proof-techniques",
-    "volume-iii/analysis/real-analysis",
+    "volume-iii/analysis/real-analysis/notes/proof-techniques",
+    "volume-iv/algebra/index.tex",
+    "volume-iv/algebra/algebraic-structures",
 }
 
 
