@@ -50,7 +50,7 @@ def stub_chapter(volume_root, subject, display_title, registry, section_titles):
     roadmap = (f"\\chapterroadmap{{{prior_t or 'the prior development'}}}"
                f"{{{next_t or 'the next chapter'}}}{{{topics}}}")
     write_new(chap / "index.tex",
-        f"\\chapter{{{display_title}}}\n{bc}\n{roadmap}\n\\input{{notes/index}}\n\\input{{proofs/index}}\n",
+        f"\\chapter{{{display_title}}}\n{bc}\n{roadmap}\n\\input{{notes/index}}\n\\LRAProofsInput{{proofs/index}}\n",
     )
 
     if section_titles:

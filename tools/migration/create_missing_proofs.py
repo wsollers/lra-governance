@@ -32,13 +32,13 @@ STUB_TEMPLATE = r"""\newpage
 %%STATEMENT%%
 \end{theorem*}
 
-\begin{proof}
-\textbf{Professional Standard Proof.}~
+\begin{proof}[Professional Standard Proof]
+\LRAProofBodyStart
 TODO: professional standard proof for %%ROOT%%.
 \end{proof}
 
-\begin{proof}
-\textbf{Detailed Learning Proof.}~
+\begin{proof}[Detailed Learning Proof]
+\LRAProofBodyStart
 TODO: detailed learning proof for %%ROOT%%.
 \end{proof}
 
@@ -59,16 +59,16 @@ DEFAULT_DEPS = (r"\begin{dependencies}" "\n"
 def extract_payload(notes_path: Path, thm_label: str):
     """Return (title, statement_body, deps_block_or_None) for the theorem labelled thm_label."""
     text = notes_path.read_text(encoding="utf-8", errors="ignore")
-    matches = list(idp.THEOREM_ENV_RE.finditer(text))
-    for k, m in enumerate(matches):
-        body = m.group(3)
+    matches = list(idp.iter_theorem_blocks(text))
+    for k, block in enumerate(matches):
+        body = block["body"]
         lab = idp.LABEL_IN_BODY_RE.search(body)
         if not lab or lab.group(1) != thm_label:
             continue
-        title = (m.group(2) or "").strip()
+        title = block["title"]
         statement = idp.clean_restatement(body)
-        nxt = matches[k + 1].start() if k + 1 < len(matches) else len(text)
-        dm = idp.DEPENDENCIES_RE.search(text, m.end(), nxt)
+        nxt = matches[k + 1]["start"] if k + 1 < len(matches) else len(text)
+        dm = idp.DEPENDENCIES_RE.search(text, block["end"], nxt)
         return title, statement, (dm.group(0) if dm else None)
     return None, None, None
 
@@ -82,11 +82,18 @@ def safe_optional_title(title: str, fallback: str) -> str:
     title = (title or "").strip()
     if not title:
         return fallback
+    if title.startswith(r"\texorpdfstring"):
+        _, pos = read_braced_arg(title, len(r"\texorpdfstring"))
+        pdf_title, _ = read_braced_arg(title, pos)
+        if pdf_title:
+            title = pdf_title
     title = re.sub(r"\\texorpdfstring\{([^{}]*)\}\{([^{}]*)\}", r"\2", title)
     title = re.sub(r"\\hyperref\[[^\]]+\]\{([^{}]*)\}", r"\1", title)
     title = re.sub(r"\\[A-Za-z]+\*?(?:\[[^\]]*\])?(?:\{([^{}]*)\})?", r"\1", title)
     title = re.sub(r"[{}]", "", title)
     title = re.sub(r"\s+", " ", title).strip()
+    if re.search(r"[\\{}\[\]]", title):
+        return fallback
     return title or fallback
 
 def build_stub(root, thm_label, title, statement, deps):
@@ -108,26 +115,70 @@ def detect_nl(*texts):
             return "\r\n"
     return "\n"
 
+def read_braced_arg(text: str, pos: int):
+    while pos < len(text) and text[pos].isspace():
+        pos += 1
+    if pos >= len(text) or text[pos] != "{":
+        return "", pos
+    depth = 1
+    i = pos + 1
+    while i < len(text):
+        ch = text[i]
+        prev = text[i - 1] if i else ""
+        if prev != "\\":
+            if ch == "{":
+                depth += 1
+            elif ch == "}":
+                depth -= 1
+                if depth == 0:
+                    return text[pos + 1:i], i + 1
+        i += 1
+    return text[pos + 1:], len(text)
+
 def append_input(index_path: Path, target_rel: str, nl: str, apply: bool):
-    """Append \\input{target_rel} to index_path if absent. Returns action str or None."""
+    """Append \\LRAProofsInput{target_rel} to index_path if absent. Returns action str or None."""
+    route = f"\\LRAProofsInput{{{target_rel}}}"
     if index_path.exists():
         text = open(index_path, encoding="utf-8", newline="").read()
         if target_rel in idp.normalized_input_targets(text):
             return None
         ix_nl = "\r\n" if "\r\n" in text else nl
-        new = text + (ix_nl if text and not text.endswith(("\n", "\r")) else "") + f"\\input{{{target_rel}}}" + ix_nl
+        proof_status = re.search(
+            r"\\begin\{remark\*\}\[Proof status\](?P<body>[\s\S]*?)\\end\{remark\*\}",
+            text,
+        )
+        if proof_status:
+            insert_at = proof_status.end("body")
+            prefix = "" if text[:insert_at].endswith(("\n", "\r")) else ix_nl
+            new = text[:insert_at] + prefix + route + ix_nl + text[insert_at:]
+        else:
+            prefix = ix_nl if text and not text.endswith(("\n", "\r")) else ""
+            new = (
+                text
+                + prefix
+                + r"\begin{remark*}[Proof status]" + ix_nl
+                + route + ix_nl
+                + r"\end{remark*}" + ix_nl
+            )
         if apply:
-            open(index_path, "w", encoding="utf-8", newline="").write(new)
-        return f"WIRE   {index_path.name}  <- \\input{{{target_rel}}}"
+            with open(index_path, "w", encoding="utf-8", newline="") as f:
+                f.write(new)
+        return f"WIRE   {index_path.name}  <- \\LRAProofsInput{{{target_rel}}}"
     # create fresh topic index
     banner = (f"% ========================================================={nl}"
               f"% Proofs: {index_path.parent.name}{nl}"
               f"% ========================================================={nl}{nl}")
-    new = banner + f"\\input{{{target_rel}}}" + nl
+    new = (
+        banner
+        + r"\begin{remark*}[Proof status]" + nl
+        + route + nl
+        + r"\end{remark*}" + nl
+    )
     if apply:
         index_path.parent.mkdir(parents=True, exist_ok=True)
-        open(index_path, "w", encoding="utf-8", newline="").write(new)
-    return f"CREATE {index_path.relative_to(index_path.parents[2])}  (+ \\input{{{target_rel}}})"
+        with open(index_path, "w", encoding="utf-8", newline="") as f:
+            f.write(new)
+    return f"CREATE {index_path.relative_to(index_path.parents[2])}  (+ \\LRAProofsInput{{{target_rel}}})"
 
 def main():
     ap = argparse.ArgumentParser(description="Create proof stubs for missing obligations.")

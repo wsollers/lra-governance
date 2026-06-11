@@ -10,6 +10,7 @@ from dataclasses import dataclass
 
 from rules.decoration import dependencies_block, interpretation_block, labels
 from rules.proofs import proof_stub_state
+from rules.routing import print_edition_inputs
 
 
 @dataclass
@@ -80,6 +81,57 @@ def test_proof_stub_state_atom_accepts_untitled_proof_envs():
     )
     assert "proof_stub_structure_not_blank" in codes(
         proof_stub_state.check(text, FileInfo("proofs/topic/prf-x.tex"), None)
+    )
+
+
+def test_proof_stub_state_atom_flags_mixed_professional_authored_detailed_stub():
+    text = (
+        r"\begin{proof}[Professional Standard Proof]" "\n"
+        r"\LRAProofBodyStart" "\n"
+        "This is an actual proof.\n"
+        r"\end{proof}" "\n"
+        r"\begin{proof}[Detailed Learning Proof]" "\n"
+        r"\LRAProofBodyStart" "\n"
+        "TODO: Expand the proof into a detailed learning proof.\n"
+        r"\end{proof}" "\n"
+        r"\begin{remark*}[Proof structure]" "\n"
+        "Actual structure.\n"
+        r"\end{remark*}" "\n"
+    )
+    assert "mixed_authored_professional_detailed_stub" in codes(
+        proof_stub_state.check(text, FileInfo("proofs/topic/prf-x.tex"), None)
+    )
+
+
+def test_proof_stub_state_atom_accepts_all_stub_layers():
+    text = (
+        r"\begin{proof}[Professional Standard Proof]" "\n"
+        r"\LRAProofBodyStart" "\n"
+        "TODO: professional standard proof for x.\n"
+        r"\end{proof}" "\n"
+        r"\begin{proof}[Detailed Learning Proof]" "\n"
+        r"\LRAProofBodyStart" "\n"
+        "TODO: detailed learning proof for x.\n"
+        r"\end{proof}" "\n"
+        r"\begin{remark*}[Proof structure]" "\n\n"
+        r"\end{remark*}" "\n"
+    )
+    assert "mixed_authored_professional_detailed_stub" not in codes(
+        proof_stub_state.check(text, FileInfo("proofs/topic/prf-x.tex"), None)
+    )
+
+
+def test_print_edition_atom_flags_raw_proof_input():
+    text = r"\input{volume-i/example/proofs/index}" "\n"
+    assert "print_edition_raw_input" in codes(
+        print_edition_inputs.check(text, FileInfo("example/index.tex"), None)
+    )
+
+
+def test_print_edition_atom_accepts_semantic_proof_input():
+    text = r"\LRAProofsInput{volume-i/example/proofs/index}" "\n"
+    assert "print_edition_raw_input" not in codes(
+        print_edition_inputs.check(text, FileInfo("example/index.tex"), None)
     )
 
 

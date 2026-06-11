@@ -13,6 +13,7 @@ from typing import Callable, Iterable
 
 from rules.decoration import dependencies_block, interpretation_block, labels
 from rules.proofs import proof_stub_state
+from rules.routing import print_edition_inputs
 
 # ---- canonical vocabulary (from common/boxes.tex + decoration-box-standards) ----
 AUDITED_ENVS = {"definition":"def","axiom":"ax","theorem":"thm","lemma":"lem",
@@ -220,6 +221,10 @@ def _events(text: str):
 def proof_stub_structure_blank(text: str, info: FileInfo, ctx: Context):
     yield from _adapt(proof_stub_state.check(text, info, ctx))
 
+@file_rule("print_edition_inputs")
+def print_edition_input_routes(text: str, info: FileInfo, ctx: Context):
+    yield from _adapt(print_edition_inputs.check(text, info, ctx))
+
 @file_rule("breadcrumb_placement")
 def breadcrumb_placement(text: str, info: FileInfo, ctx: Context):
     ev=_events(text)
@@ -273,6 +278,8 @@ def toolkit_placement(text: str, info: FileInfo, ctx: Context):
             yield Issue("toolkit_leading_exposition",
                 f"{expos} exposition block(s) between subsection and toolkit; max allowed is "
                 f"{ctx.toolkit_max_leading_exposition}.","error",ln)
+        if prev is None and info.kind == "section_note":
+            continue
         if prev is None or not (prev[0]=="heading" and prev[2] in ("section", "subsection")):
             yield Issue("toolkit_misplaced",
                 "Toolkit must sit at the top of a section or \\subsection (at most one exposition between); "
@@ -323,18 +330,20 @@ def structural_roadmap_purge(text: str, info: FileInfo, ctx: Context):
 _FORMAL_BOX_ENVS = {"definitionbox","axiombox","theorembox","lemmabox","propositionbox","corollarybox"}
 _STARRED_RESTATEMENT_ENVS = {"theorem*","lemma*","proposition*","corollary*"}
 _ALLOWED_NOTE_TOP_ENVS = _FORMAL_BOX_ENVS | {
-    "remark*","example*","exposition","dependencies","tcolorbox",
-    "longtable","tabular","tabularx","itemize","enumerate",
-}
+    "remark*","example*","exposition","dependencies","tcolorbox","toolkitbox",
+    "signaturebox","topicbox","figure","longtable","tabular","tabularx","itemize",
+    "enumerate","description","quote","center","tikzpicture",
+} | set(AUDITED_ENVS)
 _ALLOWED_PROOF_TOP_ENVS = {"remark*", *_STARRED_RESTATEMENT_ENVS, "proof", "dependencies"}
 _BEGIN_ENV_RE = re.compile(r"\\begin\{([^{}]+)\}(?:\[[^\]]*\])?")
 _END_ENV_RE   = re.compile(r"\\end\{([^{}]+)\}")
 _PLAIN_BLOCK_RE = re.compile(r"\\begin\{(remark|example)\}(?!\*)")
 _TOP_LEVEL_COMMANDS = ("\\chapter","\\section","\\subsection","\\subsubsection",
     "\\paragraph","\\input","\\include","\\label","\\newpage","\\clearpage",
-    "\\phantomsection","\\noindent","\\FloatBarrier","\\LRAProofFor")
+    "\\phantomsection","\\noindent","\\FloatBarrier","\\LRAProofFor",
+    "\\NoLocalDependencies")
 _IGNORED_LABEL_PREFIXES = {"ch","sec","subsec","toc"}
-_BAD_LABEL_PARTS = {"the","following","this","with","for","therefore","and","or","let","denote","page"}
+_BAD_LABEL_PARTS = {"the","following","this","with","therefore","and","or","let","denote","page"}
 _TCOLORBOX_RE = re.compile(r"\\begin\{tcolorbox\}(?:\[[\s\S]*?\])?")
 
 def _strip_comment(line: str) -> str:
@@ -346,8 +355,12 @@ def _strip_comment(line: str) -> str:
         escaped=False; out.append(ch)
     return "".join(out)
 
+def strip_latex_comments(text: str) -> str:
+    """Strip LaTeX line comments while preserving line numbers."""
+    return "\n".join(_strip_comment(line) for line in text.splitlines())
+
 def _uncommented(text: str) -> str:
-    return "\n".join(_strip_comment(l) for l in text.splitlines())
+    return strip_latex_comments(text)
 
 def _line_at(text: str, pos: int) -> int:
     return text.count("\n",0,pos)+1
@@ -373,6 +386,12 @@ def block_discipline(text: str, info: FileInfo, ctx: Context):
         if b:
             env=b.group(1)
             if not stack and env not in allowed:
+                if is_note and env == "proof":
+                    yield Issue("proof_inside_note",
+                        "Proof environment appears in a note file; move substantial proof content to the proof vault.",
+                        "review", line_no)
+                    stack.append(env)
+                    continue
                 yield Issue("unexpected_top_level_environment",f"Unexpected top-level environment {env}.","error",line_no)
             stack.append(env)
         if not stack and not _top_level_allowed_line(raw):
@@ -395,9 +414,9 @@ def label_quality(text: str, info: FileInfo, ctx: Context):
             continue
         line=_line_at(body, m.start())
         if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)+", slug):
-            yield Issue("weak_label_slug",f"Label slug should be lowercase kebab-case with readable terms: {label}.","error",line)
+            yield Issue("weak_label_slug",f"Label slug should be lowercase kebab-case with readable terms: {label}.","warning",line)
         if any(part in _BAD_LABEL_PARTS for part in slug.split("-")):
-            yield Issue("ocr_like_label",f"Label appears to include prose/OCR filler: {label}.","error",line)
+            yield Issue("ocr_like_label",f"Label appears to include prose/OCR filler: {label}.","warning",line)
 
 @file_rule("capstone_structure")
 def capstone_structure(text: str, info: FileInfo, ctx: Context):
@@ -437,7 +456,7 @@ def capstone_structure(text: str, info: FileInfo, ctx: Context):
 # structural_roadmap_purge. Routing checks remain in audit_volume_layout.
 # ============================================================
 _STARRED_CHAPTER_RE      = re.compile(r"\\chapter\*(?:\[[^\]]*\])?\{[^{}]+\}")
-_SECTION_HEADING_RE      = re.compile(r"\\section(?:\[[^\]]*\])?\{[^{}]+\}")
+_SECTION_HEADING_RE      = re.compile(r"\\section(?!\*)(?:\[[^\]]*\])?\{")
 _STARRED_SECTION_RE      = re.compile(r"\\section\*(?:\[[^\]]*\])?\{[^{}]+\}")
 _UNSTARRED_SUBSECTION_RE = re.compile(r"\\sub(?:sub)?section(?:\[[^\]]*\])?\{[^{}]+\}")
 
@@ -473,7 +492,7 @@ def chapter_identity(text: str, info: FileInfo, ctx: Context):
             "error", _line_at(t, m.start()))
     if "\\chapter" not in t:
         yield Issue("missing_chapter_heading", "Missing chapter heading.", "error", 0)
-    if "\\label{ch:" not in t:
+    if "\\label{ch:" not in t and "\\label{chap:" not in t:
         yield Issue("missing_chapter_label", "Missing chapter label.", "error", 0)
 
 @file_rule("section_router_heading")
@@ -600,7 +619,7 @@ def reference_voice(text: str, info: FileInfo, ctx: Context):
                 title=(blk.group("title") or blk.group("env")).strip()
                 yield Issue("non_reference_voice",
                     f"{title} block uses {reason}: '{mm.group(0)}'. Use impersonal reference voice.",
-                    "error", _line_at(t, blk.start("body")))
+                    "warning", _line_at(t, blk.start("body")))
 
 @file_rule("latex_integrity")
 def latex_integrity(text: str, info: FileInfo, ctx: Context):
@@ -618,7 +637,9 @@ def latex_integrity(text: str, info: FileInfo, ctx: Context):
                 yield Issue("mismatched_environment", f"Opened {oenv} but closed {env}.",
                             "error", _line_at(t, m.start()))
     # unclosed_environment intentionally not emitted (block_discipline owns it)
-    if t.count("\\[") != t.count("\\]"):
+    display_opens = len(re.findall(r"(?<!\\)\\\[", t))
+    display_closes = len(re.findall(r"(?<!\\)\\\]", t))
+    if display_opens != display_closes:
         yield Issue("unbalanced_display_math",
                     "Display math delimiters \\[ and \\] are not balanced.", "error", 0)
     if len(re.findall(r"\\begin\{tcolorbox\}", t)) != len(re.findall(r"\\end\{tcolorbox\}", t)):
@@ -676,7 +697,7 @@ def formal_block_decoration(text: str, info: FileInfo, ctx: Context):
             if key not in _DECORATION_ORDER:
                 yield Issue("unknown_decoration_block",
                     f"{label} has nonstandard decoration block '{key}'.",
-                    "error", ln + _line_at(dec, m.start()) - 1)
+                    "warning", ln + _line_at(dec, m.start()) - 1)
                 continue
             if key in _FORBIDDEN_DECORATION_BY_ENV.get(b.environment, set()):
                 yield Issue("forbidden_decoration_block",

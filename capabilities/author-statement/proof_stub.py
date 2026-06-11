@@ -40,9 +40,11 @@ def render_proof_stub(kind: str, slug: str, title: str, statement_body: str,
         "\\end{remark*}\n"
         f"\\begin{{theorem*}}[{title}]\n{body}\n\\end{{theorem*}}\n"
         "\\begin{proof}[Professional Standard Proof]\n"
+        "\\LRAProofBodyStart\n"
         "TODO: supply the compact professional proof.\n"
         "\\end{proof}\n"
         "\\begin{proof}[Detailed Learning Proof]\n"
+        "\\LRAProofBodyStart\n"
         "TODO: supply the expanded learning proof.\n"
         "\\end{proof}\n"
         "\\begin{remark*}[Proof structure]\n\n\\end{remark*}\n"   # blank body: present + renders blank

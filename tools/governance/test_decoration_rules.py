@@ -83,6 +83,12 @@ def test_bc_section_note_clean():
     t = "\\subsection{Sup}\nprose and a definition"
     assert dr.run_file_rules(t, SN, dr.Context()) == []
 
+def test_section_note_top_level_figure_allowed():
+    t = "\\subsection{Diagram}\n\\begin{figure}[h]\n\\centering\n\\end{figure}"
+    assert "unexpected_top_level_environment" not in _codes(
+        dr.run_file_rules(t, SN, dr.Context())
+    )
+
 def test_bc_hand_rolled_palette():
     t = "\\chapter{Bounds}\n\\begin{tcolorbox}[colback=breadcrumb,colframe=breadcrumbborder]\nx\n\\end{tcolorbox}"
     assert "breadcrumb_hand_rolled" in _codes(dr.run_file_rules(t, CI, dr.Context()))

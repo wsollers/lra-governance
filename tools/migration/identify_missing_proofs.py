@@ -19,7 +19,49 @@ THEOREM_ENV_RE = re.compile(
 LABEL_IN_BODY_RE = re.compile(r"\\label\{((?:thm|prop|lem|cor):[a-z0-9-]+)\}")
 PROOF_LINK_RE   = re.compile(r"\\hyperref\[prf:[a-z0-9-]+\]")
 DEPENDENCIES_RE = re.compile(r"\\begin\{dependencies\}.*?\\end\{dependencies\}", re.DOTALL)
-INPUT_RE        = re.compile(r"\\(?:input|include)\{([^}]+)\}")
+INPUT_RE        = re.compile(r"\\(?:input|include|LRAProofsInput|LRAExercisesInput|LRACapstoneInput)\{([^}]+)\}")
+BEGIN_THEOREM_RE = re.compile(r"\\begin\{(theorem|proposition|lemma|corollary)\}")
+
+def read_optional_arg(text: str, pos: int):
+    if pos >= len(text) or text[pos] != "[":
+        return "", pos
+    square_depth = 1
+    brace_depth = 0
+    i = pos + 1
+    while i < len(text):
+        ch = text[i]
+        prev = text[i - 1] if i else ""
+        if prev != "\\":
+            if ch == "{":
+                brace_depth += 1
+            elif ch == "}" and brace_depth:
+                brace_depth -= 1
+            elif ch == "[":
+                square_depth += 1
+            elif ch == "]":
+                square_depth -= 1
+                if square_depth == 0 and brace_depth == 0:
+                    return text[pos + 1:i].strip(), i + 1
+        i += 1
+    return text[pos + 1:].strip(), len(text)
+
+def iter_theorem_blocks(text: str):
+    for m in BEGIN_THEOREM_RE.finditer(text):
+        env = m.group(1)
+        title, body_start = read_optional_arg(text, m.end())
+        end_pat = rf"\\end\{{{env}\}}"
+        end = re.search(end_pat, text[body_start:])
+        if not end:
+            continue
+        end_start = body_start + end.start()
+        end_stop = body_start + end.end()
+        yield {
+            "env": env,
+            "title": title,
+            "body": text[body_start:end_start],
+            "start": m.start(),
+            "end": end_stop,
+        }
 
 def find_chapter_roots(root: Path):
     roots = []
@@ -45,7 +87,11 @@ def topic_after(anchor: str, path: Path, chapter_root: Path):
     if anchor not in parts:
         return None
     i = parts.index(anchor)
-    return parts[i + 1] if i + 2 < len(parts) else None
+    if i + 2 < len(parts):
+        return parts[i + 1]
+    if i + 1 < len(parts):
+        return anchor
+    return None
 
 def normalized_input_targets(text: str):
     out = set()
@@ -87,8 +133,8 @@ def iter_theorems(chapter_root: Path):
         if path.name == "index.tex":
             continue
         text = path.read_text(encoding="utf-8", errors="ignore")
-        for m in THEOREM_ENV_RE.finditer(text):
-            env, title, body = m.group(1), (m.group(2) or "").strip(), m.group(3)
+        for block in iter_theorem_blocks(text):
+            env, title, body = block["env"], block["title"], block["body"]
             lab = LABEL_IN_BODY_RE.search(body)
             yield path, env, title, (lab.group(1) if lab else None), body
 

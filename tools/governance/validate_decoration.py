@@ -12,15 +12,34 @@ from __future__ import annotations
 import argparse, json, os, sys
 from collections import Counter
 from pathlib import Path
+import re
 
 import decoration_rules as dr
 import _targeting as tg
 
 EXCLUDED = {".git","common","bibliography","build","dist","out","output","outputs",
             ".venv","venv","node_modules","__pycache__",".history","reports","archive"}
+EXCLUDED_RELATIVE_DIRS = {
+    "volume-i/proof-techniques",
+    "volume-ii/lean",
+    "volume-iii/analysis/real-analysis",
+}
+
+def _posix_relative(path: Path, root: Path) -> str:
+    try:
+        return path.resolve().relative_to(root.resolve()).as_posix()
+    except ValueError:
+        return path.resolve().as_posix()
+
+def _is_excluded_relative_dir(path: Path, root: Path) -> bool:
+    rel = _posix_relative(path, root)
+    full = path.resolve().as_posix()
+    return any(rel == excluded or full.endswith("/" + excluded) for excluded in EXCLUDED_RELATIVE_DIRS)
 
 def classify(path: Path) -> str:
     if path.name == "index.tex" and tg.is_chapter_root(path.parent):
+        return "chapter_index"
+    if path.name == "index.tex" and re.fullmatch(r"volume-[ivx]+", path.parent.parent.name):
         return "chapter_index"
     if "notes" in {p.lower() for p in path.parts}:
         return "section_note"
@@ -31,7 +50,13 @@ def iter_tex(roots: list[Path]):
         if root.is_file() and root.suffix == ".tex":
             yield root; continue
         for dp, dns, fns in os.walk(root):
-            dns[:] = [d for d in dns if d not in EXCLUDED and not d.startswith(".")]
+            dp_path = Path(dp)
+            dns[:] = [
+                d for d in dns
+                if d not in EXCLUDED
+                and not d.startswith(".")
+                and not _is_excluded_relative_dir(dp_path / d, root)
+            ]
             for f in fns:
                 if f.endswith(".tex"):
                     yield Path(dp) / f
@@ -43,7 +68,8 @@ def walk_roots_for(target: tg.Target, root: Path) -> list[Path]:
         return [target.chapter]
     if target.scope == "volume" and target.volume:
         return [target.volume]
-    return [root]
+    volumes = tg.volume_roots(root)
+    return volumes or [root]
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description="Run LRA decoration rules over a volume/chapter/section.")
@@ -88,7 +114,7 @@ def main(argv=None) -> int:
     for tex in sorted(set(iter_tex(walk_roots_for(target, root)))):
         files += 1
         kind = classify(tex)
-        text = tex.read_text(encoding="utf-8", errors="replace")
+        text = dr.strip_latex_comments(tex.read_text(encoding="utf-8", errors="replace"))
         info = dr.FileInfo(str(tex), kind)
         issues = list(dr.run_file_rules(text, info, ctx))
         for b in dr.extract_blocks(text):

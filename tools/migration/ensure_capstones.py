@@ -22,7 +22,7 @@ from __future__ import annotations
 import argparse, re
 from pathlib import Path
 
-INPUT_RE = re.compile(r"\\(?:input|include)\{([^}]+)\}")
+INPUT_RE = re.compile(r"\\(?:input|include|LRAProofsInput|LRAExercisesInput|LRACapstoneInput)\{([^}]+)\}")
 
 def camel(subject: str) -> str:
     return "".join(p.capitalize() for p in re.split(r"[-_]", subject))
@@ -86,7 +86,7 @@ def route_capstone_last(index_path: Path, cap_target: str, apply: bool, nl="\n")
     if index_path.exists():
         text = read(index_path); nl = nl_of(text, nl)
         lines = text.split(nl)
-        cap_line = f"\\input{{{cap_target}}}"
+        cap_line = f"\\LRACapstoneInput{{{cap_target}}}"
         norm = lambda s: (INPUT_RE.search(s).group(1).replace("\\", "/").removesuffix(".tex")
                           if INPUT_RE.search(s) else None)
         has = any(norm(l) == cap_target for l in lines)
@@ -109,7 +109,7 @@ def route_capstone_last(index_path: Path, cap_target: str, apply: bool, nl="\n")
     banner = (f"% ========================================================={nl}"
               f"% Exercise Proofs{nl}"
               f"% ========================================================={nl}{nl}")
-    new = banner + f"\\subsection*{{Exercise Proofs}}{nl}\\input{{{cap_target}}}{nl}"
+    new = banner + f"\\subsection*{{Exercise Proofs}}{nl}\\LRACapstoneInput{{{cap_target}}}{nl}"
     if apply:
         index_path.parent.mkdir(parents=True, exist_ok=True)
         open(index_path, "w", encoding="utf-8", newline="").write(new)
@@ -123,7 +123,7 @@ def ensure_proofs_routes_exercises(proofs_index: Path, ex_target: str, apply: bo
     if ex_target in targets:
         return None
     glue = "" if (not text or text.endswith(("\n", "\r"))) else nl
-    new = text + glue + f"\\input{{{ex_target}}}" + nl
+    new = text + glue + f"\\LRAExercisesInput{{{ex_target}}}" + nl
     if apply:
         open(proofs_index, "w", encoding="utf-8", newline="").write(new)
     return "WIRE proofs/index.tex -> proofs/exercises/index"
