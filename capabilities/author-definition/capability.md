@@ -25,6 +25,7 @@ Write one mathematical definition in a volume chapter.
 
 - `python tools/governance/validate_decoration.py --root <volume-root> --chapter <chapter> --canonical-dir <canonical-root>`
 - `python capabilities/author-definition/verify.py --target <file> --kind definition --predicates <canonical-root>/predicates.yaml`
+- `cd <volume-root> && latexmk -lualatex main.tex`
 
 Stop if a success gate fails, the target file is ambiguous, or the needed
 canonical predicate is missing.

@@ -11,6 +11,9 @@ import re
 from dataclasses import dataclass, field
 from typing import Callable, Iterable
 
+from rules.decoration import dependencies_block, interpretation_block, labels
+from rules.proofs import proof_stub_state
+
 # ---- canonical vocabulary (from common/boxes.tex + decoration-box-standards) ----
 AUDITED_ENVS = {"definition":"def","axiom":"ax","theorem":"thm","lemma":"lem",
                 "proposition":"prop","corollary":"cor"}
@@ -74,6 +77,12 @@ def _dep_window(deco):
     mm=re.search(r"\\begin\{remark\*?\}\[Dependencies\](?P<b>.*?)\\end\{remark\*?\}",deco,re.DOTALL|re.I)
     return mm.group("b") if mm else ""
 
+def _adapt(findings):
+    if not findings:
+        return
+    for finding in findings:
+        yield Issue(finding.code, finding.message, finding.severity, finding.line)
+
 # ================= BLOCK RULES =================
 
 # --- the discovered box rule (semantic / raw-old / wrong / neither) ---
@@ -114,37 +123,19 @@ def math_box_wrapper(b: Block, ctx: Context):
 # --- ported verbatim from analyze_block() (logic unchanged, relocated) ---
 @rule("missing_label", AUDITED_ENVS)
 def missing_label(b: Block, ctx: Context):
-    labels=LABEL_RE.findall(b.text)
-    if not labels:
-        yield Issue("missing_label","The block has no visible label.","error",b.line_start)
+    yield from _adapt(labels.check_missing_label(b, ctx))
 
 @rule("wrong_label_prefix", AUDITED_ENVS)
 def wrong_label_prefix(b: Block, ctx: Context):
-    labels=LABEL_RE.findall(b.text)
-    if not labels: return
-    prefix=labels[0].split(":",1)[0] if ":" in labels[0] else ""
-    expected=AUDITED_ENVS[b.environment]
-    if prefix!=expected:
-        yield Issue("wrong_label_prefix",
-            f"Expected label prefix '{expected}:' but found '{prefix}:'.","error",b.line_start)
+    yield from _adapt(labels.check_label_prefix(b, ctx))
 
 @rule("missing_interpretation", AUDITED_ENVS)
 def missing_interpretation(b: Block, ctx: Context):
-    if not _has(b.decoration,("interpretation",)):
-        yield Issue("missing_interpretation","Interpretation remark is missing.","warning",b.line_start)
+    yield from _adapt(interpretation_block.check(b, ctx))
 
 @rule("missing_dependencies", AUDITED_ENVS)
 def missing_dependencies(b: Block, ctx: Context):
-    deco = b.decoration
-    has_dependencies = (
-        "\\begin{dependencies}" in deco            # canonical dependencies environment
-        or bool(_dep_window(deco))                   # legacy remark*[Dependencies] form
-        or "\\NoLocalDependencies" in deco
-    )
-    if not has_dependencies:
-        yield Issue("missing_dependencies",
-            "Dependencies are missing (use \\begin{dependencies} or \\NoLocalDependencies).",
-            "warning", b.line_start)
+    yield from _adapt(dependencies_block.check(b, ctx))
 
 # (remaining analyze_block checks port the same way: one function each.)
 
@@ -225,33 +216,9 @@ def _events(text: str):
     return events
 
 # ---------- breadcrumb: present, very-first-content, chapter-index only ----------
-_PROOF_STRUCTURE_RE = re.compile(r"\\begin\{remark\*\}\[Proof structure\](.*?)\\end\{remark\*\}", re.DOTALL)
-_PROOF_BODY_RE = re.compile(r"\\begin\{proof\}(.*?)\\end\{proof\}", re.DOTALL)
-
-def _strip_comments_ws(s: str) -> str:
-    lines = [re.sub(r"(?<!\\)%.*$", "", ln) for ln in s.splitlines()]
-    return "".join(lines).strip()
-
 @file_rule("proof_stub_structure_blank")
 def proof_stub_structure_blank(text: str, info: FileInfo, ctx: Context):
-    """Squareness: while a proof is a STUB (both bodies TODO), the Proof structure
-    block must be blank (whitespace/comments only). Catches planned-proof prose left
-    in a stub -- the fault in legacy stubs. audit_proof_layout checks PRESENCE; this
-    checks BLANKNESS-in-a-stub. Scoped to prf-*.tex files."""
-    name = info.path.replace("\\", "/").rsplit("/", 1)[-1]
-    if not name.startswith("prf-"):
-        return
-    bodies = [b for b in _PROOF_BODY_RE.findall(text)
-              if ("Professional Standard Proof" in b or "Detailed Learning Proof" in b)]
-    is_stub = bool(bodies) and all(re.search(r"\bTODO\b", b, re.I) for b in bodies)
-    m = _PROOF_STRUCTURE_RE.search(text)
-    if not m:
-        return  # presence is audit_proof_layout's job
-    if is_stub and _strip_comments_ws(m.group(1)):
-        yield Issue("proof_stub_structure_not_blank",
-            "Proof structure block must be blank while the proof is a stub (bodies are TODO); "
-            "found planned-proof prose. Leave it blank until the proof is authored.",
-            "error", text.count("\n", 0, m.start()) + 1)
+    yield from _adapt(proof_stub_state.check(text, info, ctx))
 
 @file_rule("breadcrumb_placement")
 def breadcrumb_placement(text: str, info: FileInfo, ctx: Context):

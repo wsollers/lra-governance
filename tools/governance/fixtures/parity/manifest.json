@@ -1,0 +1,28 @@
+{
+  "fixtures": [
+    {
+      "name": "broken_chapter",
+      "root": "broken-volume",
+      "chapter": "bad-chapter",
+      "validators": {
+        "decoration": [
+          "wrong_label_prefix",
+          "missing_interpretation",
+          "missing_dependencies",
+          "missing_standard_quantified_statement",
+          "missing_proof_navigation",
+          "proof_stub_structure_not_blank"
+        ],
+        "proof_layout": [
+          "partial_stub",
+          "proof_dependency_target",
+          "proof_not_in_topic_index",
+          "topic_index_not_in_proofs_index"
+        ],
+        "volume_layout": [
+          "unrouted_proofs_topic"
+        ]
+      }
+    }
+  ]
+}

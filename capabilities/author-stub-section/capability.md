@@ -19,6 +19,7 @@ from the chapter routers. The slug is lowercase ASCII with hyphens.
 ## Success Gate
 
 - `python tools/governance/audit_volume_layout.py --root <volume-root> --chapter <chapter> --strict`
+- `cd <volume-root> && latexmk -lualatex main.tex`
 
 Stop if the section already exists with content that would be overwritten, or if
 the chapter is not layout-compliant after the change.

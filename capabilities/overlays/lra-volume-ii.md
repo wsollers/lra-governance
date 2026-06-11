@@ -10,6 +10,7 @@ Local conventions:
 - Chapters route into BOTH `volume-ii/index.tex` (monorepo) and `main.tex` (local build).
 - Canonical YAML registries live at the monorepo root; cross-volume `\hyperref` targets resolve
   only in the assembled monorepo build.
+- Volume success requires both governance validation and `latexmk -lualatex main.tex`.
 
 Applicable capabilities: author-statement, author-stub-chapter, author-stub-section.
 

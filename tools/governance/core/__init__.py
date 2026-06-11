@@ -1,0 +1,1 @@
+"""Shared governance validator primitives."""

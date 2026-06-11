@@ -26,6 +26,7 @@ The chapter starts with `\chapter`, `\breadcrumb`, `\stubstatus`, and
 
 - `python tools/governance/audit_volume_layout.py --root <volume-root> --chapter <subject> --strict`
 - `python tools/governance/validate_decoration.py --root <volume-root> --chapter <subject>`
+- `cd <volume-root> && latexmk -lualatex main.tex`
 
 Stop if a target chapter already exists with content that would be overwritten,
 or if either success gate fails.

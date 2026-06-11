@@ -24,6 +24,9 @@ small: route to one capability, do the action, and run its success gates.
   available.
 - For structural tasks, move or route existing content; do not rewrite mathematics.
 - For mechanics tasks, do not change mathematical content.
+- Do not preload architecture or workflow docs. Use repo search and nearby files first;
+  open docs only when the capability, overlay, and local examples do not answer the
+  concrete question.
 
 ## Pointers
 

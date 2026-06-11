@@ -1,0 +1,8 @@
+subject: bad-chapter
+display_title: "Bad Chapter"
+volume: volume-i
+status: current
+sections:
+  - subject: broken
+    display_title: "Broken"
+dependencies: {}

@@ -1,0 +1,1 @@
+"""Atomized governance validation rules."""
