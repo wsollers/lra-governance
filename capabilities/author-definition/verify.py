@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
-"""author-definition bound verifier: post-generation self-check on ONE target file.
-Reads the same schema source as the canonical validator when provided; never forks rule logic.
+"""author-definition bound verifier: focused post-generation check on one target file.
 Exit 0 = pass, 1 = fail."""
 import argparse, re, sys, os
 
 DEFAULT_REQUIRED = {"definition": ["Standard quantified statement", "Interpretation"]}
+KIND_KEYS = {"definition": "def"}
+BLOCK_TITLES = {
+    "standard_quantified_stmt": "Standard quantified statement",
+    "interpretation": "Interpretation",
+}
 
 def balance_report(s):
     p=[]
@@ -15,8 +19,20 @@ def balance_report(s):
     return p
 
 def required_blocks(kind, matrix_path):
-    # Production: parse artifact-matrix.yaml for this kind's required blocks.
-    # Falls back to the documented default when the schema file is absent (PoC).
+    if matrix_path and os.path.exists(matrix_path):
+        try:
+            import yaml
+            data = yaml.safe_load(open(matrix_path, encoding="utf-8")) or {}
+            matrix = data.get("matrix", {})
+            key = KIND_KEYS.get(kind, kind)
+            required = []
+            for block_id, by_kind in matrix.items():
+                if by_kind.get(key) == "R" and block_id in BLOCK_TITLES:
+                    required.append(BLOCK_TITLES[block_id])
+            if required:
+                return required
+        except Exception as exc:
+            print(f"WARN: could not read matrix {matrix_path}: {exc}", file=sys.stderr)
     return DEFAULT_REQUIRED.get(kind, [])
 
 def predicate_names(path):
@@ -56,7 +72,7 @@ def main():
         print(f"VERIFY FAIL ({a.target}) [kind={a.kind}]:")
         for f in fails: print(f"  - {f}")
         sys.exit(1)
-    print(f"VERIFY PASS ({a.target}) [kind={a.kind}] — definition invariants satisfied.")
+    print(f"VERIFY PASS ({a.target}) [kind={a.kind}] - definition invariants satisfied.")
     sys.exit(0)
 
 if __name__=="__main__": main()

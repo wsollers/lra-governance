@@ -21,6 +21,11 @@ def append_once(path: Path, snippet: str) -> bool:
         f.write(snippet if snippet.endswith("\n") else snippet + "\n")
     return True
 
+def write_new(path: Path, text: str) -> None:
+    if path.exists():
+        raise FileExistsError(f"refusing to overwrite existing file: {path}")
+    path.write_text(text, encoding="utf-8")
+
 def stub_section(chapter_root: Path, title: str) -> dict:
     chapter_root = Path(chapter_root)
     slug = slugify(title)
@@ -28,10 +33,8 @@ def stub_section(chapter_root: Path, title: str) -> dict:
     proofs_dir = chapter_root / "proofs" / slug
     notes_dir.mkdir(parents=True, exist_ok=True)
     proofs_dir.mkdir(parents=True, exist_ok=True)
-    (notes_dir / "index.tex").write_text(
-        f"% Section: {title}  (notes router; content authored later)\n", encoding="utf-8")
-    (proofs_dir / "index.tex").write_text(
-        f"% Section: {title}  (proofs router; proof files \\input here as authored)\n", encoding="utf-8")
+    write_new(notes_dir / "index.tex", f"% Section: {title}  (notes router; content authored later)\n")
+    write_new(proofs_dir / "index.tex", f"% Section: {title}  (proofs router; proof files \\input here as authored)\n")
     append_once(chapter_root / "notes" / "index.tex", f"\\section{{{title}}}\n\\input{{{slug}/index}}")
     append_once(chapter_root / "proofs" / "index.tex", f"\\input{{{slug}/index}}")
     return {"slug": slug, "title": title, "notes": str(notes_dir), "proofs": str(proofs_dir)}

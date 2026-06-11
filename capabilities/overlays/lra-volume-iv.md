@@ -1,6 +1,6 @@
 # Repo Overlay -- lra-volume-iv
 
-Repo identity: TODO: Volume IV title.
+Repo identity: Volume IV.
 
 Local conventions:
 - Content lives under `volume-iv/<chapter>/notes/<section>/notes-<section>.tex`;

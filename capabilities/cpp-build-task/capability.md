@@ -1,23 +1,26 @@
 # Capability: cpp-build-task
 
-Repo kind: `cpp` (lra-numerical-analysis). Same author -> validate spine as the volume
-capabilities, specialized to the C++/numerical companion.
+Repo kind: `cpp` (`lra-numerical-analysis`).
 
-## Trigger
-"do task: X", "implement X", "build task X".
+## Action
 
-## What it does
-1. **Do the task.** Make the requested change to the C++ project (add a solver, fix a
-   routine, add a test, etc.).
+Implement one requested C++/numerical change.
 
-2. **VERIFY (bound).** The project must still build:
+## Inputs
 
-       cd <cpp-root> && cmake --build build    # TODO: confirm exact build command (cmake/make)
+- User task.
+- Repo overlay.
+- Relevant source and test files found from local project structure.
 
-   This is the gate -- the task is not "done" until the build is green. Add a test-suite
-   run here too once the project's test command is settled.
+## Do
 
-## Notes
-- Unlike the LaTeX capabilities there is no house-style validator yet; the build is the
-  verifier. A linter / test gate can be added to the verify list later.
-- Status: SCAFFOLD. The build verifier is wired; exact build/test commands are TODO.
+1. Follow the repo overlay for placement, build environment, and test policy.
+2. Make the smallest project-consistent code change.
+3. Add or update tests when the repo has a nearby test pattern.
+
+## Success Gates
+
+Run the success gates listed in the repo overlay. On Windows/MSVC repos, run
+CMake from the MSVC x64 developer environment or a repo script that enters it.
+
+Stop if the build environment is unavailable or any gate fails.

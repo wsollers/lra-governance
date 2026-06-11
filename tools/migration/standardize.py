@@ -13,8 +13,9 @@ the state between relocate and stub-gen.
 Per-volume pipeline (--root <volume content dir>):
   A. cleanup    remove_status_planned, remove_legacy_chrome [, purge_archives]
   B. relocate   relocate_misplaced_notes, relocate_misplaced_files
-  C. gate       identify_misplaced_files, identify_missing_proofs   (read-only)
-  D. fill       create_missing_proofs, ensure_capstones --upgrade-empty
+  C. repair     repair_generated_latex
+  D. gate       identify_misplaced_files, identify_missing_proofs   (read-only)
+  E. fill       create_missing_proofs, ensure_capstones --upgrade-empty
 
 Whole work (--all under --repos-root): runs A-D for every volume found, then
 populates the GLOBAL breadcrumb chain once at the end (reading order i..viii).
@@ -81,11 +82,15 @@ def standardize_volume(vol: Path, apply: bool, *, require_proof_link=False,
     if not step("relocate_misplaced_files.py", [*scope, *write]):
         return False
 
-    stage(f"{vol.name}: C. recon gate (read-only)")
+    stage(f"{vol.name}: C. repair generated LaTeX")
+    if not step("repair_generated_latex.py", write):
+        return False
+
+    stage(f"{vol.name}: D. recon gate (read-only)")
     step("identify_misplaced_files.py", [])
     step("identify_missing_proofs.py", [])
 
-    stage(f"{vol.name}: D. fill genuine gaps")
+    stage(f"{vol.name}: E. fill genuine gaps")
     cargs = list(scope) + (["--require-proof-link"] if require_proof_link else [])
     if not step("create_missing_proofs.py", [*cargs, *write]):
         return False

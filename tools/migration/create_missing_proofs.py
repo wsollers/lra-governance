@@ -25,10 +25,10 @@ STUB_TEMPLATE = r"""\newpage
 \LRAProofFor{%%THMLABEL%%}
 
 \begin{remark*}[Return]
-\hyperref[%%THMLABEL%%]{Return to Theorem (%%TITLE%%).}
+\hyperref[%%THMLABEL%%]{Return to Theorem}
 \end{remark*}
 
-\begin{theorem*}[%%TITLE%%]
+\begin{theorem*}[%%SAFE_TITLE%%]
 %%STATEMENT%%
 \end{theorem*}
 
@@ -72,14 +72,33 @@ def extract_payload(notes_path: Path, thm_label: str):
         return title, statement, (dm.group(0) if dm else None)
     return None, None, None
 
+def safe_optional_title(title: str, fallback: str) -> str:
+    """Return a short optional-argument title without active links/macros.
+
+    The statement body carries the full mathematics; theorem optional arguments
+    must stay syntactically boring because they are written into headings, PDF
+    strings, and theorem internals.
+    """
+    title = (title or "").strip()
+    if not title:
+        return fallback
+    title = re.sub(r"\\texorpdfstring\{([^{}]*)\}\{([^{}]*)\}", r"\2", title)
+    title = re.sub(r"\\hyperref\[[^\]]+\]\{([^{}]*)\}", r"\1", title)
+    title = re.sub(r"\\[A-Za-z]+\*?(?:\[[^\]]*\])?(?:\{([^{}]*)\})?", r"\1", title)
+    title = re.sub(r"[{}]", "", title)
+    title = re.sub(r"\s+", " ", title).strip()
+    return title or fallback
+
 def build_stub(root, thm_label, title, statement, deps):
     title = title or root
+    safe_title = safe_optional_title(title, root.replace("-", " ").title())
     statement = statement or "TODO: restate the theorem."
     deps = deps or DEFAULT_DEPS
     return (STUB_TEMPLATE
             .replace("%%THMLABEL%%", thm_label)
             .replace("%%ROOT%%", root)
             .replace("%%TITLE%%", title)
+            .replace("%%SAFE_TITLE%%", safe_title)
             .replace("%%STATEMENT%%", statement)
             .replace("%%DEPS%%", deps))
 

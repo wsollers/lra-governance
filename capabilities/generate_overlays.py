@@ -35,42 +35,58 @@ Overlay-specific verifier args:{plainnote or ' none beyond the capability defaul
 Pass `--canonical-dir <monorepo-root>` to `validate_decoration.py` to enable formal-reading triggers.
 """
 
-def nonvolume_overlay(repo, kind, title):
+def _bullets(items):
+    return "\n".join(f"- `{item}`" for item in items)
+
+def nonvolume_overlay(repo, kind, title, build_environment=None, success_gates=None):
     blocks = {
         "library": (
             "Shared LaTeX macros, boxes, environments, and templates consumed by every volume. "
             "Changes here affect ALL volumes.",
-            "edit-shared-macro (PLANNED): change a macro/box; verifier = a consuming volume still builds."),
+            None),
         "lean": (
             "Lean formalization of the mathematics.",
             "author-lean-theorem: given \"formalize X\", add a descriptively-named theorem "
-            "(e.g. RationalEquivalenceClassAdditionIsCommutative) in the right place, formalize it to "
-            "the project's standards, then VERIFY with `lake build`, then sync the formalized statement "
-            "into its owning LaTeX volume. Standards doc + volume-sync mapping: TODO (owner-defined)."),
+            "in the locally inferred file/namespace and run the success gates below."),
         "cpp": (
             "C++ / numerical companion.",
-            "cpp-build-task: do the requested task; verifier = the project still builds "
-            "(`cmake --build build` / `make` -- TODO confirm)."),
+            "cpp-build-task: do the requested task and run the success gates below."),
         "vault": (
             "Handwritten proof records; volumes link here via \\ProofVaultURL.",
-            "memorialize-record (PLANNED): register a handwritten record and link it from the owning proof."),
+            None),
         "web": (
             "Knowledge Explorer web app consuming extracted knowledge-graph data.",
-            "explorer-build (PLANNED): build/test the app against the latest extracted data."),
+            None),
     }
     purpose, cap = blocks[kind]
-    return f"""# Repo Overlay -- {repo}
+    if not cap:
+        return f"""# Repo Overlay -- {repo}
 
 Repo identity: {title}.
 
 {purpose}
 
+No manifest-backed LLM capability is exposed for repo kind `{kind}` yet.
+"""
+    env_block = (
+        f"\nBuild environment: {build_environment}. Run the success gates from this environment.\n"
+        if build_environment else ""
+    )
+    gate_block = _bullets(success_gates or [])
+    return f"""# Repo Overlay -- {repo}
+
+Repo identity: {title}.
+
+{purpose}
+{env_block}
+Success gates:
+{gate_block}
+
 Capabilities (domain-specific to this repo; same author -> validate spine as the volumes):
 - {cap}
 
 Capabilities here are scoped to repo kind `{kind}` in the manifest, so volume LaTeX
-capabilities will NOT resolve in this repo (and vice versa). Capabilities marked PLANNED are
-not yet implemented -- the shape and verifier are recorded so they can be built to spec.
+capabilities will NOT resolve in this repo (and vice versa).
 """
 
 def main():
@@ -82,7 +98,13 @@ def main():
         if r["kind"] == "volume":
             md = volume_overlay(r["repo"], r["title"], r.get("plain_style", False))
         else:
-            md = nonvolume_overlay(r["repo"], r["kind"], r["title"])
+            md = nonvolume_overlay(
+                r["repo"],
+                r["kind"],
+                r["title"],
+                r.get("build_environment"),
+                r.get("success_gates"),
+            )
         (outdir / f"{r['repo']}.md").write_text(md, encoding="utf-8")
         print(f"wrote overlays/{r['repo']}.md")
 

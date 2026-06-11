@@ -63,6 +63,15 @@ def test_define_does_not_leak_into_lean():
     assert got.startswith("FATAL:"), f"expected non-resolution in lean, got {got!r}"
     assert "no capability matches" in got, f"expected kind-rejection, got {got!r}"
 
+def test_lean_routes_to_lean_capability():
+    expect("lra-lean", "formalize addition commutativity", "author-lean-theorem")
+
+def test_numerical_analysis_routes_to_cpp_capability():
+    expect("lra-numerical-analysis", "implement the solver", "cpp-build-task")
+
+def test_nurbs_routes_to_cpp_capability():
+    expect("lra-nurbs", "implement surface evaluation", "cpp-build-task")
+
 
 if __name__ == "__main__":
     tests = [v for k, v in sorted(globals().items()) if k.startswith("test_") and callable(v)]

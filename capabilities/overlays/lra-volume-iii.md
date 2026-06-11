@@ -1,6 +1,6 @@
 # Repo Overlay -- lra-volume-iii
 
-Repo identity: TODO: Volume III title.
+Repo identity: Volume III.
 
 Local conventions:
 - Content lives under `volume-iii/<chapter>/notes/<section>/notes-<section>.tex`;

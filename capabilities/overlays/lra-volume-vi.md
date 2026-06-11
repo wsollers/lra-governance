@@ -1,6 +1,6 @@
 # Repo Overlay -- lra-volume-vi
 
-Repo identity: TODO: Volume VI title.
+Repo identity: Volume VI.
 
 Local conventions:
 - Content lives under `volume-vi/<chapter>/notes/<section>/notes-<section>.tex`;

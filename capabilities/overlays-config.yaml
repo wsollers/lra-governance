@@ -2,42 +2,55 @@
 # kind: volume -> uses the LaTeX authoring capabilities (stub/statement).
 #       library|lean|cpp|vault|web -> authoring capabilities do NOT apply; overlay documents purpose.
 # plain_style: true -> Vol IV style; verifiers pass --no-require-box (definitions are not boxed).
-# title: fill TODOs with the real volume titles.
+# title: short repo identity shown to agents.
 repos:
   - repo: lra-volume-i
     kind: volume
     title: "Logic, Sets, and Proof"
   - repo: lra-volume-ii
     kind: volume
-    title: "TODO: Volume II title"
+    title: "Volume II"
   - repo: lra-volume-iii
     kind: volume
-    title: "TODO: Volume III title"
+    title: "Volume III"
   - repo: lra-volume-iv
     kind: volume
-    title: "TODO: Volume IV title"
+    title: "Volume IV"
     plain_style: true
   - repo: lra-volume-v
     kind: volume
-    title: "TODO: Volume V title"
+    title: "Volume V"
   - repo: lra-volume-vi
     kind: volume
-    title: "TODO: Volume VI title"
+    title: "Volume VI"
   - repo: lra-volume-vii
     kind: volume
-    title: "TODO: Volume VII title"
+    title: "Volume VII"
   - repo: lra-volume-viii
     kind: volume
-    title: "TODO: Volume VIII title"
+    title: "Volume VIII"
   - repo: lra-common
     kind: library
     title: "Shared LaTeX macros, boxes, and templates"
   - repo: lra-lean
     kind: lean
     title: "Lean formalization"
+    success_gates:
+      - "lake build"
   - repo: lra-numerical-analysis
     kind: cpp
     title: "C++ / numerical companion"
+    build_environment: "MSVC x64 developer environment"
+    success_gates:
+      - "powershell -ExecutionPolicy Bypass -File tools\\build-msvc.ps1 -Configuration Debug"
+  - repo: lra-nurbs
+    kind: cpp
+    title: "NURBS / numerical geometry"
+    build_environment: "MSVC x64 developer environment"
+    success_gates:
+      - "cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug"
+      - "cmake --build build"
+      - "ctest --test-dir build --output-on-failure"
   - repo: lra-proof-vault
     kind: vault
     title: "Handwritten proof records"

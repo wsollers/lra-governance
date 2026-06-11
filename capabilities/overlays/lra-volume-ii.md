@@ -1,6 +1,6 @@
 # Repo Overlay -- lra-volume-ii
 
-Repo identity: TODO: Volume II title.
+Repo identity: Volume II.
 
 Local conventions:
 - Content lives under `volume-ii/<chapter>/notes/<section>/notes-<section>.tex`;

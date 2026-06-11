@@ -1,6 +1,6 @@
 # Repo Overlay -- lra-volume-viii
 
-Repo identity: TODO: Volume VIII title.
+Repo identity: Volume VIII.
 
 Local conventions:
 - Content lives under `volume-viii/<chapter>/notes/<section>/notes-<section>.tex`;
