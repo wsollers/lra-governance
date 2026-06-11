@@ -848,7 +848,7 @@ def generate_capstone_stub(chapter: Path, findings: list[Finding]) -> None:
             "\\end{remark*}\n",
             encoding="utf-8",
         )
-def validate_chapter_layout(chapter: Path, findings: list[Finding], generate_missing_capstone: bool = False) -> None:
+def validate_chapter_layout(chapter: Path, findings: list[Finding], generate_missing_capstone: bool = False, require_roadmap: bool = True) -> None:
     for relative in ("index.tex", "chapter.yaml", "notes/index.tex", "proofs/index.tex", "proofs/exercises/index.tex"):
         path = chapter / relative
         if not path.exists():
@@ -922,7 +922,7 @@ def validate_chapter_layout(chapter: Path, findings: list[Finding], generate_mis
                 add(findings, chapter, chapter_index, "invalid_breadcrumb", "Breadcrumb must bold the current chapter and use the arrow-chain form.", line_at(chapter_text, breadcrumb.start()))
             if re.search(r"title\s*=\s*\{[^{}]*Breadcrumb", breadcrumb_block, re.IGNORECASE):
                 add(findings, chapter, chapter_index, "invalid_breadcrumb_title", "Breadcrumb title must be the chapter subject, not 'Breadcrumb'.", line_at(chapter_text, breadcrumb.start()))
-        if not re.search(r"Roadmap|roadmap", pre_inputs):
+        if require_roadmap and not re.search(r"Roadmap|roadmap", pre_inputs):
             add(findings, chapter, chapter_index, "missing_structural_roadmap", "Chapter index must include structural roadmap content before routed inputs.")
         if not re.search(r"Chapter structure|chapter structure|Structure", pre_inputs):
             add(findings, chapter, chapter_index, "missing_chapter_structure", "Chapter index must include chapter-structure content before routed inputs.")
@@ -1513,6 +1513,13 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Create a planned standard capstone stub when proofs/exercises/capstone-{chapter}.tex is missing.",
     )
+    parser.add_argument(
+        "--no-require-roadmap",
+        action="store_true",
+        help="Do not require a structural roadmap in the chapter index. Lockstep with the "
+             "structural-roadmap purge: roadmaps are being retired, so this requirement is "
+             "disabled wherever the new engine's structural_roadmap_purge rule is active.",
+    )
     return parser.parse_args()
 
 
@@ -1525,7 +1532,7 @@ def main() -> int:
     else:
         terms = canonical_terms(chapter)
         validate_chapter_registry(chapter, findings)
-        validate_chapter_layout(chapter, findings, generate_missing_capstone=args.generate_missing_capstone)
+        validate_chapter_layout(chapter, findings, generate_missing_capstone=args.generate_missing_capstone, require_roadmap=not args.no_require_roadmap)
         validate_unique_labels(chapter, findings)
         for path in tex_files(chapter):
             validate_latex_integrity(chapter, path, findings)

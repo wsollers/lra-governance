@@ -1,0 +1,46 @@
+# Per-repo overlay config consumed by generate_overlays.py.
+# kind: volume -> uses the LaTeX authoring capabilities (stub/statement).
+#       library|lean|cpp|vault|web -> authoring capabilities do NOT apply; overlay documents purpose.
+# plain_style: true -> Vol IV style; verifiers pass --no-require-box (definitions are not boxed).
+# title: fill TODOs with the real volume titles.
+repos:
+  - repo: lra-volume-i
+    kind: volume
+    title: "Logic, Sets, and Proof"
+  - repo: lra-volume-ii
+    kind: volume
+    title: "TODO: Volume II title"
+  - repo: lra-volume-iii
+    kind: volume
+    title: "TODO: Volume III title"
+  - repo: lra-volume-iv
+    kind: volume
+    title: "TODO: Volume IV title"
+    plain_style: true
+  - repo: lra-volume-v
+    kind: volume
+    title: "TODO: Volume V title"
+  - repo: lra-volume-vi
+    kind: volume
+    title: "TODO: Volume VI title"
+  - repo: lra-volume-vii
+    kind: volume
+    title: "TODO: Volume VII title"
+  - repo: lra-volume-viii
+    kind: volume
+    title: "TODO: Volume VIII title"
+  - repo: lra-common
+    kind: library
+    title: "Shared LaTeX macros, boxes, and templates"
+  - repo: lra-lean
+    kind: lean
+    title: "Lean formalization"
+  - repo: lra-numerical-analysis
+    kind: cpp
+    title: "C++ / numerical companion"
+  - repo: lra-proof-vault
+    kind: vault
+    title: "Handwritten proof records"
+  - repo: lra-knowledge-explorer
+    kind: web
+    title: "Knowledge Explorer web app"

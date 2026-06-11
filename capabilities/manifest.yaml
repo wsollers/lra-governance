@@ -1,0 +1,49 @@
+version: 2
+# Capability manifest consumed by resolve.py. Each capability declares `applies_to`
+# (repo kinds). The resolver maps repo -> kind via overlays-config.yaml and only matches
+# capabilities applicable to that kind. Triggers matched whole-word, longest-match wins.
+# {root}/{chapter}/{canonical}/{target} are substituted by the resolver.
+capabilities:
+  - id: author-statement
+    applies_to: [volume]
+    triggers: ["author statement", "generate the latex", "append the", "the theorem",
+               "the lemma", "the proposition", "the corollary", "the axiom",
+               "theorem", "lemma", "proposition", "corollary", "axiom"]
+    reads:
+      - capabilities/author-statement/capability.md
+      - capabilities/author-statement/proof_stub.py
+    verify:
+      - "python tools/governance/validate_decoration.py --root {root} --chapter {chapter} --canonical-dir {canonical}"
+      - "python tools/governance/audit_proof_layout.py --root {root} --chapter {chapter} --strict"
+  - id: author-definition
+    applies_to: [volume]
+    triggers: ["author definition", "generate the definition", "the definition",
+               "write the def", "define ", "definition"]
+    reads:
+      - capabilities/author-definition/capability.md
+      - capabilities/author-definition/verify.py
+    verify:
+      - "python tools/governance/validate_decoration.py --root {root} --chapter {chapter} --canonical-dir {canonical}"
+      - "python capabilities/author-definition/verify.py --target {target} --kind definition --predicates {canonical}/predicates.yaml"
+  - id: author-stub-chapter
+    applies_to: [volume]
+    triggers: ["stub a chapter", "stub chapter", "scaffold a chapter", "scaffold chapter", "new chapter"]
+    reads: [capabilities/author-stub-chapter/capability.md]
+    verify: ["python tools/governance/audit_volume_layout.py --root {root} --chapter {chapter} --strict"]
+  - id: author-stub-section
+    applies_to: [volume]
+    triggers: ["stub a section", "stub section", "scaffold a section", "new section"]
+    reads: [capabilities/author-stub-section/capability.md]
+    verify: ["python tools/governance/audit_volume_layout.py --root {root} --chapter {chapter} --strict"]
+  - id: author-lean-theorem
+    applies_to: [lean]
+    triggers: ["formalize", "lean theorem", "add lean", "formalise"]
+    reads: [capabilities/author-lean-theorem/capability.md]
+    verify:
+      - "cd {root} && lake build"        # TODO: confirm the exact Lean build command
+  - id: cpp-build-task
+    applies_to: [cpp]
+    triggers: ["do task", "task", "implement", "build task"]
+    reads: [capabilities/cpp-build-task/capability.md]
+    verify:
+      - "cd {root} && cmake --build build"   # TODO: confirm the exact C++ build command
