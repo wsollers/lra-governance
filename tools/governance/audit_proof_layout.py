@@ -21,7 +21,10 @@ PROOF_FOR_RE = re.compile(r"\\LRAProofFor\{((?:thm|lem|prop|cor):[a-z0-9-]+)\}")
 HYPERREF_RE = re.compile(r"\\hyperref\[([a-z]+:[a-z0-9-]+)\]\{([^}]*)\}")
 PROOF_VAULT_RE = re.compile(r"\\ProofVaultURL\{([^}]*)\}")
 BEGIN_PROOF_RE = re.compile(r"\\begin\{proof\}(.*?)\\end\{proof\}", re.DOTALL)
-THEOREM_STAR_RE = re.compile(r"\\begin\{theorem\*\}(?:\[[^\]]*\])?(.*?)\\end\{theorem\*\}", re.DOTALL)
+THEOREM_STAR_RE = re.compile(
+    r"\\begin\{(?:theorem|lemma|proposition|corollary)\*\}(?:\[[^\]]*\])?(.*?)\\end\{(?:theorem|lemma|proposition|corollary)\*\}",
+    re.DOTALL,
+)
 PROOF_STRUCTURE_RE = re.compile(
     r"\\begin\{remark\*\}\[Proof structure\](.*?)\\end\{remark\*\}",
     re.DOTALL,
@@ -229,7 +232,7 @@ def validate_order(text: str, audit: ProofAudit) -> None:
         ("proof_label", r"\\label\{prf:[a-z0-9-]+\}"),
         ("proof_for", r"\\LRAProofFor\{(?:thm|lem|prop|cor):[a-z0-9-]+\}"),
         ("return_navigation", r"\\begin\{remark\*\}\[Return\]"),
-        ("theorem_restatement", r"\\begin\{theorem\*\}"),
+        ("theorem_restatement", r"\\begin\{(?:theorem|lemma|proposition|corollary)\*\}"),
         ("professional_standard_proof", r"Professional Standard Proof"),
         ("detailed_learning_proof", r"Detailed Learning Proof"),
         ("proof_structure", r"\\begin\{remark\*\}\[Proof structure\]"),
@@ -314,7 +317,7 @@ def audit_proof(path: Path, chapter_root: Path, root: Path, notes: dict[str, str
             add(audit, "error", "missing_return_link", "Missing return hyperref to LRAProofFor target.")
 
     vault = PROOF_VAULT_RE.search(text)
-    theorem_pos = position(text, r"\\begin\{theorem\*\}")
+    theorem_pos = position(text, r"\\begin\{(?:theorem|lemma|proposition|corollary)\*\}")
     return_pos = position(text, r"\\begin\{remark\*\}\[Return\]")
     if vault:
         url = vault.group(1).strip()
@@ -323,7 +326,7 @@ def audit_proof(path: Path, chapter_root: Path, root: Path, notes: dict[str, str
         if re.search(r"\.(?:jpg|jpeg|png|webp)$", url, re.IGNORECASE):
             add(audit, "error", "raw_image_proof_vault_url", "ProofVaultURL must point to a record, not a raw image.")
         if return_pos >= 0 and theorem_pos >= 0 and not (return_pos < vault.start() < theorem_pos):
-            add(audit, "error", "proof_vault_url_position", "ProofVaultURL must appear after Return and before theorem*.")
+            add(audit, "error", "proof_vault_url_position", "ProofVaultURL must appear after Return and before the starred restatement.")
 
     theorem_body = block(text, THEOREM_STAR_RE)
     professional_body, detailed_body = proof_blocks(text)

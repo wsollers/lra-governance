@@ -23,4 +23,11 @@ Implement one requested C++/numerical change.
 Run the success gates listed in the repo overlay. On Windows/MSVC repos, run
 CMake from the MSVC x64 developer environment or a repo script that enters it.
 
+## Reference Escalation
+
+Prefer local source, tests, build scripts, and the repo overlay. If repository
+structure or generated-file ownership is still unclear, open
+`capabilities/reference-index.md` and use only the C++ or cross-repo row needed
+for the issue.
+
 Stop if the build environment is unavailable or any gate fails.

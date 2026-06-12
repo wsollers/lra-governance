@@ -4,6 +4,9 @@
 # plain_style: true -> Vol IV style; verifiers pass --no-require-box (definitions are not boxed).
 # title: short repo identity shown to agents.
 repos:
+  - repo: lra-governance
+    kind: governance
+    title: "Governance, capabilities, validators, and wrappers"
   - repo: lra-volume-i
     kind: volume
     title: "Logic, Sets, and Proof"

@@ -32,5 +32,6 @@ small: route to one capability, do the action, and run its success gates.
 
 - Machine manifest: `capabilities/manifest.yaml`
 - Human index: `capabilities/index.md`
+- Escalation references: `capabilities/reference-index.md`
 - Repo overlays: `capabilities/overlays/`
 - Capability docs: `capabilities/<capability>/capability.md`

@@ -71,7 +71,7 @@ Every nested sequence of nonempty compact sets intersects.
         self.assertIn("volume-ii/integers/proofs/notes/prf-int-order", targets)
         self.assertIn("prf-int-order", targets)
 
-    def test_append_input_wraps_fresh_index_in_proof_status_remark(self):
+    def test_append_input_creates_router_only_fresh_index(self):
         tmp = Path(__file__).resolve().parents[2] / ".test-tmp" / "append-proof-input"
         if tmp.exists():
             shutil.rmtree(tmp)
@@ -88,9 +88,9 @@ Every nested sequence of nonempty compact sets intersects.
             if tmp.exists():
                 shutil.rmtree(tmp)
 
-        self.assertIn(r"\begin{remark*}[Proof status]", text)
-        self.assertIn(r"\LRAProofsInput{volume-ii/integers/proofs/notes/prf-int-order}", text)
-        self.assertIn(r"\end{remark*}", text)
+        self.assertIn(r"\input{volume-ii/integers/proofs/notes/prf-int-order}", text)
+        self.assertNotIn(r"\begin{remark*}[Proof status]", text)
+        self.assertNotIn(r"\end{remark*}", text)
 
 
 if __name__ == "__main__":

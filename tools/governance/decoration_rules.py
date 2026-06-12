@@ -190,7 +190,7 @@ def run_file_rules(text: str, info: FileInfo, ctx: Context) -> list[Issue]:
 # Events are (kind, line, level). Machinery/comments/blank skipped. exposition and
 # toolkitbox collapse to a single ('exposition'|'toolkit', start_line, '') event.
 _MACHINERY = re.compile(
-    r"\\(input|include|LRAProofsInput|LRAExercisesInput|label|index|phantomsection|addcontentsline|clearpage|newpage|FloatBarrier)\b"
+    r"\\(input|include|LRAExcludeFromPrintEditionBegin|LRAExcludeFromPrintEditionEnd|label|index|phantomsection|addcontentsline|clearpage|newpage|FloatBarrier)\b"
 )
 _HEADING   = re.compile(r"\\(chapter|section|subsection|subsubsection)\b")
 _ENV_BEG   = re.compile(r"\\begin\{(exposition|toolkitbox)\}")
@@ -298,10 +298,12 @@ def chapter_index_shape(text: str, info: FileInfo, ctx: Context):
         ("label", _LABEL_LINE_RE, "\\label{chap:...} or \\label{ch:...}"),
         ("breadcrumb", _BREADCRUMB_LINE_RE, "\\breadcrumb{...}{...}{...}{...}"),
         ("notes_input", re.compile(rf"\\input\{{{re.escape(root)}/notes/index\}}$"), f"\\input{{{root}/notes/index}}"),
+        ("exclude_begin", re.compile(r"\\LRAExcludeFromPrintEditionBegin$"), "\\LRAExcludeFromPrintEditionBegin"),
         ("proofs_heading", re.compile(r"\\section\*\{Proofs\}$"), "\\section*{Proofs}"),
-        ("proofs_input", re.compile(rf"\\LRAProofsInput\{{{re.escape(root)}/proofs/index\}}$"), f"\\LRAProofsInput{{{root}/proofs/index}}"),
+        ("proofs_input", re.compile(rf"\\input\{{{re.escape(root)}/proofs/index\}}$"), f"\\input{{{root}/proofs/index}}"),
         ("capstone_heading", re.compile(r"\\section\*\{Capstone\}$"), "\\section*{Capstone}"),
-        ("capstone_input", re.compile(rf"\\LRAExercisesInput\{{{re.escape(root)}/proofs/exercises/index\}}$"), f"\\LRAExercisesInput{{{root}/proofs/exercises/index}}"),
+        ("capstone_input", re.compile(rf"\\input\{{{re.escape(root)}/proofs/exercises/index\}}$"), f"\\input{{{root}/proofs/exercises/index}}"),
+        ("exclude_end", re.compile(r"\\LRAExcludeFromPrintEditionEnd$"), "\\LRAExcludeFromPrintEditionEnd"),
     ]
     lines = list(_significant_lines(text))
     if len(lines) != len(expected):
@@ -404,7 +406,7 @@ _PLAIN_BLOCK_RE = re.compile(r"\\begin\{(remark|example)\}(?!\*)")
 _TOP_LEVEL_COMMANDS = ("\\chapter","\\section","\\subsection","\\subsubsection",
     "\\paragraph","\\input","\\include","\\label","\\newpage","\\clearpage",
     "\\phantomsection","\\noindent","\\FloatBarrier","\\LRAProofFor",
-    "\\LRAProofsInput","\\LRAExercisesInput","\\NoLocalDependencies",
+    "\\LRAExcludeFromPrintEditionBegin","\\LRAExcludeFromPrintEditionEnd","\\NoLocalDependencies",
     "\\medskip","\\smallskip","\\bigskip","\\vspace")
 _IGNORED_LABEL_PREFIXES = {"ch","sec","subsec","toc"}
 _BAD_LABEL_PARTS = {"the","following","this","with","therefore","and","or","let","denote","page"}

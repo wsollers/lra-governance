@@ -27,5 +27,11 @@ Write one mathematical definition in a volume chapter.
 - `python capabilities/author-definition/verify.py --target <file> --kind definition --predicates <canonical-root>/predicates.yaml`
 - `cd <volume-root> && latexmk -lualatex main.tex`
 
+## Reference Escalation
+
+If the overlay and nearby examples do not answer a structural question, open
+`capabilities/reference-index.md` and use only the `Volume Definition Authoring`
+row needed for the issue.
+
 Stop if a success gate fails, the target file is ambiguous, or the needed
 canonical predicate is missing.

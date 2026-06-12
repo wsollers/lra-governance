@@ -1,1 +1,1 @@
-"""Shared governance validator primitives."""
+"""Shared primitives for volume validators."""

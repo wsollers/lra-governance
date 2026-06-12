@@ -32,5 +32,11 @@ is specifically to define a term.
 - For provable statements: `python tools/governance/audit_proof_layout.py --root <volume-root> --chapter <chapter> --strict`
 - `cd <volume-root> && latexmk -lualatex main.tex`
 
+## Reference Escalation
+
+If the overlay and nearby examples do not answer a structural question, open
+`capabilities/reference-index.md` and use only the `Volume Statement Authoring`
+row needed for the issue.
+
 Stop if the target section is ambiguous, a canonical registry entry is required
 but missing, or either success gate fails.

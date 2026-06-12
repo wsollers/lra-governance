@@ -73,6 +73,22 @@ def test_nurbs_routes_to_cpp_capability():
     expect("lra-nurbs", "implement surface evaluation", "cpp-build-task")
 
 
+def test_volume_build_routes_to_build_repo():
+    expect("lra-volume-viii", "build repo", "build-repo")
+
+
+def test_lean_workflow_monitor_routes_to_build_repo():
+    expect("lra-lean", "monitor workflows", "build-repo")
+
+
+def test_cpp_build_repo_routes_to_build_repo():
+    expect("lra-numerical-analysis", "build repository", "build-repo")
+
+
+def test_governance_validate_routes_to_build_repo():
+    expect("lra-governance", "validate repo", "build-repo")
+
+
 if __name__ == "__main__":
     tests = [v for k, v in sorted(globals().items()) if k.startswith("test_") and callable(v)]
     failed = 0

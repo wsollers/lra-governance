@@ -136,49 +136,26 @@ def read_braced_arg(text: str, pos: int):
     return text[pos + 1:], len(text)
 
 def append_input(index_path: Path, target_rel: str, nl: str, apply: bool):
-    """Append \\LRAProofsInput{target_rel} to index_path if absent. Returns action str or None."""
-    route = f"\\LRAProofsInput{{{target_rel}}}"
+    """Append \\input{target_rel} to index_path if absent. Returns action str or None."""
+    route = f"\\input{{{target_rel}}}"
     if index_path.exists():
         text = open(index_path, encoding="utf-8", newline="").read()
         if target_rel in idp.normalized_input_targets(text):
             return None
         ix_nl = "\r\n" if "\r\n" in text else nl
-        proof_status = re.search(
-            r"\\begin\{remark\*\}\[Proof status\](?P<body>[\s\S]*?)\\end\{remark\*\}",
-            text,
-        )
-        if proof_status:
-            insert_at = proof_status.end("body")
-            prefix = "" if text[:insert_at].endswith(("\n", "\r")) else ix_nl
-            new = text[:insert_at] + prefix + route + ix_nl + text[insert_at:]
-        else:
-            prefix = ix_nl if text and not text.endswith(("\n", "\r")) else ""
-            new = (
-                text
-                + prefix
-                + r"\begin{remark*}[Proof status]" + ix_nl
-                + route + ix_nl
-                + r"\end{remark*}" + ix_nl
-            )
+        prefix = ix_nl if text and not text.endswith(("\n", "\r")) else ""
+        new = text + prefix + route + ix_nl
         if apply:
             with open(index_path, "w", encoding="utf-8", newline="") as f:
                 f.write(new)
-        return f"WIRE   {index_path.name}  <- \\LRAProofsInput{{{target_rel}}}"
+        return f"WIRE   {index_path.name}  <- \\input{{{target_rel}}}"
     # create fresh topic index
-    banner = (f"% ========================================================={nl}"
-              f"% Proofs: {index_path.parent.name}{nl}"
-              f"% ========================================================={nl}{nl}")
-    new = (
-        banner
-        + r"\begin{remark*}[Proof status]" + nl
-        + route + nl
-        + r"\end{remark*}" + nl
-    )
+    new = f"% Proofs router: {index_path.parent.name}{nl}{route}{nl}"
     if apply:
         index_path.parent.mkdir(parents=True, exist_ok=True)
         with open(index_path, "w", encoding="utf-8", newline="") as f:
             f.write(new)
-    return f"CREATE {index_path.relative_to(index_path.parents[2])}  (+ \\LRAProofsInput{{{target_rel}}})"
+    return f"CREATE {index_path.relative_to(index_path.parents[2])}  (+ \\input{{{target_rel}}})"
 
 def main():
     ap = argparse.ArgumentParser(description="Create proof stubs for missing obligations.")

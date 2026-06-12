@@ -67,6 +67,12 @@ def test_parity_fixtures_cover_expected_codes():
         chapter = fixture["chapter"]
         expected = fixture["validators"]
 
+        validate_volume = _run_json([
+            "validate_volume.py",
+            str(root),
+        ])
+        _assert_subset("validate_volume", expected["validate_volume"], _codes_from_decoration(validate_volume))
+
         decoration = _run_json([
             "validate_decoration.py",
             "--root", str(root),

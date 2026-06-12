@@ -1,7 +1,9 @@
-"""Print-edition routing checks.
+r"""Print-edition routing checks.
 
-Proof vaults, exercise vaults, and capstones must be routed through semantic
-input macros so shelf/print builds can omit them without editing source files.
+Chapter routers own the print-edition boundary. Proof and capstone routes are
+ordinary ``\input`` lines inside one ``\LRAExcludeFromPrintEditionBegin`` /
+``\LRAExcludeFromPrintEditionEnd`` block. Files below ``proofs/`` use ordinary
+``\input`` as plain router files.
 """
 from __future__ import annotations
 
@@ -19,49 +21,132 @@ class Finding:
 
 
 RAW_INPUT_RE = re.compile(r"\\(?:input|include)\{([^}]+)\}")
-PRINT_AWARE_INPUT_RE = re.compile(r"\\(?:LRAProofsInput|LRAExercisesInput|LRACapstoneInput)\{([^}]+)\}")
+LEGACY_INPUT_RE = re.compile(r"\\(?P<macro>LRAProofsInput|LRAExercisesInput|LRACapstoneInput)\{(?P<target>[^}]+)\}")
+EXCLUDE_BEGIN_RE = re.compile(r"\\LRAExcludeFromPrintEditionBegin\b")
+EXCLUDE_END_RE = re.compile(r"\\LRAExcludeFromPrintEditionEnd\b")
 
 
 def _line(text: str, pos: int) -> int:
     return text.count("\n", 0, pos) + 1
 
 
+def _normalize(target: str) -> str:
+    return target.replace("\\", "/").removesuffix(".tex")
+
+
 def _target_kind(target: str) -> str | None:
-    normalized = target.replace("\\", "/").removesuffix(".tex")
+    normalized = _normalize(target)
+    if normalized.endswith("/proofs/exercises/index"):
+        return "exercises_index"
+    if normalized.endswith("/proofs/index"):
+        return "proofs_index"
     if "/proofs/exercises/capstone-" in normalized:
         return "capstone"
-    if normalized.endswith("/proofs/exercises/index") or "/proofs/exercises/" in normalized:
+    if "/proofs/exercises/" in normalized:
         return "exercises"
-    if normalized.endswith("/proofs/index") or "/proofs/" in normalized:
+    if "/proofs/" in normalized:
         return "proofs"
+    if normalized.endswith("/exercises/index") or "/exercises/" in normalized:
+        return "exercises"
     return None
 
 
-def check(text: str, info, ctx) -> Iterable[Finding]:
-    for match in RAW_INPUT_RE.finditer(text):
-        target = match.group(1)
-        kind = _target_kind(target)
-        if not kind:
+def _posix_path(info) -> str:
+    return getattr(info, "path", "").replace("\\", "/")
+
+
+def _is_chapter_index(info) -> bool:
+    return getattr(info, "kind", "") == "chapter_index"
+
+
+def _in_excluded_span(spans: list[tuple[int, int]], pos: int) -> bool:
+    return any(start <= pos <= end for start, end in spans)
+
+
+def _exclude_spans(text: str) -> tuple[list[tuple[int, int]], list[Finding]]:
+    findings: list[Finding] = []
+    begins = list(EXCLUDE_BEGIN_RE.finditer(text))
+    ends = list(EXCLUDE_END_RE.finditer(text))
+    if len(begins) != len(ends):
+        findings.append(
+            Finding(
+                "print_edition_exclusion_unbalanced",
+                "Print-edition exclusion blocks must have matching begin and end markers.",
+                "error",
+                _line(text, (begins + ends)[0].start()) if begins or ends else 0,
+            )
+        )
+        return [], findings
+    spans: list[tuple[int, int]] = []
+    for begin, end in zip(begins, ends):
+        if end.start() < begin.end():
+            findings.append(
+                Finding(
+                    "print_edition_exclusion_misordered",
+                    "\\LRAExcludeFromPrintEditionEnd appears before its begin marker.",
+                    "error",
+                    _line(text, end.start()),
+                )
+            )
             continue
-        macro = {
-            "proofs": r"\LRAProofsInput",
-            "exercises": r"\LRAExercisesInput",
-            "capstone": r"\LRACapstoneInput",
-        }[kind]
+        spans.append((begin.start(), end.end()))
+    return spans, findings
+
+
+def check(text: str, info, ctx) -> Iterable[Finding]:
+    is_chapter_index = _is_chapter_index(info)
+    spans, span_findings = _exclude_spans(text)
+
+    for item in span_findings:
+        yield item
+
+    for match in LEGACY_INPUT_RE.finditer(text):
+        macro = match.group("macro")
         yield Finding(
-            "print_edition_raw_input",
-            f"Route {target} through {macro}{{...}} so print edition can omit {kind}.",
+            "legacy_print_edition_input_macro",
+            f"\\{macro} is retired; use ordinary \\input{{...}} and place chapter proof/capstone routes inside the print-edition exclusion block.",
             "error",
             _line(text, match.start()),
         )
 
-    for match in PRINT_AWARE_INPUT_RE.finditer(text):
-        target = match.group(1)
-        kind = _target_kind(target)
-        if not kind:
+    if not is_chapter_index:
+        for match in EXCLUDE_BEGIN_RE.finditer(text):
             yield Finding(
-                "print_edition_macro_non_vault_target",
-                f"Print-edition input macro wraps non-vault target {target}; use \\input{{...}} for ordinary content.",
+                "print_edition_exclusion_not_chapter_index",
+                "Print-edition exclusion blocks belong only in the chapter index router.",
                 "error",
                 _line(text, match.start()),
             )
+        for match in EXCLUDE_END_RE.finditer(text):
+            yield Finding(
+                "print_edition_exclusion_not_chapter_index",
+                "Print-edition exclusion blocks belong only in the chapter index router.",
+                "error",
+                _line(text, match.start()),
+            )
+        return
+
+    raw_matches = list(RAW_INPUT_RE.finditer(text))
+    has_print_sensitive_route = any(_target_kind(match.group(1)) is not None for match in raw_matches)
+    if not spans and not has_print_sensitive_route:
+        return
+
+    if len(spans) != 1:
+        yield Finding(
+            "print_edition_exclusion_block_count",
+            "Chapter index must contain exactly one print-edition exclusion block wrapping proofs and capstone routes.",
+            "error",
+            _line(text, spans[0][0]) if spans else 0,
+        )
+
+    for match in raw_matches:
+        target = match.group(1)
+        kind = _target_kind(target)
+        if kind is not None:
+            if not _in_excluded_span(spans, match.start()):
+                yield Finding(
+                    "print_edition_chapter_input_outside_exclusion",
+                    f"Chapter index routes {target} outside the print-edition exclusion block.",
+                    "error",
+                    _line(text, match.start()),
+                )

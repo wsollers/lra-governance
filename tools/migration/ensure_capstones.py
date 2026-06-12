@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Ensure every chapter has a canonical capstone in the proper place + routed.
+r"""Ensure every chapter has a canonical capstone in the proper place + routed.
 
 Canonical location: proofs/exercises/capstone-{subject}.tex, routed LAST in
 proofs/exercises/index.tex, which is routed from proofs/index.tex
@@ -76,17 +76,23 @@ def stub(subject: str, title: str) -> str:
     )
 
 def read(p: Path):
-    return open(p, encoding="utf-8", newline="").read()
+    with open(p, encoding="utf-8", newline="") as f:
+        return f.read()
+
+
+def write(p: Path, text: str) -> None:
+    with open(p, "w", encoding="utf-8", newline="") as f:
+        f.write(text)
 
 def nl_of(text, d="\n"):
     return "\r\n" if "\r\n" in text else d
 
 def route_capstone_last(index_path: Path, cap_target: str, apply: bool, nl="\n"):
-    """Ensure \input{cap_target} is present and is the LAST \input. Returns action or None."""
+    r"""Ensure \input{cap_target} is present and is the LAST \input. Returns action or None."""
     if index_path.exists():
         text = read(index_path); nl = nl_of(text, nl)
         lines = text.split(nl)
-        cap_line = f"\\LRACapstoneInput{{{cap_target}}}"
+        cap_line = f"\\input{{{cap_target}}}"
         norm = lambda s: (INPUT_RE.search(s).group(1).replace("\\", "/").removesuffix(".tex")
                           if INPUT_RE.search(s) else None)
         has = any(norm(l) == cap_target for l in lines)
@@ -104,15 +110,12 @@ def route_capstone_last(index_path: Path, cap_target: str, apply: bool, nl="\n")
             lines.append(cap_line)
         new = nl.join(lines)
         if apply:
-            open(index_path, "w", encoding="utf-8", newline="").write(new)
+            write(index_path, new)
         return ("MOVE capstone -> last" if has else "ROUTE capstone (last)")
-    banner = (f"% ========================================================={nl}"
-              f"% Exercise Proofs{nl}"
-              f"% ========================================================={nl}{nl}")
-    new = banner + f"\\subsection*{{Exercise Proofs}}{nl}\\LRACapstoneInput{{{cap_target}}}{nl}"
+    new = f"% Exercise proofs router{nl}\\input{{{cap_target}}}{nl}"
     if apply:
         index_path.parent.mkdir(parents=True, exist_ok=True)
-        open(index_path, "w", encoding="utf-8", newline="").write(new)
+        write(index_path, new)
     return "CREATE proofs/exercises/index.tex (+ capstone)"
 
 def ensure_proofs_routes_exercises(proofs_index: Path, ex_target: str, apply: bool):
@@ -123,9 +126,9 @@ def ensure_proofs_routes_exercises(proofs_index: Path, ex_target: str, apply: bo
     if ex_target in targets:
         return None
     glue = "" if (not text or text.endswith(("\n", "\r"))) else nl
-    new = text + glue + f"\\LRAExercisesInput{{{ex_target}}}" + nl
+    new = text + glue + f"\\input{{{ex_target}}}" + nl
     if apply:
-        open(proofs_index, "w", encoding="utf-8", newline="").write(new)
+        write(proofs_index, new)
     return "WIRE proofs/index.tex -> proofs/exercises/index"
 
 def main():
@@ -154,21 +157,21 @@ def main():
                 actions.append(f"RENAME {misnamed[0].name} -> capstone-{subject}.tex")
                 if a.apply:
                     canonical.parent.mkdir(parents=True, exist_ok=True)
-                    open(canonical, "w", encoding="utf-8", newline="").write(read(misnamed[0]))
+                    write(canonical, read(misnamed[0]))
                     misnamed[0].unlink()
             else:
                 title = subject.replace("-", " ").title()
                 actions.append("CREATE capstone stub")
                 if a.apply:
                     canonical.parent.mkdir(parents=True, exist_ok=True)
-                    open(canonical, "w", encoding="utf-8", newline="").write(stub(subject, title))
+                    write(canonical, stub(subject, title))
         elif a.upgrade_empty:
             body = re.sub(r"(?<!\\)%.*", "", read(canonical))
             if "\\begin{tcolorbox}" not in body:
                 title = subject.replace("-", " ").title()
                 actions.append("UPGRADE empty capstone -> compliant stub")
                 if a.apply:
-                    open(canonical, "w", encoding="utf-8", newline="").write(stub(subject, title))
+                    write(canonical, stub(subject, title))
         # 2) route capstone last (creates ex_index if absent)
         act = route_capstone_last(ex_index, cap_target, a.apply)
         if act:

@@ -99,8 +99,8 @@ def test_standalone_figure_file_skips_block_discipline():
 def test_route_macros_are_machinery_not_top_level_prose():
     info = dr.FileInfo("vol/chapter/proofs/topic/index.tex", "other")
     t = (
-        "\\LRAProofsInput{vol/chapter/proofs/topic/prf-a}\n"
-        "\\LRAExercisesInput{vol/chapter/proofs/exercises/index}\n"
+        "\\input{vol/chapter/proofs/topic/prf-a}\n"
+        "\\input{vol/chapter/proofs/exercises/index}\n"
     )
     assert "top_level_prose" not in _codes(dr.run_file_rules(t, info, dr.Context()))
 
@@ -190,10 +190,12 @@ def _chapter_index():
         r"\label{chap:structure-of-real-line}",
         r"\breadcrumb{structure-of-real-line}{Number Lines and Intervals}{Structure of the Real Line}{Formalizing the Number Systems}",
         r"\input{volume-ii/structure-of-real-line/notes/index}",
+        r"\LRAExcludeFromPrintEditionBegin",
         r"\section*{Proofs}",
-        r"\LRAProofsInput{volume-ii/structure-of-real-line/proofs/index}",
+        r"\input{volume-ii/structure-of-real-line/proofs/index}",
         r"\section*{Capstone}",
-        r"\LRAExercisesInput{volume-ii/structure-of-real-line/proofs/exercises/index}",
+        r"\input{volume-ii/structure-of-real-line/proofs/exercises/index}",
+        r"\LRAExcludeFromPrintEditionEnd",
     ])
 
 def test_chapter_index_shape_ok():
@@ -205,10 +207,12 @@ def test_chapter_index_shape_ok_for_nested_chapter():
         r"\label{chap:sequences}",
         r"\breadcrumb{sequences}{Functions}{Sequences}{Continuity}",
         r"\input{volume-iii/analysis/sequences/notes/index}",
+        r"\LRAExcludeFromPrintEditionBegin",
         r"\section*{Proofs}",
-        r"\LRAProofsInput{volume-iii/analysis/sequences/proofs/index}",
+        r"\input{volume-iii/analysis/sequences/proofs/index}",
         r"\section*{Capstone}",
-        r"\LRAExercisesInput{volume-iii/analysis/sequences/proofs/exercises/index}",
+        r"\input{volume-iii/analysis/sequences/proofs/exercises/index}",
+        r"\LRAExcludeFromPrintEditionEnd",
     ])
     assert "chapter_index_shape" not in _codes(dr.run_file_rules(t, NESTED_CI, dr.Context()))
 

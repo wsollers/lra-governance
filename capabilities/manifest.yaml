@@ -4,6 +4,18 @@ version: 2
 # capabilities applicable to that kind. Triggers matched whole-word, longest-match wins.
 # {root}/{chapter}/{canonical}/{target} are substituted by the resolver.
 capabilities:
+  - id: build-repo
+    applies_to: [volume, lean, cpp, library, vault, web, governance]
+    triggers: ["dispatch workflow", "dispatch workflows", "monitor workflow", "monitor workflows",
+               "github action", "github actions", "build repo", "build repository",
+               "validate repo", "validate repository", "check repo", "check repository",
+               "run ci", "ci", "build", "validate"]
+    reads:
+      - capabilities/build-repo/capability.md
+      - capabilities/reference-index.md
+      - capabilities/build-repo/build_repo.py
+    verify:
+      - "python capabilities/build-repo/build_repo.py --root {root}"
   - id: author-statement
     applies_to: [volume]
     triggers: ["author statement", "generate the latex", "append the", "the theorem",
@@ -11,6 +23,7 @@ capabilities:
                "theorem", "lemma", "proposition", "corollary", "axiom"]
     reads:
       - capabilities/author-statement/capability.md
+      - capabilities/reference-index.md
       - capabilities/author-statement/proof_stub.py
     verify:
       - "python tools/governance/validate_decoration.py --root {root} --chapter {chapter} --canonical-dir {canonical}"
@@ -22,6 +35,7 @@ capabilities:
                "write the def", "define ", "definition"]
     reads:
       - capabilities/author-definition/capability.md
+      - capabilities/reference-index.md
       - capabilities/author-definition/verify.py
     verify:
       - "python tools/governance/validate_decoration.py --root {root} --chapter {chapter} --canonical-dir {canonical}"
@@ -32,29 +46,34 @@ capabilities:
     triggers: ["stub a chapter", "stub chapter", "scaffold a chapter", "scaffold chapter", "new chapter"]
     reads:
       - capabilities/author-stub-chapter/capability.md
+      - capabilities/reference-index.md
       - capabilities/author-stub-chapter/stub_chapter.py
     verify:
-      - "python tools/governance/audit_volume_layout.py --root {root} --chapter {chapter} --strict"
-      - "python tools/governance/validate_decoration.py --root {root} --chapter {chapter}"
+      - "python tools/governance/validate_volume.py {root} --fail-on-errors"
       - "cd {root} && latexmk -lualatex main.tex"
   - id: author-stub-section
     applies_to: [volume]
     triggers: ["stub a section", "stub section", "scaffold a section", "new section"]
     reads:
       - capabilities/author-stub-section/capability.md
+      - capabilities/reference-index.md
       - capabilities/author-stub-section/stub_section.py
     verify:
-      - "python tools/governance/audit_volume_layout.py --root {root} --chapter {chapter} --strict"
+      - "python tools/governance/validate_volume.py {root} --fail-on-errors"
       - "cd {root} && latexmk -lualatex main.tex"
   - id: author-lean-theorem
     applies_to: [lean]
     triggers: ["formalize", "lean theorem", "add lean", "formalise"]
-    reads: [capabilities/author-lean-theorem/capability.md]
+    reads:
+      - capabilities/author-lean-theorem/capability.md
+      - capabilities/reference-index.md
     verify:
       - "Run the repo overlay success gates."
   - id: cpp-build-task
     applies_to: [cpp]
     triggers: ["do task", "task", "implement", "build task"]
-    reads: [capabilities/cpp-build-task/capability.md]
+    reads:
+      - capabilities/cpp-build-task/capability.md
+      - capabilities/reference-index.md
     verify:
       - "Run the repo overlay success gates."

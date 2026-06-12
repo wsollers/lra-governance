@@ -24,4 +24,10 @@ Add or change one Lean theorem or proof in the Lean project.
 
 Run the success gates listed in the repo overlay.
 
+## Reference Escalation
+
+Prefer local Lean files and the repo overlay. If placement or scope is still
+unclear, open `capabilities/reference-index.md` and use only the `Lean Work`
+row needed for the issue.
+
 Stop if placement cannot be inferred from local structure or any gate fails.

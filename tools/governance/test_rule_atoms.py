@@ -24,6 +24,7 @@ class Block:
 @dataclass
 class FileInfo:
     path: str
+    kind: str = "other"
 
 
 def codes(findings):
@@ -121,17 +122,56 @@ def test_proof_stub_state_atom_accepts_all_stub_layers():
     )
 
 
-def test_print_edition_atom_flags_raw_proof_input():
+def test_print_edition_atom_flags_chapter_proof_input_outside_exclusion():
     text = r"\input{volume-i/example/proofs/index}" "\n"
-    assert "print_edition_raw_input" in codes(
-        print_edition_inputs.check(text, FileInfo("example/index.tex"), None)
+    assert "print_edition_chapter_input_outside_exclusion" in codes(
+        print_edition_inputs.check(text, FileInfo("example/index.tex", "chapter_index"), None)
     )
 
 
-def test_print_edition_atom_accepts_semantic_proof_input():
-    text = r"\LRAProofsInput{volume-i/example/proofs/index}" "\n"
-    assert "print_edition_raw_input" not in codes(
-        print_edition_inputs.check(text, FileInfo("example/index.tex"), None)
+def test_print_edition_atom_accepts_chapter_exclusion_block():
+    text = "\n".join(
+        [
+            r"\input{volume-i/example/notes/index}",
+            r"\LRAExcludeFromPrintEditionBegin",
+            r"\section*{Proofs}",
+            r"\input{volume-i/example/proofs/index}",
+            r"\section*{Capstone}",
+            r"\input{volume-i/example/proofs/exercises/index}",
+            r"\LRAExcludeFromPrintEditionEnd",
+            "",
+        ]
+    )
+    assert not codes(
+        print_edition_inputs.check(text, FileInfo("example/index.tex", "chapter_index"), None)
+    )
+
+
+def test_print_edition_atom_accepts_raw_input_below_proofs():
+    text = r"\input{volume-i/example/proofs/topic/prf-a}" "\n"
+    assert not codes(
+        print_edition_inputs.check(text, FileInfo("example/proofs/topic/index.tex"), None)
+    )
+
+
+def test_print_edition_atom_flags_macro_below_proofs():
+    text = r"\LRAProofsInput{volume-i/example/proofs/topic/prf-a}" "\n"
+    assert "legacy_print_edition_input_macro" in codes(
+        print_edition_inputs.check(text, FileInfo("example/proofs/topic/index.tex"), None)
+    )
+
+
+def test_print_edition_atom_flags_legacy_chapter_capstone_gate():
+    text = r"\LRACapstoneInput{volume-i/example/proofs/exercises/capstone-example}" "\n"
+    assert "legacy_print_edition_input_macro" in codes(
+        print_edition_inputs.check(text, FileInfo("example/index.tex", "chapter_index"), None)
+    )
+
+
+def test_print_edition_atom_flags_exclusion_outside_chapter_index():
+    text = r"\LRAExcludeFromPrintEditionBegin" "\n" r"\input{volume-i/example/proofs/exercises/index}" "\n" r"\LRAExcludeFromPrintEditionEnd" "\n"
+    assert "print_edition_exclusion_not_chapter_index" in codes(
+        print_edition_inputs.check(text, FileInfo("example/capstone.tex"), None)
     )
 
 

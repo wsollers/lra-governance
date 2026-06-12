@@ -15,9 +15,9 @@ LLM-authored LaTeX.
 ## Do
 
 Run `stub_chapter.py`. It creates the chapter router, `chapter.yaml`,
-`notes/index.tex`, `proofs/index.tex`, `proofs/exercises/.gitkeep`, optional
-section stubs, and routes the chapter from `index.tex` and `main.tex` when those
-routers exist.
+`notes/index.tex`, `proofs/index.tex`, `proofs/exercises/index.tex`, the
+canonical capstone stub, optional section stubs, and routes the chapter from
+`index.tex` and `main.tex` when those routers exist.
 
 The chapter router uses the thin canonical shape: `\chapter`, chapter label,
 `\breadcrumb`, notes input, proof section, print-aware proofs input, capstone
@@ -25,9 +25,14 @@ section, and print-aware capstone input.
 
 ## Success Gates
 
-- `python tools/governance/validate_decoration.py --root <volume-root> --chapter <subject> --fail-on-errors`
-- `python tools/governance/audit_volume_layout.py --root <volume-root> --chapter <subject> --strict`
+- `python tools/governance/validate_volume.py <volume-root> --fail-on-errors`
 - `cd <volume-root> && latexmk -lualatex main.tex`
 
+## Reference Escalation
+
+If the generator behavior or local routers do not answer a layout question,
+open `capabilities/reference-index.md` and use only the `Chapter And Section
+Scaffolding` row needed for the issue.
+
 Stop if a target chapter already exists with content that would be overwritten,
-or if either success gate fails.
+or if a success gate fails.
