@@ -9,7 +9,7 @@ from generators.chapter_stub import stub_chapter
 from generators.section_stub import stub_section
 from core import volume as volume_core
 from validate_volume import VALIDATORS
-from validators import block_discipline, capstones, chapter_router, dependency_blocks, dependency_graphs, formal_decoration, formal_reading_required, interpretation_blocks, labels, latex_integrity, math_boxes, notes_structure, print_edition_routing, proof_coverage, proof_file_contract, proof_layout, proof_order, proof_routing, proof_stub_state, reference_voice, structural_chrome, volume_shape
+from validators import block_discipline, capstones, chapter_router, dependency_blocks, dependency_graphs, formal_decoration, formal_reading_required, input_resolution, interpretation_blocks, labels, latex_integrity, math_boxes, notes_structure, print_edition_routing, proof_coverage, proof_file_contract, proof_layout, proof_order, proof_routing, proof_stub_state, reference_voice, structural_chrome, structural_positions, volume_shape
 
 
 HERE = Path(__file__).resolve().parent
@@ -1040,6 +1040,35 @@ class ValidateVolumeTests(unittest.TestCase):
         codes = {finding.code for finding in latex_integrity.validate(volume)}
 
         self.assertIn("mismatched_environment", codes)
+
+    def test_input_resolution_flags_missing_input_target(self):
+        volume = make_volume()
+        index = volume / "integers" / "proofs" / "index.tex"
+        index.write_text(
+            r"\input{volume-ii/integers/proofs/missing-topic/index}" "\n"
+            r"\input{volume-ii/integers/proofs/exercises/index}" "\n",
+            encoding="utf-8",
+        )
+
+        codes = {finding.code for finding in input_resolution.validate(volume)}
+
+        self.assertIn("missing_input_target", codes)
+
+    def test_structural_positions_flags_embedded_clearpage(self):
+        volume = make_volume()
+        capstone = volume / "integers" / "proofs" / "exercises" / "capstone-integers.tex"
+        capstone.write_text(
+            capstone.read_text(encoding="utf-8").replace(
+                r"\clearpage",
+                "near\n" + r"\clearpage$, find the limit.",
+                1,
+            ),
+            encoding="utf-8",
+        )
+
+        codes = {finding.code for finding in structural_positions.validate(volume)}
+
+        self.assertIn("illegal_clearpage_position", codes)
 
     def test_dependency_blocks_accepts_canonical_fixture(self):
         volume = make_volume()
