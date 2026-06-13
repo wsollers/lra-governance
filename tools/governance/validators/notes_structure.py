@@ -5,7 +5,7 @@ from pathlib import Path
 
 from core.finding import Finding, finding
 from core.tex import INPUT_RE, is_routed, read_text, strip_latex_comment
-from core.volume import chapter_roots
+from core.volume import chapter_roots, is_ignored
 
 
 FORMAL_ENV_RE = re.compile(r"\\begin\{(?:definition|axiom|theorem|lemma|proposition|corollary)\}")
@@ -13,6 +13,8 @@ PROOF_ENV_RE = re.compile(r"\\begin\{proof\}")
 UNSTARRED_SUBSECTION_RE = re.compile(r"\\sub(?:sub)?section(?:\[[^\]]*\])?\{[^{}]+\}")
 TOPIC_SECTION_RE = re.compile(r"\\section(?:\[[^\]]*\])?\{[^{}]+\}")
 TOPIC_SUBSECTION_RE = re.compile(r"\\subsection\*(?:\[[^\]]*\])?\{[^{}]+\}")
+TOOLKIT_BEGIN_RE = re.compile(r"\\begin\{toolkitbox\}(?:\{.*\})?")
+TOOLKIT_END_RE = re.compile(r"\\end\{toolkitbox\}")
 
 
 def validate(volume_root: Path) -> list[Finding]:
@@ -24,7 +26,9 @@ def validate(volume_root: Path) -> list[Finding]:
             _check_router_content(volume_root, notes_index, findings)
         if not notes_root.exists():
             continue
-        for topic_dir in sorted(path for path in notes_root.iterdir() if path.is_dir() and not path.name.startswith(".")):
+        for topic_dir in sorted(
+            path for path in notes_root.iterdir() if path.is_dir() and not is_ignored(path, notes_root)
+        ):
             topic_index = topic_dir / "index.tex"
             if topic_index.exists():
                 _check_router_content(volume_root, topic_index, findings)
@@ -75,11 +79,19 @@ def _check_topic_router_only(volume_root: Path, index: Path, findings: list[Find
         for body in index.parent.glob("*.tex")
         if body.name != "index.tex" and not body.name.startswith("figure-")
     )
+    in_toolkit = False
     for line_no, raw in enumerate(read_text(index).splitlines(), 1):
         line = strip_latex_comment(raw).strip()
+        if in_toolkit:
+            if TOOLKIT_END_RE.search(line):
+                in_toolkit = False
+            continue
         if not line:
             continue
         if INPUT_RE.fullmatch(line) or TOPIC_SECTION_RE.fullmatch(line):
+            continue
+        if TOOLKIT_BEGIN_RE.fullmatch(line):
+            in_toolkit = True
             continue
         if TOPIC_SUBSECTION_RE.fullmatch(line) and topic_body_count > 1:
             continue

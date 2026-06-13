@@ -4,7 +4,7 @@ from pathlib import Path
 
 from core.finding import Finding, finding
 from core.tex import INPUT_RE, is_routed, read_text, strip_latex_comment
-from core.volume import chapter_roots
+from core.volume import chapter_roots, is_ignored
 
 
 def validate(volume_root: Path) -> list[Finding]:
@@ -38,7 +38,11 @@ def validate(volume_root: Path) -> list[Finding]:
 
         if not proofs_root.exists():
             continue
-        for topic_dir in sorted(path for path in proofs_root.iterdir() if path.is_dir() and path.name != "exercises"):
+        for topic_dir in sorted(
+            path
+            for path in proofs_root.iterdir()
+            if path.is_dir() and path.name != "exercises" and not is_ignored(path, proofs_root)
+        ):
             index = topic_dir / "index.tex"
             if index.exists():
                 text = read_text(index)

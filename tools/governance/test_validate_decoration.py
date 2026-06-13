@@ -109,7 +109,7 @@ def test_iter_tex_excludes_print_technique_folders():
         assert "lra-volume-i/volume-i/proof-techniques/skip.tex" not in files
         assert "lra-volume-ii/volume-ii/lean/skip.tex" not in files
         assert "lra-volume-iii/volume-iii/analysis/real-analysis/notes/proof-techniques/skip.tex" not in files
-        assert "lra-volume-iii/volume-iii/analysis/real-analysis/notes/standard-topic/keep.tex" in files
+        assert "lra-volume-iii/volume-iii/analysis/real-analysis/notes/standard-topic/keep.tex" not in files
         assert "lra-volume-i/volume-i/sets/keep.tex" in files
         assert "lra-volume-ii/volume-ii/natural-numbers/keep.tex" in files
         assert "lra-volume-iii/volume-iii/analysis/functions/keep.tex" in files

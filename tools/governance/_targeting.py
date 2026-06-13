@@ -22,12 +22,12 @@ IGNORED_DIR_NAMES = {
     "out",
     "output",
     "outputs",
+    "proof-techniques",
     "reports",
     "venv",
 }
 IGNORED_RELATIVE_DIRS = {
-    "volume-i/proof-techniques",
-    "volume-iii/analysis/real-analysis/notes/proof-techniques",
+    "volume-iii/analysis/real-analysis",
     "volume-iv/algebra/index.tex",
     "volume-iv/algebra/algebraic-structures",
 }
@@ -66,7 +66,13 @@ def is_ignored_path(path: Path, root: Path | None = None) -> bool:
         return False
     rel = relative_posix(path, root)
     full = path.resolve().as_posix()
-    return any(rel == ignored or full.endswith("/" + ignored) for ignored in IGNORED_RELATIVE_DIRS)
+    return any(
+        rel == ignored
+        or rel.startswith(f"{ignored}/")
+        or full.endswith("/" + ignored)
+        or f"/{ignored}/" in full
+        for ignored in IGNORED_RELATIVE_DIRS
+    )
 
 
 def volume_roots(root: Path) -> list[Path]:

@@ -217,7 +217,8 @@ def proof_blocks(text: str) -> tuple[str, str]:
 
 
 def has_todo(text: str) -> bool:
-    return bool(re.search(r"\bTODO\b", text, re.IGNORECASE))
+    uncommented_lines = [re.sub(r"(?<!\\)%.*$", "", line) for line in text.splitlines()]
+    return bool(re.search(r"\bTODO\b", "\n".join(uncommented_lines), re.IGNORECASE))
 
 
 def position(text: str, pattern: str) -> int:

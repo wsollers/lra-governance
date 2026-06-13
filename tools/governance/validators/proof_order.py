@@ -5,7 +5,7 @@ from pathlib import Path
 
 from core.finding import Finding, finding
 from core.tex import INPUT_RE, read_text, strip_latex_comments
-from core.volume import chapter_roots
+from core.volume import chapter_roots, is_ignored
 
 
 NOTE_FORMAL_RE = re.compile(
@@ -73,6 +73,8 @@ def _proof_label_order(chapter: Path) -> list[str]:
     if not notes_root.exists():
         return []
     for tex in sorted(notes_root.rglob("*.tex")):
+        if is_ignored(tex, chapter):
+            continue
         text = strip_latex_comments(read_text(tex))
         for begin in NOTE_FORMAL_RE.finditer(text):
             env = begin.group("env")

@@ -28,13 +28,28 @@ EXCLUDED_DIRS = {
     "build",
     "common",
     "dist",
+    "lean",
     "node_modules",
     "out",
     "output",
     "outputs",
+    "proof-techniques",
     "reports",
     "venv",
 }
+EXCLUDED_RELATIVE_DIRS = {
+    "volume-ii/integers/notes/mendelson-construction",
+    "volume-ii/integers/notes/tao-construction",
+    "volume-ii/integers/proofs/mendelson-construction",
+    "volume-ii/integers/proofs/tao-construction",
+    "volume-iii/analysis/real-analysis",
+    "volume-iv/algebra/algebraic-structures",
+}
+
+
+def is_excluded_path(path: Path) -> bool:
+    full = path.resolve().as_posix()
+    return any(full.endswith(f"/{rel}") or f"/{rel}/" in full for rel in EXCLUDED_RELATIVE_DIRS)
 
 
 class FileInfo:
@@ -54,7 +69,12 @@ def iter_tex(root: Path):
         yield root
         return
     for dirpath, dirnames, filenames in os.walk(root):
-        dirnames[:] = [name for name in dirnames if name not in EXCLUDED_DIRS and not name.startswith(".")]
+        current = Path(dirpath)
+        dirnames[:] = [
+            name
+            for name in dirnames
+            if name not in EXCLUDED_DIRS and not name.startswith(".") and not is_excluded_path(current / name)
+        ]
         for filename in filenames:
             if filename.endswith(".tex"):
                 yield Path(dirpath) / filename

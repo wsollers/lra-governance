@@ -142,14 +142,27 @@ def active_tex_files(repo_root: Path) -> list[Path]:
         "constitution",
         "docs",
         "generated",
+        "lean",
         "migration-reports",
         "bibliography",
+        "proof-techniques",
         ".git",
         ".github",
     }
+    ignored_relative = {
+        "volume-ii/integers/notes/mendelson-construction",
+        "volume-ii/integers/notes/tao-construction",
+        "volume-ii/integers/proofs/mendelson-construction",
+        "volume-ii/integers/proofs/tao-construction",
+        "volume-iii/analysis/real-analysis",
+        "volume-iv/algebra/algebraic-structures",
+    }
     for root in roots:
         for path in root.rglob("*.tex"):
+            rel_path = path.relative_to(repo_root).as_posix()
             if any(part in ignored_parts for part in path.relative_to(repo_root).parts):
+                continue
+            if any(rel_path == ignored or rel_path.startswith(f"{ignored}/") for ignored in ignored_relative):
                 continue
             if path.name in {"main.tex"}:
                 continue

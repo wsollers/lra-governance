@@ -6,7 +6,7 @@ from pathlib import Path
 
 from core.finding import Finding, finding
 from core.tex import read_text, strip_latex_comments
-from core.volume import chapter_roots
+from core.volume import chapter_roots, is_ignored
 
 
 DEFAULT_SCHEMA = {
@@ -64,7 +64,9 @@ def _topic_dirs(parent: Path) -> set[str]:
     return {
         child.name
         for child in parent.iterdir()
-        if child.is_dir() and not child.name.startswith(".") and child.name != "exercises"
+        if child.is_dir()
+        and not is_ignored(child, parent)
+        and child.name != "exercises"
     }
 
 
@@ -109,7 +111,7 @@ def _validate_notes_shape(volume_root: Path, chapter: Path, findings: list[Findi
         return
     topic_re = re.compile(schema["topic_name_pattern"])
     for child in notes_root.iterdir():
-        if child.name.startswith(".") or child.name == "index.tex":
+        if is_ignored(child, notes_root) or child.name == "index.tex":
             continue
         if child.is_file() and child.suffix == ".tex":
             _add(findings, volume_root, child, "flat_note_body", "Note body files must live under notes/{topic}/, not directly under notes/.")
@@ -126,7 +128,7 @@ def _validate_proofs_shape(volume_root: Path, chapter: Path, findings: list[Find
     topic_re = re.compile(schema["topic_name_pattern"])
     proof_file_re = re.compile(schema["proof_file_pattern"])
     for child in proofs_root.iterdir():
-        if child.name.startswith(".") or child.name == "index.tex":
+        if is_ignored(child, proofs_root) or child.name == "index.tex":
             continue
         if child.is_file() and child.suffix == ".tex":
             _add(findings, volume_root, child, "flat_proof_file", "Proof files must live under proofs/{topic}/, not directly under proofs/.")
@@ -157,7 +159,7 @@ def _validate_proofs_shape(volume_root: Path, chapter: Path, findings: list[Find
             for item in schema.get("exercises_allowed_files", DEFAULT_SCHEMA["exercises_allowed_files"])
         }
         for child in exercises_root.iterdir():
-            if child.name.startswith("."):
+            if is_ignored(child, exercises_root):
                 continue
             if child.is_dir():
                 _add(findings, volume_root, child, "noncanonical_exercises_path", "proofs/exercises/ may contain only index.tex and the canonical capstone file.")

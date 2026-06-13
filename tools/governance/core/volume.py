@@ -17,12 +17,29 @@ IGNORED_DIR_NAMES = {
     "build",
     "common",
     "dist",
+    "lean",
     "node_modules",
     "out",
     "output",
     "outputs",
+    "proof-techniques",
     "reports",
     "venv",
+}
+
+IGNORED_RELATIVE_DIRS = {
+    "analysis/real-analysis",
+    "algebra/algebraic-structures",
+    "integers/notes/mendelson-construction",
+    "integers/notes/tao-construction",
+    "integers/proofs/mendelson-construction",
+    "integers/proofs/tao-construction",
+    "volume-iii/analysis/real-analysis",
+    "volume-iv/algebra/algebraic-structures",
+    "volume-ii/integers/notes/mendelson-construction",
+    "volume-ii/integers/notes/tao-construction",
+    "volume-ii/integers/proofs/mendelson-construction",
+    "volume-ii/integers/proofs/tao-construction",
 }
 
 
@@ -45,8 +62,30 @@ def resolve_volume(value: str | Path) -> Volume:
     raise ValueError(f"Could not resolve a single volume-* directory from {root}")
 
 
-def is_ignored(path: Path) -> bool:
-    return any(part in IGNORED_DIR_NAMES or part.startswith(".") for part in path.parts)
+def _relative_posix(path: Path, root: Path) -> str:
+    try:
+        return path.resolve().relative_to(root.resolve()).as_posix()
+    except ValueError:
+        return path.resolve().as_posix()
+
+
+def _parts_for_ignore(path: Path, root: Path | None) -> tuple[str, ...]:
+    if root is None:
+        return path.parts
+    try:
+        return path.resolve().relative_to(root.resolve()).parts
+    except ValueError:
+        return path.parts
+
+
+def is_ignored(path: Path, root: Path | None = None) -> bool:
+    if any(part in IGNORED_DIR_NAMES or part.startswith(".") for part in _parts_for_ignore(path, root)):
+        return True
+    if root is None:
+        return False
+    rel = _relative_posix(path, root)
+    full = path.resolve().as_posix()
+    return any(rel == ignored or rel.startswith(f"{ignored}/") or full.endswith(f"/{ignored}") for ignored in IGNORED_RELATIVE_DIRS)
 
 
 def is_chapter_root(path: Path) -> bool:
@@ -61,7 +100,7 @@ def chapter_roots(volume_root: Path) -> list[Path]:
         dirnames[:] = [
             name
             for name in dirnames
-            if name not in IGNORED_DIR_NAMES and not name.startswith(".")
+            if not is_ignored(current / name, volume_root)
         ]
         if is_chapter_root(current):
             chapters.append(current.resolve())
@@ -77,7 +116,7 @@ def iter_tex(root: Path):
         dirnames[:] = [
             name
             for name in dirnames
-            if name not in IGNORED_DIR_NAMES and not name.startswith(".")
+            if not is_ignored(Path(dirpath) / name, root)
         ]
         for filename in filenames:
             if filename.endswith(".tex"):

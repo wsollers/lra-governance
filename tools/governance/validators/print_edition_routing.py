@@ -4,7 +4,7 @@ from pathlib import Path
 
 from core.finding import Finding, finding
 from core.tex import read_text
-from core.volume import chapter_roots
+from core.volume import chapter_roots, is_ignored
 from rules.routing import print_edition_inputs
 
 
@@ -18,7 +18,7 @@ def validate(volume_root: Path) -> list[Finding]:
     findings: list[Finding] = []
     for chapter in chapter_roots(volume_root):
         for tex in sorted(chapter.rglob("*.tex")):
-            if ".git" in tex.parts:
+            if is_ignored(tex, volume_root):
                 continue
             kind = "chapter_index" if tex == chapter / "index.tex" else "other"
             info = FileInfo(tex, kind)

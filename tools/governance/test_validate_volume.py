@@ -7,6 +7,7 @@ from pathlib import Path
 
 from generators.chapter_stub import stub_chapter
 from generators.section_stub import stub_section
+from core import volume as volume_core
 from validate_volume import VALIDATORS
 from validators import block_discipline, capstones, chapter_router, dependency_blocks, dependency_graphs, formal_decoration, formal_reading_required, interpretation_blocks, labels, latex_integrity, math_boxes, notes_structure, print_edition_routing, proof_coverage, proof_file_contract, proof_layout, proof_order, proof_routing, proof_stub_state, reference_voice, structural_chrome, volume_shape
 
@@ -139,6 +140,31 @@ class ValidateVolumeTests(unittest.TestCase):
     def tearDown(self):
         if TMP.exists():
             shutil.rmtree(TMP)
+
+    def test_core_volume_excludes_special_validation_directories(self):
+        volume = make_volume()
+        proof_techniques = volume / "proof-techniques"
+        write(proof_techniques / "chapter.yaml", "subject: proof techniques\n")
+        write(proof_techniques / "notes" / "index.tex", r"\begin{definition}Unlabelled\end{definition}" + "\n")
+        write(proof_techniques / "proofs" / "index.tex", r"\begin{proof}Rendered\end{proof}" + "\n")
+        lean = volume / "lean"
+        write(lean / "chapter.yaml", "subject: lean\n")
+        write(lean / "notes" / "index.tex", r"\begin{definition}Unlabelled\end{definition}" + "\n")
+        write(lean / "proofs" / "index.tex", r"\begin{proof}Rendered\end{proof}" + "\n")
+        real_analysis = volume / "analysis" / "real-analysis"
+        write(real_analysis / "chapter.yaml", "subject: real analysis\n")
+        write(real_analysis / "notes" / "index.tex", r"\begin{definition}Unlabelled\end{definition}" + "\n")
+        write(real_analysis / "proofs" / "index.tex", r"\begin{proof}Rendered\end{proof}" + "\n")
+
+        chapters = {path.relative_to(volume).as_posix() for path in volume_core.chapter_roots(volume)}
+        tex_files = {path.relative_to(volume).as_posix() for path in volume_core.iter_tex(volume)}
+
+        self.assertNotIn("proof-techniques", chapters)
+        self.assertNotIn("lean", chapters)
+        self.assertNotIn("analysis/real-analysis", chapters)
+        self.assertFalse(any(path.startswith("proof-techniques/") for path in tex_files))
+        self.assertFalse(any(path.startswith("lean/") for path in tex_files))
+        self.assertFalse(any(path.startswith("analysis/real-analysis/") for path in tex_files))
 
     def test_volume_shape_accepts_canonical_fixture(self):
         volume = make_volume()
@@ -483,6 +509,21 @@ class ValidateVolumeTests(unittest.TestCase):
 
         self.assertIn("mixed_authored_professional_detailed_stub", codes)
 
+    def test_proof_layout_ignores_todo_in_comments_for_stub_state(self):
+        volume = make_volume()
+        proof = volume / "integers" / "proofs" / "order" / "prf-order.tex"
+        proof.write_text(
+            proof.read_text(encoding="utf-8").replace(
+                "Professional Standard Proof.",
+                "% TODO: historical migration note, not proof-body stub state.\nProfessional Standard Proof.",
+            ),
+            encoding="utf-8",
+        )
+
+        codes = {finding.code for finding in proof_layout.validate(volume)}
+
+        self.assertNotIn("partial_stub", codes)
+
     def test_notes_structure_accepts_canonical_fixture(self):
         volume = make_volume()
 
@@ -543,6 +584,34 @@ class ValidateVolumeTests(unittest.TestCase):
 
         self.assertNotIn("notes_topic_index_contains_rendered_content", codes)
         self.assertNotIn("unrouted_notes_topic_body", codes)
+
+    def test_notes_structure_allows_toolkit_boxes_in_topic_index(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "index.tex",
+            "\n".join(
+                [
+                    r"\section{Order Notes}",
+                    r"\begin{toolkitbox}{Order Toolkit}",
+                    "Rendered prose is allowed inside the toolkit.",
+                    r"\begin{itemize}",
+                    r"  \item Table/list content is ignored by the router validator.",
+                    r"\end{itemize}",
+                    r"\end{toolkitbox}",
+                    r"\begin{toolkitbox}{Second Order Toolkit}",
+                    r"\begin{tabular}{l l}",
+                    r"A & B \\",
+                    r"\end{tabular}",
+                    r"\end{toolkitbox}",
+                    r"\input{volume-ii/integers/notes/order/notes-order}",
+                    "",
+                ]
+            ),
+        )
+
+        codes = {finding.code for finding in notes_structure.validate(volume)}
+
+        self.assertNotIn("notes_topic_index_contains_rendered_content", codes)
 
     def test_block_discipline_accepts_canonical_fixture(self):
         volume = make_volume()

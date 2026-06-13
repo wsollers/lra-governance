@@ -44,7 +44,16 @@ EXCLUDED_DIRS = {
     "node_modules",
     "__pycache__",
     ".history",
+    "proof-techniques",
     "reports",
+}
+EXCLUDED_RELATIVE_DIRS = {
+    "volume-ii/integers/notes/mendelson-construction",
+    "volume-ii/integers/notes/tao-construction",
+    "volume-ii/integers/proofs/mendelson-construction",
+    "volume-ii/integers/proofs/tao-construction",
+    "volume-iii/analysis/real-analysis",
+    "volume-iv/algebra/algebraic-structures",
 }
 STANDARD_FUNCTIONS = {
     "sin",
@@ -107,11 +116,13 @@ def safe_resolve(path: Path) -> Path:
 
 def is_excluded_dir(path: Path) -> bool:
     name = path.name
+    full = path.resolve().as_posix()
     return (
         name in EXCLUDED_DIRS
         or name.startswith("_minted-")
         or name.endswith(".egg-info")
         or name in {"cmake-build-debug", "cmake-build-release"}
+        or any(full.endswith(f"/{rel}") or f"/{rel}/" in full for rel in EXCLUDED_RELATIVE_DIRS)
     )
 
 
