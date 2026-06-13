@@ -33,7 +33,7 @@
           "unrouted_proof_topic_file",
           "todo_outside_stub_layers",
           "proof_stub_structure_not_blank",
-          "unrouted_proof_exercises_index"
+          "proofs_index_routes_exercises"
         ],
         "decoration": [
           "wrong_label_prefix",

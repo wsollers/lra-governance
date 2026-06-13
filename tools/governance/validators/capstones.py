@@ -4,6 +4,7 @@ import re
 from pathlib import Path
 
 from core.finding import Finding, finding
+from core.file_inventory import reachable_files
 from core.tex import input_targets, read_text, strip_latex_comment
 from core.volume import chapter_roots, latex_input_path
 
@@ -15,11 +16,12 @@ INPUT_ORDER_RE = re.compile(r"\\(?:input|include)\{([^}]+)\}")
 def validate(volume_root: Path) -> list[Finding]:
     findings: list[Finding] = []
     for chapter in chapter_roots(volume_root):
+        included = reachable_files(chapter)
         capstone = chapter / "proofs" / "exercises" / f"capstone-{chapter.name}.tex"
-        if capstone.exists():
+        if capstone.exists() and capstone.resolve() in included:
             _validate_capstone_file(volume_root, chapter, capstone, findings)
         exercise_index = chapter / "proofs" / "exercises" / "index.tex"
-        if exercise_index.exists() and capstone.exists():
+        if exercise_index.exists() and exercise_index.resolve() in included and capstone.exists() and capstone.resolve() in included:
             _validate_capstone_route(volume_root, chapter, exercise_index, capstone, findings)
     return findings
 

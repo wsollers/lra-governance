@@ -4,6 +4,7 @@ import re
 from pathlib import Path
 
 from core.finding import Finding, finding
+from core.file_inventory import files_to_validate
 from core.tex import INPUT_RE, read_text, strip_latex_comments
 from core.volume import chapter_roots, is_ignored
 
@@ -27,17 +28,7 @@ def _validate_chapter(volume_root: Path, chapter: Path, findings: list[Finding])
     proofs_index = chapter / "proofs" / "index.tex"
     notes_inputs = [_routed_topic_name(target) for target in _ordered_inputs(notes_index)]
     routed_proof_inputs = [_routed_topic_name(target) for target in _ordered_inputs(proofs_index)]
-    proofs_inputs = [target for target in routed_proof_inputs if target != "exercises"]
-    if "exercises" in routed_proof_inputs and routed_proof_inputs[-1] != "exercises":
-        findings.append(
-            finding(
-                "proof_exercises_not_last",
-                "proofs/exercises/index must be the last route in proofs/index.tex.",
-                proofs_index,
-                volume_root,
-            )
-        )
-    if notes_inputs and proofs_inputs and notes_inputs != proofs_inputs:
+    if notes_inputs and routed_proof_inputs and notes_inputs != routed_proof_inputs:
         findings.append(
             finding(
                 "proof_topic_order_mismatch",
@@ -72,7 +63,7 @@ def _proof_label_order(chapter: Path) -> list[str]:
     notes_root = chapter / "notes"
     if not notes_root.exists():
         return []
-    for tex in sorted(notes_root.rglob("*.tex")):
+    for tex in files_to_validate([notes_root]):
         if is_ignored(tex, chapter):
             continue
         text = strip_latex_comments(read_text(tex))

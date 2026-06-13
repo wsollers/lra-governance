@@ -4,8 +4,9 @@ import re
 from pathlib import Path
 
 from core.finding import Finding, finding
+from core.file_inventory import files_to_validate
 from core.tex import read_text, strip_latex_comments
-from core.volume import chapter_roots, iter_tex
+from core.volume import chapter_roots
 
 
 PROOF_ENVS = {"theorem", "lemma", "proposition", "corollary"}
@@ -30,7 +31,7 @@ def _validate_chapter(volume_root: Path, chapter: Path, findings: list[Finding])
     proof_for_targets: set[str] = set()
     proofs_root = chapter / "proofs"
     if proofs_root.exists():
-        for tex in iter_tex(proofs_root):
+        for tex in files_to_validate([proofs_root]):
             if "/proofs/exercises/" in f"/{tex.resolve().relative_to(chapter.resolve()).as_posix()}":
                 continue
             text = strip_latex_comments(read_text(tex))
@@ -40,7 +41,7 @@ def _validate_chapter(volume_root: Path, chapter: Path, findings: list[Finding])
     notes_root = chapter / "notes"
     if not notes_root.exists():
         return
-    for tex in iter_tex(notes_root):
+    for tex in files_to_validate([notes_root]):
         text = strip_latex_comments(read_text(tex))
         for begin in NOTE_FORMAL_RE.finditer(text):
             env = begin.group("env")

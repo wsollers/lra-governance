@@ -5,7 +5,7 @@ from pathlib import Path
 
 from core.finding import Finding, finding
 from core.tex import read_text, strip_latex_comments
-from core.volume import iter_tex
+from core.file_inventory import files_to_validate
 
 
 PROOF_FOR_RE = re.compile(r"\\LRAProofFor\{(?P<label>(?:thm|lem|prop|cor):[a-z0-9-]+)\}")
@@ -33,7 +33,7 @@ RESTATEMENT_ENV_BY_PREFIX = {
 
 def validate(volume_root: Path) -> list[Finding]:
     findings: list[Finding] = []
-    for tex in iter_tex(volume_root):
+    for tex in files_to_validate([volume_root]):
         rel = tex.resolve().relative_to(volume_root.resolve()).as_posix()
         if "/proofs/" not in f"/{rel}" or "/proofs/exercises/" in f"/{rel}" or tex.name == "index.tex":
             continue

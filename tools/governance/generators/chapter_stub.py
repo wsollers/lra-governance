@@ -124,7 +124,6 @@ def stub_chapter(volume_root, subject, display_title, registry, section_titles):
             append_once(path, f"\\input{{{subject}/index}}")
 
     created = [stub_section(chapter, title) for title in section_titles]
-    append_once(chapter / "proofs" / "index.tex", f"\\input{{{chapter_route}/proofs/exercises/index}}")
     return {"chapter": str(chapter), "sections": created}
 
 

@@ -12,6 +12,7 @@ from validators import block_discipline, capstones, chapter_router, dependency_b
 
 
 VALIDATORS = [
+    ("volume_shape", volume_shape),
     ("chapter_router", chapter_router),
     ("input_resolution", input_resolution),
     ("print_edition_routing", print_edition_routing),
@@ -52,14 +53,6 @@ def main(argv=None) -> int:
         return 1
 
     all_findings = []
-    shape_findings = volume_shape.validate(volume.root)
-    if shape_findings:
-        print_report(f"validate volume: {volume.root} [volume_shape fail-fast]", shape_findings)
-        if args.json:
-            write_json_report(Path(args.json), volume.root, shape_findings)
-            print(f"\njson report: {args.json}")
-        return 2 if args.fail_on_errors and Counter(f.severity for f in shape_findings).get("error", 0) else 0
-
     for _name, validator in VALIDATORS:
         all_findings.extend(validator.validate(volume.root))
 

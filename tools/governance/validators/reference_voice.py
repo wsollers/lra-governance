@@ -5,7 +5,7 @@ from pathlib import Path
 
 from core.finding import Finding, finding
 from core.tex import read_text, strip_latex_comments
-from core.volume import iter_tex
+from core.file_inventory import files_to_validate
 
 
 VOICE_BLOCK_RE = re.compile(
@@ -40,7 +40,7 @@ VOICE_BANNED_PATTERNS = {
 
 def validate(volume_root: Path) -> list[Finding]:
     findings: list[Finding] = []
-    for tex in iter_tex(volume_root):
+    for tex in files_to_validate([volume_root]):
         if tex.name.startswith("figure-"):
             continue
         _validate_file(volume_root, tex, findings)

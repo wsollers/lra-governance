@@ -371,6 +371,26 @@ def is_routed(index_path: Path, target: Path, chapter: Path) -> bool:
     return bool(targets & variants)
 
 
+def directly_inputs(index_path: Path, target: Path, chapter: Path) -> bool:
+    if not index_path.exists():
+        return False
+    try:
+        target_rel = target.relative_to(chapter).as_posix().removesuffix(".tex")
+    except ValueError:
+        target_rel = target.as_posix().replace("\\", "/").removesuffix(".tex")
+    variants = {target_rel, target_rel.removesuffix("/index")}
+    for routed in ordered_inputs(index_path):
+        routed_base = routed.removesuffix("/index")
+        if (
+            routed in variants
+            or routed_base in variants
+            or routed.endswith(f"/{target_rel}")
+            or routed_base.endswith(f"/{target_rel.removesuffix('/index')}")
+        ):
+            return True
+    return False
+
+
 def latex_input_path(path: Path) -> str:
     parts = path.with_suffix("").parts
     for idx, part in enumerate(parts):
@@ -785,8 +805,8 @@ def validate_proof_structure(chapter: Path, findings: list[Finding]) -> None:
         if "\\begin{proof}" in text or "\\LRAProofFor{" in text:
             add(findings, chapter, proofs_index, "proofs_index_contains_proof_content", "proofs/index.tex must be a router, not a proof-content file.")
         proof_exercises = proofs_root / "exercises" / "index.tex"
-        if proof_exercises.exists() and not is_routed(proofs_index, proof_exercises, chapter):
-            add(findings, chapter, proofs_index, "unrouted_proof_exercises_index", "proofs/exercises/index.tex is not routed from proofs/index.tex.")
+        if proof_exercises.exists() and directly_inputs(proofs_index, proof_exercises, chapter):
+            add(findings, chapter, proofs_index, "proofs_index_routes_exercises", "proofs/exercises/index.tex must be routed only from the chapter router, not from proofs/index.tex.")
     for path in tex_siblings(proofs_root):
         add(findings, chapter, path, "legacy_flat_proof_file", "Active proof files must live under proofs/{topic}/, not directly under proofs/.")
     for topic in sorted(topic_dirs(proofs_root)):
@@ -944,8 +964,8 @@ def validate_chapter_layout(chapter: Path, findings: list[Finding], generate_mis
             add(findings, chapter, index, "unrouted_proofs_topic", f"proofs/{topic}/index.tex is not routed from proofs/index.tex.")
 
     proof_exercises_index = chapter / "proofs" / "exercises" / "index.tex"
-    if proof_exercises_index.exists() and not is_routed(chapter / "proofs" / "index.tex", proof_exercises_index, chapter):
-        add(findings, chapter, proof_exercises_index, "unrouted_proof_exercises_index", "proofs/exercises/index.tex is not routed from proofs/index.tex.")
+    if proof_exercises_index.exists() and directly_inputs(chapter / "proofs" / "index.tex", proof_exercises_index, chapter):
+        add(findings, chapter, proof_exercises_index, "proofs_index_routes_exercises", "proofs/exercises/index.tex must be routed only from the chapter router, not from proofs/index.tex.")
 
 
 def validate_toolkits(chapter: Path, findings: list[Finding]) -> None:

@@ -3,27 +3,29 @@ from __future__ import annotations
 from pathlib import Path
 
 from core.finding import Finding, finding
-from core.tex import INPUT_RE, is_routed, read_text, strip_latex_comment
+from core.file_inventory import reachable_files
+from core.tex import INPUT_RE, is_routed, read_text, strip_latex_comment, strip_latex_comments
 from core.volume import chapter_roots, is_ignored
 
 
 def validate(volume_root: Path) -> list[Finding]:
     findings: list[Finding] = []
     for chapter in chapter_roots(volume_root):
+        included = reachable_files(chapter)
         proofs_root = chapter / "proofs"
         proofs_index = proofs_root / "index.tex"
         exercises_index = proofs_root / "exercises" / "index.tex"
-        if exercises_index.exists() and not is_routed(proofs_index, exercises_index, chapter):
+        if exercises_index.exists() and _directly_inputs(proofs_index, exercises_index, chapter):
             findings.append(
                 finding(
-                    "unrouted_proof_exercises_index",
-                    "proofs/exercises/index.tex is not routed from proofs/index.tex.",
+                    "proofs_index_routes_exercises",
+                    "proofs/exercises/index.tex must be routed only from the chapter router, not from proofs/index.tex.",
                     proofs_index,
                     volume_root,
                 )
             )
 
-        if proofs_index.exists():
+        if proofs_index.exists() and proofs_index.resolve() in included:
             text = read_text(proofs_index)
             if "\\begin{proof}" in text or "\\LRAProofFor{" in text:
                 findings.append(
@@ -44,7 +46,8 @@ def validate(volume_root: Path) -> list[Finding]:
             if path.is_dir() and path.name != "exercises" and not is_ignored(path, proofs_root)
         ):
             index = topic_dir / "index.tex"
-            if index.exists():
+            index_included = index.exists() and index.resolve() in included
+            if index_included:
                 text = read_text(index)
                 if "\\begin{proof}" in text or "\\LRAProofFor{" in text:
                     findings.append(
@@ -74,7 +77,9 @@ def validate(volume_root: Path) -> list[Finding]:
             for proof_file in sorted(topic_dir.glob("*.tex")):
                 if proof_file.name == "index.tex":
                     continue
-                if not is_routed(index, proof_file, chapter):
+                if proof_file.resolve() not in included:
+                    continue
+                if index_included and not is_routed(index, proof_file, chapter):
                     findings.append(
                         finding(
                             "unrouted_proof_topic_file",
@@ -84,6 +89,27 @@ def validate(volume_root: Path) -> list[Finding]:
                         )
                     )
     return findings
+
+
+def _directly_inputs(index_path: Path, target: Path, chapter_root: Path) -> bool:
+    if not index_path.exists():
+        return False
+    try:
+        relative = target.relative_to(chapter_root).as_posix().removesuffix(".tex")
+    except ValueError:
+        relative = target.as_posix().replace("\\", "/").removesuffix(".tex")
+    variants = {relative, relative.removesuffix("/index")}
+    for match in INPUT_RE.finditer(strip_latex_comments(read_text(index_path))):
+        routed = match.group(1).replace("\\", "/").removesuffix(".tex")
+        routed_base = routed.removesuffix("/index")
+        if (
+            routed in variants
+            or routed_base in variants
+            or routed.endswith(f"/{relative}")
+            or routed_base.endswith(f"/{relative.removesuffix('/index')}")
+        ):
+            return True
+    return False
 
 
 def _check_router_only(volume_root: Path, index: Path, findings: list[Finding], code: str, label: str) -> None:

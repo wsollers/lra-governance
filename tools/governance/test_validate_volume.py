@@ -72,7 +72,7 @@ def make_volume() -> Path:
             ]
         ),
     )
-    write(chapter / "proofs" / "index.tex", r"\input{volume-ii/integers/proofs/order/index}" + "\n" + r"\input{volume-ii/integers/proofs/exercises/index}" + "\n")
+    write(chapter / "proofs" / "index.tex", r"\input{volume-ii/integers/proofs/order/index}" + "\n")
     write(chapter / "proofs" / "order" / "index.tex", r"\input{volume-ii/integers/proofs/order/prf-order}" + "\n")
     write(
         chapter / "proofs" / "order" / "prf-order.tex",
@@ -265,8 +265,7 @@ class ValidateVolumeTests(unittest.TestCase):
         write(
             volume / "integers" / "proofs" / "index.tex",
             r"\subsection*{Proof Topics}" "\n"
-            r"\input{volume-ii/integers/proofs/order/index}" "\n"
-            r"\input{volume-ii/integers/proofs/exercises/index}" "\n",
+            r"\input{volume-ii/integers/proofs/order/index}" "\n",
         )
         write(
             volume / "integers" / "proofs" / "order" / "index.tex",
@@ -278,6 +277,18 @@ class ValidateVolumeTests(unittest.TestCase):
 
         self.assertIn("proofs_index_contains_rendered_content", codes)
         self.assertIn("proofs_topic_index_contains_rendered_content", codes)
+
+    def test_proof_routing_flags_exercises_routed_from_proofs_index(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "proofs" / "index.tex",
+            r"\input{volume-ii/integers/proofs/order/index}" "\n"
+            r"\input{volume-ii/integers/proofs/exercises/index}" "\n",
+        )
+
+        codes = {finding.code for finding in proof_routing.validate(volume)}
+
+        self.assertIn("proofs_index_routes_exercises", codes)
 
     def test_proof_layout_accepts_canonical_fixture(self):
         volume = make_volume()
@@ -463,7 +474,7 @@ class ValidateVolumeTests(unittest.TestCase):
         self.assertIn("proof_topic_order_mismatch", codes)
         self.assertIn("proof_file_order_mismatch", codes)
 
-    def test_proof_order_flags_exercises_before_topic_route(self):
+    def test_proof_order_flags_topic_route_order_mismatch(self):
         volume = make_volume()
         write(volume / "integers" / "notes" / "index.tex", "\n".join([
             r"\input{volume-ii/integers/notes/order/index}",
@@ -473,15 +484,14 @@ class ValidateVolumeTests(unittest.TestCase):
         write(volume / "integers" / "notes" / "algebra" / "index.tex", "")
         write(volume / "integers" / "proofs" / "algebra" / "index.tex", "")
         write(volume / "integers" / "proofs" / "index.tex", "\n".join([
-            r"\input{volume-ii/integers/proofs/order/index}",
-            r"\input{volume-ii/integers/proofs/exercises/index}",
             r"\input{volume-ii/integers/proofs/algebra/index}",
+            r"\input{volume-ii/integers/proofs/order/index}",
             "",
         ]))
 
         codes = {finding.code for finding in proof_order.validate(volume)}
 
-        self.assertIn("proof_exercises_not_last", codes)
+        self.assertIn("proof_topic_order_mismatch", codes)
 
     def test_proof_stub_state_accepts_canonical_fixture(self):
         volume = make_volume()
@@ -1045,8 +1055,7 @@ class ValidateVolumeTests(unittest.TestCase):
         volume = make_volume()
         index = volume / "integers" / "proofs" / "index.tex"
         index.write_text(
-            r"\input{volume-ii/integers/proofs/missing-topic/index}" "\n"
-            r"\input{volume-ii/integers/proofs/exercises/index}" "\n",
+            r"\input{volume-ii/integers/proofs/missing-topic/index}" "\n",
             encoding="utf-8",
         )
 
@@ -1113,9 +1122,14 @@ class ValidateVolumeTests(unittest.TestCase):
 
         self.assertEqual(dependency_graphs.validate(volume), [])
 
-    def test_validate_volume_fails_fast_on_shape(self):
+    def test_validate_volume_reports_shape_without_fail_fast(self):
         volume = make_volume()
         (volume / "integers" / "proofs" / "exercises" / "capstone-integers.tex").unlink()
+        write(
+            volume / "integers" / "proofs" / "index.tex",
+            r"\input{volume-ii/integers/proofs/order/index}" "\n"
+            r"\input{volume-ii/integers/proofs/exercises/index}" "\n",
+        )
 
         result = subprocess.run(
             [
@@ -1130,9 +1144,9 @@ class ValidateVolumeTests(unittest.TestCase):
         )
 
         self.assertEqual(result.returncode, 2)
-        self.assertIn("[volume_shape fail-fast]", result.stdout)
+        self.assertNotIn("fail-fast", result.stdout)
         self.assertIn("missing_volume_shape_file", result.stdout)
-        self.assertNotIn("print_edition", result.stdout)
+        self.assertIn("proofs_index_routes_exercises", result.stdout)
 
     def test_chapter_generator_emits_shape_and_routing_clean_output(self):
         if TMP.exists():
@@ -1178,10 +1192,9 @@ class ValidateVolumeTests(unittest.TestCase):
             if line.strip().startswith(r"\input")
         ]
         self.assertEqual(
-            proof_routes[-2:],
+            proof_routes[-1:],
             [
                 r"\input{volume-ii/ordered-fields/proofs/completion-fields/index}",
-                r"\input{volume-ii/ordered-fields/proofs/exercises/index}",
             ],
         )
         self.assertEqual(volume_shape.validate(volume), [])

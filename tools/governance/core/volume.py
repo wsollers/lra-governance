@@ -108,19 +108,22 @@ def chapter_roots(volume_root: Path) -> list[Path]:
     return sorted(set(chapters))
 
 
+def iter_all_tex(root: Path):
+    from .file_inventory import all_files
+
+    yield from all_files(root)
+
+
+def included_tex_files(root: Path) -> set[Path]:
+    from .file_inventory import reachable_files
+
+    return reachable_files(root)
+
+
 def iter_tex(root: Path):
-    if root.is_file() and root.suffix == ".tex":
-        yield root
-        return
-    for dirpath, dirnames, filenames in os.walk(root):
-        dirnames[:] = [
-            name
-            for name in dirnames
-            if not is_ignored(Path(dirpath) / name, root)
-        ]
-        for filename in filenames:
-            if filename.endswith(".tex"):
-                yield Path(dirpath) / filename
+    from .file_inventory import files_to_validate
+
+    yield from files_to_validate([root])
 
 
 def latex_input_path(path: Path) -> str:

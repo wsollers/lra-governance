@@ -58,10 +58,9 @@ def stub_section(chapter_root: Path, title: str) -> dict:
         chapter_root / "notes" / "index.tex",
         f"\\input{{{latex_input_path(notes_dir / 'index.tex')}}}",
     )
-    insert_once_before(
+    append_once(
         chapter_root / "proofs" / "index.tex",
         f"\\input{{{latex_input_path(proofs_dir / 'index.tex')}}}",
-        f"\\input{{{chapter_route}/proofs/exercises/index}}",
     )
     return {"slug": slug, "title": title, "notes": str(notes_dir), "proofs": str(proofs_dir)}
 

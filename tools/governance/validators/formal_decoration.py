@@ -5,7 +5,7 @@ from pathlib import Path
 
 from core.finding import Finding, finding
 from core.tex import read_text, strip_latex_comments
-from core.volume import iter_tex
+from core.file_inventory import files_to_validate
 
 
 FORMAL_RE = re.compile(
@@ -62,7 +62,7 @@ FORBIDDEN_DECORATION_BY_ENV = {
 
 def validate(volume_root: Path) -> list[Finding]:
     findings: list[Finding] = []
-    for tex in iter_tex(volume_root):
+    for tex in files_to_validate([volume_root]):
         rel = tex.resolve().relative_to(volume_root.resolve()).as_posix()
         if "/notes/" not in f"/{rel}":
             continue

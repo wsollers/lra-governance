@@ -4,8 +4,9 @@ import re
 from pathlib import Path
 
 from core.finding import Finding, finding
+from core.file_inventory import files_to_validate
 from core.tex import read_text
-from core.volume import chapter_roots, iter_tex
+from core.volume import chapter_roots
 
 
 LABEL_RE = re.compile(r"\\label\{([^}]+)\}")
@@ -41,14 +42,14 @@ def validate(volume_root: Path) -> list[Finding]:
     findings: list[Finding] = []
     _check_duplicate_and_slug_labels(volume_root, findings)
     for chapter in chapter_roots(volume_root):
-        for tex in iter_tex(chapter):
+        for tex in files_to_validate([chapter]):
             _check_formal_block_labels(volume_root, tex, findings)
     return findings
 
 
 def _check_duplicate_and_slug_labels(volume_root: Path, findings: list[Finding]) -> None:
     seen: dict[str, Path] = {}
-    for tex in iter_tex(volume_root):
+    for tex in files_to_validate([volume_root]):
         text = read_text(tex)
         for match in LABEL_RE.finditer(text):
             label = match.group(1)

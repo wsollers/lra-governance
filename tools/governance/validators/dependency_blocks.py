@@ -5,7 +5,7 @@ from pathlib import Path
 
 from core.finding import Finding, finding
 from core.tex import read_text, strip_latex_comments
-from core.volume import iter_tex
+from core.file_inventory import files_to_validate
 
 
 FORMAL_ENVS = {"definition", "axiom", "theorem", "lemma", "proposition", "corollary"}
@@ -25,7 +25,7 @@ LABEL_RE = re.compile(r"\\label\{(?P<label>[a-z]+:[^{}]+)\}")
 
 def validate(volume_root: Path) -> list[Finding]:
     findings: list[Finding] = []
-    for tex in iter_tex(volume_root):
+    for tex in files_to_validate([volume_root]):
         _validate_file(volume_root, tex, findings)
     return findings
 

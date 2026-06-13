@@ -4,6 +4,7 @@ import re
 from pathlib import Path
 
 from core.finding import Finding, finding
+from core.file_inventory import reachable_files
 from core.tex import INPUT_RE, is_routed, read_text, strip_latex_comment
 from core.volume import chapter_roots, is_ignored
 
@@ -20,9 +21,10 @@ TOOLKIT_END_RE = re.compile(r"\\end\{toolkitbox\}")
 def validate(volume_root: Path) -> list[Finding]:
     findings: list[Finding] = []
     for chapter in chapter_roots(volume_root):
+        included = reachable_files(chapter)
         notes_root = chapter / "notes"
         notes_index = notes_root / "index.tex"
-        if notes_index.exists():
+        if notes_index.exists() and notes_index.resolve() in included:
             _check_router_content(volume_root, notes_index, findings)
         if not notes_root.exists():
             continue
@@ -30,9 +32,10 @@ def validate(volume_root: Path) -> list[Finding]:
             path for path in notes_root.iterdir() if path.is_dir() and not is_ignored(path, notes_root)
         ):
             topic_index = topic_dir / "index.tex"
-            if topic_index.exists():
+            topic_index_included = topic_index.exists() and topic_index.resolve() in included
+            if topic_index_included:
                 _check_router_content(volume_root, topic_index, findings)
-                _check_topic_router_only(volume_root, topic_index, findings)
+                _check_topic_router_only(volume_root, topic_index, included, findings)
                 if not is_routed(notes_index, topic_index, chapter):
                     findings.append(
                         finding(
@@ -45,9 +48,11 @@ def validate(volume_root: Path) -> list[Finding]:
             for body in sorted(topic_dir.glob("*.tex")):
                 if body.name == "index.tex":
                     continue
+                if body.resolve() not in included:
+                    continue
                 if body.name.startswith("figure-"):
                     continue
-                if topic_index.exists() and not is_routed(topic_index, body, chapter):
+                if topic_index_included and not is_routed(topic_index, body, chapter):
                     findings.append(
                         finding(
                             "unrouted_notes_topic_body",
@@ -73,11 +78,12 @@ def _check_router_content(volume_root: Path, index: Path, findings: list[Finding
         )
 
 
-def _check_topic_router_only(volume_root: Path, index: Path, findings: list[Finding]) -> None:
+def _check_topic_router_only(volume_root: Path, index: Path, included: set[Path], findings: list[Finding]) -> None:
     topic_body_count = sum(
         1
         for body in index.parent.glob("*.tex")
         if body.name != "index.tex" and not body.name.startswith("figure-")
+        and body.resolve() in included
     )
     in_toolkit = False
     for line_no, raw in enumerate(read_text(index).splitlines(), 1):
