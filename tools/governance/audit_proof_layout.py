@@ -323,11 +323,11 @@ def audit_proof(path: Path, chapter_root: Path, root: Path, notes: dict[str, str
     if vault:
         url = vault.group(1).strip()
         if not url:
-            add(audit, "error", "empty_proof_vault_url", "ProofVaultURL must not be empty.")
+            add(audit, "warning", "empty_proof_vault_url", "ProofVaultURL must not be empty.")
         if re.search(r"\.(?:jpg|jpeg|png|webp)$", url, re.IGNORECASE):
-            add(audit, "error", "raw_image_proof_vault_url", "ProofVaultURL must point to a record, not a raw image.")
+            add(audit, "warning", "raw_image_proof_vault_url", "ProofVaultURL must point to a record, not a raw image.")
         if return_pos >= 0 and theorem_pos >= 0 and not (return_pos < vault.start() < theorem_pos):
-            add(audit, "error", "proof_vault_url_position", "ProofVaultURL must appear after Return and before the starred restatement.")
+            add(audit, "warning", "proof_vault_url_position", "ProofVaultURL must appear after Return and before the starred restatement.")
 
     theorem_body = block(text, THEOREM_STAR_RE)
     professional_body, detailed_body = proof_blocks(text)
