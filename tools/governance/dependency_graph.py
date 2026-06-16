@@ -357,7 +357,7 @@ def extract_edges_from_universe(root: Path, universe: Universe, universe_ref: st
                 "declaration": "missing",
             }
             if not dep_blocks:
-                issues.append(Issue("error", "missing_dependency_declaration", f"{source} has no dependency declaration.", repo, rel(path, root), line, source))
+                issues.append(Issue("warning", "missing_dependency_declaration", f"{source} has no dependency declaration.", repo, rel(path, root), line, source))
                 declarations.append(declaration)
                 continue
             if len(dep_blocks) > 1:
