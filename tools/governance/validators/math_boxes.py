@@ -25,6 +25,14 @@ FORMAL_RE = re.compile(
 ANY_BOX_RE = re.compile(r"\\begin\{(?:definition|axiom|theorem|lemma|proposition|corollary)box\}")
 TCOLORBOX_RE = re.compile(r"\\begin\{tcolorbox\}(?P<body>[\s\S]*?)\\end\{tcolorbox\}", re.IGNORECASE)
 NONFORMAL_BOXED_RE = re.compile(r"\\begin\{(?:remark\*?|example\*?|proof)\}", re.IGNORECASE)
+FORMAL_LABEL_RE = re.compile(r"\\label\{(?:def|ax|thm|lem|prop|cor):[^{}]+\}")
+FORMAL_BOX_RE = re.compile(
+    r"\\begin\{(?P<env>definitionbox|axiombox|theorembox|lemmabox|propositionbox|corollarybox)\}"
+    r"(?:\{[^{}]*\})?"
+    r"(?P<body>[\s\S]*?)"
+    r"\\end\{(?P=env)\}",
+    re.IGNORECASE,
+)
 
 
 @dataclass(frozen=True)
@@ -44,6 +52,7 @@ def validate(volume_root: Path) -> list[Finding]:
 def _validate_file(volume_root: Path, path: Path, findings: list[Finding]) -> None:
     text = read_text(path)
     _check_boxed_nonformal_content(volume_root, path, text, findings)
+    _check_multi_label_decorative_boxes(volume_root, path, text, findings)
     for block in _formal_blocks(text):
         kind = _classify_wrapper(block)
         expected = ENV_PREFIX[block.env]
@@ -77,9 +86,8 @@ def _validate_file(volume_root: Path, path: Path, findings: list[Finding]) -> No
                     path,
                     volume_root,
                     block.line,
-                    "warning",
                 )
-                )
+            )
 
 
 def _check_boxed_nonformal_content(volume_root: Path, path: Path, text: str, findings: list[Finding]) -> None:
@@ -94,6 +102,26 @@ def _check_boxed_nonformal_content(volume_root: Path, path: Path, text: str, fin
                     text.count("\n", 0, match.start()) + 1,
                 )
             )
+
+
+def _check_multi_label_decorative_boxes(volume_root: Path, path: Path, text: str, findings: list[Finding]) -> None:
+    for match in FORMAL_BOX_RE.finditer(text):
+        body = match.group("body")
+        if FORMAL_RE.search(body):
+            continue
+        labels = FORMAL_LABEL_RE.findall(body)
+        if len(labels) <= 1:
+            continue
+        findings.append(
+            finding(
+                "multiple_formal_labels_in_box",
+                "Decorative formal box contains multiple formal labels but no inner formal environment; split it into one formal artifact per label.",
+                path,
+                volume_root,
+                text.count("\n", 0, match.start()) + 1,
+                "warning",
+            )
+        )
 
 
 def _formal_blocks(text: str):

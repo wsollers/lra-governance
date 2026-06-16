@@ -53,16 +53,20 @@ def make_volume() -> Path:
         chapter / "notes" / "order" / "notes-order.tex",
         "\n".join(
             [
+                r"\begin{axiombox}{Axiom (Order Foundation)}",
                 r"\begin{axiom}[Order Foundation]",
                 r"\label{ax:order-foundation}",
                 "Order has a foundation.",
                 r"\end{axiom}",
+                r"\end{axiombox}",
                 r"\NoLocalDependencies",
                 "",
+                r"\begin{propositionbox}{Proposition (Order)}",
                 r"\begin{proposition}[Order]",
                 r"\label{prop:order}",
                 "Every ordered integer is ordered.",
                 r"\end{proposition}",
+                r"\end{propositionbox}",
                 r"\begin{dependencies}",
                 r"\begin{itemize}",
                 r"  \item \hyperref[ax:order-foundation]{Order foundation}.",
@@ -922,6 +926,11 @@ class ValidateVolumeTests(unittest.TestCase):
     def test_math_boxes_flags_raw_wrong_and_unwrapped_formal_blocks(self):
         volume = make_volume()
         write(
+            volume / "integers" / "notes" / "order" / "index.tex",
+            r"\input{volume-ii/integers/notes/order/notes-order}" "\n"
+            r"\input{volume-ii/integers/notes/order/notes-extra}" "\n",
+        )
+        write(
             volume / "integers" / "notes" / "order" / "notes-extra.tex",
             "\n".join(
                 [
@@ -957,6 +966,100 @@ class ValidateVolumeTests(unittest.TestCase):
         self.assertIn("wrong_box_macro", codes)
         self.assertIn("unwrapped_math_env", codes)
         self.assertIn("boxed_nonformal_content", codes)
+
+    def test_math_boxes_warns_on_multi_label_decorative_box(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "index.tex",
+            r"\input{volume-ii/integers/notes/order/notes-extra}" "\n",
+        )
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{propositionbox}{Definition (Cover, Subcover, Finite Cover)}",
+                    r"\label{def:cover-full}",
+                    r"\begin{enumerate}",
+                    r"\item \label{def:subcover}",
+                    "Subcover.",
+                    r"\item \label{def:finite-cover}",
+                    "Finite cover.",
+                    r"\end{enumerate}",
+                    r"\end{propositionbox}",
+                    "",
+                ]
+            ),
+        )
+
+        findings = math_boxes.validate(volume)
+        by_code = {finding.code: finding for finding in findings}
+
+        self.assertEqual(by_code["multiple_formal_labels_in_box"].severity, "warning")
+
+    def test_math_boxes_requires_canonical_wrapper_for_each_formal_environment(self):
+        volume = make_volume()
+        note = volume / "integers" / "notes" / "order" / "notes-extra.tex"
+        write(
+            volume / "integers" / "notes" / "order" / "index.tex",
+            r"\input{volume-ii/integers/notes/order/notes-order}" "\n"
+            r"\input{volume-ii/integers/notes/order/notes-extra}" "\n",
+        )
+        write(
+            note,
+            "\n".join(
+                [
+                    r"\begin{definition}[Raw Definition]",
+                    r"\label{def:raw-definition}",
+                    "Raw definition.",
+                    r"\end{definition}",
+                    r"\begin{axiombox}{Wrong Axiom}",
+                    r"\begin{theorem}[Wrong Axiom]",
+                    r"\label{thm:wrong-axiom}",
+                    "Wrong wrapper.",
+                    r"\end{theorem}",
+                    r"\end{axiombox}",
+                    r"\begin{tcolorbox}",
+                    r"\begin{axiom}[Raw Axiom Box]",
+                    r"\label{ax:raw-axiom-box}",
+                    "Raw tcolorbox.",
+                    r"\end{axiom}",
+                    r"\end{tcolorbox}",
+                    "",
+                ]
+            ),
+        )
+
+        findings = math_boxes.validate(volume)
+        by_code = {finding.code: finding for finding in findings}
+
+        self.assertEqual(by_code["unwrapped_math_env"].severity, "error")
+        self.assertIn("wrong_box_macro", by_code)
+        self.assertIn("raw_tcolorbox_wrapper", by_code)
+
+        env_to_box = {
+            "definition": "definitionbox",
+            "axiom": "axiombox",
+            "theorem": "theorembox",
+            "lemma": "lemmabox",
+            "proposition": "propositionbox",
+            "corollary": "corollarybox",
+        }
+        canonical = []
+        for env, box in env_to_box.items():
+            title = env.title()
+            canonical.extend(
+                [
+                    rf"\begin{{{box}}}{{{title}}}",
+                    rf"\begin{{{env}}}[{title}]",
+                    rf"\label{{{env[:3]}:{env}}}",
+                    f"{title}.",
+                    rf"\end{{{env}}}",
+                    rf"\end{{{box}}}",
+                ]
+            )
+        write(note, "\n".join(canonical + [""]))
+
+        self.assertEqual(math_boxes.validate(volume), [])
 
     def test_interpretation_blocks_flags_missing_interpretation(self):
         volume = make_volume()
