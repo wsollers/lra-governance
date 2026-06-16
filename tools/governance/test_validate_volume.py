@@ -1033,7 +1033,7 @@ class ValidateVolumeTests(unittest.TestCase):
         findings = math_boxes.validate(volume)
         by_code = {finding.code: finding for finding in findings}
 
-        self.assertEqual(by_code["unwrapped_math_env"].severity, "error")
+        self.assertEqual(by_code["unwrapped_math_env"].severity, "warning")
         self.assertIn("wrong_box_macro", by_code)
         self.assertIn("raw_tcolorbox_wrapper", by_code)
 

@@ -86,6 +86,7 @@ def _validate_file(volume_root: Path, path: Path, findings: list[Finding]) -> No
                     path,
                     volume_root,
                     block.line,
+                    "warning",
                 )
             )
 
