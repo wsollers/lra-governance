@@ -7,6 +7,7 @@ from pathlib import Path
 
 from generators.chapter_stub import stub_chapter
 from generators.section_stub import stub_section
+import dependency_graph
 from core import volume as volume_core
 from validate_volume import VALIDATORS
 from validators import block_discipline, capstones, chapter_router, dependency_blocks, dependency_graphs, formal_decoration, formal_reading_required, input_resolution, interpretation_blocks, labels, latex_integrity, math_boxes, notes_structure, print_edition_routing, proof_coverage, proof_file_contract, proof_layout, proof_order, proof_routing, proof_stub_state, reference_voice, structural_chrome, structural_positions, volume_shape
@@ -1224,6 +1225,30 @@ class ValidateVolumeTests(unittest.TestCase):
         volume = make_volume()
 
         self.assertEqual(dependency_graphs.validate(volume), [])
+
+    def test_dependency_graph_uses_live_reachable_files(self):
+        volume = make_volume()
+        repo = volume.parent
+        write(
+            volume / "integers" / "notes" / "order" / "orphan-duplicate.tex",
+            "\n".join(
+                [
+                    r"\begin{axiom}[Orphan Duplicate]",
+                    r"\label{ax:order-foundation}",
+                    "This orphan should not enter the dependency graph universe.",
+                    r"\end{axiom}",
+                    r"\NoLocalDependencies",
+                    "",
+                ]
+            ),
+        )
+
+        universe = dependency_graph.build_universe(repo.parent, repo.name)
+        files = {node.file for node in universe.nodes}
+        codes = {issue.code for issue in universe.issues}
+
+        self.assertNotIn("volume-ii/integers/notes/order/orphan-duplicate.tex", files)
+        self.assertNotIn("duplicate_global_label", codes)
 
     def test_validate_volume_reports_shape_without_fail_fast(self):
         volume = make_volume()

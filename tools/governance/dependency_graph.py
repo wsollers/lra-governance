@@ -18,6 +18,9 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any
 
+from core.file_inventory import files_to_validate
+from core.volume import resolve_volume
+
 
 FORMAL_ENVS = {
     "definition": "def",
@@ -131,43 +134,8 @@ def rel(path: Path, root: Path) -> str:
 
 
 def active_tex_files(repo_root: Path) -> list[Path]:
-    volume_dirs = [path for path in repo_root.iterdir() if path.is_dir() and re.fullmatch(r"volume-[ivx]+", path.name)]
-    roots = volume_dirs or [repo_root]
-    files: list[Path] = []
-    ignored_parts = {
-        "archive",
-        "archives",
-        "build",
-        "common",
-        "constitution",
-        "docs",
-        "generated",
-        "lean",
-        "migration-reports",
-        "bibliography",
-        "proof-techniques",
-        ".git",
-        ".github",
-    }
-    ignored_relative = {
-        "volume-ii/integers/notes/mendelson-construction",
-        "volume-ii/integers/notes/tao-construction",
-        "volume-ii/integers/proofs/mendelson-construction",
-        "volume-ii/integers/proofs/tao-construction",
-        "volume-iii/analysis/real-analysis",
-        "volume-iv/algebra/algebraic-structures",
-    }
-    for root in roots:
-        for path in root.rglob("*.tex"):
-            rel_path = path.relative_to(repo_root).as_posix()
-            if any(part in ignored_parts for part in path.relative_to(repo_root).parts):
-                continue
-            if any(rel_path == ignored or rel_path.startswith(f"{ignored}/") for ignored in ignored_relative):
-                continue
-            if path.name in {"main.tex"}:
-                continue
-            files.append(path)
-    return sorted(files)
+    volume_root = resolve_volume(repo_root).root
+    return files_to_validate(volume_root, only_reachable=True)
 
 
 def formal_blocks(text: str) -> list[tuple[re.Match[str], int]]:
