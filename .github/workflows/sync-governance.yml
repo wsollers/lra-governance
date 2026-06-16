@@ -18,6 +18,7 @@ on:
       - 'constitution/**'
       - 'docs/**'
       - 'scripts/**'
+      - 'templates/**'
       - 'tools/**'
       - '.github/workflows/sync-governance.yml'
   workflow_dispatch:
@@ -67,7 +68,6 @@ jobs:
             rsync -av --delete governance/scripts/ target/scripts/
             repo="${{ matrix.repo }}"
             volume="${repo#lra-volume-}"
-            expr='$'
             case "$volume" in
               i) bib="volume-i-foundations.bib" ;;
               ii) bib="volume-ii-number-systems.bib" ;;
@@ -80,61 +80,11 @@ jobs:
               *) echo "Unknown volume suffix: $volume" >&2; exit 1 ;;
             esac
             mkdir -p target/.github/workflows
-            cat > target/.github/workflows/sync-to-monorepo.yml <<EOF
-name: Sync volume-$volume to monorepo
-
-on:
-  push:
-    branches: [main]
-    paths:
-      - 'volume-$volume/**'
-      - 'bibliography/$bib'
-
-jobs:
-  sync:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout lra-volume-$volume
-        uses: actions/checkout@v4
-        with:
-          path: source
-
-      - name: Checkout monorepo
-        uses: actions/checkout@v4
-        with:
-          repository: wsollers/Learning-Real-Analysis
-          token: ${expr}{{ secrets.SYNC_PAT }}
-          path: monorepo
-
-      - name: Validate volume bibliography
-        run: |
-          cd source
-          python scripts/check_bibliography.py --bib-dir bibliography
-
-      - name: Validate volume
-        run: |
-          cd source
-          python scripts/build_volume.py --validate-only
-
-      - name: Sync volume-$volume/ into monorepo
-        run: |
-          rsync -av --delete source/volume-$volume/ monorepo/volume-$volume/
-
-      - name: Sync volume-$volume bibliography into monorepo
-        run: |
-          mkdir -p monorepo/bibliography
-          cp source/bibliography/$bib monorepo/bibliography/$bib
-
-      - name: Commit and push if changed
-        run: |
-          cd monorepo
-          git config user.name  "lra-sync-bot"
-          git config user.email "sync-bot@noreply.github.com"
-          git add volume-$volume/ bibliography/$bib
-          git diff --cached --quiet && echo "No changes to sync" && exit 0
-          git commit -m "chore: sync volume-$volume from lra-volume-$volume"
-          git push
-            EOF
+            sed \
+              -e "s/__VOLUME__/$volume/g" \
+              -e "s/__BIB__/$bib/g" \
+              governance/templates/sync-to-monorepo-volume.yml \
+              > target/.github/workflows/sync-to-monorepo.yml
           fi
 
       - name: Commit and push if changed
