@@ -131,7 +131,7 @@ Python parsing/rules resolve the overwhelming majority — lean into that.
 - `validate_decoration.py` (CLI; `--canonical-dir`, `--no-formal-reading`, `--chapter/--volume/
   --section`), `formal_reading.py` (trigger dictionary from predicate names), `tex_codec.py`
   (TeX↔base64), `test_decoration_rules.py`.
-- **Remaining fold-in / parity targets** (still standalone): `validate_note_blocks`,
+- **Remaining fold-in / parity targets** (still standalone):
   `audit_proof_layout`, `audit_volume_layout`, and the REST of `validate_chapter_house_rules`
   (proof-file structure suite, exercises, dependency-target resolution, generated-artifact
   markers, formal-tcolorbox styles). The monster's breadcrumb/toolkit CHROME checks are STALE
@@ -198,8 +198,8 @@ Python parsing/rules resolve the overwhelming majority — lean into that.
    identify/relocate pairs behind `standardize.py`. Parallel-run: keep until confirmed unused.
 3. **Finish capabilities:** fill volume titles → `generate_overlays.py`; confirm build commands;
    regenerate vendor entrypoints (`generate_entrypoints.py`).
-4. **Engine parity:** fold the remaining standalone validators (`validate_note_blocks`,
-   `audit_proof_layout`, `audit_volume_layout`, rest of `validate_chapter_house_rules`) into the
+4. **Engine parity:** fold the remaining standalone validators (`audit_proof_layout`,
+   `audit_volume_layout`, rest of `validate_chapter_house_rules`) into the
    engine; reach parity; ONLY THEN delete `audit_latex_decoration.py` + LLM generators/prompts.
 5. Predicate cleanup R1–R7 + sweeper (fix the YAML quoting bug first) → unblocks "bounded"
    trigger, canonical-name check, model-card fan-in.
