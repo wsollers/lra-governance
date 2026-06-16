@@ -11,9 +11,10 @@ from core.volume import chapter_roots, is_ignored
 
 FORMAL_ENV_RE = re.compile(r"\\begin\{(?:definition|axiom|theorem|lemma|proposition|corollary)\}")
 PROOF_ENV_RE = re.compile(r"\\begin\{proof\}")
-UNSTARRED_SUBSECTION_RE = re.compile(r"\\sub(?:sub)?section(?:\[[^\]]*\])?\{[^{}]+\}")
-TOPIC_SECTION_RE = re.compile(r"\\section(?:\[[^\]]*\])?\{[^{}]+\}")
-TOPIC_SUBSECTION_RE = re.compile(r"\\subsection\*(?:\[[^\]]*\])?\{[^{}]+\}")
+_SECTION_TITLE = r"(?:[^{}]|\{[^{}]*\})+"
+UNSTARRED_SUBSECTION_RE = re.compile(rf"\\sub(?:sub)?section(?:\[[^\]]*\])?\{{{_SECTION_TITLE}\}}")
+TOPIC_SECTION_RE = re.compile(rf"\\section(?:\[[^\]]*\])?\{{{_SECTION_TITLE}\}}")
+TOPIC_SUBSECTION_RE = re.compile(rf"\\subsection\*(?:\[[^\]]*\])?\{{{_SECTION_TITLE}\}}")
 TOOLKIT_BEGIN_RE = re.compile(r"\\begin\{toolkitbox\}(?:\{.*\})?")
 TOOLKIT_END_RE = re.compile(r"\\end\{toolkitbox\}")
 
