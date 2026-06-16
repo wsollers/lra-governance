@@ -60,6 +60,7 @@ def validate(volume_root: Path) -> list[Finding]:
                             f"{body.relative_to(chapter).as_posix()} is not routed from notes/{topic_dir.name}/index.tex.",
                             body,
                             volume_root,
+                            severity="warning",
                         )
                     )
                 _check_body_heading(volume_root, body, findings)

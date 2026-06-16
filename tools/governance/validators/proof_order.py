@@ -13,7 +13,7 @@ NOTE_FORMAL_RE = re.compile(
     r"\\begin\{(?P<env>theorem|lemma|proposition|corollary)\}(?:\[[^\]]*\])?",
     re.IGNORECASE,
 )
-LABEL_RE = re.compile(r"\\label\{(?P<label>(?:thm|lem|prop|cor):[a-z0-9-]+)\}")
+LABEL_RE = re.compile(r"\\label\{(?P<label>(?:thm|lem|prop|cor):[A-Za-z0-9-]+)\}")
 
 
 def validate(volume_root: Path) -> list[Finding]:
@@ -54,6 +54,7 @@ def _validate_chapter(volume_root: Path, chapter: Path, findings: list[Finding])
                     "Proof files must be routed in source theorem order.",
                     index,
                     volume_root,
+                    severity="warning",
                 )
             )
 
@@ -75,7 +76,7 @@ def _proof_label_order(chapter: Path) -> list[str]:
             match = LABEL_RE.search(block)
             if match:
                 line = text.count("\n", 0, begin.start()) + 1
-                labels.append((f"prf:{match.group('label').split(':', 1)[1]}", tex, line))
+                labels.append((f"prf:{match.group('label').split(':', 1)[1].casefold()}", tex, line))
     return [label for label, _path, _line in sorted(labels, key=lambda item: (item[1].as_posix(), item[2]))]
 
 

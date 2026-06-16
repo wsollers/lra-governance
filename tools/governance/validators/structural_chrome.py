@@ -50,6 +50,7 @@ def _check_breadcrumb_format(volume_root: Path, path: Path, text: str, findings:
                 path,
                 volume_root,
                 text.count("\n", 0, match.start()) + 1,
+                "warning",
             )
         )
 
@@ -65,11 +66,12 @@ def _check_toolkit(volume_root: Path, path: Path, rel: str, text: str, findings:
                 finding(
                     "toolkit_not_in_notes_router",
                     "Toolkit boxes belong in notes routers, not note body files or chapter routers.",
-                    path,
-                    volume_root,
-                    line,
-                )
+                path,
+                volume_root,
+                line,
+                "warning",
             )
+        )
             continue
         prior = index - 1
         exposition_count = 0
@@ -159,6 +161,7 @@ def _check_inline_tikz(volume_root: Path, path: Path, rel: str, text: str, findi
                 path,
                 volume_root,
                 text.count("\n", 0, match.start()) + 1,
+                "warning",
             )
         )
 

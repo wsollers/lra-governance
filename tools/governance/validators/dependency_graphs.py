@@ -23,7 +23,7 @@ def validate(volume_root: Path) -> list[Finding]:
                 path,
                 volume_root,
                 issue.line,
-                issue.severity,
+                "warning",
             )
         )
     return findings

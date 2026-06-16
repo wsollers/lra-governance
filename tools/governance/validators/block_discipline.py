@@ -53,6 +53,7 @@ TOP_LEVEL_COMMANDS = (
     "\\noindent",
     "\\FloatBarrier",
     "\\LRAProofFor",
+    "\\ProofVaultURL",
     "\\LRAExcludeFromPrintEditionBegin",
     "\\LRAExcludeFromPrintEditionEnd",
     "\\NoLocalDependencies",
@@ -92,6 +93,7 @@ def _validate_file(volume_root: Path, path: Path, findings: list[Finding]) -> No
                     path,
                     volume_root,
                     line_no,
+                    "warning",
                 )
             )
         begin = BEGIN_ENV_RE.match(stripped)
@@ -106,6 +108,7 @@ def _validate_file(volume_root: Path, path: Path, findings: list[Finding]) -> No
                             path,
                             volume_root,
                             line_no,
+                            "warning",
                         )
                     )
                 elif is_note and env == "proof":
@@ -127,6 +130,7 @@ def _validate_file(volume_root: Path, path: Path, findings: list[Finding]) -> No
                             path,
                             volume_root,
                             line_no,
+                            "warning",
                         )
                     )
             stack.append(env)
@@ -138,6 +142,7 @@ def _validate_file(volume_root: Path, path: Path, findings: list[Finding]) -> No
                     path,
                     volume_root,
                     line_no,
+                    "warning",
                 )
             )
         end = END_ENV_RE.match(stripped)

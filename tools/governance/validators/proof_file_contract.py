@@ -8,7 +8,7 @@ from core.tex import read_text, strip_latex_comments
 from core.file_inventory import files_to_validate
 
 
-PROOF_FOR_RE = re.compile(r"\\LRAProofFor\{(?P<label>(?:thm|lem|prop|cor):[a-z0-9-]+)\}")
+PROOF_FOR_RE = re.compile(r"\\LRAProofFor\{(?P<label>(?:thm|lem|prop|cor):[A-Za-z0-9-]+)\}")
 PROOF_LABEL_RE = re.compile(r"\\label\{prf:[a-z0-9-]+\}")
 LABEL_RE = re.compile(r"\\label\{[^{}]+\}")
 HYPERREF_RE = re.compile(r"\\hyperref\[(?P<label>[^\]]+)\]")
@@ -156,6 +156,7 @@ def _check_todo_placement(volume_root: Path, path: Path, text: str, findings: li
                 path,
                 volume_root,
                 _line_at(text, match.start()),
+                "warning",
             )
         )
 

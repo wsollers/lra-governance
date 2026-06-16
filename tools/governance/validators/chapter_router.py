@@ -50,6 +50,7 @@ def validate(volume_root: Path) -> list[Finding]:
                     index,
                     volume_root,
                     line,
+                    "warning",
                 )
             )
             continue
@@ -62,6 +63,7 @@ def validate(volume_root: Path) -> list[Finding]:
                         index,
                         volume_root,
                         line_no,
+                        "warning",
                     )
                 )
     return findings

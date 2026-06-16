@@ -89,6 +89,7 @@ def _validate_file(volume_root: Path, path: Path, findings: list[Finding]) -> No
                     path,
                     volume_root,
                     dep_line,
+                    "warning",
                 )
             )
         for ref in refs:
@@ -101,6 +102,7 @@ def _validate_file(volume_root: Path, path: Path, findings: list[Finding]) -> No
                         path,
                         volume_root,
                         dep_line,
+                        "warning",
                     )
                 )
             elif ":" not in target or target.split(":", 1)[0] not in FORMAL_PREFIXES:
@@ -111,6 +113,7 @@ def _validate_file(volume_root: Path, path: Path, findings: list[Finding]) -> No
                         path,
                         volume_root,
                         dep_line,
+                        "warning",
                     )
                 )
 

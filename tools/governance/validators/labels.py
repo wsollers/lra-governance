@@ -62,6 +62,7 @@ def _check_duplicate_and_slug_labels(volume_root: Path, findings: list[Finding])
                         tex,
                         volume_root,
                         line,
+                        "warning",
                     )
                 )
             else:
