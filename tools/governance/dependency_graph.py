@@ -50,6 +50,7 @@ DEPENDENCIES_REMARK_RE = re.compile(
     re.IGNORECASE,
 )
 NO_LOCAL_RE = re.compile(r"\\NoLocalDependencies\b")
+DEFINITIONAL_ROOT_RE = re.compile(r"\\DefinitionalRoot\b")
 SECTION_RE = re.compile(r"\\(?:chapter|section|subsection|subsubsection)\*?\{")
 COMMENT_RE = re.compile(r"(?<!\\)%.*$")
 
@@ -66,6 +67,7 @@ class Node:
     line: int
     source_order: int
     body_hash: str
+    root_kind: str = ""
 
 
 @dataclass
@@ -205,6 +207,7 @@ def extract_nodes(repo_root: Path, repo: str, start_order: int = 0) -> tuple[lis
                     line=line,
                     source_order=order,
                     body_hash=stable_hash(block_text),
+                    root_kind=root_kind_after_block(text, end_pos),
                 )
             )
     return nodes, issues
@@ -277,6 +280,13 @@ def next_boundary(text: str, start: int) -> int:
     return min(candidates) if candidates else len(text)
 
 
+def root_kind_after_block(text: str, end_pos: int) -> str:
+    window = text[end_pos:next_boundary(text, end_pos)]
+    if DEFINITIONAL_ROOT_RE.search(window):
+        return "definitional"
+    return ""
+
+
 def dependency_blocks(window: str) -> list[tuple[str, str, int]]:
     blocks: list[tuple[str, str, int]] = []
     for match in DEPENDENCIES_ENV_RE.finditer(window):
@@ -285,6 +295,8 @@ def dependency_blocks(window: str) -> list[tuple[str, str, int]]:
         blocks.append(("dependencies_remark", match.group("body"), match.start()))
     for match in NO_LOCAL_RE.finditer(window):
         blocks.append(("no_local", "", match.start()))
+    for match in DEFINITIONAL_ROOT_RE.finditer(window):
+        blocks.append(("definitional_root", "", match.start()))
     return sorted(blocks, key=lambda item: item[2])
 
 
@@ -335,7 +347,7 @@ def extract_edges_from_universe(root: Path, universe: Universe, universe_ref: st
             declaration["dependency_line"] = line_at(text, window_start + block_offset)
             if block_kind == "dependencies_remark":
                 issues.append(Issue("warning", "legacy_dependency_remark", f"{source} uses remark*[Dependencies] instead of dependencies environment.", repo, rel(path, root), int(declaration["dependency_line"]), source))
-            if block_kind == "no_local":
+            if block_kind in {"no_local", "definitional_root"}:
                 declarations.append(declaration)
                 continue
             hyperrefs = list(HYPERREF_RE.finditer(body))
@@ -408,10 +420,20 @@ def load_edges(path: Path) -> EdgeReport:
 def allowed_root(node: Node, policy: dict[str, Any]) -> bool:
     if node.kind == "ax":
         return True
+    if node.root_kind == "definitional":
+        return True
     primitives = set(policy.get("primitive_definitions") or [])
     if node.label in primitives or node.id in primitives:
         return True
     return False
+
+
+def definitional_root_ids(edge_report: EdgeReport) -> set[str]:
+    return {
+        str(item.get("source_id"))
+        for item in edge_report.declarations
+        if item.get("source_id") and item.get("declaration") == "definitional_root"
+    }
 
 
 def excluded_path_patterns(policy: dict[str, Any]) -> list[str]:
@@ -467,12 +489,13 @@ def validate_graph(universe: Universe, edge_report: EdgeReport, policy: dict[str
         issues.append(Issue("error", "dependency_cycle", "Dependency graph contains at least one cycle in extracted edges."))
 
     missing_decls = {item.get("source_id") for item in edge_report.declarations if item.get("declaration") == "missing"}
+    definitional_roots = definitional_root_ids(edge_report)
     for node in universe.nodes:
         if node.id not in ids_in_scope or node.kind not in THEOREM_LIKE:
             continue
         if node.id in missing_decls:
             continue
-        bad_leaf = first_bad_leaf(node.id, adjacency, node_by_id, policy)
+        bad_leaf = first_bad_leaf(node.id, adjacency, node_by_id, policy, definitional_roots)
         if bad_leaf:
             leaf = node_by_id[bad_leaf]
             issues.append(
@@ -491,7 +514,8 @@ def validate_graph(universe: Universe, edge_report: EdgeReport, policy: dict[str
     return issues
 
 
-def first_bad_leaf(start: str, adjacency: dict[str, list[str]], node_by_id: dict[str, Node], policy: dict[str, Any]) -> str | None:
+def first_bad_leaf(start: str, adjacency: dict[str, list[str]], node_by_id: dict[str, Node], policy: dict[str, Any], definitional_roots: set[str] | None = None) -> str | None:
+    definitional_roots = definitional_roots or set()
     stack = [start]
     visited: set[str] = set()
     while stack:
@@ -502,7 +526,7 @@ def first_bad_leaf(start: str, adjacency: dict[str, list[str]], node_by_id: dict
         targets = adjacency.get(node_id, [])
         if not targets:
             node = node_by_id.get(node_id)
-            if node and not allowed_root(node, policy):
+            if node and node_id not in definitional_roots and not allowed_root(node, policy):
                 return node_id
         stack.extend(targets)
     return None

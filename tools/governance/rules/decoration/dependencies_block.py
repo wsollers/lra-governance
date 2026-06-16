@@ -21,11 +21,12 @@ def check(block, ctx) -> Iterable[Finding]:
         "\\begin{dependencies}" in decoration
         or bool(_dependency_remark_body(decoration))
         or "\\NoLocalDependencies" in decoration
+        or "\\DefinitionalRoot" in decoration
     )
     if not has_dependencies:
         yield Finding(
             "missing_dependencies",
-            "Dependencies are missing (use \\begin{dependencies} or \\NoLocalDependencies).",
+            "Dependencies are missing (use \\begin{dependencies}, \\NoLocalDependencies, or \\DefinitionalRoot).",
             "warning",
             block.line_start,
         )

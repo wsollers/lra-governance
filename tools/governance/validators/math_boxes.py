@@ -22,12 +22,12 @@ FORMAL_RE = re.compile(
     r"(?:\[[^\]]*\])?",
     re.IGNORECASE,
 )
-ANY_BOX_RE = re.compile(r"\\begin\{(?:definition|axiom|theorem|lemma|proposition|corollary)box\}")
+ANY_BOX_RE = re.compile(r"\\begin\{(?:definition|definitional|axiom|theorem|lemma|proposition|corollary)box\}")
 TCOLORBOX_RE = re.compile(r"\\begin\{tcolorbox\}(?P<body>[\s\S]*?)\\end\{tcolorbox\}", re.IGNORECASE)
 NONFORMAL_BOXED_RE = re.compile(r"\\begin\{(?:remark\*?|example\*?|proof)\}", re.IGNORECASE)
 FORMAL_LABEL_RE = re.compile(r"\\label\{(?:def|ax|thm|lem|prop|cor):[^{}]+\}")
 FORMAL_BOX_RE = re.compile(
-    r"\\begin\{(?P<env>definitionbox|axiombox|theorembox|lemmabox|propositionbox|corollarybox)\}"
+    r"\\begin\{(?P<env>definitionbox|definitionalbox|axiombox|theorembox|lemmabox|propositionbox|corollarybox)\}"
     r"(?:\{[^{}]*\})?"
     r"(?P<body>[\s\S]*?)"
     r"\\end\{(?P=env)\}",
@@ -140,6 +140,8 @@ def _classify_wrapper(block: FormalBlock) -> str:
         if not stripped:
             continue
         if re.search(r"\\begin\{" + re.escape(expected) + r"\}", line):
+            return "semantic"
+        if block.env == "definition" and re.search(r"\\begin\{definitionalbox\}", line):
             return "semantic"
         if re.search(r"\\begin\{tcolorbox\}", line):
             return "raw"

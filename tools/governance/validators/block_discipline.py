@@ -9,7 +9,7 @@ from core.file_inventory import files_to_validate
 
 
 FORMAL_ENVS = {"definition", "axiom", "theorem", "lemma", "proposition", "corollary"}
-FORMAL_BOX_ENVS = {"definitionbox", "axiombox", "theorembox", "lemmabox", "propositionbox", "corollarybox"}
+FORMAL_BOX_ENVS = {"definitionbox", "definitionalbox", "axiombox", "theorembox", "lemmabox", "propositionbox", "corollarybox"}
 STARRED_RESTATEMENT_ENVS = {"theorem*", "lemma*", "proposition*", "corollary*"}
 ALLOWED_NOTE_TOP_ENVS = FORMAL_ENVS | FORMAL_BOX_ENVS | {
     "remark*",
@@ -57,6 +57,7 @@ TOP_LEVEL_COMMANDS = (
     "\\LRAExcludeFromPrintEditionBegin",
     "\\LRAExcludeFromPrintEditionEnd",
     "\\NoLocalDependencies",
+    "\\DefinitionalRoot",
     "\\medskip",
     "\\smallskip",
     "\\bigskip",

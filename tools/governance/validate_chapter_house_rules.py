@@ -27,6 +27,7 @@ FORMAL_ENVS = {
 }
 FORMAL_BOX_ENVS = {
     "definitionbox": "definition",
+    "definitionalbox": "definition",
     "axiombox": "axiom",
     "theorembox": "theorem",
     "lemmabox": "lemma",
@@ -81,7 +82,7 @@ TCOLORBOX_FORMAL_RE = re.compile(
     re.IGNORECASE,
 )
 FORMAL_BOX_RE = re.compile(
-    r"\\begin\{(?P<wrapper>definitionbox|axiombox|theorembox|lemmabox|propositionbox|corollarybox)\}"
+    r"\\begin\{(?P<wrapper>definitionbox|definitionalbox|axiombox|theorembox|lemmabox|propositionbox|corollarybox)\}"
     r"(?:\{[^{}]*\})?\s*"
     r"\\begin\{(?P<env>definition|axiom|theorem|lemma|proposition|corollary)\}",
     re.IGNORECASE,
@@ -1161,7 +1162,10 @@ def validate_voice(chapter: Path, path: Path, findings: list[Finding]) -> None:
 
 
 def dependency_bodies(decoration: str) -> list[str]:
-    return re.findall(r"\\begin\{dependencies\}(.*?)\\end\{dependencies\}", decoration, re.DOTALL)
+    bodies = re.findall(r"\\begin\{dependencies\}(.*?)\\end\{dependencies\}", decoration, re.DOTALL)
+    if r"\DefinitionalRoot" in decoration:
+        bodies.append(r"\DefinitionalRoot")
+    return bodies
 
 
 def decoration_key(match: re.Match[str]) -> str:
@@ -1183,8 +1187,9 @@ def validate_formal_blocks(chapter: Path, blocks: list[FormalBlock], findings: l
             source = uncommented(read(block.path))
             block_start = source.find(block.text)
             wrapper_context = source[max(0, block_start - 500) : block_start] if block_start >= 0 else ""
-            expected_wrapper = next((box for box, env in FORMAL_BOX_ENVS.items() if env == block.env), "")
-            if f"\\begin{{{expected_wrapper}}}" not in wrapper_context:
+            expected_wrappers = [box for box, env in FORMAL_BOX_ENVS.items() if env == block.env]
+            if not any(f"\\begin{{{wrapper}}}" in wrapper_context for wrapper in expected_wrappers):
+                expected_wrapper = expected_wrappers[0] if expected_wrappers else ""
                 add(findings, chapter, block.path, "missing_required_box", f"{block.label} must be wrapped in {expected_wrapper} by artifact-matrix box rules.", block.line)
         if not block.label.startswith(f"{block.prefix}:"):
             add(findings, chapter, block.path, "label_prefix_mismatch", f"{block.env} label should start with {block.prefix}:.", block.line)

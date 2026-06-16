@@ -93,8 +93,9 @@ def _classify_wrapper(prelines: list[str], env: str) -> str:
         s=line.strip()
         if not s: continue
         if re.search(r"\\begin\{"+re.escape(expected)+r"\}", line): return "semantic"
+        if env == "definition" and re.search(r"\\begin\{definitionalbox\}", line): return "semantic"
         if re.search(r"\\begin\{tcolorbox\}", line):                 return "raw"
-        if re.search(r"\\begin\{(?:definition|axiom|theorem|lemma|proposition|corollary)box\}", line):
+        if re.search(r"\\begin\{(?:definition|definitional|axiom|theorem|lemma|proposition|corollary)box\}", line):
             return "wrong_box"
         if re.search(r"\\end\{", line):                              return "none"
         if re.search(r"\\begin\{", line):                            return "none"
@@ -392,7 +393,7 @@ def structural_roadmap_purge(text: str, info: FileInfo, ctx: Context):
 # Cross-file capstone routing (unrouted_capstone, capstone_not_last) is deferred to
 # the routing fold-in; it needs chapter context this per-file engine lacks.
 # ============================================================
-_FORMAL_BOX_ENVS = {"definitionbox","axiombox","theorembox","lemmabox","propositionbox","corollarybox"}
+_FORMAL_BOX_ENVS = {"definitionbox","definitionalbox","axiombox","theorembox","lemmabox","propositionbox","corollarybox"}
 _STARRED_RESTATEMENT_ENVS = {"theorem*","lemma*","proposition*","corollary*"}
 _ALLOWED_NOTE_TOP_ENVS = _FORMAL_BOX_ENVS | {
     "remark*","example*","exposition","dependencies","tcolorbox","toolkitbox",
@@ -406,7 +407,7 @@ _PLAIN_BLOCK_RE = re.compile(r"\\begin\{(remark|example)\}(?!\*)")
 _TOP_LEVEL_COMMANDS = ("\\chapter","\\section","\\subsection","\\subsubsection",
     "\\paragraph","\\input","\\include","\\label","\\newpage","\\clearpage",
     "\\phantomsection","\\noindent","\\FloatBarrier","\\LRAProofFor",
-    "\\LRAExcludeFromPrintEditionBegin","\\LRAExcludeFromPrintEditionEnd","\\NoLocalDependencies",
+    "\\LRAExcludeFromPrintEditionBegin","\\LRAExcludeFromPrintEditionEnd","\\NoLocalDependencies","\\DefinitionalRoot",
     "\\medskip","\\smallskip","\\bigskip","\\vspace")
 _IGNORED_LABEL_PREFIXES = {"ch","sec","subsec","toc"}
 _BAD_LABEL_PARTS = {"the","following","this","with","therefore","and","or","let","denote","page"}

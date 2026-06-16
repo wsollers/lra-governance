@@ -19,6 +19,7 @@ SECTION_RE = re.compile(r"\\(?:chapter|section|subsection|subsubsection)\*?\{")
 DEPENDENCIES_ENV_RE = re.compile(r"\\begin\{dependencies\}(?P<body>[\s\S]*?)\\end\{dependencies\}", re.IGNORECASE)
 DEPENDENCIES_REMARK_RE = re.compile(r"\\begin\{remark\*\}\[Dependencies\](?P<body>[\s\S]*?)\\end\{remark\*\}", re.IGNORECASE)
 NO_LOCAL_RE = re.compile(r"\\NoLocalDependencies\b")
+DEFINITIONAL_ROOT_RE = re.compile(r"\\DefinitionalRoot\b")
 HYPERREF_RE = re.compile(r"\\hyperref\[(?P<label>[^\]]+)\]")
 LABEL_RE = re.compile(r"\\label\{(?P<label>[a-z]+:[^{}]+)\}")
 
@@ -78,7 +79,7 @@ def _validate_file(volume_root: Path, path: Path, findings: list[Finding]) -> No
                     "warning",
                 )
             )
-        if kind == "no_local":
+        if kind in {"no_local", "definitional_root"}:
             continue
         refs = list(HYPERREF_RE.finditer(body))
         if not refs and "TODO" not in body:
@@ -141,4 +142,6 @@ def _dependency_declarations(window: str) -> list[tuple[str, str, int]]:
         declarations.append(("dependencies_remark", match.group("body"), match.start()))
     for match in NO_LOCAL_RE.finditer(window):
         declarations.append(("no_local", "", match.start()))
+    for match in DEFINITIONAL_ROOT_RE.finditer(window):
+        declarations.append(("definitional_root", "", match.start()))
     return sorted(declarations, key=lambda item: item[2])
