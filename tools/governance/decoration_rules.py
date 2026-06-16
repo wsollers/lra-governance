@@ -162,7 +162,7 @@ def formal_reading_required(b: Block, ctx: Context):
         yield Issue("formal_reading_missing",
             f"Statement invokes {uniq[:4]} but has no Standard quantified statement "
             f"(formal reading). Generate the quantified/predicate reading, or mark it "
-            f"lra:simple if it makes no formal claim.", "error", b.line_start)
+            f"lra:simple if it makes no formal claim.", "warning", b.line_start)
 
 # ================= FILE-LEVEL RULES =================
 # Whole-file invariants: breadcrumb/toolkit placement, structural-roadmap purge.

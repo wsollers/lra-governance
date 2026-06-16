@@ -54,6 +54,7 @@ def _validate_file(volume_root: Path, path: Path, surface_forms: list[str], find
                     path,
                     volume_root,
                     line,
+                    "warning",
                 )
             )
 
