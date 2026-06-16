@@ -28,9 +28,9 @@ STUB_TEMPLATE = r"""\newpage
 \hyperref[%%THMLABEL%%]{Return to Theorem}
 \end{remark*}
 
-\begin{theorem*}[%%SAFE_TITLE%%]
+\begin{%%RESTATEMENT_ENV%%}[%%SAFE_TITLE%%]
 %%STATEMENT%%
-\end{theorem*}
+\end{%%RESTATEMENT_ENV%%}
 
 \begin{proof}[Professional Standard Proof]
 \LRAProofBodyStart
@@ -55,6 +55,13 @@ DEFAULT_DEPS = (r"\begin{dependencies}" "\n"
                 r"  \item TODO: list mathematical dependencies." "\n"
                 r"\end{itemize}" "\n"
                 r"\end{dependencies}")
+
+RESTATEMENT_ENV_BY_PREFIX = {
+    "thm": "theorem*",
+    "lem": "lemma*",
+    "prop": "proposition*",
+    "cor": "corollary*",
+}
 
 def extract_payload(notes_path: Path, thm_label: str):
     """Return (title, statement_body, deps_block_or_None) for the theorem labelled thm_label."""
@@ -101,9 +108,11 @@ def build_stub(root, thm_label, title, statement, deps):
     safe_title = safe_optional_title(title, root.replace("-", " ").title())
     statement = statement or "TODO: restate the theorem."
     deps = deps or DEFAULT_DEPS
+    restatement_env = RESTATEMENT_ENV_BY_PREFIX.get(thm_label.split(":", 1)[0], "theorem*")
     return (STUB_TEMPLATE
             .replace("%%THMLABEL%%", thm_label)
             .replace("%%ROOT%%", root)
+            .replace("%%RESTATEMENT_ENV%%", restatement_env)
             .replace("%%TITLE%%", title)
             .replace("%%SAFE_TITLE%%", safe_title)
             .replace("%%STATEMENT%%", statement)
