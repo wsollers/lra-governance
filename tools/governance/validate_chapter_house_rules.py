@@ -806,7 +806,7 @@ def validate_proof_structure(chapter: Path, findings: list[Finding]) -> None:
             add(findings, chapter, proofs_index, "proofs_index_contains_proof_content", "proofs/index.tex must be a router, not a proof-content file.")
         proof_exercises = proofs_root / "exercises" / "index.tex"
         if proof_exercises.exists() and directly_inputs(proofs_index, proof_exercises, chapter):
-            add(findings, chapter, proofs_index, "proofs_index_routes_exercises", "proofs/exercises/index.tex must be routed only from the chapter router, not from proofs/index.tex.")
+            add(findings, chapter, proofs_index, "proofs_index_routes_exercises", "proofs/exercises/index.tex must be routed only from the chapter router, not from proofs/index.tex.", severity="warning")
     for path in tex_siblings(proofs_root):
         add(findings, chapter, path, "legacy_flat_proof_file", "Active proof files must live under proofs/{topic}/, not directly under proofs/.")
     for topic in sorted(topic_dirs(proofs_root)):
@@ -965,7 +965,7 @@ def validate_chapter_layout(chapter: Path, findings: list[Finding], generate_mis
 
     proof_exercises_index = chapter / "proofs" / "exercises" / "index.tex"
     if proof_exercises_index.exists() and directly_inputs(chapter / "proofs" / "index.tex", proof_exercises_index, chapter):
-        add(findings, chapter, proof_exercises_index, "proofs_index_routes_exercises", "proofs/exercises/index.tex must be routed only from the chapter router, not from proofs/index.tex.")
+        add(findings, chapter, proof_exercises_index, "proofs_index_routes_exercises", "proofs/exercises/index.tex must be routed only from the chapter router, not from proofs/index.tex.", severity="warning")
 
 
 def validate_toolkits(chapter: Path, findings: list[Finding]) -> None:

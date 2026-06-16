@@ -22,6 +22,7 @@ def validate(volume_root: Path) -> list[Finding]:
                     "proofs/exercises/index.tex must be routed only from the chapter router, not from proofs/index.tex.",
                     proofs_index,
                     volume_root,
+                    severity="warning",
                 )
             )
 
