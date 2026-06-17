@@ -4,6 +4,11 @@
 #
 # Required secret:
 #   SYNC_PAT: GitHub PAT with repo scope for the target repositories.
+#
+# NOTE: This workflow no longer generates per-leaf sync-to-monorepo.yml
+# files. Leaf -> monorepo syncing was inverted to a single mono-side
+# orchestrator (Learning-Real-Analysis/.github/workflows/assemble-from-leaves.yml),
+# so the old fan-in template is intentionally not emitted here anymore.
 # =============================================================
 
 name: Sync governance files
@@ -66,25 +71,6 @@ jobs:
           if [[ "${{ matrix.repo }}" == lra-volume-* ]]; then
             rsync -av --delete governance/tools/ target/tools/
             rsync -av --delete governance/scripts/ target/scripts/
-            repo="${{ matrix.repo }}"
-            volume="${repo#lra-volume-}"
-            case "$volume" in
-              i) bib="volume-i-foundations.bib" ;;
-              ii) bib="volume-ii-number-systems.bib" ;;
-              iii) bib="volume-iii-analysis.bib" ;;
-              iv) bib="volume-iv-algebra.bib" ;;
-              v) bib="volume-v-topology-geometry.bib" ;;
-              vi) bib="volume-vi-computational.bib" ;;
-              vii) bib="volume-vii-numerical-approximation.bib" ;;
-              viii) bib="volume-viii-logic-foundations.bib" ;;
-              *) echo "Unknown volume suffix: $volume" >&2; exit 1 ;;
-            esac
-            mkdir -p target/.github/workflows
-            sed \
-              -e "s/__VOLUME__/$volume/g" \
-              -e "s/__BIB__/$bib/g" \
-              governance/templates/sync-to-monorepo-volume.yml \
-              > target/.github/workflows/sync-to-monorepo.yml
           fi
 
       - name: Commit and push if changed
@@ -94,7 +80,7 @@ jobs:
           git config user.email "governance-bot@noreply.github.com"
           git add .gitignore DESIGN.md REPOSITORY_STRUCTURE.md constitution/ docs/
           if [[ "${{ matrix.repo }}" == lra-volume-* ]]; then
-            git add tools/ scripts/ .github/workflows/sync-to-monorepo.yml
+            git add tools/ scripts/
           fi
           git diff --cached --quiet && echo "No governance changes for ${{ matrix.repo }}" && exit 0
           git commit -m "chore: sync governance files"
