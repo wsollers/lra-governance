@@ -64,6 +64,17 @@ Stage 2 generates data:
 - extract formal nodes and dependency edges from the volume repos with the
   canonical governance reader.
 
+The first conservative Stage 2 command is read-only against the volume repos.
+It derives a chapter manifest from source, extracts dependency data, validates
+the graph, and writes ignored run artifacts:
+
+```powershell
+python tools\governance\extraction_pipeline\generate_data.py
+```
+
+Generated run artifacts live under `runs/extraction-*`. Raw logs and human
+reports live under `logs/` and are ignored.
+
 Stage 3 combines data:
 
 - merge per-volume extraction output into canonical knowledge artifacts;
