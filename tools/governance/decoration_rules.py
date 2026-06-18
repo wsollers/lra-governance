@@ -34,7 +34,7 @@ class Block:
 @dataclass
 class Context:
     """Per-run config. Volume overlays can flip these (e.g. plain-style Vol IV)."""
-    require_box: bool = True              # math env must be wrapped in its semantic box
+    require_box: bool = False             # opt-in audit for statements explicitly expected to be boxed
     unwrapped_severity: str = "warning"   # severity when require_box and none found
     predicates: set[str] = field(default_factory=set)
     breadcrumb_max_leading_exposition: int = 0  # 'very first content' = 0; set 1 to allow one exposition
@@ -119,7 +119,7 @@ def math_box_wrapper(b: Block, ctx: Context):
         if ctx.require_box:
             yield Issue("unwrapped_math_env",
                 f"{b.environment} is not wrapped in {BOX_MACRO[b.environment]} (neither semantic box nor legacy tcolorbox). "
-                f"Plain-style volumes may set require_box=false in the overlay.",
+                f"Use require_box only for targeted audits of statements explicitly expected to be boxed.",
                 ctx.unwrapped_severity, b.line_start)
 
 # --- ported verbatim from analyze_block() (logic unchanged, relocated) ---

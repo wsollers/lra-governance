@@ -23,9 +23,9 @@ def test_unwrapped_flagged_when_required():
     t = "\\begin{lemma}[Z]\n\\label{lem:z}\nbody\n\\end{lemma}"
     assert "unwrapped_math_env" in _codes(dr.run_rules(_block(t), dr.Context(require_box=True)))
 
-def test_unwrapped_ok_when_plain_style():
+def test_unwrapped_ok_by_default():
     t = "\\begin{lemma}[Z]\n\\label{lem:z}\nbody\n\\end{lemma}"
-    assert "unwrapped_math_env" not in _codes(dr.run_rules(_block(t), dr.Context(require_box=False)))
+    assert "unwrapped_math_env" not in _codes(dr.run_rules(_block(t), dr.Context()))
 
 # ---------- ported legacy rules ----------
 def test_missing_label():

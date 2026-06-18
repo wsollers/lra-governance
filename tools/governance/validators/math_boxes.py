@@ -78,17 +78,9 @@ def _validate_file(volume_root: Path, path: Path, findings: list[Finding]) -> No
                     block.line,
                 )
             )
-        else:
-            findings.append(
-                finding(
-                    "unwrapped_math_env",
-                    f"{block.env} is not wrapped in {expected}.",
-                    path,
-                    volume_root,
-                    block.line,
-                    "warning",
-                )
-            )
+        # Unboxed formal environments are allowed. Boxes are reserved for
+        # load-bearing statements; this validator only checks box correctness
+        # when a box is actually present.
 
 
 def _check_boxed_nonformal_content(volume_root: Path, path: Path, text: str, findings: list[Finding]) -> None:

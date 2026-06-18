@@ -5,7 +5,7 @@ Repo identity: Volume III.
 Local conventions:
 - Content lives under `volume-iii/<chapter>/notes/<section>/notes-<section>.tex`;
   proofs under `.../proofs/<section>/prf-<slug>.tex`.
-- Definitions are wrapped in the semantic `definitionbox` family (common/boxes.tex).
+- Definitions use ordinary `definition` environments by default; wrap only load-bearing definitions in the semantic `definitionbox` family.
 - Decoration blocks are unboxed `remark*`; dependencies use `\begin{dependencies}` or `\NoLocalDependencies`.
 - Chapters route into BOTH `volume-iii/index.tex` (monorepo) and `main.tex` (local build).
 - Canonical YAML registries live at the monorepo root; cross-volume `\hyperref` targets resolve

@@ -1,0 +1,83 @@
+{
+  "root": "F:\\repos\\lra-volume-iv",
+  "write": true,
+  "converted": 50,
+  "skipped_prose_only": 0,
+  "files": [
+    {
+      "path": "F:\\repos\\lra-volume-iv\\volume-iv\\algebra\\lattice-order\\notes\\ordered-sets\\notes-chain.tex",
+      "converted": 2,
+      "skipped_prose_only": 0
+    },
+    {
+      "path": "F:\\repos\\lra-volume-iv\\volume-iv\\algebra\\lattice-order\\notes\\ordered-sets\\notes-consistency.tex",
+      "converted": 1,
+      "skipped_prose_only": 0
+    },
+    {
+      "path": "F:\\repos\\lra-volume-iv\\volume-iv\\algebra\\lattice-order\\notes\\ordered-sets\\notes-covering-relation.tex",
+      "converted": 3,
+      "skipped_prose_only": 0
+    },
+    {
+      "path": "F:\\repos\\lra-volume-iv\\volume-iv\\algebra\\lattice-order\\notes\\ordered-sets\\notes-down-up-sets.tex",
+      "converted": 2,
+      "skipped_prose_only": 0
+    },
+    {
+      "path": "F:\\repos\\lra-volume-iv\\volume-iv\\algebra\\lattice-order\\notes\\ordered-sets\\notes-duality.tex",
+      "converted": 2,
+      "skipped_prose_only": 0
+    },
+    {
+      "path": "F:\\repos\\lra-volume-iv\\volume-iv\\algebra\\lattice-order\\notes\\ordered-sets\\notes-extremal-elements.tex",
+      "converted": 7,
+      "skipped_prose_only": 0
+    },
+    {
+      "path": "F:\\repos\\lra-volume-iv\\volume-iv\\algebra\\lattice-order\\notes\\ordered-sets\\notes-families.tex",
+      "converted": 1,
+      "skipped_prose_only": 0
+    },
+    {
+      "path": "F:\\repos\\lra-volume-iv\\volume-iv\\algebra\\lattice-order\\notes\\ordered-sets\\notes-lifting.tex",
+      "converted": 2,
+      "skipped_prose_only": 0
+    },
+    {
+      "path": "F:\\repos\\lra-volume-iv\\volume-iv\\algebra\\lattice-order\\notes\\ordered-sets\\notes-maps.tex",
+      "converted": 4,
+      "skipped_prose_only": 0
+    },
+    {
+      "path": "F:\\repos\\lra-volume-iv\\volume-iv\\algebra\\lattice-order\\notes\\ordered-sets\\notes-ordered-sets.tex",
+      "converted": 2,
+      "skipped_prose_only": 0
+    },
+    {
+      "path": "F:\\repos\\lra-volume-iv\\volume-iv\\algebra\\lattice-order\\notes\\ordered-sets\\notes-partial-total-maps.tex",
+      "converted": 1,
+      "skipped_prose_only": 0
+    },
+    {
+      "path": "F:\\repos\\lra-volume-iv\\volume-iv\\algebra\\linear-algebra\\notes\\vector-spaces\\notes-vector-space-preliminaries.tex",
+      "converted": 6,
+      "skipped_prose_only": 0
+    },
+    {
+      "path": "F:\\repos\\lra-volume-iv\\volume-iv\\algebra\\linear-algebra\\notes\\vector-spaces\\notes-vector-spaces.tex",
+      "converted": 9,
+      "skipped_prose_only": 0
+    },
+    {
+      "path": "F:\\repos\\lra-volume-iv\\volume-iv\\algebra\\linear-algebra\\notes\\vector-spaces\\notes-vector-subspaces.tex",
+      "converted": 7,
+      "skipped_prose_only": 0
+    },
+    {
+      "path": "F:\\repos\\lra-volume-iv\\volume-iv\\algebra\\linear-algebra\\proofs\\exercises\\capstone-linear-algebra.tex",
+      "converted": 1,
+      "skipped_prose_only": 0
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "root": "F:\\repos\\lra-volume-viii",
+  "write": false,
+  "converted": 7,
+  "skipped_prose_only": 0,
+  "files": [
+    {
+      "path": "F:\\repos\\lra-volume-viii\\volume-viii\\algebras-of-sets\\notes\\rings-of-sets\\notes-boolean-rings.tex",
+      "converted": 5,
+      "skipped_prose_only": 0
+    },
+    {
+      "path": "F:\\repos\\lra-volume-viii\\volume-viii\\algebras-of-sets\\proofs\\rings-of-sets\\prf-self-additive-inverse.tex",
+      "converted": 1,
+      "skipped_prose_only": 0
+    },
+    {
+      "path": "F:\\repos\\lra-volume-viii\\volume-viii\\algebras-of-sets\\proofs\\rings-of-sets\\prf-self-negation.tex",
+      "converted": 1,
+      "skipped_prose_only": 0
+    }
+  ]
+}

@@ -10,10 +10,9 @@ from __future__ import annotations
 from pathlib import Path
 
 def volume_overlay(repo, title, plain):
-    box = ("Definitions are PLAIN (\\begin{definition} ... no box); verifiers run with "
-           "`--no-require-box`." if plain else
-           "Definitions are wrapped in the semantic `definitionbox` family (common/boxes.tex).")
-    plainnote = ("\n- Plain-style volume: pass `--no-require-box` to `validate_decoration.py`."
+    box = ("Definitions are ordinary `definition` environments unless a rare load-bearing definition warrants a semantic box." if plain else
+           "Definitions use ordinary `definition` environments by default; wrap only load-bearing definitions in the semantic `definitionbox` family.")
+    plainnote = ("\n- Plain-style volume: prefer unboxed formal environments except for rare structural emphasis."
                  if plain else "")
     vol = repo.replace('lra-', '')
     return f"""# Repo Overlay -- {repo}
@@ -40,6 +39,28 @@ def _bullets(items):
     return "\n".join(f"- `{item}`" for item in items)
 
 def nonvolume_overlay(repo, kind, title, build_environment=None, success_gates=None):
+    if kind == "governance":
+        return f"""# Repo Overlay -- {repo}
+
+Repo identity: {title}.
+
+Owned concerns:
+
+- capability resolver and capability docs,
+- governance validators and tests,
+- repo overlays and generated wrapper tooling,
+- standards, reports, and migration plans.
+
+Success gates:
+
+- `python capabilities/test_resolve.py`
+- `python -m py_compile capabilities/resolve.py capabilities/build-repo/build_repo.py`
+- run focused validator tests for changed validator code.
+
+Build and validation work in this repo should use the `build-repo` capability.
+Do not run LaTeX volume render checks as substitutes for governance tests.
+"""
+
     blocks = {
         "library": (
             "Shared LaTeX macros, boxes, environments, and templates consumed by every volume. "
@@ -57,6 +78,9 @@ def nonvolume_overlay(repo, kind, title, build_environment=None, success_gates=N
             None),
         "web": (
             "Knowledge Explorer web app consuming extracted knowledge-graph data.",
+            None),
+        "governance": (
+            "Canonical governance source for authoring standards, schemas, capabilities, validators, and generated repo overlays.",
             None),
     }
     purpose, cap = blocks[kind]

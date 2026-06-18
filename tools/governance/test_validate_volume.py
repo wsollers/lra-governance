@@ -924,7 +924,7 @@ class ValidateVolumeTests(unittest.TestCase):
         self.assertIn("missing_dependent_parent_block", codes)
         self.assertIn("unknown_decoration_block", codes)
 
-    def test_math_boxes_flags_raw_wrong_and_unwrapped_formal_blocks(self):
+    def test_math_boxes_flags_raw_and_wrong_but_allows_unwrapped_formal_blocks(self):
         volume = make_volume()
         write(
             volume / "integers" / "notes" / "order" / "index.tex",
@@ -965,7 +965,7 @@ class ValidateVolumeTests(unittest.TestCase):
 
         self.assertIn("raw_tcolorbox_wrapper", codes)
         self.assertIn("wrong_box_macro", codes)
-        self.assertIn("unwrapped_math_env", codes)
+        self.assertNotIn("unwrapped_math_env", codes)
         self.assertIn("boxed_nonformal_content", codes)
 
     def test_math_boxes_warns_on_multi_label_decorative_box(self):
@@ -997,7 +997,7 @@ class ValidateVolumeTests(unittest.TestCase):
 
         self.assertEqual(by_code["multiple_formal_labels_in_box"].severity, "warning")
 
-    def test_math_boxes_requires_canonical_wrapper_for_each_formal_environment(self):
+    def test_math_boxes_checks_canonical_wrapper_when_present(self):
         volume = make_volume()
         note = volume / "integers" / "notes" / "order" / "notes-extra.tex"
         write(
@@ -1033,7 +1033,7 @@ class ValidateVolumeTests(unittest.TestCase):
         findings = math_boxes.validate(volume)
         by_code = {finding.code: finding for finding in findings}
 
-        self.assertEqual(by_code["unwrapped_math_env"].severity, "warning")
+        self.assertNotIn("unwrapped_math_env", by_code)
         self.assertIn("wrong_box_macro", by_code)
         self.assertIn("raw_tcolorbox_wrapper", by_code)
 

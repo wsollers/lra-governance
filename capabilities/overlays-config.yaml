@@ -6,7 +6,7 @@
 repos:
   - repo: lra-governance
     kind: governance
-    title: "Governance, capabilities, validators, and wrappers"
+    title: "Governance, capabilities, validators, and wrapper tooling"
   - repo: lra-volume-i
     kind: volume
     title: "Logic, Sets, and Proof"

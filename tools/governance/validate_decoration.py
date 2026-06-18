@@ -59,8 +59,10 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description="Run LRA decoration rules over a volume/chapter/section.")
     ap.add_argument("--root", required=True)
     ap.add_argument("--volume"); ap.add_argument("--chapter"); ap.add_argument("--section")
+    ap.add_argument("--require-box", action="store_true",
+                    help="require every formal environment to use its semantic math box")
     ap.add_argument("--no-require-box", action="store_true",
-                    help="plain-style volumes (e.g. Vol IV): do not require semantic math boxes")
+                    help="deprecated no-op: semantic math boxes are selective by default")
     ap.add_argument("--breadcrumb-max-leading-exposition", type=int, default=0)
     ap.add_argument("--toolkit-max-leading-exposition", type=int, default=1)
     ap.add_argument("--canonical-dir", help="dir with predicates.yaml/structures.yaml; enables formal_reading concept triggers")
@@ -86,7 +88,7 @@ def main(argv=None) -> int:
               f"structures.yaml {'present' if gap['structures_yaml_present'] else 'absent'})\n")
 
     ctx = dr.Context(
-        require_box=not args.no_require_box,
+        require_box=args.require_box,
         breadcrumb_max_leading_exposition=args.breadcrumb_max_leading_exposition,
         toolkit_max_leading_exposition=args.toolkit_max_leading_exposition,
         formal_reading=not args.no_formal_reading,

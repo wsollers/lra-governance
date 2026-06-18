@@ -17,8 +17,12 @@ is specifically to define a term.
 
 1. If the user supplied verbatim LaTeX, preserve the mathematical statement exactly.
 2. Resolve `kind` and label prefix:
-   definition->`definitionbox`/`def:`, axiom->`axiombox`/`ax:`, theorem->`theorembox`/`thm:`,
-   lemma->`lemmabox`/`lem:`, proposition->`propositionbox`/`prop:`, corollary->`corollarybox`/`cor:`.
+   definition->`def:`, axiom->`ax:`, theorem->`thm:`, lemma->`lem:`,
+   proposition->`prop:`, corollary->`cor:`.
+   Use semantic box wrappers only for load-bearing statements. When a statement
+   is boxed, use the matching house wrapper:
+   definition->`definitionbox`, axiom->`axiombox`, theorem->`theorembox`,
+   lemma->`lemmabox`, proposition->`propositionbox`, corollary->`corollarybox`.
 3. Emit the statement in the repo house style with required decoration remarks:
    standard quantified statement, interpretation, and dependencies or `\NoLocalDependencies`.
 4. For theorem, lemma, proposition, and corollary, create the proof stub in the

@@ -1183,7 +1183,7 @@ def validate_formal_blocks(chapter: Path, blocks: list[FormalBlock], findings: l
             add(findings, chapter, block.path, "missing_formal_label", f"{block.env} has no label.", block.line)
             continue
         by_label[block.label] = block
-        if block.env in {"definition", "axiom"}:
+        if block.env == "axiom":
             source = uncommented(read(block.path))
             block_start = source.find(block.text)
             wrapper_context = source[max(0, block_start - 500) : block_start] if block_start >= 0 else ""
