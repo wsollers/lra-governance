@@ -2,9 +2,9 @@
 """Move early dependencies blocks after formal decoration remarks.
 
 This is a mechanical fixer for `decoration_order` findings where an existing
-`\begin{dependencies}` block appears before `Standard quantified statement` in
-a formal statement's decoration region. It does not invent dependencies and
-does not edit mathematical statement bodies.
+`\begin{dependencies}` block appears before a later-ranked decoration block in a
+formal statement's decoration region. It does not invent dependencies and does
+not edit mathematical statement bodies.
 """
 from __future__ import annotations
 
@@ -24,6 +24,29 @@ SECTION_RE = re.compile(r"\\(?:chapter|section|subsection|subsubsection)\*?\{")
 LABEL_RE = re.compile(r"\\label\{([^}]+)\}")
 DEPENDENCIES_RE = re.compile(r"\n*\\begin\{dependencies\}[\s\S]*?\\end\{dependencies\}\n*", re.IGNORECASE)
 STANDARD_RE = re.compile(r"\\begin\{remark\*\}\[Standard quantified statement\]", re.IGNORECASE)
+DECORATION_BLOCK_RE = re.compile(
+    r"\\begin\{(?P<env>remark\*|example\*|dependencies)\}(?:\[(?P<title>[^\]]+)\])?",
+    re.IGNORECASE,
+)
+DECORATION_ORDER = {
+    "proof_link": 10,
+    "standard quantified statement": 20,
+    "definition predicate reading": 30,
+    "predicate reading": 30,
+    "negated quantified statement": 40,
+    "negation predicate reading": 50,
+    "failure modes": 60,
+    "failure mode decomposition": 70,
+    "contrapositive quantified statement": 80,
+    "contrapositive predicate reading": 90,
+    "interpretation": 100,
+    "historical note": 105,
+    "comparison with feferman": 105,
+    "exposition": 110,
+    "examples": 120,
+    "non-examples": 130,
+    "dependencies": 140,
+}
 
 IGNORED_DIRS = {
     ".git",
@@ -76,6 +99,22 @@ def line_at(text: str, offset: int) -> int:
     return text.count("\n", 0, offset) + 1
 
 
+def decoration_key(match: re.Match[str]) -> str:
+    env = match.group("env").lower()
+    if env == "dependencies":
+        return "dependencies"
+    return re.sub(r"\s+", " ", (match.group("title") or "").strip().lower())
+
+
+def dependency_is_early(decoration: str, dependency: re.Match[str]) -> bool:
+    for block in DECORATION_BLOCK_RE.finditer(decoration, dependency.end()):
+        key = decoration_key(block)
+        rank = DECORATION_ORDER.get(key)
+        if rank is not None and rank < DECORATION_ORDER["dependencies"]:
+            return True
+    return False
+
+
 def fix_text(path: Path, text: str, max_fixes: int | None) -> tuple[str, list[Fix]]:
     pieces: list[str] = []
     cursor = 0
@@ -90,9 +129,8 @@ def fix_text(path: Path, text: str, max_fixes: int | None) -> tuple[str, list[Fi
         if not labels:
             continue
 
-        standard = STANDARD_RE.search(decoration)
         dependency = DEPENDENCIES_RE.search(decoration)
-        if not standard or not dependency or dependency.start() > standard.start():
+        if not dependency or not dependency_is_early(decoration, dependency):
             continue
 
         dependencies_block = dependency.group(0).strip()
