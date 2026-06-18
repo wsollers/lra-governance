@@ -44,6 +44,19 @@ Stage 1 prepares repositories:
 - pull only when a repo is clean and behind;
 - fail loudly on local dirt, divergent history, or missing repositories.
 
+Use the governance preflight command:
+
+```powershell
+python tools\governance\extraction_pipeline\preflight.py
+```
+
+For local development immediately after intentional checkpoint commits, use
+`--allow-ahead` to allow clean repositories that have not yet been pushed:
+
+```powershell
+python tools\governance\extraction_pipeline\preflight.py --allow-ahead
+```
+
 Stage 2 generates data:
 
 - regenerate `chapter.yaml` from volume source;
