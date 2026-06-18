@@ -1,0 +1,19 @@
+{
+  "graph_id": "0025-0025",
+  "volume": "ii",
+  "chapter": "peano-systems",
+  "section": "recursion-on-peano-systems",
+  "term": "def:iteration-of-a-self-map",
+  "kind": "Definition",
+  "title": "Iteration of a Self-Map",
+  "root": "",
+  "statement": "Let $(P,S,1)$ be a Peano system, let $W$ be a set, let $c\\in W$, and let\n$g:W\\to W$. The iterator-generated function determined by $(W,c,g)$ is called\nthe \\emph{iteration of $g$ from $c$ along $P$}.",
+  "current_dependencies": [
+    {
+      "id": "def:iterator-generated-function",
+      "title": "Iterator-Generated Function",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

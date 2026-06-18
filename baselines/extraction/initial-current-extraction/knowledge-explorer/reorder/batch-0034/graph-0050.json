@@ -1,0 +1,37 @@
+{
+  "graph_id": "0034-0050",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "semantics",
+  "term": "lem:subst-formulas",
+  "kind": "Lemma",
+  "title": "Substitution Lemma for Formulas",
+  "root": "",
+  "statement": "Let \\(\\varphi\\) be a formula and let \\(u\\) be a term free for \\(x\\) in\n\\(\\varphi\\). For every structure \\(\\mathcal M\\) and assignment \\(s\\),\n\\[\n\\mathcal M,s\\models\\varphi[u/x]\n\\Longleftrightarrow\n\\mathcal M,s[x\\mapsto\\llbracket u\\rrbracket_{\\mathcal M,s}]\\models\\varphi.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:fol-satisfaction",
+      "title": "Satisfaction",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:free-for",
+      "title": "Free for Substitution",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:subst-notation",
+      "title": "Substitution Notation",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "lem:subst-terms",
+      "title": "Substitution Lemma for Terms",
+      "kind": "Lemma",
+      "root": ""
+    }
+  ]
+}

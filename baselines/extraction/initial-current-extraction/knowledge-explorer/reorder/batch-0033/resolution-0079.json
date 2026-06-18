@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0079",
+  "term": "def:clause-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:literal-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.8,
+  "notes": "A clause is a finite disjunction of literals; def:literal is the sole load-bearing constituent (the disjunction is ambient). This is the canonical disjunction-of-literals node that def:elementary-disjunction (0071) duplicates."
+}

@@ -1,0 +1,25 @@
+{
+  "graph_id": "0024-0125",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "order-on-q",
+  "term": "thm:order-on-q-total",
+  "kind": "Theorem",
+  "title": "Order on $ $ Is Total",
+  "root": "",
+  "statement": "For all $x,y\\in\\mathbb{Q}$,\n\\[\nx\\le y\\text{ or }y\\le x.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:order-on-q",
+      "title": "Order on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:trichotomy-on-q",
+      "title": "Trichotomy on $ $",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

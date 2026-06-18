@@ -1,0 +1,49 @@
+{
+  "graph_id": "0028-0075",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "operations-on-z-classes",
+  "term": "thm:z-additive-abelian-group",
+  "kind": "Theorem",
+  "title": "$ $ Is an Additive Abelian Group",
+  "root": "",
+  "statement": "The structure $(\\mathbb{Z},+,0_{\\mathbb{Z}})$ is an abelian group.",
+  "current_dependencies": [
+    {
+      "id": "def:addition-on-z-classes",
+      "title": "Addition on $ $-Classes",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:group",
+      "title": "Group",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:addition-on-z-associative",
+      "title": "Addition on $ $ Is Associative",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:addition-on-z-commutative",
+      "title": "Addition on $ $ Is Commutative",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:every-integer-has-additive-inverse",
+      "title": "Every Integer Has an Additive Inverse",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:zero-additive-identity-on-z",
+      "title": "Zero Is an Additive Identity on $ $",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

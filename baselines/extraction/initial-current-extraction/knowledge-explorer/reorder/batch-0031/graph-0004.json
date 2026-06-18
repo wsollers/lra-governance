@@ -1,0 +1,19 @@
+{
+  "graph_id": "0031-0004",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "algebraic-laws",
+  "term": "def:left-distributivity",
+  "kind": "Definition",
+  "title": "Left Distributivity",
+  "root": "",
+  "statement": "The operation $\\otimes$ is left distributive over $\\oplus$ if\n\\[\nx\\otimes(y\\oplus z)=(x\\otimes y)\\oplus(x\\otimes z),\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:binary-arithmetic-operation",
+      "title": "Binary Arithmetic Operation",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

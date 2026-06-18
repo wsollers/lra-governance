@@ -1,0 +1,12 @@
+{
+  "graph_id": "0024-0051",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "field-structure-of-q",
+  "term": "cor:uniqueness-multiplicative-inverse-on-q",
+  "kind": "Corollary",
+  "title": "Uniqueness of Multiplicative Inverses on $ $",
+  "root": "",
+  "statement": "Every multiplicative inverse of a nonzero rational number is unique.",
+  "current_dependencies": []
+}

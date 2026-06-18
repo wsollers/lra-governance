@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0046",
+  "term": "def:model-theory-set",
+  "verdict": "ok",
+  "dependencies": ["def:model"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.7,
+  "notes": "Natural layering: 'M is a model of T iff M models every sentence in T' builds the set-version on the singleton-version def:model. The notation M |= theta also points at def:truth-structure directly, but that is transitive through def:model (which is defined via truth-structure), so the single dep is the correct direct one."
+}

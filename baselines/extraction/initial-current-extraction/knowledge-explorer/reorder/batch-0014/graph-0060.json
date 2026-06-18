@@ -1,0 +1,25 @@
+{
+  "graph_id": "0014-0060",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "convergence",
+  "term": "thm:limit-preserves-eventual-order",
+  "kind": "Theorem",
+  "title": "Limit Preserves Eventual Order",
+  "root": "",
+  "statement": "Let $(x_n)$ and $(y_n)$ be real sequences, and let $L,M\\in\\mathbb{R}$.\nSuppose that $x_n\\to L$ and $y_n\\to M$. If there exists\n$N_0\\in\\mathbb{N}$ such that $x_n\\le y_n$ for every $n\\ge N_0$, then\n$L\\le M$.",
+  "current_dependencies": [
+    {
+      "id": "def:convergent-sequence",
+      "title": "Convergence of a Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:uniqueness-of-limits",
+      "title": "Uniqueness of Limits",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

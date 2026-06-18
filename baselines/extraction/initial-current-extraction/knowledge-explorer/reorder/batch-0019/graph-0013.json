@@ -1,0 +1,19 @@
+{
+  "graph_id": "0019-0013",
+  "volume": "iii",
+  "chapter": "continuity",
+  "section": "gauge",
+  "term": "def:common-refinement",
+  "kind": "Definition",
+  "title": "Common Refinement",
+  "root": "",
+  "statement": "Let $a<b$ and let $P$ and $Q$ be partitions of $[a,b]$. Their common refinement is the partition $R$ obtained by taking the union of their node sets, so $R = P \\cup Q$ as sets of points in $[a,b]$.",
+  "current_dependencies": [
+    {
+      "id": "def:interval-partition",
+      "title": "Partition",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

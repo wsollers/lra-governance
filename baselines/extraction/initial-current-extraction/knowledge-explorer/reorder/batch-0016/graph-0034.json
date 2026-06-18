@@ -1,0 +1,31 @@
+{
+  "graph_id": "0016-0034",
+  "volume": "iii",
+  "chapter": "functions",
+  "section": "real-valued-functions",
+  "term": "def:function-bounded-below",
+  "kind": "Definition",
+  "title": "Bounded Below Function",
+  "root": "",
+  "statement": "Let $A\\subseteq\\mathbb{R}$ and let $f:A\\to\\mathbb{R}$. The function\n$f$ is bounded below on $A$ if there exists $m\\in\\mathbb{R}$ such that\n\\[\n m\\leq f(x)\n \\qquad (x\\in A).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:function",
+      "title": "Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:order-on-r",
+      "title": "Order on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:subset",
+      "title": "Subset",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

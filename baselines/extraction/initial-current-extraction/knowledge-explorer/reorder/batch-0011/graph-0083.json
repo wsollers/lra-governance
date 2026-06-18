@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0083",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "relations",
+  "term": "def:binary-relation",
+  "kind": "Definition",
+  "title": "Binary Relation",
+  "root": "",
+  "statement": "Let $A$ be a set.\nA \\textbf{binary relation on $A$} is a rule $R$ that determines, for each\nordered pair $(a,b)$ with $a,b \\in A$, whether $a$ and $b$ stand in the\nrelation. We write $a \\mathrel{R} b$ when the relation holds, and\n$\\lnot(a \\mathrel{R} b)$ when it does not.",
+  "current_dependencies": []
+}

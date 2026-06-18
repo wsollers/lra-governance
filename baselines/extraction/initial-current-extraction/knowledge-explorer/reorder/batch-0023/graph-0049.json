@@ -1,0 +1,37 @@
+{
+  "graph_id": "0023-0049",
+  "volume": "ii",
+  "chapter": "reals",
+  "section": "multiplication-on-r",
+  "term": "def:reciprocal-positive-on-r",
+  "kind": "Definition",
+  "title": "Reciprocal of a Positive Cut",
+  "root": "",
+  "statement": "For $\\alpha>0_{\\mathbb{R}}$, define\n\\[\n\\alpha^{-1}:=\\{r\\in\\mathbb{Q}:r\\le 0_{\\mathbb{Q}}\\}\n\\cup\n\\{r\\in\\mathbb{Q}:r>0_{\\mathbb{Q}}\\land \\exists s\\in\\mathbb{Q}\\,(s>r\\land s^{-1}\\notin\\alpha)\\}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:order-on-q",
+      "title": "Order on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:order-on-r",
+      "title": "Order on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:reals",
+      "title": "The Real Numbers",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:reciprocal-on-q-classes",
+      "title": "Reciprocal on Nonzero $ $-Classes",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

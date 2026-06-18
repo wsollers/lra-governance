@@ -1,0 +1,31 @@
+{
+  "graph_id": "0022-0008",
+  "volume": "ii",
+  "chapter": "structure-of-real-line",
+  "section": "heine-borel",
+  "term": "thm:closed-bounded-interval-compact",
+  "kind": "Theorem",
+  "title": "Closed Bounded Intervals Are Compact",
+  "root": "",
+  "statement": "Every closed bounded interval $[a,b]\\subseteq\\mathbb{R}$ is compact.",
+  "current_dependencies": [
+    {
+      "id": "def:closed-interval",
+      "title": "Closed Interval",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:compact-set",
+      "title": "Compact Set in $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:lub-property-r",
+      "title": "Least-Upper-Bound Property",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

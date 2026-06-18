@@ -1,0 +1,19 @@
+{
+  "graph_id": "0020-0027",
+  "volume": "iii",
+  "chapter": "bounding",
+  "section": "bounds-extremals",
+  "term": "def:lower-bound",
+  "kind": "Definition",
+  "title": "Lower Bound",
+  "root": "",
+  "statement": "Let $(S,\\le)$ be an ordered set, $A\\subseteq S$, and $l\\in S$. The element $l$ is a \\emph{lower bound} of $A$ if and only if every $x\\in A$ satisfies $l\\le x$.",
+  "current_dependencies": [
+    {
+      "id": "def:ordered-set",
+      "title": "Ordered Set",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

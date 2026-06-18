@@ -1,0 +1,43 @@
+{
+  "graph_id": "0027-0042",
+  "volume": "ii",
+  "chapter": "natural-numbers",
+  "section": "order-on-n",
+  "term": "thm:order-antisymmetric-on-peano-system",
+  "kind": "Theorem",
+  "title": "Order Is Antisymmetric on a Peano System",
+  "root": "",
+  "statement": "Let $(P,S,1)$ be a Peano system. For every $a,b \\in P$,\n\\[\n\\bigl(a \\le b \\land b \\le a\\bigr)\n\\Longrightarrow\na=b.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:less-than-or-equal-on-peano-system",
+      "title": "Less Than or Equal on a Peano System",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:strict-less-than-on-peano-system",
+      "title": "Strict Less Than on a Peano System",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:addition-associative",
+      "title": "Addition Is Associative",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:addition-left-cancellation",
+      "title": "Left Cancellation for Addition",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:no-object-is-its-own-successor",
+      "title": "No Object Is Its Own Successor",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

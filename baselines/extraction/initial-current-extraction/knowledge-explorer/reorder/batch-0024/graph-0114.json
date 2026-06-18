@@ -1,0 +1,12 @@
+{
+  "graph_id": "0024-0114",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "order-on-q",
+  "term": "thm:absolute-value-of-reciprocal-q",
+  "kind": "Theorem",
+  "title": "Absolute Value of a Reciprocal on $ $",
+  "root": "",
+  "statement": "For every nonzero $x\\in\\mathbb{Q}$,\n\\[\n|x^{-1}|=|x|^{-1}.\n\\]",
+  "current_dependencies": []
+}

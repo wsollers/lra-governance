@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0012",
+  "term": "def:argument-form-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:well-formed-formula"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.7,
+  "notes": "An argument form is a finite list of premise wffs plus one conclusion wff, so def:well-formed-formula is the sole load-bearing constituent. 'finite list' and 'schematic pattern' are ambient structural framing."
+}

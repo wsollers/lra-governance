@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0074",
+  "term": "def:disjunctive-normal-form-propositional-logic",
+  "verdict": "change",
+  "dependencies": ["def:elementary-conjunction-propositional-logic"],
+  "rationale": "DNF is a finite disjunction of elementary conjunctions (each C_j an elementary conjunction), so def:elementary-conjunction is the load-bearing constituent and was missing -- the statement hyperrefs it explicitly. Mirrors the CNF fix at 0070 (which needed def:clause).",
+  "licensing_quote": "is an elementary conjunction",
+  "confidence": 0.7,
+  "notes": "The disjunction structure is ambient (the or-connective); the elementary conjunction is the contentful constituent."
+}

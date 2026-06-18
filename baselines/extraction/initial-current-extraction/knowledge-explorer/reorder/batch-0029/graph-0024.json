@@ -1,0 +1,25 @@
+{
+  "graph_id": "0029-0024",
+  "volume": "ii",
+  "chapter": "identity-equality-equivalence",
+  "section": "equivalence",
+  "term": "thm:induced-partial-operation-on-quotient",
+  "kind": "Theorem",
+  "title": "Induced Partial Operation on a Quotient",
+  "root": "",
+  "statement": "Let $D\\subseteq A$ be saturated under $\\sim$, meaning\n\\[\na\\in D\\land a\\sim a'\\Longrightarrow a'\\in D.\n\\]\nIf $f:D\\to A$ respects $\\sim$ on $D$, then\n\\[\n\\overline{f}([a]):=[f(a)]\n\\]\nis a well-defined partial operation on $A/{\\sim}$ with domain\n\\[\nD/{\\sim}:=\\{[a]\\in A/{\\sim}:a\\in D\\}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "thm:induced-predicate-on-quotient",
+      "title": "Induced Predicate on a Quotient",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:induced-unary-operation-on-quotient",
+      "title": "Induced Unary Operation",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

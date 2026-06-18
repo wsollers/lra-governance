@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0117",
+  "term": "def:proper-subformula",
+  "verdict": "ok",
+  "dependencies": ["def:subformula-propositional-logic", "def:well-formed-formula"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.75,
+  "notes": "A proper subformula of phi (def:well-formed-formula) is a member of Sub(phi) (def:subformula) distinct from phi. Both load-bearing and present. Clean."
+}

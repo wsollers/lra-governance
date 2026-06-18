@@ -1,0 +1,12 @@
+{
+  "graph_id": "0032-0087",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "order",
+  "term": "def:net",
+  "kind": "Definition",
+  "title": "Net",
+  "root": "",
+  "statement": "Let $(I, \\leq)$ be a directed set and $X$ a set. A \\emph{net} in $X$ is a\nfunction $x : I \\to X$. The value at $i \\in I$ is written $x_i$, and the\nnet is written $(x_i)_{i \\in I}$.",
+  "current_dependencies": []
+}

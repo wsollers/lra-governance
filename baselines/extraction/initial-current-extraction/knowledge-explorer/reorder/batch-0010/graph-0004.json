@@ -1,0 +1,25 @@
+{
+  "graph_id": "0010-0004",
+  "volume": "vi",
+  "chapter": "lattice-order",
+  "section": "ordered-sets",
+  "term": "def:covering-relation",
+  "kind": "Definition",
+  "title": "Covering Relation",
+  "root": "",
+  "statement": "Let $(P, \\leq)$ be a partially ordered set and let $x, y \\in P$ with\n$x < y$. The element $y$ \\emph{covers} $x$, written $x \\prec y$, if\nthere is no element of $P$ strictly between them:\n\\[\nx \\prec y\n\\;\\coloneqq\\;\nx < y\n\\;\\land\\;\n\\neg\\,\\bigl(\\exists z \\in P,\\; x < z < y\\bigr).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:lattice-order-partial-order",
+      "title": "Partial Order",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:lattice-order-strict-partial-order",
+      "title": "Strict Partial Order",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

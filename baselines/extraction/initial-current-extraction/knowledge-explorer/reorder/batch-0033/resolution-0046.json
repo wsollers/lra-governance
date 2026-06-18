@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0046",
+  "term": "def:definable-connective-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:boolean-function-propositional-logic", "def:connective-basis-propositional-logic", "def:truth-function-induced-by-formula"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.65,
+  "notes": "A connective is definable from basis B (def:connective-basis) if some B-formula's induced truth function (def:truth-function-induced-by-formula) agrees with the connective's truth function (def:boolean-function). All three load-bearing and present."
+}

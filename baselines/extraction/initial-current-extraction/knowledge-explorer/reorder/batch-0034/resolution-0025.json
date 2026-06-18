@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0025",
+  "term": "def:weaker-formula",
+  "verdict": "ok",
+  "dependencies": ["def:strength"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.85,
+  "notes": "Pure converse definition: 'B weaker than A' is defined as 'A stronger than B', so def:strength is the sole and correct stating-dependency."
+}

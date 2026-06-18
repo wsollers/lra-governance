@@ -1,0 +1,25 @@
+{
+  "graph_id": "0031-0008",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "algebraic-laws",
+  "term": "def:two-sided-distributivity",
+  "kind": "Definition",
+  "title": "Two-Sided Distributivity",
+  "root": "",
+  "statement": "The operation $\\otimes$ is two-sided distributive over $\\oplus$ if it is both\nleft distributive and right distributive.",
+  "current_dependencies": [
+    {
+      "id": "def:left-distributivity",
+      "title": "Left Distributivity",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:right-distributivity",
+      "title": "Right Distributivity",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

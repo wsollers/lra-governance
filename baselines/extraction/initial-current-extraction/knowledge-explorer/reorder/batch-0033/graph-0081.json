@@ -1,0 +1,25 @@
+{
+  "graph_id": "0033-0081",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "normal-forms",
+  "term": "def:empty-clause-propositional-logic",
+  "kind": "Definition",
+  "title": "Empty Clause",
+  "root": "",
+  "statement": "The \\emph{empty clause} is the empty disjunction of literals. Semantically, it\nis read as false.",
+  "current_dependencies": [
+    {
+      "id": "def:clause-propositional-logic",
+      "title": "Clause",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:contradiction-propositional-logic",
+      "title": "Contradiction",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "graph_id": "0014-0059",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "convergence",
+  "term": "thm:eventual-strict-comparison-preserves-weak-limit-order",
+  "kind": "Theorem",
+  "title": "Eventual Strict Comparison Preserves Weak Limit Order",
+  "root": "",
+  "statement": "Let $(x_n)$ and $(y_n)$ be real sequences, and let $A,B\\in\\mathbb{R}$.\nSuppose that $x_n\\to A$ and $y_n\\to B$.\n- [label=(\\alph*)]\n- If there exists $N\\in\\mathbb{N}$ such that $x_n<y_n$ for every\n $n\\ge N$, then $A\\le B$.\n- If there exists $N\\in\\mathbb{N}$ such that $x_n>y_n$ for every\n $n\\ge N$, then $A\\ge B$.",
+  "current_dependencies": [
+    {
+      "id": "thm:limit-preserves-eventual-order",
+      "title": "Limit Preserves Eventual Order",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

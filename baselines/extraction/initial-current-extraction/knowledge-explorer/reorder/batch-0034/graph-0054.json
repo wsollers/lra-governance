@@ -1,0 +1,19 @@
+{
+  "graph_id": "0034-0054",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "semantics",
+  "term": "def:truth-structure",
+  "kind": "Definition",
+  "title": "Truth in a Structure",
+  "root": "",
+  "statement": "Let \\(\\varphi\\) be a sentence and let \\(\\mathcal M\\) be a structure. The\nsentence \\(\\varphi\\) is \\emph{true in} \\(\\mathcal M\\), written\n\\(\\mathcal M\\models\\varphi\\), exactly when\n\\(\\mathcal M,s\\models\\varphi\\) for every variable assignment \\(s\\) for\n\\(\\mathcal M\\).",
+  "current_dependencies": [
+    {
+      "id": "def:fol-satisfaction",
+      "title": "Satisfaction",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

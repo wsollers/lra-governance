@@ -1,0 +1,31 @@
+{
+  "graph_id": "0024-0106",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "order-on-q",
+  "term": "def:absolute-value-on-q",
+  "kind": "Definition",
+  "title": "Absolute Value on $ $",
+  "root": "",
+  "statement": "For $x\\in\\mathbb{Q}$, define\n\\[\n|x|:=\n\\begin{cases}\nx, & 0_{\\mathbb{Q}}\\le x,\\\\\n-x, & x<0_{\\mathbb{Q}}.\n\\end{cases}\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:negation-on-q-classes",
+      "title": "Negation on $ $-Classes",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:order-on-q",
+      "title": "Order on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:zero-in-q",
+      "title": "Zero in $ $",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

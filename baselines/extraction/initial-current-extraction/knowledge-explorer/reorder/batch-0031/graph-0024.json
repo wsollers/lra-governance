@@ -1,0 +1,25 @@
+{
+  "graph_id": "0031-0024",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "algebraic-structures",
+  "term": "def:monoid",
+  "kind": "Definition",
+  "title": "Monoid",
+  "root": "",
+  "statement": "A \\emph{monoid} is a semigroup with a two-sided identity element.",
+  "current_dependencies": [
+    {
+      "id": "def:semigroup",
+      "title": "Semigroup",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:two-sided-identity",
+      "title": "Two-Sided Identity",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

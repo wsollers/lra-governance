@@ -1,0 +1,19 @@
+{
+  "graph_id": "0029-0037",
+  "volume": "ii",
+  "chapter": "identity-equality-equivalence",
+  "section": "substitution",
+  "term": "prop:substitution-preserves-operations-right",
+  "kind": "Proposition",
+  "title": "Right Congruence for Operations",
+  "root": "",
+  "statement": "\\[\ny=y' \\Longrightarrow x\\mathbin{O}y=x\\mathbin{O}y'.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "prop:substitution-preserves-functions",
+      "title": "Substitution Preserves Functions",
+      "kind": "Proposition",
+      "root": ""
+    }
+  ]
+}

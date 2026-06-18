@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0133",
+  "term": "thm:unique-syntax-tree-propositional-formulas",
+  "verdict": "ok",
+  "dependencies": ["def:parse-tree-propositional-logic", "thm:unique-decomposition-propositional-formulas"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.75,
+  "notes": "Every wff has a unique parse tree (def:parse-tree): uniqueness propagates level-by-level from unique readability (thm:unique-decomposition). Both load-bearing and present. Clean capstone of the syntax section."
+}

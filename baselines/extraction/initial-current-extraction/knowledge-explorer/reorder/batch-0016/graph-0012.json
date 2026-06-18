@@ -1,0 +1,19 @@
+{
+  "graph_id": "0016-0012",
+  "volume": "iii",
+  "chapter": "functions",
+  "section": "limits",
+  "term": "def:delta-close-function",
+  "kind": "Definition",
+  "title": "Local $ $-Closeness Near a Point",
+  "root": "",
+  "statement": "Let $f : X \\to \\mathbb{R}$, let $L \\in \\mathbb{R}$, let $x_0$ be\nadherent to $X$, and let $\\varepsilon, \\delta > 0$. The function $f$\nis \\textbf{$\\varepsilon$-close to $L$ near $x_0$ within $\\delta$} if\n\\[\n \\forall x \\in X\\;\\bigl(|x-x_0|<\\delta\\Rightarrow |f(x)-L|\\leq\\varepsilon\\bigr).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:eps-close-function",
+      "title": "$ $-Closeness of a Function to a Value",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

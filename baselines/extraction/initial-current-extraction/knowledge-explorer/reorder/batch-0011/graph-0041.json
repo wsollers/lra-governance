@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0041",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "",
+  "term": "def:formal-model-theoretic-structures-l635",
+  "kind": "Definition",
+  "title": "Ring",
+  "root": "",
+  "statement": "A \\textbf{ring} is a tuple $(A, +, \\cdot, 0, 1)$ where $A$ is a nonempty set\n satisfying:\n \\begin{align*}\n (A,+,0,-)\\ &\\text{is an abelian group} \\tag{Ab.\\ Group under $+$}\\\\\n (A,\\cdot,1)\\ &\\text{is a monoid} \\tag{Monoid under $\\cdot$}\\\\\n \\forall\\,a,b,c \\in A:\\ &a\\cdot(b+c) = a\\cdot b + a\\cdot c \\tag{Left Distributivity}\\\\\n \\forall\\,a,b,c \\in A:\\ &(a+b)\\cdot c = a\\cdot c + b\\cdot c \\tag{Right Distributivity}\n \\end{align*}\n Note: $\\cdot$ need not be commutative, and multiplicative inverses need not\n exist.\n\n \n Model-theoretic signature:\n \\[\n \\mathcal{L}_{\\mathrm{ring}} = \\{\\,+,\\,\\cdot,\\,0,\\,1,\\,-\\,\\},\n \\quad +,\\cdot \\text{ arity } 2,\\quad - \\text{ arity } 1,\\quad\n 0,1 \\text{ constants.}\n \\]",
+  "current_dependencies": []
+}

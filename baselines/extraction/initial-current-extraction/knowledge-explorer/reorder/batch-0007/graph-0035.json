@@ -1,0 +1,12 @@
+{
+  "graph_id": "0007-0035",
+  "volume": "vii",
+  "chapter": "euclidean-geometry",
+  "section": "foundations",
+  "term": "ax:euclid-postulate-produce-straight-line",
+  "kind": "Axiom",
+  "title": "Euclid Postulate II: Producing a finite straight line",
+  "root": "axiom",
+  "statement": "Let it have been postulated to produce a finite straight line continuously in a\nstraight line.",
+  "current_dependencies": []
+}

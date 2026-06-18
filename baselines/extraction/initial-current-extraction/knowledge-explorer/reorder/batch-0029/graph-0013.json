@@ -1,0 +1,12 @@
+{
+  "graph_id": "0029-0013",
+  "volume": "ii",
+  "chapter": "identity-equality-equivalence",
+  "section": "equivalence",
+  "term": "definition:notes-equivalence:004",
+  "kind": "Definition",
+  "title": "Quotient Set",
+  "root": "",
+  "statement": "The \\emph{quotient set} of $A$ by $\\sim$ is the set of equivalence classes\n\\[\nA/{\\sim} := \\{[a]\\mid a\\in A\\}.\n\\]",
+  "current_dependencies": []
+}

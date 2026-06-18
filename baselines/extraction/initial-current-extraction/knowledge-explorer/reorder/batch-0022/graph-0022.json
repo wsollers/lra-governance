@@ -1,0 +1,19 @@
+{
+  "graph_id": "0022-0022",
+  "volume": "ii",
+  "chapter": "structure-of-real-line",
+  "section": "order-distance-length",
+  "term": "def:distance-on-real-line",
+  "kind": "Definition",
+  "title": "Distance on the Real Line",
+  "root": "",
+  "statement": "The \\emph{distance} on $\\mathbb{R}$ is the map $d:\\mathbb{R}\\times\\mathbb{R}\\to\\mathbb{R}$ given by\n\\[\nd(x,y)=|x-y|.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "thm:triangle-inequality",
+      "title": "Triangle Inequality",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

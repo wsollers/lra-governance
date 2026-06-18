@@ -1,0 +1,12 @@
+{
+  "graph_id": "0008-0004",
+  "volume": "vii",
+  "chapter": "analytical-geometry",
+  "section": "lines",
+  "term": "def:normal-form-line",
+  "kind": "Definition",
+  "title": "Normal form",
+  "root": "",
+  "statement": "A line in $\\mathbb{R}^2$ may be written in normal form as\n\\[\n x\\cos\\alpha+y\\sin\\alpha-p=0,\n\\]\nwhere $p\\ge 0$ is the distance from the origin to the line.",
+  "current_dependencies": []
+}

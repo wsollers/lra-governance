@@ -1,0 +1,19 @@
+{
+  "graph_id": "0016-0066",
+  "volume": "iii",
+  "chapter": "functions",
+  "section": "subsets-real-line",
+  "term": "def:true-near",
+  "kind": "Definition",
+  "title": "True Near a Point",
+  "root": "",
+  "statement": "Property $P(f(x))$ is \\textbf{true near $x_0$} if\n$\\exists\\delta>0,\\;\\forall x : 0<|x-x_0|<\n\\delta) \\Rightarrow P(f(x))$.",
+  "current_dependencies": [
+    {
+      "id": "def:epsilon-neighbourhood",
+      "title": "$ $-Neighbourhood",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

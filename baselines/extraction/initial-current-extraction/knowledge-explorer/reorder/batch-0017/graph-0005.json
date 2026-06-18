@@ -1,0 +1,12 @@
+{
+  "graph_id": "0017-0005",
+  "volume": "iii",
+  "chapter": "elementary-functions",
+  "section": "hyperbolic",
+  "term": "prop:tanh-limits",
+  "kind": "Proposition",
+  "title": "Limits of $ $",
+  "root": "",
+  "statement": "\\[\n \\lim_{x \\to +\\infty} \\tanh x = 1,\n \\qquad\n \\lim_{x \\to -\\infty} \\tanh x = -1.\n\\]",
+  "current_dependencies": []
+}

@@ -1,0 +1,10 @@
+{
+  "graph_id": "0032-0024",
+  "term": "prop:fip-duality",
+  "verdict": "ok",
+  "dependencies": ["def:complement", "def:cover-full", "def:fip", "def:intersection", "def:subset"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.75,
+  "notes": "{U_alpha} covers A (def:cover-full) iff the complements F_alpha = X minus U_alpha (def:complement), intersected with A (def:intersection), fail the FIP (def:fip); families of subsets of X (def:subset). All five genuinely load-bearing -- this is the node whose dep set was erroneously copied onto def:open-cover (0022)."
+}

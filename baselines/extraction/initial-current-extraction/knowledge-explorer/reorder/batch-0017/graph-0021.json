@@ -1,0 +1,12 @@
+{
+  "graph_id": "0017-0021",
+  "volume": "iii",
+  "chapter": "elementary-functions",
+  "section": "trigonometric",
+  "term": "thm:fundamental-trig-limit",
+  "kind": "Theorem",
+  "title": "Fundamental Trigonometric Limit",
+  "root": "",
+  "statement": "\\[\n \\lim_{x \\to 0} \\frac{\\sin x}{x} = 1.\n\\]",
+  "current_dependencies": []
+}

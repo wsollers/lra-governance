@@ -1,0 +1,31 @@
+{
+  "graph_id": "0028-0061",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "operations-on-z-classes",
+  "term": "thm:addition-on-z-associative",
+  "kind": "Theorem",
+  "title": "Addition on $ $ Is Associative",
+  "root": "",
+  "statement": "For all $x,y,z\\in\\mathbb{Z}$,\n\\[\n(x+y)+z=x+(y+z).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:addition-on-z-classes",
+      "title": "Addition on $ $-Classes",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:addition-on-w-associative",
+      "title": "Addition on $ $ Is Associative",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:addition-on-z-well-defined",
+      "title": "Addition on $ $ Is Well-Defined",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

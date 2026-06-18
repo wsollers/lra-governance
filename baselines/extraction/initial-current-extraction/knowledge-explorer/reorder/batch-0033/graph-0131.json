@@ -1,0 +1,25 @@
+{
+  "graph_id": "0033-0131",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "syntax",
+  "term": "thm:structural-recursion-propositional-formulas",
+  "kind": "Theorem",
+  "title": "Structural Recursion for Propositional Formulas",
+  "root": "",
+  "statement": "To define a function \\(F\\) on \\(\\WFF\\), it suffices to specify:\n- \\(F(P)\\) for every \\(P\\in\\Prop\\);\n- \\(F(\\neg\\varphi)\\) in terms of \\(F(\\varphi)\\);\n- \\(F((\\varphi\\circ\\psi))\\) in terms of \\(F(\\varphi)\\), \\(F(\\psi)\\), and \\(\\circ\\).\nWhen these clauses respect the formation rules, they determine a unique function on \\(\\WFF\\).",
+  "current_dependencies": [
+    {
+      "id": "def:well-formed-formula",
+      "title": "Well-Formed Formula",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:structural-induction-propositional-formulas",
+      "title": "Structural Induction for Propositional Formulas",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

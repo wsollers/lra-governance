@@ -1,0 +1,25 @@
+{
+  "graph_id": "0020-0011",
+  "volume": "iii",
+  "chapter": "bounding",
+  "section": "bounds-algebra",
+  "term": "prop:upper-bound-comparison-with-the-supremum",
+  "kind": "Proposition",
+  "title": "Upper Bound Comparison with the Supremum",
+  "root": "",
+  "statement": "Let $A\\subseteq\\mathbb{R}$ be nonempty and bounded above, and let $s=\\sup A$. For $u\\in\\mathbb{R}$, the number $u$ is an upper bound of $A$ if and only if $s\\le u$.",
+  "current_dependencies": [
+    {
+      "id": "def:supremum",
+      "title": "Supremum",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:upper-bound",
+      "title": "Upper Bound",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

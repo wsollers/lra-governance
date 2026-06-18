@@ -1,0 +1,19 @@
+{
+  "graph_id": "0033-0084",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "normal-forms",
+  "term": "def:negative-literal-propositional-logic",
+  "kind": "Definition",
+  "title": "Negative Literal",
+  "root": "",
+  "statement": "A \\emph{negative literal} is a literal of the form \\(\\neg P\\), where \\(P\\) is a\npropositional variable.",
+  "current_dependencies": [
+    {
+      "id": "def:literal-propositional-logic",
+      "title": "Literal",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "graph_id": "0004-0005",
+  "volume": "viii",
+  "chapter": "numerical-analysis",
+  "section": "ieee-floating-point",
+  "term": "def:numerical-analysis-ieee-754-binary64-format",
+  "kind": "Definition",
+  "title": "IEEE 754 Binary64 Format",
+  "root": "",
+  "statement": "The \\emph{IEEE 754 binary64 format} is the 64-bit binary floating-point interchange format\nwith the following field layout:\n\n- $1$ sign bit,\n- $11$ exponent bits,\n- $52$ fraction bits,\n- exponent bias $1023$.\n\nFor a normalized finite binary64 datum, the represented value is\n\\[\n(-1)^s (1.f)_2 2^{e-1023}.\n\\]",
+  "current_dependencies": []
+}

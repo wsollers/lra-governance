@@ -1,0 +1,12 @@
+{
+  "graph_id": "0025-0016",
+  "volume": "ii",
+  "chapter": "peano-systems",
+  "section": "defining-peano-systems",
+  "term": "thm:induction-principle-for-peano-system",
+  "kind": "Theorem",
+  "title": "Induction Principle for a Peano System",
+  "root": "",
+  "statement": "Let $(P,S,1)$ be a Peano system, and let $\\varphi$ be a predicate on $P$.\nIf\n\\[\n\\varphi(1)\n\\qquad\\text{and}\\qquad\n\\forall n \\in P\\;(\\varphi(n) \\Longrightarrow \\varphi(S(n))),\n\\]\nthen\n\\[\n\\forall n \\in P\\;\\varphi(n).\n\\]",
+  "current_dependencies": []
+}

@@ -1,0 +1,19 @@
+{
+  "graph_id": "0018-0020",
+  "volume": "iii",
+  "chapter": "differentiation",
+  "section": "derivative-definition",
+  "term": "def:derivative-at-a-point",
+  "kind": "Definition",
+  "title": "Derivative at a Point",
+  "root": "",
+  "statement": "Let $f: D \\to \\mathbb{R}$ be a real-valued function and $c \\in \\operatorname{int}(D)$. We say $f$ is \\emph{differentiable at $c$} with \\emph{derivative} $L = f'(c)$ if and only if:\n\\[\n\\forall \\varepsilon > 0 \\;\\exists \\delta > 0 \\;\\forall x \\in D\n\\Bigl(0 < |x - c| < \\delta \\implies \\left| \\frac{f(x) - f(c)}{x - c} - L \\right| < \\varepsilon\\Bigr).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:limit-function",
+      "title": "Limit of a Function",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

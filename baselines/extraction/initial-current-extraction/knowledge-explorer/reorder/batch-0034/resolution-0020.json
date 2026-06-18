@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0020",
+  "term": "def:sentence-predicate-logic",
+  "verdict": "change",
+  "dependencies": ["def:fv", "def:wff-pred"],
+  "rationale": "A sentence is defined as a wff with no free variables, so the free-variable notion def:fv is load-bearing and missing; def:wff-pred (present) is the substrate. Exact dual of def:open-formula-quantifiers (0018), which is a wff with at least one free variable -- both must carry def:fv.",
+  "licensing_quote": "with no free variables",
+  "confidence": 0.8,
+  "notes": "Consistent with the def:fv additions at 0018 and the wff additions at 0017/0021."
+}

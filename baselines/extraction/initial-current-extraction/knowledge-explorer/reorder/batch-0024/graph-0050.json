@@ -1,0 +1,12 @@
+{
+  "graph_id": "0024-0050",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "field-structure-of-q",
+  "term": "cor:uniqueness-additive-inverse-on-q",
+  "kind": "Corollary",
+  "title": "Uniqueness of Additive Inverses on $ $",
+  "root": "",
+  "statement": "Every additive inverse in $\\mathbb{Q}$ is unique.",
+  "current_dependencies": []
+}

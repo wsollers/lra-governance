@@ -1,0 +1,12 @@
+{
+  "graph_id": "0029-0001",
+  "volume": "ii",
+  "chapter": "identity-equality-equivalence",
+  "section": "equality",
+  "term": "ax:leibniz-law",
+  "kind": "Axiom",
+  "title": "Leibniz's Law",
+  "root": "axiom",
+  "statement": "Identical objects have exactly the same properties.\n\\[\n\\forall x\\,\\forall y\\,\n\\Bigl(x=y \\Longrightarrow \\forall P\\,\\bigl(P(x)\\Longleftrightarrow P(y)\\bigr)\\Bigr).\n\\]",
+  "current_dependencies": []
+}

@@ -1,0 +1,37 @@
+{
+  "graph_id": "0020-0037",
+  "volume": "iii",
+  "chapter": "bounding",
+  "section": "completeness",
+  "term": "def:least-upper-bound-property",
+  "kind": "Definition",
+  "title": "Least Upper Bound Property",
+  "root": "",
+  "statement": "Let $(S,\\le)$ be an ordered set. The set $S$ has the \\emph{Least Upper Bound Property} if and only if every nonempty subset of $S$ that is bounded above in $S$ has a supremum in $S$.",
+  "current_dependencies": [
+    {
+      "id": "def:ordered-set",
+      "title": "Ordered Set",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:subset",
+      "title": "Subset",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:supremum",
+      "title": "Supremum",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:upper-bound",
+      "title": "Upper Bound",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

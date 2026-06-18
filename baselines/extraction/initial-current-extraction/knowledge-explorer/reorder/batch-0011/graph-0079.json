@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0079",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "number-systems-as-structures",
+  "term": "def:whole-number-model",
+  "kind": "Definition",
+  "title": "The Whole Number Model $ $",
+  "root": "",
+  "statement": "The \\textbf{whole number model} is the $\\mathcal{L}_{\\mathbb{W}}$-structure\n\\[\n\\mathcal{W}\n=\n\\bigl(\\mathbb{W};\\,\nS^{\\mathcal{W}},+^{\\mathcal{W}},\\cdot^{\\mathcal{W}},\n0^{\\mathcal{W}},1^{\\mathcal{W}}\\bigr),\n\\]\nwhere\n\\[\n\\mathbb{W}=\\{0,1,2,\\ldots\\},\n\\]\n$S^{\\mathcal{W}}$ is successor, $+^{\\mathcal{W}}$ is whole-number addition,\n$\\cdot^{\\mathcal{W}}$ is whole-number multiplication, and\n$0^{\\mathcal{W}},1^{\\mathcal{W}}$ are the distinguished whole-number constants.",
+  "current_dependencies": []
+}

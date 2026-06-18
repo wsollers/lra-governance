@@ -1,0 +1,25 @@
+{
+  "graph_id": "0032-0031",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "functions",
+  "term": "def:composition",
+  "kind": "Definition",
+  "title": "Composition",
+  "root": "",
+  "statement": "Let $f : A \\to B$ and $g : B \\to C$. The \\emph{composition} $g \\circ f : A \\to C$ is:\n\\[\n(g \\circ f)(a) := g\\bigl(f(a)\\bigr)\n\\quad\\text{for all } a \\in A.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:cartesian-product-rel",
+      "title": "Cartesian Product — as foundation for relations",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:function",
+      "title": "Function",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

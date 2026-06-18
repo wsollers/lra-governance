@@ -1,0 +1,37 @@
+{
+  "graph_id": "0033-0044",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "functional-completeness",
+  "term": "thm:dnf-representation-of-boolean-functions-propositional-logic",
+  "kind": "Theorem",
+  "title": "DNF Representation of Boolean Functions",
+  "root": "",
+  "statement": "Every Boolean function \\(f:\\mathbb{B}^n\\to\\mathbb{B}\\) is represented by a\nformula in disjunctive normal form using variables \\(P_1,\\ldots,P_n\\).",
+  "current_dependencies": [
+    {
+      "id": "def:boolean-function-representation-propositional-logic",
+      "title": "Representation of a Boolean Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:canonical-disjunctive-normal-form-propositional-logic",
+      "title": "Canonical Disjunctive Normal Form",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:disjunctive-normal-form-propositional-logic",
+      "title": "Disjunctive Normal Form",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:canonical-disjunctive-normal-form-propositional-logic",
+      "title": "Canonical Disjunctive Normal Form Theorem",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

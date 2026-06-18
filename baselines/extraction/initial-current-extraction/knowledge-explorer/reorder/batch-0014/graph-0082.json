@@ -1,0 +1,25 @@
+{
+  "graph_id": "0014-0082",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "definition",
+  "term": "thm:ultimately-zero-sequence-is-null",
+  "kind": "Theorem",
+  "title": "Ultimately Zero Sequence is Null",
+  "root": "",
+  "statement": "Let $(x_n)$ be a real sequence. If there exists $N_0 \\in \\mathbb{N}$ such\nthat $x_n = 0$ for every $n \\ge N_0$, then $(x_n)$ is a null sequence.",
+  "current_dependencies": [
+    {
+      "id": "def:null-sequence",
+      "title": "Null Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:ultimately-constant-sequence",
+      "title": "Ultimately Constant Sequence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

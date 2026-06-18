@@ -1,0 +1,43 @@
+{
+  "graph_id": "0028-0070",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "operations-on-z-classes",
+  "term": "thm:negation-left-additive-inverse-on-z",
+  "kind": "Theorem",
+  "title": "Negation Gives a Left Additive Inverse on $ $",
+  "root": "",
+  "statement": "For every $x\\in\\mathbb{Z}$,\n\\[\n(-x)+x=0_{\\mathbb{Z}}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:addition-on-z-classes",
+      "title": "Addition on $ $-Classes",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:negation-on-z-classes",
+      "title": "Negation on $ $-Classes",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:zero-in-z",
+      "title": "Zero in $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:addition-on-z-well-defined",
+      "title": "Addition on $ $ Is Well-Defined",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:negation-on-z-well-defined",
+      "title": "Negation on $ $ Is Well-Defined",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

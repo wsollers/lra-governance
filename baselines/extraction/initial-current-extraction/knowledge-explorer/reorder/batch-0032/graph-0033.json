@@ -1,0 +1,31 @@
+{
+  "graph_id": "0032-0033",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "functions",
+  "term": "def:left-right-inverse",
+  "kind": "Definition",
+  "title": "Left and Right Inverses",
+  "root": "",
+  "statement": "Let $f : A \\to B$.\n\nA \\emph{left inverse} of $f$ is a function $g : B \\to A$ with $g \\circ f = \\id_A$.\n\nA \\emph{right inverse} (or \\emph{section}) of $f$ is a function $h : B \\to A$\nwith $f \\circ h = \\id_B$.",
+  "current_dependencies": [
+    {
+      "id": "def:composition",
+      "title": "Composition",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:function",
+      "title": "Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:identity",
+      "title": "Identity and Inclusion",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

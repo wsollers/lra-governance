@@ -1,0 +1,25 @@
+{
+  "graph_id": "0016-0003",
+  "volume": "iii",
+  "chapter": "functions",
+  "section": "algebra-of-functions",
+  "term": "prop:composition-surjective",
+  "kind": "Proposition",
+  "title": "Composition of Surjections Is Surjective",
+  "root": "",
+  "statement": "$\\operatorname{Surjective}(f)\\wedge\\operatorname{Surjective}(g)\n\\Rightarrow\\operatorname{Surjective}(g\\circ f)$.",
+  "current_dependencies": [
+    {
+      "id": "def:composition",
+      "title": "Composition",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:function",
+      "title": "Function",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

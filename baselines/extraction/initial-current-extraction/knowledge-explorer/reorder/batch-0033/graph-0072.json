@@ -1,0 +1,12 @@
+{
+  "graph_id": "0033-0072",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "normal-forms",
+  "term": "def:maxterm-propositional-logic",
+  "kind": "Definition",
+  "title": "Maxterm",
+  "root": "",
+  "statement": "Let \\(P_1,\\ldots,P_n\\) be a finite list of propositional variables. A\n\\emph{maxterm} relative to \\(P_1,\\ldots,P_n\\) is an\n\nthat contains exactly one of \\(P_i\\) or \\(\\neg P_i\\) for each\n\\(i=1,\\ldots,n\\).",
+  "current_dependencies": []
+}

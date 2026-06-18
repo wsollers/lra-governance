@@ -1,0 +1,31 @@
+{
+  "graph_id": "0033-0039",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "compactness-preview",
+  "term": "def:finitely-satisfiable-set-of-propositional-formulas",
+  "kind": "Definition",
+  "title": "Finitely Satisfiable Set of Propositional Formulas",
+  "root": "",
+  "statement": "Let \\(\\Gamma\\subseteq\\WFF\\). The set \\(\\Gamma\\) is finitely satisfiable if every\nfinite subset of \\(\\Gamma\\) is satisfiable.\n\\[\n\\operatorname{FinitelySatisfiableSet}(\\Gamma)\n\\Longleftrightarrow\n\\forall\\Delta\\,\\Bigl((\\Delta\\subseteq\\Gamma\\land \\Delta\\text{ is finite})\n\\Rightarrow \\operatorname{SatisfiableSet}(\\Delta)\\Bigr).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:finite-subset-of-set-of-propositional-formulas",
+      "title": "Finite Subset of a Set of Propositional Formulas",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:satisfiable-set-of-propositional-formulas",
+      "title": "Satisfiable Set of Propositional Formulas",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:truth-assignment-propositional-logic",
+      "title": "Truth Assignment",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

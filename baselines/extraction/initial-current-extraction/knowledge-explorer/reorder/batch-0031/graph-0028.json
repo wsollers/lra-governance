@@ -1,0 +1,25 @@
+{
+  "graph_id": "0031-0028",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "algebraic-structures",
+  "term": "def:semiring",
+  "kind": "Definition",
+  "title": "Semiring",
+  "root": "",
+  "statement": "A \\emph{semiring} is a domain with addition and multiplication such that\naddition is a commutative monoid, multiplication is a monoid, multiplication\ndistributes over addition, and the additive identity is absorbing for\nmultiplication.",
+  "current_dependencies": [
+    {
+      "id": "def:commutative-monoid",
+      "title": "Commutative Monoid",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:monoid",
+      "title": "Monoid",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

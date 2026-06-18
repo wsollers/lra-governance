@@ -1,0 +1,31 @@
+{
+  "graph_id": "0016-0047",
+  "volume": "iii",
+  "chapter": "functions",
+  "section": "real-valued-functions",
+  "term": "def:pointwise-maximum-of-two-functions",
+  "kind": "Definition",
+  "title": "Pointwise Maximum of Two Functions",
+  "root": "",
+  "statement": "Let $X\\subseteq\\mathbb{R}$ and let $f,g:X\\to\\mathbb{R}$. The\npointwise maximum $\\max(f,g):X\\to\\mathbb{R}$ is the function defined by\n\\[\n \\max(f,g)(x)=\\max\\{f(x),g(x)\\}\n \\qquad (x\\in X).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:function",
+      "title": "Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:maximum",
+      "title": "Maximum",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:subset",
+      "title": "Subset",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

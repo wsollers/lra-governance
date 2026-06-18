@@ -1,0 +1,25 @@
+{
+  "graph_id": "0032-0064",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "order",
+  "term": "prop:order-duality",
+  "kind": "Proposition",
+  "title": "Duality Principle for Posets",
+  "root": "",
+  "statement": "Let $\\Phi$ be any first-order statement about a poset $(A, \\leq)$ expressed\nusing only the relation $\\leq$. Let $\\Phi^*$ be the statement obtained from\n$\\Phi$ by replacing every occurrence of $\\leq$ with $\\geq$ (equivalently,\nworking in the dual poset). Then:\n\\[\n (A, \\leq) \\models \\Phi\n \\;\\;\\Longleftrightarrow\\;\\;\n (A, \\geq) \\models \\Phi.\n\\]\nIn particular, if $\\Phi$ is a theorem about all posets, then so is $\\Phi^*$.",
+  "current_dependencies": [
+    {
+      "id": "def:partial-order",
+      "title": "Partial Order",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:relation",
+      "title": "Relation",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

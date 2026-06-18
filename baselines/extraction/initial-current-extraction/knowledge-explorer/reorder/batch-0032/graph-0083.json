@@ -1,0 +1,12 @@
+{
+  "graph_id": "0032-0083",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "order",
+  "term": "def:comparable",
+  "kind": "Definition",
+  "title": "Comparable and Incomparable Elements",
+  "root": "",
+  "statement": "In an ordered set $(A,\\leq)$, elements $a,b \\in A$ are \\emph{comparable} if\n$a \\leq b$ or $b \\leq a$; they are \\emph{incomparable} if neither holds.",
+  "current_dependencies": []
+}

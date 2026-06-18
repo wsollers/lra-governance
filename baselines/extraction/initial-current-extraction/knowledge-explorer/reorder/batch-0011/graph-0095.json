@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0095",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "rings",
+  "term": "def:notes-rings-definition-l19",
+  "kind": "Definition",
+  "title": "Ring",
+  "root": "",
+  "statement": "A \\emph{ring} is a triple $(R, +, \\cdot)$ where $R$ is a set and\n$+$ and $\\cdot$ are binary operations on $R$ satisfying:\n\n- [label=\\textbf{R\\arabic*.}]\n- \\textbf{Additive abelian group.}\n $(R, +)$ is an abelian group:\n - - $(a + b) + c = a + (b + c)$ for all $a,b,c \\in R$.\n- $a + b = b + a$ for all $a, b \\in R$.\n- There exists $0 \\in R$ such that $a + 0 = a$ for all $a \\in R$.\n- For each $a \\in R$, there exists $-a \\in R$ such that\n $a + (-a) = 0$.\n- \\textbf{Multiplicative associativity.}\n $(a \\cdot b) \\cdot c = a \\cdot (b \\cdot c)$\n for all $a, b, c \\in R$.\n- \\textbf{Distributivity.}\n - - $a \\cdot (b + c) = a \\cdot b + a \\cdot c$\n for all $a,b,c \\in R$.\n- $(a + b) \\cdot c = a \\cdot c + b \\cdot c$\n for all $a,b,c \\in R$.",
+  "current_dependencies": []
+}

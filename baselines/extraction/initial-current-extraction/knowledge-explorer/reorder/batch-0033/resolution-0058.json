@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0058",
+  "term": "def:nor-only-formula-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:nor-connective-propositional-logic", "def:well-formed-formula"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.75,
+  "notes": "A wff (def:well-formed-formula) whose only connective is NOR (def:nor-connective). Both load-bearing and present; parallel to 0055."
+}

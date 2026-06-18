@@ -1,0 +1,19 @@
+{
+  "graph_id": "0032-0005",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "cardinality",
+  "term": "def:same-cardinality",
+  "kind": "Definition",
+  "title": "Same Cardinality",
+  "root": "",
+  "statement": "Two sets $A$ and $B$ have the \\emph{same cardinality}, written $A \\sim B$,\nif there exists a bijection $f : A \\to B$.",
+  "current_dependencies": [
+    {
+      "id": "def:bijective",
+      "title": "Bijective Function",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

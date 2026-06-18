@@ -1,0 +1,12 @@
+{
+  "graph_id": "0004-0013",
+  "volume": "viii",
+  "chapter": "numerical-analysis",
+  "section": "interval-arithmetic",
+  "term": "def:box-hadamard",
+  "kind": "Definition",
+  "title": "Coordinatewise / Hadamard Product of Boxes",
+  "root": "",
+  "statement": "For $x,y\\in\\mathbb{R}^n$, write $(x\\odot y)_i := x_i y_i$.\nFor boxes $X=[a,b]$ and $Y=[c,d]$, define\n\\[\nX\\odot Y \\;:=\\; \\{x\\odot y : x\\in X,\\ y\\in Y\\}.\n\\]\nThen $X\\odot Y$ is again a box, computed coordinatewise:\n\\[\n[a,b]\\odot[c,d] \\;=\\; \\prod_{i=1}^n \\Bigl[\\min S_i,\\ \\max S_i\\Bigr],\n\\qquad\nS_i:=\\{a_ic_i,\\ a_id_i,\\ b_ic_i,\\ b_id_i\\}.\n\\]",
+  "current_dependencies": []
+}

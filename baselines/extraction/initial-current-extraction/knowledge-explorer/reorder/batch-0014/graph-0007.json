@@ -1,0 +1,31 @@
+{
+  "graph_id": "0014-0007",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "applications",
+  "term": "thm:factorial-partial-sums-approximate-e",
+  "kind": "Theorem",
+  "title": "Factorial Partial Sums Approximate $e$",
+  "root": "",
+  "statement": "Let $(s_n)$ be the factorial partial-sum sequence. Then $(s_n)$ converges\nto the Euler number $e$:\n\\[\n \\lim_{n\\to\\infty}s_n=e.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:factorial-partial-sums",
+      "title": "Factorial Partial Sums",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:number-e",
+      "title": "The Number $e$",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:cauchy-criterion-real-sequences",
+      "title": "Cauchy Criterion for Real Sequences",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

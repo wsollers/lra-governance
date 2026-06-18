@@ -1,0 +1,12 @@
+{
+  "graph_id": "0001-0004",
+  "volume": "viii",
+  "chapter": "model-theory",
+  "section": "l-structures",
+  "term": "def:variable-assignment",
+  "kind": "Definition",
+  "title": "Variable Assignment",
+  "root": "",
+  "statement": "Let $\\mathcal{M}$ be an $\\mathcal{L}$-structure with domain $M$, and let\n$\\mathrm{Var} = \\{v_1, v_2, v_3, \\ldots\\}$ be a fixed countable set of\nfirst-order variables.\n\nA \\textbf{variable assignment} (or \\textbf{environment}) for $\\mathcal{M}$\nis a function $s : \\mathrm{Var} \\to M$.\n\nFor a variable assignment $s$, a variable $v_i$, and an element $a \\in M$,\nwrite $s[v_i \\mapsto a]$ for the assignment that agrees with $s$ on all\nvariables except $v_i$, where it returns $a$:\n\\[\n s[v_i \\mapsto a](v_j) =\n \\begin{cases}\n a & \\text{if } j = i, \\\\\n s(v_j) & \\text{if } j \\neq i.\n \\end{cases}\n\\]",
+  "current_dependencies": []
+}

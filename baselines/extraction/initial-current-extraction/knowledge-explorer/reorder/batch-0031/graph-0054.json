@@ -1,0 +1,37 @@
+{
+  "graph_id": "0031-0054",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "field-and-ordered-field-laws",
+  "term": "cor:generic-ordered-field-laws",
+  "kind": "Corollary",
+  "title": "Generic Ordered-Field Laws",
+  "root": "",
+  "statement": "Every ordered field satisfies the standard positivity, order-compatibility,\ninverse-order, sign, and comparison laws listed in this topic.",
+  "current_dependencies": [
+    {
+      "id": "thm:ordered-field-one-positive",
+      "title": "Ordered Field One Is Positive",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:ordered-field-positive-inverses",
+      "title": "Ordered Field Positive Inverses",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:ordered-field-positive-multiplication-preserves-order",
+      "title": "Ordered Field Positive Multiplication Preserves Order",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:ordered-field-positive-product",
+      "title": "Ordered Field Positive Product",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

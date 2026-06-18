@@ -1,0 +1,19 @@
+{
+  "graph_id": "0023-0028",
+  "volume": "ii",
+  "chapter": "reals",
+  "section": "embedding-q-into-r",
+  "term": "thm:archimedean-property-of-r",
+  "kind": "Theorem",
+  "title": "Archimedean Property of $ $",
+  "root": "",
+  "statement": "For $\\alpha,\\beta\\in\\mathbb{R}$,\n\\[\n0_{\\mathbb{R}}<\\alpha\n\\Longrightarrow\n\\exists n\\in\\mathbb{N}\\,(\\beta<\\iota(n)\\cdot\\alpha).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "thm:lub-property-r",
+      "title": "Least-Upper-Bound Property",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

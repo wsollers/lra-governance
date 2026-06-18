@@ -1,0 +1,12 @@
+{
+  "graph_id": "0007-0009",
+  "volume": "vii",
+  "chapter": "euclidean-geometry",
+  "section": "foundations",
+  "term": "def:euclid-acute-angle",
+  "kind": "Definition",
+  "title": "Acute angle",
+  "root": "",
+  "statement": "An acute angle is an angle less than a right angle.",
+  "current_dependencies": []
+}

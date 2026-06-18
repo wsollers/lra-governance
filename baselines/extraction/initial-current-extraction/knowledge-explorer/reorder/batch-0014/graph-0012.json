@@ -1,0 +1,25 @@
+{
+  "graph_id": "0014-0012",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "cauchy",
+  "term": "thm:cauchy-criterion-via-tails",
+  "kind": "Theorem",
+  "title": "Cauchy Criterion via Tails",
+  "root": "",
+  "statement": "Let $(x_n)$ be a real sequence. Then $(x_n)$ is Cauchy if and only if\nfor every $\\varepsilon>0$ there exists $N\\in\\mathbb{N}$ such that the\n$N$-tail has pairwise term distances less than $\\varepsilon$.",
+  "current_dependencies": [
+    {
+      "id": "def:cauchy-sequence",
+      "title": "Cauchy Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:m-tail",
+      "title": "$M$-Tail of a Sequence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

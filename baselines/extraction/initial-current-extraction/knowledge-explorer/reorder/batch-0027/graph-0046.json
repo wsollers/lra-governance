@@ -1,0 +1,55 @@
+{
+  "graph_id": "0027-0046",
+  "volume": "ii",
+  "chapter": "natural-numbers",
+  "section": "order-on-n",
+  "term": "thm:trichotomy-on-peano-system",
+  "kind": "Theorem",
+  "title": "Trichotomy on a Peano System",
+  "root": "",
+  "statement": "Let $(P,S,1)$ be a Peano system. For every $a,b \\in P$, exactly one of the\nfollowing holds:\n\\[\na<b,\\qquad a=b,\\qquad b<a.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:less-than-or-equal-on-peano-system",
+      "title": "Less Than or Equal on a Peano System",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:strict-less-than-on-peano-system",
+      "title": "Strict Less Than on a Peano System",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:induction-principle-for-peano-system",
+      "title": "Induction Principle for a Peano System",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:order-antisymmetric-on-peano-system",
+      "title": "Order Is Antisymmetric on a Peano System",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:order-reflexive-on-peano-system",
+      "title": "Order Is Reflexive on a Peano System",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:order-transitive-on-peano-system",
+      "title": "Order Is Transitive on a Peano System",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:strict-order-successor-characterization",
+      "title": "Strict Order Successor Characterization",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

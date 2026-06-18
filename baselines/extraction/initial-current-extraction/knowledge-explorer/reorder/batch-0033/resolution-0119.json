@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0119",
+  "term": "def:propositional-variable",
+  "verdict": "ok",
+  "dependencies": ["def:propositional-language"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.7,
+  "notes": "A propositional variable is the atomic-symbol component supplied by the propositional language (def:propositional-language). Sole dep correct; the variable is declared by the language root (0118)."
+}

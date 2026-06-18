@@ -1,0 +1,25 @@
+{
+  "graph_id": "0034-0086",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "translation",
+  "term": "prop:universal-translation-pattern",
+  "kind": "Proposition",
+  "title": "Universal Translation Pattern",
+  "root": "",
+  "statement": "In a broad domain, an English statement of the form ``All \\(A\\) are \\(B\\)''\nis translated by\n\\[\n\\forall x\\,(A(x)\\to B(x)).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:molecular",
+      "title": "Molecular Formula",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:universal-q",
+      "title": "Universal Formula",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

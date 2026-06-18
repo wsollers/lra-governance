@@ -1,0 +1,12 @@
+{
+  "graph_id": "0004-0015",
+  "volume": "viii",
+  "chapter": "numerical-analysis",
+  "section": "interval-arithmetic",
+  "term": "def:box-sub",
+  "kind": "Definition",
+  "title": "Box Subtraction / Difference",
+  "root": "",
+  "statement": "For boxes $X=[a,b]$ and $Y=[c,d]$ in $\\mathbb{R}^n$, define\n\\[\nX\\ominus Y \\;:=\\; \\{x-y : x\\in X,\\ y\\in Y\\}.\n\\]\nThen\n\\[\n[a,b]\\ominus[c,d] \\;=\\; [a-d,\\; b-c].\n\\]",
+  "current_dependencies": []
+}

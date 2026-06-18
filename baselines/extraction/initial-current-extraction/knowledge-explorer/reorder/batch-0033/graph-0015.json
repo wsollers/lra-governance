@@ -1,0 +1,37 @@
+{
+  "graph_id": "0033-0015",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "argument-forms",
+  "term": "thm:truth-table-validity-test-argument-forms-propositional-logic",
+  "kind": "Theorem",
+  "title": "Truth-Table Validity Test for Argument Forms",
+  "root": "",
+  "statement": "An argument form \\((\\Gamma,\\varphi)\\) is valid if and only if no row of its truth\ntable makes every formula in \\(\\Gamma\\) true and \\(\\varphi\\) false.",
+  "current_dependencies": [
+    {
+      "id": "def:counterexample-assignment-propositional-logic",
+      "title": "Counterexample Assignment",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:truth-table-propositional-logic",
+      "title": "Truth Table",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:valid-argument-form-propositional-logic",
+      "title": "Valid Argument Form",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:finite-truth-table-propositional-logic",
+      "title": "Finite Truth-Table Theorem",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

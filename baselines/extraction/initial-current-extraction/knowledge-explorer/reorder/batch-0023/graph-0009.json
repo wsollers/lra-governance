@@ -1,0 +1,12 @@
+{
+  "graph_id": "0023-0009",
+  "volume": "ii",
+  "chapter": "reals",
+  "section": "addition-on-r",
+  "term": "thm:r-additive-abelian-group",
+  "kind": "Theorem",
+  "title": "$ $ Is an Additive Abelian Group",
+  "root": "",
+  "statement": "The structure $(\\mathbb{R},+,0_{\\mathbb{R}})$ is an abelian group.",
+  "current_dependencies": []
+}

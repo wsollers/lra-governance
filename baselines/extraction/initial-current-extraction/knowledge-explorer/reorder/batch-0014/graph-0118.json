@@ -1,0 +1,43 @@
+{
+  "graph_id": "0014-0118",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "monotonicity",
+  "term": "thm:algebraic-transformations-preserve-monotonicity",
+  "kind": "Theorem",
+  "title": "Algebraic Transformations Preserve Monotonicity",
+  "root": "",
+  "statement": "Let $(x_n)$ be a real sequence and let $c,\\alpha\\in\\mathbb{R}$.\n- [label=(\\alph*)]\n- If $(x_n)$ is increasing, then $(x_n+c)$ is increasing.\n- If $(x_n)$ is decreasing, then $(x_n+c)$ is decreasing.\n- If $(x_n)$ is increasing and $\\alpha>0$, then $(\\alpha x_n)$ is increasing.\n- If $(x_n)$ is increasing and $\\alpha<0$, then $(\\alpha x_n)$ is decreasing.\n- If $(x_n)$ is increasing, then $(-x_n)$ is decreasing.\n- If $(x_n)$ is decreasing, then $(-x_n)$ is increasing.",
+  "current_dependencies": [
+    {
+      "id": "def:decreasing-sequence",
+      "title": "Decreasing Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:increasing-sequence",
+      "title": "Increasing Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:pointwise-negation-sequence",
+      "title": "Pointwise Negation of a Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:pointwise-sum-sequence",
+      "title": "Pointwise Sum of Sequences",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:scalar-multiple-sequence",
+      "title": "Scalar Multiple of a Sequence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

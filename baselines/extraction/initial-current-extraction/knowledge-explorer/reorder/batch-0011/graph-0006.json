@@ -1,0 +1,19 @@
+{
+  "graph_id": "0011-0006",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "algebraic-structures",
+  "term": "def:abstract-integral-domain",
+  "kind": "Definition",
+  "title": "Integral Domain",
+  "root": "",
+  "statement": "An \\textbf{integral domain} is a commutative ring with unity in which there are\nno zero divisors.",
+  "current_dependencies": [
+    {
+      "id": "def:commutative-ring",
+      "title": "Commutative Ring",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

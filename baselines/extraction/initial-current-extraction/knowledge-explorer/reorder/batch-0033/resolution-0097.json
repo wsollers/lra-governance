@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0097",
+  "term": "def:satisfaction-propositional-formula",
+  "verdict": "ok",
+  "dependencies": ["def:truth-assignment-propositional-logic", "def:well-formed-formula", "thm:unique-extension-truth-assignment-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.7,
+  "notes": "v satisfies phi (a wff, def:well-formed-formula) when its extended value v-hat(phi) is True; v is a truth assignment (def:truth-assignment) and v-hat is well-defined by thm:unique-extension. All three load-bearing; here def:well-formed-formula IS load-bearing (phi is a formula being evaluated), unlike at def:truth-assignment (0102)."
+}

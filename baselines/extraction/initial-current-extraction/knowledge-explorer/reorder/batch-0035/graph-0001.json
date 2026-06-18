@@ -1,0 +1,19 @@
+{
+  "graph_id": "0035-0001",
+  "volume": "i",
+  "chapter": "axiom-systems",
+  "section": "axioms",
+  "term": "def:assumption",
+  "kind": "Definition",
+  "title": "Assumption",
+  "root": "",
+  "statement": "An \\emph{assumption} is a statement temporarily accepted for purposes of\nreasoning.",
+  "current_dependencies": [
+    {
+      "id": "def:axiom",
+      "title": "Axiom",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

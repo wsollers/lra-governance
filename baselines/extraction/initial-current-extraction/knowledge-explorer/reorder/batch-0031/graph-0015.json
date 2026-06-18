@@ -1,0 +1,12 @@
+{
+  "graph_id": "0031-0015",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "algebraic-structures",
+  "term": "ax:ordered-field-multiplication-law",
+  "kind": "Axiom",
+  "title": "Ordered Field Multiplication Law",
+  "root": "axiom",
+  "statement": "In an ordered field, for all elements $a$, $b$, and $c$,\n\\[\nc>0 \\Longrightarrow\n\\bigl(ac<bc \\Longleftrightarrow a<b\\bigr),\n\\]\nand\n\\[\nc<0 \\Longrightarrow\n\\bigl(ac<bc \\Longleftrightarrow b<a\\bigr).\n\\]\nMoreover, positive elements are closed under multiplication:\n\\[\n0<a \\land 0<b \\Longrightarrow 0<ab.\n\\]",
+  "current_dependencies": []
+}

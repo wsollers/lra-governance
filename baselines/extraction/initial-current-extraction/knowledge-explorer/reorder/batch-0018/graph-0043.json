@@ -1,0 +1,19 @@
+{
+  "graph_id": "0018-0043",
+  "volume": "iii",
+  "chapter": "differentiation",
+  "section": "derivative-geometry",
+  "term": "thm:nonincreasing-iff-nonpos-derivative",
+  "kind": "Theorem",
+  "title": "Nonincreasing Iff Nonpositive Derivative",
+  "root": "",
+  "statement": "Let $I \\subseteq \\mathbb{R}$ be an interval, and let $f : I \\to \\mathbb{R}$ be differentiable on $I$. Then $f$ is nonincreasing on $I$ if and only if\n\\[\nf'(x) \\leq 0 \\qquad \\text{for all } x \\in I.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "thm:nondecreasing-iff-nonneg-derivative",
+      "title": "Nondecreasing Iff Nonnegative Derivative",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

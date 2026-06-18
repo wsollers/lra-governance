@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0034",
+  "term": "cor:finite-unsatisfiability-witness-contrapositive-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:finitely-satisfiable-set-of-propositional-formulas", "def:satisfiable-set-of-propositional-formulas", "thm:finite-unsatisfiability-witness-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.6,
+  "notes": "Direct contrapositive of thm:finite-unsatisfiability-witness: if Gamma is satisfiable (def:satisfiable-set), no finite subset can be an unsatisfiability witness, so every finite subset is satisfiable (def:finitely-satisfiable-set). All three load-bearing and present; 'finite subset' rides on def:finitely-satisfiable-set."
+}

@@ -1,0 +1,43 @@
+{
+  "graph_id": "0024-0137",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "order-on-q",
+  "term": "thm:triangle-inequality-on-q",
+  "kind": "Theorem",
+  "title": "Triangle Inequality on $ $",
+  "root": "",
+  "statement": "For all $x,y\\in\\mathbb{Q}$,\n\\[\n|x+y|\\le |x|+|y|.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:absolute-value-on-q",
+      "title": "Absolute Value on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:addition-on-q-classes",
+      "title": "Addition on $ $-Classes",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:order-on-q",
+      "title": "Order on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:addition-preserves-order-on-q",
+      "title": "Addition Preserves Order on $ $",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:q-totally-ordered-set",
+      "title": "$ $ Is a Totally Ordered Set",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0059",
+  "term": "thm:nor-functionally-complete-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:functionally-complete-connective-set-propositional-logic", "def:nor-connective-propositional-logic", "def:nor-only-formula-propositional-logic", "thm:negation-disjunction-functionally-complete-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.65,
+  "notes": "{NOR} is complete because {not, or} is complete (thm:negation-disjunction-functionally-complete) and both are expressible by NOR-only formulas. Parallel to NAND (0056); all four load-bearing and present."
+}

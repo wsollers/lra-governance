@@ -1,0 +1,31 @@
+{
+  "graph_id": "0022-0005",
+  "volume": "ii",
+  "chapter": "structure-of-real-line",
+  "section": "compactness-on-r",
+  "term": "thm:compact-implies-closed-bounded",
+  "kind": "Theorem",
+  "title": "Compact Subsets of $ $ Are Closed and Bounded",
+  "root": "",
+  "statement": "If $K\\subseteq\\mathbb{R}$ is compact, then $K$ is closed and bounded.",
+  "current_dependencies": [
+    {
+      "id": "def:bounded-subset-of-r",
+      "title": "Bounded Subset of the Real Line",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:closed-set",
+      "title": "Closed Set in $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:compact-set",
+      "title": "Compact Set in $ $",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

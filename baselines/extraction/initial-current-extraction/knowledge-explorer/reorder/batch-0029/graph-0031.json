@@ -1,0 +1,31 @@
+{
+  "graph_id": "0029-0031",
+  "volume": "ii",
+  "chapter": "identity-equality-equivalence",
+  "section": "properties-of-equality",
+  "term": "thm:equality-transitivity",
+  "kind": "Theorem",
+  "title": "Transitivity of Equality",
+  "root": "",
+  "statement": "\\[\n\\forall x\\,\\forall y\\,\\forall z,\\,\n\\bigl(x=y \\land y=z \\Longrightarrow x=z\\bigr).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "ax:equality-reflexivity",
+      "title": "Reflexivity of Equality",
+      "kind": "Axiom",
+      "root": "axiom"
+    },
+    {
+      "id": "ax:leibniz-law",
+      "title": "Leibniz's Law",
+      "kind": "Axiom",
+      "root": "axiom"
+    },
+    {
+      "id": "thm:equality-symmetry",
+      "title": "Symmetry of Equality",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

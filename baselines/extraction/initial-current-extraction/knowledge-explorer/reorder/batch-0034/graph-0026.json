@@ -1,0 +1,19 @@
+{
+  "graph_id": "0034-0026",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "quantifiers",
+  "term": "thm:dependent-witness-not-uniform",
+  "kind": "Theorem",
+  "title": "Dependent Witness Need Not Be Uniform",
+  "root": "",
+  "statement": "In general,\n\\[\n\\forall x\\,\\exists y\\,\\varphi(x,y)\n\\not\\models\n\\exists y\\,\\forall x\\,\\varphi(x,y).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "thm:uniform-witness-implies-dependent-witness",
+      "title": "Uniform Witness Implies Dependent Witness",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

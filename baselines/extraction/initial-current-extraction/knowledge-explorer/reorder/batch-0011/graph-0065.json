@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0065",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "laws-of-operations",
+  "term": "prop:group-cancellation",
+  "kind": "Proposition",
+  "title": "Cancellation Laws in a Group",
+  "root": "",
+  "statement": "Let $G$ be a group and let $a,b,c \\in G$.\nIf $ab = ac$, then $b=c$.\nIf $ba = ca$, then $b=c$.",
+  "current_dependencies": []
+}

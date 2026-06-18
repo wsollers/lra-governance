@@ -1,0 +1,19 @@
+{
+  "graph_id": "0024-0124",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "order-on-q",
+  "term": "thm:order-on-q-reflexive",
+  "kind": "Theorem",
+  "title": "Order on $ $ Is Reflexive",
+  "root": "",
+  "statement": "For every $x\\in\\mathbb{Q}$, $x\\le x$.",
+  "current_dependencies": [
+    {
+      "id": "def:order-on-q",
+      "title": "Order on $ $",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

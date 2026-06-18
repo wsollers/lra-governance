@@ -1,0 +1,25 @@
+{
+  "graph_id": "0021-0010",
+  "volume": "ii",
+  "chapter": "whole-numbers",
+  "section": "extending-addition",
+  "term": "def:addition-on-w",
+  "kind": "Definition",
+  "title": "Addition on $ $",
+  "root": "",
+  "statement": "Define $+_{\\mathbb{W}}:\\mathbb{W}\\times\\mathbb{W}\\to\\mathbb{W}$ by\n\\[\n0+_{\\mathbb{W}}a=a,\\qquad\na+_{\\mathbb{W}}0=a,\n\\]\nand, for $a,b\\in\\mathbb{N}$,\n\\[\na+_{\\mathbb{W}}b=a+_{\\mathbb{N}}b.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:addition-on-peano-system",
+      "title": "Addition on a Peano System",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:whole-numbers",
+      "title": "Whole Numbers",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

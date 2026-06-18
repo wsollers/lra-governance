@@ -1,0 +1,12 @@
+{
+  "graph_id": "0034-0010",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "proof-theory",
+  "term": "def:ei",
+  "kind": "Definition",
+  "title": "Existential Instantiation — EI",
+  "root": "",
+  "statement": "From an existentially quantified statement, infer an instance with a fresh\nconstant (witness):\n\\[\n\\exists x\\,\\varphi \\;\\Rightarrow\\; \\varphi[c/x].\n\\]",
+  "current_dependencies": []
+}

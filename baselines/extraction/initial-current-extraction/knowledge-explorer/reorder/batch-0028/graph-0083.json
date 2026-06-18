@@ -1,0 +1,12 @@
+{
+  "graph_id": "0028-0083",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "order-on-z",
+  "term": "cor:negative-multiplication-reverses-order-on-z",
+  "kind": "Corollary",
+  "title": "Multiplication by Negatives Reverses Order on $ $",
+  "root": "",
+  "statement": "For all $x,y,z\\in\\mathbb{Z}$,\n\\[\nz<0\\land x\\le y \\Longrightarrow z\\cdot y\\le z\\cdot x.\n\\]",
+  "current_dependencies": []
+}

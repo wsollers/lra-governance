@@ -1,0 +1,19 @@
+{
+  "graph_id": "0014-0001",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "applications",
+  "term": "def:compound-interest-sequence",
+  "kind": "Definition",
+  "title": "Compound-Interest Sequence",
+  "root": "",
+  "statement": "The \\textbf{compound-interest sequence} is the real sequence $(c_n)$\ndefined by\n\\[\n c_n:=\\left(1+\\frac{1}{n}\\right)^n\n \\qquad\\text{for every } n\\in\\mathbb{N}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:sequence",
+      "title": "Sequence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

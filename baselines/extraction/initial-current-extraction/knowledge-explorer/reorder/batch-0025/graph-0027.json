@@ -1,0 +1,19 @@
+{
+  "graph_id": "0025-0027",
+  "volume": "ii",
+  "chapter": "peano-systems",
+  "section": "recursion-on-peano-systems",
+  "term": "def:iterator-generated-function",
+  "kind": "Definition",
+  "title": "Iterator-Generated Function",
+  "root": "",
+  "statement": "Let $(P,S,1)$ be a Peano system, and let $(W,c,g)$ be iterator data for it.\nThe unique function $f:P\\to W$ satisfying\n\\[\nf(1)=c\n\\qquad\\text{and}\\qquad\n\\forall n\\in P\\;(f(S(n))=g(f(n)))\n\\]\nis called the \\emph{iterator-generated function determined by $(W,c,g)$}.",
+  "current_dependencies": [
+    {
+      "id": "thm:peano-iterator-theorem",
+      "title": "Peano Iterator Theorem",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "graph_id": "0018-0026",
+  "volume": "iii",
+  "chapter": "differentiation",
+  "section": "derivative-definition",
+  "term": "thm:differentiable-implies-continuous",
+  "kind": "Theorem",
+  "title": "Differentiable Implies Continuous",
+  "root": "",
+  "statement": "Let $f : A \\to \\mathbb{R}$ and $c \\in A$. If $f$ is differentiable at $c$, then $f$ is continuous at $c$.",
+  "current_dependencies": [
+    {
+      "id": "def:continuous-at-point",
+      "title": "Continuity at a Point",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:derivative-at-a-point",
+      "title": "Derivative at a Point",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

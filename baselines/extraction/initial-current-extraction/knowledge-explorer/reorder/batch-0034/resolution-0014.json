@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0014",
+  "term": "def:fol-soundness",
+  "verdict": "ok",
+  "dependencies": ["def:fol-satisfaction", "def:log-consequence"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.55,
+  "notes": "The only semantic symbol in the statement (Gamma |= phi) is def:log-consequence, whose gloss is 'semantic entailment ... across structures' -- i.e. it is itself defined via def:fol-satisfaction. So def:fol-satisfaction is plausibly a TRANSITIVE dep reached through def:log-consequence rather than a direct stating-dependency, and could be trimmed for a clean direct set {def:log-consequence}. Left as-is (flag, not forced removal) because confirming requires reading def:log-consequence's own deps. Reviewer: decide direct-vs-transitive convention; whatever is chosen should also govern completeness (0013) for dual symmetry. The provability side (|-) has no node."
+}

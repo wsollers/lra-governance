@@ -1,0 +1,10 @@
+{
+  "graph_id": "0032-0013",
+  "term": "def:index",
+  "verdict": "ok",
+  "dependencies": ["def:quotient-set", "def:same-cardinality"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.6,
+  "notes": "Index of R = |A/R| (def:quotient-set), the cardinality/number of classes. MISSING-VOCABULARY FLAG: there is no standalone def:cardinality node (cardinality is only relational here -- def:same-cardinality for ~ and def:cardinality-order for <=). So |A/R| as a cardinal-number is routed to def:same-cardinality, the closest available cardinality notion; a dedicated def:cardinality node would be the precise dep. Kept as-is."
+}

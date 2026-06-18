@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0099",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "rings",
+  "term": "def:notes-rings-integral-domains-l25",
+  "kind": "Definition",
+  "title": "Integral Domain",
+  "root": "",
+  "statement": "A commutative ring with unity $R$ is an \\emph{integral domain} if\n$R$ has no zero divisors. Equivalently,\n\\[\na \\cdot b = 0 \\;\\Longrightarrow\\; a = 0 \\;\\text{ or }\\; b = 0\n\\quad \\text{for all } a, b \\in R.\n\\]",
+  "current_dependencies": []
+}

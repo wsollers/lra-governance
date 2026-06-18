@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0056",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "groups",
+  "term": "def:group-binary-operation",
+  "kind": "Definition",
+  "title": "Binary Operation",
+  "root": "",
+  "statement": "Let $G$ be a set. A \\textbf{binary operation} on $G$ is a function\n\\[\n\\star : G \\times G \\to G.\n\\]\nFor $a, b \\in G$, the element $\\star(a,b)$ is denoted by $a \\star b$.",
+  "current_dependencies": []
+}

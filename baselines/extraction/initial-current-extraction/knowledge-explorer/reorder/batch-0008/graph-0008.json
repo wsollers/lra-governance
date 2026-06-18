@@ -1,0 +1,12 @@
+{
+  "graph_id": "0008-0008",
+  "volume": "vii",
+  "chapter": "analytical-geometry",
+  "section": "lines",
+  "term": "def:vector-parametric-form",
+  "kind": "Definition",
+  "title": "Vector parametric form",
+  "root": "",
+  "statement": "A line in $\\mathbb{R}^2$ may be represented as the image of\n$\\mathbf r:\\mathbb{R}\\to\\mathbb{R}^2$ given by\n\\[\n \\mathbf r(t)=\\mathbf r_0+t\\mathbf v,\n\\]\nwhere $\\mathbf r_0\\in\\mathbb{R}^2$ is a point on the line and\n$\\mathbf v\\in\\mathbb{R}^2$ is a nonzero direction vector.",
+  "current_dependencies": []
+}

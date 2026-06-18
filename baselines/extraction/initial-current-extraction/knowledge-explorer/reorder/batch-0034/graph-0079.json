@@ -1,0 +1,25 @@
+{
+  "graph_id": "0034-0079",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "translation",
+  "term": "def:scope-ambiguity-translation",
+  "kind": "Definition",
+  "title": "Scope Ambiguity",
+  "root": "",
+  "statement": "A sentence has \\emph{scope ambiguity} when the same ordinary-language wording\nadmits two or more translations with different quantifier nesting or different\nconnective scope.",
+  "current_dependencies": [
+    {
+      "id": "def:q-alt",
+      "title": "Quantifier Order",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:quantifier-scope",
+      "title": "Quantifier Scope",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "graph_id": "0014-0127",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "order-limits",
+  "term": "thm:tail-suprema-and-infima-converge",
+  "kind": "Theorem",
+  "title": "Tail Suprema and Infima Converge",
+  "root": "",
+  "statement": "Let $(x_n)$ be a bounded real sequence. Define\n\\[\n s_n=\\sup\\{x_k:k\\ge n\\},\n \\qquad\n i_n=\\inf\\{x_k:k\\ge n\\}.\n\\]\nThen $(s_n)$ and $(i_n)$ converge.",
+  "current_dependencies": [
+    {
+      "id": "def:tail-infimum-sequence",
+      "title": "Tail Infimum Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:tail-supremum-sequence",
+      "title": "Tail Supremum Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:monotone-convergence-theorem",
+      "title": "Monotone Convergence Theorem",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:tail-infima-are-increasing",
+      "title": "Tail Infima Are Increasing",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:tail-suprema-are-decreasing",
+      "title": "Tail Suprema Are Decreasing",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "graph_id": "0022-0018",
+  "volume": "ii",
+  "chapter": "structure-of-real-line",
+  "section": "neighborhoods-and-balls",
+  "term": "def:open-ball",
+  "kind": "Definition",
+  "title": "Open Ball on the Real Line",
+  "root": "",
+  "statement": "Let $x\\in\\mathbb{R}$ and $r>0$. The \\emph{open ball} of radius $r$ about $x$ is\n\\[\nB_{r}(x)=\\{\\,y\\in\\mathbb{R} : |y-x|<r\\,\\}=(x-r,\\,x+r).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:distance-on-real-line",
+      "title": "Distance on the Real Line",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:open-interval",
+      "title": "Open Interval",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

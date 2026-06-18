@@ -1,0 +1,19 @@
+{
+  "graph_id": "0016-0021",
+  "volume": "iii",
+  "chapter": "functions",
+  "section": "limits",
+  "term": "thm:composition-of-limits",
+  "kind": "Theorem",
+  "title": "Composition of Limits",
+  "root": "",
+  "statement": "Let $f : A \\to B$, let $g : B \\to \\mathbb{R}$, let $c_1$ be a\ncluster point of $A$, and let $c_2 \\in \\mathbb{R}$ be a cluster\npoint of $B$. Suppose $\\lim_{x\\to c_1}f(x)=c_2$ and\n$\\lim_{y\\to c_2}g(y)=L$. If $c_2 \\in B$, assume also that\n$g(c_2) = L$. Then $\\lim_{x\\to c_1}g(f(x))=L$.",
+  "current_dependencies": [
+    {
+      "id": "def:limit-function",
+      "title": "Limit of a Function",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

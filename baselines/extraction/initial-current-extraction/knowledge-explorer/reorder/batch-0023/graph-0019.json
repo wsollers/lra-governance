@@ -1,0 +1,19 @@
+{
+  "graph_id": "0023-0019",
+  "volume": "ii",
+  "chapter": "reals",
+  "section": "construction-of-r",
+  "term": "def:dedekind-cut",
+  "kind": "Definition",
+  "title": "Dedekind Cut",
+  "root": "",
+  "statement": "A \\emph{Dedekind cut} is a set $\\alpha\\subseteq\\mathbb{Q}$ satisfying:\n\\[\n\\alpha\\ne\\emptyset,\\qquad \\alpha\\ne\\mathbb{Q},\n\\]\n\\[\np\\in\\alpha\\land q<p \\Longrightarrow q\\in\\alpha,\n\\]\nand\n\\[\np\\in\\alpha \\Longrightarrow \\exists r\\in\\alpha\\,(p<r).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "thm:density-of-q",
+      "title": "Density of $ $ in Itself",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

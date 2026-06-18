@@ -1,0 +1,12 @@
+{
+  "graph_id": "0032-0121",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "sets",
+  "term": "ax:replacement",
+  "kind": "Axiom",
+  "title": "Axiom Schema of Replacement",
+  "root": "axiom",
+  "statement": "If $\\varphi(x,y)$ defines a functional relation on a set $A$, then the image\nof $A$ under $\\varphi$ is a set. For any formula $\\varphi(x,y)$,\n\\[\n\\forall A\\,\n\\Bigl(\n\\bigl(\\forall x \\in A\\, \\exists! y\\, \\varphi(x,y)\\bigr)\n\\rightarrow\n\\exists B\\, \\forall y\\,\n\\bigl(y \\in B \\leftrightarrow \\exists x \\in A\\, \\varphi(x,y)\\bigr)\n\\Bigr).\n\\]",
+  "current_dependencies": []
+}

@@ -1,0 +1,12 @@
+{
+  "graph_id": "0023-0006",
+  "volume": "ii",
+  "chapter": "reals",
+  "section": "addition-on-r",
+  "term": "thm:addition-on-r-associative",
+  "kind": "Theorem",
+  "title": "Addition on $ $ Is Associative",
+  "root": "",
+  "statement": "For all $\\alpha,\\beta,\\gamma\\in\\mathbb{R}$,\n\\[\n(\\alpha+\\beta)+\\gamma=\\alpha+(\\beta+\\gamma).\n\\]",
+  "current_dependencies": []
+}

@@ -1,0 +1,31 @@
+{
+  "graph_id": "0027-0055",
+  "volume": "ii",
+  "chapter": "natural-numbers",
+  "section": "well-ordering-principle",
+  "term": "thm:induction-well-ordering-equivalence",
+  "kind": "Theorem",
+  "title": "Induction, Strong Induction, and Well-Ordering Are Equivalent",
+  "root": "",
+  "statement": "Let $(P,S,1)$ be a Peano system equipped with the order $\\le$. The following\nare equivalent:\n- The induction principle: for every predicate $\\varphi$ on $P$, if\n $\\varphi(1)$ holds and the successor step holds, then $\\varphi(n)$ holds\n for all $n \\in P$.\n- The strong induction principle: for every predicate $\\varphi$ on $P$,\n if $\\varphi(k)$ holds for every $k<n$ implies $\\varphi(n)$, then\n $\\varphi(n)$ holds for every $n \\in P$.\n- The well-ordering principle: every nonempty subset of $P$ has a least\n element with respect to $\\le$.",
+  "current_dependencies": [
+    {
+      "id": "thm:induction-principle-for-peano-system",
+      "title": "Induction Principle for a Peano System",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:strong-induction-on-peano-system",
+      "title": "Strong Induction on a Peano System",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:well-ordering-principle",
+      "title": "Well-Ordering Principle",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

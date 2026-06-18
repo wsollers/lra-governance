@@ -1,0 +1,25 @@
+{
+  "graph_id": "0020-0022",
+  "volume": "iii",
+  "chapter": "bounding",
+  "section": "bounds-algebra",
+  "term": "thm:supremum-sum-set",
+  "kind": "Theorem",
+  "title": "Supremum of a Sum Set",
+  "root": "",
+  "statement": "Let $A,B\\subseteq\\mathbb{R}$ be nonempty and bounded above. Then\n\\[\n \\sup(A+B)=\\sup A+\\sup B,\n \\qquad\n A+B=\\{a+b:a\\in A,\\ b\\in B\\}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:epsilon-characterization-of-supremum",
+      "title": "Epsilon Characterization of Supremum",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:supremum",
+      "title": "Supremum",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

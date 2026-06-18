@@ -1,0 +1,31 @@
+{
+  "graph_id": "0015-0004",
+  "volume": "iii",
+  "chapter": "real-analysis",
+  "section": "inequality",
+  "term": "thm:ineq-bernoulli",
+  "kind": "Theorem",
+  "title": "Bernoulli's Inequality",
+  "root": "",
+  "statement": "For all $x \\in \\mathbb{R}$ with $x \\ge -1$ and all $n \\in \\mathbb{N}$,\n\\[\n (1 + x)^n \\ge 1 + nx.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:real-ordered-field",
+      "title": "Complete Ordered Field",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:ineq-nonstrict-add-both-sides",
+      "title": "Addition Preserves Nonstrict Inequality",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:ineq-nonstrict-multiply-nonneg",
+      "title": "Multiplication by a Nonneg Scalar Preserves Nonstrict Inequality",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

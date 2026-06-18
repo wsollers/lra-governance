@@ -1,0 +1,19 @@
+{
+  "graph_id": "0023-0014",
+  "volume": "ii",
+  "chapter": "reals",
+  "section": "completeness-of-r",
+  "term": "cor:glb-property-r",
+  "kind": "Corollary",
+  "title": "Greatest-Lower-Bound Property",
+  "root": "",
+  "statement": "Every nonempty subset $S\\subseteq\\mathbb{R}$ that is bounded below has a\ngreatest lower bound.",
+  "current_dependencies": [
+    {
+      "id": "thm:lub-property-r",
+      "title": "Least-Upper-Bound Property",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

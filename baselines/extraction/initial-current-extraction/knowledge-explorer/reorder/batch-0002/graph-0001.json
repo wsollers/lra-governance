@@ -1,0 +1,12 @@
+{
+  "graph_id": "0002-0001",
+  "volume": "viii",
+  "chapter": "lambda-calculus",
+  "section": "introduction",
+  "term": "def:lambda-terms",
+  "kind": "Definition",
+  "title": "Lambda Terms",
+  "root": "",
+  "statement": "The set $\\Lambda$ of $\\lambda$-terms is defined inductively as follows:\n\n- Every variable $x$ is a $\\lambda$-term.\n- If $M$ is a $\\lambda$-term and $x$ is a variable, then\n \\[\n \\lambda x.\\,M\n \\]\n is a $\\lambda$-term.\n- If $M$ and $N$ are $\\lambda$-terms, then\n \\[\n MN\n \\]\n is a $\\lambda$-term.",
+  "current_dependencies": []
+}

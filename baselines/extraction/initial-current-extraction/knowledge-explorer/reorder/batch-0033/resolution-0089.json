@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0089",
+  "term": "thm:existence-negation-normal-form-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:negation-normal-form-propositional-logic", "def:nnf-conversion-procedure-propositional-logic", "thm:replacement-of-logical-equivalents-propositional-logic", "thm:structural-induction-propositional-formulas"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.65,
+  "notes": "The NNF conversion procedure (def:nnf-conversion-procedure) yields an NNF formula (def:negation-normal-form); structural induction (thm:structural-induction) shows it terminates and equivalence-preserving replacement (thm:replacement-of-logical-equivalents) gives phi == result. All four load-bearing; == is transitive through replacement (same as 0073/0078)."
+}

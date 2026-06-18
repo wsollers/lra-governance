@@ -1,0 +1,25 @@
+{
+  "graph_id": "0019-0022",
+  "volume": "iii",
+  "chapter": "continuity",
+  "section": "global-theorems",
+  "term": "thm:image-of-closed-bounded-interval",
+  "kind": "Theorem",
+  "title": "Image of Closed Bounded Interval Is Closed Bounded Interval",
+  "root": "",
+  "statement": "Let $f:[a,b]\\to\\mathbb{R}$ be continuous. Then $f([a,b])=[\\min_{[a,b]} f,\\max_{[a,b]} f]$.",
+  "current_dependencies": [
+    {
+      "id": "thm:bolzano-intermediate-value",
+      "title": "Bolzano's Intermediate Value Theorem",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:extreme-value-theorem",
+      "title": "Extreme Value Theorem",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

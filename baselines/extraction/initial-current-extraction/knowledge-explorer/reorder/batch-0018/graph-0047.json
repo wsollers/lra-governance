@@ -1,0 +1,19 @@
+{
+  "graph_id": "0018-0047",
+  "volume": "iii",
+  "chapter": "differentiation",
+  "section": "one-sided-derivatives",
+  "term": "def:left-hand-derivative",
+  "kind": "Definition",
+  "title": "Left-Hand Derivative",
+  "root": "",
+  "statement": "Let $I \\subseteq \\mathbb{R}$ be an interval, let $f : I \\to \\mathbb{R}$, and let $c \\in I$ be such that $c$ is a left-hand limit point of $I$. We say that $f$ has a \\emph{left-hand derivative} at $c$ if the limit\n\\[\n\\lim_{x \\to c^-} \\frac{f(x) - f(c)}{x - c}\n\\]\nexists. In that case, the value of this limit is denoted $f'_-(c)$:\n\\[\nf'_-(c) := \\lim_{x \\to c^-} \\frac{f(x) - f(c)}{x - c}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:derivative-at-a-point",
+      "title": "Derivative at a Point",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

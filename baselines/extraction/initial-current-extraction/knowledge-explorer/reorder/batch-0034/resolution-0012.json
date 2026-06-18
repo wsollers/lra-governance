@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0012",
+  "term": "def:ui",
+  "verdict": "ok",
+  "dependencies": [],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.5,
+  "notes": "Inference-rule schema forall x phi => phi[t/x]. Stating-vocabulary candidates under the attach convention: def:universal-q, def:subst-notation, and def:free-for (the 'free for substitution' obligation that keeps the instantiation sound). Note def:ui (this rule) coexists with ax:predicate-logic-universal-instantiation (the axiom form) -- possible redundancy for the reviewer. Left unproposed pending the rule-schema convention flagged at 0034-0001; uniform with 0009-0011."
+}

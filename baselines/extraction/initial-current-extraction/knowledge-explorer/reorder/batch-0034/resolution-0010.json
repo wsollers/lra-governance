@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0010",
+  "term": "def:ei",
+  "verdict": "ok",
+  "dependencies": [],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.5,
+  "notes": "Inference-rule schema exists x phi => phi[c/x] with a fresh constant c. Stating-vocabulary candidates under the attach convention: def:existential-q, def:subst-notation, and def:constant-symbol (the witness c). The 'fresh' side condition rests on a freshness/not-occurring-elsewhere notion (no clean node located). Left unproposed pending the rule-schema convention flagged at 0034-0001; uniform with 0009/0011/0012."
+}

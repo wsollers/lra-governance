@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0081",
+  "term": "def:empty-clause-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:clause-propositional-logic", "def:contradiction-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.7,
+  "notes": "The empty clause is the empty disjunction (a clause, def:clause, with no literals), read semantically as false (def:contradiction). Both load-bearing and present. Cleanly mirrors def:empty-conjunction (0082): empty-clause -> contradiction here, empty-conjunction -> tautology there."
+}

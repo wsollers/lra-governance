@@ -1,0 +1,19 @@
+{
+  "graph_id": "0018-0028",
+  "volume": "iii",
+  "chapter": "differentiation",
+  "section": "derivative-geometry",
+  "term": "cor:necessary-condition-extremum",
+  "kind": "Corollary",
+  "title": "Necessary Condition for an Extremum",
+  "root": "",
+  "statement": "Let $I \\subseteq \\mathbb{R}$ be an open interval, let $f : I \\to \\mathbb{R}$, and let $c \\in I$. If $f$ has a relative extremum at $c$, then\n\\[\nf'(c) = 0 \\quad \\text{or} \\quad f'(c) \\text{ does not exist.}\n\\]",
+  "current_dependencies": [
+    {
+      "id": "thm:necessary-condition-extremum",
+      "title": "Necessary Condition for an Interior Extremum",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

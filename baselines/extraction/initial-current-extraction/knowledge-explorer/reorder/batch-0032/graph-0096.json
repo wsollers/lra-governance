@@ -1,0 +1,25 @@
+{
+  "graph_id": "0032-0096",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "relations",
+  "term": "def:preorder",
+  "kind": "Definition",
+  "title": "Preorder",
+  "root": "",
+  "statement": "$R$ is a \\emph{preorder} on $A$ if it is reflexive and transitive.",
+  "current_dependencies": [
+    {
+      "id": "def:reflexive",
+      "title": "Reflexive Relation",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:transitive",
+      "title": "Transitive Relation",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

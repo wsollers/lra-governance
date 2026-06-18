@@ -1,0 +1,12 @@
+{
+  "graph_id": "0032-0075",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "order",
+  "term": "def:distributive-lattice",
+  "kind": "Definition",
+  "title": "Distributive Lattice",
+  "root": "",
+  "statement": "A lattice $(L, \\leq)$ is \\emph{distributive} if for all $a, b, c \\in L$:\n\\[\n a \\wedge (b \\vee c) = (a \\wedge b) \\vee (a \\wedge c).\n\\]",
+  "current_dependencies": []
+}

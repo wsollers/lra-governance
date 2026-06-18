@@ -1,0 +1,31 @@
+{
+  "graph_id": "0014-0093",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "divergence",
+  "term": "thm:unbounded-above-has-positive-infinity-subsequence",
+  "kind": "Theorem",
+  "title": "Unbounded Above Sequence Has a Positive-Infinity Subsequence",
+  "root": "",
+  "statement": "Let $(x_n)$ be a real sequence. If $(x_n)$ is not bounded above, then\nthere exists a subsequence $(x_{\\sigma(k)})$ such that\n$x_{\\sigma(k)}\\to+\\infty$.",
+  "current_dependencies": [
+    {
+      "id": "def:diverges-to-positive-infinity",
+      "title": "Divergence to Positive Infinity",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:sequence-bounded-above",
+      "title": "Sequence Bounded Above",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:subsequence",
+      "title": "Subsequence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

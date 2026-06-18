@@ -1,0 +1,12 @@
+{
+  "graph_id": "0027-0030",
+  "volume": "ii",
+  "chapter": "natural-numbers",
+  "section": "nz-axioms",
+  "term": "ax:n-base-has-no-predecessor",
+  "kind": "Axiom",
+  "title": "N3, Base Has No Predecessor",
+  "root": "axiom",
+  "statement": "\\[\n\\forall n \\in \\mathbb{N}\\;(S(n)\\ne 1).\n\\]",
+  "current_dependencies": []
+}

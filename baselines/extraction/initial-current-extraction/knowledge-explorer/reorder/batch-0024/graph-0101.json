@@ -1,0 +1,12 @@
+{
+  "graph_id": "0024-0101",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "order-on-q",
+  "term": "cor:negative-multiplication-reverses-order-on-q",
+  "kind": "Corollary",
+  "title": "Multiplication by Negatives Reverses Order on $ $",
+  "root": "",
+  "statement": "For all $x,y,z\\in\\mathbb{Q}$,\n\\[\nz<0_{\\mathbb{Q}}\\land x\\le y\n\\Longrightarrow\nz\\cdot y\\le z\\cdot x.\n\\]",
+  "current_dependencies": []
+}

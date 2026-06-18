@@ -1,0 +1,12 @@
+{
+  "graph_id": "0032-0057",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "order",
+  "term": "def:owc",
+  "kind": "Definition",
+  "title": "and Proposition (Only Weak Cycles)",
+  "root": "",
+  "statement": "Let $\\succsim$ be a binary relation on $X$ with asymmetric part $\\succ$ and\ntransitive closure $T(\\succsim)$. We say $\\succsim$ satisfies \\emph{only weak\ncycles} (OWC) if\n\\[\n xT(\\succsim)y \\;\\Rightarrow\\; \\lnot(y \\succ x).\n\\]\n\n \n \\textbf{Proposition.} A binary relation $\\succsim$ on a nonempty\nset $X$ can be extended to a complete preorder if and only if it satisfies\nOWC.",
+  "current_dependencies": []
+}

@@ -1,0 +1,31 @@
+{
+  "graph_id": "0021-0026",
+  "volume": "ii",
+  "chapter": "whole-numbers",
+  "section": "extending-multiplication",
+  "term": "thm:one-multiplicative-identity-on-w",
+  "kind": "Theorem",
+  "title": "One Is a Multiplicative Identity on $ $",
+  "root": "",
+  "statement": "For every $a\\in\\mathbb{W}$,\n\\[\n1\\cdot_{\\mathbb{W}}a=a\n\\qquad\\text{and}\\qquad\na\\cdot_{\\mathbb{W}}1=a.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:multiplication-on-w",
+      "title": "Multiplication on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:multiplication-with-one",
+      "title": "Multiplication With $1$",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:one-times-n",
+      "title": "One Times $n$",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

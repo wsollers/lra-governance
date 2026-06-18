@@ -1,0 +1,19 @@
+{
+  "graph_id": "0016-0067",
+  "volume": "iii",
+  "chapter": "functions",
+  "section": "subsets-real-line",
+  "term": "lem:closure-elementary",
+  "kind": "Lemma",
+  "title": "Elementary Properties of Closures",
+  "root": "",
+  "statement": "Let $X, Y \\subseteq \\mathbb{R}$. Then: (i) $X \\subseteq \\overline{X}$;\n(ii) $\\overline{X \\cup Y} = \\overline{X} \\cup \\overline{Y}$;\n(iii) $\\overline{X \\cap Y} \\subseteq \\overline{X} \\cap \\overline{Y}$;\n(iv) $X \\subseteq Y \\Rightarrow \\overline{X} \\subseteq \\overline{Y}$.",
+  "current_dependencies": [
+    {
+      "id": "def:closure-r",
+      "title": "Closure",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

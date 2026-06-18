@@ -1,0 +1,12 @@
+{
+  "graph_id": "0028-0116",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "order-on-z",
+  "term": "thm:strict-order-on-z-irreflexive",
+  "kind": "Theorem",
+  "title": "Strict Order on $ $ Is Irreflexive",
+  "root": "",
+  "statement": "For every $x\\in\\mathbb{Z}$, not $x<x$.",
+  "current_dependencies": []
+}

@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0034",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "",
+  "term": "def:formal-model-theoretic-structures-l325",
+  "kind": "Definition",
+  "title": "Magma",
+  "root": "",
+  "statement": "A \\textbf{magma} is a pair $(A, *)$ where $A$ is a nonempty set and\n $* : A \\times A \\to A$ is a binary operation satisfying:\n \\[\n \\forall\\,a, b \\in A:\\; a * b \\in A. \\tag{Closure}\n \\]\n No further axioms are imposed on $*$.\n\n \n Model-theoretic signature:\n \\[\n \\mathcal{L}_{\\mathrm{magma}} = \\{\\,*\\,\\},\n \\qquad * \\text{ a function symbol of arity } 2.\n \\]",
+  "current_dependencies": []
+}

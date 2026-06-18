@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0018",
+  "term": "def:open-formula-quantifiers",
+  "verdict": "change",
+  "dependencies": ["def:predicate", "def:fv", "def:wff-pred"],
+  "rationale": "The definition is 'a wff with at least one free variable', so it rests directly on the free-variable notion def:fv, which is missing. def:wff-pred (the 'wff' substrate) is correctly present.",
+  "licensing_quote": "at least one free\nvariable",
+  "confidence": 0.8,
+  "notes": "Redundancy flag (not enacted): def:predicate is itself titled 'Open Formula' (the syntactic-predicate sense), and this node is also titled 'Open Formula' -- two same-named nodes. def:predicate reads as a parallel/duplicate concept rather than a constituent of this definition, so it may be a mis-attached cross-link; kept here pending reviewer deduplication rather than removed on uncertain grounds."
+}

@@ -1,0 +1,19 @@
+{
+  "graph_id": "0014-0088",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "divergence",
+  "term": "def:diverges-to-positive-infinity",
+  "kind": "Definition",
+  "title": "Divergence to Positive Infinity",
+  "root": "",
+  "statement": "Let $(x_n)$ be a real sequence. The sequence $(x_n)$ \\textbf{diverges to}\n$+\\infty$ if\n\\[\n \\forall M\\in\\mathbb{R}\\;\\exists N\\in\\mathbb{N}\\;\\forall n\\ge N\n \\;\\bigl(M<x_n\\bigr).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:sequence",
+      "title": "Sequence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

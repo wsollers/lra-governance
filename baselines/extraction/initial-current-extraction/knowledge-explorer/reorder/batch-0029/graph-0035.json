@@ -1,0 +1,25 @@
+{
+  "graph_id": "0029-0035",
+  "volume": "ii",
+  "chapter": "identity-equality-equivalence",
+  "section": "substitution",
+  "term": "prop:substitution-preserves-operations-full",
+  "kind": "Proposition",
+  "title": "Full Congruence for Operations",
+  "root": "",
+  "statement": "\\[\nx=x' \\land y=y' \\Longrightarrow x\\mathbin{O}y=x'\\mathbin{O}y'.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "prop:substitution-preserves-operations-left",
+      "title": "Left Congruence for Operations",
+      "kind": "Proposition",
+      "root": ""
+    },
+    {
+      "id": "prop:substitution-preserves-operations-right",
+      "title": "Right Congruence for Operations",
+      "kind": "Proposition",
+      "root": ""
+    }
+  ]
+}

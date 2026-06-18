@@ -1,0 +1,37 @@
+{
+  "graph_id": "0033-0059",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "functional-completeness",
+  "term": "thm:nor-functionally-complete-propositional-logic",
+  "kind": "Theorem",
+  "title": "NOR is Functionally Complete",
+  "root": "",
+  "statement": "The one-connective basis \\(\\{\\downarrow\\}\\) is functionally complete.",
+  "current_dependencies": [
+    {
+      "id": "def:functionally-complete-connective-set-propositional-logic",
+      "title": "Functionally Complete Connective Set",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:nor-connective-propositional-logic",
+      "title": "NOR Connective",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:nor-only-formula-propositional-logic",
+      "title": "NOR-Only Formula",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:negation-disjunction-functionally-complete-propositional-logic",
+      "title": "Negation and Disjunction are Functionally Complete",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "graph_id": "0015-0030",
+  "volume": "iii",
+  "chapter": "real-analysis",
+  "section": "modulus",
+  "term": "thm:absolute-value-zero-iff-zero",
+  "kind": "Theorem",
+  "title": "Absolute Value Zero Iff Zero",
+  "root": "",
+  "statement": "For all $a \\in \\mathbb{R}$,\n\\[\n \\lvert a \\rvert = 0 \\iff a = 0.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:absolute-value",
+      "title": "Absolute Value",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:real-ordered-field",
+      "title": "Complete Ordered Field",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:absolute-value-nonneg",
+      "title": "Absolute Value Is Nonnegative",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "graph_id": "0015-0008",
+  "volume": "iii",
+  "chapter": "real-analysis",
+  "section": "inequality",
+  "term": "thm:ineq-nonstrict-add-both-sides",
+  "kind": "Theorem",
+  "title": "Addition Preserves Nonstrict Inequality",
+  "root": "",
+  "statement": "For all $a, b, c \\in \\mathbb{R}$,\n\\[\n a \\le b \\;\\Rightarrow\\; a + c \\le b + c.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:real-ordered-field",
+      "title": "Complete Ordered Field",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:ineq-add-both-sides",
+      "title": "Addition Preserves Strict Inequality",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

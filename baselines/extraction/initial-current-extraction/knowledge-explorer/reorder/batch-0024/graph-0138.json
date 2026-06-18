@@ -1,0 +1,31 @@
+{
+  "graph_id": "0024-0138",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "order-on-q",
+  "term": "thm:trichotomy-on-q",
+  "kind": "Theorem",
+  "title": "Trichotomy on $ $",
+  "root": "",
+  "statement": "For all $x,y\\in\\mathbb{Q}$, exactly one of\n\\[\nx<y,\\qquad x=y,\\qquad y<x\n\\]\nholds.",
+  "current_dependencies": [
+    {
+      "id": "def:strict-order-on-q",
+      "title": "Strict Order on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:subtraction-on-q",
+      "title": "Subtraction on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:sign-trichotomy-on-q",
+      "title": "Sign Trichotomy on $ $",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

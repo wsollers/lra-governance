@@ -1,0 +1,25 @@
+{
+  "graph_id": "0024-0052",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "field-structure-of-q",
+  "term": "cor:zero-product-on-q",
+  "kind": "Corollary",
+  "title": "Zero Product on $ $",
+  "root": "",
+  "statement": "For all $x,y\\in\\mathbb{Q}$,\n\\[\nx\\cdot y=0_{\\mathbb{Q}}\n\\quad\\Longleftrightarrow\\quad\nx=0_{\\mathbb{Q}}\\ \\text{or}\\ y=0_{\\mathbb{Q}}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "thm:field-zero-product",
+      "title": "Field Zero Product",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:q-is-a-field",
+      "title": "$ $ Is a Field",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

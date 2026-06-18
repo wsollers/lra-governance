@@ -1,0 +1,12 @@
+{
+  "graph_id": "0034-0076",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "syntax",
+  "term": "def:sentence",
+  "kind": "Definition",
+  "title": "Sentence",
+  "root": "",
+  "statement": "A \\emph{sentence} (or \\emph{closed formula}) is a formula with no free variables.\n\nFormally, $\\varphi$ is a sentence if and only if $\\mathrm{FV}(\\varphi) = \\varnothing$.",
+  "current_dependencies": []
+}

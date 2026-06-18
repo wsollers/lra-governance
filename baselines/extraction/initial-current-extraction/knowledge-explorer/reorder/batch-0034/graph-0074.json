@@ -1,0 +1,49 @@
+{
+  "graph_id": "0034-0074",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "syntax",
+  "term": "def:fv",
+  "kind": "Definition",
+  "title": "Free Variables of a Formula",
+  "root": "",
+  "statement": "The set $\\mathrm{FV}(\\varphi)$ of \\emph{free variables} of a formula $\\varphi$\nis defined recursively:\n- If $\\varphi = P(t_1,\\dots,t_n)$ is atomic, then\n $\\mathrm{FV}(\\varphi) = \\bigcup_{i=1}^n \\mathrm{Var}(t_i)$,\n where $\\mathrm{Var}(t_i)$ is the set of variables in term $t_i$.\n- $\\mathrm{FV}(\\neg \\varphi) = \\mathrm{FV}(\\varphi)$.\n- $\\mathrm{FV}(\\varphi \\circ \\psi) = \\mathrm{FV}(\\varphi) \\cup \\mathrm{FV}(\\psi)$\n for any binary connective $\\circ$.\n- $\\mathrm{FV}(\\forall x\\,\\varphi) = \\mathrm{FV}(\\varphi) \\setminus \\{x\\}$.\n- $\\mathrm{FV}(\\exists x\\,\\varphi) = \\mathrm{FV}(\\varphi) \\setminus \\{x\\}$.",
+  "current_dependencies": [
+    {
+      "id": "def:bound-free",
+      "title": "Bound and Free Occurrences",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:formula",
+      "title": "Formula",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:set-difference",
+      "title": "Set Difference",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:term",
+      "title": "Term",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:union",
+      "title": "Union",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:variable",
+      "title": "Variable",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0068",
+  "term": "def:term",
+  "verdict": "change",
+  "dependencies": ["def:constant-symbol", "def:function-symbol", "def:language", "def:variable"],
+  "rationale": "The term grammar's clauses are built directly from variables ('every variable is a term'), constant symbols ('every constant symbol is a term'), and function symbols (the f(t_1,...,t_n) clause), so def:variable, def:constant-symbol, def:function-symbol are all load-bearing and were missing -- only def:language was listed.",
+  "licensing_quote": "every variable is a term",
+  "confidence": 0.7,
+  "notes": "Granularity flag (recurring): the statement says 'first-order language', but the dep is the generic def:language rather than def:fo-language (0056). This generic-vs-FO split is systematic across the syntax layer (0064, 0069 too) while the semantics layer uses def:fo-language -- worth a single convention decision. No cycle: term sits downstream of the symbol nodes."
+}

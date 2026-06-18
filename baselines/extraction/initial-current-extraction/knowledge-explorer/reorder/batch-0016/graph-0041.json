@@ -1,0 +1,25 @@
+{
+  "graph_id": "0016-0041",
+  "volume": "iii",
+  "chapter": "functions",
+  "section": "real-valued-functions",
+  "term": "def:function-monotone",
+  "kind": "Definition",
+  "title": "Monotone Function",
+  "root": "",
+  "statement": "Let $A\\subseteq\\mathbb{R}$ and let $f:A\\to\\mathbb{R}$. The function\n$f$ is monotone on $A$ if $f$ is increasing on $A$ or decreasing on $A$.",
+  "current_dependencies": [
+    {
+      "id": "def:function-decreasing",
+      "title": "Decreasing Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:function-increasing",
+      "title": "Increasing Function",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

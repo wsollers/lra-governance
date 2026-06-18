@@ -1,0 +1,25 @@
+{
+  "graph_id": "0032-0035",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "functions",
+  "term": "thm:comp-assoc",
+  "kind": "Theorem",
+  "title": "Associativity of Composition",
+  "root": "",
+  "statement": "For $f : A \\to B$, $g : B \\to C$, $h : C \\to D$:\n\\[\nh \\circ (g \\circ f) = (h \\circ g) \\circ f.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:composition",
+      "title": "Composition",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:function",
+      "title": "Function",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "graph_id": "0031-0072",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "field-and-ordered-field-laws",
+  "term": "thm:ordered-field-positive-product",
+  "kind": "Theorem",
+  "title": "Ordered Field Positive Product",
+  "root": "",
+  "statement": "In an ordered field,\n\\[\n0<a\\land0<b\n\\Longrightarrow\n0<a\\cdot b.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:abstract-ordered-field",
+      "title": "Ordered Field",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

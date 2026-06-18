@@ -1,0 +1,25 @@
+{
+  "graph_id": "0024-0008",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "arbitrary-closeness-in-q",
+  "term": "prop:one-sided-rational-approximation",
+  "kind": "Proposition",
+  "title": "One-Sided Rational Approximation",
+  "root": "",
+  "statement": "For every $x\\in\\mathbb{Q}$ and every $\\varepsilon\\in\\mathbb{Q}$,\n\\[\n0_{\\mathbb{Q}}<\\varepsilon\n\\Longrightarrow\n\\exists y,z\\in\\mathbb{Q}\\ (x-\\varepsilon<y<x<z<x+\\varepsilon).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "thm:density-of-q",
+      "title": "Density of $ $ in Itself",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:q-has-arbitrarily-close-distinct-points",
+      "title": "$ $ Has Arbitrarily Close Distinct Points",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

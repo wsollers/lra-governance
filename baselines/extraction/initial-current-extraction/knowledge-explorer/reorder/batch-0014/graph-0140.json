@@ -1,0 +1,25 @@
+{
+  "graph_id": "0014-0140",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "subsequences",
+  "term": "thm:squeeze-passes-to-subsequences",
+  "kind": "Theorem",
+  "title": "Squeeze Passes to Subsequences",
+  "root": "",
+  "statement": "Let $(a_n)$, $(x_n)$, and $(b_n)$ be real sequences. If\n$a_n\\le x_n\\le b_n$ eventually, then for every subsequence\n$(x_{\\sigma(k)})$ there exists $K\\in\\mathbb{N}$ such that\n\\[\n a_{\\sigma(k)}\\le x_{\\sigma(k)}\\le b_{\\sigma(k)}\n \\qquad\n \\text{for every } k\\ge K.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "thm:eventual-properties-pass-to-subsequences",
+      "title": "Eventual Properties Pass to Subsequences",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:sequence-squeeze-theorem",
+      "title": "Sequence Squeeze Theorem",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

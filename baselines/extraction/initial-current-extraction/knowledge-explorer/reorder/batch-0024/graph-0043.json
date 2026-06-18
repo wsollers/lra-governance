@@ -1,0 +1,12 @@
+{
+  "graph_id": "0024-0043",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "field-structure-of-q",
+  "term": "cor:inverse-of-one-is-one-on-q",
+  "kind": "Corollary",
+  "title": "The Inverse of One Is One on $ $",
+  "root": "",
+  "statement": "In $\\mathbb{Q}$,\n\\[\n1_{\\mathbb{Q}}^{-1}=1_{\\mathbb{Q}}.\n\\]",
+  "current_dependencies": []
+}

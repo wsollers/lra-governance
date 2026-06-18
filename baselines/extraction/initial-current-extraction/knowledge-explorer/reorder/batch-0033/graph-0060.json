@@ -1,0 +1,31 @@
+{
+  "graph_id": "0033-0060",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "functional-completeness",
+  "term": "def:connective-reduction-propositional-logic",
+  "kind": "Definition",
+  "title": "Connective Reduction",
+  "root": "",
+  "statement": "A \\emph{connective reduction} replaces a formula using one connective basis by\na logically equivalent formula using a smaller or different connective basis.",
+  "current_dependencies": [
+    {
+      "id": "def:connective-basis-propositional-logic",
+      "title": "Connective Basis",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:definable-connective-propositional-logic",
+      "title": "Definable Connective",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:logical-equivalence-propositional-logic",
+      "title": "Logical Equivalence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "graph_id": "0014-0051",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "convergence",
+  "term": "thm:positive-limit-eventually-positive",
+  "kind": "Theorem",
+  "title": "Positive Limit is Eventually Positive",
+  "root": "",
+  "statement": "Let $(x_n)$ be a real sequence, and let $L>0$. If $x_n\\to L$, then there\nexists $N\\in\\mathbb{N}$ such that $0<x_n$ for every $n\\ge N$.",
+  "current_dependencies": [
+    {
+      "id": "def:convergent-sequence",
+      "title": "Convergence of a Sequence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

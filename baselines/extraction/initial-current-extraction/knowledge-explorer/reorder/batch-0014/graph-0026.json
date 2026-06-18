@@ -1,0 +1,31 @@
+{
+  "graph_id": "0014-0026",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "cluster-values",
+  "term": "thm:bounded-sequences-have-cluster-values",
+  "kind": "Theorem",
+  "title": "Bounded Sequences Have Cluster Values",
+  "root": "",
+  "statement": "Every bounded real sequence has at least one cluster value.",
+  "current_dependencies": [
+    {
+      "id": "def:bounded-sequence",
+      "title": "Bounded Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:bolzano-weierstrass-sequences",
+      "title": "Bolzano-Weierstrass Theorem for Sequences",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:cluster-values-are-subsequential-limits",
+      "title": "Cluster Values Are Subsequential Limits",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

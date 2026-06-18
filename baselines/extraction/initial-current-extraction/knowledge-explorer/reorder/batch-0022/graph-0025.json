@@ -1,0 +1,25 @@
+{
+  "graph_id": "0022-0025",
+  "volume": "ii",
+  "chapter": "structure-of-real-line",
+  "section": "unions-and-intersections",
+  "term": "thm:closed-set-closure-operations",
+  "kind": "Theorem",
+  "title": "Closure Laws for Closed Sets",
+  "root": "",
+  "statement": "An arbitrary intersection of closed subsets of $\\mathbb{R}$ is closed, and a finite union of closed subsets of $\\mathbb{R}$ is closed.",
+  "current_dependencies": [
+    {
+      "id": "def:closed-set",
+      "title": "Closed Set in $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:open-set-closure-operations",
+      "title": "Unions and Finite Intersections of Open Sets",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "graph_id": "0014-0015",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "cauchy",
+  "term": "thm:cauchy-successive-differences-vanish",
+  "kind": "Theorem",
+  "title": "Cauchy Sequences Have Vanishing Successive Differences",
+  "root": "",
+  "statement": "If $(x_n)$ is a Cauchy real sequence, then\n\\[\n |x_{n+1}-x_n|\\to 0.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:cauchy-sequence",
+      "title": "Cauchy Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:null-sequence",
+      "title": "Null Sequence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

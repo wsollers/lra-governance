@@ -1,0 +1,19 @@
+{
+  "graph_id": "0014-0114",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "monotonicity",
+  "term": "def:increasing-sequence",
+  "kind": "Definition",
+  "title": "Increasing Sequence",
+  "root": "",
+  "statement": "Let $(x_n)$ be a real sequence. The sequence $(x_n)$ is\n\\textbf{increasing} if\n\\[\n x_n \\le x_{n+1}\n \\qquad\n \\text{for every } n\\in\\mathbb{N}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:sequence",
+      "title": "Sequence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

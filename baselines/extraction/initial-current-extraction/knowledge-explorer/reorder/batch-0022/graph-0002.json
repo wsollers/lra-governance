@@ -1,0 +1,19 @@
+{
+  "graph_id": "0022-0002",
+  "volume": "ii",
+  "chapter": "structure-of-real-line",
+  "section": "closed-sets",
+  "term": "def:closed-set",
+  "kind": "Definition",
+  "title": "Closed Set in $ $",
+  "root": "",
+  "statement": "A set $F\\subseteq\\mathbb{R}$ is \\emph{closed} exactly when its complement $\\mathbb{R}\\setminus F$ is open.",
+  "current_dependencies": [
+    {
+      "id": "def:open-set",
+      "title": "Open Set in $ $",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

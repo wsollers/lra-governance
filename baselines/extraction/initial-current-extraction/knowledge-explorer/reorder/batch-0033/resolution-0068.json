@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0068",
+  "term": "thm:canonical-conjunctive-normal-form-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:canonical-conjunctive-normal-form-propositional-logic", "def:logical-equivalence-propositional-logic", "lem:coincidence-lemma-propositional-logic", "thm:finite-truth-table-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.7,
+  "notes": "phi == CCNF(phi) (def:canonical-conjunctive-normal-form, def:logical-equivalence) because the CCNF is constructed to be false on exactly phi's false rows; the finitely many rows (thm:finite-truth-table) and dependence only on variable values (lem:coincidence-lemma) make the truth tables coincide. All four load-bearing and present."
+}

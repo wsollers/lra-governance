@@ -1,0 +1,19 @@
+{
+  "graph_id": "0034-0045",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "semantics",
+  "term": "def:model",
+  "kind": "Definition",
+  "title": "Model of a Sentence",
+  "root": "",
+  "statement": "Let \\(\\varphi\\) be a sentence and let \\(\\mathcal M\\) be a structure for the\nlanguage of \\(\\varphi\\). The structure \\(\\mathcal M\\) is a \\emph{model of}\n\\(\\varphi\\) exactly when \\(\\mathcal M\\models\\varphi\\).",
+  "current_dependencies": [
+    {
+      "id": "def:truth-structure",
+      "title": "Truth in a Structure",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

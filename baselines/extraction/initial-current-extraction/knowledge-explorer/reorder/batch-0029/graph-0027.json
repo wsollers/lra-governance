@@ -1,0 +1,25 @@
+{
+  "graph_id": "0029-0027",
+  "volume": "ii",
+  "chapter": "identity-equality-equivalence",
+  "section": "equivalence",
+  "term": "thm:induced-unary-operation-on-quotient",
+  "kind": "Theorem",
+  "title": "Induced Unary Operation",
+  "root": "",
+  "statement": "Let $f:A\\to A$. If\n\\[\na\\sim a'\\Longrightarrow f(a)\\sim f(a'),\n\\]\nthen\n\\[\n\\overline{f}([a]):=[f(a)]\n\\]\ndefines a well-defined unary operation on $A/{\\sim}$.",
+  "current_dependencies": [
+    {
+      "id": "prop:representatives-related-iff-classes-equal",
+      "title": "Representatives Related iff Classes Equal",
+      "kind": "Proposition",
+      "root": ""
+    },
+    {
+      "id": "thm:existence-of-a-quotient",
+      "title": "Existence of a Quotient",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

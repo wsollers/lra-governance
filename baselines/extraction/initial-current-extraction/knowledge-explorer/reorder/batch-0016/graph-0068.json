@@ -1,0 +1,19 @@
+{
+  "graph_id": "0016-0068",
+  "volume": "iii",
+  "chapter": "functions",
+  "section": "subsets-real-line",
+  "term": "thm:cluster-point-sequential",
+  "kind": "Theorem",
+  "title": "Sequential Characterization of Cluster Points",
+  "root": "",
+  "statement": "$c\\text{ is a cluster point of }A$ if and only if there exists\n$(a_n) \\subseteq A \\setminus \\{c\\}$ with $a_n \\to c$.",
+  "current_dependencies": [
+    {
+      "id": "def:cluster-point-r",
+      "title": "Cluster Point",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "graph_id": "0031-0083",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "inverse-operations",
+  "term": "def:left-solvability",
+  "kind": "Definition",
+  "title": "Left Solvability",
+  "root": "",
+  "statement": "Left solvability means\n\\[\n\\forall x,y\\,\\exists z,\\ x=z\\mathbin{O}y.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:binary-arithmetic-operation",
+      "title": "Binary Arithmetic Operation",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

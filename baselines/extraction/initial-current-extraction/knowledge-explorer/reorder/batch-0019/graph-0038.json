@@ -1,0 +1,37 @@
+{
+  "graph_id": "0019-0038",
+  "volume": "iii",
+  "chapter": "continuity",
+  "section": "monotone-functions",
+  "term": "thm:monotone-one-sided-limits",
+  "kind": "Theorem",
+  "title": "One-Sided Limits of Monotone Functions",
+  "root": "",
+  "statement": "Let $I \\subseteq \\mathbb{R}$ be an interval, let $c$ be interior to $I$, and let $f:I\\to\\mathbb{R}$ be increasing. Define\n\\[\nL_- \\coloneqq \\sup\\{f(x): x\\in I,\\; x<c\\},\n\\qquad\nL_+ \\coloneqq \\inf\\{f(x): x\\in I,\\; c<x\\}.\n\\]\nThen both one-sided limits exist and satisfy\n\\[\n\\lim_{x\\to c^-} f(x) = L_-,\n\\qquad\n\\lim_{x\\to c^+} f(x) = L_+.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "ax:completeness-of-reals",
+      "title": "Completeness of $ $",
+      "kind": "Axiom",
+      "root": "axiom"
+    },
+    {
+      "id": "def:function-monotone",
+      "title": "Monotone Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:infimum",
+      "title": "Infimum",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:supremum",
+      "title": "Supremum",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

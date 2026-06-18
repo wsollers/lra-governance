@@ -1,0 +1,31 @@
+{
+  "graph_id": "0024-0019",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "construction-of-q",
+  "term": "def:zero-in-q",
+  "kind": "Definition",
+  "title": "Zero in $ $",
+  "root": "",
+  "statement": "Define\n\\[\n0_{\\mathbb{Q}}:=[0_{\\mathbb{Z}},1_{\\mathbb{Z}}].\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:one-in-z",
+      "title": "One in $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:rational-class-notation",
+      "title": "Rational Class Notation",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:zero-in-z",
+      "title": "Zero in $ $",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

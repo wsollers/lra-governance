@@ -1,0 +1,37 @@
+{
+  "graph_id": "0030-0001",
+  "volume": "ii",
+  "chapter": "embedding-number-systems",
+  "section": "compatibility-of-arithmetic-and-order",
+  "term": "thm:embedding-chain-compatibility",
+  "kind": "Theorem",
+  "title": "Compatibility of the Embedding Chain",
+  "root": "",
+  "statement": "Let $\\iota_{1}:\\mathbb{N}\\to\\mathbb{W}$, $\\iota_{2}:\\mathbb{W}\\to\\mathbb{Z}$, $\\iota_{3}:\\mathbb{Z}\\to\\mathbb{Q}$, and $\\iota_{4}:\\mathbb{Q}\\to\\mathbb{R}$ be the canonical embeddings. For every $n\\in\\mathbb{N}$ the composite $(\\iota_{4}\\circ\\iota_{3}\\circ\\iota_{2}\\circ\\iota_{1})(n)$ is the real number identified with $n$, and the composite preserves the arithmetic and order carried by the source system. Hence arithmetic computed in any system agrees with arithmetic on its image in $\\mathbb{R}$.",
+  "current_dependencies": [
+    {
+      "id": "thm:n-embeds-into-w-as-positive-part",
+      "title": "$ $ Embeds into $ $ as the Positive Part",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:q-embeds-in-r",
+      "title": "$ $ Embeds in $ $",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:w-embeds-in-z",
+      "title": "$ $ Embeds in $ $",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:z-embeds-in-q",
+      "title": "$ $ Embeds in $ $",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

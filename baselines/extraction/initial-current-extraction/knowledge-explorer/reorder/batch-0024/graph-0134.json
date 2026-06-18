@@ -1,0 +1,25 @@
+{
+  "graph_id": "0024-0134",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "order-on-q",
+  "term": "thm:strict-order-on-q-asymmetric",
+  "kind": "Theorem",
+  "title": "Strict Order on $ $ Is Asymmetric",
+  "root": "",
+  "statement": "For all $x,y\\in\\mathbb{Q}$,\n\\[\nx<y \\Longrightarrow \\neg(y<x).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:strict-order-on-q",
+      "title": "Strict Order on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:trichotomy-on-q",
+      "title": "Trichotomy on $ $",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

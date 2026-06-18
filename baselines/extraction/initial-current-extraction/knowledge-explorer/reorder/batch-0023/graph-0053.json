@@ -1,0 +1,12 @@
+{
+  "graph_id": "0023-0053",
+  "volume": "ii",
+  "chapter": "reals",
+  "section": "multiplication-on-r",
+  "term": "thm:distributivity-on-r",
+  "kind": "Theorem",
+  "title": "Distributivity on $ $",
+  "root": "",
+  "statement": "For all $\\alpha,\\beta,\\gamma\\in\\mathbb{R}$,\n\\[\n\\alpha\\cdot(\\beta+\\gamma)=\\alpha\\cdot\\beta+\\alpha\\cdot\\gamma.\n\\]",
+  "current_dependencies": []
+}

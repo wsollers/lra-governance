@@ -1,0 +1,31 @@
+{
+  "graph_id": "0011-0085",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "relations",
+  "term": "def:partial-order",
+  "kind": "Definition",
+  "title": "Partial Order",
+  "root": "",
+  "statement": "A binary relation $R$ on $A$ is a \\textbf{partial order} if it is reflexive,\nantisymmetric, and transitive.\nA set $A$ equipped with a partial order $R$ is a \\textbf{partially ordered set}\nor \\textbf{poset}, written $(A,R)$.",
+  "current_dependencies": [
+    {
+      "id": "def:antisymmetric",
+      "title": "Antisymmetric Relation",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:reflexive",
+      "title": "Reflexive Relation",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:transitive",
+      "title": "Transitive Relation",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

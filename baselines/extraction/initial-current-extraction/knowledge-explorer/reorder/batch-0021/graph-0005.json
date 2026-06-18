@@ -1,0 +1,31 @@
+{
+  "graph_id": "0021-0005",
+  "volume": "ii",
+  "chapter": "whole-numbers",
+  "section": "algebraic-structure-of-w",
+  "term": "thm:w-has-no-additive-inverses-except-zero",
+  "kind": "Theorem",
+  "title": "$ $ Has No Additive Inverses Except $0$",
+  "root": "",
+  "statement": "If $a,b\\in\\mathbb{W}$ and\n\\[\na+_{\\mathbb{W}}b=0,\n\\]\nthen $a=0$ and $b=0$.",
+  "current_dependencies": [
+    {
+      "id": "def:addition-on-w",
+      "title": "Addition on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:no-natural-number-equals-itself-plus-a-natural-number",
+      "title": "No Natural Number Equals Itself Plus a Natural Number",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:zero-least-element-of-w",
+      "title": "Zero Is the Least Element of $ $",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

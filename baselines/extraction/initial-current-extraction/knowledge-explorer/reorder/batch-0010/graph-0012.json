@@ -1,0 +1,19 @@
+{
+  "graph_id": "0010-0012",
+  "volume": "vi",
+  "chapter": "lattice-order",
+  "section": "ordered-sets",
+  "term": "def:greatest-element",
+  "kind": "Definition",
+  "title": "Greatest Element",
+  "root": "",
+  "statement": "Let $(P, \\leq)$ be a partially ordered set and let $Q \\subseteq P$. An\nelement $m \\in Q$ is the \\emph{greatest element} (or \\emph{maximum}) of\n$Q$ if it dominates every element of $Q$:\n\\[\n\\forall x \\in Q, \\quad x \\leq m.\n\\]\nIf it exists it is unique; it is denoted $\\max Q$.",
+  "current_dependencies": [
+    {
+      "id": "def:maximal-element",
+      "title": "Maximal Element",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

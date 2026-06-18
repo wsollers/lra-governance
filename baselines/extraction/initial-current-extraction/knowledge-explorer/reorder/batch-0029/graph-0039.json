@@ -1,0 +1,25 @@
+{
+  "graph_id": "0029-0039",
+  "volume": "ii",
+  "chapter": "identity-equality-equivalence",
+  "section": "substitution",
+  "term": "prop:substitution-preserves-relations-full",
+  "kind": "Proposition",
+  "title": "Substitution Preserves Relations",
+  "root": "",
+  "statement": "\\[\nx=x' \\land y=y' \\Longrightarrow\n\\bigl(R(x,y)\\Longleftrightarrow R(x',y')\\bigr).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "prop:substitution-preserves-relations-left",
+      "title": "Substitution Preserves Relations on the Left",
+      "kind": "Proposition",
+      "root": ""
+    },
+    {
+      "id": "prop:substitution-preserves-relations-right",
+      "title": "Substitution Preserves Relations on the Right",
+      "kind": "Proposition",
+      "root": ""
+    }
+  ]
+}

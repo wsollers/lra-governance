@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0004",
+  "term": "def:eq-refl",
+  "verdict": "ok",
+  "dependencies": ["def:term"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.82,
+  "notes": "Minimal and correct: the rule ranges over terms (t=t requires t to be a term). The equality symbol is the notion being introduced here, not a dependency."
+}

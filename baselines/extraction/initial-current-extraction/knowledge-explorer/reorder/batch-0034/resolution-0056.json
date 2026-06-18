@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0056",
+  "term": "def:fo-language",
+  "verdict": "ok",
+  "dependencies": ["def:constant-symbol", "def:function-symbol", "def:predicate-symbol", "def:variable"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.7,
+  "notes": "The four listed constituents (variables + the three non-logical symbol types) are load-bearing and present. 'with assigned arities' references def:arity, but that is transitive through def:function-symbol/def:predicate-symbol (each carries arity). 'logical symbols' and 'a signature of non-logical symbols' are candidate edges to def:logical-connective and def:signature, left unproposed since the individual constituents are already enumerated; reviewer may prefer the def:signature grouping."
+}

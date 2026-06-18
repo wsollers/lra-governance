@@ -1,0 +1,25 @@
+{
+  "graph_id": "0028-0014",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "construction-of-z",
+  "term": "def:zero-in-z",
+  "kind": "Definition",
+  "title": "Zero in $ $",
+  "root": "",
+  "statement": "Define\n\\[\n0_{\\mathbb{Z}}:=[0,0].\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:integer-class-notation",
+      "title": "Integer Class Notation",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:whole-numbers",
+      "title": "Whole Numbers",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

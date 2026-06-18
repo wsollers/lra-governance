@@ -1,0 +1,19 @@
+{
+  "graph_id": "0018-0055",
+  "volume": "iii",
+  "chapter": "differentiation",
+  "section": "taylor-expansion",
+  "term": "def:taylor-remainder",
+  "kind": "Definition",
+  "title": "Taylor Remainder",
+  "root": "",
+  "statement": "Let $I\\subseteq\\mathbb{R}$ be an interval, let $a\\in I$, let\n$n\\in\\mathbb{N}$, and let $f:I\\to\\mathbb{R}$ have a Taylor polynomial\n$T_{n,a}f$. The \\textbf{Taylor remainder of order} $n$ at $a$ is the\nfunction $R_{n,a}f:I\\to\\mathbb{R}$ defined by\n\\[\n R_{n,a}f(x):=f(x)-T_{n,a}f(x).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:taylor-polynomial-at-a-point",
+      "title": "Taylor Polynomial at a Point",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

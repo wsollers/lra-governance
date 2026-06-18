@@ -1,0 +1,19 @@
+{
+  "graph_id": "0027-0007",
+  "volume": "ii",
+  "chapter": "natural-numbers",
+  "section": "addition-on-n",
+  "term": "thm:addition-successor-on-right",
+  "kind": "Theorem",
+  "title": "Addition Successor on the Right",
+  "root": "",
+  "statement": "Let $(P,S,1)$ be a Peano system. For every $m,n \\in P$,\n\\[\nm+S(n)=S(m+n).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:addition-on-peano-system",
+      "title": "Addition on a Peano System",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

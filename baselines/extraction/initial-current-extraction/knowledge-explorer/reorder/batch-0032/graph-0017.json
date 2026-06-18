@@ -1,0 +1,49 @@
+{
+  "graph_id": "0032-0017",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "equivalence",
+  "term": "thm:equiv-partition",
+  "kind": "Theorem",
+  "title": "Equivalence Relations and Partitions",
+  "root": "",
+  "statement": "Let $A$ be a set.\n- [label=(\\roman*)]\n- If $R$ is an equivalence relation on $A$, then $A/R$ is a partition of $A$.\n- If $\\mathcal{P}$ is a partition of $A$, then the relation\n$R_{\\mathcal{P}}$ defined by\n\\[\n(a,b) \\in R_{\\mathcal{P}} \\;\\Longleftrightarrow\\;\n\\exists P \\in \\mathcal{P} \\text{ with } a \\in P \\text{ and } b \\in P\n\\]\nis an equivalence relation on $A$.\n- These constructions are inverse: $R_{A/R} = R$ and $A/R_{\\mathcal{P}} = \\mathcal{P}$.",
+  "current_dependencies": [
+    {
+      "id": "def:canonical-surj",
+      "title": "Canonical Surjection",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:composition",
+      "title": "Composition",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:equiv-class",
+      "title": "Equivalence Class",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:equivalence-relation",
+      "title": "Equivalence Relation",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:function",
+      "title": "Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:quotient-set",
+      "title": "Quotient Set",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

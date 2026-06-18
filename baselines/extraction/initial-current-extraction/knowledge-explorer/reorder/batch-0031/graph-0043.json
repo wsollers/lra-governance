@@ -1,0 +1,12 @@
+{
+  "graph_id": "0031-0043",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "composed-relations",
+  "term": "definition:notes-composed-relations:006",
+  "kind": "Definition",
+  "title": "Well-Order",
+  "root": "",
+  "statement": "A \\emph{well-order} is a total order in which every nonempty subset has a\nleast element.",
+  "current_dependencies": []
+}

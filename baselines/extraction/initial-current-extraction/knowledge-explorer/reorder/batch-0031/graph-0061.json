@@ -1,0 +1,19 @@
+{
+  "graph_id": "0031-0061",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "field-and-ordered-field-laws",
+  "term": "thm:field-power-of-power",
+  "kind": "Theorem",
+  "title": "Field Power of Power",
+  "root": "",
+  "statement": "In a field, if $a\\ne0$ and $m,n\\in\\mathbb{Z}$, then\n\\[\n(a^m)^n=a^{m\\cdot n}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:field-integer-power",
+      "title": "Field Integer Power",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

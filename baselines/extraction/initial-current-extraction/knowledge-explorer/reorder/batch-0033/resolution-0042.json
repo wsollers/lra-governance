@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0042",
+  "term": "def:unsatisfiable-set-of-propositional-formulas",
+  "verdict": "ok",
+  "dependencies": ["def:satisfiable-set-of-propositional-formulas"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.85,
+  "notes": "Unsatisfiable = not satisfiable; pure negation of def:satisfiable-set, the sole and correct dependency."
+}

@@ -1,0 +1,25 @@
+{
+  "graph_id": "0031-0013",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "algebraic-laws",
+  "term": "thm:general-commutativity",
+  "kind": "Theorem",
+  "title": "General Commutativity",
+  "root": "",
+  "statement": "If $O$ is associative and commutative, then any finite reordering of\n$x_1\\mathbin{O}\\cdots\\mathbin{O}x_n$ has the same value.",
+  "current_dependencies": [
+    {
+      "id": "def:associativity",
+      "title": "Associativity",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:commutativity",
+      "title": "Commutativity",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

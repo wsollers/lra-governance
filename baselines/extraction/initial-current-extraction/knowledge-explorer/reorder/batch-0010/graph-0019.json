@@ -1,0 +1,31 @@
+{
+  "graph_id": "0010-0019",
+  "volume": "vi",
+  "chapter": "lattice-order",
+  "section": "ordered-sets",
+  "term": "def:co-lifting",
+  "kind": "Definition",
+  "title": "Co-Lifting",
+  "root": "",
+  "statement": "Let $(P, \\leq)$ be a partially ordered set. The \\emph{co-lifting} of $P$\nis the poset $P^{\\top} \\coloneqq P \\cup \\{\\top\\}$, where $\\top \\notin P$,\nwith the order:\n\\[\nx \\leq \\top \\quad \\text{for all } x \\in P^{\\top},\n\\qquad\nx \\leq_{P^{\\top}} y \\;\\Longleftrightarrow\\; x \\leq_P y\n\\quad \\text{for all } x, y \\in P.\n\\]\nThus $P^{\\top}$ is $P$ with a new\n\\hyperref[def:top-element]{top element} $\\top$ adjoined.",
+  "current_dependencies": [
+    {
+      "id": "def:lifting",
+      "title": "Lifting",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:top-element",
+      "title": "Top Element",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "prop:duality-principle",
+      "title": "Duality Principle",
+      "kind": "Proposition",
+      "root": ""
+    }
+  ]
+}

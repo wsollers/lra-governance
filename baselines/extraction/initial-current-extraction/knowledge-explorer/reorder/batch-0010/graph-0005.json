@@ -1,0 +1,25 @@
+{
+  "graph_id": "0010-0005",
+  "volume": "vi",
+  "chapter": "lattice-order",
+  "section": "ordered-sets",
+  "term": "lem:order-iso-finite-characterizations",
+  "kind": "Lemma",
+  "title": "Characterizations of Order-Isomorphisms for Finite Posets",
+  "root": "",
+  "statement": "Let $(P, \\leq_P)$ and $(Q, \\leq_Q)$ be finite partially ordered sets and\nlet $\\varphi : P \\to Q$ be a bijection. The following are equivalent:\n- $\\varphi$ is an order-isomorphism.\n- For all $x, y \\in P$:\\; $x <_P y \\;\\Longleftrightarrow\\; \\varphi(x) <_Q \\varphi(y)$.\n- For all $x, y \\in P$:\\; $x \\prec_P y \\;\\Longleftrightarrow\\; \\varphi(x) \\prec_Q \\varphi(y)$.",
+  "current_dependencies": [
+    {
+      "id": "def:covering-relation",
+      "title": "Covering Relation",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:order-isomorphism",
+      "title": "Order-Isomorphism",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "graph_id": "0028-0080",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "order-on-z",
+  "term": "cor:addition-reflects-order-on-z",
+  "kind": "Corollary",
+  "title": "Addition Reflects Order on $ $",
+  "root": "",
+  "statement": "Addition by a fixed integer reflects both strict and non-strict order.",
+  "current_dependencies": []
+}

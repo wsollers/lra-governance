@@ -1,0 +1,25 @@
+{
+  "graph_id": "0016-0008",
+  "volume": "iii",
+  "chapter": "functions",
+  "section": "limits",
+  "term": "thm:limit-quotient",
+  "kind": "Theorem",
+  "title": "Quotient Rule for Function Limits",
+  "root": "",
+  "statement": "Let $f,g:A\\to\\mathbb{R}$ and let $c$ be a cluster point of $A$. If\n$\\lim_{x\\to c}f(x)=L$, $\\lim_{x\\to c}g(x)=M$, and $M\\neq 0$, then\nthere exists $\\delta_0>0$ such that $g(x)\\neq 0$ whenever $x\\in A$ and\n$0<|x-c|<\\delta_0$, and\n\\[\n \\lim_{x\\to c}\\frac{f(x)}{g(x)}=\\frac{L}{M}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:limit-function",
+      "title": "Limit of a Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:pointwise-quotient-of-functions",
+      "title": "Pointwise Quotient of Functions",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

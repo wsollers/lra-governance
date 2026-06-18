@@ -1,0 +1,31 @@
+{
+  "graph_id": "0024-0111",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "order-on-q",
+  "term": "prop:product-of-positives-is-positive-q",
+  "kind": "Proposition",
+  "title": "Product of Positives Is Positive on $ $",
+  "root": "",
+  "statement": "For all $x,y\\in\\mathbb{Q}$,\n\\[\n0_{\\mathbb{Q}}<x\\land 0_{\\mathbb{Q}}<y\n\\Longrightarrow\n0_{\\mathbb{Q}}<x\\cdot y.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:multiplication-on-q-classes",
+      "title": "Multiplication on $ $-Classes",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:positive-rational",
+      "title": "Positive Rational",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:z-has-no-zero-divisors",
+      "title": "$ $ Has No Zero Divisors",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

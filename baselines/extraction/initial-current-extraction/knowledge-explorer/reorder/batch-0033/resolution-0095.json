@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0095",
+  "term": "def:logical-consequence-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:satisfaction-propositional-formula", "def:satisfaction-set-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.75,
+  "notes": "Gamma |= phi iff every assignment satisfying the set Gamma (def:satisfaction-set) also satisfies phi (def:satisfaction-propositional-formula). Both load-bearing and present; 'every truth assignment' is carried by the satisfaction notions (transitive). Clean."
+}

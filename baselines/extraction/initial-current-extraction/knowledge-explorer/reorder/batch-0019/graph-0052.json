@@ -1,0 +1,19 @@
+{
+  "graph_id": "0019-0052",
+  "volume": "iii",
+  "chapter": "continuity",
+  "section": "uniform-continuity",
+  "term": "def:bi-lipschitz",
+  "kind": "Definition",
+  "title": "Bi-Lipschitz Map",
+  "root": "",
+  "statement": "Let $A\\subseteq \\mathbb{R}$ and let $f:A\\to\\mathbb{R}$. The map $f$ is bi-Lipschitz on $A$ if and only if there exist constants $0<\\alpha\\le K$ such that for every $x,u\\in A$,\n\\[\n\\alpha|x-u|\\le |f(x)-f(u)|\\le K|x-u|.\n\\]\nAny such pair $(\\alpha,K)$ is called a bi-Lipschitz constant pair for $f$ on $A$.",
+  "current_dependencies": [
+    {
+      "id": "def:function",
+      "title": "Function",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

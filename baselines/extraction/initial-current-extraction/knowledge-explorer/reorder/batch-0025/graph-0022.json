@@ -1,0 +1,12 @@
+{
+  "graph_id": "0025-0022",
+  "volume": "ii",
+  "chapter": "peano-systems",
+  "section": "presburger-arithmetic",
+  "term": "def:presburger-signature",
+  "kind": "Definition",
+  "title": "Presburger Signature",
+  "root": "",
+  "statement": "The \\emph{Presburger signature} is the first-order signature\n\\[\n\\mathcal{L}_{\\mathrm{Pres}} = \\{0, S, +, <, =\\},\n\\]\nwhere $0$ is a constant symbol, $S$ is a unary function symbol, $+$ is a\nbinary function symbol, and $<$ and $=$ are binary relation symbols.",
+  "current_dependencies": []
+}

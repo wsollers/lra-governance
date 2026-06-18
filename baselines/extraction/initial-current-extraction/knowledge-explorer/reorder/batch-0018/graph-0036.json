@@ -1,0 +1,19 @@
+{
+  "graph_id": "0018-0036",
+  "volume": "iii",
+  "chapter": "differentiation",
+  "section": "derivative-geometry",
+  "term": "def:increasing-at-a-point",
+  "kind": "Definition",
+  "title": "Increasing at a Point",
+  "root": "",
+  "statement": "Let $A \\subseteq \\mathbb{R}$, let $f : A \\to \\mathbb{R}$, and let $c \\in A$. We say that $f$ is \\emph{increasing at $c$} if there exists $\\delta > 0$ such that for all\n\\[\nx \\in A \\cap (c-\\delta,c)\n\\quad \\text{and} \\quad\ny \\in A \\cap (c,c+\\delta),\n\\]\nwe have $f(x) \\leq f(c) \\leq f(y)$.",
+  "current_dependencies": [
+    {
+      "id": "def:function-strictly-increasing",
+      "title": "Strictly Increasing Function",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

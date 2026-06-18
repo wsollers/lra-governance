@@ -1,0 +1,12 @@
+{
+  "graph_id": "0017-0003",
+  "volume": "iii",
+  "chapter": "elementary-functions",
+  "section": "hyperbolic",
+  "term": "prop:hyperbolic-addition",
+  "kind": "Proposition",
+  "title": "Addition Formulas for Hyperbolic Functions",
+  "root": "",
+  "statement": "For all $x, y \\in \\mathbb{R}$:\n\\[\n \\sinh(x+y) = \\sinh x \\cosh y + \\cosh x \\sinh y,\n \\qquad\n \\cosh(x+y) = \\cosh x \\cosh y + \\sinh x \\sinh y.\n\\]",
+  "current_dependencies": []
+}

@@ -1,0 +1,12 @@
+{
+  "graph_id": "0023-0027",
+  "volume": "ii",
+  "chapter": "reals",
+  "section": "embedding-q-into-r",
+  "term": "def:real-chapter-embedding-q-into-r",
+  "kind": "Definition",
+  "title": "Embedding of $ $ into $ $",
+  "root": "",
+  "statement": "Define $\\iota:\\mathbb{Q}\\to\\mathbb{R}$ by\n\\[\n\\iota(q):=q^{\\ast}.\n\\]",
+  "current_dependencies": []
+}

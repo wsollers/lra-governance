@@ -1,0 +1,19 @@
+{
+  "graph_id": "0011-0068",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "laws-of-operations",
+  "term": "def:right-distributivity",
+  "kind": "Definition",
+  "title": "Right Distributivity",
+  "root": "",
+  "statement": "Let $+$ and $\\cdot$ be binary operations on $A$.\nMultiplication is \\textbf{right distributive} over addition if\n\\[\n\\forall a,b,c \\in A,\\quad\n(a+b)\\cdot c=a\\cdot c+b\\cdot c.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:binary-arithmetic-operation",
+      "title": "Binary Arithmetic Operation",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

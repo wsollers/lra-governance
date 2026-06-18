@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0050",
+  "term": "lem:subst-formulas",
+  "verdict": "ok",
+  "dependencies": ["def:fol-satisfaction", "def:free-for", "def:subst-notation", "lem:subst-terms"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.65,
+  "notes": "Induction on phi with the atomic base discharged by lem:subst-terms; uses satisfaction, the 'free for' capture hypothesis (genuinely needed here, unlike the term lemma 0051), and substitution notation -- all present. The term value [[u]] and modified assignment in the statement (def:term-interp, def:mod-assign) are transitive through def:fol-satisfaction and lem:subst-terms, so not missing direct edges."
+}

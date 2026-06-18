@@ -1,0 +1,12 @@
+{
+  "graph_id": "0024-0039",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "field-structure-of-q",
+  "term": "cor:additive-cancellation-on-q",
+  "kind": "Corollary",
+  "title": "Additive Cancellation on $ $",
+  "root": "",
+  "statement": "For all $x,y,z\\in\\mathbb{Q}$,\n\\[\nx+z=y+z\n\\Longrightarrow\nx=y.\n\\]",
+  "current_dependencies": []
+}

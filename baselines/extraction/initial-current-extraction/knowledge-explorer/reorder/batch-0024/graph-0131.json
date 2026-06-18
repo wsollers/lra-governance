@@ -1,0 +1,37 @@
+{
+  "graph_id": "0024-0131",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "order-on-q",
+  "term": "thm:reciprocal-reverses-order-on-positives-q",
+  "kind": "Theorem",
+  "title": "Reciprocal Reverses Order on Positives in $ $",
+  "root": "",
+  "statement": "For all $x,y\\in\\mathbb{Q}$,\n\\[\n0_{\\mathbb{Q}}<x<y\n\\Longrightarrow\n0_{\\mathbb{Q}}<y^{-1}<x^{-1}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:order-on-q",
+      "title": "Order on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:reciprocal-on-q-classes",
+      "title": "Reciprocal on Nonzero $ $-Classes",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:positive-multiplication-preserves-strict-order-on-q",
+      "title": "Multiplication by Positives Preserves Strict Order on $ $",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:sign-of-reciprocal-q",
+      "title": "Sign of a Reciprocal on $ $",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

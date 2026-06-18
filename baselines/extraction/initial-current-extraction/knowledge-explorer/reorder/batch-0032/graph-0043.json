@@ -1,0 +1,31 @@
+{
+  "graph_id": "0032-0043",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "functions",
+  "term": "def:bijective",
+  "kind": "Definition",
+  "title": "Bijective Function",
+  "root": "",
+  "statement": "$f : A \\to B$ is \\emph{bijective} if it is both injective and surjective.",
+  "current_dependencies": [
+    {
+      "id": "def:function",
+      "title": "Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:injective",
+      "title": "Injective Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:surjective",
+      "title": "Surjective Function",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

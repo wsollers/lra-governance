@@ -1,0 +1,31 @@
+{
+  "graph_id": "0014-0113",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "monotonicity",
+  "term": "def:eventually-monotone-sequence",
+  "kind": "Definition",
+  "title": "Eventually Monotone Sequence",
+  "root": "",
+  "statement": "Let $(x_n)$ be a real sequence. The sequence $(x_n)$ is\n\\textbf{eventually monotone} if it is eventually increasing or eventually\ndecreasing.",
+  "current_dependencies": [
+    {
+      "id": "def:eventually-decreasing-sequence",
+      "title": "Eventually Decreasing Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:eventually-increasing-sequence",
+      "title": "Eventually Increasing Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:m-tail",
+      "title": "$M$-Tail of a Sequence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

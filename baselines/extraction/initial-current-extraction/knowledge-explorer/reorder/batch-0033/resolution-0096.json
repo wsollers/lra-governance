@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0096",
+  "term": "def:logical-equivalence-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:truth-assignment-propositional-logic", "thm:unique-extension-truth-assignment-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.65,
+  "notes": "phi == psi iff they share truth value under every assignment (def:truth-assignment). 'The truth value of phi under v' is v-hat(phi), well-defined by thm:unique-extension-truth-assignment -- a Rule-4 well-definedness dep, and the workhorse the algebra theorems also cite. Candidate: the extension object itself is def:extended-truth-assignment (0094); the cite of the uniqueness theorem rather than the definition is a granularity choice the reviewer may standardize. This is the node the whole ==-convention rests on."
+}

@@ -1,0 +1,31 @@
+{
+  "graph_id": "0028-0065",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "operations-on-z-classes",
+  "term": "thm:left-distributivity-on-z",
+  "kind": "Theorem",
+  "title": "Left Distributivity on $ $",
+  "root": "",
+  "statement": "For all $x,y,z\\in\\mathbb{Z}$,\n\\[\nx\\cdot(y+z)=x\\cdot y+x\\cdot z.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:addition-on-z-classes",
+      "title": "Addition on $ $-Classes",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:multiplication-on-z-classes",
+      "title": "Multiplication on $ $-Classes",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:multiplication-distributes-over-addition-on-w",
+      "title": "Multiplication Distributes over Addition on $ $",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

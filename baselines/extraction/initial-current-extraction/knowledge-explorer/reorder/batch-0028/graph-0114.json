@@ -1,0 +1,25 @@
+{
+  "graph_id": "0028-0114",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "order-on-z",
+  "term": "thm:sign-trichotomy-on-z",
+  "kind": "Theorem",
+  "title": "Sign Trichotomy on $ $",
+  "root": "",
+  "statement": "For every $x\\in\\mathbb{Z}$, exactly one of\n\\[\nx<0,\\qquad x=0,\\qquad 0<x\n\\]\nholds.",
+  "current_dependencies": [
+    {
+      "id": "thm:canonical-form-of-integers",
+      "title": "Canonical Form of Integers",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:order-on-w-total",
+      "title": "Order on $ $ Is Total",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

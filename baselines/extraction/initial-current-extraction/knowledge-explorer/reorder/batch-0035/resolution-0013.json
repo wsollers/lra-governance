@@ -1,0 +1,10 @@
+{
+  "graph_id": "0035-0013",
+  "term": "def:axiom-systems-structure",
+  "verdict": "ok",
+  "dependencies": ["def:axiom-systems-interpretation", "def:signature"],
+  "rationale": "An L-structure is a nonempty domain together with an interpretation of the signature's symbols on it; def:signature (the symbols) and def:axiom-systems-interpretation (the assignment) are both load-bearing and present. The nonempty domain M is ambient set substrate.",
+  "licensing_quote": "",
+  "confidence": 0.8,
+  "notes": ""
+}

@@ -1,0 +1,25 @@
+{
+  "graph_id": "0014-0133",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "subsequences",
+  "term": "thm:boundedness-passes-to-subsequences",
+  "kind": "Theorem",
+  "title": "Boundedness Passes to Subsequences",
+  "root": "",
+  "statement": "Every subsequence of a bounded real sequence is bounded.",
+  "current_dependencies": [
+    {
+      "id": "def:bounded-sequence",
+      "title": "Bounded Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:subsequence",
+      "title": "Subsequence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

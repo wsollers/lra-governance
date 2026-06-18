@@ -1,0 +1,12 @@
+{
+  "graph_id": "0007-0016",
+  "volume": "vii",
+  "chapter": "euclidean-geometry",
+  "section": "foundations",
+  "term": "def:euclid-figure",
+  "kind": "Definition",
+  "title": "Figure",
+  "root": "",
+  "statement": "A figure is that which is contained by any boundary or boundaries.",
+  "current_dependencies": []
+}

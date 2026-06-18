@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0062",
+  "term": "thm:negation-disjunction-functionally-complete-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["thm:de-morgan-laws-propositional-logic", "thm:replacement-of-logical-equivalents-propositional-logic", "thm:standard-connectives-functionally-complete-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.6,
+  "notes": "Dual of 0061: and is definable from {not, or} by De Morgan, reducing completeness to thm:standard-connectives via replacement. All three load-bearing and present."
+}

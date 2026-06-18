@@ -1,0 +1,12 @@
+{
+  "graph_id": "0032-0060",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "order",
+  "term": "def:trans-closure",
+  "kind": "Definition",
+  "title": "Transitive Closure",
+  "root": "",
+  "statement": "The \\emph{transitive closure} $T(R)$ of a binary relation $R$ on $X$ is the\nsmallest transitive relation containing $R$: that is, $T(R)$ is transitive,\n$xRy \\Rightarrow xT(R)y$, and no strictly smaller relation is both transitive\nand contains $R$.",
+  "current_dependencies": []
+}

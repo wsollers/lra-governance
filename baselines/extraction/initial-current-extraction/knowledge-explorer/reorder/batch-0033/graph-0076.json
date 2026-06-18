@@ -1,0 +1,12 @@
+{
+  "graph_id": "0033-0076",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "normal-forms",
+  "term": "def:minterm-propositional-logic",
+  "kind": "Definition",
+  "title": "Minterm",
+  "root": "",
+  "statement": "Let \\(P_1,\\ldots,P_n\\) be a finite list of propositional variables. A\n\\emph{minterm} relative to \\(P_1,\\ldots,P_n\\) is an\n\nthat contains exactly one of \\(P_i\\) or \\(\\neg P_i\\) for each\n\\(i=1,\\ldots,n\\).",
+  "current_dependencies": []
+}

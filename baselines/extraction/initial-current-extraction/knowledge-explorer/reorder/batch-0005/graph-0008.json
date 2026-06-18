@@ -1,0 +1,12 @@
+{
+  "graph_id": "0005-0008",
+  "volume": "viii",
+  "chapter": "ordinary-differential-equations",
+  "section": "differential-equations-models",
+  "term": "def:ordinary-differential-equations-solutions-initial-value-problem",
+  "kind": "Definition",
+  "title": "Initial Value Problem",
+  "root": "",
+  "statement": "An \\textbf{initial value problem}, or \\textbf{IVP}, is a differential equation together with one or more initial conditions.\n\nFor a first-order differential equation, an initial value problem has the form\n\\[\ny'=f(t,y),\n\\qquad\ny(t_0)=y_0.\n\\]\nThe differential equation describes how the function changes, while the initial condition specifies the value of the solution at the initial time $t_0$.",
+  "current_dependencies": []
+}

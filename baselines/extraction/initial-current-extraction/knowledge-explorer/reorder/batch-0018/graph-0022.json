@@ -1,0 +1,37 @@
+{
+  "graph_id": "0018-0022",
+  "volume": "iii",
+  "chapter": "differentiation",
+  "section": "derivative-definition",
+  "term": "def:topological-definition-of-derivative-at-a-point",
+  "kind": "Definition",
+  "title": "Topological Definition of Derivative at a Point",
+  "root": "",
+  "statement": "Let $f: D \\to \\mathbb{R}$ and $c \\in \\operatorname{int}(D)$. $f$ is differentiable at $c$ with derivative $L$ if for every neighbourhood $V$ of $L$, there exists a neighbourhood $U$ of $c$ such that for all $x \\in (U \\setminus \\{c\\}) \\cap D$:\n\\[\n\\frac{f(x) - f(c)}{x - c} \\in V.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:division-on-r",
+      "title": "Division on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:function",
+      "title": "Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:relative-neighborhood",
+      "title": "Relative Neighborhood",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:subtraction-on-r",
+      "title": "Subtraction on $ $",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

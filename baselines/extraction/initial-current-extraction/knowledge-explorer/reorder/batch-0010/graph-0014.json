@@ -1,0 +1,19 @@
+{
+  "graph_id": "0010-0014",
+  "volume": "vi",
+  "chapter": "lattice-order",
+  "section": "ordered-sets",
+  "term": "def:maximal-element",
+  "kind": "Definition",
+  "title": "Maximal Element",
+  "root": "",
+  "statement": "Let $(P, \\leq)$ be a partially ordered set and let $Q \\subseteq P$. An\nelement $a \\in Q$ is \\emph{maximal in $Q$} if no element of $Q$ strictly\nexceeds it:\n\\[\n\\forall x \\in Q, \\quad a \\leq x \\;\\Longrightarrow\\; a = x.\n\\]\nThe set of maximal elements of $Q$ is denoted $\\operatorname{Max}(Q)$.",
+  "current_dependencies": [
+    {
+      "id": "def:lattice-order-partial-order",
+      "title": "Partial Order",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

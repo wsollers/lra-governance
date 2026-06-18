@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0036",
+  "term": "def:unsatisfiability-witness-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:unsatisfiable-set-of-propositional-formulas"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.65,
+  "notes": "A subset Delta of Gamma is an unsatisfiability witness iff Delta is unsatisfiable (def:unsatisfiable-set) -- the sole load-bearing condition. The subset relation Delta subset Gamma is ambient typing (Rule 3): it merely locates Delta in Gamma and the claim rests only on unsatisfiability, so no def:subset edge is needed. Correctly contrasts 0035, where finiteness IS load-bearing."
+}

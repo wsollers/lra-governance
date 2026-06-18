@@ -1,0 +1,12 @@
+{
+  "graph_id": "0024-0082",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "operations-on-q-classes",
+  "term": "thm:every-rational-has-additive-inverse",
+  "kind": "Theorem",
+  "title": "Every Rational Has an Additive Inverse",
+  "root": "",
+  "statement": "For every $x\\in\\mathbb{Q}$ there exists $y\\in\\mathbb{Q}$ such that\n\\[\nx+y=0_{\\mathbb{Q}}\n\\qquad\\text{and}\\qquad\ny+x=0_{\\mathbb{Q}}.\n\\]",
+  "current_dependencies": []
+}

@@ -1,0 +1,31 @@
+{
+  "graph_id": "0024-0121",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "order-on-q",
+  "term": "thm:left-positive-multiplication-preserves-strict-order-on-q",
+  "kind": "Theorem",
+  "title": "Left Multiplication by Positives Preserves Strict Order on $ $",
+  "root": "",
+  "statement": "For all $x,y,z\\in\\mathbb{Q}$,\n\\[\n0_{\\mathbb{Q}}<z\\land x<y\n\\Longrightarrow\nz\\cdot x<z\\cdot y.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:multiplication-on-q-classes",
+      "title": "Multiplication on $ $-Classes",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:strict-order-on-q",
+      "title": "Strict Order on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "prop:product-of-positives-is-positive-q",
+      "title": "Product of Positives Is Positive on $ $",
+      "kind": "Proposition",
+      "root": ""
+    }
+  ]
+}

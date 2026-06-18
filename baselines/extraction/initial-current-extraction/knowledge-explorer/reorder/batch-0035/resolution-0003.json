@@ -1,0 +1,10 @@
+{
+  "graph_id": "0035-0003",
+  "term": "def:axiom-system",
+  "verdict": "ok",
+  "dependencies": ["def:axiom", "def:language"],
+  "rationale": "Both edges are load-bearing: an axiom system is a collection of axioms (def:axiom), and the constraint that they share a 'common language' (def:language) is a genuine condition, not mere typing.",
+  "licensing_quote": "",
+  "confidence": 0.72,
+  "notes": "Language stays general (def:language), matching the informal 'common language' wording rather than the formal def:first-order-language."
+}

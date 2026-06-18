@@ -1,0 +1,19 @@
+{
+  "graph_id": "0014-0038",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "convergence",
+  "term": "def:square-sequence",
+  "kind": "Definition",
+  "title": "Square Sequence",
+  "root": "",
+  "statement": "Let $(x_n)$ be a real sequence. The \\textbf{square sequence} of $(x_n)$ is\nthe real sequence $(x_n^2)$ defined by\n\\[\n(x^2)_n := x_n^2\n\\qquad\n\\text{for every } n\\in\\mathbb{N}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:pointwise-product-sequence",
+      "title": "Pointwise Product of Sequences",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

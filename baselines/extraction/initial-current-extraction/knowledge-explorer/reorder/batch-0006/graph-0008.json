@@ -1,0 +1,43 @@
+{
+  "graph_id": "0006-0008",
+  "volume": "viii",
+  "chapter": "computational-geometry",
+  "section": "convex-hulls",
+  "term": "thm:computational-geometry-greedy-slope-upper-hull",
+  "kind": "Theorem",
+  "title": "Greedy slope construction of the upper hull",
+  "root": "",
+  "statement": "Let \\(P\\subset\\mathbb{R}^2\\) be finite and in general position. Define\n\\[\n v_0=\\argmin_{p\\in P}x(p).\n\\]\nGiven \\(v_k\\) with\n\\[\n x(v_k)<\\max_{p\\in P}x(p),\n\\]\ndefine\n\\[\n v_{k+1}\n =\n \\argmax_{\\substack{q\\in P\\\\x(q)>x(v_k)}}\n \\frac{y(q)-y(v_k)}{x(q)-x(v_k)}.\n\\]\nTerminate once\n\\[\n v_k=\\argmax_{p\\in P}x(p).\n\\]\nThen the points\n\\[\n v_0,v_1,\\dots,v_m\n\\]\nproduced by this construction are exactly the vertices of the upper hull of\n\\(P\\), and the slopes encountered along the way are strictly decreasing.",
+  "current_dependencies": [
+    {
+      "id": "def:computational-geometry-convex-hull",
+      "title": "Convex Hull",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:computational-geometry-supporting-line",
+      "title": "Supporting Line",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "lem:computational-geometry-linear-functionals-convex-combinations",
+      "title": "Linear functionals preserve convex combinations",
+      "kind": "Lemma",
+      "root": ""
+    },
+    {
+      "id": "thm:computational-geometry-monotone-slope-upper-hull",
+      "title": "Monotone slope characterization of the upper hull",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:computational-geometry-supporting-functional-hull-vertices",
+      "title": "Supporting functional characterization of hull vertices",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

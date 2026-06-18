@@ -1,0 +1,25 @@
+{
+  "graph_id": "0019-0058",
+  "volume": "iii",
+  "chapter": "continuity",
+  "section": "uniform-continuity",
+  "term": "thm:algebra-of-lipschitz-functions",
+  "kind": "Theorem",
+  "title": "Algebra of Lipschitz Functions",
+  "root": "",
+  "statement": "Let $A\\subseteq \\mathbb{R}$ and let $f,g:A\\to\\mathbb{R}$ be Lipschitz with constants $K_f,K_g\\ge 0$ respectively.\n- [label=(\\alph*)]\n- For every $c\\in\\mathbb{R}$, the function $cf$ is Lipschitz on $A$ with constant $|c|K_f$.\n- The functions $f+g$ and $f-g$ are Lipschitz on $A$ with constant $K_f+K_g$.\n- If $B\\subseteq\\mathbb{R}$, $h:B\\to\\mathbb{R}$ is Lipschitz with constant $K_h\\ge 0$, and $f(A)\\subseteq B$, then $h\\circ f$ is Lipschitz on $A$ with constant $K_hK_f$.\n- If $|f(x)|\\le M_f$ and $|g(x)|\\le M_g$ for all $x\\in A$, then $fg$ is Lipschitz on $A$ with constant $M_gK_f+M_fK_g$.\n- If $|f(x)|\\le M_f$ for all $x\\in A$, if $|g(x)|\\ge k>0$ for all $x\\in A$, and if $g$ is Lipschitz on $A$ with constant $K_g$, then $f/g$ is Lipschitz on $A$ with constant $K_f/k + M_fK_g/k^2$.",
+  "current_dependencies": [
+    {
+      "id": "def:bounded-on-a-set",
+      "title": "Bounded on a Set",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:lipschitz-condition",
+      "title": "Lipschitz Condition",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

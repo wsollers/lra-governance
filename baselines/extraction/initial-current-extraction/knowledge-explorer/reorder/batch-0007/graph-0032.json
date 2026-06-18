@@ -1,0 +1,12 @@
+{
+  "graph_id": "0007-0032",
+  "volume": "vii",
+  "chapter": "euclidean-geometry",
+  "section": "foundations",
+  "term": "ax:euclid-postulate-describe-circle",
+  "kind": "Axiom",
+  "title": "Euclid Postulate III: Describing a circle",
+  "root": "axiom",
+  "statement": "Let it have been postulated to describe a circle with any center and distance.",
+  "current_dependencies": []
+}

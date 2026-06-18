@@ -1,0 +1,10 @@
+{
+  "graph_id": "0035-0021",
+  "term": "def:axiom-systems-theorem",
+  "verdict": "ok",
+  "dependencies": ["def:axiom-systems-theory"],
+  "rationale": "A theorem is a sentence with a finite formal derivation from the theory T; T (def:axiom-systems-theory) is the premise base and is the only load-bearing notion that has a node. The central concept -- the syntactic derivation relation T |- phi -- has no node, so per the closed-world rule no edge is proposed for it.",
+  "licensing_quote": "",
+  "confidence": 0.5,
+  "notes": "MISSING VOCABULARY (load-bearing, candidate for authoring): the formal/syntactic derivation or provability relation '|-' (Gamma |- phi), plus 'valid inference rule' and 'logical axiom' -- none exist in index.json (only def:informal-proof-pattern-propositional-logic, which is not the first-order derivation node). 'theorem' cannot be fully grounded until a derivation/provability node exists; low confidence flags this for re-run/authoring. phi being a sentence (def:sentence) is ambient typing."
+}

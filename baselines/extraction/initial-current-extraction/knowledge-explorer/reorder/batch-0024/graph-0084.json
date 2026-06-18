@@ -1,0 +1,12 @@
+{
+  "graph_id": "0024-0084",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "operations-on-q-classes",
+  "term": "thm:multiplication-distributes-over-addition-on-q",
+  "kind": "Theorem",
+  "title": "Multiplication Distributes over Addition on $ $",
+  "root": "",
+  "statement": "Multiplication distributes over addition on both sides in $\\mathbb{Q}$.",
+  "current_dependencies": []
+}

@@ -1,0 +1,12 @@
+{
+  "graph_id": "0025-0029",
+  "volume": "ii",
+  "chapter": "peano-systems",
+  "section": "recursion-on-peano-systems",
+  "term": "def:minimal-iterator-relation",
+  "kind": "Definition",
+  "title": "Minimal Iterator Relation",
+  "root": "",
+  "statement": "Let $(P,S,1)$ be a Peano system, and let $(W,c,g)$ be iterator data for it.\nThe \\emph{minimal iterator relation} for $(W,c,g)$ is\n\\[\nR^*\n=\n\\bigcap\\{R\\subseteq P\\times W : R \\text{ is an iterator relation for }\n(W,c,g)\\}.\n\\]",
+  "current_dependencies": []
+}

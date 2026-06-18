@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0026",
+  "term": "thm:disjunctive-syllogism-validity-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:truth-assignment-propositional-logic", "def:valid-argument-form-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.6,
+  "notes": "Semantic proof: any assignment satisfying phi or psi and not-phi must satisfy psi. Cites def:truth-assignment as the semantic base; the satisfaction step is transitive via def:valid-argument-form. Minor stylistic variance across the valid-form theorems (some cite truth-assignment, some logical-consequence, some only valid-argument-form) -- not a defect, but worth one convention note."
+}

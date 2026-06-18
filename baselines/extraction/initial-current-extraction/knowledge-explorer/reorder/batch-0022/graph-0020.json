@@ -1,0 +1,25 @@
+{
+  "graph_id": "0022-0020",
+  "volume": "ii",
+  "chapter": "structure-of-real-line",
+  "section": "open-sets",
+  "term": "thm:open-interval-is-open",
+  "kind": "Theorem",
+  "title": "Open Intervals Are Open",
+  "root": "",
+  "statement": "Every open interval $(a,b)$, every open ray $(a,\\infty)$ and $(-\\infty,b)$, and $\\mathbb{R}$ itself are open sets.",
+  "current_dependencies": [
+    {
+      "id": "def:open-interval",
+      "title": "Open Interval",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:open-set",
+      "title": "Open Set in $ $",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

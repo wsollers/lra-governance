@@ -1,0 +1,25 @@
+{
+  "graph_id": "0016-0032",
+  "volume": "iii",
+  "chapter": "functions",
+  "section": "real-valued-functions",
+  "term": "def:function-bounded",
+  "kind": "Definition",
+  "title": "Bounded Function",
+  "root": "",
+  "statement": "Let $A\\subseteq\\mathbb{R}$ and let $f:A\\to\\mathbb{R}$. The function\n$f$ is bounded on $A$ if there exists $B>0$ such that\n\\[\n |f(x)|\\leq B\n \\qquad (x\\in A).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:function-bounded-above",
+      "title": "Bounded Above Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:function-bounded-below",
+      "title": "Bounded Below Function",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

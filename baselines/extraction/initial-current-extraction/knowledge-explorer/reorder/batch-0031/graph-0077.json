@@ -1,0 +1,19 @@
+{
+  "graph_id": "0031-0077",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "identity-elements",
+  "term": "def:left-identity",
+  "kind": "Definition",
+  "title": "Left Identity",
+  "root": "",
+  "statement": "\\[\n\\forall x,\\ e_L\\mathbin{O}x=x.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:binary-arithmetic-operation",
+      "title": "Binary Arithmetic Operation",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

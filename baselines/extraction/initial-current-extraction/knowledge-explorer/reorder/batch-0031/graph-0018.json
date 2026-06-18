@@ -1,0 +1,25 @@
+{
+  "graph_id": "0031-0018",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "algebraic-structures",
+  "term": "def:abstract-field",
+  "kind": "Definition",
+  "title": "Field",
+  "root": "",
+  "statement": "A \\emph{field} is a commutative ring in which every nonzero element has a\nmultiplicative inverse.",
+  "current_dependencies": [
+    {
+      "id": "def:commutative-ring",
+      "title": "Commutative Ring",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:two-sided-inverse",
+      "title": "Two-Sided Inverse",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

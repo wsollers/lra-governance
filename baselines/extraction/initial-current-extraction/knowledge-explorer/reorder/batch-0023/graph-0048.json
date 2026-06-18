@@ -1,0 +1,43 @@
+{
+  "graph_id": "0023-0048",
+  "volume": "ii",
+  "chapter": "reals",
+  "section": "multiplication-on-r",
+  "term": "def:reciprocal-on-r",
+  "kind": "Definition",
+  "title": "Reciprocal of a Nonzero Cut",
+  "root": "",
+  "statement": "For $\\alpha\\ne0_{\\mathbb{R}}$, define $\\alpha^{-1}$ to be $|\\alpha|^{-1}$ if\n$\\alpha>0_{\\mathbb{R}}$ and $-(|\\alpha|^{-1})$ if $\\alpha<0_{\\mathbb{R}}$.",
+  "current_dependencies": [
+    {
+      "id": "def:negation-on-r",
+      "title": "Negation of a Cut",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:order-on-r",
+      "title": "Order on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:real-chapter-absolute-value-on-r",
+      "title": "Absolute Value on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:reciprocal-positive-on-r",
+      "title": "Reciprocal of a Positive Cut",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:zero-in-r",
+      "title": "Zero in $ $",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "graph_id": "0028-0120",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "order-on-z",
+  "term": "thm:z-is-not-well-ordered",
+  "kind": "Theorem",
+  "title": "$ $ Is Not Well-Ordered",
+  "root": "",
+  "statement": "The ordered set $(\\mathbb{Z},\\le)$ is not a well-order.",
+  "current_dependencies": [
+    {
+      "id": "def:one-in-z",
+      "title": "One in $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:order-on-z",
+      "title": "Order on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:well-order",
+      "title": "Well-Ordered Set",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:zero-in-z",
+      "title": "Zero in $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:trichotomy-on-z",
+      "title": "Trichotomy on $ $",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

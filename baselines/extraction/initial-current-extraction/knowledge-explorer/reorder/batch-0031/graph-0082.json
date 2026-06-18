@@ -1,0 +1,25 @@
+{
+  "graph_id": "0031-0082",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "inverse-operations",
+  "term": "def:left-inverse",
+  "kind": "Definition",
+  "title": "Left Inverse",
+  "root": "",
+  "statement": "An element $x'$ is a left inverse of $x$ with respect to identity $e$ if\n\\[\nx'\\mathbin{O}x=e.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:binary-arithmetic-operation",
+      "title": "Binary Arithmetic Operation",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:two-sided-identity",
+      "title": "Two-Sided Identity",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

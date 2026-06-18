@@ -1,0 +1,25 @@
+{
+  "graph_id": "0028-0013",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "construction-of-z",
+  "term": "def:one-in-z",
+  "kind": "Definition",
+  "title": "One in $ $",
+  "root": "",
+  "statement": "Define\n\\[\n1_{\\mathbb{Z}}:=[1,0].\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:integer-class-notation",
+      "title": "Integer Class Notation",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:whole-numbers",
+      "title": "Whole Numbers",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

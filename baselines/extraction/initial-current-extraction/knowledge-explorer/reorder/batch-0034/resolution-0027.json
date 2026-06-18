@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0027",
+  "term": "thm:existential-not-universal",
+  "verdict": "change",
+  "dependencies": ["thm:universal-implies-existential", "def:log-consequence"],
+  "rationale": "Semantic non-entailment (|/=) is the negation of def:log-consequence, which was missing. Same shape as 0026.",
+  "licensing_quote": "\\not\\models",
+  "confidence": 0.6,
+  "notes": "Counterexample structure (def:structure) is the actual proof witness but is not statement-licensed (no domain phrase here), so flagged not added -- mirroring 0026. The edge to the converse thm:universal-implies-existential is a contrast pairing, not a used proof step; reviewer may drop it."
+}

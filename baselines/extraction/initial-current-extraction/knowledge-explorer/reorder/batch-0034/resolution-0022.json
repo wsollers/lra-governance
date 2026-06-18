@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0022",
+  "term": "thm:neg-bounded",
+  "verdict": "ok",
+  "dependencies": ["def:bounded-q", "thm:qneg"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.6,
+  "notes": "Proof unfolds the bounded forms via def:bounded-q, applies the unbounded quantifier-negation laws thm:qneg, then re-folds using the propositional equivalences not(p->q) == p and not-q and not(p and q) == p -> not-q. Those propositional rewrites are what convert the negated unfolded form back into bounded form, so they are arguably load-bearing; left unproposed because the convention treats connective-level manipulation as ambient (cf. 0016) and they map to De Morgan / material-implication nodes in the propositional layer rather than a single id. The two listed deps are the load-bearing predicate-level ingredients."
+}

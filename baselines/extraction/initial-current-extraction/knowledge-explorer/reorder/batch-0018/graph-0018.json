@@ -1,0 +1,31 @@
+{
+  "graph_id": "0018-0018",
+  "volume": "iii",
+  "chapter": "differentiation",
+  "section": "chain-rule",
+  "term": "thm:caratheodory-characterization-of-differentiability",
+  "kind": "Theorem",
+  "title": "Carathéodory Characterization of Differentiability",
+  "root": "",
+  "statement": "Let $I \\subseteq \\mathbb{R}$ be an interval, let $f : I \\to \\mathbb{R}$, and let $c \\in I$. The following are equivalent:\n- [label=(\\roman*)]\n- $f$ is differentiable at $c$.\n- There exists a function $\\phi : I \\to \\mathbb{R}$, continuous at $c$, such that\n\\[\nf(x) = f(c) + (x-c)\\,\\phi(x) \\qquad \\text{for all } x \\in I.\n\\]\nIn this case, $\\phi(c) = f'(c)$.",
+  "current_dependencies": [
+    {
+      "id": "def:caratheodory-factorization",
+      "title": "Carathéodory Factorization",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:continuous-at-point",
+      "title": "Continuity at a Point",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:derivative-at-a-point",
+      "title": "Derivative at a Point",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

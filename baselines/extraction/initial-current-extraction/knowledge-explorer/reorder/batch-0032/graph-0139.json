@@ -1,0 +1,12 @@
+{
+  "graph_id": "0032-0139",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "sets",
+  "term": "def:set-equality",
+  "kind": "Definition",
+  "title": "Set Equality",
+  "root": "",
+  "statement": "Two sets $A$ and $B$ are \\emph{equal}, written $A = B$, if they have the same\nelements:\n\\[\nA = B \\;\\;\\Longleftrightarrow\\;\\; \\forall x \\, (x \\in A \\leftrightarrow x \\in B).\n\\]\nEquivalently, $A = B \\iff (A \\subseteq B \\land B \\subseteq A)$.",
+  "current_dependencies": []
+}

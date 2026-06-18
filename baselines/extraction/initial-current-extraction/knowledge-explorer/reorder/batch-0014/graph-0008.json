@@ -1,0 +1,37 @@
+{
+  "graph_id": "0014-0008",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "applications",
+  "term": "thm:newton-approximation-sqrt-two",
+  "kind": "Theorem",
+  "title": "Newton Approximation of $ $",
+  "root": "",
+  "statement": "Let $(x_n)$ be the Newton sequence for $\\sqrt{2}$. Then $(x_n)$ converges\nand\n\\[\n \\lim_{n\\to\\infty}x_n=\\sqrt{2}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:newton-sequence-sqrt-two",
+      "title": "Newton Sequence for $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:square-root-sequence",
+      "title": "Square Root Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:monotone-convergence-theorem",
+      "title": "Monotone Convergence Theorem",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:rational-sequence-limit",
+      "title": "Rational Sequence Limit",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

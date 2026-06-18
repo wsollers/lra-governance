@@ -1,0 +1,31 @@
+{
+  "graph_id": "0014-0070",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "definition",
+  "term": "thm:absolute-bound-gives-upper-and-lower-bounds",
+  "kind": "Theorem",
+  "title": "Absolute Bound Gives Upper and Lower Bounds",
+  "root": "",
+  "statement": "Let $(x_n)$ be a real sequence, and let $K > 0$. If $|x_n| \\le K$ for every\n$n \\in \\mathbb{N}$, then $-K \\le x_n \\le K$ for every\n$n \\in \\mathbb{N}$.",
+  "current_dependencies": [
+    {
+      "id": "def:bounded-sequence",
+      "title": "Bounded Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:sequence-bounded-above",
+      "title": "Sequence Bounded Above",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:sequence-bounded-below",
+      "title": "Sequence Bounded Below",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

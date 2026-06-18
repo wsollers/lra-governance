@@ -1,0 +1,31 @@
+{
+  "graph_id": "0016-0036",
+  "volume": "iii",
+  "chapter": "functions",
+  "section": "real-valued-functions",
+  "term": "def:function-decreasing",
+  "kind": "Definition",
+  "title": "Decreasing Function",
+  "root": "",
+  "statement": "Let $A\\subseteq\\mathbb{R}$ and let $f:A\\to\\mathbb{R}$. The function\n$f$ is decreasing on $A$ if\n\\[\n x_1<x_2\\;\\Longrightarrow\\;f(x_1)\\geq f(x_2)\n \\qquad (x_1,x_2\\in A).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:function",
+      "title": "Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:order-on-r",
+      "title": "Order on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:subset",
+      "title": "Subset",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

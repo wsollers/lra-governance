@@ -1,0 +1,12 @@
+{
+  "graph_id": "0031-0038",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "composed-relations",
+  "term": "def:strict-partial-order",
+  "kind": "Definition",
+  "title": "Strict Partial Order",
+  "root": "",
+  "statement": "A \\emph{strict partial order} is an irreflexive and transitive relation.",
+  "current_dependencies": []
+}

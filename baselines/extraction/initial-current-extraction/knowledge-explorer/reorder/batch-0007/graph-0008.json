@@ -1,0 +1,12 @@
+{
+  "graph_id": "0007-0008",
+  "volume": "vii",
+  "chapter": "euclidean-geometry",
+  "section": "foundations",
+  "term": "ax:euclid-common-notion-whole-greater-than-part",
+  "kind": "Axiom",
+  "title": "Euclid Common Notion V: Whole and part",
+  "root": "axiom",
+  "statement": "The whole is greater than the part.",
+  "current_dependencies": []
+}

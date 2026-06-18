@@ -1,0 +1,25 @@
+{
+  "graph_id": "0034-0031",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "quantifiers",
+  "term": "def:pnf",
+  "kind": "Definition",
+  "title": "Prenex Normal Form",
+  "root": "",
+  "statement": "A formula \\(\\psi\\) is a \\emph{prenex normal form} of a formula \\(\\varphi\\)\nexactly when \\(\\psi\\) is prenex and \\(\\varphi\\equiv\\psi\\).",
+  "current_dependencies": [
+    {
+      "id": "def:log-equiv",
+      "title": "Logical Equivalence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:prenex-formula",
+      "title": "Prenex Formula",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

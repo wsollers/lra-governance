@@ -1,0 +1,19 @@
+{
+  "graph_id": "0019-0023",
+  "volume": "iii",
+  "chapter": "continuity",
+  "section": "global-theorems",
+  "term": "thm:location-of-roots",
+  "kind": "Theorem",
+  "title": "Location of Roots",
+  "root": "",
+  "statement": "Let $a,b \\in \\mathbb{R}$ with $a<b$ and let $f:[a,b]\\to\\mathbb{R}$ be continuous. If either $f(a)<0<f(b)$ or $f(a)>0>f(b)$, then there exists $c\\in(a,b)$ such that $f(c)=0$.",
+  "current_dependencies": [
+    {
+      "id": "thm:bolzano-intermediate-value",
+      "title": "Bolzano's Intermediate Value Theorem",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

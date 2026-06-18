@@ -1,0 +1,37 @@
+{
+  "graph_id": "0019-0046",
+  "volume": "iii",
+  "chapter": "continuity",
+  "section": "point-continuity",
+  "term": "def:types-of-discontinuity-at-a-point",
+  "kind": "Definition",
+  "title": "Types of Discontinuity",
+  "root": "",
+  "statement": "Let $A \\subseteq \\mathbb{R}$, let $f:A \\to \\mathbb{R}$, and let $x_0 \\in A$ with $f$ discontinuous at $x_0$.\n- [label=(\\roman*)]\n- \\emph{Removable} iff $\\exists L \\in \\mathbb{R}:\\;\\lim_{x \\to x_0} f(x) = L$ and $L \\ne f(x_0)$.\n- \\emph{Jump} iff $\\exists L_{-}, L_{+} \\in \\mathbb{R}:\\;\\lim_{x \\to x_0^-} f(x) = L_{-}$, $\\lim_{x \\to x_0^+} f(x) = L_{+}$, and $L_{-} \\ne L_{+}$.\n- \\emph{Essential} iff it is not removable.",
+  "current_dependencies": [
+    {
+      "id": "def:left-hand-limit",
+      "title": "Left-Hand Limit",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:limit-function",
+      "title": "Limit of a Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:point-of-discontinuity",
+      "title": "Point of Discontinuity",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:right-hand-limit",
+      "title": "Right-Hand Limit",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "graph_id": "0034-0055",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "semantics",
+  "term": "def:validity",
+  "kind": "Definition",
+  "title": "Validity",
+  "root": "",
+  "statement": "A formula \\(\\varphi\\) is \\emph{valid}, or \\emph{logically true}, exactly when\n\\(\\mathcal M,s\\models\\varphi\\) for every structure \\(\\mathcal M\\) for the\nlanguage of \\(\\varphi\\) and every variable assignment \\(s\\) for \\(\\mathcal M\\).",
+  "current_dependencies": [
+    {
+      "id": "def:fol-satisfaction",
+      "title": "Satisfaction",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "graph_id": "0019-0018",
+  "volume": "iii",
+  "chapter": "continuity",
+  "section": "global-theorems",
+  "term": "thm:bolzano-intermediate-value",
+  "kind": "Theorem",
+  "title": "Bolzano's Intermediate Value Theorem",
+  "root": "",
+  "statement": "Let $I \\subseteq \\mathbb{R}$ be an interval, let $f \\colon I \\to \\mathbb{R}$ be continuous on $I$, and choose $a,b \\in I$ with $f(a) < k < f(b)$. Then there exists $c \\in I$ such that $\\min\\{a,b\\} < c < \\max\\{a,b\\}$ and $f(c) = k$. \\hyperref[prf:bolzano-intermediate-value]{Go to proof.}",
+  "current_dependencies": [
+    {
+      "id": "def:continuous-at-point",
+      "title": "Continuity at a Point",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:function",
+      "title": "Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:maximum",
+      "title": "Maximum",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:minimum",
+      "title": "Minimum",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:order-on-r",
+      "title": "Order on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:subset",
+      "title": "Subset",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

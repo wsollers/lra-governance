@@ -1,0 +1,12 @@
+{
+  "graph_id": "0012-0011",
+  "volume": "vi",
+  "chapter": "algebraic-geometry",
+  "section": "polynomial-rings",
+  "term": "def:polynomial-ring-in-n-variables",
+  "kind": "Definition",
+  "title": "Polynomial Ring in $n$ Variables",
+  "root": "",
+  "statement": "Let $R$ be a commutative ring and let $n \\in \\mathbb{N}$.\nThe \\emph{polynomial ring in $n$ variables} over $R$, denoted\n\\[\nR[x_1, x_2, \\dots, x_n],\n\\]\nis defined inductively by\n\\[\nR[x_1, \\dots, x_n] := R[x_1, \\dots, x_{n-1}][x_n].\n\\]\nIts elements are finite sums of the form\n\\[\nf = \\sum_{\\alpha} a_\\alpha \\, x^\\alpha,\n\\]\nwhere the sum ranges over multi-indices\n$\\alpha = (\\alpha_1, \\dots, \\alpha_n) \\in \\mathbb{N}^n$,\nthe coefficients $a_\\alpha \\in R$, and\n$x^\\alpha := x_1^{\\alpha_1} \\cdots x_n^{\\alpha_n}$.",
+  "current_dependencies": []
+}

@@ -1,0 +1,25 @@
+{
+  "graph_id": "0033-0092",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "semantics",
+  "term": "def:contingency-propositional-logic",
+  "kind": "Definition",
+  "title": "Contingency",
+  "root": "",
+  "statement": "A formula \\(\\varphi\\in\\WFF\\) is a contingency if it is satisfiable but not a tautology.",
+  "current_dependencies": [
+    {
+      "id": "def:satisfiable-formula-propositional-logic",
+      "title": "Satisfiable Formula",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:tautology-propositional-logic",
+      "title": "Tautology",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

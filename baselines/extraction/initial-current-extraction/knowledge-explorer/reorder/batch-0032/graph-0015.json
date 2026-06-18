@@ -1,0 +1,25 @@
+{
+  "graph_id": "0032-0015",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "equivalence",
+  "term": "def:quotient-set",
+  "kind": "Definition",
+  "title": "Quotient Set",
+  "root": "",
+  "statement": "The \\emph{quotient set} of $A$ by $R$ is the set of all equivalence classes:\n\\[\nA / R \\;:=\\; \\{\\, [a]_R \\mid a \\in A \\,\\}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:equiv-class",
+      "title": "Equivalence Class",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:equivalence-relation",
+      "title": "Equivalence Relation",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

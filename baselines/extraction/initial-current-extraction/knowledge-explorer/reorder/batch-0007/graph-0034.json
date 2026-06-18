@@ -1,0 +1,12 @@
+{
+  "graph_id": "0007-0034",
+  "volume": "vii",
+  "chapter": "euclidean-geometry",
+  "section": "foundations",
+  "term": "ax:euclid-postulate-parallel",
+  "kind": "Axiom",
+  "title": "Euclid Postulate V: Parallel postulate",
+  "root": "axiom",
+  "statement": "Let it have been postulated that, if a straight line falling on two straight\nlines makes the interior angles on the same side less than two right angles,\nthe two straight lines, if produced indefinitely, meet on that side on which are\nthe angles less than the two right angles.",
+  "current_dependencies": []
+}

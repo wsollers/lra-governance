@@ -1,0 +1,12 @@
+{
+  "graph_id": "0024-0058",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "operations-on-q-classes",
+  "term": "cor:zero-right-additive-identity-on-q",
+  "kind": "Corollary",
+  "title": "Zero Is a Right Additive Identity on $ $",
+  "root": "",
+  "statement": "For every $x\\in\\mathbb{Q}$,\n\\[\nx+0_{\\mathbb{Q}}=x.\n\\]",
+  "current_dependencies": []
+}

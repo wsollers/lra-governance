@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0091",
+  "term": "def:boolean-function-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:truth-value-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.7,
+  "notes": "An n-ary Boolean function maps B^n to B, where B is the set of truth values (def:truth-value). Sole load-bearing dep; arity and 'function' are ambient."
+}

@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0039",
+  "term": "def:finitely-satisfiable-set-of-propositional-formulas",
+  "verdict": "ok",
+  "dependencies": ["def:finite-subset-of-set-of-propositional-formulas", "def:satisfiable-set-of-propositional-formulas", "def:truth-assignment-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.6,
+  "notes": "Every finite subset (def:finite-subset) is satisfiable (def:satisfiable-set). def:truth-assignment is listed directly but is transitive through def:satisfiable-set (which is defined via an existential over truth assignments) -- mild redundancy the reviewer may trim, not a defect."
+}

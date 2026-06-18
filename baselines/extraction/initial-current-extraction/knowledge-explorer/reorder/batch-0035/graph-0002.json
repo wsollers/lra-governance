@@ -1,0 +1,19 @@
+{
+  "graph_id": "0035-0002",
+  "volume": "i",
+  "chapter": "axiom-systems",
+  "section": "axioms",
+  "term": "def:axiom",
+  "kind": "Definition",
+  "title": "Axiom",
+  "root": "",
+  "statement": "Let $\\mathcal{L}$ be a first-order language, and let\n$\\operatorname{Sent}(\\mathcal{L})$ denote the set of sentences of\n$\\mathcal{L}$. If $T\\subseteq \\operatorname{Sent}(\\mathcal{L})$ is a theory,\nthen an \\emph{axiom of $T$} is an element $\\alpha\\in T$.",
+  "current_dependencies": [
+    {
+      "id": "def:language",
+      "title": "Language",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

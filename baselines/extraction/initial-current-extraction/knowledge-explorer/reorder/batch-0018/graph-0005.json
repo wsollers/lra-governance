@@ -1,0 +1,19 @@
+{
+  "graph_id": "0018-0005",
+  "volume": "iii",
+  "chapter": "differentiation",
+  "section": "algebra-of-derivatives",
+  "term": "cor:power-rule-special-case",
+  "kind": "Corollary",
+  "title": "Power Rule for Integer Powers of a Function",
+  "root": "",
+  "statement": "Let $A \\subseteq \\mathbb{R}$, let $f : A \\to \\mathbb{R}$, let $c \\in A$ be a limit point of $A$, and let $n \\in \\mathbb{N}$. If $f$ is differentiable at $c$, then $f^n$ is differentiable at $c$, and\n\\[\n(f^n)'(c) = n(f(c))^{n-1}f'(c).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "cor:extended-product-rule",
+      "title": "Extended Product Rule",
+      "kind": "Corollary",
+      "root": ""
+    }
+  ]
+}

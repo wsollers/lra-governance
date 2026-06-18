@@ -1,0 +1,25 @@
+{
+  "graph_id": "0033-0109",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "syntax",
+  "term": "def:atomic-formula-propositional-logic",
+  "kind": "Definition",
+  "title": "Atomic Formula",
+  "root": "",
+  "statement": "An atomic formula is a well-formed formula that is a propositional variable.",
+  "current_dependencies": [
+    {
+      "id": "def:propositional-variable",
+      "title": "Propositional Variable",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:well-formed-formula",
+      "title": "Well-Formed Formula",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

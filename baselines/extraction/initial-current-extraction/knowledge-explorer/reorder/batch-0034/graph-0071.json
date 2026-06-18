@@ -1,0 +1,12 @@
+{
+  "graph_id": "0034-0071",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "syntax",
+  "term": "def:alpha-equiv",
+  "kind": "Definition",
+  "title": "Alpha-Equivalence",
+  "root": "",
+  "statement": "Formulas that differ only by the names of bound variables are logically\nequivalent. This is called \\emph{alpha-equivalence} (or \\emph{alphabetic\nvariance}):\n\\[\n\\forall x\\,\\varphi \\;\\equiv\\; \\forall y\\,\\varphi[y/x]\n\\quad\\text{(provided $y$ is not free in $\\varphi$).}\n\\]",
+  "current_dependencies": []
+}

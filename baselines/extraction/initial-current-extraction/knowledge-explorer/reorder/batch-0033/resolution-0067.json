@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0067",
+  "term": "def:truth-table-row-conjunction-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:formula-variable-set-propositional-logic", "def:literal-propositional-logic", "def:truth-table-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.6,
+  "notes": "The row conjunction for row r is a conjunction of literals (def:literal) over the variables (def:formula-variable-set), true exactly at r (def:truth-table). Asymmetry flag: the dual node def:truth-table-row-clause (0066) cites the structural GENUS def:clause, whereas this one cites only the building block def:literal -- def:elementary-conjunction (which exists, the conjunction-of-literals genus dual to def:clause) is the parallel edge and is arguably missing. Not enacted because this statement has a rendering gap (the genus term dropped out), leaving no clean licensing span; reviewer to align 0066/0067."
+}

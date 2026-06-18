@@ -1,0 +1,37 @@
+{
+  "graph_id": "0015-0013",
+  "volume": "iii",
+  "chapter": "real-analysis",
+  "section": "inequality",
+  "term": "thm:ineq-reciprocal-positive",
+  "kind": "Theorem",
+  "title": "Reciprocal Reverses Strict Inequality for Positives",
+  "root": "",
+  "statement": "For all $a, b \\in \\mathbb{R}$,\n\\[\n 0 < a < b \\;\\Rightarrow\\; 0 < \\frac{1}{b} < \\frac{1}{a}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:real-ordered-field",
+      "title": "Complete Ordered Field",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:ineq-multiply-positive",
+      "title": "Multiplication by a Positive Scalar Preserves Strict Inequality",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:ordered-field-positive-inverses",
+      "title": "Ordered Field Positive Inverses",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:reciprocal-reverses-order-on-positives-q",
+      "title": "Reciprocal Reverses Order on Positives in $ $",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

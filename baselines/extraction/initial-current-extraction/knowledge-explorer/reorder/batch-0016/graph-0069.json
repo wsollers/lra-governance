@@ -1,0 +1,25 @@
+{
+  "graph_id": "0016-0069",
+  "volume": "iii",
+  "chapter": "functions",
+  "section": "subsets-real-line",
+  "term": "thm:heine-borel-subsets-real-line",
+  "kind": "Theorem",
+  "title": "Heine--Borel Theorem for $ $",
+  "root": "",
+  "statement": "$X\\text{ is closed} \\wedge X\\text{ is bounded}$\n$\\iff$ every $(a_n)\\subseteq X$ has a subsequence converging to\na limit in $X$.",
+  "current_dependencies": [
+    {
+      "id": "def:bounded-set-r",
+      "title": "Bounded Subset of $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:closed-set-r",
+      "title": "Closed Subset of $ $",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

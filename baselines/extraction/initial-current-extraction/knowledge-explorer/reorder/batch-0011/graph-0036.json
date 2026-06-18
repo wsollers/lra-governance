@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0036",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "",
+  "term": "def:formal-model-theoretic-structures-l434",
+  "kind": "Definition",
+  "title": "Monoid",
+  "root": "",
+  "statement": "A \\textbf{monoid} is a triple $(A, *, e)$ where $A$ is a nonempty set,\n $* : A \\times A \\to A$ is a binary operation, and $e \\in A$, satisfying:\n \\begin{align*}\n \\forall\\,a,b \\in A:&\\; a * b \\in A \\tag{Closure}\\\\\n \\forall\\,a,b,c \\in A:&\\; (a*b)*c = a*(b*c) \\tag{Associativity}\\\\\n \\forall\\,a \\in A:&\\; a * e = e * a = a \\tag{Identity}\n \\end{align*}\n The element $e$ is called the \\textbf{identity} (or \\textbf{neutral element})\n of $*$. It is unique: if $e'$ also satisfies the identity law, then\n $e = e * e' = e'$.\n\n \n Model-theoretic signature:\n \\[\n \\mathcal{L}_{\\mathrm{mon}} = \\{\\,*,\\, e\\,\\},\n \\quad * \\text{ arity } 2,\\quad e \\text{ a constant symbol.}\n \\]",
+  "current_dependencies": []
+}

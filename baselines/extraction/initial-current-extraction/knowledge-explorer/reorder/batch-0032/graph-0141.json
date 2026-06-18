@@ -1,0 +1,12 @@
+{
+  "graph_id": "0032-0141",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "sets",
+  "term": "def:sym-diff",
+  "kind": "Definition",
+  "title": "Symmetric Difference",
+  "root": "",
+  "statement": "The \\emph{symmetric difference} $A \\triangle B$ is the set of elements\nbelonging to exactly one of $A$ and $B$:\n\\[\nA \\triangle B\n\\;=\\;\n(A \\setminus B) \\cup (B \\setminus A)\n\\;=\\;\n\\{\\, x \\mid (x \\in A \\lor x \\in B) \\land x \\notin A \\cap B \\,\\}.\n\\]",
+  "current_dependencies": []
+}

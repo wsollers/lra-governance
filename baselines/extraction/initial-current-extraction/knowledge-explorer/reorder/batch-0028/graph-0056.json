@@ -1,0 +1,31 @@
+{
+  "graph_id": "0028-0056",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "operations-on-z-classes",
+  "term": "lem:addition-on-z-classes-respects-right-equivalence",
+  "kind": "Lemma",
+  "title": "Addition Respects Formal-Difference Equivalence on the Right",
+  "root": "",
+  "statement": "If $[c,d]=[c',d']$, then\n\\[\n[a,b]+[c,d]=[a,b]+[c',d'].\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:addition-on-z-classes",
+      "title": "Addition on $ $-Classes",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:formal-difference-equivalence",
+      "title": "Formal-Difference Equivalence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:addition-on-w-cancellation",
+      "title": "Addition on $ $ Satisfies Cancellation",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

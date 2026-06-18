@@ -1,0 +1,12 @@
+{
+  "graph_id": "0031-0041",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "composed-relations",
+  "term": "definition:notes-composed-relations:002",
+  "kind": "Definition",
+  "title": "Partial Order",
+  "root": "",
+  "statement": "A \\emph{partial order} is a preorder that is antisymmetric.",
+  "current_dependencies": []
+}

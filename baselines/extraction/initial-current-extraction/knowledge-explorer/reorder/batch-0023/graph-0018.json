@@ -1,0 +1,19 @@
+{
+  "graph_id": "0023-0018",
+  "volume": "ii",
+  "chapter": "reals",
+  "section": "completeness-of-r",
+  "term": "thm:lub-property-r",
+  "kind": "Theorem",
+  "title": "Least-Upper-Bound Property",
+  "root": "",
+  "statement": "Every nonempty subset $S\\subseteq\\mathbb{R}$ that is bounded above has a least\nupper bound, namely\n\\[\n\\sup S=\\bigcup_{\\alpha\\in S}\\alpha.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "ax:completeness-of-reals",
+      "title": "Completeness of $ $",
+      "kind": "Axiom",
+      "root": "axiom"
+    }
+  ]
+}

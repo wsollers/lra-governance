@@ -1,0 +1,19 @@
+{
+  "graph_id": "0018-0001",
+  "volume": "iii",
+  "chapter": "differentiation",
+  "section": "algebra-of-derivatives",
+  "term": "cor:extended-product-rule",
+  "kind": "Corollary",
+  "title": "Extended Product Rule",
+  "root": "",
+  "statement": "Let $A \\subseteq \\mathbb{R}$, let $f_1, \\dots, f_n : A \\to \\mathbb{R}$, and let $c \\in A$ be a limit point of $A$. If each $f_i$ is differentiable at $c$, then $\\prod_{i=1}^{n} f_i$ is differentiable at $c$, and\n\\[\n\\left(\\prod_{i=1}^{n} f_i\\right)'(c)\n=\n\\sum_{k=1}^{n}\nf_k'(c) \\prod_{\\substack{i=1\\\\i\\neq k}}^{n} f_i(c).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "thm:product-rule",
+      "title": "Product Rule",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0065",
+  "term": "def:canonical-disjunctive-normal-form-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:disjunctive-normal-form-propositional-logic", "def:empty-clause-propositional-logic", "def:truth-table-propositional-logic", "def:truth-table-row-conjunction-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.7,
+  "notes": "CDNF = disjunction (a DNF, def:disjunctive-normal-form) of the row conjunctions (def:truth-table-row-conjunction) for the true rows (def:truth-table); def:empty-clause (the empty disjunction = bottom) handles the contradiction edge case (no true rows). Correctly dual to CCNF (0064): empty-conjunction->top there, empty-clause/empty-disjunction->bottom here. All four load-bearing and present."
+}

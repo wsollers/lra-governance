@@ -1,0 +1,12 @@
+{
+  "graph_id": "0032-0027",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "families",
+  "term": "def:indexed-intersection",
+  "kind": "Definition",
+  "title": "Indexed Intersection",
+  "root": "",
+  "statement": "For $I \\neq \\varnothing$, the \\emph{intersection} of $\\{A_i\\}_{i \\in I}$ is:\n\\[\n\\bigcap_{i \\in I} A_i\n\\;:=\\;\n\\{\\, x \\mid \\forall i \\in I,\\; x \\in A_i \\,\\}.\n\\]",
+  "current_dependencies": []
+}

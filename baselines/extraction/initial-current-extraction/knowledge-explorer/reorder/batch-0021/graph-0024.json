@@ -1,0 +1,25 @@
+{
+  "graph_id": "0021-0024",
+  "volume": "ii",
+  "chapter": "whole-numbers",
+  "section": "extending-multiplication",
+  "term": "thm:multiplication-on-w-extends-multiplication-on-n",
+  "kind": "Theorem",
+  "title": "Multiplication on $ $ Extends Multiplication on $ $",
+  "root": "",
+  "statement": "For all $a,b\\in\\mathbb{N}$,\n\\[\na\\cdot_{\\mathbb{W}}b=a\\cdot_{\\mathbb{N}}b.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:multiplication-on-peano-system",
+      "title": "Multiplication on a Peano System",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:multiplication-on-w",
+      "title": "Multiplication on $ $",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

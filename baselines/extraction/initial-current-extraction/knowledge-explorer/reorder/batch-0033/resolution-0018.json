@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0018",
+  "term": "thm:denying-antecedent-invalid-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:counterexample-assignment-propositional-logic", "def:valid-argument-form-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.7,
+  "notes": "Same shape as 0017: a counterexample (phi false, psi true) makes phi->psi and not-phi true but the conclusion not-psi false, witnessing invalidity. Both deps load-bearing and present."
+}

@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0114",
+  "term": "def:main-connective-propositional-logic",
+  "verdict": "change",
+  "dependencies": ["def:logical-connective", "def:molecular-formula-propositional-logic", "def:well-formed-formula", "thm:unique-decomposition-propositional-formulas"],
+  "rationale": "The main connective (def:logical-connective) of a molecular formula (def:molecular-formula) is 'the connective introduced at the final formation step'. That this final step is UNIQUE -- hence the main connective is well-defined -- is exactly unique readability (thm:unique-decomposition), which was missing. This is the same well-definedness dependency that parse-tree (0116) and subformula (0120) already carry.",
+  "licensing_quote": "the connective introduced at the final formation step",
+  "confidence": 0.6,
+  "notes": "Kept the existing three deps; added thm:unique-decomposition as the well-definedness justification (Rule 4). def:well-formed-formula is the substrate (the phi, psi in neg-phi and (phi-circ-psi)); def:molecular-formula scopes the notion (atomic formulas have no main connective)."
+}

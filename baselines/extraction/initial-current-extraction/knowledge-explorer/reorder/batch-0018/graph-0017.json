@@ -1,0 +1,25 @@
+{
+  "graph_id": "0018-0017",
+  "volume": "iii",
+  "chapter": "differentiation",
+  "section": "chain-rule",
+  "term": "def:caratheodory-factorization",
+  "kind": "Definition",
+  "title": "Carathéodory Factorization",
+  "root": "",
+  "statement": "Let $I \\subseteq \\mathbb{R}$ be an interval, let $f : I \\to \\mathbb{R}$, and let $c \\in I$. We say that $f$ admits a \\emph{Carathéodory factorization} at $c$ if there exists a function $\\phi : I \\to \\mathbb{R}$, continuous at $c$, such that\n\\[\nf(x) = f(c) + (x-c)\\,\\phi(x) \\qquad \\text{for all } x \\in I.\n\\]\nIn this case, $f$ is differentiable at $c$ and $f'(c) = \\phi(c)$.",
+  "current_dependencies": [
+    {
+      "id": "def:continuous-at-point",
+      "title": "Continuity at a Point",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:derivative-at-a-point",
+      "title": "Derivative at a Point",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

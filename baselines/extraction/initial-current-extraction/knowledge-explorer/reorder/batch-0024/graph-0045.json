@@ -1,0 +1,12 @@
+{
+  "graph_id": "0024-0045",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "field-structure-of-q",
+  "term": "cor:multiplicative-cancellation-on-q",
+  "kind": "Corollary",
+  "title": "Multiplicative Cancellation on $ $",
+  "root": "",
+  "statement": "For all $x,y,z\\in\\mathbb{Q}$,\n\\[\nz\\ne 0_{\\mathbb{Q}}\\land x\\cdot z=y\\cdot z\n\\Longrightarrow\nx=y.\n\\]",
+  "current_dependencies": []
+}

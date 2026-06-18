@@ -1,0 +1,12 @@
+{
+  "graph_id": "0024-0049",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "field-structure-of-q",
+  "term": "cor:product-of-negatives-on-q",
+  "kind": "Corollary",
+  "title": "Product of Negatives on $ $",
+  "root": "",
+  "statement": "For all $x,y\\in\\mathbb{Q}$,\n\\[\n(-x)\\cdot(-y)=x\\cdot y.\n\\]",
+  "current_dependencies": []
+}

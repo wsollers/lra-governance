@@ -1,0 +1,12 @@
+{
+  "graph_id": "0023-0029",
+  "volume": "ii",
+  "chapter": "reals",
+  "section": "embedding-q-into-r",
+  "term": "thm:density-of-q-in-r",
+  "kind": "Theorem",
+  "title": "Density of $ $ in $ $",
+  "root": "",
+  "statement": "For all $\\alpha,\\beta\\in\\mathbb{R}$,\n\\[\n\\alpha<\\beta \\Longrightarrow \\exists q\\in\\mathbb{Q}\\,(\\alpha<\\iota(q)<\\beta).\n\\]",
+  "current_dependencies": []
+}

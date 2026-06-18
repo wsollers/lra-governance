@@ -1,0 +1,31 @@
+{
+  "graph_id": "0014-0094",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "divergence",
+  "term": "thm:unbounded-below-has-negative-infinity-subsequence",
+  "kind": "Theorem",
+  "title": "Unbounded Below Sequence Has a Negative-Infinity Subsequence",
+  "root": "",
+  "statement": "Let $(x_n)$ be a real sequence. If $(x_n)$ is not bounded below, then\nthere exists a subsequence $(x_{\\sigma(k)})$ such that\n$x_{\\sigma(k)}\\to-\\infty$.",
+  "current_dependencies": [
+    {
+      "id": "def:diverges-to-negative-infinity",
+      "title": "Divergence to Negative Infinity",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:sequence-bounded-below",
+      "title": "Sequence Bounded Below",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:subsequence",
+      "title": "Subsequence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

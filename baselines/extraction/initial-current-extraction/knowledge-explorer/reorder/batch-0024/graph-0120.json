@@ -1,0 +1,25 @@
+{
+  "graph_id": "0024-0120",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "order-on-q",
+  "term": "thm:left-positive-multiplication-preserves-order-on-q",
+  "kind": "Theorem",
+  "title": "Left Multiplication by Positives Preserves Order on $ $",
+  "root": "",
+  "statement": "For all $x,y,z\\in\\mathbb{Q}$,\n\\[\n0_{\\mathbb{Q}}<z\\land x\\le y\n\\Longrightarrow\nz\\cdot x\\le z\\cdot y.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:order-on-q",
+      "title": "Order on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:left-positive-multiplication-preserves-strict-order-on-q",
+      "title": "Left Multiplication by Positives Preserves Strict Order on $ $",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

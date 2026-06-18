@@ -1,0 +1,31 @@
+{
+  "graph_id": "0028-0067",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "operations-on-z-classes",
+  "term": "thm:multiplication-on-z-associative",
+  "kind": "Theorem",
+  "title": "Multiplication on $ $ Is Associative",
+  "root": "",
+  "statement": "For all $x,y,z\\in\\mathbb{Z}$,\n\\[\n(x\\cdot y)\\cdot z=x\\cdot(y\\cdot z).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:multiplication-on-z-classes",
+      "title": "Multiplication on $ $-Classes",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:multiplication-on-w-associative",
+      "title": "Multiplication on $ $ Is Associative",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:multiplication-on-z-well-defined",
+      "title": "Multiplication on $ $ Is Well-Defined",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

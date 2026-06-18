@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0037",
+  "term": "thm:qcomm",
+  "verdict": "change",
+  "dependencies": ["def:existential-q", "def:log-equiv", "def:universal-q"],
+  "rationale": "An equivalence theorem (==) whose statement asserts logical equivalence, so def:log-equiv is load-bearing and was missing. The sibling equivalence laws thm:qdist (0038) and thm:qneg (0039) both list def:log-equiv directly; qcomm must match.",
+  "licensing_quote": "\\equiv",
+  "confidence": 0.75,
+  "notes": "Harmonizes the same-set trio qcomm/qdist/qneg to {def:existential-q, def:universal-q, def:log-equiv}."
+}

@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0043",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "",
+  "term": "def:formal-model-theoretic-structures-l784",
+  "kind": "Definition",
+  "title": "Vector Space",
+  "root": "",
+  "statement": "Let $F$ be a field. A \\textbf{vector space} over $F$ is a tuple\n $(V, +, \\mathbf{0}, -, F, \\cdot)$ where $(V, +, \\mathbf{0}, -)$ is an\n abelian group and $\\cdot : F \\times V \\to V$ satisfies, for all $a, b \\in F$\n and $\\mathbf{u}, \\mathbf{v} \\in V$:\n \\begin{align*}\n a \\cdot (\\mathbf{u} + \\mathbf{v}) &= a\\cdot\\mathbf{u} + a\\cdot\\mathbf{v}\n \\tag{Distributivity over vector $+$}\\\\\n (a + b)\\cdot\\mathbf{v} &= a\\cdot\\mathbf{v} + b\\cdot\\mathbf{v}\n \\tag{Distributivity over scalar $+$}\\\\\n (ab)\\cdot\\mathbf{v} &= a\\cdot(b\\cdot\\mathbf{v})\n \\tag{Compatibility}\\\\\n 1_F\\cdot\\mathbf{v} &= \\mathbf{v}\n \\tag{Identity scalar}\n \\end{align*}\n Elements of $V$ are called \\textbf{vectors}; elements of $F$ are called\n \\textbf{scalars}.\n\n \n Model-theoretic signature:\n \\[\n \\mathcal{L}_{\\mathrm{VS}} = \\{\\,+_V,\\,\\mathbf{0},\\,-_V,\\,\\cdot\\,\\}\n \\cup \\mathcal{L}_{\\mathrm{fld}},\n \\]\n where $\\cdot$ has arity~2 (one scalar, one vector) and\n $\\mathcal{L}_{\\mathrm{fld}}$ names the field operations on $F$.",
+  "current_dependencies": []
+}

@@ -1,0 +1,12 @@
+{
+  "graph_id": "0003-0006",
+  "volume": "viii",
+  "chapter": "algebras-of-sets",
+  "section": "rings-of-sets",
+  "term": "def:ring-of-sets",
+  "kind": "Definition",
+  "title": "Ring",
+  "root": "",
+  "statement": "A \\textbf{ring} is a non-empty set $R$ together with two binary\noperations $+$ and $\\cdot$ on $R$, a unary operation $-$ on $R$,\nand two distinguished elements $0, 1 \\in R$, satisfying the\nfollowing axioms for all $p, q, r \\in R$:\n- $p + (q + r) = (p + q) + r$\n \\textit{(additive associativity)}\n- $p \\cdot (q \\cdot r) = (p \\cdot q) \\cdot r$\n \\textit{(multiplicative associativity)}\n- $p + q = q + p$\n \\textit{(additive commutativity)}\n- $p + 0 = p$\n \\textit{(additive identity)}\n- $p \\cdot 1 = p$\n \\textit{(multiplicative identity)}\n- $p + (-p) = 0$\n \\textit{(additive inverse)}\n- $p \\cdot (q + r) = p \\cdot q + p \\cdot r$\n \\textit{(left distributivity)}\n- $(q + r) \\cdot p = q \\cdot p + r \\cdot p$\n \\textit{(right distributivity)}\nAxiom numbering follows Halmos--Givant~\\cite{HalmosGivant2009};\naxiom~(4) is commutativity of multiplication, which is not a ring\naxiom but a theorem in the Boolean setting.\nA ring possessing a distinguished element $1$ satisfying\naxiom~(6) is called a \\textbf{ring with unit}.\nA ring satisfying $p \\cdot q = q \\cdot p$ for all $p, q \\in R$\nis called a \\textbf{commutative ring}.",
+  "current_dependencies": []
+}

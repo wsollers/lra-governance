@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0076",
+  "term": "def:sentence",
+  "verdict": "change",
+  "dependencies": ["def:fv", "def:wff-pred"],
+  "rationale": "The empty set omits both constituents: a sentence is a formula (def:wff-pred) with no free variables, formalized as FV(phi) = empty, which rests directly on def:fv. Same fix as the parallel sentence node def:sentence-predicate-logic (0020), which I set to {def:fv, def:wff-pred}.",
+  "licensing_quote": "no free variables",
+  "confidence": 0.7,
+  "notes": "DUPLICATE FLAG: def:sentence (this node, 'Sentence/closed formula', defined via FV=empty) and def:sentence-predicate-logic (0020, 'Sentence', glossed semantically as 'truth values without an assignment') are two Sentence nodes -- dedup candidate. 'FV(phi) = empty-set' also points at def:empty-set, a candidate edge left unproposed (the emptiness is the predicate, not a constructed object)."
+}

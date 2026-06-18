@@ -1,0 +1,37 @@
+{
+  "graph_id": "0033-0056",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "functional-completeness",
+  "term": "thm:nand-functionally-complete-propositional-logic",
+  "kind": "Theorem",
+  "title": "NAND is Functionally Complete",
+  "root": "",
+  "statement": "The one-connective basis \\(\\{\\uparrow\\}\\) is functionally complete.",
+  "current_dependencies": [
+    {
+      "id": "def:functionally-complete-connective-set-propositional-logic",
+      "title": "Functionally Complete Connective Set",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:nand-connective-propositional-logic",
+      "title": "NAND Connective",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:nand-only-formula-propositional-logic",
+      "title": "NAND-Only Formula",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:negation-conjunction-functionally-complete-propositional-logic",
+      "title": "Negation and Conjunction are Functionally Complete",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

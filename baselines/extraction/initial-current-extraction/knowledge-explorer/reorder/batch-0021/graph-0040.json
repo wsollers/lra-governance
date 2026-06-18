@@ -1,0 +1,25 @@
+{
+  "graph_id": "0021-0040",
+  "volume": "ii",
+  "chapter": "whole-numbers",
+  "section": "order-on-w",
+  "term": "thm:order-on-w-total",
+  "kind": "Theorem",
+  "title": "Order on $ $ Is Total",
+  "root": "",
+  "statement": "For all $a,b\\in\\mathbb{W}$,\n\\[\na\\leq_{\\mathbb{W}}b\n\\quad\\text{or}\\quad\nb\\leq_{\\mathbb{W}}a.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:order-on-w",
+      "title": "Order on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:trichotomy-on-peano-system",
+      "title": "Trichotomy on a Peano System",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

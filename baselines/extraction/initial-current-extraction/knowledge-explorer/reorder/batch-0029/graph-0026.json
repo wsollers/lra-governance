@@ -1,0 +1,25 @@
+{
+  "graph_id": "0029-0026",
+  "volume": "ii",
+  "chapter": "identity-equality-equivalence",
+  "section": "equivalence",
+  "term": "thm:induced-relation-on-quotient",
+  "kind": "Theorem",
+  "title": "Induced Relation on a Quotient",
+  "root": "",
+  "statement": "If $R$ respects $\\sim$, then\n\\[\n\\overline{R}([a],[b]):\\Longleftrightarrow R(a,b)\n\\]\ndefines a well-defined binary relation on $A/{\\sim}$.",
+  "current_dependencies": [
+    {
+      "id": "def:relation-respects-equivalence",
+      "title": "Relation Respects an Equivalence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "prop:representatives-related-iff-classes-equal",
+      "title": "Representatives Related iff Classes Equal",
+      "kind": "Proposition",
+      "root": ""
+    }
+  ]
+}

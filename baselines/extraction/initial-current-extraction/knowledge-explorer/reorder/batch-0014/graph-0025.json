@@ -1,0 +1,19 @@
+{
+  "graph_id": "0014-0025",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "cluster-values",
+  "term": "def:cluster-value-sequence",
+  "kind": "Definition",
+  "title": "Cluster Value of a Sequence",
+  "root": "",
+  "statement": "Let $(x_n)$ be a real sequence, and let $L\\in\\mathbb{R}$. The number $L$ is\na \\textbf{cluster value} of $(x_n)$ if for every $\\varepsilon>0$ and every\n$N\\in\\mathbb{N}$ there exists $n\\ge N$ such that\n\\[\n |x_n-L|<\\varepsilon.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:sequence",
+      "title": "Sequence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

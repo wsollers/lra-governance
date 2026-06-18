@@ -1,0 +1,10 @@
+subject: set-algebra
+display_title: Set Algebra
+volume: volume-iv
+status: active
+dependencies:
+  prior: ''
+  next: ''
+path: volume-iv/algebra/set-algebra
+environments: []
+proof_files: []

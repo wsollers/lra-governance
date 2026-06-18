@@ -1,0 +1,19 @@
+{
+  "graph_id": "0025-0007",
+  "volume": "ii",
+  "chapter": "peano-systems",
+  "section": "defining-peano-systems",
+  "term": "def:peano-system",
+  "kind": "Definition",
+  "title": "Peano System",
+  "root": "",
+  "statement": "A triple $(P,S,1)$ is called a \\emph{Peano system} exactly when $P$ is a set,\n$1 \\in P$, $S : P \\to P$ is a function, and the following axioms hold:\n- $1 \\in P$.\n- For every $n \\in P$, $S(n) \\in P$.\n- For every $n \\in P$, $S(n) \\neq 1$.\n- For all $m,n \\in P$, if $S(m)=S(n)$ then $m=n$.\n- If $A \\subseteq P$, $1 \\in A$, and\n \\[\n \\forall n \\in P\\;(n \\in A \\Longrightarrow S(n) \\in A),\n \\]\n then $A=P$.",
+  "current_dependencies": [
+    {
+      "id": "ax:peano-system-existence",
+      "title": "Existence of a Peano System",
+      "kind": "Axiom",
+      "root": "axiom"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "graph_id": "0015-0021",
+  "volume": "iii",
+  "chapter": "real-analysis",
+  "section": "modulus",
+  "term": "thm:absolute-value-bounds",
+  "kind": "Theorem",
+  "title": "Bound by Modulus",
+  "root": "",
+  "statement": "For all $a \\in \\mathbb{R}$,\n\\[\n -\\lvert a \\rvert \\le a \\le \\lvert a \\rvert.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:absolute-value",
+      "title": "Absolute Value",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:real-ordered-field",
+      "title": "Complete Ordered Field",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:absolute-value-nonneg",
+      "title": "Absolute Value Is Nonnegative",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

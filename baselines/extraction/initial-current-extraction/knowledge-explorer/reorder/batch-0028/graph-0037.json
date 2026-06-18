@@ -1,0 +1,12 @@
+{
+  "graph_id": "0028-0037",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "divisibility-in-z",
+  "term": "thm:units-of-z-are-pm-one",
+  "kind": "Theorem",
+  "title": "The Units of $ $ Are Exactly $ 1$",
+  "root": "",
+  "statement": "An integer $u$ is a unit if and only if\n\\[\nu=1\\quad\\text{or}\\quad u=-1.\n\\]",
+  "current_dependencies": []
+}

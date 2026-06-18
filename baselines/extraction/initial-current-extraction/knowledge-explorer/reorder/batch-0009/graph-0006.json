@@ -1,0 +1,19 @@
+{
+  "graph_id": "0009-0006",
+  "volume": "vi",
+  "chapter": "linear-algebra",
+  "section": "vector-spaces",
+  "term": "def:zero-vector-in-fn",
+  "kind": "Definition",
+  "title": "Zero Vector in $ ^n$",
+  "root": "",
+  "statement": "The symbol $0$ denotes the list of length $n$ all of whose coordinates are $0$:\n\\[\n0=(0,\\dots,0)\\in \\mathbf{F}^n.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:fn",
+      "title": "$ ^n$",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

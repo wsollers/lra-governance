@@ -1,0 +1,37 @@
+{
+  "graph_id": "0028-0076",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "operations-on-z-classes",
+  "term": "thm:z-commutative-ring",
+  "kind": "Theorem",
+  "title": "$ $ Is a Commutative Ring",
+  "root": "",
+  "statement": "The structure $(\\mathbb{Z},+,\\cdot,0_{\\mathbb{Z}},1_{\\mathbb{Z}})$ is a\ncommutative ring.",
+  "current_dependencies": [
+    {
+      "id": "def:commutative-ring",
+      "title": "Commutative Ring",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:multiplication-distributes-over-addition-on-z",
+      "title": "Multiplication Distributes over Addition on $ $",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:z-additive-abelian-group",
+      "title": "$ $ Is an Additive Abelian Group",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:z-multiplicative-commutative-monoid",
+      "title": "$ $ Is a Multiplicative Commutative Monoid",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

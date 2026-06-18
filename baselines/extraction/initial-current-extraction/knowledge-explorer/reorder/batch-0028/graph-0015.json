@@ -1,0 +1,25 @@
+{
+  "graph_id": "0028-0015",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "construction-of-z",
+  "term": "lem:formal-difference-equivalence-reflexive",
+  "kind": "Lemma",
+  "title": "Formal-Difference Equivalence Is Reflexive",
+  "root": "",
+  "statement": "For every $(a,b)\\in\\operatorname{Pre}\\mathbb{Z}$,\n\\[\n(a,b)\\sim_{\\mathbb{Z}}(a,b).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:addition-on-w",
+      "title": "Addition on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:formal-difference-equivalence",
+      "title": "Formal-Difference Equivalence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

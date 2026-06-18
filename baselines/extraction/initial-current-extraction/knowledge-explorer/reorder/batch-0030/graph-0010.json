@@ -1,0 +1,19 @@
+{
+  "graph_id": "0030-0010",
+  "volume": "ii",
+  "chapter": "embedding-number-systems",
+  "section": "embeddings-as-structure-preserving-maps",
+  "term": "def:image-of-embedding",
+  "kind": "Definition",
+  "title": "Image of an Embedding",
+  "root": "",
+  "statement": "Let $\\varphi:A\\to B$ be an embedding. The \\emph{image} of $\\varphi$ is the set $\\varphi(A)=\\{\\,\\varphi(a) : a\\in A\\,\\}\\subseteq B$, equipped with the selected constants, operations, and order of $B$ restricted to $\\varphi(A)$.",
+  "current_dependencies": [
+    {
+      "id": "def:number-system-embedding",
+      "title": "Embedding of Number Systems",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

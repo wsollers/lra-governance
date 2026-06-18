@@ -1,0 +1,19 @@
+{
+  "graph_id": "0031-0113",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "structure-preserving-maps",
+  "term": "cor:identity-map-is-homomorphism",
+  "kind": "Corollary",
+  "title": "Identity Map Is a Homomorphism",
+  "root": "",
+  "statement": "The identity map on a structure is a homomorphism from that structure to\nitself.",
+  "current_dependencies": [
+    {
+      "id": "def:homomorphism",
+      "title": "Homomorphism",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

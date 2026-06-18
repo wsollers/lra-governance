@@ -1,0 +1,31 @@
+{
+  "graph_id": "0014-0039",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "convergence",
+  "term": "thm:limit-of-a-difference",
+  "kind": "Theorem",
+  "title": "Limit of a Difference",
+  "root": "",
+  "statement": "Let $(x_n)$ and $(y_n)$ be real sequences, and let $L,M\\in\\mathbb{R}$.\nIf $x_n\\to L$ and $y_n\\to M$, then $x_n-y_n\\to L-M$.",
+  "current_dependencies": [
+    {
+      "id": "def:pointwise-difference-sequence",
+      "title": "Pointwise Difference of Sequences",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:limit-of-a-negation",
+      "title": "Limit of a Negation",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:limit-of-a-sum",
+      "title": "Limit of a Sum",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

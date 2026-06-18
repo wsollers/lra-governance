@@ -1,0 +1,12 @@
+{
+  "graph_id": "0032-0056",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "order",
+  "term": "def:maximal-upper",
+  "kind": "Definition",
+  "title": "Maximal Elements and Upper Bounds",
+  "root": "",
+  "statement": "Let $\\succsim$ be a binary relation on $X$.\n- The set of \\emph{maximal elements} of $X$ is\n \\[\n \\mathrm{Max}(X, \\succsim)\n = \\{ x \\in X \\mid y \\succsim x \\text{ for no } y \\in X \\text{ with }\n y \\neq x \\}.\n \\]\n- The set of \\emph{upper bounds} of $X$ is\n \\[\n M(X, \\succsim)\n = \\{ x \\in X \\mid x \\succsim y \\text{ for all } y \\in X \\}.\n \\]",
+  "current_dependencies": []
+}

@@ -1,0 +1,12 @@
+{
+  "graph_id": "0028-0033",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "divisibility-in-z",
+  "term": "prop:everything-divides-zero-on-z",
+  "kind": "Proposition",
+  "title": "Every Integer Divides Zero",
+  "root": "",
+  "statement": "For every $a\\in\\mathbb{Z}$,\n\\[\na\\mid 0.\n\\]",
+  "current_dependencies": []
+}

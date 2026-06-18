@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0069",
+  "term": "thm:canonical-disjunctive-normal-form-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:canonical-disjunctive-normal-form-propositional-logic", "def:logical-equivalence-propositional-logic", "lem:coincidence-lemma-propositional-logic", "thm:finite-truth-table-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.7,
+  "notes": "Dual of 0068: phi == CDNF(phi) by matching truth tables on the true rows. All four load-bearing and present. This is the theorem consumed by thm:dnf-representation (0044) and hence by standard-connectives completeness (0063)."
+}

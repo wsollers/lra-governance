@@ -1,0 +1,19 @@
+{
+  "graph_id": "0018-0044",
+  "volume": "iii",
+  "chapter": "differentiation",
+  "section": "derivative-geometry",
+  "term": "thm:zero-derivative-implies-constant",
+  "kind": "Theorem",
+  "title": "Zero Derivative Implies Constant",
+  "root": "",
+  "statement": "Let $I := [a,b] \\subseteq \\mathbb{R}$ be a closed interval, and let $f : I \\to \\mathbb{R}$ be continuous on $I$ and differentiable on $(a,b)$. If\n\\[\nf'(x) = 0 \\qquad \\text{for all } x \\in (a,b),\n\\]\nthen $f$ is constant on $I$.",
+  "current_dependencies": [
+    {
+      "id": "thm:mean-value-theorem",
+      "title": "Mean Value Theorem",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

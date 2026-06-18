@@ -1,0 +1,12 @@
+{
+  "graph_id": "0024-0115",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "order-on-q",
+  "term": "thm:absolute-value-zero-iff-on-q",
+  "kind": "Theorem",
+  "title": "Absolute Value Vanishes Only at Zero on $ $",
+  "root": "",
+  "statement": "For every $x\\in\\mathbb{Q}$,\n\\[\n|x|=0_{\\mathbb{Q}}\n\\quad\\Longleftrightarrow\\quad\nx=0_{\\mathbb{Q}}.\n\\]",
+  "current_dependencies": []
+}

@@ -1,0 +1,25 @@
+{
+  "graph_id": "0031-0007",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "algebraic-laws",
+  "term": "def:two-sided-cancellation",
+  "kind": "Definition",
+  "title": "Two-Sided Cancellation",
+  "root": "",
+  "statement": "An operation has two-sided cancellation if it has both left cancellation and\nright cancellation.",
+  "current_dependencies": [
+    {
+      "id": "def:left-cancellation",
+      "title": "Left Cancellation",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:right-cancellation",
+      "title": "Right Cancellation",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

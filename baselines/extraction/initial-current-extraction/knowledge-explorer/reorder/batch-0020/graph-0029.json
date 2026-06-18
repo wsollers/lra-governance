@@ -1,0 +1,19 @@
+{
+  "graph_id": "0020-0029",
+  "volume": "iii",
+  "chapter": "bounding",
+  "section": "bounds-extremals",
+  "term": "def:minimum",
+  "kind": "Definition",
+  "title": "Minimum",
+  "root": "",
+  "statement": "Let $(S,\\le)$ be an ordered set, $A\\subseteq S$, and $m\\in A$. The element $m$ is the \\emph{minimum} of $A$ if and only if for every $x\\in A$ one has $m\\le x$.",
+  "current_dependencies": [
+    {
+      "id": "def:ordered-set",
+      "title": "Ordered Set",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

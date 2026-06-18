@@ -1,0 +1,12 @@
+{
+  "graph_id": "0006-0004",
+  "volume": "viii",
+  "chapter": "computational-geometry",
+  "section": "convex-hulls",
+  "term": "def:computational-geometry-extreme-point",
+  "kind": "Definition",
+  "title": "Extreme Point",
+  "root": "",
+  "statement": "Let \\(S\\subseteq\\mathbb{R}^2\\) be convex. A point \\(p\\in S\\) is an\n\\emph{extreme point} of \\(S\\) if whenever\n\\[\n p=\\lambda a+(1-\\lambda)b,\n \\qquad\n a,b\\in S,\\quad \\lambda\\in(0,1),\n\\]\nit follows that \\(a=b=p\\). For a finite point set \\(P\\), the extreme points of\n\\(\\conv(P)\\) are called the vertices of the convex hull.",
+  "current_dependencies": []
+}

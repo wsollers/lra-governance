@@ -1,0 +1,31 @@
+{
+  "graph_id": "0014-0005",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "applications",
+  "term": "thm:compound-interest-approximation-e",
+  "kind": "Theorem",
+  "title": "Compound-Interest Approximation of $e$",
+  "root": "",
+  "statement": "Let $(c_n)$ be the compound-interest sequence. Then\n\\[\n \\lim_{n\\to\\infty}c_n=e.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:compound-interest-sequence",
+      "title": "Compound-Interest Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:number-e",
+      "title": "The Number $e$",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:sequence-squeeze-theorem",
+      "title": "Sequence Squeeze Theorem",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

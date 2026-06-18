@@ -1,0 +1,12 @@
+{
+  "graph_id": "0023-0010",
+  "volume": "ii",
+  "chapter": "reals",
+  "section": "addition-on-r",
+  "term": "thm:zero-additive-identity-on-r",
+  "kind": "Theorem",
+  "title": "Zero Is an Additive Identity on $ $",
+  "root": "",
+  "statement": "For every $\\alpha\\in\\mathbb{R}$,\n\\[\n\\alpha+0_{\\mathbb{R}}=\\alpha.\n\\]",
+  "current_dependencies": []
+}

@@ -1,0 +1,19 @@
+{
+  "graph_id": "0031-0003",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "algebraic-laws",
+  "term": "def:left-cancellation",
+  "kind": "Definition",
+  "title": "Left Cancellation",
+  "root": "",
+  "statement": "An operation has left cancellation if\n\\[\nx\\mathbin{O}y=x\\mathbin{O}z \\Longrightarrow y=z,\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:binary-arithmetic-operation",
+      "title": "Binary Arithmetic Operation",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

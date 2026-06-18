@@ -1,0 +1,12 @@
+{
+  "graph_id": "0034-0001",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "axioms",
+  "term": "ax:predicate-logic-quantifier-distribution",
+  "kind": "Axiom",
+  "title": "Quantifier Distribution",
+  "root": "axiom",
+  "statement": "For formulas $\\varphi$ and $\\psi(x)$, if $x$ is not free in $\\varphi$, then\n\\[\n\\forall x\\,(\\varphi \\Longrightarrow \\psi(x))\n\\Longrightarrow\n\\bigl(\\varphi \\Longrightarrow \\forall x\\,\\psi(x)\\bigr).\n\\]",
+  "current_dependencies": []
+}

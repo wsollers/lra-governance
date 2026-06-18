@@ -1,0 +1,12 @@
+{
+  "graph_id": "0031-0016",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "algebraic-structures",
+  "term": "ax:ordered-field-trichotomy",
+  "kind": "Axiom",
+  "title": "Ordered Field Trichotomy",
+  "root": "axiom",
+  "statement": "In an ordered field, for all elements $a$ and $b$, exactly one of the following\nholds:\n\\[\na=b,\\qquad a<b,\\qquad b<a.\n\\]",
+  "current_dependencies": []
+}

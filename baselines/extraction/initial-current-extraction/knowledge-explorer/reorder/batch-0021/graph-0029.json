@@ -1,0 +1,25 @@
+{
+  "graph_id": "0021-0029",
+  "volume": "ii",
+  "chapter": "whole-numbers",
+  "section": "extending-successor",
+  "term": "def:successor-on-w",
+  "kind": "Definition",
+  "title": "Successor on $ $",
+  "root": "",
+  "statement": "Define $S_{\\mathbb{W}}:\\mathbb{W}\\to\\mathbb{W}$ by\n\\[\nS_{\\mathbb{W}}(0)=1\n\\qquad\\text{and}\\qquad\nS_{\\mathbb{W}}(n)=S_{\\mathbb{N}}(n)\\quad(n\\in\\mathbb{N}).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:peano-system",
+      "title": "Peano System",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:whole-numbers",
+      "title": "Whole Numbers",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

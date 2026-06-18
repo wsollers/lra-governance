@@ -1,0 +1,19 @@
+{
+  "graph_id": "0010-0022",
+  "volume": "vi",
+  "chapter": "lattice-order",
+  "section": "ordered-sets",
+  "term": "def:order-isomorphism",
+  "kind": "Definition",
+  "title": "Order-Isomorphism",
+  "root": "",
+  "statement": "An \\hyperref[def:lattice-order-embedding]{order-embedding} $\\varphi : P \\to Q$\nthat is surjective is an \\emph{order-isomorphism}. When an\norder-isomorphism exists, $P$ and $Q$ are said to be\n\\emph{order-isomorphic}, written $P \\cong Q$.",
+  "current_dependencies": [
+    {
+      "id": "def:lattice-order-embedding",
+      "title": "Order-Embedding",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0036",
+  "term": "thm:mixed-quantifiers-do-not-commute",
+  "verdict": "change",
+  "dependencies": ["thm:qcomm", "def:log-equiv"],
+  "rationale": "Non-equivalence (not-equiv) is the negation of def:log-equiv, missing here. Same negative-result shape as 0035.",
+  "licensing_quote": "\\not\\equiv",
+  "confidence": 0.6,
+  "notes": "Counterexample structure not statement-licensed -> flagged not added. Edge to thm:qcomm (same-type commutation) is the contrast pairing. Note this is the not-equiv twin of 0026 (which states the same fact as a not-models non-entailment); the two should be treated alike."
+}

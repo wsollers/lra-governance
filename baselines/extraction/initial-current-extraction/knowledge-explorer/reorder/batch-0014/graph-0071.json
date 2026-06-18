@@ -1,0 +1,31 @@
+{
+  "graph_id": "0014-0071",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "definition",
+  "term": "thm:bounded-sequence-iff-bounded-above-and-below",
+  "kind": "Theorem",
+  "title": "Bounded Sequence If and Only If Bounded Above and Below",
+  "root": "",
+  "statement": "Let $(x_n)$ be a real sequence. The sequence $(x_n)$ is bounded if and only\nif it is both bounded above and bounded below.",
+  "current_dependencies": [
+    {
+      "id": "def:bounded-sequence",
+      "title": "Bounded Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:sequence-bounded-above",
+      "title": "Sequence Bounded Above",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:sequence-bounded-below",
+      "title": "Sequence Bounded Below",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

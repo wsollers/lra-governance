@@ -1,0 +1,37 @@
+{
+  "graph_id": "0021-0001",
+  "volume": "ii",
+  "chapter": "whole-numbers",
+  "section": "algebraic-structure-of-w",
+  "term": "thm:n-embeds-into-w-as-positive-part",
+  "kind": "Theorem",
+  "title": "$ $ Embeds into $ $ as the Positive Part",
+  "root": "",
+  "statement": "The inclusion map identifies $\\mathbb{N}$ with the positive part\n$\\mathbb{W}\\setminus\\{0\\}$ and preserves successor, $1$, addition,\nmultiplication, and order.",
+  "current_dependencies": [
+    {
+      "id": "def:whole-numbers",
+      "title": "Whole Numbers",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:addition-on-w-extends-addition-on-n",
+      "title": "Addition on $ $ Extends Addition on $ $",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:multiplication-on-w-extends-multiplication-on-n",
+      "title": "Multiplication on $ $ Extends Multiplication on $ $",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:order-on-w-extends-order-on-n",
+      "title": "Order on $ $ Extends Order on $ $",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "graph_id": "0020-0001",
+  "volume": "iii",
+  "chapter": "bounding",
+  "section": "bounds-algebra",
+  "term": "lem:rational-gap-suprema",
+  "kind": "Lemma",
+  "title": "Rational Gap Example for Suprema",
+  "root": "",
+  "statement": "Let\n\\[\n A=\\{q\\in\\mathbb{Q}:q^2<2\\}.\n\\]\nThen $A$ is nonempty and bounded above in $\\mathbb{Q}$, but $A$ has no supremum relative to $\\mathbb{Q}$.",
+  "current_dependencies": [
+    {
+      "id": "def:supremum",
+      "title": "Supremum",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:upper-bound",
+      "title": "Upper Bound",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:ambient-existence-supremum",
+      "title": "Ambient Existence of Supremum",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

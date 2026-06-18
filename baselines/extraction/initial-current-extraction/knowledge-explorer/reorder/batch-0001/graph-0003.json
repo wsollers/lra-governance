@@ -1,0 +1,12 @@
+{
+  "graph_id": "0001-0003",
+  "volume": "viii",
+  "chapter": "model-theory",
+  "section": "l-structures",
+  "term": "def:term-evaluation",
+  "kind": "Definition",
+  "title": "Term Evaluation",
+  "root": "",
+  "statement": "Let $\\mathcal{M}$ be an $\\mathcal{L}$-structure and $s : \\mathrm{Var} \\to M$\na variable assignment.\nThe \\textbf{evaluation} $s(t) \\in M$ of an $\\mathcal{L}$-term $t$ under\n$s$ is defined inductively:\n- If $t = v_i$ is a variable, then $s(t) = s(v_i)$.\n- If $t = c$ is a constant symbol, then $s(t) = c^{\\mathcal{M}}$.\n- If $t = f(t_1, \\ldots, t_n)$ for an $n$-ary function symbol $f$,\n then $s(t) = f^{\\mathcal{M}}(s(t_1), \\ldots, s(t_n))$.",
+  "current_dependencies": []
+}

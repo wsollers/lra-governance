@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0044",
+  "term": "def:log-equiv",
+  "verdict": "ok",
+  "dependencies": ["def:log-consequence"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.85,
+  "notes": "phi == psi is defined as phi |= psi and psi |= phi, so def:log-consequence is the sole, correct stating-dependency. This node retroactively validates the cluster of 'add def:log-equiv' changes at 0035-0037/0040-0042: log-equiv is a real node cleanly built on log-consequence."
+}

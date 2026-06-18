@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0024",
+  "term": "thm:constructive-dilemma-validity-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:valid-argument-form-propositional-logic", "thm:disjunctive-syllogism-validity-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.55,
+  "notes": "Validity (def:valid-argument-form) of the dilemma is load-bearing and present. The edge to thm:disjunctive-syllogism is flagged: the standard proof is a direct case analysis on phi or psi (phi gives chi via phi->chi; psi gives theta via psi->theta; so chi or theta), which does not obviously invoke disjunctive syllogism. Reviewer to confirm the intended proof route; if it is pure case-analysis, this edge may be dropped."
+}

@@ -1,0 +1,25 @@
+{
+  "graph_id": "0033-0049",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "functional-completeness",
+  "term": "def:incomplete-connective-set-propositional-logic",
+  "kind": "Definition",
+  "title": "Incomplete Connective Set",
+  "root": "",
+  "statement": "A connective basis is \\emph{incomplete} if it is not functionally complete.",
+  "current_dependencies": [
+    {
+      "id": "def:boolean-function-propositional-logic",
+      "title": "Boolean Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:functionally-complete-connective-set-propositional-logic",
+      "title": "Functionally Complete Connective Set",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

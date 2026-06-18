@@ -1,0 +1,19 @@
+{
+  "graph_id": "0014-0069",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "definition",
+  "term": "def:ultimately-constant-sequence",
+  "kind": "Definition",
+  "title": "Ultimately Constant Sequence",
+  "root": "",
+  "statement": "Let $(x_n)$ be a real sequence. The sequence $(x_n)$ is\n\\textbf{ultimately constant} exactly when there exist $N \\in \\mathbb{N}$ and\n$c \\in \\mathbb{R}$ such that $x_n = c$ for every $n \\ge N$.",
+  "current_dependencies": [
+    {
+      "id": "def:sequence",
+      "title": "Sequence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

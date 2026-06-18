@@ -1,0 +1,37 @@
+{
+  "graph_id": "0032-0078",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "order",
+  "term": "prop:sup-char",
+  "kind": "Proposition",
+  "title": "Characterisation of Supremum",
+  "root": "",
+  "statement": "Let $(A, \\leq)$ be a poset, $S \\subseteq A$, and $u^* \\in A$. Then\n$u^* = \\sup S$ if and only if:\n- [label=(\\roman*)]\n- $u^*$ is an upper bound of $S$; and\n- for every $v \\in A$ with $v < u^*$, there exists $s \\in S$ with\n $v < s$.",
+  "current_dependencies": [
+    {
+      "id": "def:bounds",
+      "title": "Upper and Lower Bounds",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:partial-order",
+      "title": "Partial Order",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:subset",
+      "title": "Subset",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:sup-inf",
+      "title": "Supremum and Infimum",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

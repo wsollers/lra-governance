@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0027",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "",
+  "term": "def:formal-model-theoretic-structures-l103",
+  "kind": "Definition",
+  "title": "Function",
+  "root": "",
+  "statement": "Let $A$ and $B$ be sets. A \\textbf{function} $f : A \\to B$ is a rule\n such that\n \\[\n (\\forall\\, a \\in A)\\;(\\exists!\\, b \\in B)\\;(f(a) = b).\n \\]\n The components of $f$ are:\n - \\textbf{Domain}: $\\operatorname{dom}(f) = A$,\n- \\textbf{Codomain}: $\\operatorname{cod}(f) = B$,\n- \\textbf{Graph}: $\\Gamma_f = \\{(a,\\, f(a)) : a \\in A\\}\n \\subseteq A \\times B$.\n Two functions are equal iff they have the same domain, codomain, and graph.",
+  "current_dependencies": []
+}

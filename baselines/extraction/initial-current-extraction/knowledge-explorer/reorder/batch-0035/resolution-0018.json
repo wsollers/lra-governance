@@ -1,0 +1,10 @@
+{
+  "graph_id": "0035-0018",
+  "term": "def:signature-constant-symbol",
+  "verdict": "ok",
+  "dependencies": ["def:arity", "def:signature"],
+  "rationale": "A constant symbol is characterized by c in F with ar(c)=0; the definition rests on the signature's function-symbol set (def:signature) and the arity map (def:arity), both present.",
+  "licensing_quote": "",
+  "confidence": 0.68,
+  "notes": "'c is already a well-formed term' names def:term; treated as ambient consequence of arity 0, not load-bearing for the definition."
+}

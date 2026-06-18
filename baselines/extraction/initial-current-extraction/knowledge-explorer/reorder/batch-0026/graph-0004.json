@@ -1,0 +1,19 @@
+{
+  "graph_id": "0026-0004",
+  "volume": "ii",
+  "chapter": "number-lines",
+  "section": "intervals-on-a-number-line",
+  "term": "def:ray",
+  "kind": "Definition",
+  "title": "Ray",
+  "root": "",
+  "statement": "Let $a\\in\\mathbb{R}$. The four \\emph{rays} determined by $a$ are\n\\[\n(a,\\infty)=\\{x:x>a\\},\\ [a,\\infty)=\\{x:x\\ge a\\},\\ (-\\infty,a)=\\{x:x<a\\},\\ (-\\infty,a]=\\{x:x\\le a\\}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:abstract-ordered-field",
+      "title": "Ordered Field",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

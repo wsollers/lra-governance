@@ -1,0 +1,25 @@
+{
+  "graph_id": "0014-0022",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "cauchy",
+  "term": "thm:reciprocal-cauchy-sequence",
+  "kind": "Theorem",
+  "title": "Reciprocals of Cauchy Sequences",
+  "root": "",
+  "statement": "Let $(x_n)$ be a Cauchy real sequence. If there exist $c>0$ and\n$N_0\\in\\mathbb{N}$ such that $|x_n|\\ge c$ for every $n\\ge N_0$, then\n$(1/x_n)$ is Cauchy.",
+  "current_dependencies": [
+    {
+      "id": "def:cauchy-sequence",
+      "title": "Cauchy Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:reciprocal-sequence",
+      "title": "Reciprocal Sequence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

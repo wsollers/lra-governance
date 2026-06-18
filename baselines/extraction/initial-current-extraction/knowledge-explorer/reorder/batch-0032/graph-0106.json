@@ -1,0 +1,12 @@
+{
+  "graph_id": "0032-0106",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "set-systems",
+  "term": "def:algebra-of-sets",
+  "kind": "Definition",
+  "title": "Algebra of Sets",
+  "root": "",
+  "statement": "A collection $\\mathcal{A}$ of subsets of $X$ is an \\emph{algebra of sets}\n(or \\emph{Boolean algebra of sets}, or \\emph{field of sets}) if:\n- [label=(\\roman*)]\n- $X \\in \\mathcal{A}$;\n- $A \\in \\mathcal{A}$ implies $A^c = X \\setminus A \\in \\mathcal{A}$;\n- $A, B \\in \\mathcal{A}$ implies $A \\cup B \\in \\mathcal{A}$.",
+  "current_dependencies": []
+}

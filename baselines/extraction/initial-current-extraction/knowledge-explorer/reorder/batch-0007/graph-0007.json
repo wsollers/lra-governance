@@ -1,0 +1,12 @@
+{
+  "graph_id": "0007-0007",
+  "volume": "vii",
+  "chapter": "euclidean-geometry",
+  "section": "foundations",
+  "term": "ax:euclid-common-notion-things-equal-to-same",
+  "kind": "Axiom",
+  "title": "Euclid Common Notion I: Equality is transitive through a common equal",
+  "root": "axiom",
+  "statement": "Things which are equal to the same thing are also equal to one another.",
+  "current_dependencies": []
+}

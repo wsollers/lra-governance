@@ -1,0 +1,19 @@
+{
+  "graph_id": "0034-0087",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "translation",
+  "term": "def:categorical-a-form-predicate-logic",
+  "kind": "Definition",
+  "title": "Universal Affirmative Form",
+  "root": "",
+  "statement": "The \\emph{universal affirmative} categorical form, called \\(A\\), translates\n``All \\(A\\) are \\(B\\)'' as\n\\[\n\\forall x\\,(A(x)\\to B(x)).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "prop:universal-translation-pattern",
+      "title": "Universal Translation Pattern",
+      "kind": "Proposition",
+      "root": ""
+    }
+  ]
+}

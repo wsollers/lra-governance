@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0073",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "number-systems-as-structures",
+  "term": "def:arithmetic-signature",
+  "kind": "Definition",
+  "title": "Arithmetic Signature",
+  "root": "",
+  "statement": "The \\textbf{arithmetic signature} is the collection of symbols used to view\nnumber systems as structures: arithmetic operations such as $+$ and $\\cdot$,\ndistinguished constants such as $0$ and $1$, and relations such as $\\leq$ when\norder is included.",
+  "current_dependencies": []
+}

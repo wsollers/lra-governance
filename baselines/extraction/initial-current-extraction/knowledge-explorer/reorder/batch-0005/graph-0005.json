@@ -1,0 +1,12 @@
+{
+  "graph_id": "0005-0005",
+  "volume": "viii",
+  "chapter": "ordinary-differential-equations",
+  "section": "differential-equations-models",
+  "term": "def:ordinary-differential-equations-solutions-family-of-solutions",
+  "kind": "Definition",
+  "title": "Family of Solutions",
+  "root": "",
+  "statement": "A \\textbf{family of solutions} of a differential equation is a collection of solution functions described by one or more parameters.\n\nFor example, a family of solutions may be written in the form\n\\[\ny(t)=\\Phi(t,C),\n\\]\nor more generally,\n\\[\ny(t)=\\Phi(t,C_1,C_2,\\dots,C_n),\n\\]\nwhere $C,C_1,\\dots,C_n$ are parameters. Each choice of the parameters gives one particular solution.",
+  "current_dependencies": []
+}

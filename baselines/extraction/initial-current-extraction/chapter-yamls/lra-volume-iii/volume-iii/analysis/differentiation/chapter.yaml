@@ -1,0 +1,290 @@
+subject: differentiation
+display_title: Differentiation
+volume: volume-iii
+status: in-progress
+dependencies:
+  prior: ''
+  next: ''
+path: volume-iii/analysis/differentiation
+environments:
+- label: thm:constant-multiple-rule
+  type: thm
+  file: notes\algebra-of-derivatives\notes-algebra-of-derivatives.tex
+  display_title: Constant Multiple Rule
+  proof_file: null
+- label: thm:sum-rule
+  type: thm
+  file: notes\algebra-of-derivatives\notes-algebra-of-derivatives.tex
+  display_title: Sum Rule
+  proof_file: null
+- label: thm:product-rule
+  type: thm
+  file: notes\algebra-of-derivatives\notes-algebra-of-derivatives.tex
+  display_title: Product Rule
+  proof_file: null
+- label: thm:quotient-rule
+  type: thm
+  file: notes\algebra-of-derivatives\notes-algebra-of-derivatives.tex
+  display_title: Quotient Rule
+  proof_file: null
+- label: cor:finite-sum-rule
+  type: cor
+  file: notes\algebra-of-derivatives\notes-algebra-of-derivatives.tex
+  display_title: Finite Sum Rule
+  proof_file: null
+- label: cor:extended-product-rule
+  type: cor
+  file: notes\algebra-of-derivatives\notes-algebra-of-derivatives.tex
+  display_title: Extended Product Rule
+  proof_file: null
+- label: cor:power-rule-special-case
+  type: cor
+  file: notes\algebra-of-derivatives\notes-algebra-of-derivatives.tex
+  display_title: Power Rule for Integer Powers of a Function
+  proof_file: null
+- label: thm:finite-linear-combination-rule
+  type: thm
+  file: notes\algebra-of-derivatives\notes-algebra-of-derivatives.tex
+  display_title: Finite Linear Combination Rule
+  proof_file: null
+- label: thm:constant-multiple-rule-interval
+  type: thm
+  file: notes\algebra-of-derivatives\notes-algebra-of-derivatives.tex
+  display_title: Constant Multiple Rule on an Interval
+  proof_file: null
+- label: thm:sum-rule-interval
+  type: thm
+  file: notes\algebra-of-derivatives\notes-algebra-of-derivatives.tex
+  display_title: Sum Rule on an Interval
+  proof_file: null
+- label: thm:product-rule-interval
+  type: thm
+  file: notes\algebra-of-derivatives\notes-algebra-of-derivatives.tex
+  display_title: Product Rule on an Interval
+  proof_file: null
+- label: thm:quotient-rule-interval
+  type: thm
+  file: notes\algebra-of-derivatives\notes-algebra-of-derivatives.tex
+  display_title: Quotient Rule on an Interval
+  proof_file: null
+- label: cor:finite-sum-rule-interval
+  type: cor
+  file: notes\algebra-of-derivatives\notes-algebra-of-derivatives.tex
+  display_title: Finite Sum Rule on an Interval
+  proof_file: null
+- label: cor:extended-product-rule-interval
+  type: cor
+  file: notes\algebra-of-derivatives\notes-algebra-of-derivatives.tex
+  display_title: Extended Product Rule on an Interval
+  proof_file: null
+- label: cor:power-rule-special-case-interval
+  type: cor
+  file: notes\algebra-of-derivatives\notes-algebra-of-derivatives.tex
+  display_title: Power Rule for Integer Powers of a Function on an Interval
+  proof_file: null
+- label: thm:finite-linear-combination-rule-interval
+  type: thm
+  file: notes\algebra-of-derivatives\notes-algebra-of-derivatives.tex
+  display_title: Finite Linear Combination Rule on an Interval
+  proof_file: null
+- label: def:caratheodory-factorization
+  type: def
+  file: notes\chain-rule\notes-caratheodory.tex
+  display_title: Carathéodory Factorization
+  proof_file: null
+- label: thm:caratheodory-characterization-of-differentiability
+  type: thm
+  file: notes\chain-rule\notes-caratheodory.tex
+  display_title: Carathéodory Characterization of Differentiability
+  proof_file: null
+- label: thm:chain-rule
+  type: thm
+  file: notes\chain-rule\notes-caratheodory.tex
+  display_title: Chain Rule
+  proof_file: null
+- label: def:derivative-at-a-point
+  type: def
+  file: notes\derivative-definition\notes-derivative-definition.tex
+  display_title: Derivative at a Point
+  proof_file: null
+- label: def:topological-definition-of-derivative-at-a-point
+  type: def
+  file: notes\derivative-definition\notes-derivative-definition.tex
+  display_title: Topological Definition of Derivative at a Point
+  proof_file: null
+- label: def:sequential-definition-of-derivative-at-a-point
+  type: def
+  file: notes\derivative-definition\notes-derivative-definition.tex
+  display_title: Sequential Definition of Derivative at a Point
+  proof_file: null
+- label: thm:derivative-equivalence
+  type: thm
+  file: notes\derivative-definition\notes-derivative-definition.tex
+  display_title: Equivalence of Definitions of the Derivative at a Point
+  proof_file: null
+- label: prop:derivative-h-form-equivalence
+  type: prop
+  file: notes\derivative-definition\notes-derivative-definition.tex
+  display_title: 'Derivative: $h$-Form Equivalence'
+  proof_file: null
+- label: thm:differentiable-implies-continuous
+  type: thm
+  file: notes\derivative-definition\notes-derivative-definition.tex
+  display_title: Differentiable Implies Continuous
+  proof_file: null
+- label: thm:uniqueness-of-the-derivative
+  type: thm
+  file: notes\derivative-definition\notes-derivative-definition.tex
+  display_title: Uniqueness of the Derivative
+  proof_file: null
+- label: prop:derivative-of-the-identity
+  type: prop
+  file: notes\derivative-definition\notes-derivative-definition.tex
+  display_title: Derivative of the Identity
+  proof_file: null
+- label: def:relative-minimum
+  type: def
+  file: notes\derivative-geometry\notes-derivative-geometry.tex
+  display_title: Relative Minimum
+  proof_file: null
+- label: def:relative-maximum
+  type: def
+  file: notes\derivative-geometry\notes-derivative-geometry.tex
+  display_title: Relative Maximum
+  proof_file: null
+- label: def:relative-extremum
+  type: def
+  file: notes\derivative-geometry\notes-derivative-geometry.tex
+  display_title: Relative Extremum
+  proof_file: null
+- label: thm:interior-extremum-theorem
+  type: thm
+  file: notes\derivative-geometry\notes-derivative-geometry.tex
+  display_title: Interior Extremum Theorem
+  proof_file: null
+- label: thm:necessary-condition-extremum
+  type: thm
+  file: notes\derivative-geometry\notes-derivative-geometry.tex
+  display_title: Necessary Condition for an Interior Extremum
+  proof_file: null
+- label: cor:necessary-condition-extremum
+  type: cor
+  file: notes\derivative-geometry\notes-derivative-geometry.tex
+  display_title: Necessary Condition for an Extremum
+  proof_file: null
+- label: def:increasing-at-a-point
+  type: def
+  file: notes\derivative-geometry\notes-understanding-derivatives.tex
+  display_title: Increasing at a Point
+  proof_file: null
+- label: def:decreasing-at-a-point
+  type: def
+  file: notes\derivative-geometry\notes-understanding-derivatives.tex
+  display_title: Decreasing at a Point
+  proof_file: null
+- label: thm:zero-derivative-implies-constant
+  type: thm
+  file: notes\derivative-geometry\notes-understanding-derivatives.tex
+  display_title: Zero Derivative Implies Constant
+  proof_file: null
+- label: cor:equal-derivatives-constant-difference
+  type: cor
+  file: notes\derivative-geometry\notes-understanding-derivatives.tex
+  display_title: Equal Derivatives Imply Difference Is Constant
+  proof_file: null
+- label: thm:nondecreasing-iff-nonneg-derivative
+  type: thm
+  file: notes\derivative-geometry\notes-understanding-derivatives.tex
+  display_title: Nondecreasing Iff Nonnegative Derivative
+  proof_file: null
+- label: thm:nonincreasing-iff-nonpos-derivative
+  type: thm
+  file: notes\derivative-geometry\notes-understanding-derivatives.tex
+  display_title: Nonincreasing Iff Nonpositive Derivative
+  proof_file: null
+- label: lem:positive-derivative-implies-locally-increasing
+  type: lem
+  file: notes\derivative-geometry\notes-understanding-derivatives.tex
+  display_title: Positive Derivative Implies Locally Increasing
+  proof_file: null
+- label: lem:negative-derivative-implies-locally-decreasing
+  type: lem
+  file: notes\derivative-geometry\notes-understanding-derivatives.tex
+  display_title: Negative Derivative Implies Locally Decreasing
+  proof_file: null
+- label: thm:first-derivative-test-maximum
+  type: thm
+  file: notes\derivative-geometry\notes-understanding-derivatives.tex
+  display_title: 'First Derivative Test: Relative Maximum'
+  proof_file: null
+- label: thm:first-derivative-test-minimum
+  type: thm
+  file: notes\derivative-geometry\notes-understanding-derivatives.tex
+  display_title: 'First Derivative Test: Relative Minimum'
+  proof_file: null
+- label: thm:darboux
+  type: thm
+  file: notes\derivative-geometry\notes-understanding-derivatives.tex
+  display_title: Darboux's Theorem
+  proof_file: null
+- label: thm:rolles-theorem
+  type: thm
+  file: notes\mean-value-theorem\notes-mean-value-theorem.tex
+  display_title: Rolle's Theorem
+  proof_file: null
+- label: thm:mean-value-theorem
+  type: thm
+  file: notes\mean-value-theorem\notes-mean-value-theorem.tex
+  display_title: Mean Value Theorem
+  proof_file: null
+- label: def:left-hand-derivative
+  type: def
+  file: notes\one-sided-derivatives\notes-one-sided-derivatives.tex
+  display_title: Left-Hand Derivative
+  proof_file: null
+- label: def:right-hand-derivative
+  type: def
+  file: notes\one-sided-derivatives\notes-one-sided-derivatives.tex
+  display_title: Right-Hand Derivative
+  proof_file: null
+- label: thm:differentiability-and-one-sided-derivatives
+  type: thm
+  file: notes\one-sided-derivatives\notes-one-sided-derivatives.tex
+  display_title: Differentiability and One-Sided Derivatives
+  proof_file: null
+- label: def:secant-line
+  type: def
+  file: notes\secant-tangent\notes-secant-tangent.tex
+  display_title: Secant Line
+  proof_file: null
+- label: def:tangent-line
+  type: def
+  file: notes\secant-tangent\notes-secant-tangent.tex
+  display_title: Tangent Line
+  proof_file: null
+- label: def:taylor-polynomial-at-a-point
+  type: def
+  file: notes\taylor-expansion\notes-taylor-expansion.tex
+  display_title: Taylor Polynomial at a Point
+  proof_file: null
+- label: def:taylor-remainder
+  type: def
+  file: notes\taylor-expansion\notes-taylor-expansion.tex
+  display_title: Taylor Remainder
+  proof_file: null
+- label: def:maclaurin-polynomial
+  type: def
+  file: notes\taylor-expansion\notes-taylor-expansion.tex
+  display_title: Maclaurin Polynomial
+  proof_file: null
+- label: thm:taylor-theorem-lagrange-remainder
+  type: thm
+  file: notes\taylor-expansion\notes-taylor-expansion.tex
+  display_title: Taylor's Theorem with Lagrange Remainder
+  proof_file: null
+- label: cor:taylor-expansion-peano-remainder
+  type: cor
+  file: notes\taylor-expansion\notes-taylor-expansion.tex
+  display_title: Taylor Expansion with Peano Remainder
+  proof_file: null
+proof_files: []

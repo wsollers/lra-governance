@@ -1,0 +1,25 @@
+{
+  "graph_id": "0034-0022",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "quantifiers",
+  "term": "thm:neg-bounded",
+  "kind": "Theorem",
+  "title": "Negation of Bounded Quantifiers",
+  "root": "",
+  "statement": "Let \\(A\\) be a set and let \\(\\varphi\\) be a formula. Then\n\\[\n\\neg(\\forall x\\in A\\,\\varphi)\\equiv \\exists x\\in A\\,\\neg\\varphi,\n\\qquad\n\\neg(\\exists x\\in A\\,\\varphi)\\equiv \\forall x\\in A\\,\\neg\\varphi.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:bounded-q",
+      "title": "Bounded Quantifier",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:qneg",
+      "title": "Quantifier Negation Laws",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

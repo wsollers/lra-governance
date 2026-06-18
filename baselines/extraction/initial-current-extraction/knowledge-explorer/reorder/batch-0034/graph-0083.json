@@ -1,0 +1,19 @@
+{
+  "graph_id": "0034-0083",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "translation",
+  "term": "prop:conditional-translation-pattern",
+  "kind": "Proposition",
+  "title": "Conditional Translation Pattern",
+  "root": "",
+  "statement": "An English statement of the form ``If \\(A\\), then \\(B\\)'' is translated by\n\\[\nA\\to B,\n\\]\nwith quantifiers placed according to the variables occurring in \\(A\\) and \\(B\\).",
+  "current_dependencies": [
+    {
+      "id": "prop:universal-translation-pattern",
+      "title": "Universal Translation Pattern",
+      "kind": "Proposition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "graph_id": "0033-0095",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "semantics",
+  "term": "def:logical-consequence-propositional-logic",
+  "kind": "Definition",
+  "title": "Logical Consequence",
+  "root": "",
+  "statement": "Let \\(\\Gamma\\subseteq\\WFF\\) and \\(\\varphi\\in\\WFF\\). The formula \\(\\varphi\\) is a logical consequence of \\(\\Gamma\\), written\n\\[\n\\Gamma\\models\\varphi,\n\\]\nif every truth assignment satisfying \\(\\Gamma\\) also satisfies \\(\\varphi\\).",
+  "current_dependencies": [
+    {
+      "id": "def:satisfaction-propositional-formula",
+      "title": "Satisfaction of a Formula",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:satisfaction-set-propositional-logic",
+      "title": "Satisfaction of a Set of Formulas",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

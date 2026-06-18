@@ -1,0 +1,31 @@
+{
+  "graph_id": "0020-0021",
+  "volume": "iii",
+  "chapter": "bounding",
+  "section": "bounds-algebra",
+  "term": "thm:supremum-is-monotone-under-inclusion",
+  "kind": "Theorem",
+  "title": "Supremum Is Monotone Under Inclusion",
+  "root": "",
+  "statement": "Let $A,B\\subseteq\\mathbb{R}$ be nonempty sets that are bounded above. If $A\\subseteq B$, then $\\sup A\\le \\sup B$.",
+  "current_dependencies": [
+    {
+      "id": "def:supremum",
+      "title": "Supremum",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:upper-bound",
+      "title": "Upper Bound",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "lem:subset-inclusion-preserves-upper-bounds",
+      "title": "Subset Inclusion Preserves Upper Bounds",
+      "kind": "Lemma",
+      "root": ""
+    }
+  ]
+}

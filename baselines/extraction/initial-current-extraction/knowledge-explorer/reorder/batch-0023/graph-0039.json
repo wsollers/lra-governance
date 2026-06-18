@@ -1,0 +1,19 @@
+{
+  "graph_id": "0023-0039",
+  "volume": "ii",
+  "chapter": "reals",
+  "section": "field-and-ordered-field-structure-of-r",
+  "term": "thm:r-is-a-field",
+  "kind": "Theorem",
+  "title": "$ $ Is a Field",
+  "root": "",
+  "statement": "The structure $(\\mathbb{R},+,\\cdot,0_{\\mathbb{R}},1_{\\mathbb{R}})$ is a field.",
+  "current_dependencies": [
+    {
+      "id": "thm:zero-not-one-in-r",
+      "title": "Zero Is Not One in $ $",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "graph_id": "0005-0013",
+  "volume": "viii",
+  "chapter": "ordinary-differential-equations",
+  "section": "differential-equations-models",
+  "term": "def:ordinary-differential-equations-terminology-linear-differential-equation",
+  "kind": "Definition",
+  "title": "Linear Differential Equation",
+  "root": "",
+  "statement": "A differential equation is called \\textbf{linear} if the unknown function and its derivatives appear only to the first power and are not multiplied together.\n\nAn $n$th-order linear ordinary differential equation for an unknown function $y=y(t)$ has the form\n\\[\na_n(t)y^{(n)}+a_{n-1}(t)y^{(n-1)}+\\cdots+a_1(t)y'+a_0(t)y=g(t),\n\\]\nwhere the coefficient functions\n\\[\na_0(t),a_1(t),\\dots,a_n(t)\n\\]\nand the forcing term $g(t)$ are given functions of the independent variable $t$.",
+  "current_dependencies": []
+}

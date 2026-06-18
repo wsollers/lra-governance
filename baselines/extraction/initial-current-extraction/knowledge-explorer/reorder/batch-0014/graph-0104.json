@@ -1,0 +1,25 @@
+{
+  "graph_id": "0014-0104",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "liminf-limsup",
+  "term": "thm:limsup-comparison-under-eventual-order",
+  "kind": "Theorem",
+  "title": "Limsup Comparison Under Eventual Order",
+  "root": "",
+  "statement": "Let $(x_n)$ and $(y_n)$ be bounded real sequences. If there exists\n$N\\in\\mathbb{N}$ such that $x_n\\le y_n$ for every $n\\ge N$, then\n\\[\n \\limsup_{n\\to\\infty}x_n\n \\le\n \\limsup_{n\\to\\infty}y_n.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:limsup-sequence",
+      "title": "Limit Superior of a Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:limit-preserves-eventual-order",
+      "title": "Limit Preserves Eventual Order",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

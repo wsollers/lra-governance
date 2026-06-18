@@ -1,0 +1,25 @@
+{
+  "graph_id": "0009-0016",
+  "volume": "vi",
+  "chapter": "linear-algebra",
+  "section": "vector-spaces",
+  "term": "thm:zero-scalar-times-vector",
+  "kind": "Theorem",
+  "title": "$0v=0$",
+  "root": "",
+  "statement": "For every $v \\in V$,\n\\[\n0v=0.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:vector-space",
+      "title": "Vector Space",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:unique-additive-inverse",
+      "title": "Unique Additive Inverse",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

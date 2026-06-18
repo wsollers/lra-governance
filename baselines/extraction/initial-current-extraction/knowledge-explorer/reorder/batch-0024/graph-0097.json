@@ -1,0 +1,12 @@
+{
+  "graph_id": "0024-0097",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "operations-on-q-classes",
+  "term": "thm:subtraction-on-q-well-defined",
+  "kind": "Theorem",
+  "title": "Subtraction on $ $ Is Well-Defined",
+  "root": "",
+  "statement": "Subtraction determines a well-defined binary operation\n$\\mathbb{Q}\\times\\mathbb{Q}\\to\\mathbb{Q}$.",
+  "current_dependencies": []
+}

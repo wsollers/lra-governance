@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0086",
+  "term": "prop:universal-translation-pattern",
+  "verdict": "ok",
+  "dependencies": ["def:molecular", "def:universal-q"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.6,
+  "notes": "'All A are B' -> forall x (A(x) -> B(x)): universal form (def:universal-q) over a molecular matrix (def:molecular, carrying the implication). Dual of the existential pattern (0084); symmetric set. 'In a broad domain' ambient."
+}

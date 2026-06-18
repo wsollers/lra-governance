@@ -1,0 +1,37 @@
+{
+  "graph_id": "0014-0099",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "liminf-limsup",
+  "term": "thm:convergence-iff-liminf-equals-limsup",
+  "kind": "Theorem",
+  "title": "Convergence iff Liminf Equals Limsup",
+  "root": "",
+  "statement": "Let $(x_n)$ be a bounded real sequence, and let $L\\in\\mathbb{R}$. Then\n$x_n\\to L$ if and only if\n\\[\n \\liminf_{n\\to\\infty}x_n\n =\n \\limsup_{n\\to\\infty}x_n\n =\n L.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:convergent-sequence",
+      "title": "Convergence of a Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:liminf-sequence",
+      "title": "Limit Inferior of a Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:limsup-sequence",
+      "title": "Limit Superior of a Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:sequence-squeeze-theorem",
+      "title": "Sequence Squeeze Theorem",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

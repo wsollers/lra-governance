@@ -1,0 +1,31 @@
+{
+  "graph_id": "0033-0062",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "functional-completeness",
+  "term": "thm:negation-disjunction-functionally-complete-propositional-logic",
+  "kind": "Theorem",
+  "title": "Negation and Disjunction are Functionally Complete",
+  "root": "",
+  "statement": "The connective basis\n\\[\n\\{\\neg,\\lor\\}\n\\]\nis functionally complete.",
+  "current_dependencies": [
+    {
+      "id": "thm:de-morgan-laws-propositional-logic",
+      "title": "De Morgan Laws for Propositional Logic",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:replacement-of-logical-equivalents-propositional-logic",
+      "title": "Replacement of Logical Equivalents",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:standard-connectives-functionally-complete-propositional-logic",
+      "title": "Standard Connectives are Functionally Complete",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "graph_id": "0010-0001",
+  "volume": "vi",
+  "chapter": "lattice-order",
+  "section": "ordered-sets",
+  "term": "def:antichain",
+  "kind": "Definition",
+  "title": "Antichain",
+  "root": "",
+  "statement": "Let $(S, \\leq)$ be a partially ordered set. A subset $A \\subseteq S$ is\nan \\emph{antichain} if no two distinct elements of $A$ are comparable:\n\\[\n\\forall x, y \\in A, \\quad x \\neq y \\Longrightarrow \\neg(x \\leq y) \\land \\neg(y \\leq x).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:lattice-order-partial-order",
+      "title": "Partial Order",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "graph_id": "0033-0036",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "compactness-preview",
+  "term": "def:unsatisfiability-witness-propositional-logic",
+  "kind": "Definition",
+  "title": "Unsatisfiability Witness",
+  "root": "",
+  "statement": "Let \\(\\Gamma\\subseteq\\WFF\\). A subset \\(\\Delta\\subseteq\\Gamma\\) is an\nunsatisfiability witness for \\(\\Gamma\\) if \\(\\Delta\\) is unsatisfiable.",
+  "current_dependencies": [
+    {
+      "id": "def:unsatisfiable-set-of-propositional-formulas",
+      "title": "Unsatisfiable Set of Propositional Formulas",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

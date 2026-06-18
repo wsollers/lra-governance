@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0058",
+  "term": "def:structure",
+  "verdict": "ok",
+  "dependencies": ["def:fo-language"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.65,
+  "notes": "A structure interprets the language, so def:fo-language is the correct primary dependency. The interpretation I is specified symbol-type by symbol-type (constant/function/predicate symbols, each n-ary), so def:constant-symbol/def:function-symbol/def:predicate-symbol and def:arity are directly referenced but transitive through def:fo-language. Reviewer may surface them if the convention prefers direct symbol edges. 'D is a nonempty set' is the standard structure hypothesis (no separate node)."
+}

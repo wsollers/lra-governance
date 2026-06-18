@@ -1,0 +1,25 @@
+{
+  "graph_id": "0025-0020",
+  "volume": "ii",
+  "chapter": "peano-systems",
+  "section": "defining-peano-systems",
+  "term": "thm:successor-inequality-reflection",
+  "kind": "Theorem",
+  "title": "Successor Inequality Reflection",
+  "root": "",
+  "statement": "Let $(P,S,1)$ be a Peano system. For all $a,b \\in P$, if $a \\neq b$, then\n$S(a)\\neq S(b)$.",
+  "current_dependencies": [
+    {
+      "id": "ax:peano-successor-injective",
+      "title": "Injectivity of Successor",
+      "kind": "Axiom",
+      "root": "axiom"
+    },
+    {
+      "id": "def:peano-system",
+      "title": "Peano System",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

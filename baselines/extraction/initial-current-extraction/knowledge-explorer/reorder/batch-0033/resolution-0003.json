@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0003",
+  "term": "thm:absorption-laws-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:logical-equivalence-propositional-logic", "thm:basic-boolean-equivalence-laws-propositional-logic", "thm:distributive-laws-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.6,
+  "notes": "Absorption is derived algebraically rather than from raw truth assignments: phi and (phi or psi) == phi follows from distribution (thm:distributive-laws) plus idempotence/identity in thm:basic-boolean-equivalence-laws, with == as def:logical-equivalence. A consistent layering choice -- derived laws build on the foundational laws (0004/0008) instead of re-deriving from semantics."
+}

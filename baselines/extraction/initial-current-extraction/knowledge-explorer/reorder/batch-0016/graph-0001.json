@@ -1,0 +1,25 @@
+{
+  "graph_id": "0016-0001",
+  "volume": "iii",
+  "chapter": "functions",
+  "section": "algebra-of-functions",
+  "term": "cor:composition-bijective",
+  "kind": "Corollary",
+  "title": "Composition of Bijections Is Bijective",
+  "root": "",
+  "statement": "Let $f:A\\to B$ and let $g:B\\to C$. If $f$ is bijective and $g$ is\nbijective, then $g\\circ f:A\\to C$ is bijective.",
+  "current_dependencies": [
+    {
+      "id": "def:composition",
+      "title": "Composition",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:function",
+      "title": "Function",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

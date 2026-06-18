@@ -1,0 +1,43 @@
+{
+  "graph_id": "0018-0032",
+  "volume": "iii",
+  "chapter": "differentiation",
+  "section": "derivative-geometry",
+  "term": "thm:interior-extremum-theorem",
+  "kind": "Theorem",
+  "title": "Interior Extremum Theorem",
+  "root": "",
+  "statement": "Let $I \\subseteq \\mathbb{R}$ be an open interval, let $f : I \\to \\mathbb{R}$, and let $c \\in I$.\nIf $f$ has a relative extremum at $c$ and $f$ is differentiable at $c$, then\n\\[\nf'(c) = 0.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:derivative-at-a-point",
+      "title": "Derivative at a Point",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:left-hand-derivative",
+      "title": "Left-Hand Derivative",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:relative-extremum",
+      "title": "Relative Extremum",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:right-hand-derivative",
+      "title": "Right-Hand Derivative",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:differentiability-and-one-sided-derivatives",
+      "title": "Differentiability and One-Sided Derivatives",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

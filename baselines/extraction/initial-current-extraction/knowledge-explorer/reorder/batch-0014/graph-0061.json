@@ -1,0 +1,25 @@
+{
+  "graph_id": "0014-0061",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "convergence",
+  "term": "thm:sequence-squeeze-theorem",
+  "kind": "Theorem",
+  "title": "Sequence Squeeze Theorem",
+  "root": "",
+  "statement": "Let $(a_n)$, $(x_n)$, and $(b_n)$ be real sequences, and let\n$L\\in\\mathbb{R}$. Suppose that $a_n\\to L$ and $b_n\\to L$. If there\nexists $N_0\\in\\mathbb{N}$ such that $a_n\\le x_n\\le b_n$ for every\n$n\\ge N_0$, then $x_n\\to L$.",
+  "current_dependencies": [
+    {
+      "id": "def:convergent-sequence",
+      "title": "Convergence of a Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:limit-preserves-eventual-order",
+      "title": "Limit Preserves Eventual Order",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "graph_id": "0033-0079",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "normal-forms",
+  "term": "def:clause-propositional-logic",
+  "kind": "Definition",
+  "title": "Clause",
+  "root": "",
+  "statement": "A \\emph{clause} is a finite disjunction of literals.",
+  "current_dependencies": [
+    {
+      "id": "def:literal-propositional-logic",
+      "title": "Literal",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "graph_id": "0034-0024",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "quantifiers",
+  "term": "def:strength",
+  "kind": "Definition",
+  "title": "Stronger Formula",
+  "root": "",
+  "statement": "A sentence \\(A\\) is \\emph{stronger than} a sentence \\(B\\) exactly when\n\\[\nA\\models B\n\\quad\\text{and}\\quad\nB\\not\\models A.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:log-consequence",
+      "title": "Logical Consequence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

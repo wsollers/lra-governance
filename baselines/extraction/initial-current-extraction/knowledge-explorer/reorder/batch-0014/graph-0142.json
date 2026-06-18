@@ -1,0 +1,19 @@
+{
+  "graph_id": "0014-0142",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "subsequences",
+  "term": "thm:subsequence-of-subsequence",
+  "kind": "Theorem",
+  "title": "Subsequence of a Subsequence",
+  "root": "",
+  "statement": "Every subsequence of a subsequence of $(x_n)$ is a subsequence of $(x_n)$.",
+  "current_dependencies": [
+    {
+      "id": "def:subsequence",
+      "title": "Subsequence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "graph_id": "0014-0122",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "monotonicity",
+  "term": "thm:strict-monotonicity-implies-monotonicity",
+  "kind": "Theorem",
+  "title": "Strict Monotonicity Implies Monotonicity",
+  "root": "",
+  "statement": "Let $(x_n)$ be a real sequence.\n- [label=(\\alph*)]\n- If $(x_n)$ is strictly increasing, then $(x_n)$ is increasing.\n- If $(x_n)$ is strictly decreasing, then $(x_n)$ is decreasing.",
+  "current_dependencies": [
+    {
+      "id": "def:decreasing-sequence",
+      "title": "Decreasing Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:increasing-sequence",
+      "title": "Increasing Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:strictly-decreasing-sequence",
+      "title": "Strictly Decreasing Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:strictly-increasing-sequence",
+      "title": "Strictly Increasing Sequence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

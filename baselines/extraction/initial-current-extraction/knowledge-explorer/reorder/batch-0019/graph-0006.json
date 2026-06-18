@@ -1,0 +1,19 @@
+{
+  "graph_id": "0019-0006",
+  "volume": "iii",
+  "chapter": "continuity",
+  "section": "approximation",
+  "term": "thm:weierstrass-approximation",
+  "kind": "Theorem",
+  "title": "Weierstrass Approximation Theorem",
+  "root": "",
+  "statement": "Let $f:[a,b]\\to\\mathbb{R}$ be continuous. For every $\\varepsilon>0$ there exists a polynomial $p_\\varepsilon\\in\\mathbb{R}[x]$ such that $\\|f-p_\\varepsilon\\|_{\\infty,[a,b]}<\\varepsilon$.",
+  "current_dependencies": [
+    {
+      "id": "thm:bernstein-approximation",
+      "title": "Bernstein Approximation Theorem",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

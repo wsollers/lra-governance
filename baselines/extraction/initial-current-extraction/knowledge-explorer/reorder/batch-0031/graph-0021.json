@@ -1,0 +1,25 @@
+{
+  "graph_id": "0031-0021",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "algebraic-structures",
+  "term": "def:commutative-monoid",
+  "kind": "Definition",
+  "title": "Commutative Monoid",
+  "root": "",
+  "statement": "A \\emph{commutative monoid} is a monoid whose operation is commutative.",
+  "current_dependencies": [
+    {
+      "id": "def:commutativity",
+      "title": "Commutativity",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:monoid",
+      "title": "Monoid",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

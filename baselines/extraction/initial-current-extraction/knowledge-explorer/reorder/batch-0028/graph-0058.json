@@ -1,0 +1,25 @@
+{
+  "graph_id": "0028-0058",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "operations-on-z-classes",
+  "term": "lem:multiplication-on-z-classes-respects-left-equivalence",
+  "kind": "Lemma",
+  "title": "Multiplication Respects Formal-Difference Equivalence on the Left",
+  "root": "",
+  "statement": "If $[a,b]=[a',b']$, then\n\\[\n[a,b]\\cdot[c,d]=[a',b']\\cdot[c,d].\n\\]",
+  "current_dependencies": [
+    {
+      "id": "thm:addition-on-w-cancellation",
+      "title": "Addition on $ $ Satisfies Cancellation",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:order-on-w-total",
+      "title": "Order on $ $ Is Total",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

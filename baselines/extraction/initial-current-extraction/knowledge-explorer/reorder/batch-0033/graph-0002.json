@@ -1,0 +1,25 @@
+{
+  "graph_id": "0033-0002",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "algebra",
+  "term": "def:propositional-equivalence-law",
+  "kind": "Definition",
+  "title": "Propositional Equivalence Law",
+  "root": "",
+  "statement": "A propositional equivalence law is a valid schema of the form\n\\[\n\\varphi\\equiv\\psi,\n\\]\nwith \\(\\varphi,\\psi\\in\\WFF\\). Each instance of the schema says that the two formulas have the same truth value under every truth assignment.",
+  "current_dependencies": [
+    {
+      "id": "def:logical-equivalence-propositional-logic",
+      "title": "Logical Equivalence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:well-formed-formula",
+      "title": "Well-Formed Formula",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

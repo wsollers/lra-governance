@@ -1,0 +1,12 @@
+{
+  "graph_id": "0034-0002",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "axioms",
+  "term": "ax:predicate-logic-universal-instantiation",
+  "kind": "Axiom",
+  "title": "Universal Instantiation",
+  "root": "axiom",
+  "statement": "For every formula $\\varphi(x)$ and every term $t$ that is free for $x$ in\n$\\varphi$,\n\\[\n\\forall x\\,\\varphi(x) \\Longrightarrow \\varphi(t).\n\\]",
+  "current_dependencies": []
+}

@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0023",
+  "term": "def:q-alt",
+  "verdict": "ok",
+  "dependencies": ["def:quantifier-prefix"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.55,
+  "notes": "The order is 'the ordered list of quantifiers in its prefix' -> def:quantifier-prefix is the operative object (present). The statement also says 'of a prenex formula', explicitly naming def:prenex-formula; that is load-bearing UNLESS it is already transitive through def:quantifier-prefix (which presupposes prenex form). Left unproposed pending the direct-vs-transitive convention. The 'witnesses depend on earlier variables' clause is explanatory."
+}

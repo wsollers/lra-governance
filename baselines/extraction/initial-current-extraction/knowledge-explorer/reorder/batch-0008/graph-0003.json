@@ -1,0 +1,12 @@
+{
+  "graph_id": "0008-0003",
+  "volume": "vii",
+  "chapter": "analytical-geometry",
+  "section": "lines",
+  "term": "def:intercept-form",
+  "kind": "Definition",
+  "title": "Intercept form",
+  "root": "",
+  "statement": "If a line meets the $x$-axis at $(a,0)$ and the $y$-axis at $(0,b)$ with\n$a,b\\neq 0$, its intercept form is\n\\[\n \\frac{x}{a}+\\frac{y}{b}=1.\n\\]",
+  "current_dependencies": []
+}

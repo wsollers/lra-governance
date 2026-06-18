@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0082",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "operations",
+  "term": "def:unary-operation",
+  "kind": "Definition",
+  "title": "Unary Operation",
+  "root": "",
+  "statement": "Let $S$ be a set.\nA \\textbf{unary operation} on $S$ is a function\n\\[\nf:S \\to S.\n\\]",
+  "current_dependencies": []
+}

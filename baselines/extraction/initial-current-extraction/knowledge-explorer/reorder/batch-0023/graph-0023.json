@@ -1,0 +1,25 @@
+{
+  "graph_id": "0023-0023",
+  "volume": "ii",
+  "chapter": "reals",
+  "section": "construction-of-r",
+  "term": "def:zero-in-r",
+  "kind": "Definition",
+  "title": "Zero in $ $",
+  "root": "",
+  "statement": "Define\n\\[\n0_{\\mathbb{R}}:=(0_{\\mathbb{Q}})^{\\ast}\n=\\{r\\in\\mathbb{Q}:r<0_{\\mathbb{Q}}\\}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:rational-cut",
+      "title": "Rational Cut",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:zero-in-q",
+      "title": "Zero in $ $",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

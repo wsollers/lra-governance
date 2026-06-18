@@ -1,0 +1,25 @@
+{
+  "graph_id": "0033-0083",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "normal-forms",
+  "term": "def:literal-propositional-logic",
+  "kind": "Definition",
+  "title": "Literal",
+  "root": "",
+  "statement": "A \\emph{literal} is either a propositional variable \\(P\\) or the negation\n\\(\\neg P\\) of a propositional variable \\(P\\).",
+  "current_dependencies": [
+    {
+      "id": "def:logical-connective",
+      "title": "Logical Connective",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:propositional-variable",
+      "title": "Propositional Variable",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

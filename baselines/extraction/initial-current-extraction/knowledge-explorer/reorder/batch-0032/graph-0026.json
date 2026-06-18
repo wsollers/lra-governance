@@ -1,0 +1,25 @@
+{
+  "graph_id": "0032-0026",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "families",
+  "term": "def:indexed-family",
+  "kind": "Definition",
+  "title": "Indexed Family of Sets",
+  "root": "",
+  "statement": "Let $I$ be a set (the \\emph{index set}) and $U$ a universe. An\n\\emph{indexed family of sets} is a function\n\\[\nF : I \\to \\mathcal{P}(U),\n\\]\nwith $F(i)$ typically written $A_i$. The family is denoted $\\{A_i\\}_{i \\in I}$.",
+  "current_dependencies": [
+    {
+      "id": "def:function",
+      "title": "Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:power-set",
+      "title": "Power Set",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

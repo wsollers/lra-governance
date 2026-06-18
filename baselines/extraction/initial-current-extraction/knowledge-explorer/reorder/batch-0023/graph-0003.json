@@ -1,0 +1,25 @@
+{
+  "graph_id": "0023-0003",
+  "volume": "ii",
+  "chapter": "reals",
+  "section": "addition-on-r",
+  "term": "def:subtraction-on-r",
+  "kind": "Definition",
+  "title": "Subtraction on $ $",
+  "root": "",
+  "statement": "For cuts $\\alpha,\\beta\\in\\mathbb{R}$, define\n\\[\n\\alpha-\\beta:=\\alpha+(-\\beta).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:addition-on-r",
+      "title": "Addition of Cuts",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:negation-on-r",
+      "title": "Negation of a Cut",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

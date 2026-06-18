@@ -1,0 +1,37 @@
+{
+  "graph_id": "0032-0102",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "relations",
+  "term": "def:cartesian-product-rel",
+  "kind": "Definition",
+  "title": "Cartesian Product — as foundation for relations",
+  "root": "",
+  "statement": "The \\emph{Cartesian product} of sets $A$ and $B$ is:\n\\[\nA \\times B\n\\;:=\\;\n\\{\\, (a,b) \\mid a \\in A \\text{ and } b \\in B \\,\\}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "ax:pairing",
+      "title": "Axiom of Pairing",
+      "kind": "Axiom",
+      "root": "axiom"
+    },
+    {
+      "id": "ax:power-set",
+      "title": "Axiom of Power Set",
+      "kind": "Axiom",
+      "root": "axiom"
+    },
+    {
+      "id": "ax:separation",
+      "title": "Axiom Schema of Separation",
+      "kind": "Axiom",
+      "root": "axiom"
+    },
+    {
+      "id": "def:ordered-pair",
+      "title": "Ordered Pair",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

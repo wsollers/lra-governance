@@ -1,0 +1,19 @@
+{
+  "graph_id": "0016-0024",
+  "volume": "iii",
+  "chapter": "functions",
+  "section": "limits",
+  "term": "thm:limits-are-local",
+  "kind": "Theorem",
+  "title": "Limits Are Local",
+  "root": "",
+  "statement": "Let $E \\subseteq X \\subseteq \\mathbb{R}$, let $x_0$ be a cluster\npoint of $E$, let $f : X \\to \\mathbb{R}$, and let $\\delta > 0$.\nThen\n\\[\n \\lim_{x\\to x_0;\\,x\\in E}f(x)=L\n \\;\\iff\\;\n \\lim_{x\\to x_0;\\,x\\in E\\cap(x_0-\\delta,x_0+\\delta)}f(x)=L.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:limit-function",
+      "title": "Limit of a Function",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

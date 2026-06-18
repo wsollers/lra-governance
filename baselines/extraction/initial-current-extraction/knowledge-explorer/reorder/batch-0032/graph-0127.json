@@ -1,0 +1,31 @@
+{
+  "graph_id": "0032-0127",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "sets",
+  "term": "thm:distributivity",
+  "kind": "Theorem",
+  "title": "Distributive Laws",
+  "root": "",
+  "statement": "Let $A,B,C$ be sets. Then\n\\[\nA \\cap (B \\cup C) = (A \\cap B) \\cup (A \\cap C),\n\\]\n\\[\nA \\cup (B \\cap C) = (A \\cup B) \\cap (A \\cup C).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "ax:extensionality",
+      "title": "Axiom of Extensionality",
+      "kind": "Axiom",
+      "root": "axiom"
+    },
+    {
+      "id": "def:intersection",
+      "title": "Intersection",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:union",
+      "title": "Union",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

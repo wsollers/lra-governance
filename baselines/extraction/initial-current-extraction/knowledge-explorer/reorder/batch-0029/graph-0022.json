@@ -1,0 +1,31 @@
+{
+  "graph_id": "0029-0022",
+  "volume": "ii",
+  "chapter": "identity-equality-equivalence",
+  "section": "equivalence",
+  "term": "thm:induced-map-out-of-quotient",
+  "kind": "Theorem",
+  "title": "Induced Map out of a Quotient",
+  "root": "",
+  "statement": "Let $g:A\\to B$. If\n\\[\na\\sim a'\\Longrightarrow g(a)=g(a'),\n\\]\nthen there is a unique well-defined map\n\\[\n\\overline{g}:A/{\\sim}\\to B\n\\]\nsuch that\n\\[\n\\overline{g}([a])=g(a)\n\\qquad\\text{and}\\qquad\n\\overline{g}\\circ\\pi=g,\n\\]\nwhere $\\pi:A\\to A/{\\sim}$ is the canonical projection.",
+  "current_dependencies": [
+    {
+      "id": "def:canonical-projection",
+      "title": "Canonical Projection",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "prop:projection-identifies-equivalent-elements",
+      "title": "Projection Identifies Exactly the Equivalent Elements",
+      "kind": "Proposition",
+      "root": ""
+    },
+    {
+      "id": "prop:projection-is-surjective",
+      "title": "Projection Is Surjective",
+      "kind": "Proposition",
+      "root": ""
+    }
+  ]
+}

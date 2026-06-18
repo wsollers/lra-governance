@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0124",
+  "term": "lem:constructor-disjointness-propositional-formulas",
+  "verdict": "change",
+  "dependencies": ["def:atomic-formula-propositional-logic", "def:well-formed-formula"],
+  "rationale": "Constructor disjointness (no variable is a negation, no variable is binary, no negation is binary) is a PRIMITIVE syntactic fact about the three formation cases of a wff (def:well-formed-formula), with the variable case named as atomic (def:atomic-formula); it is proved directly (first-symbol/string structure). def:main-connective is removed: it would invert the dependency order and create a cycle -- this lemma FEEDS thm:unique-decomposition (0132), which is precisely what makes def:main-connective (0114) well-defined, so 0124 -> main-connective -> unique-decomposition -> 0124.",
+  "licensing_quote": "",
+  "confidence": 0.65,
+  "notes": "Cycle-avoidance removal (parity with the layering: disjointness/injectivity -> unique-decomposition -> main-connective). The disjointness proof does not use the main connective; it establishes the very fact the main-connective notion later relies on. Confirmed against 0132's correct deps [wff, constructor-disjointness, constructor-injectivity]."
+}

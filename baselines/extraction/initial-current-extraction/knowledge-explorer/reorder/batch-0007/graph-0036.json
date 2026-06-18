@@ -1,0 +1,12 @@
+{
+  "graph_id": "0007-0036",
+  "volume": "vii",
+  "chapter": "euclidean-geometry",
+  "section": "foundations",
+  "term": "ax:euclid-postulate-right-angles-equal",
+  "kind": "Axiom",
+  "title": "Euclid Postulate IV: Equality of right angles",
+  "root": "axiom",
+  "statement": "Let it have been postulated that all right angles are equal to one another.",
+  "current_dependencies": []
+}

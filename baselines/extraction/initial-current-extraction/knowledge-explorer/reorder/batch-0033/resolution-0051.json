@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0051",
+  "term": "thm:conjunction-disjunction-not-functionally-complete-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:functionally-complete-connective-set-propositional-logic", "def:incomplete-connective-set-propositional-logic", "def:monotone-boolean-function-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.65,
+  "notes": "Proof invariant: formulas over {and, or} compute only monotone Boolean functions (def:monotone-boolean-function), but negation is non-monotone, so {and, or} cannot represent every function -- it is incomplete (def:incomplete-connective-set / not def:functionally-complete-connective-set). All three load-bearing and present."
+}

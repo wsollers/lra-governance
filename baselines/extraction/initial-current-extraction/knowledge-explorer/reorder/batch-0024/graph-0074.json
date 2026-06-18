@@ -1,0 +1,12 @@
+{
+  "graph_id": "0024-0074",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "operations-on-q-classes",
+  "term": "lem:nonzero-predicate-well-defined-q",
+  "kind": "Lemma",
+  "title": "Nonzero Predicate Is Well-Defined on $ $",
+  "root": "",
+  "statement": "For every prefraction $(a,b)\\in\\operatorname{Pre}\\mathbb{Q}$,\n\\[\n[a,b]\\ne 0_{\\mathbb{Q}}\n\\quad\\Longleftrightarrow\\quad\na\\ne 0_{\\mathbb{Z}}.\n\\]\nThus nonzeroness is independent of the representative.",
+  "current_dependencies": []
+}

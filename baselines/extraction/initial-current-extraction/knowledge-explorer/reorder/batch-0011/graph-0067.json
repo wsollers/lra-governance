@@ -1,0 +1,19 @@
+{
+  "graph_id": "0011-0067",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "laws-of-operations",
+  "term": "def:left-distributivity",
+  "kind": "Definition",
+  "title": "Left Distributivity",
+  "root": "",
+  "statement": "Let $+$ and $\\cdot$ be binary operations on $A$.\nMultiplication is \\textbf{left distributive} over addition if\n\\[\n\\forall a,b,c \\in A,\\quad\na\\cdot(b+c)=a\\cdot b+a\\cdot c.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:binary-arithmetic-operation",
+      "title": "Binary Arithmetic Operation",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

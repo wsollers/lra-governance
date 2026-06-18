@@ -1,0 +1,25 @@
+{
+  "graph_id": "0010-0016",
+  "volume": "vi",
+  "chapter": "lattice-order",
+  "section": "ordered-sets",
+  "term": "def:top-element",
+  "kind": "Definition",
+  "title": "Top Element",
+  "root": "",
+  "statement": "Let $(P, \\leq)$ be a partially ordered set. An element $\\top \\in P$ is\na \\emph{top element} (or \\emph{greatest element}) of $P$ if\n\\[\n\\forall x \\in P, \\quad x \\leq \\top.\n\\]\nIf a top element exists it is unique; it is denoted $\\top_P$ or simply\n$\\top$.",
+  "current_dependencies": [
+    {
+      "id": "def:bottom-element",
+      "title": "Bottom Element",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "prop:duality-principle",
+      "title": "Duality Principle",
+      "kind": "Proposition",
+      "root": ""
+    }
+  ]
+}

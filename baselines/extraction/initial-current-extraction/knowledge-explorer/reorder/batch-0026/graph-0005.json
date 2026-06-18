@@ -1,0 +1,19 @@
+{
+  "graph_id": "0026-0005",
+  "volume": "ii",
+  "chapter": "number-lines",
+  "section": "intervals-on-a-number-line",
+  "term": "def:right-half-open-interval",
+  "kind": "Definition",
+  "title": "Right-Half-Open Interval",
+  "root": "",
+  "statement": "Let $a,b\\in\\mathbb{R}$ with $a\\le b$. The \\emph{right-half-open interval} with endpoints $a$ and $b$ is\n\\[\n[a,b)=\\{\\,x\\in\\mathbb{R} : a\\le x<b\\,\\}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:abstract-ordered-field",
+      "title": "Ordered Field",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

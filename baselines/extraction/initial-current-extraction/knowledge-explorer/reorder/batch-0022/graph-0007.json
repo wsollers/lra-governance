@@ -1,0 +1,19 @@
+{
+  "graph_id": "0022-0007",
+  "volume": "ii",
+  "chapter": "structure-of-real-line",
+  "section": "covers-and-subcovers",
+  "term": "def:real-open-cover",
+  "kind": "Definition",
+  "title": "Open Cover",
+  "root": "",
+  "statement": "Let $E\\subseteq\\mathbb{R}$. An \\emph{open cover} of $E$ is a family $\\{U_{i}\\}_{i\\in I}$ of open subsets of $\\mathbb{R}$ with\n\\[\nE\\subseteq\\bigcup_{i\\in I} U_{i}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:open-set",
+      "title": "Open Set in $ $",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "graph_id": "0023-0037",
+  "volume": "ii",
+  "chapter": "reals",
+  "section": "field-and-ordered-field-structure-of-r",
+  "term": "thm:addition-preserves-order-on-r",
+  "kind": "Theorem",
+  "title": "Addition Preserves Order on $ $",
+  "root": "",
+  "statement": "For all $\\alpha,\\beta,\\gamma\\in\\mathbb{R}$,\n\\[\n\\alpha<\\beta \\Longrightarrow \\alpha+\\gamma<\\beta+\\gamma,\n\\]\nand the corresponding non-strict statement also holds.",
+  "current_dependencies": []
+}

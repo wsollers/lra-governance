@@ -1,0 +1,19 @@
+{
+  "graph_id": "0019-0014",
+  "volume": "iii",
+  "chapter": "continuity",
+  "section": "gauge",
+  "term": "def:mesh-of-partition",
+  "kind": "Definition",
+  "title": "Mesh of a Partition",
+  "root": "",
+  "statement": "Let $a,b \\in \\mathbb{R}$ with $a<b$, and let $P=\\{x_0,\\ldots,x_n\\}$ be a partition of $[a,b]$. A real number $m$ is the \\emph{mesh} (or \\emph{norm}) of $P$ if and only if\n\\[\nm=\\max_{1\\le i\\le n}(x_i - x_{i-1}).\n\\]\nThe mesh of $P$ is denoted by $\\|P\\|$ and is the unique $m$ satisfying this equivalence.",
+  "current_dependencies": [
+    {
+      "id": "def:interval-partition",
+      "title": "Partition",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

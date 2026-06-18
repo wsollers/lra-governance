@@ -1,0 +1,25 @@
+{
+  "graph_id": "0014-0109",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "liminf-limsup",
+  "term": "thm:tail-suprema-are-decreasing",
+  "kind": "Theorem",
+  "title": "Tail Suprema Are Decreasing",
+  "root": "",
+  "statement": "Let $(x_n)$ be a bounded real sequence, and let $(s_n)$ be its tail\nsupremum sequence. Then $(s_n)$ is decreasing.",
+  "current_dependencies": [
+    {
+      "id": "def:tail-supremum-sequence",
+      "title": "Tail Supremum Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:supremum-is-monotone-under-inclusion",
+      "title": "Supremum Is Monotone Under Inclusion",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

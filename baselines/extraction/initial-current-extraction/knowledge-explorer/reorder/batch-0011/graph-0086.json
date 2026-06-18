@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0086",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "relations",
+  "term": "def:strict-partial-order",
+  "kind": "Definition",
+  "title": "Strict Partial Order",
+  "root": "",
+  "statement": "A binary relation $<$ on $A$ is a \\textbf{strict partial order} if it is\nirreflexive, asymmetric, and transitive.",
+  "current_dependencies": []
+}

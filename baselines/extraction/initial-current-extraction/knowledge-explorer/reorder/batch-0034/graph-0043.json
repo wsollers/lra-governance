@@ -1,0 +1,25 @@
+{
+  "graph_id": "0034-0043",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "semantics",
+  "term": "def:log-consequence",
+  "kind": "Definition",
+  "title": "Logical Consequence",
+  "root": "",
+  "statement": "Let \\(T\\) be a set of sentences and let \\(\\varphi\\) be a sentence in the same\nlanguage. The sentence \\(\\varphi\\) is a \\emph{logical consequence} of \\(T\\),\nwritten \\(T\\models\\varphi\\), exactly when every model of \\(T\\) is a model of\n\\(\\varphi\\).",
+  "current_dependencies": [
+    {
+      "id": "def:model-theory-set",
+      "title": "Model of a Set of Sentences",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:theory",
+      "title": "Theory",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

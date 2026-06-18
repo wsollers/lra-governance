@@ -1,0 +1,12 @@
+{
+  "graph_id": "0028-0084",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "order-on-z",
+  "term": "cor:right-addition-preserves-order-on-z",
+  "kind": "Corollary",
+  "title": "Right Addition Preserves Order on $ $",
+  "root": "",
+  "statement": "For all $x,y,z\\in\\mathbb{Z}$,\n\\[\nx\\le y \\Longrightarrow x+z\\le y+z.\n\\]",
+  "current_dependencies": []
+}

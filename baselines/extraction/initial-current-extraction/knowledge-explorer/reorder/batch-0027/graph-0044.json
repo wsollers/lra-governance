@@ -1,0 +1,31 @@
+{
+  "graph_id": "0027-0044",
+  "volume": "ii",
+  "chapter": "natural-numbers",
+  "section": "order-on-n",
+  "term": "thm:order-transitive-on-peano-system",
+  "kind": "Theorem",
+  "title": "Order Is Transitive on a Peano System",
+  "root": "",
+  "statement": "Let $(P,S,1)$ be a Peano system. For every $a,b,c \\in P$,\n\\[\n\\bigl(a \\le b \\land b \\le c\\bigr)\n\\Longrightarrow\na \\le c.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:less-than-or-equal-on-peano-system",
+      "title": "Less Than or Equal on a Peano System",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:strict-less-than-on-peano-system",
+      "title": "Strict Less Than on a Peano System",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:addition-associative",
+      "title": "Addition Is Associative",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

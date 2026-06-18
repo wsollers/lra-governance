@@ -1,0 +1,25 @@
+{
+  "graph_id": "0028-0053",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "operations-on-z-classes",
+  "term": "def:subtraction-on-z",
+  "kind": "Definition",
+  "title": "Subtraction on $ $",
+  "root": "",
+  "statement": "For $x,y\\in\\mathbb{Z}$, define\n\\[\nx-y:=x+(-y).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:addition-on-z-classes",
+      "title": "Addition on $ $-Classes",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:negation-on-z-classes",
+      "title": "Negation on $ $-Classes",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

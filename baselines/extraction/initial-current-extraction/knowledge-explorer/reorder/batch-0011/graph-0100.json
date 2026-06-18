@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0100",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "rings",
+  "term": "prop:domain-cancellation",
+  "kind": "Proposition",
+  "title": "Cancellation in Integral Domains",
+  "root": "",
+  "statement": "Let $R$ be an integral domain and $a, b, c \\in R$ with $a \\neq 0$.\nThen\n\\[\nab = ac \\;\\Longrightarrow\\; b = c.\n\\]",
+  "current_dependencies": []
+}

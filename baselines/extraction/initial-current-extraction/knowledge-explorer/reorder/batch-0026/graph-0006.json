@@ -1,0 +1,19 @@
+{
+  "graph_id": "0026-0006",
+  "volume": "ii",
+  "chapter": "number-lines",
+  "section": "number-lines",
+  "term": "def:number-line",
+  "kind": "Definition",
+  "title": "Number Line",
+  "root": "",
+  "statement": "A \\emph{number line} for a linearly ordered system $(A,<_A)$ is a linearly ordered set of points $L$ together with an order isomorphism $\\lambda:A\\to L$, so that for all $a,a'\\in A$,\n\\[\na<_A a' \\Longleftrightarrow \\lambda(a) \\text{ lies to the left of } \\lambda(a').\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:order-embedding",
+      "title": "Order Embedding",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

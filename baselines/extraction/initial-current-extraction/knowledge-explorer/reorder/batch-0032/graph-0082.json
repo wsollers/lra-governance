@@ -1,0 +1,12 @@
+{
+  "graph_id": "0032-0082",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "order",
+  "term": "def:chain",
+  "kind": "Definition",
+  "title": "Chain and Antichain",
+  "root": "",
+  "statement": "A subset $C \\subseteq A$ of a poset $(A,\\leq)$ is a \\emph{chain} if every\npair of elements in $C$ is comparable. It is an \\emph{antichain} if no two\ndistinct elements of $C$ are comparable.",
+  "current_dependencies": []
+}

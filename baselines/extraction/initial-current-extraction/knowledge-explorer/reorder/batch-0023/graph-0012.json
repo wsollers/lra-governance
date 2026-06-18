@@ -1,0 +1,19 @@
+{
+  "graph_id": "0023-0012",
+  "volume": "ii",
+  "chapter": "reals",
+  "section": "characterization-of-r",
+  "term": "def:real-ordered-field",
+  "kind": "Definition",
+  "title": "Complete Ordered Field",
+  "root": "",
+  "statement": "A \\emph{complete ordered field} is an ordered field satisfying the\nleast-upper-bound property.",
+  "current_dependencies": [
+    {
+      "id": "thm:lub-property-r",
+      "title": "Least-Upper-Bound Property",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

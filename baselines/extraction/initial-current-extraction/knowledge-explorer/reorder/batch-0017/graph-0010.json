@@ -1,0 +1,25 @@
+{
+  "graph_id": "0017-0010",
+  "volume": "iii",
+  "chapter": "elementary-functions",
+  "section": "power-exponential",
+  "term": "def:number-e",
+  "kind": "Definition",
+  "title": "The Number $e$",
+  "root": "",
+  "statement": "The \\textbf{Euler number} is\n\\[\n e \\;:=\\; \\sum_{n=0}^{\\infty} \\frac{1}{n!}\n \\;=\\; \\lim_{n \\to \\infty} \\!\\left(1 + \\frac{1}{n}\\right)^{\\!n}\n \\;\\approx\\; 2.71828\\ldots\n\\]\nBoth expressions define the same real number.",
+  "current_dependencies": [
+    {
+      "id": "def:convergent-sequence",
+      "title": "Convergence of a Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:sequence",
+      "title": "Sequence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

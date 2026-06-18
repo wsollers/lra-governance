@@ -1,0 +1,19 @@
+{
+  "graph_id": "0014-0076",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "definition",
+  "term": "thm:eventually-bounded-above-tail-formulation",
+  "kind": "Theorem",
+  "title": "Eventually Bounded Above Tail Formulation",
+  "root": "",
+  "statement": "Let $(x_n)$ be a real sequence. The sequence $(x_n)$ is bounded above if and\nonly if there exist $N_0 \\in \\mathbb{N}$ and $M \\in \\mathbb{R}$ such that\n$x_n \\le M$ for every $n \\ge N_0$.",
+  "current_dependencies": [
+    {
+      "id": "def:sequence-bounded-above",
+      "title": "Sequence Bounded Above",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

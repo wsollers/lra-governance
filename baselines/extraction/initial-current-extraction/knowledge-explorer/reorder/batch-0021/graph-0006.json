@@ -1,0 +1,25 @@
+{
+  "graph_id": "0021-0006",
+  "volume": "ii",
+  "chapter": "whole-numbers",
+  "section": "algebraic-structure-of-w",
+  "term": "thm:w-is-not-a-ring",
+  "kind": "Theorem",
+  "title": "$ $ Is Not a Ring",
+  "root": "",
+  "statement": "With the operations $+_{\\mathbb{W}}$ and $\\cdot_{\\mathbb{W}}$, the whole\nnumbers do not form a ring.",
+  "current_dependencies": [
+    {
+      "id": "thm:w-commutative-semiring",
+      "title": "$( ,+, ,0,1)$ Is a Commutative Semiring",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:w-has-no-additive-inverses-except-zero",
+      "title": "$ $ Has No Additive Inverses Except $0$",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

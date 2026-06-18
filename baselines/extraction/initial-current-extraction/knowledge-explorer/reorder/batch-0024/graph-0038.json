@@ -1,0 +1,49 @@
+{
+  "graph_id": "0024-0038",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "embedding-z-into-q",
+  "term": "thm:z-embeds-into-q",
+  "kind": "Theorem",
+  "title": "$ $ Embeds into $ $",
+  "root": "",
+  "statement": "The map $\\iota:\\mathbb{Z}\\to\\mathbb{Q}$ is an injective order-preserving ring\nhomomorphism.",
+  "current_dependencies": [
+    {
+      "id": "thm:embedding-z-into-q-injective",
+      "title": "Embedding $ $ into $ $ Is Injective",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:embedding-z-into-q-preserves-addition",
+      "title": "Embedding Preserves Addition",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:embedding-z-into-q-preserves-multiplication",
+      "title": "Embedding Preserves Multiplication",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:embedding-z-into-q-preserves-one",
+      "title": "Embedding Preserves One",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:embedding-z-into-q-preserves-order",
+      "title": "Embedding Preserves Order",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:embedding-z-into-q-preserves-zero",
+      "title": "Embedding Preserves Zero",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

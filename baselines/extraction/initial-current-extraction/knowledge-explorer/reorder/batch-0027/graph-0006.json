@@ -1,0 +1,25 @@
+{
+  "graph_id": "0027-0006",
+  "volume": "ii",
+  "chapter": "natural-numbers",
+  "section": "addition-on-n",
+  "term": "thm:addition-right-cancellation",
+  "kind": "Theorem",
+  "title": "Right Cancellation for Addition",
+  "root": "",
+  "statement": "Let $(P,S,1)$ be a Peano system. For every $a,b,c \\in P$,\n\\[\nb+a=c+a\n\\Longrightarrow\nb=c.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "thm:addition-commutative",
+      "title": "Addition Is Commutative",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:addition-left-cancellation",
+      "title": "Left Cancellation for Addition",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

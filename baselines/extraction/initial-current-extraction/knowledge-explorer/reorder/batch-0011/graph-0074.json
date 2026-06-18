@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0074",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "number-systems-as-structures",
+  "term": "def:complex-number-model",
+  "kind": "Definition",
+  "title": "The Complex Number Model $ C$",
+  "root": "",
+  "statement": "The \\textbf{complex number model} is the\n$\\mathcal L_{\\mathrm{field}}$-structure\n\n\\[\n\\mathcal C\n=\n\\bigl(\n\\mathbb C;\n+^{\\mathcal C},\n\\cdot^{\\mathcal C},\n-^{\\mathcal C},\n{}^{-1\\,\\mathcal C},\n0^{\\mathcal C},\n1^{\\mathcal C}\n\\bigr),\n\\]\n\nwhose carrier\n\n\\[\n|\\mathcal C|\n=\n\\mathbb C\n\\]\n\nis the set of complex numbers constructed in Volume~II, and whose symbols\nare interpreted by the usual complex-number operations.",
+  "current_dependencies": []
+}

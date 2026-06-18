@@ -1,0 +1,31 @@
+{
+  "graph_id": "0020-0003",
+  "volume": "iii",
+  "chapter": "bounding",
+  "section": "bounds-algebra",
+  "term": "prop:bounds-sum-set",
+  "kind": "Proposition",
+  "title": "Bounds for Suprema and Infima Under Set Addition",
+  "root": "",
+  "statement": "Let $A,B\\subseteq\\mathbb{R}$ be nonempty and bounded. Then\n\\[\n \\inf A+\\inf B\\le \\inf(A+B)\n \\qquad\\text{and}\\qquad\n \\sup(A+B)\\le \\sup A+\\sup B.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:infimum",
+      "title": "Infimum",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:supremum",
+      "title": "Supremum",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:supremum-sum-set",
+      "title": "Supremum of a Sum Set",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

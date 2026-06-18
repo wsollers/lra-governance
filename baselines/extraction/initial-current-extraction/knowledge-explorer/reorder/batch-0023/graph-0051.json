@@ -1,0 +1,12 @@
+{
+  "graph_id": "0023-0051",
+  "volume": "ii",
+  "chapter": "reals",
+  "section": "multiplication-on-r",
+  "term": "lem:product-of-cuts-is-a-cut",
+  "kind": "Lemma",
+  "title": "Product of Cuts Is a Cut",
+  "root": "",
+  "statement": "If $\\alpha,\\beta\\in\\mathbb{R}$, then $\\alpha\\cdot\\beta\\in\\mathbb{R}$.",
+  "current_dependencies": []
+}

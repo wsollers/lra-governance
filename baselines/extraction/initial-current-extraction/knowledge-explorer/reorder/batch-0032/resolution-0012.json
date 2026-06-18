@@ -1,0 +1,10 @@
+{
+  "graph_id": "0032-0012",
+  "term": "def:equiv-class",
+  "verdict": "ok",
+  "dependencies": ["def:equivalence-relation", "def:relation"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.65,
+  "notes": "[a]_R = {x in A : (a,x) in R} for an equivalence relation R (def:equivalence-relation). REDUNDANCY NOTE: def:relation is subsumed by def:equivalence-relation (an equivalence relation IS a relation; the (a,x) in R membership is carried by it), so def:relation is a prunable redundant edge -- kept (not wrong) but flagged for the reviewer."
+}

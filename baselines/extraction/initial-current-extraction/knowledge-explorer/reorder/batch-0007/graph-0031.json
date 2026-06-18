@@ -1,0 +1,12 @@
+{
+  "graph_id": "0007-0031",
+  "volume": "vii",
+  "chapter": "euclidean-geometry",
+  "section": "foundations",
+  "term": "def:euclid-triangle-side-classes",
+  "kind": "Definition",
+  "title": "Equilateral, isosceles, and scalene triangles",
+  "root": "",
+  "statement": "Of trilateral figures, an equilateral triangle is that which has its three\nsides equal, an isosceles triangle that which has two of its sides alone equal,\nand a scalene triangle that which has its three sides unequal.",
+  "current_dependencies": []
+}

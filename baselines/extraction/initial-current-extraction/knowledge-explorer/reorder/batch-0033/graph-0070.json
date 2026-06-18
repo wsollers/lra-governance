@@ -1,0 +1,12 @@
+{
+  "graph_id": "0033-0070",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "normal-forms",
+  "term": "def:conjunctive-normal-form-propositional-logic",
+  "kind": "Definition",
+  "title": "Conjunctive Normal Form",
+  "root": "",
+  "statement": "A formula is in \\emph{conjunctive normal form}, abbreviated \\emph{CNF}, when it\nis a finite conjunction of\n\\hyperref[def:clause-propositional-logic]{clauses}. Equivalently, it has the\nshape\n\\[\nC_1\\land C_2\\land\\cdots\\land C_m,\n\\]\nwhere each \\(C_j\\) is a clause.",
+  "current_dependencies": []
+}

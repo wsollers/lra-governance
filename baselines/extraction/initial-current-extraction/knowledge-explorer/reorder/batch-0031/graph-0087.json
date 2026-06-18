@@ -1,0 +1,25 @@
+{
+  "graph_id": "0031-0087",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "inverse-operations",
+  "term": "def:two-sided-solvability",
+  "kind": "Definition",
+  "title": "Two-Sided Solvability",
+  "root": "",
+  "statement": "Two-sided solvability means both left solvability and right solvability hold.",
+  "current_dependencies": [
+    {
+      "id": "def:left-solvability",
+      "title": "Left Solvability",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:right-solvability",
+      "title": "Right Solvability",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

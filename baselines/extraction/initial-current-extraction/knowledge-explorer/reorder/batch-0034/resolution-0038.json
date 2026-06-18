@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0038",
+  "term": "thm:qdist",
+  "verdict": "ok",
+  "dependencies": ["def:existential-q", "def:log-equiv", "def:universal-q"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.7,
+  "notes": "Quantifier forms plus def:log-equiv (the ==) are present and load-bearing. The connectives and/or are treated as ambient logical scaffolding per the chapter convention. Reference set for the qcomm/qdist/qneg trio."
+}

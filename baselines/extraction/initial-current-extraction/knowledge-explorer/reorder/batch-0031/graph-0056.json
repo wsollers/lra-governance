@@ -1,0 +1,19 @@
+{
+  "graph_id": "0031-0056",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "field-and-ordered-field-laws",
+  "term": "thm:field-exponent-addition",
+  "kind": "Theorem",
+  "title": "Field Exponent Addition",
+  "root": "",
+  "statement": "In a field, if $a\\ne0$ and $m,n\\in\\mathbb{Z}$, then\n\\[\na^{m+n}=a^m\\cdot a^n.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:field-integer-power",
+      "title": "Field Integer Power",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

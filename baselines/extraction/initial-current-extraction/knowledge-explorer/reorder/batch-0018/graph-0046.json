@@ -1,0 +1,31 @@
+{
+  "graph_id": "0018-0046",
+  "volume": "iii",
+  "chapter": "differentiation",
+  "section": "mean-value-theorem",
+  "term": "thm:rolles-theorem",
+  "kind": "Theorem",
+  "title": "Rolle's Theorem",
+  "root": "",
+  "statement": "Let $a, b \\in \\mathbb{R}$ with $a < b$. Suppose that $f : [a,b] \\to \\mathbb{R}$ is continuous on $[a,b]$, differentiable on $(a,b)$, and satisfies $f(a) = f(b)$. Then there exists $c \\in (a,b)$ such that\n\\[\nf'(c) = 0.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:derivative-at-a-point",
+      "title": "Derivative at a Point",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:extreme-value-theorem",
+      "title": "Extreme Value Theorem",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:interior-extremum-theorem",
+      "title": "Interior Extremum Theorem",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

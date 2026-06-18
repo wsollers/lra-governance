@@ -1,0 +1,19 @@
+{
+  "graph_id": "0018-0030",
+  "volume": "iii",
+  "chapter": "differentiation",
+  "section": "derivative-geometry",
+  "term": "def:relative-maximum",
+  "kind": "Definition",
+  "title": "Relative Maximum",
+  "root": "",
+  "statement": "Let $A \\subseteq \\mathbb{R}$, let $f : A \\to \\mathbb{R}$, and let $c \\in A$. We say that $f$ has a \\emph{relative maximum} at $c$ if there exists $\\delta > 0$ such that\n\\[\nf(x) \\leq f(c) \\qquad \\text{for all } x \\in A \\cap (c-\\delta,c+\\delta).\n\\]\nIf, in addition,\n\\[\nf(x) < f(c) \\qquad \\text{for all } x \\in \\bigl(A \\cap (c-\\delta,c+\\delta)\\bigr)\\setminus\\{c\\},\n\\]\nthen $f$ has a \\emph{strict relative maximum} at $c$.",
+  "current_dependencies": [
+    {
+      "id": "def:relative-minimum",
+      "title": "Relative Minimum",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

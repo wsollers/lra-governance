@@ -1,0 +1,31 @@
+{
+  "graph_id": "0027-0039",
+  "volume": "ii",
+  "chapter": "natural-numbers",
+  "section": "order-on-n",
+  "term": "thm:addition-preserves-order-on-right",
+  "kind": "Theorem",
+  "title": "Addition Preserves Order on the Right",
+  "root": "",
+  "statement": "Let $(P,S,1)$ be a Peano system. For every $a,b,c \\in P$,\n\\[\na \\le b\n\\Longrightarrow\na+c \\le b+c.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:less-than-or-equal-on-peano-system",
+      "title": "Less Than or Equal on a Peano System",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:strict-less-than-on-peano-system",
+      "title": "Strict Less Than on a Peano System",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:addition-associative",
+      "title": "Addition Is Associative",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

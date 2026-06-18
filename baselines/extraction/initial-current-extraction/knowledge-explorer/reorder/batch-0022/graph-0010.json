@@ -1,0 +1,19 @@
+{
+  "graph_id": "0022-0010",
+  "volume": "ii",
+  "chapter": "structure-of-real-line",
+  "section": "interior-exterior-boundary",
+  "term": "def:boundary-point",
+  "kind": "Definition",
+  "title": "Boundary Point",
+  "root": "",
+  "statement": "Let $E\\subseteq\\mathbb{R}$ and $x\\in\\mathbb{R}$. Then $x$ is a boundary point of $E$ exactly when\n\\[\n\\forall r>0\\;(B_{r}(x)\\cap E\\neq\\emptyset \\;\\land\\; B_{r}(x)\\cap(\\mathbb{R}\\setminus E)\\neq\\emptyset).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:open-ball",
+      "title": "Open Ball on the Real Line",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

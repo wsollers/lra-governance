@@ -1,0 +1,25 @@
+{
+  "graph_id": "0034-0028",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "quantifiers",
+  "term": "thm:uniform-witness-implies-dependent-witness",
+  "kind": "Theorem",
+  "title": "Uniform Witness Implies Dependent Witness",
+  "root": "",
+  "statement": "For every formula \\(\\varphi(x,y)\\),\n\\[\n\\exists y\\,\\forall x\\,\\varphi(x,y)\n\\models\n\\forall x\\,\\exists y\\,\\varphi(x,y).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:log-consequence",
+      "title": "Logical Consequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:q-alt",
+      "title": "Quantifier Order",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

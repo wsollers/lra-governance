@@ -1,0 +1,43 @@
+{
+  "graph_id": "0034-0072",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "syntax",
+  "term": "def:bound-free",
+  "kind": "Definition",
+  "title": "Bound and Free Occurrences",
+  "root": "",
+  "statement": "An occurrence of a variable $x$ in a formula $\\varphi$ is \\emph{bound} if it\nlies within the scope of a quantifier $\\forall x$ or $\\exists x$.\n\nAn occurrence of $x$ is \\emph{free} if it is not bound by any quantifier in\n$\\varphi$.",
+  "current_dependencies": [
+    {
+      "id": "def:existential-q",
+      "title": "Existential Formula",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:formula",
+      "title": "Formula",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:scope",
+      "title": "Scope of a Quantifier",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:universal-q",
+      "title": "Universal Formula",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:variable",
+      "title": "Variable",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

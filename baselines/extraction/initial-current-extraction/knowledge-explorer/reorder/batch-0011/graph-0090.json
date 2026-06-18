@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0090",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "relations",
+  "term": "def:rel-irreflexive",
+  "kind": "Definition",
+  "title": "Irreflexive Relation",
+  "root": "",
+  "statement": "Let $R$ be a binary relation on $A$.\nThe relation $R$ is \\textbf{irreflexive} if no element of $A$ is related to\nitself:\n\\[\n\\forall a \\in A,\\quad \\lnot(a \\mathrel{R} a).\n\\]",
+  "current_dependencies": []
+}

@@ -1,0 +1,31 @@
+{
+  "graph_id": "0033-0046",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "functional-completeness",
+  "term": "def:definable-connective-propositional-logic",
+  "kind": "Definition",
+  "title": "Definable Connective",
+  "root": "",
+  "statement": "Let \\(B\\) be a connective basis. A connective \\(\\circ\\) is \\emph{definable from}\n\\(B\\) if there is a formula built using only connectives from \\(B\\) whose truth\nfunction agrees with the truth function of \\(\\circ\\).",
+  "current_dependencies": [
+    {
+      "id": "def:boolean-function-propositional-logic",
+      "title": "Boolean Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:connective-basis-propositional-logic",
+      "title": "Connective Basis",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:truth-function-induced-by-formula",
+      "title": "Truth Function Induced by a Formula",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

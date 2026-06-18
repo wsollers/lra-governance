@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0015",
+  "term": "thm:truth-table-validity-test-argument-forms-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:counterexample-assignment-propositional-logic", "def:truth-table-propositional-logic", "def:valid-argument-form-propositional-logic", "thm:finite-truth-table-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.7,
+  "notes": "Validity (def:valid-argument-form) iff no truth-table row (def:truth-table, finitely many by thm:finite-truth-table) is a counterexample (def:counterexample-assignment -- premises true, conclusion false). All four load-bearing and present; complete set."
+}

@@ -1,0 +1,25 @@
+{
+  "graph_id": "0016-0009",
+  "volume": "iii",
+  "chapter": "functions",
+  "section": "limits",
+  "term": "thm:limit-scalar-multiple",
+  "kind": "Theorem",
+  "title": "Scalar Multiple Rule for Function Limits",
+  "root": "",
+  "statement": "Let $f:A\\to\\mathbb{R}$, let $c$ be a cluster point of $A$, and let\n$\\alpha\\in\\mathbb{R}$. If $\\lim_{x\\to c}f(x)=L$, then\n\\[\n \\lim_{x\\to c}(\\alpha f)(x)=\\alpha L.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:limit-function",
+      "title": "Limit of a Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:pointwise-scalar-multiple-of-a-function",
+      "title": "Pointwise Scalar Multiple of a Function",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

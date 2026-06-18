@@ -1,0 +1,10 @@
+{
+  "graph_id": "0032-0005",
+  "term": "def:same-cardinality",
+  "verdict": "ok",
+  "dependencies": ["def:bijective"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.8,
+  "notes": "A ~ B iff there is a bijection A -> B (def:bijective). Sole load-bearing dep; the foundational equinumerosity relation the rest of the section rests on. Clean."
+}

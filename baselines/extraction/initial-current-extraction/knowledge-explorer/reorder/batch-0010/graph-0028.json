@@ -1,0 +1,12 @@
+{
+  "graph_id": "0010-0028",
+  "volume": "vi",
+  "chapter": "lattice-order",
+  "section": "ordered-sets",
+  "term": "def:partial-map",
+  "kind": "Definition",
+  "title": "Partial Map",
+  "root": "",
+  "statement": "Let $A$ and $B$ be sets. A \\emph{partial map} $f : A \\rightharpoonup B$\nis a relation $f \\subseteq A \\times B$ such that every element of $A$ has\nat most one image:\n\\[\n\\forall x \\in A,\\; \\forall y_1, y_2 \\in B,\\quad\n(x, y_1) \\in f \\;\\land\\; (x, y_2) \\in f\n\\;\\Longrightarrow\\; y_1 = y_2.\n\\]",
+  "current_dependencies": []
+}

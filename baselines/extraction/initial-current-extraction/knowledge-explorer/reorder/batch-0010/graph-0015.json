@@ -1,0 +1,25 @@
+{
+  "graph_id": "0010-0015",
+  "volume": "vi",
+  "chapter": "lattice-order",
+  "section": "ordered-sets",
+  "term": "def:minimal-element",
+  "kind": "Definition",
+  "title": "Minimal Element",
+  "root": "",
+  "statement": "Let $(P, \\leq)$ be a partially ordered set and let $Q \\subseteq P$. An\nelement $a \\in Q$ is \\emph{minimal in $Q$} if no element of $Q$ is\nstrictly below it:\n\\[\n\\forall x \\in Q, \\quad x \\leq a \\;\\Longrightarrow\\; x = a.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:maximal-element",
+      "title": "Maximal Element",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "prop:duality-principle",
+      "title": "Duality Principle",
+      "kind": "Proposition",
+      "root": ""
+    }
+  ]
+}

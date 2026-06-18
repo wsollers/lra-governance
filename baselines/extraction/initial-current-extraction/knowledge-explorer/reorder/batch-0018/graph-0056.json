@@ -1,0 +1,43 @@
+{
+  "graph_id": "0018-0056",
+  "volume": "iii",
+  "chapter": "differentiation",
+  "section": "taylor-expansion",
+  "term": "thm:taylor-theorem-lagrange-remainder",
+  "kind": "Theorem",
+  "title": "Taylor's Theorem with Lagrange Remainder",
+  "root": "",
+  "statement": "Let $a,b\\in\\mathbb{R}$ with $a<b$, let $n\\in\\mathbb{N}$, and let\n$f:[a,b]\\to\\mathbb{R}$. Suppose that $f,f',\\ldots,f^{(n)}$ are continuous\non $[a,b]$ and that $f^{(n+1)}$ exists on $(a,b)$. Then, for every\n$x\\in(a,b)$, there exists $c$ strictly between $a$ and $x$ such that\n\\[\n f(x)\n =\n \\sum_{k=0}^{n}\\frac{f^{(k)}(a)}{k!}(x-a)^k\n +\n \\frac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "cor:finite-sum-rule",
+      "title": "Finite Sum Rule",
+      "kind": "Corollary",
+      "root": ""
+    },
+    {
+      "id": "cor:power-rule-special-case",
+      "title": "Power Rule for Integer Powers of a Function",
+      "kind": "Corollary",
+      "root": ""
+    },
+    {
+      "id": "def:taylor-polynomial-at-a-point",
+      "title": "Taylor Polynomial at a Point",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:taylor-remainder",
+      "title": "Taylor Remainder",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:mean-value-theorem",
+      "title": "Mean Value Theorem",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

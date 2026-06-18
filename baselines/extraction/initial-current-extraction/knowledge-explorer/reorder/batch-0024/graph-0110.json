@@ -1,0 +1,25 @@
+{
+  "graph_id": "0024-0110",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "order-on-q",
+  "term": "lem:positivity-respects-equivalence-q",
+  "kind": "Lemma",
+  "title": "Positivity Respects Fraction Equivalence on $ $",
+  "root": "",
+  "statement": "If $[a,b]=[c,d]$, then\n\\[\na\\cdot b>0_{\\mathbb{Z}}\n\\Longleftrightarrow\nc\\cdot d>0_{\\mathbb{Z}}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "thm:z-has-no-zero-divisors",
+      "title": "$ $ Has No Zero Divisors",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:z-totally-ordered-set",
+      "title": "$ $ Is a Totally Ordered Set",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

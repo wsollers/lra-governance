@@ -1,0 +1,25 @@
+{
+  "graph_id": "0022-0004",
+  "volume": "ii",
+  "chapter": "structure-of-real-line",
+  "section": "compactness-on-r",
+  "term": "def:compact-set",
+  "kind": "Definition",
+  "title": "Compact Set in $ $",
+  "root": "",
+  "statement": "A set $K\\subseteq\\mathbb{R}$ is \\emph{compact} exactly when every open cover of $K$ admits a finite subcover:\n\\[\n\\forall \\{U_i\\}_{i\\in I}\\text{ open cover of }K\\;\\exists \\text{finite } J\\subseteq I\\;\\Bigl(K\\subseteq\\bigcup_{i\\in J}U_i\\Bigr).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:finite-subcover",
+      "title": "Subcover and Finite Subcover",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:real-open-cover",
+      "title": "Open Cover",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

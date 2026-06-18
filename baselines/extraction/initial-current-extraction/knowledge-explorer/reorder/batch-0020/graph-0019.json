@@ -1,0 +1,37 @@
+{
+  "graph_id": "0020-0019",
+  "volume": "iii",
+  "chapter": "bounding",
+  "section": "bounds-algebra",
+  "term": "thm:supremum-difference-set",
+  "kind": "Theorem",
+  "title": "Supremum of a Difference Set",
+  "root": "",
+  "statement": "Let $A,B\\subseteq\\mathbb{R}$ be nonempty, with $A$ bounded above and $B$ bounded below. Then\n\\[\n \\sup(A-B)=\\sup A-\\inf B,\n \\qquad\n A-B=\\{a-b:a\\in A,\\ b\\in B\\}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:infimum",
+      "title": "Infimum",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:supremum",
+      "title": "Supremum",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:negation-exchange-sup-inf",
+      "title": "Negation Exchanges Supremum and Infimum",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:supremum-sum-set",
+      "title": "Supremum of a Sum Set",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

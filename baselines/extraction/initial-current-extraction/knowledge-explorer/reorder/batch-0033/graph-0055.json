@@ -1,0 +1,25 @@
+{
+  "graph_id": "0033-0055",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "functional-completeness",
+  "term": "def:nand-only-formula-propositional-logic",
+  "kind": "Definition",
+  "title": "NAND-Only Formula",
+  "root": "",
+  "statement": "A \\emph{NAND-only formula} is a well-formed formula whose only connective is\n\\(\\uparrow\\).",
+  "current_dependencies": [
+    {
+      "id": "def:nand-connective-propositional-logic",
+      "title": "NAND Connective",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:well-formed-formula",
+      "title": "Well-Formed Formula",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

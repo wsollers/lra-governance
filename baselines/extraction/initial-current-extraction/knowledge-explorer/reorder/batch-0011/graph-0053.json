@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0053",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "functions",
+  "term": "def:alg-surjective",
+  "kind": "Definition",
+  "title": "Surjective Function",
+  "root": "",
+  "statement": "Let $f:A\\to B$.\nThe function $f$ is \\textbf{surjective} if\n\\[\n\\forall b \\in B,\\; \\exists a \\in A,\\; f(a)=b.\n\\]",
+  "current_dependencies": []
+}

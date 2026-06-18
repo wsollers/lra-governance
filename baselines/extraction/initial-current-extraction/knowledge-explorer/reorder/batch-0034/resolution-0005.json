@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0005",
+  "term": "thm:eq-pred",
+  "verdict": "ok",
+  "dependencies": ["def:eq-elim"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.55,
+  "notes": "The forward direction of the biconditional is immediate from substitution of equals (def:eq-elim). The reverse direction needs t2=t1, i.e. symmetry (thm:eq-sym). Kept at {def:eq-elim} on the reading that eq-elim is applied bidirectionally; if eq-elim is strictly directional as stated, thm:eq-sym becomes load-bearing -- but adding it would be a backward edge against the layer order (0005 -> 0006), so it is flagged rather than proposed. Reviewer to confirm eq-elim's directionality."
+}

@@ -1,0 +1,25 @@
+{
+  "graph_id": "0014-0095",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "liminf-limsup",
+  "term": "def:liminf-sequence",
+  "kind": "Definition",
+  "title": "Limit Inferior of a Sequence",
+  "root": "",
+  "statement": "Let $(x_n)$ be a bounded real sequence, and let $(i_n)$ be its tail\ninfimum sequence. The \\textbf{limit inferior} of $(x_n)$ is\n\\[\n \\liminf_{n\\to\\infty}x_n:=\\lim_{n\\to\\infty}i_n.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:convergent-sequence",
+      "title": "Convergence of a Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:tail-infimum-sequence",
+      "title": "Tail Infimum Sequence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

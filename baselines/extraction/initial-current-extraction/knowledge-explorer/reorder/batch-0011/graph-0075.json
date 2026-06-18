@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0075",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "number-systems-as-structures",
+  "term": "def:integer-model",
+  "kind": "Definition",
+  "title": "The Integer Model $ $",
+  "root": "",
+  "statement": "The \\textbf{integer model} is the\n$\\mathcal{L}_{\\mathrm{ring}}$-structure\n\n\\[\n\\mathcal{Z}\n=\n\\bigl(\n\\mathbb{Z};\n+^{\\mathcal Z},\n\\cdot^{\\mathcal Z},\n-^{\\mathcal Z},\n0^{\\mathcal Z},\n1^{\\mathcal Z}\n\\bigr),\n\\]\n\nwhose carrier $|\\mathcal Z|=\\mathbb Z$ is the set of integers constructed in\nVolume~II, and whose symbols are interpreted by the\n\n\\]\n\nis integer addition,\n\n\\[\n\\cdot^{\\mathcal Z}\n\\]\n\nis integer multiplication,\n\n\\[\n-^{\\mathcal Z}\n\\]\n\nis integer negation, and\n\n\\[\n0^{\\mathcal Z},\n\\quad\n1^{\\mathcal Z}\n\\]\n\nare the distinguished integer constants.",
+  "current_dependencies": []
+}

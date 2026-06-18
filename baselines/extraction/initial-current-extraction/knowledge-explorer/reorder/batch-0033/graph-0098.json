@@ -1,0 +1,25 @@
+{
+  "graph_id": "0033-0098",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "semantics",
+  "term": "def:satisfaction-set-propositional-logic",
+  "kind": "Definition",
+  "title": "Satisfaction of a Set of Formulas",
+  "root": "",
+  "statement": "Let \\(\\Gamma\\subseteq\\WFF\\). A truth assignment \\(v\\) satisfies \\(\\Gamma\\), written\n\\[\nv\\models\\Gamma,\n\\]\nif \\(v\\models\\gamma\\) for every \\(\\gamma\\in\\Gamma\\).",
+  "current_dependencies": [
+    {
+      "id": "def:satisfaction-propositional-formula",
+      "title": "Satisfaction of a Formula",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:truth-assignment-propositional-logic",
+      "title": "Truth Assignment",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

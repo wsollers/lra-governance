@@ -1,0 +1,19 @@
+{
+  "graph_id": "0014-0066",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "definition",
+  "term": "def:null-sequence",
+  "kind": "Definition",
+  "title": "Null Sequence",
+  "root": "",
+  "statement": "Let $(x_n)$ be a real sequence. The sequence $(x_n)$ is a\n\\textbf{null sequence} exactly when for every $\\varepsilon > 0$ there exists\n$N \\in \\mathbb{N}$ such that $|x_n| < \\varepsilon$ for every $n \\ge N$.",
+  "current_dependencies": [
+    {
+      "id": "def:sequence",
+      "title": "Sequence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

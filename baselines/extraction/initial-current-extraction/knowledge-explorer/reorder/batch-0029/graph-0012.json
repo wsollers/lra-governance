@@ -1,0 +1,25 @@
+{
+  "graph_id": "0029-0012",
+  "volume": "ii",
+  "chapter": "identity-equality-equivalence",
+  "section": "equivalence",
+  "term": "def:relation-respects-equivalence",
+  "kind": "Definition",
+  "title": "Relation Respects an Equivalence",
+  "root": "",
+  "statement": "Let $R$ be a binary relation on $A$. The relation $R$ \\emph{respects} $\\sim$\nif\n\\[\n\\forall a,a',b,b'\\in A,\\,\n\\bigl(a\\sim a'\\land b\\sim b'\\bigr)\n\\Longrightarrow\n\\bigl(R(a,b)\\Longleftrightarrow R(a',b')\\bigr).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:equivalence-relation",
+      "title": "Equivalence Relation",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:relation",
+      "title": "Relation",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

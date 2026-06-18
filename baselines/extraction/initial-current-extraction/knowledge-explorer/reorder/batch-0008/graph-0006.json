@@ -1,0 +1,12 @@
+{
+  "graph_id": "0008-0006",
+  "volume": "vii",
+  "chapter": "analytical-geometry",
+  "section": "lines",
+  "term": "def:symmetric-form-line",
+  "kind": "Definition",
+  "title": "Symmetric form",
+  "root": "",
+  "statement": "Given a point $(x_1,y_1)$ and direction cosines\n$(\\cos\\theta,\\sin\\theta)$, the symmetric form of a line is\n\\[\n \\frac{x-x_1}{\\cos\\theta}\n =\n \\frac{y-y_1}{\\sin\\theta}\n =\n r.\n\\]",
+  "current_dependencies": []
+}

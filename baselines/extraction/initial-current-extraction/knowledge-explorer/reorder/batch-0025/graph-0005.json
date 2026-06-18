@@ -1,0 +1,12 @@
+{
+  "graph_id": "0025-0005",
+  "volume": "ii",
+  "chapter": "peano-systems",
+  "section": "defining-peano-systems",
+  "term": "ax:peano-successor-injective",
+  "kind": "Axiom",
+  "title": "Injectivity of Successor",
+  "root": "axiom",
+  "statement": "If $m,n \\in P$ and $S(m)=S(n)$, then $m=n$.",
+  "current_dependencies": []
+}

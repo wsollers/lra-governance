@@ -1,0 +1,12 @@
+{
+  "graph_id": "0023-0063",
+  "volume": "ii",
+  "chapter": "reals",
+  "section": "order-on-r",
+  "term": "thm:order-on-r-reflexive",
+  "kind": "Theorem",
+  "title": "Order on $ $ Is Reflexive",
+  "root": "",
+  "statement": "For every $\\alpha\\in\\mathbb{R}$, $\\alpha\\le\\alpha$.",
+  "current_dependencies": []
+}

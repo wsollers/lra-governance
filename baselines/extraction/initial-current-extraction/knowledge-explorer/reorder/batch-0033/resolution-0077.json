@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0077",
+  "term": "thm:dnf-satisfiability-criterion-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:complementary-literals-propositional-logic", "def:disjunctive-normal-form-propositional-logic", "def:satisfiable-formula-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.6,
+  "notes": "The known criterion: a DNF (def:disjunctive-normal-form) is satisfiable (def:satisfiable-formula) iff some disjunct contains no complementary literals (def:complementary-literals). All three load-bearing and present and match the criterion, though the stored statement is truncated by a rendering gap -- reviewer should restore the full statement text."
+}

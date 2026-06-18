@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0086",
+  "term": "def:term-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:literal-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.8,
+  "notes": "A term (conjunction term) is a finite conjunction of literals; def:literal is the sole load-bearing constituent (the conjunction is ambient). This is the canonical conjunction-of-literals node synonymous with def:elementary-conjunction (0075) -- confirming that dedup pair."
+}

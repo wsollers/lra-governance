@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0023",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "fields",
+  "term": "prop:field-characteristic",
+  "kind": "Proposition",
+  "title": "Characteristic of a Field",
+  "root": "",
+  "statement": "Let $\\mathbb{F}$ be a field. The \\emph{characteristic} of $\\mathbb{F}$\nis the smallest positive integer $n$ such that\n\\[\n\\underbrace{1 + 1 + \\cdots + 1}_{n} = 0,\n\\]\nor $0$ if no such $n$ exists.\nThe characteristic of a field is either $0$ or a prime $p$.",
+  "current_dependencies": []
+}

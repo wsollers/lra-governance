@@ -1,0 +1,12 @@
+{
+  "graph_id": "0007-0017",
+  "volume": "vii",
+  "chapter": "euclidean-geometry",
+  "section": "foundations",
+  "term": "def:euclid-line",
+  "kind": "Definition",
+  "title": "Line",
+  "root": "",
+  "statement": "A line is breadthless length.",
+  "current_dependencies": []
+}

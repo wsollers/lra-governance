@@ -1,0 +1,10 @@
+{
+  "graph_id": "0032-0031",
+  "term": "def:composition",
+  "verdict": "change",
+  "dependencies": ["def:function"],
+  "rationale": "Composition g o f is defined pointwise by (g o f)(a) := g(f(a)) for functions f, g (def:function). def:cartesian-product-rel is removed: it underlies function-as-relation but is carried transitively by def:function, so it is redundant here -- the pointwise definition does not invoke the product directly.",
+  "licensing_quote": "",
+  "confidence": 0.6,
+  "notes": "Over-inclusion removal. If the corpus convention is to surface the relational substrate explicitly on every function operation, the reviewer may restore it; but by the load-bearing/ambient rule it is redundant given def:function."
+}

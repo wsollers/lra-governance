@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0123",
+  "term": "lem:closure-under-formation-propositional-formulas",
+  "verdict": "ok",
+  "dependencies": ["def:well-formed-formula"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.7,
+  "notes": "WFF is closed under the formation rules -- nearly immediate from the smallest-set definition (def:well-formed-formula). The connectives appearing in the rules are carried by def:well-formed-formula's own definition, so the single dep suffices."
+}

@@ -1,0 +1,12 @@
+{
+  "graph_id": "0024-0113",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "order-on-q",
+  "term": "thm:absolute-value-nonnegative-on-q",
+  "kind": "Theorem",
+  "title": "Absolute Value Is Nonnegative on $ $",
+  "root": "",
+  "statement": "For every $x\\in\\mathbb{Q}$,\n\\[\n0_{\\mathbb{Q}}\\le |x|.\n\\]",
+  "current_dependencies": []
+}

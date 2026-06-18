@@ -1,0 +1,25 @@
+{
+  "graph_id": "0020-0007",
+  "volume": "iii",
+  "chapter": "bounding",
+  "section": "bounds-algebra",
+  "term": "prop:suprema-ambient-set",
+  "kind": "Proposition",
+  "title": "Suprema Depend on the Ambient Set",
+  "root": "",
+  "statement": "Let $A\\subseteq S\\subseteq S'$ be subsets of an ordered set. The supremum of $A$ relative to $S$, if it exists, need not agree with the supremum of $A$ relative to $S'$.",
+  "current_dependencies": [
+    {
+      "id": "def:supremum",
+      "title": "Supremum",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:upper-bound",
+      "title": "Upper Bound",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

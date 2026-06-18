@@ -1,0 +1,19 @@
+{
+  "graph_id": "0034-0053",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "semantics",
+  "term": "def:fol-satisfiability",
+  "kind": "Definition",
+  "title": "Satisfiability",
+  "root": "",
+  "statement": "A formula \\(\\varphi\\) is \\emph{satisfiable} exactly when there are a structure\n\\(\\mathcal M\\) and a variable assignment \\(s\\) such that\n\\(\\mathcal M,s\\models\\varphi\\).",
+  "current_dependencies": [
+    {
+      "id": "def:fol-satisfaction",
+      "title": "Satisfaction",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

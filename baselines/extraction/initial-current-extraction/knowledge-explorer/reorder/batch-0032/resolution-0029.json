@@ -1,0 +1,10 @@
+{
+  "graph_id": "0032-0029",
+  "term": "def:pairwise-disjoint",
+  "verdict": "change",
+  "dependencies": ["def:empty-set", "def:indexed-family", "def:intersection"],
+  "rationale": "Pairwise disjointness of an indexed family {A_i} (def:indexed-family) is the condition that distinct members have empty (def:empty-set) binary intersection A_i cap A_j (def:intersection). All three were missing.",
+  "licensing_quote": "$A_i \\cap A_j = \\varnothing$",
+  "confidence": 0.65,
+  "notes": "Under-specified []. Here the BINARY def:intersection IS used (A_i cap A_j of two members), in contrast to the indexed-intersection definition (0027). licensing_quote grounds intersection + empty-set; def:indexed-family is the operand."
+}

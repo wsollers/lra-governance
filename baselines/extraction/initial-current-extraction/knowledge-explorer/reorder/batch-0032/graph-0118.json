@@ -1,0 +1,12 @@
+{
+  "graph_id": "0032-0118",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "sets",
+  "term": "ax:infinity",
+  "kind": "Axiom",
+  "title": "Axiom of Infinity",
+  "root": "axiom",
+  "statement": "There exists an infinite set.\n\\[\n\\exists A \\,\n\\Bigl( \\varnothing \\in A \\land\n\\forall x \\, (x \\in A \\rightarrow x \\cup \\{x\\} \\in A) \\Bigr).\n\\]",
+  "current_dependencies": []
+}

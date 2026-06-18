@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0081",
+  "term": "def:translation-key-predicate-logic",
+  "verdict": "change",
+  "dependencies": ["def:constant-symbol", "def:predicate-symbol", "def:relation-symbol"],
+  "rationale": "The key 'assigns intended English readings to the constant symbols, predicate symbols, and relation symbols' -- it explicitly ranges over all three symbol kinds, but def:relation-symbol was missing. Added.",
+  "licensing_quote": "relation symbols",
+  "confidence": 0.65,
+  "notes": "Deliberately NOT adding def:domain-of-discourse-predicate-logic despite 'fixes a domain of discourse': that node (0078) already depends on the translation key, so an edge here would create a 0078<->0081 cycle. The key is upstream; domain-of-discourse is downstream."
+}

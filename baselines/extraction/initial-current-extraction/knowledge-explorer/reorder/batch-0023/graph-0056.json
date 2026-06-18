@@ -1,0 +1,12 @@
+{
+  "graph_id": "0023-0056",
+  "volume": "ii",
+  "chapter": "reals",
+  "section": "multiplication-on-r",
+  "term": "thm:one-multiplicative-identity-on-r",
+  "kind": "Theorem",
+  "title": "One Is a Multiplicative Identity on $ $",
+  "root": "",
+  "statement": "For every $\\alpha\\in\\mathbb{R}$,\n\\[\n\\alpha\\cdot 1_{\\mathbb{R}}=\\alpha.\n\\]",
+  "current_dependencies": []
+}

@@ -1,0 +1,19 @@
+{
+  "graph_id": "0034-0005",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "proof-theory",
+  "term": "thm:eq-pred",
+  "kind": "Theorem",
+  "title": "Predicate Substitution under Equality",
+  "root": "",
+  "statement": "If $t_1 = t_2$ and $P$ is an $n$-ary predicate symbol, then\n$P(\\dots,t_1,\\dots) \\;\\Leftrightarrow\\; P(\\dots,t_2,\\dots)$.",
+  "current_dependencies": [
+    {
+      "id": "def:eq-elim",
+      "title": "Equality Elimination — Substitution of Equals",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

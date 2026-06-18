@@ -1,0 +1,37 @@
+{
+  "graph_id": "0033-0065",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "normal-forms",
+  "term": "def:canonical-disjunctive-normal-form-propositional-logic",
+  "kind": "Definition",
+  "title": "Canonical Disjunctive Normal Form",
+  "root": "",
+  "statement": "Let \\(\\varphi\\in\\WFF\\), and fix an ordering \\(P_1,\\ldots,P_n\\) of the finite\nvariable set of \\(\\varphi\\). The \\emph{canonical disjunctive normal form} of\n\\(\\varphi\\) relative to this ordering is the disjunction of the\n\ncorresponding to the rows on which \\(\\varphi\\) is true.",
+  "current_dependencies": [
+    {
+      "id": "def:disjunctive-normal-form-propositional-logic",
+      "title": "Disjunctive Normal Form",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:empty-clause-propositional-logic",
+      "title": "Empty Clause",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:truth-table-propositional-logic",
+      "title": "Truth Table",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:truth-table-row-conjunction-propositional-logic",
+      "title": "Truth-Table Row Conjunction",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "graph_id": "0028-0105",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "order-on-z",
+  "term": "thm:left-positive-multiplication-preserves-strict-order-on-z",
+  "kind": "Theorem",
+  "title": "Left Multiplication by Positives Preserves Strict Order on $ $",
+  "root": "",
+  "statement": "For all $x,y,z\\in\\mathbb{Z}$,\n\\[\n0<z\\land x<y \\Longrightarrow z\\cdot x<z\\cdot y.\n\\]",
+  "current_dependencies": []
+}

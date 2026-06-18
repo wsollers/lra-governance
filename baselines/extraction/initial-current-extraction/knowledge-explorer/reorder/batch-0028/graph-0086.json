@@ -1,0 +1,12 @@
+{
+  "graph_id": "0028-0086",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "order-on-z",
+  "term": "cor:right-positive-multiplication-preserves-order-on-z",
+  "kind": "Corollary",
+  "title": "Right Multiplication by Positives Preserves Order on $ $",
+  "root": "",
+  "statement": "For all $x,y,z\\in\\mathbb{Z}$,\n\\[\n0<z\\land x\\le y \\Longrightarrow x\\cdot z\\le y\\cdot z.\n\\]",
+  "current_dependencies": []
+}

@@ -1,0 +1,25 @@
+{
+  "graph_id": "0033-0045",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "functional-completeness",
+  "term": "def:connective-basis-propositional-logic",
+  "kind": "Definition",
+  "title": "Connective Basis",
+  "root": "",
+  "statement": "A \\emph{connective basis} is a specified set \\(B\\) of propositional connectives\nallowed as primitive connectives for building formulas.",
+  "current_dependencies": [
+    {
+      "id": "def:logical-connective",
+      "title": "Logical Connective",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:propositional-language",
+      "title": "Propositional Language",
+      "kind": "Definition",
+      "root": "definitional_truth"
+    }
+  ]
+}

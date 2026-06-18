@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0045",
+  "term": "def:connective-basis-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:logical-connective", "def:propositional-language"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.65,
+  "notes": "A basis is a set of logical connectives (def:logical-connective) designated as primitive for building formulas in the propositional language (def:propositional-language). Both load-bearing and present."
+}

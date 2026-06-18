@@ -1,0 +1,12 @@
+{
+  "graph_id": "0017-0016",
+  "volume": "iii",
+  "chapter": "elementary-functions",
+  "section": "trigonometric",
+  "term": "def:other-trig",
+  "kind": "Definition",
+  "title": "Tangent, Cotangent, Secant, Cosecant",
+  "root": "",
+  "statement": "\\[\n \\tan x := \\frac{\\sin x}{\\cos x},\\quad\n \\cot x := \\frac{\\cos x}{\\sin x},\\quad\n \\sec x := \\frac{1}{\\cos x},\\quad\n \\csc x := \\frac{1}{\\sin x}.\n\\]\n$\\tan x$ and $\\sec x$ are defined where $\\cos x \\neq 0$,\ni.e., $x \\neq \\pi/2 + k\\pi$ for $k \\in \\mathbb{Z}$.",
+  "current_dependencies": []
+}

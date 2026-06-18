@@ -1,0 +1,19 @@
+{
+  "graph_id": "0032-0133",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "sets",
+  "term": "def:empty-set",
+  "kind": "Definition",
+  "title": "Empty Set",
+  "root": "",
+  "statement": "The unique set with no elements is called the \\emph{empty set} and is denoted\n$\\varnothing$.",
+  "current_dependencies": [
+    {
+      "id": "ax:empty-set",
+      "title": "Axiom of Empty Set",
+      "kind": "Axiom",
+      "root": "axiom"
+    }
+  ]
+}

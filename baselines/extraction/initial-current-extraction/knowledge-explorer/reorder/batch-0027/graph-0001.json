@@ -1,0 +1,25 @@
+{
+  "graph_id": "0027-0001",
+  "volume": "ii",
+  "chapter": "natural-numbers",
+  "section": "addition-on-n",
+  "term": "def:addition-on-peano-system",
+  "kind": "Definition",
+  "title": "Addition on a Peano System",
+  "root": "",
+  "statement": "Let $(P,S,1)$ be a Peano system. For each $m \\in P$, define the function\n\\[\nf_m : P \\to P\n\\]\nto be the unique function satisfying\n\\[\nf_m(1)=S(m)\n\\qquad\\text{and}\\qquad\n\\forall n \\in P\\;(f_m(S(n))=S(f_m(n))).\n\\]\nFor $m,n \\in P$, define\n\\[\nm+n \\coloneqq f_m(n).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:peano-system",
+      "title": "Peano System",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:peano-iterator-theorem",
+      "title": "Peano Iterator Theorem",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

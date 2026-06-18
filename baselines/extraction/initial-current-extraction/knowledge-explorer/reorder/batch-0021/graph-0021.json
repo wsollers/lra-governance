@@ -1,0 +1,31 @@
+{
+  "graph_id": "0021-0021",
+  "volume": "ii",
+  "chapter": "whole-numbers",
+  "section": "extending-multiplication",
+  "term": "thm:multiplication-distributes-over-addition-on-w",
+  "kind": "Theorem",
+  "title": "Multiplication Distributes over Addition on $ $",
+  "root": "",
+  "statement": "For all $a,b,c\\in\\mathbb{W}$,\n\\[\na\\cdot_{\\mathbb{W}}(b+_{\\mathbb{W}}c)\n=\n(a\\cdot_{\\mathbb{W}}b)+_{\\mathbb{W}}(a\\cdot_{\\mathbb{W}}c).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:addition-on-w",
+      "title": "Addition on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:multiplication-on-w",
+      "title": "Multiplication on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:multiplication-distributes-over-addition",
+      "title": "Multiplication Distributes Over Addition",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

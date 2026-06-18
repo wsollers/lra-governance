@@ -1,0 +1,19 @@
+{
+  "graph_id": "0018-0038",
+  "volume": "iii",
+  "chapter": "differentiation",
+  "section": "derivative-geometry",
+  "term": "lem:positive-derivative-implies-locally-increasing",
+  "kind": "Lemma",
+  "title": "Positive Derivative Implies Locally Increasing",
+  "root": "",
+  "statement": "Let $I \\subseteq \\mathbb{R}$ be an interval, let $f : I \\to \\mathbb{R}$, let $c \\in I$, and suppose that $f$ is differentiable at $c$. If $f'(c) > 0$, then there exists $\\delta > 0$ such that\n\\[\nf(x) < f(c) \\quad \\text{for all } x \\in I \\text{ with } c - \\delta < x < c,\n\\]\nand\n\\[\nf(x) > f(c) \\quad \\text{for all } x \\in I \\text{ with } c < x < c + \\delta.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:derivative-at-a-point",
+      "title": "Derivative at a Point",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "graph_id": "0035-0023",
+  "term": "def:deductive-closure",
+  "verdict": "change",
+  "dependencies": ["def:sentence"],
+  "rationale": "Cn(Gamma) is the set of sentences of L derivable from Gamma, so the load-bearing element type is the sentence (def:sentence), which was missing. The listed def:axiom-system is removed: Gamma is introduced as a generic 'set of premises' of sentences, not as an axiom system.",
+  "licensing_quote": "is the set of all sentences derivable from\n$\\Gamma$",
+  "confidence": 0.5,
+  "notes": "MISSING VOCABULARY (load-bearing, candidate for authoring): the derivability relation '|-' (Gamma |- phi) is the defining operation of deductive closure and has no node. Left unproposed per closed-world rule; low confidence flags the gap. def:language treated as ambient locator inside Sentences(L) (the operative element type is the sentence), unlike def:axiom-systems-theory where 'over a language L' is an explicit parameter -- flag if a uniform treatment of the language edge is preferred."
+}

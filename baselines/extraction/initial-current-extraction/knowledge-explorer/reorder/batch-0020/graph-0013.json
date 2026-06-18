@@ -1,0 +1,31 @@
+{
+  "graph_id": "0020-0013",
+  "volume": "iii",
+  "chapter": "bounding",
+  "section": "bounds-algebra",
+  "term": "thm:ambient-existence-supremum",
+  "kind": "Theorem",
+  "title": "Ambient Existence of Supremum",
+  "root": "",
+  "statement": "There are ordered sets $S\\subseteq S'$ and a subset $A\\subseteq S$ such that $A$ has a supremum relative to $S'$ but has no supremum relative to $S$.",
+  "current_dependencies": [
+    {
+      "id": "def:supremum",
+      "title": "Supremum",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:upper-bound",
+      "title": "Upper Bound",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "prop:suprema-ambient-set",
+      "title": "Suprema Depend on the Ambient Set",
+      "kind": "Proposition",
+      "root": ""
+    }
+  ]
+}

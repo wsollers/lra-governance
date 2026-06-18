@@ -1,0 +1,43 @@
+{
+  "graph_id": "0014-0090",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "divergence",
+  "term": "thm:bounded-divergence-produces-two-subsequential-limits",
+  "kind": "Theorem",
+  "title": "Bounded Divergence Produces Two Subsequential Limits",
+  "root": "",
+  "statement": "Let $(x_n)$ be a bounded real sequence. If $(x_n)$ is divergent, then\nthere exist $L,K\\in\\mathbb{R}$ with $L\\ne K$ such that $L$ and $K$ are\nsubsequential limits of $(x_n)$.",
+  "current_dependencies": [
+    {
+      "id": "def:bounded-sequence",
+      "title": "Bounded Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:divergent-sequence",
+      "title": "Divergent Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:subsequential-limit",
+      "title": "Subsequential Limit",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:bolzano-weierstrass-sequences",
+      "title": "Bolzano-Weierstrass Theorem for Sequences",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:subsequences-preserve-limits",
+      "title": "Subsequences Preserve Limits",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

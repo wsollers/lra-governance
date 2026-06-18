@@ -1,0 +1,19 @@
+{
+  "graph_id": "0003-0003",
+  "volume": "viii",
+  "chapter": "algebras-of-sets",
+  "section": "rings-of-sets",
+  "term": "def:idempotent-element",
+  "kind": "Definition",
+  "title": "Idempotent Element",
+  "root": "",
+  "statement": "An element $p$ of a ring $R$ is called \\textbf{idempotent} if\n\\[\np \\cdot p = p.\n\\]\nA ring in which every element is idempotent is called an\n\\textbf{idempotent ring}.",
+  "current_dependencies": [
+    {
+      "id": "def:ring",
+      "title": "Ring",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "graph_id": "0021-0015",
+  "volume": "ii",
+  "chapter": "whole-numbers",
+  "section": "extending-addition",
+  "term": "thm:addition-on-w-well-defined",
+  "kind": "Theorem",
+  "title": "Addition on $ $ Is Well-Defined",
+  "root": "",
+  "statement": "The case definition of $+_{\\mathbb{W}}$ determines a binary operation on\n$\\mathbb{W}$.",
+  "current_dependencies": [
+    {
+      "id": "def:addition-on-w",
+      "title": "Addition on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:whole-numbers",
+      "title": "Whole Numbers",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:addition-well-defined-on-peano-system",
+      "title": "Addition Is Well-Defined on a Peano System",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

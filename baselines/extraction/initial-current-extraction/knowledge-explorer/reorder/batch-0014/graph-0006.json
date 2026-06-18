@@ -1,0 +1,25 @@
+{
+  "graph_id": "0014-0006",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "applications",
+  "term": "thm:decimal-truncations-converge",
+  "kind": "Theorem",
+  "title": "Decimal Truncations Converge",
+  "root": "",
+  "statement": "Let $\\alpha\\in\\mathbb{R}$, and let $(d_n)$ be the decimal truncation\nsequence of $\\alpha$. Then\n\\[\n \\lim_{n\\to\\infty}d_n=\\alpha.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:decimal-truncation-sequence",
+      "title": "Decimal Truncation Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:sequence-squeeze-theorem",
+      "title": "Sequence Squeeze Theorem",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

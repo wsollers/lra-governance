@@ -1,0 +1,25 @@
+{
+  "graph_id": "0031-0086",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "inverse-operations",
+  "term": "def:two-sided-inverse",
+  "kind": "Definition",
+  "title": "Two-Sided Inverse",
+  "root": "",
+  "statement": "An element $y$ is a two-sided inverse of $x$ if\n\\[\ny\\mathbin{O}x=e\n\\quad\\text{and}\\quad\nx\\mathbin{O}y=e.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:left-inverse",
+      "title": "Left Inverse",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:right-inverse",
+      "title": "Right Inverse",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

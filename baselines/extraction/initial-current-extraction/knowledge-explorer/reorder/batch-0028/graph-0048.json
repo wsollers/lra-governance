@@ -1,0 +1,25 @@
+{
+  "graph_id": "0028-0048",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "operations-on-z-classes",
+  "term": "cor:right-distributivity-on-z",
+  "kind": "Corollary",
+  "title": "Right Distributivity on $ $",
+  "root": "",
+  "statement": "For all $x,y,z\\in\\mathbb{Z}$,\n\\[\n(y+z)\\cdot x=y\\cdot x+z\\cdot x.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "thm:left-distributivity-on-z",
+      "title": "Left Distributivity on $ $",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:multiplication-on-z-commutative",
+      "title": "Multiplication on $ $ Is Commutative",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

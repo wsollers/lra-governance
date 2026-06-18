@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0047",
+  "term": "def:expressively-equivalent-connective-sets-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:connective-basis-propositional-logic", "def:definable-connective-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.75,
+  "notes": "Two bases (def:connective-basis) are expressively equivalent iff each connective of one is definable from the other (def:definable-connective), mutually. Both load-bearing and present; clean."
+}

@@ -1,0 +1,25 @@
+{
+  "graph_id": "0023-0059",
+  "volume": "ii",
+  "chapter": "reals",
+  "section": "order-on-r",
+  "term": "def:order-on-r",
+  "kind": "Definition",
+  "title": "Order on $ $",
+  "root": "",
+  "statement": "For cuts $\\alpha,\\beta\\in\\mathbb{R}$, define\n\\[\n\\alpha\\le\\beta \\quad:\\Longleftrightarrow\\quad \\alpha\\subseteq\\beta.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:reals",
+      "title": "The Real Numbers",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:subset",
+      "title": "Subset",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0039",
+  "term": "thm:qneg",
+  "verdict": "ok",
+  "dependencies": ["def:existential-q", "def:log-equiv", "def:universal-q"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.7,
+  "notes": "Same load-bearing set as thm:qdist (0038); negation is ambient. Correct as listed."
+}

@@ -1,0 +1,10 @@
+{
+  "graph_id": "0032-0023",
+  "term": "def:subcover",
+  "verdict": "ok",
+  "dependencies": ["def:cover-full", "def:subset"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.75,
+  "notes": "C' is a subcover of C if C' subset of C (def:subset) and C' is still a cover of A (def:cover-full). Both load-bearing and present. Clean."
+}

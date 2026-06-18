@@ -1,0 +1,25 @@
+{
+  "graph_id": "0023-0058",
+  "volume": "ii",
+  "chapter": "reals",
+  "section": "multiplication-on-r",
+  "term": "thm:triangle-inequality",
+  "kind": "Theorem",
+  "title": "Triangle Inequality",
+  "root": "",
+  "statement": "For all $\\alpha,\\beta\\in\\mathbb{R}$,\n\\[\n|\\alpha+\\beta|\\le |\\alpha|+|\\beta|.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:real-chapter-absolute-value-on-r",
+      "title": "Absolute Value on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:r-is-an-ordered-field",
+      "title": "$ $ Is an Ordered Field",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

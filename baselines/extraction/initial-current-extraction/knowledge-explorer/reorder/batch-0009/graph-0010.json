@@ -1,0 +1,19 @@
+{
+  "graph_id": "0009-0010",
+  "volume": "vi",
+  "chapter": "linear-algebra",
+  "section": "vector-spaces",
+  "term": "def:vector-and-point",
+  "kind": "Definition",
+  "title": "Vector and Point",
+  "root": "",
+  "statement": "An element of a vector space $V$ is called a \\textbf{vector}.\n\nWhen $V = \\mathbf{F}^n$, an element of $\\mathbf{F}^n$ may also be called\na \\textbf{point}.",
+  "current_dependencies": [
+    {
+      "id": "def:vector-space",
+      "title": "Vector Space",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "graph_id": "0027-0054",
+  "volume": "ii",
+  "chapter": "natural-numbers",
+  "section": "powers-and-growth",
+  "term": "thm:powers-with-common-exponent-preserve-strict-order",
+  "kind": "Theorem",
+  "title": "Powers with Common Exponent Preserve Strict Order",
+  "root": "",
+  "statement": "Let $(P,S,1)$ be a Peano system. For every $a,b,n \\in P$,\n\\[\na<b\n\\Longleftrightarrow\na^n<b^n.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:exponentiation-on-peano-system",
+      "title": "Exponentiation on a Peano System",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:induction-principle-for-peano-system",
+      "title": "Induction Principle for a Peano System",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:multiplication-preserves-and-reflects-strict-order",
+      "title": "Multiplication Preserves and Reflects Strict Order",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

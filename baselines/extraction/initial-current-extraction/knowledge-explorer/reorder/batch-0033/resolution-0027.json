@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0027",
+  "term": "thm:hypothetical-syllogism-validity-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:logical-consequence-propositional-logic", "def:valid-argument-form-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.6,
+  "notes": "Any assignment making phi->psi and psi->chi true makes phi->chi true (truth preservation = def:logical-consequence), so the form is valid. Both deps load-bearing and present."
+}

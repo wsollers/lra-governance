@@ -1,0 +1,25 @@
+{
+  "graph_id": "0025-0036",
+  "volume": "ii",
+  "chapter": "peano-systems",
+  "section": "recursion-on-peano-systems",
+  "term": "lem:uniqueness-of-general-recursive-functions",
+  "kind": "Lemma",
+  "title": "Uniqueness of General Recursive Functions",
+  "root": "",
+  "statement": "Let $(P,S,1)$ be a Peano system, let $W$ be a set, let $c\\in W$, and let\n$\\Phi:P\\times W\\to W$ be a stage-dependent step rule. If $f,h:P\\to W$ satisfy\n\\[\nf(1)=c,\\qquad h(1)=c,\n\\]\nand\n\\[\n\\forall n\\in P\\;(f(S(n))=\\Phi(n,f(n)))\n\\qquad\\text{and}\\qquad\n\\forall n\\in P\\;(h(S(n))=\\Phi(n,h(n))),\n\\]\nthen $f=h$.",
+  "current_dependencies": [
+    {
+      "id": "def:general-recursive-function",
+      "title": "General Recursive Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:induction-principle-for-peano-system",
+      "title": "Induction Principle for a Peano System",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

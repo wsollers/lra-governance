@@ -1,0 +1,25 @@
+{
+  "graph_id": "0015-0018",
+  "volume": "iii",
+  "chapter": "real-analysis",
+  "section": "inequality",
+  "term": "thm:ineq-transitivity-strict",
+  "kind": "Theorem",
+  "title": "Transitivity of Strict Inequality",
+  "root": "",
+  "statement": "For all $a, b, c \\in \\mathbb{R}$,\n\\[\n a < b \\;\\land\\; b < c \\;\\Rightarrow\\; a < c.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:positive-cone",
+      "title": "Positive cone",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:real-ordered-field",
+      "title": "Complete Ordered Field",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

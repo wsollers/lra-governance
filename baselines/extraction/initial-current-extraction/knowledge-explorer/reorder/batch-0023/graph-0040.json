@@ -1,0 +1,25 @@
+{
+  "graph_id": "0023-0040",
+  "volume": "ii",
+  "chapter": "reals",
+  "section": "field-and-ordered-field-structure-of-r",
+  "term": "thm:r-is-an-ordered-field",
+  "kind": "Theorem",
+  "title": "$ $ Is an Ordered Field",
+  "root": "",
+  "statement": "The structure $(\\mathbb{R},+,\\cdot,0_{\\mathbb{R}},1_{\\mathbb{R}},\\le)$ is an\nordered field.",
+  "current_dependencies": [
+    {
+      "id": "ax:ordered-field-trichotomy",
+      "title": "Ordered Field Trichotomy",
+      "kind": "Axiom",
+      "root": "axiom"
+    },
+    {
+      "id": "thm:r-is-a-field",
+      "title": "$ $ Is a Field",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

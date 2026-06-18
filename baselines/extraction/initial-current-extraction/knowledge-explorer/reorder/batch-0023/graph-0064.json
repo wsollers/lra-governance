@@ -1,0 +1,12 @@
+{
+  "graph_id": "0023-0064",
+  "volume": "ii",
+  "chapter": "reals",
+  "section": "order-on-r",
+  "term": "thm:order-on-r-total",
+  "kind": "Theorem",
+  "title": "Order on $ $ Is Total",
+  "root": "",
+  "statement": "For all $\\alpha,\\beta\\in\\mathbb{R}$,\n\\[\n\\alpha\\le\\beta\\lor\\beta\\le\\alpha.\n\\]",
+  "current_dependencies": []
+}

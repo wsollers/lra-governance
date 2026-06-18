@@ -1,0 +1,25 @@
+{
+  "graph_id": "0014-0108",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "liminf-limsup",
+  "term": "thm:tail-infima-are-increasing",
+  "kind": "Theorem",
+  "title": "Tail Infima Are Increasing",
+  "root": "",
+  "statement": "Let $(x_n)$ be a bounded real sequence, and let $(i_n)$ be its tail\ninfimum sequence. Then $(i_n)$ is increasing.",
+  "current_dependencies": [
+    {
+      "id": "def:infimum",
+      "title": "Infimum",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:tail-infimum-sequence",
+      "title": "Tail Infimum Sequence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "graph_id": "0034-0011",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "proof-theory",
+  "term": "def:ug",
+  "kind": "Definition",
+  "title": "Universal Generalization — UG",
+  "root": "",
+  "statement": "From a formula, infer a universally quantified statement:\n\\[\n\\varphi \\;\\Rightarrow\\; \\forall x\\,\\varphi.\n\\]",
+  "current_dependencies": []
+}

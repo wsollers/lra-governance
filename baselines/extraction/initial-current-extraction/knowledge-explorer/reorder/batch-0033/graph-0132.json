@@ -1,0 +1,31 @@
+{
+  "graph_id": "0033-0132",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "syntax",
+  "term": "thm:unique-decomposition-propositional-formulas",
+  "kind": "Theorem",
+  "title": "Unique Decomposition for Propositional Formulas",
+  "root": "",
+  "statement": "Every \\(\\varphi\\in\\WFF\\) has exactly one outermost form:\n- \\(\\varphi=P\\) for a unique \\(P\\in\\Prop\\);\n- \\(\\varphi=\\neg\\psi\\) for a unique \\(\\psi\\in\\WFF\\);\n- \\(\\varphi=(\\psi\\circ\\chi)\\) for unique \\(\\psi,\\chi\\in\\WFF\\) and a unique binary connective \\(\\circ\\in\\{\\land,\\lor,\\to,\\leftrightarrow\\}\\).",
+  "current_dependencies": [
+    {
+      "id": "def:well-formed-formula",
+      "title": "Well-Formed Formula",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "lem:constructor-disjointness-propositional-formulas",
+      "title": "Constructor Disjointness for Propositional Formulas",
+      "kind": "Lemma",
+      "root": ""
+    },
+    {
+      "id": "lem:constructor-injectivity-propositional-formulas",
+      "title": "Constructor Injectivity for Propositional Formulas",
+      "kind": "Lemma",
+      "root": ""
+    }
+  ]
+}

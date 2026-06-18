@@ -1,0 +1,31 @@
+{
+  "graph_id": "0030-0007",
+  "volume": "ii",
+  "chapter": "embedding-number-systems",
+  "section": "embedding-w-into-z",
+  "term": "thm:w-embeds-in-z",
+  "kind": "Theorem",
+  "title": "$ $ Embeds in $ $",
+  "root": "",
+  "statement": "The canonical map $\\iota:\\mathbb{W}\\to \\mathbb{Z}$ is an embedding of ordered arithmetic systems: it is injective, preserves $0$, $1$, addition, and multiplication, and reflects the order.",
+  "current_dependencies": [
+    {
+      "id": "def:embedding-w-into-z",
+      "title": "Embedding $ $ into $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:embedding-identifies-with-image",
+      "title": "Embeddings Identify a System with Its Image",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:formal-difference-equivalence-relation",
+      "title": "Formal-Difference Equivalence Is an Equivalence Relation",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "graph_id": "0033-0043",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "functional-completeness",
+  "term": "def:boolean-function-representation-propositional-logic",
+  "kind": "Definition",
+  "title": "Representation of a Boolean Function",
+  "root": "",
+  "statement": "Let \\(f:\\mathbb{B}^n\\to\\mathbb{B}\\) be a Boolean function. A formula\n\\(\\varphi\\in\\WFF\\) with variables among \\(P_1,\\ldots,P_n\\) \\emph{represents}\n\\(f\\) if for every truth assignment \\(v\\),\n\\[\n\\widehat v(\\varphi)=f(v(P_1),\\ldots,v(P_n)).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:boolean-function-propositional-logic",
+      "title": "Boolean Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:truth-assignment-propositional-logic",
+      "title": "Truth Assignment",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:truth-function-induced-by-formula",
+      "title": "Truth Function Induced by a Formula",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

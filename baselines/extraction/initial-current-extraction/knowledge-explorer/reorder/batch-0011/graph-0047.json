@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0047",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "functions",
+  "term": "def:automorphism",
+  "kind": "Definition",
+  "title": "Automorphism",
+  "root": "",
+  "statement": "An \\textbf{automorphism} is a bijective endomorphism.",
+  "current_dependencies": []
+}

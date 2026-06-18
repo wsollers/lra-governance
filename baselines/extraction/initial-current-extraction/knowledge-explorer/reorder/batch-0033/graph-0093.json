@@ -1,0 +1,25 @@
+{
+  "graph_id": "0033-0093",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "semantics",
+  "term": "def:contradiction-propositional-logic",
+  "kind": "Definition",
+  "title": "Contradiction",
+  "root": "",
+  "statement": "A formula \\(\\varphi\\in\\WFF\\) is a contradiction if no truth assignment satisfies \\(\\varphi\\).",
+  "current_dependencies": [
+    {
+      "id": "def:satisfaction-propositional-formula",
+      "title": "Satisfaction of a Formula",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:truth-assignment-propositional-logic",
+      "title": "Truth Assignment",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

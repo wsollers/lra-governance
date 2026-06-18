@@ -1,0 +1,37 @@
+{
+  "graph_id": "0018-0021",
+  "volume": "iii",
+  "chapter": "differentiation",
+  "section": "derivative-definition",
+  "term": "def:sequential-definition-of-derivative-at-a-point",
+  "kind": "Definition",
+  "title": "Sequential Definition of Derivative at a Point",
+  "root": "",
+  "statement": "Let $A \\subseteq \\mathbb{R}$, let $f : A \\to \\mathbb{R}$, and let $c \\in A$ be a limit point of $A$. We say that $f$ is differentiable at $c$ with derivative $L$ if\n\\[\n\\forall (x_n) \\subseteq A \\setminus \\{c\\}\\;\n\\bigl(x_n \\to c \\Rightarrow \\tfrac{f(x_n)-f(c)}{x_n-c} \\to L\\bigr).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:convergent-sequence",
+      "title": "Convergence of a Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:derivative-at-a-point",
+      "title": "Derivative at a Point",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:limit-function",
+      "title": "Limit of a Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:sequence",
+      "title": "Sequence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

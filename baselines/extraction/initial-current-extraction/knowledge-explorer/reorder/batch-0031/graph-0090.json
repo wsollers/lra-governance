@@ -1,0 +1,19 @@
+{
+  "graph_id": "0031-0090",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "inverse-operations",
+  "term": "thm:uniqueness-of-inverse",
+  "kind": "Theorem",
+  "title": "Uniqueness of Inverse",
+  "root": "",
+  "statement": "In an associative operation with identity, inverses are unique.",
+  "current_dependencies": [
+    {
+      "id": "lem:left-right-inverses-coincide",
+      "title": "Left and Right Inverses Coincide",
+      "kind": "Lemma",
+      "root": ""
+    }
+  ]
+}

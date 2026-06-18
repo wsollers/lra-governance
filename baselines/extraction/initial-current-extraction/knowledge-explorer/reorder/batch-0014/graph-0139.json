@@ -1,0 +1,25 @@
+{
+  "graph_id": "0014-0139",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "subsequences",
+  "term": "thm:sequential-compactness-closed-bounded-interval",
+  "kind": "Theorem",
+  "title": "Sequential Compactness of Closed Bounded Intervals",
+  "root": "",
+  "statement": "Let $a,b\\in\\mathbb{R}$ with $a\\le b$. Every sequence in $[a,b]$ has a\nconvergent subsequence whose limit belongs to $[a,b]$.",
+  "current_dependencies": [
+    {
+      "id": "thm:bolzano-weierstrass-sequences",
+      "title": "Bolzano-Weierstrass Theorem for Sequences",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:subsequential-limits-respect-bounds",
+      "title": "Subsequential Limits Respect Bounds",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

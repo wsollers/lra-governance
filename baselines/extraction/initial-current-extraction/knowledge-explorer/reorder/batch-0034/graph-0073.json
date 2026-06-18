@@ -1,0 +1,12 @@
+{
+  "graph_id": "0034-0073",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "syntax",
+  "term": "def:free-for",
+  "kind": "Definition",
+  "title": "Free for Substitution",
+  "root": "",
+  "statement": "A term $t$ is \\emph{free for} $x$ in $\\varphi$ if no free occurrence of $x$ in\n$\\varphi$ lies within the scope of a quantifier $\\forall y$ or $\\exists y$\nwhere $y$ is a variable occurring in $t$.\n\nEquivalently, $t$ is free for $x$ in $\\varphi$ if the substitution $\\varphi[t/x]$\ndoes not result in any variable in $t$ becoming bound.",
+  "current_dependencies": []
+}

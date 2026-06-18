@@ -1,0 +1,12 @@
+{
+  "graph_id": "0004-0010",
+  "volume": "viii",
+  "chapter": "numerical-analysis",
+  "section": "interval-arithmetic",
+  "term": "def:box",
+  "kind": "Definition",
+  "title": "Box / Product Interval",
+  "root": "",
+  "statement": "Let $a,b\\in\\mathbb{R}^n$ with $a\\le b$ coordinatewise (i.e., $a_i\\le b_i$ for all $i$).\nThe \\emph{box} (or \\emph{interval vector}) determined by $(a,b)$ is\n\\[\n[a,b] \\;:=\\; \\{x\\in\\mathbb{R}^n : a\\le x \\le b\\}\n\\;=\\;\\prod_{i=1}^n [a_i,b_i].\n\\]",
+  "current_dependencies": []
+}

@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0037",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "",
+  "term": "def:formal-model-theoretic-structures-l49",
+  "kind": "Definition",
+  "title": "First-Order Signature",
+  "root": "",
+  "statement": "A \\textbf{first-order signature} $\\mathcal{L}$ consists of:\n - \\textbf{Constant symbols} $c_1, c_2, \\ldots$ — naming distinguished\n elements,\n- \\textbf{Function symbols} $f_1, f_2, \\ldots$, each equipped with a\n specified \\textbf{arity} $n \\in \\mathbb{N}$ — naming $n$-ary\n operations,\n- \\textbf{Relation symbols} $R_1, R_2, \\ldots$ (optional), each with a\n specified arity — naming predicates.",
+  "current_dependencies": []
+}

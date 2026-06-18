@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0092",
+  "term": "def:contingency-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:satisfiable-formula-propositional-logic", "def:tautology-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.8,
+  "notes": "Contingency = satisfiable (def:satisfiable-formula) but not a tautology (def:tautology). Both load-bearing and present; clean."
+}

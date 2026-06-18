@@ -1,0 +1,12 @@
+{
+  "graph_id": "0001-0001",
+  "volume": "viii",
+  "chapter": "model-theory",
+  "section": "l-structures",
+  "term": "def:first-order-language",
+  "kind": "Definition",
+  "title": "First-Order Language $ $",
+  "root": "",
+  "statement": "A \\textbf{first-order language} $\\mathcal{L}$ consists of three (possibly\nempty) sets of non-logical symbols:\n- a set $\\mathcal{R}$ of \\textbf{relation symbols} (also called\n \\emph{predicate symbols}), each assigned a fixed arity $n \\geq 1$;\n- a set $\\mathcal{F}$ of \\textbf{function symbols}, each assigned a\n fixed \\textbf{arity} $n \\geq 0$ (0-ary function symbols are\n \\emph{constant symbols});\n- a set $\\mathcal{C}$ of \\textbf{constant symbols} (equivalently,\n 0-ary function symbols — listed separately for emphasis).\nTogether with the logical symbols common to all first-order languages\n(variables, connectives $\\lnot, \\land, \\lor, \\to, \\leftrightarrow$,\nquantifiers $\\forall, \\exists$, equality $=$, parentheses), the triple\n$(\\mathcal{F}, \\mathcal{R}, \\mathcal{C})$ determines $\\mathcal{L}$.",
+  "current_dependencies": []
+}

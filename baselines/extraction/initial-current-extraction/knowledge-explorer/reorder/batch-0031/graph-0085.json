@@ -1,0 +1,19 @@
+{
+  "graph_id": "0031-0085",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "inverse-operations",
+  "term": "def:right-solvability",
+  "kind": "Definition",
+  "title": "Right Solvability",
+  "root": "",
+  "statement": "Right solvability means\n\\[\n\\forall x,y\\,\\exists z,\\ x=y\\mathbin{O}z,\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:binary-arithmetic-operation",
+      "title": "Binary Arithmetic Operation",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

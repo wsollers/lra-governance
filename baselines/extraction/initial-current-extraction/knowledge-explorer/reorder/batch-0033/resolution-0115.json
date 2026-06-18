@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0115",
+  "term": "def:molecular-formula-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:atomic-formula-propositional-logic", "def:logical-connective", "def:well-formed-formula"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.75,
+  "notes": "A molecular formula is a wff (def:well-formed-formula) that is not atomic (def:atomic-formula), equivalently formed using at least one connective (def:logical-connective). All three load-bearing and present. Clean complement of def:atomic-formula (0109)."
+}

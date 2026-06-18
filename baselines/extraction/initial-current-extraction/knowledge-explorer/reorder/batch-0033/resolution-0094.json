@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0094",
+  "term": "def:extended-truth-assignment-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:truth-assignment-propositional-logic", "def:well-formed-formula", "thm:structural-recursion-propositional-formulas", "thm:unique-decomposition-propositional-formulas"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.7,
+  "notes": "The recursive extension v-hat: WFF -> B of a base assignment v (def:truth-assignment) over formulas (def:well-formed-formula). Its well-definedness is a textbook Rule-4 case: the recursion is justified by thm:structural-recursion, which in turn needs unique readability (thm:unique-decomposition). All four load-bearing and present -- a clean well-definedness dependency on theorems."
+}

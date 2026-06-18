@@ -1,0 +1,19 @@
+{
+  "graph_id": "0033-0119",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "syntax",
+  "term": "def:propositional-variable",
+  "kind": "Definition",
+  "title": "Propositional Variable",
+  "root": "",
+  "statement": "A propositional variable is an atomic symbol intended to stand for a proposition. A standard supply of variables is\n\\[\n\\Prop=\\{P_1,P_2,P_3,\\ldots\\}.\n\\]\nInformally, variables are often written \\(P,Q,R,S,\\ldots\\).",
+  "current_dependencies": [
+    {
+      "id": "def:propositional-language",
+      "title": "Propositional Language",
+      "kind": "Definition",
+      "root": "definitional_truth"
+    }
+  ]
+}

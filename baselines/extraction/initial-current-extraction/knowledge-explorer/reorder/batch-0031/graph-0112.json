@@ -1,0 +1,12 @@
+{
+  "graph_id": "0031-0112",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "order-relations",
+  "term": "def:trichotomy",
+  "kind": "Definition",
+  "title": "Trichotomy",
+  "root": "",
+  "statement": "The relation $<$ satisfies \\emph{trichotomy} if exactly one of\n\\[\nx<y,\\qquad x=y,\\qquad y<x\n\\]\nholds for every pair $x,y$.",
+  "current_dependencies": []
+}

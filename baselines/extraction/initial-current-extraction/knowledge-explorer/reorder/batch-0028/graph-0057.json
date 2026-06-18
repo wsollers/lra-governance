@@ -1,0 +1,31 @@
+{
+  "graph_id": "0028-0057",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "operations-on-z-classes",
+  "term": "lem:multiplication-on-z-classes-respects-equivalence",
+  "kind": "Lemma",
+  "title": "Multiplication Respects Formal-Difference Equivalence",
+  "root": "",
+  "statement": "If $[a,b]=[a',b']$ and $[c,d]=[c',d']$, then\n\\[\n[a,b]\\cdot[c,d]=[a',b']\\cdot[c',d'].\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:multiplication-on-z-classes",
+      "title": "Multiplication on $ $-Classes",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "lem:multiplication-on-z-classes-respects-left-equivalence",
+      "title": "Multiplication Respects Formal-Difference Equivalence on the Left",
+      "kind": "Lemma",
+      "root": ""
+    },
+    {
+      "id": "lem:multiplication-on-z-classes-respects-right-equivalence",
+      "title": "Multiplication Respects Formal-Difference Equivalence on the Right",
+      "kind": "Lemma",
+      "root": ""
+    }
+  ]
+}

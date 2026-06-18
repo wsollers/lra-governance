@@ -1,0 +1,12 @@
+{
+  "graph_id": "0017-0015",
+  "volume": "iii",
+  "chapter": "elementary-functions",
+  "section": "trigonometric",
+  "term": "def:inverse-trig",
+  "kind": "Definition",
+  "title": "Inverse Trigonometric Functions",
+  "root": "",
+  "statement": "- $\\arcsin : [-1,1] \\to [-\\pi/2, \\pi/2]$ is the inverse of\n $\\sin\\big|_{[-\\pi/2,\\pi/2]}$.\n- $\\arccos : [-1,1] \\to [0,\\pi]$ is the inverse of\n $\\cos\\big|_{[0,\\pi]}$.\n- $\\arctan : \\mathbb{R} \\to (-\\pi/2, \\pi/2)$ is the inverse\n of $\\tan\\big|_{(-\\pi/2,\\pi/2)}$.",
+  "current_dependencies": []
+}

@@ -1,0 +1,31 @@
+{
+  "graph_id": "0024-0016",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "construction-of-q",
+  "term": "def:prefraction-set",
+  "kind": "Definition",
+  "title": "Prefraction Set",
+  "root": "",
+  "statement": "The prefraction set is\n\\[\n\\operatorname{Pre}\\mathbb{Q}:=\\mathbb{Z}\\times\\mathbb{Z}^{\\ast}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:cartesian-product-rel",
+      "title": "Cartesian Product — as foundation for relations",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:integers",
+      "title": "Integers",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:nonzero-integers",
+      "title": "Nonzero Integers",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

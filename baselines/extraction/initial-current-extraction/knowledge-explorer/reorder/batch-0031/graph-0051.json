@@ -1,0 +1,25 @@
+{
+  "graph_id": "0031-0051",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "derived-laws",
+  "term": "prop:zero-absorption",
+  "kind": "Proposition",
+  "title": "Zero Absorption",
+  "root": "",
+  "statement": "In a ring,\n\\[\n0\\cdot a=0\n\\qquad\\text{and}\\qquad\na\\cdot 0=0.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "prop:left-zero-absorption",
+      "title": "Left Zero Absorption",
+      "kind": "Proposition",
+      "root": ""
+    },
+    {
+      "id": "prop:right-zero-absorption",
+      "title": "Right Zero Absorption",
+      "kind": "Proposition",
+      "root": ""
+    }
+  ]
+}

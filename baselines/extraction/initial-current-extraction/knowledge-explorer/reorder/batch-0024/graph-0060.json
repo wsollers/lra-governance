@@ -1,0 +1,12 @@
+{
+  "graph_id": "0024-0060",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "operations-on-q-classes",
+  "term": "def:division-on-q",
+  "kind": "Definition",
+  "title": "Division on $ $",
+  "root": "",
+  "statement": "For $x,y\\in\\mathbb{Q}$ with $y\\ne 0_{\\mathbb{Q}}$, define\n\\[\nx/y:=x\\cdot y^{-1}.\n\\]",
+  "current_dependencies": []
+}

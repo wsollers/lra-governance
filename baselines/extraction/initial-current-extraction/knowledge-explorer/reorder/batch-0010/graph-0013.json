@@ -1,0 +1,25 @@
+{
+  "graph_id": "0010-0013",
+  "volume": "vi",
+  "chapter": "lattice-order",
+  "section": "ordered-sets",
+  "term": "def:least-element",
+  "kind": "Definition",
+  "title": "Least Element",
+  "root": "",
+  "statement": "Let $(P, \\leq)$ be a partially ordered set and let $Q \\subseteq P$. An\nelement $m \\in Q$ is the \\emph{least element} (or \\emph{minimum}) of $Q$\nif it lies below every element of $Q$:\n\\[\n\\forall x \\in Q, \\quad m \\leq x.\n\\]\nIf it exists it is unique; it is denoted $\\min Q$.",
+  "current_dependencies": [
+    {
+      "id": "def:greatest-element",
+      "title": "Greatest Element",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "prop:duality-principle",
+      "title": "Duality Principle",
+      "kind": "Proposition",
+      "root": ""
+    }
+  ]
+}

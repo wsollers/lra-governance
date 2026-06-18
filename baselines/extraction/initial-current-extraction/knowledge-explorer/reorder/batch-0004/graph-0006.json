@@ -1,0 +1,12 @@
+{
+  "graph_id": "0004-0006",
+  "volume": "viii",
+  "chapter": "numerical-analysis",
+  "section": "ieee-floating-point",
+  "term": "def:numerical-analysis-ieee-754-infinity-encoding",
+  "kind": "Definition",
+  "title": "IEEE 754 Infinity Encoding",
+  "root": "",
+  "statement": "An IEEE 754 binary floating-point datum encodes \\emph{infinity} if its exponent field\nis all ones and its fraction field is all zeros.\n\nThe sign bit determines whether the represented value is $+\\infty$ or $-\\infty$.",
+  "current_dependencies": []
+}

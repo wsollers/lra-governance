@@ -1,0 +1,25 @@
+{
+  "graph_id": "0030-0002",
+  "volume": "ii",
+  "chapter": "embedding-number-systems",
+  "section": "embedding-n-into-w",
+  "term": "def:embedding-n-into-w",
+  "kind": "Definition",
+  "title": "Embedding $ $ into $ $",
+  "root": "",
+  "statement": "The \\emph{canonical embedding} $\\iota:\\mathbb{N}\\to \\mathbb{W}$ is defined by\n\\[\n\\iota(n)=n \\quad(\\text{the copy of each natural number inside the whole numbers}).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:whole-numbers",
+      "title": "Whole Numbers",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:n-embeds-into-w-as-positive-part",
+      "title": "$ $ Embeds into $ $ as the Positive Part",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

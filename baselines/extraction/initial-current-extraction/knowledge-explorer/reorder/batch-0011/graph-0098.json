@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0098",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "rings",
+  "term": "def:notes-rings-integral-domains-l19",
+  "kind": "Definition",
+  "title": "Zero Divisor",
+  "root": "",
+  "statement": "Let $R$ be a commutative ring with unity.\nA nonzero element $a \\in R$ is a \\emph{zero divisor} if there exists\na nonzero $b \\in R$ such that $a \\cdot b = 0$.",
+  "current_dependencies": []
+}

@@ -1,0 +1,25 @@
+{
+  "graph_id": "0009-0023",
+  "volume": "vi",
+  "chapter": "linear-algebra",
+  "section": "vector-spaces",
+  "term": "thm:sum-of-subspaces-smallest-containing",
+  "kind": "Theorem",
+  "title": "Sum of Subspaces Is the Smallest Containing Subspace",
+  "root": "",
+  "statement": "Let $V$ be a vector space over $\\mathbf{F}$, and let\n$U_1,\\dots,U_m$ be subspaces of $V$.\nThen $U_1+\\cdots+U_m$ is a subspace of $V$ containing each of\n$U_1,\\dots,U_m$.\nMoreover, if $W$ is a subspace of $V$ containing each of\n$U_1,\\dots,U_m$, then\n\\[\nU_1+\\cdots+U_m \\subseteq W.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:sum-of-subspaces",
+      "title": "Sum of Subspaces",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:conditions-for-a-subspace",
+      "title": "Conditions for a Subspace",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

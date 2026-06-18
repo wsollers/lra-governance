@@ -1,0 +1,37 @@
+{
+  "graph_id": "0032-0079",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "order",
+  "term": "prop:sup-inf-duality",
+  "kind": "Proposition",
+  "title": "Duality of Supremum and Infimum",
+  "root": "",
+  "statement": "Let $(A, \\leq)$ be a poset and $S \\subseteq A$. Then\n$\\inf_{(A,\\leq)} S = \\sup_{(A,\\geq)} S$,\nwhere $(A,\\geq)$ denotes the dual poset.\n\nIn particular: if every nonempty bounded-above subset of $(A,\\leq)$ has a\nsupremum, then every nonempty bounded-below subset of $(A,\\leq)$ has an\ninfimum.",
+  "current_dependencies": [
+    {
+      "id": "def:partial-order",
+      "title": "Partial Order",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:subset",
+      "title": "Subset",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:sup-inf",
+      "title": "Supremum and Infimum",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "prop:order-duality",
+      "title": "Duality Principle for Posets",
+      "kind": "Proposition",
+      "root": ""
+    }
+  ]
+}

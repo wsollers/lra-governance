@@ -1,0 +1,25 @@
+{
+  "graph_id": "0034-0008",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "proof-theory",
+  "term": "thm:eq-trans",
+  "kind": "Theorem",
+  "title": "Transitivity of Equality",
+  "root": "",
+  "statement": "From $t_1 = t_2$ and $t_2 = t_3$, one may infer $t_1 = t_3$.",
+  "current_dependencies": [
+    {
+      "id": "def:eq-elim",
+      "title": "Equality Elimination — Substitution of Equals",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:eq-refl",
+      "title": "Equality Introduction — Reflexivity",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "graph_id": "0031-0053",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "field-and-ordered-field-laws",
+  "term": "cor:generic-field-laws",
+  "kind": "Corollary",
+  "title": "Generic Field Laws",
+  "root": "",
+  "statement": "Every field satisfies the zero-product law, cancellation laws, uniqueness of\ninverses, inverse laws, ring sign laws, and integer-exponent laws listed in\nthis topic.",
+  "current_dependencies": [
+    {
+      "id": "thm:field-exponent-addition",
+      "title": "Field Exponent Addition",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:field-inverse-of-product",
+      "title": "Field Inverse of Product",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:field-multiplicative-cancellation",
+      "title": "Field Multiplicative Cancellation",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:field-zero-product",
+      "title": "Field Zero Product",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

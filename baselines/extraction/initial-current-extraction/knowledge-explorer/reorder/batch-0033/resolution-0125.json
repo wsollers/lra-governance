@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0125",
+  "term": "lem:constructor-injectivity-propositional-formulas",
+  "verdict": "ok",
+  "dependencies": ["def:logical-connective", "def:well-formed-formula"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.7,
+  "notes": "Injectivity of the constructors on wffs (def:well-formed-formula), with the binary case discriminating the connective (def:logical-connective). A primitive string-level fact feeding thm:unique-decomposition (0132). Both load-bearing; no main-connective cite, so no cycle (contrast 0124)."
+}

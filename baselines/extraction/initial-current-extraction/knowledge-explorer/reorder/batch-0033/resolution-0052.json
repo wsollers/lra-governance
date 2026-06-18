@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0052",
+  "term": "def:minimal-complete-basis-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:connective-basis-propositional-logic", "def:functionally-complete-connective-set-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.65,
+  "notes": "A functionally complete basis (def:functionally-complete-connective-set) over def:connective-basis is minimal when no proper subset is complete. The 'proper subset' relation is the ambient/cross-volume set-theory notion (no local node); both listed deps are load-bearing."
+}

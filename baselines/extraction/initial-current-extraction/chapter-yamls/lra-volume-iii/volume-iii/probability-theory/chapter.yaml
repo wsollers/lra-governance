@@ -1,0 +1,10 @@
+subject: probability-theory
+display_title: Probability Theory
+volume: volume-iii
+status: planned
+dependencies:
+  prior: ''
+  next: ''
+path: volume-iii/probability-theory
+environments: []
+proof_files: []

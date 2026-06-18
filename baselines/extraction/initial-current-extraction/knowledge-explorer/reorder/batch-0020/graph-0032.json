@@ -1,0 +1,25 @@
+{
+  "graph_id": "0020-0032",
+  "volume": "iii",
+  "chapter": "bounding",
+  "section": "bounds-extremals",
+  "term": "prop:upper-bound-property-of-supremum",
+  "kind": "Proposition",
+  "title": "Upper Bound Property of Supremum",
+  "root": "",
+  "statement": "Let $A\\subseteq\\mathbb{R}$ and let $s=\\sup A$. Then $x\\le s$ for every $x\\in A$.",
+  "current_dependencies": [
+    {
+      "id": "def:supremum",
+      "title": "Supremum",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:upper-bound",
+      "title": "Upper Bound",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

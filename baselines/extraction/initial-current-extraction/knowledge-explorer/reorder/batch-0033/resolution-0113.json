@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0113",
+  "term": "def:logical-connective",
+  "verdict": "change",
+  "dependencies": ["def:propositional-language", "def:arity"],
+  "rationale": "The definition declares the five primitive connectives as a component of the propositional language (def:propositional-language) AND types each by arity -- negation unary, the rest binary -- with the arity governing the formation pattern (neg-phi vs (phi-circ-psi)). def:arity is therefore load-bearing and was missing.",
+  "licensing_quote": "is unary",
+  "confidence": 0.55,
+  "notes": "Follows the batch-0034 precedent of adding def:arity to symbol definitions that specify arities. Borderline (arity could be read as descriptive here), so moderate confidence -> re-run. The connective inventory itself is the language component."
+}

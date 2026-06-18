@@ -1,0 +1,25 @@
+{
+  "graph_id": "0029-0005",
+  "volume": "ii",
+  "chapter": "identity-equality-equivalence",
+  "section": "equivalence",
+  "term": "cor:equality-is-finest-equivalence",
+  "kind": "Corollary",
+  "title": "Equality Is the Finest Equivalence",
+  "root": "",
+  "statement": "Let $\\sim$ be an equivalence relation on $A$. For all $a,b\\in A$,\n\\[\na=b \\Longrightarrow a\\sim b.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "ax:equality-reflexivity",
+      "title": "Reflexivity of Equality",
+      "kind": "Axiom",
+      "root": "axiom"
+    },
+    {
+      "id": "def:equivalence-relation",
+      "title": "Equivalence Relation",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

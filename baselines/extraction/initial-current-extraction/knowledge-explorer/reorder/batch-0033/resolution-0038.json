@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0038",
+  "term": "def:finite-subset-of-set-of-propositional-formulas",
+  "verdict": "ok",
+  "dependencies": ["def:well-formed-formula"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.55,
+  "notes": "Delta subset Gamma with finitely many formulas; def:well-formed-formula types the elements. The defining concepts 'subset' and 'finite' have no local propositional node (search returns only cross-volume set-theory items), so they are treated as ambient/imported primitives -- candidate edges only if the graph imports def:subset / a finite-set node. Kept minimal per the chapter's ambient-subset convention (cf. 0036)."
+}

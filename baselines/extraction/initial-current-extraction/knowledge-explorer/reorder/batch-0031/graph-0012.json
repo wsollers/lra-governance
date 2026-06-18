@@ -1,0 +1,19 @@
+{
+  "graph_id": "0031-0012",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "algebraic-laws",
+  "term": "thm:general-associativity",
+  "kind": "Theorem",
+  "title": "General Associativity",
+  "root": "",
+  "statement": "If $O$ is associative, then every bracketing of\n$x_1\\mathbin{O}\\cdots\\mathbin{O}x_n$ has the same value.",
+  "current_dependencies": [
+    {
+      "id": "def:associativity",
+      "title": "Associativity",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

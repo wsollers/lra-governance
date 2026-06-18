@@ -1,0 +1,12 @@
+{
+  "graph_id": "0032-0117",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "sets",
+  "term": "ax:foundation",
+  "kind": "Axiom",
+  "title": "Axiom of Foundation",
+  "root": "axiom",
+  "statement": "Every nonempty set has an $\\in$-minimal element.\n\\[\n\\forall A \\,\n\\Bigl( A \\neq \\varnothing \\rightarrow\n\\exists x \\in A \\, (x \\cap A = \\varnothing) \\Bigr).\n\\]",
+  "current_dependencies": []
+}

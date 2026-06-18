@@ -1,0 +1,37 @@
+{
+  "graph_id": "0021-0004",
+  "volume": "ii",
+  "chapter": "whole-numbers",
+  "section": "algebraic-structure-of-w",
+  "term": "thm:w-commutative-semiring",
+  "kind": "Theorem",
+  "title": "$( ,+, ,0,1)$ Is a Commutative Semiring",
+  "root": "",
+  "statement": "The structure\n$(\\mathbb{W},+_{\\mathbb{W}},\\cdot_{\\mathbb{W}},0,1)$ is a commutative\nsemiring.",
+  "current_dependencies": [
+    {
+      "id": "thm:multiplication-distributes-over-addition-on-w",
+      "title": "Multiplication Distributes over Addition on $ $",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:w-additive-commutative-monoid",
+      "title": "$( ,+,0)$ Is a Commutative Monoid",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:w-multiplicative-commutative-monoid",
+      "title": "$( , ,1)$ Is a Commutative Monoid",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:zero-absorbing-for-multiplication-on-w",
+      "title": "Zero Is Absorbing for Multiplication on $ $",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

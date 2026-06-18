@@ -1,0 +1,19 @@
+{
+  "graph_id": "0015-0015",
+  "volume": "iii",
+  "chapter": "real-analysis",
+  "section": "inequality",
+  "term": "thm:ineq-square-root-monotone",
+  "kind": "Theorem",
+  "title": "Square Root Is Monotone on Nonneg Reals",
+  "root": "",
+  "statement": "For all $a, b \\in \\mathbb{R}$,\n\\[\n 0 \\le a \\le b \\;\\Rightarrow\\; \\sqrt{a} \\le \\sqrt{b}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "thm:ineq-square-monotone",
+      "title": "Square Is Strictly Monotone on Nonneg Reals",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "graph_id": "0016-0028",
+  "volume": "iii",
+  "chapter": "functions",
+  "section": "limits",
+  "term": "def:left-hand-limit",
+  "kind": "Definition",
+  "title": "Left-Hand Limit",
+  "root": "",
+  "statement": "Let $A\\subseteq\\mathbb{R}$, let $f:A\\to\\mathbb{R}$, let $c\\in\\mathbb{R}$,\nand suppose $c$ is a cluster point of $A\\cap(-\\infty,c)$. A real number\n$L$ is the \\textbf{left-hand limit} of $f$ at $c$ if\n\\[\n \\forall\\varepsilon>0\\;\\exists\\delta>0\\;\\forall x\\in A\\;\n 0<c-x<\\delta\\Rightarrow |f(x)-L|<\\varepsilon.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:cluster-point-r",
+      "title": "Cluster Point",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:limit-function",
+      "title": "Limit of a Function",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

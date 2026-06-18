@@ -1,0 +1,25 @@
+{
+  "graph_id": "0023-0001",
+  "volume": "ii",
+  "chapter": "reals",
+  "section": "addition-on-r",
+  "term": "def:addition-on-r",
+  "kind": "Definition",
+  "title": "Addition of Cuts",
+  "root": "",
+  "statement": "For cuts $\\alpha,\\beta\\in\\mathbb{R}$, define\n\\[\n\\alpha+\\beta:=\\{p+q:p\\in\\alpha,\\ q\\in\\beta\\}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:addition-on-q-classes",
+      "title": "Addition on $ $-Classes",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:reals",
+      "title": "The Real Numbers",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

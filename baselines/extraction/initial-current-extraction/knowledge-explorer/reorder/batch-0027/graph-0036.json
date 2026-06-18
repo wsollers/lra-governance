@@ -1,0 +1,19 @@
+{
+  "graph_id": "0027-0036",
+  "volume": "ii",
+  "chapter": "natural-numbers",
+  "section": "order-on-n",
+  "term": "def:strict-less-than-on-peano-system",
+  "kind": "Definition",
+  "title": "Strict Less Than on a Peano System",
+  "root": "",
+  "statement": "Let $(P,S,1)$ be a Peano system, and let $a,b \\in P$. One writes\n\\[\na<b\n\\]\nexactly when there exists $c \\in P$ such that\n\\[\nb=a+c.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:addition-on-peano-system",
+      "title": "Addition on a Peano System",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

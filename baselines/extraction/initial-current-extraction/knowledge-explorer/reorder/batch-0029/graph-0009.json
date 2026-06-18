@@ -1,0 +1,25 @@
+{
+  "graph_id": "0029-0009",
+  "volume": "ii",
+  "chapter": "identity-equality-equivalence",
+  "section": "equivalence",
+  "term": "def:left-right-respect-equivalence",
+  "kind": "Definition",
+  "title": "Left and Right Respect",
+  "root": "",
+  "statement": "The operation $O$ \\emph{respects} $\\sim$ on the left if\n\\[\na\\sim a'\\Longrightarrow (a\\mathbin{O}b)\\sim(a'\\mathbin{O}b),\n\\]\nand respects $\\sim$ on the right if\n\\[\nb\\sim b'\\Longrightarrow (a\\mathbin{O}b)\\sim(a\\mathbin{O}b').\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:equivalence-relation",
+      "title": "Equivalence Relation",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:operation-respects-equivalence",
+      "title": "Operation Respects an Equivalence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

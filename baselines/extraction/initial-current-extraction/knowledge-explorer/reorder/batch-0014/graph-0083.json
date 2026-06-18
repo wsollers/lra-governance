@@ -1,0 +1,31 @@
+{
+  "graph_id": "0014-0083",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "definition",
+  "term": "thm:upper-and-lower-bounds-give-absolute-bound",
+  "kind": "Theorem",
+  "title": "Upper and Lower Bounds Give an Absolute Bound",
+  "root": "",
+  "statement": "Let $(x_n)$ be a real sequence. If there exist $m,M \\in \\mathbb{R}$ such\nthat $m \\le x_n \\le M$ for every $n \\in \\mathbb{N}$, then there exists\n$K > 0$ such that $|x_n| \\le K$ for every $n \\in \\mathbb{N}$.",
+  "current_dependencies": [
+    {
+      "id": "def:bounded-sequence",
+      "title": "Bounded Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:sequence-bounded-above",
+      "title": "Sequence Bounded Above",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:sequence-bounded-below",
+      "title": "Sequence Bounded Below",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

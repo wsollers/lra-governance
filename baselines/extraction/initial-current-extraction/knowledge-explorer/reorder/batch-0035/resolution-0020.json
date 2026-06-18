@@ -1,0 +1,10 @@
+{
+  "graph_id": "0035-0020",
+  "term": "def:axiom-systems-consequence",
+  "verdict": "change",
+  "dependencies": ["def:axiom-systems-model"],
+  "rationale": "Semantic consequence is defined as 'every model of Gamma is also a model of phi', so the load-bearing notion is the model relation (def:axiom-systems-model), which was missing. The listed def:axiom-systems-theory is removed: Gamma is an arbitrary set of premises, not a deductively-closed theory, and consequence is defined for any such Gamma.",
+  "licensing_quote": "if every model of $\\Gamma$ is also a\nmodel of $\\varphi$",
+  "confidence": 0.6,
+  "notes": "The 'Equivalently, there is no structure ... true ... false' clause is the model-free unfolding via def:axiom-systems-structure + def:axiom-systems-satisfaction; those are candidate edges if the reviewer prefers the structure/satisfaction phrasing over the model phrasing. Gamma and phi being sentences (def:sentence) is ambient typing."
+}

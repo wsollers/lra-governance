@@ -1,0 +1,37 @@
+{
+  "graph_id": "0015-0026",
+  "volume": "iii",
+  "chapter": "real-analysis",
+  "section": "modulus",
+  "term": "thm:absolute-value-quotient",
+  "kind": "Theorem",
+  "title": "Absolute Value of a Quotient",
+  "root": "",
+  "statement": "For all $a \\in \\mathbb{R}$ and $b \\in \\mathbb{R}$ with $b \\ne 0$,\n\\[\n \\left\\lvert \\frac{a}{b} \\right\\rvert\n = \\frac{\\lvert a \\rvert}{\\lvert b \\rvert}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "cor:uniqueness-multiplicative-inverse-on-q",
+      "title": "Uniqueness of Multiplicative Inverses on $ $",
+      "kind": "Corollary",
+      "root": ""
+    },
+    {
+      "id": "def:absolute-value",
+      "title": "Absolute Value",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:absolute-value-product",
+      "title": "Absolute Value of a Product",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:absolute-value-zero-iff-zero",
+      "title": "Absolute Value Zero Iff Zero",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

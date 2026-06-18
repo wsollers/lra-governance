@@ -1,0 +1,25 @@
+{
+  "graph_id": "0035-0019",
+  "volume": "i",
+  "chapter": "axiom-systems",
+  "section": "signatures",
+  "term": "def:signature-function-symbol",
+  "kind": "Definition",
+  "title": "Function Symbol",
+  "root": "",
+  "statement": "A \\emph{function symbol} is a non-logical symbol $f\\in\\mathcal{F}$ whose\nassigned arity determines how many terms it must take as inputs. If\n$\\operatorname{ar}(f)=n$, then $f$ is an $n$-ary term constructor: it takes\nexactly $n$ terms and produces a new term, not a truth value.",
+  "current_dependencies": [
+    {
+      "id": "def:arity",
+      "title": "Arity",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:signature",
+      "title": "First-Order Signature",
+      "kind": "Definition",
+      "root": "definitional_truth"
+    }
+  ]
+}

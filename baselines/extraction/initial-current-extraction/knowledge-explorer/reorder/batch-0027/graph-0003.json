@@ -1,0 +1,25 @@
+{
+  "graph_id": "0027-0003",
+  "volume": "ii",
+  "chapter": "natural-numbers",
+  "section": "addition-on-n",
+  "term": "thm:addition-cancellation",
+  "kind": "Theorem",
+  "title": "Cancellation for Addition",
+  "root": "",
+  "statement": "Let $(P,S,1)$ be a Peano system. Addition on $P$ satisfies cancellation on\nboth sides:\n\\[\na+b=a+c\\Longrightarrow b=c\n\\qquad\\text{and}\\qquad\nb+a=c+a\\Longrightarrow b=c.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "thm:addition-left-cancellation",
+      "title": "Left Cancellation for Addition",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:addition-right-cancellation",
+      "title": "Right Cancellation for Addition",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

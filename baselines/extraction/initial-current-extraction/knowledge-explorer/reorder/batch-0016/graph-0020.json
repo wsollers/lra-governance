@@ -1,0 +1,19 @@
+{
+  "graph_id": "0016-0020",
+  "volume": "iii",
+  "chapter": "functions",
+  "section": "limits",
+  "term": "thm:bounded-limits",
+  "kind": "Theorem",
+  "title": "Bounded Limits",
+  "root": "",
+  "statement": "Let $f : A \\to \\mathbb{R}$, let $c$ be a cluster point of $A$, and\nlet $a, b \\in \\mathbb{R}$. If $a \\leq f(x) \\leq b$ for all $x \\in A$\nwith $x \\neq c$, and $\\lim_{x\\to c}f(x)=L$, then\n$a \\leq L \\leq b$.",
+  "current_dependencies": [
+    {
+      "id": "def:limit-function",
+      "title": "Limit of a Function",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0024",
+  "term": "def:strength",
+  "verdict": "ok",
+  "dependencies": ["def:log-consequence"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.7,
+  "notes": "Strength is defined by A |= B and B |/= A; both the entailment and its negation are def:log-consequence, so the single dep captures it. The 'sentence' typing is ambient (Rule 3): swapping 'sentence' for 'formula' leaves the relation A |= B, B |/= A well-posed, so def:sentence-predicate-logic is not load-bearing here and is correctly omitted."
+}

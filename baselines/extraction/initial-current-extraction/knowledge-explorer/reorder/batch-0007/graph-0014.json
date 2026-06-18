@@ -1,0 +1,12 @@
+{
+  "graph_id": "0007-0014",
+  "volume": "vii",
+  "chapter": "euclidean-geometry",
+  "section": "foundations",
+  "term": "def:euclid-edges-of-a-surface",
+  "kind": "Definition",
+  "title": "Edges of a surface",
+  "root": "",
+  "statement": "The edges of a surface are lines.",
+  "current_dependencies": []
+}

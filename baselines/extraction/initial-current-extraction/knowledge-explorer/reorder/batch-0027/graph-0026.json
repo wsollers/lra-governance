@@ -1,0 +1,31 @@
+{
+  "graph_id": "0027-0026",
+  "volume": "ii",
+  "chapter": "natural-numbers",
+  "section": "multiplication-on-n",
+  "term": "thm:multiplication-well-defined-on-peano-system",
+  "kind": "Theorem",
+  "title": "Multiplication Is Well-Defined on a Peano System",
+  "root": "",
+  "statement": "Let $(P,S,1)$ be a Peano system. For every $m \\in P$, there exists a unique\nfunction\n\\[\ng_m : P \\to P\n\\]\nsuch that\n\\[\ng_m(1)=m\n\\qquad\\text{and}\\qquad\n\\forall n \\in P\\;(g_m(S(n))=g_m(n)+m).\n\\]\nConsequently the rule\n\\[\n(m,n) \\longmapsto m \\cdot n \\coloneqq g_m(n)\n\\]\ndefines a unique binary operation on $P$.",
+  "current_dependencies": [
+    {
+      "id": "def:addition-on-peano-system",
+      "title": "Addition on a Peano System",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:multiplication-on-peano-system",
+      "title": "Multiplication on a Peano System",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:general-recursion-theorem-for-peano-system",
+      "title": "General Recursion Theorem",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

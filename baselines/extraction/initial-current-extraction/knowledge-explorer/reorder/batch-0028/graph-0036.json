@@ -1,0 +1,31 @@
+{
+  "graph_id": "0028-0036",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "divisibility-in-z",
+  "term": "thm:division-algorithm-on-z",
+  "kind": "Theorem",
+  "title": "Division Algorithm on $ $",
+  "root": "",
+  "statement": "If $a,b\\in\\mathbb{Z}$ and $b\\ne0$, then there exist unique\n$q,r\\in\\mathbb{Z}$ such that\n\\[\na=bq+r\n\\qquad\\text{and}\\qquad\n0\\le r<|b|.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "cor:multiplicative-cancellation-on-z",
+      "title": "Multiplicative Cancellation on $ $",
+      "kind": "Corollary",
+      "root": ""
+    },
+    {
+      "id": "thm:well-ordering-principle",
+      "title": "Well-Ordering Principle",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:z-is-not-well-ordered",
+      "title": "$ $ Is Not Well-Ordered",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

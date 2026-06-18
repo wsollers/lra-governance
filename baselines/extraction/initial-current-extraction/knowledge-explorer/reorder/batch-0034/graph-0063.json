@@ -1,0 +1,19 @@
+{
+  "graph_id": "0034-0063",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "syntax",
+  "term": "def:constant-symbol",
+  "kind": "Definition",
+  "title": "Constant Symbol",
+  "root": "",
+  "statement": "For a first-order language \\(\\mathcal L\\), a \\emph{constant symbol} is a\nnon-logical symbol of arity \\(0\\). A constant symbol may occur as a term without\ntaking input terms.",
+  "current_dependencies": [
+    {
+      "id": "def:variable",
+      "title": "Variable",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

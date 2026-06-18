@@ -1,0 +1,31 @@
+{
+  "graph_id": "0028-0051",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "operations-on-z-classes",
+  "term": "def:multiplication-on-z-classes",
+  "kind": "Definition",
+  "title": "Multiplication on $ $-Classes",
+  "root": "",
+  "statement": "Define multiplication on representatives by\n\\[\n[a,b]\\cdot[c,d]:=[ac+bd,ad+bc].\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:addition-on-w",
+      "title": "Addition on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:integer-class-notation",
+      "title": "Integer Class Notation",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:multiplication-on-w",
+      "title": "Multiplication on $ $",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "graph_id": "0006-0007",
+  "volume": "viii",
+  "chapter": "computational-geometry",
+  "section": "convex-hulls",
+  "term": "lem:computational-geometry-linear-functionals-convex-combinations",
+  "kind": "Lemma",
+  "title": "Linear functionals preserve convex combinations",
+  "root": "",
+  "statement": "Let \\(d\\in\\mathbb{R}^2\\), and let\n\\[\n z=\\sum_{i=1}^{n}\\lambda_i q_i\n\\]\nbe a convex combination of points \\(q_1,\\dots,q_n\\in\\mathbb{R}^2\\). Then\n\\[\n \\langle d,z\\rangle\n =\n \\sum_{i=1}^{n}\\lambda_i\\langle d,q_i\\rangle.\n\\]\nConsequently, if \\(\\langle d,q_i\\rangle\\le M\\) for every \\(i\\), then\n\\[\n \\langle d,z\\rangle\\le M.\n\\]",
+  "current_dependencies": []
+}

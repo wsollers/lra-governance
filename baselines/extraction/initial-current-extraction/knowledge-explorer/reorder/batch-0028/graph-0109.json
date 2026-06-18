@@ -1,0 +1,25 @@
+{
+  "graph_id": "0028-0109",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "order-on-z",
+  "term": "thm:order-on-z-total",
+  "kind": "Theorem",
+  "title": "Order on $ $ Is Total",
+  "root": "",
+  "statement": "For all $x,y\\in\\mathbb{Z}$,\n\\[\nx\\le y\\text{ or }y\\le x.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:order-on-z",
+      "title": "Order on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:trichotomy-on-z",
+      "title": "Trichotomy on $ $",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

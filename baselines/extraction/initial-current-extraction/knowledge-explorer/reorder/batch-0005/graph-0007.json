@@ -1,0 +1,12 @@
+{
+  "graph_id": "0005-0007",
+  "volume": "viii",
+  "chapter": "ordinary-differential-equations",
+  "section": "differential-equations-models",
+  "term": "def:ordinary-differential-equations-solutions-initial-condition",
+  "kind": "Definition",
+  "title": "Initial Condition",
+  "root": "",
+  "statement": "An \\textbf{initial condition} specifies the value of the unknown function at a particular value of the independent variable.\n\nFor a first-order differential equation involving an unknown function $y=y(t)$, an initial condition has the form\n\\[\ny(t_0)=y_0,\n\\]\nwhere $t_0$ is the initial time and $y_0$ is the initial value.",
+  "current_dependencies": []
+}

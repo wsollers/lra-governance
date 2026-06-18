@@ -1,0 +1,19 @@
+{
+  "graph_id": "0024-0007",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "arbitrary-closeness-in-q",
+  "term": "prop:no-least-positive-rational",
+  "kind": "Proposition",
+  "title": "$ $ Has No Least Positive Rational",
+  "root": "",
+  "statement": "For every $x\\in\\mathbb{Q}$,\n\\[\n0_{\\mathbb{Q}}<x\n\\Longrightarrow\n\\exists y\\in\\mathbb{Q}\\ (0_{\\mathbb{Q}}<y<x).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "thm:density-of-q",
+      "title": "Density of $ $ in Itself",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "graph_id": "0024-0023",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "construction-of-q",
+  "term": "lem:vanishing-criterion-q",
+  "kind": "Lemma",
+  "title": "Vanishing Criterion in $ $",
+  "root": "",
+  "statement": "For every prefraction $(a,b)\\in\\operatorname{Pre}\\mathbb{Q}$,\n\\[\n[a,b]=0_{\\mathbb{Q}}\n\\quad\\Longleftrightarrow\\quad\na=0_{\\mathbb{Z}}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:fraction-equivalence",
+      "title": "Fraction Equivalence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:rational-class-notation",
+      "title": "Rational Class Notation",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:zero-in-q",
+      "title": "Zero in $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:zero-in-z",
+      "title": "Zero in $ $",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

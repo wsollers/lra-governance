@@ -1,0 +1,12 @@
+{
+  "graph_id": "0032-0044",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "functions",
+  "term": "def:constant",
+  "kind": "Definition",
+  "title": "Constant Function",
+  "root": "",
+  "statement": "$f : A \\to B$ is \\emph{constant} if there exists $b_0 \\in B$ with\n$f(a) = b_0$ for all $a \\in A$.",
+  "current_dependencies": []
+}

@@ -1,0 +1,12 @@
+{
+  "graph_id": "0007-0001",
+  "volume": "vii",
+  "chapter": "euclidean-geometry",
+  "section": "compass-and-straightedge-constructions",
+  "term": "thm:euclid-i-1",
+  "kind": "Theorem",
+  "title": "Euclid I.1: Constructing an equilateral triangle",
+  "root": "",
+  "statement": "Given a finite straight line segment $AB$, there exists an equilateral\ntriangle $ABC$ constructed on $AB$.",
+  "current_dependencies": []
+}

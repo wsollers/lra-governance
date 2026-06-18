@@ -1,0 +1,25 @@
+{
+  "graph_id": "0022-0014",
+  "volume": "ii",
+  "chapter": "structure-of-real-line",
+  "section": "intervals-as-subsets",
+  "term": "def:bounded-subset-of-r",
+  "kind": "Definition",
+  "title": "Bounded Subset of the Real Line",
+  "root": "",
+  "statement": "A set $E\\subseteq\\mathbb{R}$ is \\emph{bounded} exactly when there exists $M\\ge 0$ such that $|x|\\le M$ for all $x\\in E$; equivalently, $E$ is contained in some closed interval $[-M,M]$.",
+  "current_dependencies": [
+    {
+      "id": "def:closed-interval",
+      "title": "Closed Interval",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:triangle-inequality",
+      "title": "Triangle Inequality",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0022",
+  "term": "thm:addition-validity-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:valid-argument-form-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.6,
+  "notes": "Validity of 'phi therefore phi or psi' unfolds def:valid-argument-form: any assignment satisfying phi satisfies phi or psi by the disjunction's truth condition. That truth condition is def:satisfaction-propositional-formula, but it is reached by unfolding def:valid-argument-form (which carries satisfaction) and is not named in the statement, so per Rule 2 it is not a missing direct edge. Consistent with the section's minimal citation for simple valid forms; contrast the invalid forms (0017/0018), which name the counterexample construct."
+}

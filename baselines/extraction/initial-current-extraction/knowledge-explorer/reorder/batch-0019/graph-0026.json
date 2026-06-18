@@ -1,0 +1,19 @@
+{
+  "graph_id": "0019-0026",
+  "volume": "iii",
+  "chapter": "continuity",
+  "section": "limits-at-infinity",
+  "term": "def:limit-at-infinity",
+  "kind": "Definition",
+  "title": "Limit at Infinity",
+  "root": "",
+  "statement": "Let $X \\subseteq \\mathbb{R}$ be such that for every $M \\in \\mathbb{R}$ there exists $x \\in X$ with $x > M$, let $f : X \\to \\mathbb{R}$, and let $L \\in \\mathbb{R}$. The limit of $f$ at $+\\infty$ equals $L$ if and only if\nfor every $\\varepsilon > 0$ there exists $M \\in \\mathbb{R}$ such that for every $x \\in X$, $x > M$ implies $|f(x) - L| < \\varepsilon$.",
+  "current_dependencies": [
+    {
+      "id": "def:infinite-adherent-points",
+      "title": "Infinite Adherent Points",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "graph_id": "0025-0006",
+  "volume": "ii",
+  "chapter": "peano-systems",
+  "section": "defining-peano-systems",
+  "term": "ax:peano-system-existence",
+  "kind": "Axiom",
+  "title": "Existence of a Peano System",
+  "root": "axiom",
+  "statement": "There exists a Peano system.",
+  "current_dependencies": [
+    {
+      "id": "def:language",
+      "title": "Language",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

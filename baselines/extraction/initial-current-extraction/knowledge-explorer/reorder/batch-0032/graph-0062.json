@@ -1,0 +1,12 @@
+{
+  "graph_id": "0032-0062",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "order",
+  "term": "def:dual-poset",
+  "kind": "Definition",
+  "title": "Dual Poset",
+  "root": "",
+  "statement": "Let $(A, \\leq)$ be a poset. The \\emph{dual poset} is $(A, \\geq)$, where\n$a \\geq b$ is defined to mean $b \\leq a$. The dual is also written\n$(A, \\leq^{\\mathrm{op}})$.",
+  "current_dependencies": []
+}

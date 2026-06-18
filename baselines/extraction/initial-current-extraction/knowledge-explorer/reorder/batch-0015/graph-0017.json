@@ -1,0 +1,25 @@
+{
+  "graph_id": "0015-0017",
+  "volume": "iii",
+  "chapter": "real-analysis",
+  "section": "inequality",
+  "term": "thm:ineq-transitivity-mixed",
+  "kind": "Theorem",
+  "title": "Mixed Transitivity",
+  "root": "",
+  "statement": "For all $a, b, c \\in \\mathbb{R}$,\n\\[\n a \\le b \\;\\land\\; b < c \\;\\Rightarrow\\; a < c.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:real-ordered-field",
+      "title": "Complete Ordered Field",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:ineq-transitivity-strict",
+      "title": "Transitivity of Strict Inequality",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

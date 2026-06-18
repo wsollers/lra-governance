@@ -1,0 +1,25 @@
+{
+  "graph_id": "0014-0115",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "monotonicity",
+  "term": "def:monotone-sequence",
+  "kind": "Definition",
+  "title": "Monotone Sequence",
+  "root": "",
+  "statement": "Let $(x_n)$ be a real sequence. The sequence $(x_n)$ is\n\\textbf{monotone} if it is increasing or decreasing.",
+  "current_dependencies": [
+    {
+      "id": "def:decreasing-sequence",
+      "title": "Decreasing Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:increasing-sequence",
+      "title": "Increasing Sequence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

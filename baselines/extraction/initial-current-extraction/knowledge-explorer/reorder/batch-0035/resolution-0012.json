@@ -1,0 +1,10 @@
+{
+  "graph_id": "0035-0012",
+  "term": "def:axiom-systems-satisfaction",
+  "verdict": "change",
+  "dependencies": ["def:axiom-systems-structure", "def:wff-pred", "def:term"],
+  "rationale": "Satisfaction is a relation between a structure (def:axiom-systems-structure) and a formula, defined by induction on formulas (def:wff-pred) with an inline term-evaluation map over terms (def:term). Formula and term are the syntactic objects the recursion runs on and were missing; both are load-bearing.",
+  "licensing_quote": "The satisfaction relation $\\mathfrak{M}\\vDash\\varphi[s]$ is then defined by\ninduction on formulas",
+  "confidence": 0.6,
+  "notes": "Term edge licensed by the term-evaluation clause for $f(t_1,\\ldots,t_n)$. def:variable / def:variable-assignment / def:term-evaluation are NOT added: the statement constructs the variable assignment and term-evaluation map inline rather than importing them, so 'variable' sits as ambient substrate here. If the repo intends satisfaction to reuse the standalone def:variable-assignment and def:term-evaluation nodes rather than re-deriving them, those become candidate edges -- flag for reviewer. Formula node chosen as def:wff-pred (predicate-logic wff) over def:formula because quantifiers range over the domain M."
+}

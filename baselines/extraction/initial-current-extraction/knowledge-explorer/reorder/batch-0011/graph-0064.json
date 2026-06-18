@@ -1,0 +1,19 @@
+{
+  "graph_id": "0011-0064",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "laws-of-operations",
+  "term": "def:associativity",
+  "kind": "Definition",
+  "title": "Associativity",
+  "root": "",
+  "statement": "Let $\\star$ be a binary operation on $G$.\nThe operation $\\star$ is \\textbf{associative} if\n\\[\n(a \\star b) \\star c = a \\star (b \\star c)\n\\quad \\text{for all } a,b,c \\in G.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:binary-arithmetic-operation",
+      "title": "Binary Arithmetic Operation",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

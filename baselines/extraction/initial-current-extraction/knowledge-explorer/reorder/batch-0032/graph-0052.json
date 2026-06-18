@@ -1,0 +1,19 @@
+{
+  "graph_id": "0032-0052",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "functions",
+  "term": "def:injective",
+  "kind": "Definition",
+  "title": "Injective Function",
+  "root": "",
+  "statement": "$f : A \\to B$ is \\emph{injective} (one-to-one) if distinct elements of $A$\nhave distinct images:\n\\[\n\\forall a_1,a_2 \\in A,\\;\nf(a_1)=f(a_2) \\;\\Longrightarrow\\; a_1=a_2.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:function",
+      "title": "Function",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

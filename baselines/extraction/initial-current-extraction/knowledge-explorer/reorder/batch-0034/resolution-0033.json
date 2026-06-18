@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0033",
+  "term": "def:quantifier-prefix",
+  "verdict": "change",
+  "dependencies": ["def:existential-q", "def:universal-q", "def:variable"],
+  "rationale": "The prefix is a string of Q_i x_i where 'each x_i is a variable', so def:variable is a directly-named load-bearing stating-dependency and was missing.",
+  "licensing_quote": "is a variable",
+  "confidence": 0.75,
+  "notes": "Modeling caveat: a prefix uses the bare quantifier SYMBOLS forall/exists (Q_i in {forall, exists}), not whole quantified formulas, but no standalone quantifier-symbol node exists, so def:universal-q/def:existential-q serve as proxies (kept). If a symbol-level node is ever authored, it would be the cleaner attachment."
+}

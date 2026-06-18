@@ -1,0 +1,31 @@
+{
+  "graph_id": "0028-0062",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "operations-on-z-classes",
+  "term": "thm:addition-on-z-commutative",
+  "kind": "Theorem",
+  "title": "Addition on $ $ Is Commutative",
+  "root": "",
+  "statement": "For all $x,y\\in\\mathbb{Z}$,\n\\[\nx+y=y+x.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:addition-on-z-classes",
+      "title": "Addition on $ $-Classes",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:addition-on-w-commutative",
+      "title": "Addition on $ $ Is Commutative",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:addition-on-z-well-defined",
+      "title": "Addition on $ $ Is Well-Defined",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

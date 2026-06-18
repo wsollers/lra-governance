@@ -1,0 +1,25 @@
+{
+  "graph_id": "0014-0085",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "definition",
+  "term": "def:sequence",
+  "kind": "Definition",
+  "title": "Sequence",
+  "root": "",
+  "statement": "Let $X$ be a nonempty set. A \\textbf{sequence} in $X$ is a function\n\\[\n x : \\mathbb{N} \\to X.\n\\]\nThe value $x(n)$ is written $x_n$ and called the \\textbf{$n$-th term} of the\nsequence. The sequence itself is denoted $(x_n)_{n \\in \\mathbb{N}}$, or\nsimply $(x_n)$ when the index set is clear.",
+  "current_dependencies": [
+    {
+      "id": "def:function",
+      "title": "Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:natural-numbers",
+      "title": "The Natural Numbers",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "graph_id": "0027-0024",
+  "volume": "ii",
+  "chapter": "natural-numbers",
+  "section": "multiplication-on-n",
+  "term": "thm:multiplication-right-cancellation",
+  "kind": "Theorem",
+  "title": "Right Cancellation for Multiplication",
+  "root": "",
+  "statement": "Let $(P,S,1)$ be a Peano system. For every $a,b,c \\in P$,\n\\[\nb\\cdot a=c\\cdot a\n\\Longrightarrow\nb=c.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "thm:multiplication-commutative",
+      "title": "Multiplication Is Commutative",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:multiplication-left-cancellation",
+      "title": "Left Cancellation for Multiplication",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

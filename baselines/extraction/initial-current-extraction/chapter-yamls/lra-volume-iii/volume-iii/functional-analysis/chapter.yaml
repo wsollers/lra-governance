@@ -1,0 +1,10 @@
+subject: functional-analysis
+display_title: Functional Analysis
+volume: volume-iii
+status: planned
+dependencies:
+  prior: ''
+  next: ''
+path: volume-iii/functional-analysis
+environments: []
+proof_files: []

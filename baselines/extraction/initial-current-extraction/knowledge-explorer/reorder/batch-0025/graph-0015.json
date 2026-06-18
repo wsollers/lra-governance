@@ -1,0 +1,12 @@
+{
+  "graph_id": "0025-0015",
+  "volume": "ii",
+  "chapter": "peano-systems",
+  "section": "defining-peano-systems",
+  "term": "thm:every-element-is-one-or-a-successor",
+  "kind": "Theorem",
+  "title": "Every Element Is Either $1$ or a Successor",
+  "root": "",
+  "statement": "Let $(P,S,1)$ be a Peano system. For every $x \\in P$, either $x=1$ or there\nexists $u \\in P$ such that $S(u)=x$.",
+  "current_dependencies": []
+}

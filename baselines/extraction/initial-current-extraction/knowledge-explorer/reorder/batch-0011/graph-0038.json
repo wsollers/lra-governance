@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0038",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "",
+  "term": "def:formal-model-theoretic-structures-l499",
+  "kind": "Definition",
+  "title": "Group",
+  "root": "",
+  "statement": "A \\textbf{group} is a quadruple $(A, *, e, {}^{-1})$ where $A$ is a nonempty\n set, $* : A \\times A \\to A$, $e \\in A$, and ${}^{-1} : A \\to A$, satisfying:\n \\begin{align*}\n \\forall\\,a,b \\in A:&\\; a * b \\in A \\tag{Closure}\\\\\n \\forall\\,a,b,c \\in A:&\\; (a*b)*c = a*(b*c) \\tag{Associativity}\\\\\n \\forall\\,a \\in A:&\\; a * e = e * a = a \\tag{Identity}\\\\\n \\forall\\,a \\in A:&\\; a * a^{-1} = a^{-1} * a = e \\tag{Inverses}\n \\end{align*}\n The inverse $a^{-1}$ is unique for each $a$, and $(a^{-1})^{-1} = a$.\n\n \n Model-theoretic signature:\n \\[\n \\mathcal{L}_{\\mathrm{grp}} = \\{\\,*,\\, e,\\, {}^{-1}\\,\\},\n \\quad * \\text{ arity } 2,\\quad {}^{-1} \\text{ arity } 1,\\quad\n e \\text{ a constant.}\n \\]",
+  "current_dependencies": []
+}

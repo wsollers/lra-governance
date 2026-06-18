@@ -1,0 +1,25 @@
+{
+  "graph_id": "0027-0015",
+  "volume": "ii",
+  "chapter": "natural-numbers",
+  "section": "induction",
+  "term": "thm:induction-from-arbitrary-base",
+  "kind": "Theorem",
+  "title": "Induction from an Arbitrary Base",
+  "root": "",
+  "statement": "Let $(P,S,1)$ be a Peano system, let $m \\in P$, and let $\\varphi$ be a\npredicate on $P$. If\n\\[\n\\varphi(m)\n\\qquad\\text{and}\\qquad\n\\forall n \\in P\\;\\bigl(n \\ge m \\land \\varphi(n) \\Longrightarrow \\varphi(S(n))\\bigr),\n\\]\nthen\n\\[\n\\forall n \\in P\\;\\bigl(n \\ge m \\Longrightarrow \\varphi(n)\\bigr).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:less-than-or-equal-on-peano-system",
+      "title": "Less Than or Equal on a Peano System",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:induction-principle-for-peano-system",
+      "title": "Induction Principle for a Peano System",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

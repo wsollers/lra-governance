@@ -1,0 +1,12 @@
+{
+  "graph_id": "0012-0014",
+  "volume": "vi",
+  "chapter": "algebraic-geometry",
+  "section": "polynomial-rings",
+  "term": "thm:hilbert-basis-theorem",
+  "kind": "Theorem",
+  "title": "Hilbert Basis Theorem",
+  "root": "",
+  "statement": "If $R$ is a Noetherian ring, then the polynomial ring $R[x]$\nis also Noetherian.\n\nIn particular, $k[x_1, \\dots, x_n]$ is Noetherian for any field $k$.",
+  "current_dependencies": []
+}

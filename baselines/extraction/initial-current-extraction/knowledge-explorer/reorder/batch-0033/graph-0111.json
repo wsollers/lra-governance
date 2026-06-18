@@ -1,0 +1,25 @@
+{
+  "graph_id": "0033-0111",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "syntax",
+  "term": "def:formula-depth-propositional-logic",
+  "kind": "Definition",
+  "title": "Formula Depth",
+  "root": "",
+  "statement": "The depth of a formula \\(\\varphi\\), denoted \\(\\operatorname{depth}(\\varphi)\\), is defined recursively:\n- if \\(\\varphi\\) is atomic, then \\(\\operatorname{depth}(\\varphi)=0\\);\n- if \\(\\varphi=\\neg\\psi\\), then \\(\\operatorname{depth}(\\varphi)=\\operatorname{depth}(\\psi)+1\\);\n- if \\(\\varphi=(\\psi\\circ\\chi)\\), then\n\\[\n\\operatorname{depth}(\\varphi)=\\max\\{\\operatorname{depth}(\\psi),\\operatorname{depth}(\\chi)\\}+1.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:parse-tree-propositional-logic",
+      "title": "Parse Tree",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:well-formed-formula",
+      "title": "Well-Formed Formula",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

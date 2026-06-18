@@ -1,0 +1,12 @@
+{
+  "graph_id": "0024-0044",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "field-structure-of-q",
+  "term": "cor:inverse-of-product-on-q",
+  "kind": "Corollary",
+  "title": "Inverse of a Product on $ $",
+  "root": "",
+  "statement": "For all nonzero $x,y\\in\\mathbb{Q}$,\n\\[\n(x\\cdot y)^{-1}=x^{-1}\\cdot y^{-1}.\n\\]",
+  "current_dependencies": []
+}

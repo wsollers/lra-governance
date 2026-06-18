@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0104",
+  "term": "def:truth-table-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:formula-variable-set-propositional-logic", "lem:finiteness-of-variables-propositional-formulas", "thm:unique-extension-truth-assignment-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.7,
+  "notes": "A truth table has one row per assignment over Var(phi) (def:formula-variable-set) with final column v-hat(phi) (thm:unique-extension). Finiteness of the table is licensed by lem:finiteness-of-variables (Rule-4 well-posedness of 'finite table'). All three load-bearing and present."
+}

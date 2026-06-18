@@ -1,0 +1,31 @@
+{
+  "graph_id": "0033-0066",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "normal-forms",
+  "term": "def:truth-table-row-clause-propositional-logic",
+  "kind": "Definition",
+  "title": "Truth-Table Row Clause",
+  "root": "",
+  "statement": "Fix a finite variable list \\(P_1,\\ldots,P_n\\) and a row \\(r\\) of the\n\nP_i, & \\text{if row }r\\text{ makes }P_i\\text{ false},\\\\\n\\neg P_i, & \\text{if row }r\\text{ makes }P_i\\text{ true}.\n\\end{cases}\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:clause-propositional-logic",
+      "title": "Clause",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:formula-variable-set-propositional-logic",
+      "title": "Variable Set of a Formula",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:truth-table-propositional-logic",
+      "title": "Truth Table",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

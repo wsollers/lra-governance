@@ -1,0 +1,37 @@
+{
+  "graph_id": "0027-0021",
+  "volume": "ii",
+  "chapter": "natural-numbers",
+  "section": "multiplication-on-n",
+  "term": "thm:multiplication-distributes-over-addition",
+  "kind": "Theorem",
+  "title": "Multiplication Distributes Over Addition",
+  "root": "",
+  "statement": "Let $(P,S,1)$ be a Peano system. For every $a,b,c \\in P$,\n\\[\na \\cdot (b+c) = (a \\cdot b) + (a \\cdot c).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "thm:addition-associative",
+      "title": "Addition Is Associative",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:addition-commutative",
+      "title": "Addition Is Commutative",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:induction-principle-for-peano-system",
+      "title": "Induction Principle for a Peano System",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:multiplication-successor-on-right",
+      "title": "Multiplication Successor on the Right",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

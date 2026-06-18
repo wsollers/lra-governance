@@ -1,0 +1,25 @@
+{
+  "graph_id": "0022-0009",
+  "volume": "ii",
+  "chapter": "structure-of-real-line",
+  "section": "heine-borel",
+  "term": "thm:heine-borel",
+  "kind": "Theorem",
+  "title": "Heine--Borel Theorem for $ $",
+  "root": "",
+  "statement": "A set $K\\subseteq\\mathbb{R}$ is compact if and only if $K$ is closed and bounded.",
+  "current_dependencies": [
+    {
+      "id": "thm:closed-bounded-interval-compact",
+      "title": "Closed Bounded Intervals Are Compact",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:compact-implies-closed-bounded",
+      "title": "Compact Subsets of $ $ Are Closed and Bounded",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

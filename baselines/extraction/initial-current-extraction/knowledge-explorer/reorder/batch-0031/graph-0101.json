@@ -1,0 +1,19 @@
+{
+  "graph_id": "0031-0101",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "order-compatibility",
+  "term": "prop:addition-order-compatibility-right",
+  "kind": "Proposition",
+  "title": "Addition Preserves Order on the Right",
+  "root": "",
+  "statement": "\\[\ny<z \\Longrightarrow y+x<z+x\n\\]\nin ordered arithmetic systems where addition is strictly order-preserving.",
+  "current_dependencies": [
+    {
+      "id": "def:left-monotony",
+      "title": "Left Monotony",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

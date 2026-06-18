@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0102",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "rings",
+  "term": "prop:ring-mult-zero",
+  "kind": "Proposition",
+  "title": "Multiplication by Zero",
+  "root": "",
+  "statement": "Let $R$ be a ring. For all $a \\in R$,\n\\[\na \\cdot 0 = 0 \\cdot a = 0.\n\\]",
+  "current_dependencies": []
+}

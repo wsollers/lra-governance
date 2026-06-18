@@ -1,0 +1,212 @@
+[
+  {
+    "batch": "batch-0001",
+    "volume": "viii",
+    "chapter": "model-theory",
+    "graphs": 4
+  },
+  {
+    "batch": "batch-0002",
+    "volume": "viii",
+    "chapter": "lambda-calculus",
+    "graphs": 1
+  },
+  {
+    "batch": "batch-0003",
+    "volume": "viii",
+    "chapter": "algebras-of-sets",
+    "graphs": 6
+  },
+  {
+    "batch": "batch-0004",
+    "volume": "viii",
+    "chapter": "numerical-analysis",
+    "graphs": 19
+  },
+  {
+    "batch": "batch-0005",
+    "volume": "viii",
+    "chapter": "ordinary-differential-equations",
+    "graphs": 16
+  },
+  {
+    "batch": "batch-0006",
+    "volume": "viii",
+    "chapter": "computational-geometry",
+    "graphs": 10
+  },
+  {
+    "batch": "batch-0007",
+    "volume": "vii",
+    "chapter": "euclidean-geometry",
+    "graphs": 36
+  },
+  {
+    "batch": "batch-0008",
+    "volume": "vii",
+    "chapter": "analytical-geometry",
+    "graphs": 8
+  },
+  {
+    "batch": "batch-0009",
+    "volume": "vi",
+    "chapter": "linear-algebra",
+    "graphs": 23
+  },
+  {
+    "batch": "batch-0010",
+    "volume": "vi",
+    "chapter": "lattice-order",
+    "graphs": 29
+  },
+  {
+    "batch": "batch-0011",
+    "volume": "vi",
+    "chapter": "algebraic-structures",
+    "graphs": 102
+  },
+  {
+    "batch": "batch-0012",
+    "volume": "vi",
+    "chapter": "algebraic-geometry",
+    "graphs": 14
+  },
+  {
+    "batch": "batch-0013",
+    "volume": "iv",
+    "chapter": "foundations",
+    "graphs": 1
+  },
+  {
+    "batch": "batch-0014",
+    "volume": "iii",
+    "chapter": "sequences",
+    "graphs": 149
+  },
+  {
+    "batch": "batch-0015",
+    "volume": "iii",
+    "chapter": "real-analysis",
+    "graphs": 31
+  },
+  {
+    "batch": "batch-0016",
+    "volume": "iii",
+    "chapter": "functions",
+    "graphs": 69
+  },
+  {
+    "batch": "batch-0017",
+    "volume": "iii",
+    "chapter": "elementary-functions",
+    "graphs": 21
+  },
+  {
+    "batch": "batch-0018",
+    "volume": "iii",
+    "chapter": "differentiation",
+    "graphs": 56
+  },
+  {
+    "batch": "batch-0019",
+    "volume": "iii",
+    "chapter": "continuity",
+    "graphs": 62
+  },
+  {
+    "batch": "batch-0020",
+    "volume": "iii",
+    "chapter": "bounding",
+    "graphs": 43
+  },
+  {
+    "batch": "batch-0021",
+    "volume": "ii",
+    "chapter": "whole-numbers",
+    "graphs": 43
+  },
+  {
+    "batch": "batch-0022",
+    "volume": "ii",
+    "chapter": "structure-of-real-line",
+    "graphs": 25
+  },
+  {
+    "batch": "batch-0023",
+    "volume": "ii",
+    "chapter": "reals",
+    "graphs": 71
+  },
+  {
+    "batch": "batch-0024",
+    "volume": "ii",
+    "chapter": "rationals",
+    "graphs": 153
+  },
+  {
+    "batch": "batch-0025",
+    "volume": "ii",
+    "chapter": "peano-systems",
+    "graphs": 43
+  },
+  {
+    "batch": "batch-0026",
+    "volume": "ii",
+    "chapter": "number-lines",
+    "graphs": 6
+  },
+  {
+    "batch": "batch-0027",
+    "volume": "ii",
+    "chapter": "natural-numbers",
+    "graphs": 56
+  },
+  {
+    "batch": "batch-0028",
+    "volume": "ii",
+    "chapter": "integers",
+    "graphs": 122
+  },
+  {
+    "batch": "batch-0029",
+    "volume": "ii",
+    "chapter": "identity-equality-equivalence",
+    "graphs": 41
+  },
+  {
+    "batch": "batch-0030",
+    "volume": "ii",
+    "chapter": "embedding-number-systems",
+    "graphs": 14
+  },
+  {
+    "batch": "batch-0031",
+    "volume": "ii",
+    "chapter": "arithmetic-operations-relations",
+    "graphs": 118
+  },
+  {
+    "batch": "batch-0032",
+    "volume": "i",
+    "chapter": "sets-relations-functions",
+    "graphs": 143
+  },
+  {
+    "batch": "batch-0033",
+    "volume": "i",
+    "chapter": "propositional-logic",
+    "graphs": 133
+  },
+  {
+    "batch": "batch-0034",
+    "volume": "i",
+    "chapter": "predicate-logic",
+    "graphs": 93
+  },
+  {
+    "batch": "batch-0035",
+    "volume": "i",
+    "chapter": "axiom-systems",
+    "graphs": 23
+  }
+]

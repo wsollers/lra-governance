@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0035",
+  "term": "def:finite-unsatisfiability-witness-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:finite-subset-of-set-of-propositional-formulas", "def:unsatisfiable-set-of-propositional-formulas"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.7,
+  "notes": "FUW(Delta, Gamma) iff Delta is a finite subset of Gamma (def:finite-subset, where finiteness is an ACTIVE condition, not mere typing) and Delta is unsatisfiable (def:unsatisfiable-set). Both load-bearing and present. Contrast 0036, where bare subset-hood is ambient -- a clean Rule-3 discrimination."
+}

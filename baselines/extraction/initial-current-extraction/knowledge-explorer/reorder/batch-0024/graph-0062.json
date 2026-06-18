@@ -1,0 +1,25 @@
+{
+  "graph_id": "0024-0062",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "operations-on-q-classes",
+  "term": "def:negation-on-q-classes",
+  "kind": "Definition",
+  "title": "Negation on $ $-Classes",
+  "root": "",
+  "statement": "Define negation on representatives by\n\\[\n-[a,b]:=[-a,b].\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:negation-on-z-classes",
+      "title": "Negation on $ $-Classes",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:rational-class-notation",
+      "title": "Rational Class Notation",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

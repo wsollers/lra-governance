@@ -1,0 +1,12 @@
+{
+  "graph_id": "0032-0025",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "families",
+  "term": "def:arbitrary-product",
+  "kind": "Definition",
+  "title": "Arbitrary Cartesian Product",
+  "root": "",
+  "statement": "Let $\\{A_i\\}_{i \\in I}$ be an indexed family of sets. The \\emph{Cartesian\nproduct} is:\n\\[\n\\prod_{i \\in I} A_i\n\\;:=\\;\n\\Bigl\\{\nf : I \\to \\bigcup_{i \\in I} A_i\n\\;\\Bigm|\\;\n\\forall i \\in I,\\; f(i) \\in A_i\n\\Bigr\\}.\n\\]",
+  "current_dependencies": []
+}

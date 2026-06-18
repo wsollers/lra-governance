@@ -1,0 +1,19 @@
+{
+  "graph_id": "0009-0005",
+  "volume": "vi",
+  "chapter": "linear-algebra",
+  "section": "vector-spaces",
+  "term": "def:scalar-multiplication-in-fn",
+  "kind": "Definition",
+  "title": "Scalar Multiplication in $ ^n$",
+  "root": "",
+  "statement": "Let\n\\[\n\\lambda \\in \\mathbf{F}\n\\quad\\text{and}\\quad\nx=(x_1,\\dots,x_n)\\in \\mathbf{F}^n.\n\\]\nThe product of $\\lambda$ and $x$ is defined by\n\\[\n\\lambda x\n=\n(\\lambda x_1,\\dots,\\lambda x_n).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:fn",
+      "title": "$ ^n$",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

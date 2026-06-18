@@ -1,0 +1,25 @@
+{
+  "graph_id": "0034-0041",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "quantifiers",
+  "term": "thm:rename",
+  "kind": "Theorem",
+  "title": "Renaming Bound Variables",
+  "root": "",
+  "statement": "If \\(y\\) is free for \\(x\\) in \\(\\varphi\\) and no capture is introduced, then\n\\[\n\\forall x\\,\\varphi\\equiv\\forall y\\,\\varphi[y/x],\n\\qquad\n\\exists x\\,\\varphi\\equiv\\exists y\\,\\varphi[y/x].\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:free-for",
+      "title": "Free for Substitution",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:subst-notation",
+      "title": "Substitution Notation",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

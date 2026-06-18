@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0041",
+  "term": "def:satisfiable-set-of-propositional-formulas",
+  "verdict": "ok",
+  "dependencies": ["def:satisfaction-set-propositional-logic", "def:truth-assignment-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.75,
+  "notes": "Gamma satisfiable iff some truth assignment v (def:truth-assignment) satisfies the whole set, v |= Gamma (def:satisfaction-set). Both load-bearing and present; clean."
+}

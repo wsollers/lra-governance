@@ -1,0 +1,12 @@
+{
+  "graph_id": "0031-0033",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "closure",
+  "term": "def:unary-arithmetic-operation",
+  "kind": "Definition",
+  "title": "Unary Arithmetic Operation",
+  "root": "",
+  "statement": "Let $K$ be a domain. A \\emph{unary arithmetic operation} on $K$ is a function\n\\[\nO:K\\to K.\n\\]",
+  "current_dependencies": []
+}

@@ -1,0 +1,43 @@
+{
+  "graph_id": "0032-0014",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "equivalence",
+  "term": "def:partition",
+  "kind": "Definition",
+  "title": "Partition",
+  "root": "",
+  "statement": "A \\emph{partition} of $A$ is a collection $\\mathcal{P}$ of subsets of $A$ such\nthat:\n- [label=(\\roman*)]\n- every block is nonempty: $\\forall P \\in \\mathcal{P},\\; P \\neq \\varnothing$;\n- distinct blocks are disjoint:\n$\\forall P,Q \\in \\mathcal{P},\\; P \\neq Q \\rightarrow P \\cap Q = \\varnothing$;\n- the blocks cover $A$: $\\bigcup_{P \\in \\mathcal{P}} P = A$.\nThe sets $P \\in \\mathcal{P}$ are called the \\emph{blocks} of the partition.",
+  "current_dependencies": [
+    {
+      "id": "def:cover-full",
+      "title": "Cover",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:empty-set",
+      "title": "Empty Set",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:intersection",
+      "title": "Intersection",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:subset",
+      "title": "Subset",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:union",
+      "title": "Union",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

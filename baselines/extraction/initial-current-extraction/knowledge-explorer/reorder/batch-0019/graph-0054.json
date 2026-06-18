@@ -1,0 +1,37 @@
+{
+  "graph_id": "0019-0054",
+  "volume": "iii",
+  "chapter": "continuity",
+  "section": "uniform-continuity",
+  "term": "def:uniform-continuity",
+  "kind": "Definition",
+  "title": "Uniform Continuity",
+  "root": "",
+  "statement": "Let $A \\subseteq \\mathbb{R}$ and let $f:A \\to \\mathbb{R}$. The function $f$ is uniformly continuous on $A$ if and only if for every $\\varepsilon > 0$ there exists $\\delta > 0$ such that for all $x,u \\in A$ the implication $|x-u| < \\delta \\Rightarrow |f(x)-f(u)| < \\varepsilon$ holds.",
+  "current_dependencies": [
+    {
+      "id": "def:function",
+      "title": "Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:order-on-r",
+      "title": "Order on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:real-chapter-absolute-value-on-r",
+      "title": "Absolute Value on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:subset",
+      "title": "Subset",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

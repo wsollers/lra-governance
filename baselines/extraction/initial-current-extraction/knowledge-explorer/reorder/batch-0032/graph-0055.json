@@ -1,0 +1,37 @@
+{
+  "graph_id": "0032-0055",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "order",
+  "term": "cor:complete-preorder-extension",
+  "kind": "Corollary",
+  "title": "Complete preorder extension",
+  "root": "",
+  "statement": "For any nonempty set $X$ and preorder $\\succsim$ on $X$, there exists a\ncomplete preorder that is an extension of $\\succsim$.",
+  "current_dependencies": [
+    {
+      "id": "def:preorder",
+      "title": "Preorder",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:preorder-extension",
+      "title": "Extension of a Preorder",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:quotient-set",
+      "title": "Quotient Set",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:sym-asym",
+      "title": "Symmetric and Asymmetric Parts",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

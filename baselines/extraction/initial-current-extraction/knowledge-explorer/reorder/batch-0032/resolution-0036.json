@@ -1,0 +1,10 @@
+{
+  "graph_id": "0032-0036",
+  "term": "thm:comp-id",
+  "verdict": "ok",
+  "dependencies": ["def:composition", "def:function", "def:identity"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.75,
+  "notes": "f o id_A = f and id_B o f = f, using composition (def:composition), the function f (def:function), and identity maps (def:identity). All three load-bearing and present. Clean."
+}

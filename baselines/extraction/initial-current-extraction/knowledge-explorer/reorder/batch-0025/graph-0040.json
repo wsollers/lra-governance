@@ -1,0 +1,19 @@
+{
+  "graph_id": "0025-0040",
+  "volume": "ii",
+  "chapter": "peano-systems",
+  "section": "recursion-on-peano-systems",
+  "term": "thm:iterator-base-value",
+  "kind": "Theorem",
+  "title": "Iterator Base Clause",
+  "root": "",
+  "statement": "Let $(P,S,1)$ be a Peano system, let $(W,c,g)$ be iterator data for it, and let\n$f$ be the iterator-generated function determined by $(W,c,g)$. Then\n\\[\nf(1)=c.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:iterator-generated-function",
+      "title": "Iterator-Generated Function",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

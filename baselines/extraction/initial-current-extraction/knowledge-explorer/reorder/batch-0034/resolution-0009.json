@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0009",
+  "term": "def:eg",
+  "verdict": "ok",
+  "dependencies": [],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.5,
+  "notes": "Inference-rule schema phi[t/x] => exists x phi. If the convention attaches stating-vocabulary to rule schemas, the load-bearing candidates are def:subst-notation (for the substitution phi[t/x]) and def:existential-q (for exists x phi). Left unproposed pending the same rule-schema convention question raised at 0034-0001 (whether such schemas attach stating-vocabulary or are treated as DAG roots). All four of EG/EI/UG/UI (0009-0012) currently carry [] uniformly, which is consistent with the root reading."
+}

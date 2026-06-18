@@ -1,0 +1,25 @@
+{
+  "graph_id": "0031-0060",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "field-and-ordered-field-laws",
+  "term": "thm:field-multiplicative-cancellation",
+  "kind": "Theorem",
+  "title": "Field Multiplicative Cancellation",
+  "root": "",
+  "statement": "In a field,\n\\[\nc\\ne0\\land a\\cdot c=b\\cdot c\n\\Longrightarrow\na=b.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:abstract-field",
+      "title": "Field",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:group-cancellation",
+      "title": "Group Cancellation",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "graph_id": "0014-0100",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "liminf-limsup",
+  "term": "thm:liminf-below-limsup",
+  "kind": "Theorem",
+  "title": "Liminf Is Below Limsup",
+  "root": "",
+  "statement": "Let $(x_n)$ be a bounded real sequence. Then\n\\[\n \\liminf_{n\\to\\infty}x_n\\le \\limsup_{n\\to\\infty}x_n.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:liminf-sequence",
+      "title": "Limit Inferior of a Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:limsup-sequence",
+      "title": "Limit Superior of a Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:constant-comparison-for-sequence-limits",
+      "title": "Constant Comparison for Sequence Limits",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

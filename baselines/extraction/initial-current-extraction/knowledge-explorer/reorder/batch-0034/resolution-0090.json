@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0090",
+  "term": "def:categorical-o-form-predicate-logic",
+  "verdict": "ok",
+  "dependencies": ["prop:existential-translation-pattern", "prop:negation-translation-pattern"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.65,
+  "notes": "The O form ('Some A are not B' -> exists x (A(x) and not B(x))) is the existential pattern with a negated conjunct, so both deps are load-bearing and present. Parallel to the E form (0088)."
+}

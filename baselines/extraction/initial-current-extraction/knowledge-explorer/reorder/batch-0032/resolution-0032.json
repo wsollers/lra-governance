@@ -1,0 +1,10 @@
+{
+  "graph_id": "0032-0032",
+  "term": "def:inverse",
+  "verdict": "change",
+  "dependencies": ["def:bijective", "def:function"],
+  "rationale": "The inverse of a bijective f (def:bijective, required for the inverse to be a well-defined function) is the function (def:function) f^{-1} characterized by f^{-1}(b)=a iff f(a)=b. def:identity is removed: identity maps do not appear in this biconditional definition -- they characterize LEFT/RIGHT inverses (g o f = id, f o h = id) in the neighbouring def:left-right-inverse (0033), from which this edge appears to have been pasted.",
+  "licensing_quote": "",
+  "confidence": 0.6,
+  "notes": "Over-inclusion removal, neighbour-paste pattern (the id_A/id_B usage belongs to 0033, where def:identity is correctly load-bearing). The iff-definition here needs only bijectivity and function."
+}

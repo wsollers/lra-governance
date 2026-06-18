@@ -1,0 +1,25 @@
+{
+  "graph_id": "0033-0035",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "compactness-preview",
+  "term": "def:finite-unsatisfiability-witness-propositional-logic",
+  "kind": "Definition",
+  "title": "Finite Unsatisfiability Witness",
+  "root": "",
+  "statement": "Let \\(\\Gamma\\subseteq\\WFF\\). A subset \\(\\Delta\\subseteq\\Gamma\\) is a finite\nunsatisfiability witness for \\(\\Gamma\\) if \\(\\Delta\\) is finite and\nunsatisfiable.\n\\[\n\\operatorname{FiniteUnsatisfiabilityWitness}(\\Delta,\\Gamma)\n\\Longleftrightarrow\n\\Delta\\subseteq\\Gamma\\land \\Delta\\text{ is finite}\\land\n\\operatorname{UnsatisfiableSet}(\\Delta).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:finite-subset-of-set-of-propositional-formulas",
+      "title": "Finite Subset of a Set of Propositional Formulas",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:unsatisfiable-set-of-propositional-formulas",
+      "title": "Unsatisfiable Set of Propositional Formulas",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

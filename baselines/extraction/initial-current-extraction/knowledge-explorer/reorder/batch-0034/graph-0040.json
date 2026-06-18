@@ -1,0 +1,19 @@
+{
+  "graph_id": "0034-0040",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "quantifiers",
+  "term": "thm:quantifier-double-negation",
+  "kind": "Theorem",
+  "title": "Double Negation and Quantifiers",
+  "root": "",
+  "statement": "For every formula \\(\\varphi\\),\n\\[\n\\neg\\neg\\forall x\\,\\varphi \\equiv \\forall x\\,\\varphi,\n\\qquad\n\\neg\\neg\\exists x\\,\\varphi \\equiv \\exists x\\,\\varphi.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "thm:qneg",
+      "title": "Quantifier Negation Laws",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "graph_id": "0025-0008",
+  "volume": "ii",
+  "chapter": "peano-systems",
+  "section": "defining-peano-systems",
+  "term": "cor:non-one-elements-have-a-predecessor",
+  "kind": "Corollary",
+  "title": "Non-One Elements Have a Predecessor",
+  "root": "",
+  "statement": "Let $(P,S,1)$ be a Peano system. For every $x \\in P$, if $x \\neq 1$, then\nthere exists $u \\in P$ such that $S(u)=x$.",
+  "current_dependencies": [
+    {
+      "id": "def:peano-system",
+      "title": "Peano System",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:every-element-is-one-or-a-successor",
+      "title": "Every Element Is Either $1$ or a Successor",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

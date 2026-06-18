@@ -1,0 +1,25 @@
+{
+  "graph_id": "0019-0055",
+  "volume": "iii",
+  "chapter": "continuity",
+  "section": "uniform-continuity",
+  "term": "prop:lipschitz-implies-uc",
+  "kind": "Proposition",
+  "title": "Lipschitz Implies Uniform Continuity",
+  "root": "",
+  "statement": "Let $A \\subseteq \\mathbb{R}$ and $f:A \\to \\mathbb{R}$. If there exists $K \\ge 0$ such that $|f(x)-f(y)| \\le K |x-y|$ for all $x,y \\in A$, then $f$ is uniformly continuous on $A$.",
+  "current_dependencies": [
+    {
+      "id": "def:lipschitz-condition",
+      "title": "Lipschitz Condition",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:uniform-continuity",
+      "title": "Uniform Continuity",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

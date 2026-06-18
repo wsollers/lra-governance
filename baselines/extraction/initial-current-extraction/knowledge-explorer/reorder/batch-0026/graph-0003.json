@@ -1,0 +1,19 @@
+{
+  "graph_id": "0026-0003",
+  "volume": "ii",
+  "chapter": "number-lines",
+  "section": "intervals-on-a-number-line",
+  "term": "def:open-interval",
+  "kind": "Definition",
+  "title": "Open Interval",
+  "root": "",
+  "statement": "Let $a,b\\in\\mathbb{R}$ with $a\\le b$. The \\emph{open interval} with endpoints $a$ and $b$ is\n\\[\n(a,b)=\\{\\,x\\in\\mathbb{R} : a<x<b\\,\\}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:abstract-ordered-field",
+      "title": "Ordered Field",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

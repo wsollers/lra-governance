@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0045",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "functions",
+  "term": "def:alg-function",
+  "kind": "Definition",
+  "title": "Function",
+  "root": "",
+  "statement": "Let $A$ and $B$ be sets.\nA \\textbf{function} from $A$ to $B$ is a relation $f \\subseteq A \\times B$\nsuch that:\n- [label=(\\roman*)]\n- $\\forall a \\in A,\\; \\exists b \\in B,\\; (a,b) \\in f$;\n- if $(a,b_1) \\in f$ and $(a,b_2) \\in f$, then $b_1=b_2$.\nWe write $f:A\\to B$ and $f(a)=b$ in place of $(a,b)\\in f$.",
+  "current_dependencies": []
+}

@@ -1,0 +1,25 @@
+{
+  "graph_id": "0018-0042",
+  "volume": "iii",
+  "chapter": "differentiation",
+  "section": "derivative-geometry",
+  "term": "thm:nondecreasing-iff-nonneg-derivative",
+  "kind": "Theorem",
+  "title": "Nondecreasing Iff Nonnegative Derivative",
+  "root": "",
+  "statement": "Let $I \\subseteq \\mathbb{R}$ be an interval, and let $f : I \\to \\mathbb{R}$ be differentiable on $I$. Then $f$ is nondecreasing on $I$ if and only if\n\\[\nf'(x) \\geq 0 \\qquad \\text{for all } x \\in I.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:derivative-at-a-point",
+      "title": "Derivative at a Point",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:mean-value-theorem",
+      "title": "Mean Value Theorem",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

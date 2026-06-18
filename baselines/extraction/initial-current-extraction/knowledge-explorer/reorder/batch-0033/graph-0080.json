@@ -1,0 +1,19 @@
+{
+  "graph_id": "0033-0080",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "normal-forms",
+  "term": "def:complementary-literals-propositional-logic",
+  "kind": "Definition",
+  "title": "Complementary Literals",
+  "root": "",
+  "statement": "Two literals are \\emph{complementary} if they are \\(P\\) and \\(\\neg P\\) for the\nsame propositional variable \\(P\\).",
+  "current_dependencies": [
+    {
+      "id": "def:literal-propositional-logic",
+      "title": "Literal",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

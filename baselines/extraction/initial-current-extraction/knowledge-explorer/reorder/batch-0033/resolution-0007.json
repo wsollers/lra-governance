@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0007",
+  "term": "thm:de-morgan-laws-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:logical-equivalence-propositional-logic", "thm:unique-extension-truth-assignment-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.65,
+  "notes": "De Morgan laws proven semantically via truth-assignment evaluation (thm:unique-extension-truth-assignment); == is def:logical-equivalence. Foundational, same pattern as 0004/0006/0008."
+}

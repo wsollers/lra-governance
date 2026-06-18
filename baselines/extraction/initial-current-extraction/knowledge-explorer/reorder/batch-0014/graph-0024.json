@@ -1,0 +1,25 @@
+{
+  "graph_id": "0014-0024",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "cauchy",
+  "term": "thm:sum-cauchy-sequences",
+  "kind": "Theorem",
+  "title": "Sums of Cauchy Sequences",
+  "root": "",
+  "statement": "Let $(x_n)$ and $(y_n)$ be Cauchy real sequences. Then $(x_n+y_n)$ is\nCauchy.",
+  "current_dependencies": [
+    {
+      "id": "def:cauchy-sequence",
+      "title": "Cauchy Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:pointwise-sum-sequence",
+      "title": "Pointwise Sum of Sequences",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "graph_id": "0024-0083",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "operations-on-q-classes",
+  "term": "thm:left-distributivity-on-q",
+  "kind": "Theorem",
+  "title": "Left Distributivity on $ $",
+  "root": "",
+  "statement": "For all $x,y,z\\in\\mathbb{Q}$,\n\\[\nx\\cdot(y+z)=x\\cdot y+x\\cdot z.\n\\]",
+  "current_dependencies": []
+}

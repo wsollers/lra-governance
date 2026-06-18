@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0089",
+  "term": "def:categorical-i-form-predicate-logic",
+  "verdict": "ok",
+  "dependencies": ["prop:existential-translation-pattern"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.8,
+  "notes": "The I form ('Some A are B' -> exists x (A(x) and B(x))) is exactly the existential translation pattern (0084). Sole dependency correct; parallel to the A form (0087)."
+}

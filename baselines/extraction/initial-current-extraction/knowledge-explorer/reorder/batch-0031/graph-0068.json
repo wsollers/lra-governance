@@ -1,0 +1,25 @@
+{
+  "graph_id": "0031-0068",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "field-and-ordered-field-laws",
+  "term": "thm:ordered-field-negative-multiplication-reverses-order",
+  "kind": "Theorem",
+  "title": "Ordered Field Negative Multiplication Reverses Order",
+  "root": "",
+  "statement": "In an ordered field,\n\\[\nc<0\\land a<b\n\\Longrightarrow\nc\\cdot b<c\\cdot a.\n\\]\nThe corresponding non-strict implication also holds.",
+  "current_dependencies": [
+    {
+      "id": "thm:ordered-field-positive-multiplication-preserves-order",
+      "title": "Ordered Field Positive Multiplication Preserves Order",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:ring-negation-of-product",
+      "title": "Ring Negation of Product",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

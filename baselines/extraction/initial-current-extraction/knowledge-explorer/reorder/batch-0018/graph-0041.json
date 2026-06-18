@@ -1,0 +1,25 @@
+{
+  "graph_id": "0018-0041",
+  "volume": "iii",
+  "chapter": "differentiation",
+  "section": "derivative-geometry",
+  "term": "thm:first-derivative-test-minimum",
+  "kind": "Theorem",
+  "title": "First Derivative Test: Relative Minimum",
+  "root": "",
+  "statement": "Let $I := [a,b] \\subseteq \\mathbb{R}$, let $f : I \\to \\mathbb{R}$ be continuous on $I$, and let $c \\in (a,b)$. Suppose $f$ is differentiable on $(a,c)$ and $(c,b)$. If there exists $\\delta > 0$ such that $(c-\\delta,c+\\delta) \\subseteq I$ and\n\\[\nf'(x) \\leq 0 \\quad \\text{for all } x \\in (c-\\delta,c),\n\\qquad\nf'(x) \\geq 0 \\quad \\text{for all } x \\in (c,c+\\delta),\n\\]\nthen $f$ has a relative minimum at $c$.",
+  "current_dependencies": [
+    {
+      "id": "def:relative-minimum",
+      "title": "Relative Minimum",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:first-derivative-test-maximum",
+      "title": "First Derivative Test: Relative Maximum",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

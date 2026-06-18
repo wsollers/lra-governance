@@ -1,0 +1,43 @@
+{
+  "graph_id": "0033-0073",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "normal-forms",
+  "term": "thm:existence-conjunctive-normal-form-propositional-logic",
+  "kind": "Theorem",
+  "title": "Existence of Conjunctive Normal Form",
+  "root": "",
+  "statement": "For every formula \\(\\varphi\\in\\WFF\\), there exists a formula\n\\(\\psi\\in\\WFF\\) such that \\(\\psi\\) is in\n\nand\n\\[\n\\varphi\\equiv\\psi.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:conjunctive-normal-form-propositional-logic",
+      "title": "Conjunctive Normal Form",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:negation-normal-form-propositional-logic",
+      "title": "Negation Normal Form",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:distributive-laws-propositional-logic",
+      "title": "Distributive Laws for Propositional Logic",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:existence-negation-normal-form-propositional-logic",
+      "title": "Existence of Negation Normal Form",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:replacement-of-logical-equivalents-propositional-logic",
+      "title": "Replacement of Logical Equivalents",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

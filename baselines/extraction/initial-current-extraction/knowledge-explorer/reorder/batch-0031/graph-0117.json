@@ -1,0 +1,12 @@
+{
+  "graph_id": "0031-0117",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "structure-preserving-maps",
+  "term": "def:structure-embedding",
+  "kind": "Definition",
+  "title": "Structure Embedding",
+  "root": "",
+  "statement": "A \\emph{structure embedding} is an injective homomorphism that also embeds the\nrelevant order relation.",
+  "current_dependencies": []
+}

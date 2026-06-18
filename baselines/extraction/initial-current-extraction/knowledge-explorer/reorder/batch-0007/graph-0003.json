@@ -1,0 +1,12 @@
+{
+  "graph_id": "0007-0003",
+  "volume": "vii",
+  "chapter": "euclidean-geometry",
+  "section": "compass-and-straightedge-constructions",
+  "term": "thm:euclid-i-3",
+  "kind": "Theorem",
+  "title": "Euclid I.3: Cutting off an equal segment",
+  "root": "",
+  "statement": "Given two unequal finite straight line segments, there exists a construction\nwhich cuts off from the greater a straight line segment equal to the less.",
+  "current_dependencies": []
+}

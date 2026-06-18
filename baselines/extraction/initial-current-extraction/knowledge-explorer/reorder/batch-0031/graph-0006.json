@@ -1,0 +1,19 @@
+{
+  "graph_id": "0031-0006",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "algebraic-laws",
+  "term": "def:right-distributivity",
+  "kind": "Definition",
+  "title": "Right Distributivity",
+  "root": "",
+  "statement": "The operation $\\otimes$ is right distributive over $\\oplus$ if\n\\[\n(y\\oplus z)\\otimes x=(y\\otimes x)\\oplus(z\\otimes x),\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:binary-arithmetic-operation",
+      "title": "Binary Arithmetic Operation",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

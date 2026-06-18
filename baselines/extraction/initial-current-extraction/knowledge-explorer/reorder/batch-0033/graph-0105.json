@@ -1,0 +1,31 @@
+{
+  "graph_id": "0033-0105",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "semantics",
+  "term": "lem:coincidence-lemma-propositional-logic",
+  "kind": "Lemma",
+  "title": "Coincidence Lemma for Propositional Logic",
+  "root": "",
+  "statement": "Let \\(v,w:\\Prop\\to\\mathbb{B}\\) be truth assignments. If \\(v\\) and \\(w\\) agree on every propositional variable occurring in \\(\\varphi\\), then they assign the same truth value to \\(\\varphi\\):\n\\[\nv|_{\\operatorname{Var}(\\varphi)}\n=\nw|_{\\operatorname{Var}(\\varphi)}\n\\Longrightarrow\n\\widehat v(\\varphi)=\\widehat w(\\varphi).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:formula-variable-set-propositional-logic",
+      "title": "Variable Set of a Formula",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:structural-induction-propositional-formulas",
+      "title": "Structural Induction for Propositional Formulas",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:unique-extension-truth-assignment-propositional-logic",
+      "title": "Unique Extension of a Truth Assignment",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

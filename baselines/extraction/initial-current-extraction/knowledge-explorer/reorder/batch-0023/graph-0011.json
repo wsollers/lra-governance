@@ -1,0 +1,12 @@
+{
+  "graph_id": "0023-0011",
+  "volume": "ii",
+  "chapter": "reals",
+  "section": "characterization-of-r",
+  "term": "cor:r-is-the-reals",
+  "kind": "Corollary",
+  "title": "$ $ Is the Real Numbers",
+  "root": "",
+  "statement": "The field $\\mathbb{R}$ is determined up to unique order-isomorphism by being a\ncomplete ordered field.",
+  "current_dependencies": []
+}

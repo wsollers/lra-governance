@@ -1,0 +1,19 @@
+{
+  "graph_id": "0010-0023",
+  "volume": "vi",
+  "chapter": "lattice-order",
+  "section": "ordered-sets",
+  "term": "def:order-preserving-map",
+  "kind": "Definition",
+  "title": "Order-Preserving Map",
+  "root": "",
+  "statement": "Let $(P, \\leq_P)$ and $(Q, \\leq_Q)$ be partially ordered sets. A map\n$\\varphi : P \\to Q$ is \\emph{order-preserving} (or \\emph{monotone}) if\n\\[\n\\forall x, y \\in P, \\quad\nx \\leq_P y \\;\\Longrightarrow\\; \\varphi(x) \\leq_Q \\varphi(y).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:lattice-order-partial-order",
+      "title": "Partial Order",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

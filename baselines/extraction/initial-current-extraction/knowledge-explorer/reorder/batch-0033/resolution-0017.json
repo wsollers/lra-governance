@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0017",
+  "term": "thm:affirming-consequent-invalid-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:counterexample-assignment-propositional-logic", "def:valid-argument-form-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.7,
+  "notes": "Invalidity (not def:valid-argument-form) is witnessed by a counterexample assignment (def:counterexample-assignment): phi false, psi true makes phi->psi and psi true but the conclusion phi false. Both load-bearing and present -- the counterexample is the proof object, correctly cited."
+}

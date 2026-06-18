@@ -1,0 +1,25 @@
+{
+  "graph_id": "0014-0096",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "liminf-limsup",
+  "term": "def:limsup-sequence",
+  "kind": "Definition",
+  "title": "Limit Superior of a Sequence",
+  "root": "",
+  "statement": "Let $(x_n)$ be a bounded real sequence, and let $(s_n)$ be its tail\nsupremum sequence. The \\textbf{limit superior} of $(x_n)$ is\n\\[\n \\limsup_{n\\to\\infty}x_n:=\\lim_{n\\to\\infty}s_n.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:convergent-sequence",
+      "title": "Convergence of a Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:tail-supremum-sequence",
+      "title": "Tail Supremum Sequence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

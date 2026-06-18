@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0107",
+  "term": "thm:finite-truth-table-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:truth-table-propositional-logic", "lem:finiteness-of-variables-propositional-formulas"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.7,
+  "notes": "Every formula has a finite truth table (def:truth-table) with 2^n rows when Var(phi) has n elements; finiteness of n is lem:finiteness-of-variables. Both load-bearing and present."
+}

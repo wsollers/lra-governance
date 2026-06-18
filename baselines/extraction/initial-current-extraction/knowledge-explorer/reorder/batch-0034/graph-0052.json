@@ -1,0 +1,43 @@
+{
+  "graph_id": "0034-0052",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "semantics",
+  "term": "def:fol-satisfaction",
+  "kind": "Definition",
+  "title": "Satisfaction",
+  "root": "",
+  "statement": "Let \\(\\mathcal M=\\langle D,I\\rangle\\) be a structure, let \\(s\\) be a variable\nassignment, and let \\(\\varphi\\) be a well-formed formula. The relation\n\\(\\mathcal M,s\\models\\varphi\\) is defined recursively by the usual clauses:\natomic formulas are evaluated by term values and interpreted predicate\nrelations; equality compares term values; connectives follow the truth\nconditions for \\(\\neg,\\land,\\lor,\\to,\\leftrightarrow\\); and\n\\[\n\\mathcal M,s\\models\\forall x\\,\\psi\n\\Longleftrightarrow\n\\forall d\\in D\\;(\\mathcal M,s[x\\mapsto d]\\models\\psi),\n\\]\n\\[\n\\mathcal M,s\\models\\exists x\\,\\psi\n\\Longleftrightarrow\n\\exists d\\in D\\;(\\mathcal M,s[x\\mapsto d]\\models\\psi).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:mod-assign",
+      "title": "Modified Assignment",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:structure",
+      "title": "Structure",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:term-interp",
+      "title": "Term Evaluation",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:var-assign",
+      "title": "Variable Assignment",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:wff-pred",
+      "title": "Well-Formed Formula",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

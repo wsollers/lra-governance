@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0082",
+  "term": "def:translation-predicate-relation-symbol",
+  "verdict": "change",
+  "dependencies": ["def:atomic-formula", "def:predicate-symbol", "def:relation-symbol"],
+  "rationale": "The definition explicitly contrasts 'a unary predicate symbol' (def:predicate-symbol) with 'an n-ary relation symbol' (def:relation-symbol); the latter was missing. Added.",
+  "licensing_quote": "relation symbol",
+  "confidence": 0.6,
+  "notes": "def:atomic-formula is kept but flagged as tangential: this definition is about what predicate/relation symbols NAME (properties/relations of objects) in a translation key, not about atomic-formula formation. Reviewer may drop def:atomic-formula in favor of the translation-key context."
+}

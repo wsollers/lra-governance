@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0130",
+  "term": "thm:structural-induction-propositional-formulas",
+  "verdict": "ok",
+  "dependencies": ["def:well-formed-formula"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.75,
+  "notes": "The induction principle over WFF, following directly from the smallest-set/minimality property of def:well-formed-formula. Correctly does NOT depend on unique readability: induction needs only minimality, unlike recursion (0131). Sole dep correct; this is the workhorse cited throughout the chapter."
+}

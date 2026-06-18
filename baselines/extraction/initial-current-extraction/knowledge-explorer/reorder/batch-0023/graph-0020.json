@@ -1,0 +1,25 @@
+{
+  "graph_id": "0023-0020",
+  "volume": "ii",
+  "chapter": "reals",
+  "section": "construction-of-r",
+  "term": "def:one-in-r",
+  "kind": "Definition",
+  "title": "One in $ $",
+  "root": "",
+  "statement": "Define\n\\[\n1_{\\mathbb{R}}:=(1_{\\mathbb{Q}})^{\\ast}\n=\\{r\\in\\mathbb{Q}:r<1_{\\mathbb{Q}}\\}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:one-in-q",
+      "title": "One in $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:rational-cut",
+      "title": "Rational Cut",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

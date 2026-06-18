@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0001",
+  "term": "def:formula-context-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:subformula-propositional-logic", "def:well-formed-formula"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.6,
+  "notes": "A context C[-] is a wff (def:well-formed-formula) with a distinguished placeholder occupying a subformula position (def:subformula-propositional-logic) -- both load-bearing. The replacement operation C[phi] is the context's own primitive (it is the substitution mechanism here), so no separate substitution node is needed."
+}

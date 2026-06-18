@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0082",
+  "term": "def:empty-conjunction-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:tautology-propositional-logic", "def:term-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.7,
+  "notes": "The empty conjunction is the empty term (def:term, a conjunction of literals with none), read as true (def:tautology). Both load-bearing and present; dual to def:empty-clause (0081). Note def:term is the conjunction-of-literals node synonymous with def:elementary-conjunction (0075)."
+}

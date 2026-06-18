@@ -1,0 +1,37 @@
+{
+  "graph_id": "0024-0148",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "rational-gaps",
+  "term": "def:gap-set-q",
+  "kind": "Definition",
+  "title": "The Gap Set in $ $",
+  "root": "",
+  "statement": "Define\n\\[\nS:=\\{q\\in\\mathbb{Q}:0_{\\mathbb{Q}}<q\\ \\text{and}\\ q\\cdot q<2_{\\mathbb{Q}}\\}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:multiplication-on-q-classes",
+      "title": "Multiplication on $ $-Classes",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:order-on-q",
+      "title": "Order on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:rationals",
+      "title": "Rational Numbers",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:zero-in-q",
+      "title": "Zero in $ $",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

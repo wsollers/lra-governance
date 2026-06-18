@@ -1,0 +1,12 @@
+{
+  "graph_id": "0031-0106",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "order-relations",
+  "term": "def:asymmetric-relation",
+  "kind": "Definition",
+  "title": "Asymmetric Relation",
+  "root": "",
+  "statement": "\\[\n\\forall x,y,\\ xRy \\Longrightarrow \\neg(yRx).\n\\]",
+  "current_dependencies": []
+}

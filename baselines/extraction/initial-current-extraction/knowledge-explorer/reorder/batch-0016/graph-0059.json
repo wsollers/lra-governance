@@ -1,0 +1,19 @@
+{
+  "graph_id": "0016-0059",
+  "volume": "iii",
+  "chapter": "functions",
+  "section": "subsets-real-line",
+  "term": "def:closure-r",
+  "kind": "Definition",
+  "title": "Closure",
+  "root": "",
+  "statement": "\\[\n\\overline{X}\n:=\n\\{x\\in\\mathbb{R}:\\forall\\varepsilon>0\\;V_\\varepsilon(x)\\cap X\\neq\\emptyset\\}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:adherent-point-r",
+      "title": "Adherent Point",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

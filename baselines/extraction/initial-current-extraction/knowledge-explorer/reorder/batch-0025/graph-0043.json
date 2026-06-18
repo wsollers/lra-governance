@@ -1,0 +1,25 @@
+{
+  "graph_id": "0025-0043",
+  "volume": "ii",
+  "chapter": "peano-systems",
+  "section": "recursion-on-peano-systems",
+  "term": "thm:uniqueness-of-peano-systems-up-to-isomorphism",
+  "kind": "Theorem",
+  "title": "Uniqueness of Peano Systems up to Isomorphism",
+  "root": "",
+  "statement": "Let $(P,S_P,1_P)$ and $(Q,S_Q,1_Q)$ be Peano systems. Then there exists a\nunique bijection $\\theta:P\\to Q$ such that\n\\[\n\\theta(1_P)=1_Q\n\\]\nand\n\\[\n\\forall n\\in P\\;(\\theta(S_P(n))=S_Q(\\theta(n))).\n\\]\nThus any two Peano systems are isomorphic.",
+  "current_dependencies": [
+    {
+      "id": "def:peano-system",
+      "title": "Peano System",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:general-recursion-theorem-for-peano-system",
+      "title": "General Recursion Theorem",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

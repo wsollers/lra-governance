@@ -1,0 +1,19 @@
+{
+  "graph_id": "0010-0007",
+  "volume": "vi",
+  "chapter": "lattice-order",
+  "section": "ordered-sets",
+  "term": "def:down-set",
+  "kind": "Definition",
+  "title": "Down-Set",
+  "root": "",
+  "statement": "Let $(P, \\leq)$ be a partially ordered set. A subset $Q \\subseteq P$ is\na \\emph{down-set} (or \\emph{decreasing set}, or \\emph{order ideal}) if it\nis closed downward:\n\\[\n\\forall x \\in Q,\\; \\forall y \\in P,\\quad y \\leq x \\;\\Longrightarrow\\; y \\in Q.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:lattice-order-partial-order",
+      "title": "Partial Order",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

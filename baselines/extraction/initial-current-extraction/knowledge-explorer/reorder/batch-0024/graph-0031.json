@@ -1,0 +1,25 @@
+{
+  "graph_id": "0024-0031",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "embedding-z-into-q",
+  "term": "thm:embedding-z-into-q-injective",
+  "kind": "Theorem",
+  "title": "Embedding $ $ into $ $ Is Injective",
+  "root": "",
+  "statement": "For all $m,n\\in\\mathbb{Z}$,\n\\[\n\\iota(m)=\\iota(n)\\Longrightarrow m=n.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "prop:equality-criterion-for-rational-classes",
+      "title": "Equality Criterion for Rational Classes",
+      "kind": "Proposition",
+      "root": ""
+    },
+    {
+      "id": "thm:one-multiplicative-identity-on-z",
+      "title": "One Is a Multiplicative Identity on $ $",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

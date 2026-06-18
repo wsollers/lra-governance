@@ -1,0 +1,12 @@
+{
+  "graph_id": "0017-0018",
+  "volume": "iii",
+  "chapter": "elementary-functions",
+  "section": "trigonometric",
+  "term": "prop:limit-one-minus-cos",
+  "kind": "Proposition",
+  "title": "Second Fundamental Trigonometric Limit",
+  "root": "",
+  "statement": "\\[\n \\lim_{x \\to 0} \\frac{1 - \\cos x}{x^2} = \\frac{1}{2}.\n\\]",
+  "current_dependencies": []
+}

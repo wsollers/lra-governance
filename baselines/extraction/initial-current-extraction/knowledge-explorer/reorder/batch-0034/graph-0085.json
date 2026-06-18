@@ -1,0 +1,31 @@
+{
+  "graph_id": "0034-0085",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "translation",
+  "term": "prop:negation-translation-pattern",
+  "kind": "Proposition",
+  "title": "Negation Translation Pattern",
+  "root": "",
+  "statement": "The negation of a translated quantified statement is obtained by negating the\nwhole formula and then pushing the negation inward using the quantifier\nnegation laws.",
+  "current_dependencies": [
+    {
+      "id": "prop:existential-translation-pattern",
+      "title": "Existential Translation Pattern",
+      "kind": "Proposition",
+      "root": ""
+    },
+    {
+      "id": "prop:universal-translation-pattern",
+      "title": "Universal Translation Pattern",
+      "kind": "Proposition",
+      "root": ""
+    },
+    {
+      "id": "thm:qneg",
+      "title": "Quantifier Negation Laws",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

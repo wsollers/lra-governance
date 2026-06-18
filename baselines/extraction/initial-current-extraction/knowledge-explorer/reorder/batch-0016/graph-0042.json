@@ -1,0 +1,19 @@
+{
+  "graph_id": "0016-0042",
+  "volume": "iii",
+  "chapter": "functions",
+  "section": "real-valued-functions",
+  "term": "def:function-strictly-decreasing",
+  "kind": "Definition",
+  "title": "Strictly Decreasing Function",
+  "root": "",
+  "statement": "Let $A\\subseteq\\mathbb{R}$ and let $f:A\\to\\mathbb{R}$. The function\n$f$ is strictly decreasing on $A$ if\n\\[\n x_1<x_2\\;\\Longrightarrow\\;f(x_1)>f(x_2)\n \\qquad (x_1,x_2\\in A).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:function-decreasing",
+      "title": "Decreasing Function",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

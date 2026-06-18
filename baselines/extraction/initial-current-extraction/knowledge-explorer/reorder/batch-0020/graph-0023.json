@@ -1,0 +1,25 @@
+{
+  "graph_id": "0020-0023",
+  "volume": "iii",
+  "chapter": "bounding",
+  "section": "bounds-algebra",
+  "term": "thm:translation-invariance-supremum",
+  "kind": "Theorem",
+  "title": "Translation Invariance of the Supremum",
+  "root": "",
+  "statement": "Let $A\\subseteq\\mathbb{R}$ be nonempty and bounded above, and let $c\\in\\mathbb{R}$. Then\n\\[\n \\sup(A+c)=\\sup A+c,\n \\qquad\n A+c=\\{a+c:a\\in A\\}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:supremum",
+      "title": "Supremum",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:upper-bound",
+      "title": "Upper Bound",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

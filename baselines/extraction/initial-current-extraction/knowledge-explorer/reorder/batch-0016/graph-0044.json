@@ -1,0 +1,12 @@
+{
+  "graph_id": "0016-0044",
+  "volume": "iii",
+  "chapter": "functions",
+  "section": "real-valued-functions",
+  "term": "def:function-supremum-on-set",
+  "kind": "Definition",
+  "title": "Supremum of a Function on a Set",
+  "root": "",
+  "statement": "Let $A\\subseteq\\mathbb{R}$ and let $f:A\\to\\mathbb{R}$. The supremum of\n$f$ on $A$ is\n\\[\n \\sup_{x\\in A} f(x) = \\sup f(A),\n\\]\nprovided the supremum of $f(A)$ exists.",
+  "current_dependencies": []
+}

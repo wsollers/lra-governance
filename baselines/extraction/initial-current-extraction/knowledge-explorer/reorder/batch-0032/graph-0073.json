@@ -1,0 +1,12 @@
+{
+  "graph_id": "0032-0073",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "order",
+  "term": "def:boolean-lattice",
+  "kind": "Definition",
+  "title": "Complement and Boolean Lattice",
+  "root": "",
+  "statement": "Let $(L, \\leq)$ be a bounded distributive lattice with top element $\\top$ and\nbottom element $\\bot$. An element $a' \\in L$ is a \\emph{complement} of\n$a \\in L$ if\n\\[\n a \\vee a' = \\top \\quad \\text{and} \\quad a \\wedge a' = \\bot.\n\\]\nA \\emph{Boolean lattice} (or \\emph{Boolean algebra}) is a bounded distributive\nlattice in which every element has a complement.",
+  "current_dependencies": []
+}

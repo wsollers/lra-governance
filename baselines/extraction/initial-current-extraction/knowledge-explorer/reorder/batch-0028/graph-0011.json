@@ -1,0 +1,25 @@
+{
+  "graph_id": "0028-0011",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "construction-of-z",
+  "term": "def:integer-prepair-set",
+  "kind": "Definition",
+  "title": "Integer Prepair Set",
+  "root": "",
+  "statement": "The integer prepair set is\n\\[\n\\operatorname{Pre}\\mathbb{Z}:=\\mathbb{W}\\times\\mathbb{W}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:cartesian-product-rel",
+      "title": "Cartesian Product — as foundation for relations",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:whole-numbers",
+      "title": "Whole Numbers",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

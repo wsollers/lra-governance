@@ -1,0 +1,25 @@
+{
+  "graph_id": "0028-0001",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "algebraic-structure-of-z",
+  "term": "cor:multiplicative-cancellation-on-z",
+  "kind": "Corollary",
+  "title": "Multiplicative Cancellation on $ $",
+  "root": "",
+  "statement": "For all $x,y,z\\in\\mathbb{Z}$,\n\\[\nz\\ne 0 \\land z\\cdot x=z\\cdot y \\Longrightarrow x=y.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "thm:multiplication-on-z-commutative",
+      "title": "Multiplication on $ $ Is Commutative",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:z-has-no-zero-divisors",
+      "title": "$ $ Has No Zero Divisors",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "graph_id": "0032-0014",
+  "term": "def:partition",
+  "verdict": "ok",
+  "dependencies": ["def:cover-full", "def:empty-set", "def:intersection", "def:subset", "def:union"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.65,
+  "notes": "Collection of subsets (def:subset) of A with: blocks nonempty (def:empty-set), pairwise disjoint (def:intersection, def:empty-set), and covering A via union P = A (def:union / def:cover-full). All conditions accounted for. Minor redundancy: the covering condition is stated concretely as union = A (def:union), so def:cover-full overlaps it ('the blocks cover A'); kept as the named covering concept but flag it as prunable if the reviewer prefers minimal deps."
+}

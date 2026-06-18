@@ -1,0 +1,25 @@
+{
+  "graph_id": "0019-0019",
+  "volume": "iii",
+  "chapter": "continuity",
+  "section": "global-theorems",
+  "term": "thm:boundedness-theorem",
+  "kind": "Theorem",
+  "title": "Boundedness Theorem",
+  "root": "",
+  "statement": "Let $a<b$ and let $f:[a,b]\\to\\mathbb{R}$ be continuous on $[a,b]$. Then there exists $M>0$ such that $|f(x)|\\le M$ for every $x\\in[a,b]$.",
+  "current_dependencies": [
+    {
+      "id": "def:bounded-on-a-set",
+      "title": "Bounded on a Set",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:continuous-at-point",
+      "title": "Continuity at a Point",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

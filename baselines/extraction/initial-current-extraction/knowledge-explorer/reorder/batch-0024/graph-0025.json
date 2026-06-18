@@ -1,0 +1,12 @@
+{
+  "graph_id": "0024-0025",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "construction-of-q",
+  "term": "thm:fraction-equivalence-relation",
+  "kind": "Theorem",
+  "title": "Fraction Equivalence Is an Equivalence Relation",
+  "root": "",
+  "statement": "The relation $\\sim_{\\mathbb{Q}}$ is an equivalence relation on\n$\\operatorname{Pre}\\mathbb{Q}$.",
+  "current_dependencies": []
+}

@@ -1,0 +1,25 @@
+{
+  "graph_id": "0032-0140",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "sets",
+  "term": "def:subset",
+  "kind": "Definition",
+  "title": "Subset",
+  "root": "",
+  "statement": "Let $A$ and $B$ be sets. We say $A$ is a \\emph{subset} of $B$, written\n$A \\subseteq B$, if every element of $A$ is also an element of $B$:\n\\[\nA \\subseteq B \\;\\;\\Longleftrightarrow\\;\\; \\forall x \\, (x \\in A \\rightarrow x \\in B).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "ax:separation",
+      "title": "Axiom Schema of Separation",
+      "kind": "Axiom",
+      "root": "axiom"
+    },
+    {
+      "id": "def:universal-q",
+      "title": "Universal Formula",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "graph_id": "0024-0042",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "field-structure-of-q",
+  "term": "cor:inverse-of-inverse-on-q",
+  "kind": "Corollary",
+  "title": "Inverse of an Inverse on $ $",
+  "root": "",
+  "statement": "For every nonzero $x\\in\\mathbb{Q}$,\n\\[\n(x^{-1})^{-1}=x.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "cor:generic-field-laws",
+      "title": "Generic Field Laws",
+      "kind": "Corollary",
+      "root": ""
+    }
+  ]
+}

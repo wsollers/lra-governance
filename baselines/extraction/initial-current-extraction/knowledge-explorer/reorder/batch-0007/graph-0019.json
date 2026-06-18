@@ -1,0 +1,12 @@
+{
+  "graph_id": "0007-0019",
+  "volume": "vii",
+  "chapter": "euclidean-geometry",
+  "section": "foundations",
+  "term": "def:euclid-parallel-straight-lines",
+  "kind": "Definition",
+  "title": "Parallel straight lines",
+  "root": "",
+  "statement": "Parallel straight lines are straight lines which, being in the same plane and\nbeing produced indefinitely in both directions, do not meet one another in\neither direction.",
+  "current_dependencies": []
+}

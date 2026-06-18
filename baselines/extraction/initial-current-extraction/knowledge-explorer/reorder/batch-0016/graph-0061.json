@@ -1,0 +1,19 @@
+{
+  "graph_id": "0016-0061",
+  "volume": "iii",
+  "chapter": "functions",
+  "section": "subsets-real-line",
+  "term": "def:deleted-epsilon-neighbourhood",
+  "kind": "Definition",
+  "title": "Deleted $ $-Neighbourhood",
+  "root": "",
+  "statement": "Let $x\\in\\mathbb{R}$ and let $\\varepsilon>0$. The\n\\textbf{deleted $\\varepsilon$-neighbourhood} of $x$ is\n\\[\n V_\\varepsilon^*(x):=V_\\varepsilon(x)\\setminus\\{x\\}\n =\\{y\\in\\mathbb{R}:0<|y-x|<\\varepsilon\\}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:epsilon-neighbourhood",
+      "title": "$ $-Neighbourhood",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

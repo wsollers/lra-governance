@@ -1,0 +1,12 @@
+{
+  "graph_id": "0028-0118",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "order-on-z",
+  "term": "thm:triangle-inequality-on-z",
+  "kind": "Theorem",
+  "title": "Triangle Inequality on $ $",
+  "root": "",
+  "statement": "For all $x,y\\in\\mathbb{Z}$,\n\\[\n|x+y|\\le |x|+|y|.\n\\]",
+  "current_dependencies": []
+}

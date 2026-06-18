@@ -1,0 +1,12 @@
+{
+  "graph_id": "0028-0102",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "order-on-z",
+  "term": "thm:left-addition-preserves-order-on-z",
+  "kind": "Theorem",
+  "title": "Left Addition Preserves Order on $ $",
+  "root": "",
+  "statement": "For all $x,y,z\\in\\mathbb{Z}$,\n\\[\nx\\le y \\Longrightarrow z+x\\le z+y.\n\\]",
+  "current_dependencies": []
+}

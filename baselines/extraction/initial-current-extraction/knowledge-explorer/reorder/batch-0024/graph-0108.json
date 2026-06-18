@@ -1,0 +1,31 @@
+{
+  "graph_id": "0024-0108",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "order-on-q",
+  "term": "def:positive-rational",
+  "kind": "Definition",
+  "title": "Positive Rational",
+  "root": "",
+  "statement": "A rational number $[a,b]\\in\\mathbb{Q}$ is \\emph{positive} if\n\\[\na\\cdot b>0_{\\mathbb{Z}}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:multiplication-on-z-classes",
+      "title": "Multiplication on $ $-Classes",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:order-on-z",
+      "title": "Order on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:rational-class-notation",
+      "title": "Rational Class Notation",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

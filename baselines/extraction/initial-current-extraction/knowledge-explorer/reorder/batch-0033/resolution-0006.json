@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0006",
+  "term": "thm:conditional-equivalence-laws-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:logical-equivalence-propositional-logic", "thm:unique-extension-truth-assignment-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.65,
+  "notes": "phi -> psi == not phi or psi and not(phi -> psi) == phi and not psi are proven semantically by truth-assignment evaluation (thm:unique-extension-truth-assignment), with == as def:logical-equivalence. Same foundational, semantically-proven pattern as 0004/0007/0008."
+}

@@ -1,0 +1,43 @@
+{
+  "graph_id": "0032-0022",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "families",
+  "term": "def:open-cover",
+  "kind": "Definition",
+  "title": "Open Cover",
+  "root": "",
+  "statement": "In a topological space $(X, \\tau)$, an \\emph{open cover} of a subset $A\n\\subseteq X$ is a cover $\\mathcal{C}$ of $A$ all of whose members are open\nsets: $\\mathcal{C} \\subseteq \\tau$.",
+  "current_dependencies": [
+    {
+      "id": "def:complement",
+      "title": "Complement",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:cover-full",
+      "title": "Cover",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:fip",
+      "title": "Finite Intersection Property",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:intersection",
+      "title": "Intersection",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:subset",
+      "title": "Subset",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

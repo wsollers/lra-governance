@@ -1,0 +1,19 @@
+{
+  "graph_id": "0014-0128",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "subsequences",
+  "term": "def:has-convergent-subsequence",
+  "kind": "Definition",
+  "title": "Has Convergent Subsequence",
+  "root": "",
+  "statement": "Let $(x_n)$ be a real sequence. The sequence $(x_n)$ \\textbf{has a\nconvergent subsequence} if there exist a strictly increasing index map\n$\\sigma:\\mathbb{N}\\to\\mathbb{N}$ and a real number $L$ such that\n\\[\n \\lim_{k\\to\\infty}x_{\\sigma(k)}=L.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:subsequential-limit",
+      "title": "Subsequential Limit",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

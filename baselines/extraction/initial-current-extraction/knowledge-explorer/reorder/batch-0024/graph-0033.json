@@ -1,0 +1,43 @@
+{
+  "graph_id": "0024-0033",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "embedding-z-into-q",
+  "term": "thm:embedding-z-into-q-preserves-multiplication",
+  "kind": "Theorem",
+  "title": "Embedding Preserves Multiplication",
+  "root": "",
+  "statement": "For all $m,n\\in\\mathbb{Z}$,\n\\[\n\\iota(m\\cdot n)=\\iota(m)\\cdot\\iota(n).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:multiplication-on-q-classes",
+      "title": "Multiplication on $ $-Classes",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:multiplication-on-z-classes",
+      "title": "Multiplication on $ $-Classes",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:rational-chapter-embedding-z-into-q",
+      "title": "Embedding of $ $ into $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:multiplication-on-q-well-defined",
+      "title": "Multiplication on $ $ Is Well-Defined",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:multiplication-on-z-well-defined",
+      "title": "Multiplication on $ $ Is Well-Defined",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

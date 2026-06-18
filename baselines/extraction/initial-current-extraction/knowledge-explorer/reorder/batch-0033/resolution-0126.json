@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0126",
+  "term": "lem:finiteness-of-subformulas-propositional-formulas",
+  "verdict": "ok",
+  "dependencies": ["def:subformula-propositional-logic", "thm:structural-induction-propositional-formulas"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.75,
+  "notes": "Sub(phi) (def:subformula) is finite, proved by structural induction (thm:structural-induction). Both load-bearing and present. Clean."
+}

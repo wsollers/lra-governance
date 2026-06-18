@@ -1,0 +1,25 @@
+{
+  "graph_id": "0031-0080",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "identity-elements",
+  "term": "lem:left-right-identities-coincide",
+  "kind": "Lemma",
+  "title": "Left and Right Identities Coincide",
+  "root": "",
+  "statement": "If $e_L$ is a left identity and $e_R$ is a right identity for the same\noperation, then $e_L=e_R$.",
+  "current_dependencies": [
+    {
+      "id": "def:left-identity",
+      "title": "Left Identity",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:right-identity",
+      "title": "Right Identity",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

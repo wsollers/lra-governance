@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0120",
+  "term": "def:subformula-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:well-formed-formula", "thm:unique-decomposition-propositional-formulas"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.6,
+  "notes": "Sub(phi) is a set-valued function on wffs (def:well-formed-formula) defined by recursion, here justified by thm:unique-decomposition. CONSISTENCY FLAG (not enacted): its twin def:formula-variable-set (0112), an identically-shaped recursive set function, instead cites thm:structural-recursion. The corpus is split -- recursive definitions variously cite structural-recursion (Var, 0112), unique-decomposition (Sub here; parse-tree 0116), or both (extended-truth-assignment 0094, unique-extension 0108). Recommend the reviewer standardize: structural-recursion is the direct recursion principle, unique-decomposition the readability it rests on; 0094/0108 suggest the intended convention may be to cite BOTH. Left as-is because unique-decomposition is defensible and the 'right' target is genuinely ambiguous."
+}

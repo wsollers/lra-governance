@@ -1,0 +1,12 @@
+{
+  "graph_id": "0023-0013",
+  "volume": "ii",
+  "chapter": "reals",
+  "section": "characterization-of-r",
+  "term": "thm:uniqueness-of-cof",
+  "kind": "Theorem",
+  "title": "Uniqueness of the Complete Ordered Field",
+  "root": "",
+  "statement": "Any two complete ordered fields are isomorphic by a unique order-isomorphism.",
+  "current_dependencies": []
+}

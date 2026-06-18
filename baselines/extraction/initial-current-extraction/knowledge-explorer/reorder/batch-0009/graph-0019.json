@@ -1,0 +1,19 @@
+{
+  "graph_id": "0009-0019",
+  "volume": "vi",
+  "chapter": "linear-algebra",
+  "section": "vector-spaces",
+  "term": "def:sum-of-subspaces",
+  "kind": "Definition",
+  "title": "Sum of Subspaces",
+  "root": "",
+  "statement": "Let $V$ be a vector space over $\\mathbf{F}$, and let\n$U_1,\\dots,U_m$ be subspaces of $V$.\nThe \\textbf{sum} of $U_1,\\dots,U_m$ is the set\n\\[\nU_1+\\cdots+U_m\n=\n\\{u_1+\\cdots+u_m : u_1 \\in U_1,\\dots,u_m \\in U_m\\}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:subspace",
+      "title": "Subspace",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "graph_id": "0006-0003",
+  "volume": "viii",
+  "chapter": "computational-geometry",
+  "section": "convex-hulls",
+  "term": "def:computational-geometry-convex-set",
+  "kind": "Definition",
+  "title": "Convex Set",
+  "root": "",
+  "statement": "A set \\(S \\subseteq \\mathbb{R}^2\\) is \\emph{convex} if for every pair of points\n\\(a,b\\in S\\) and every \\(\\lambda\\in[0,1]\\),\n\\[\n \\lambda a+(1-\\lambda)b\\in S.\n\\]\nEquivalently, \\(S\\) contains the line segment between any two of its points.",
+  "current_dependencies": []
+}

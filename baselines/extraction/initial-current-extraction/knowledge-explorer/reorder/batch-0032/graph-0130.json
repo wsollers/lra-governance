@@ -1,0 +1,25 @@
+{
+  "graph_id": "0032-0130",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "sets",
+  "term": "cor:set-duality",
+  "kind": "Corollary",
+  "title": "Principle of Set Duality",
+  "root": "",
+  "statement": "Any identity involving $\\cup$, $\\cap$, $\\varnothing$, and $U$ that holds for\nall subsets of a universe remains valid when each operation and constant is\nreplaced by its dual.",
+  "current_dependencies": [
+    {
+      "id": "ax:extensionality",
+      "title": "Axiom of Extensionality",
+      "kind": "Axiom",
+      "root": "axiom"
+    },
+    {
+      "id": "def:set-duality",
+      "title": "Set Duality",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "graph_id": "0032-0097",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "relations",
+  "term": "def:reflexive",
+  "kind": "Definition",
+  "title": "Reflexive Relation",
+  "root": "",
+  "statement": "A binary relation $R\\subseteq A\\times A$ is \\emph{reflexive} on $A$ if every\nelement of the domain is related to itself:\n\\[\n \\forall a\\in A,\\ (a,a)\\in R.\n\\]\nIn infix notation, this is the condition $\\forall a\\in A,\\ aRa$.",
+  "current_dependencies": [
+    {
+      "id": "def:relation",
+      "title": "Relation",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:universal-q",
+      "title": "Universal Formula",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

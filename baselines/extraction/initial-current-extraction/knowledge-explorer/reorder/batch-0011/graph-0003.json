@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0003",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "algebraic-structures",
+  "term": "prop:abstract-field-is-domain",
+  "kind": "Proposition",
+  "title": "Every Field is an Integral Domain",
+  "root": "",
+  "statement": "Every field is an integral domain.",
+  "current_dependencies": []
+}

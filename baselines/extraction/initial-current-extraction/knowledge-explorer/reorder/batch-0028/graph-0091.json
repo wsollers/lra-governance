@@ -1,0 +1,25 @@
+{
+  "graph_id": "0028-0091",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "order-on-z",
+  "term": "def:strict-order-on-z",
+  "kind": "Definition",
+  "title": "Strict Order on $ $",
+  "root": "",
+  "statement": "For $x,y\\in\\mathbb{Z}$, define\n\\[\nx<y \\quad:\\Longleftrightarrow\\quad y-x \\text{ is positive}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:positive-integer",
+      "title": "Positive Integer",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:subtraction-on-z",
+      "title": "Subtraction on $ $",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

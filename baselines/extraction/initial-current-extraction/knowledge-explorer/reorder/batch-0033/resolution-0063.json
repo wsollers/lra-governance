@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0063",
+  "term": "thm:standard-connectives-functionally-complete-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:disjunctive-normal-form-propositional-logic", "def:functionally-complete-connective-set-propositional-logic", "thm:dnf-representation-of-boolean-functions-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.7,
+  "notes": "{not, and, or} is complete because every Boolean function has a DNF representation (thm:dnf-representation) and DNF uses only not/and/or (def:disjunctive-normal-form), meeting def:functionally-complete. This is the base completeness result that 0061/0062 reduce to. All three load-bearing and present."
+}

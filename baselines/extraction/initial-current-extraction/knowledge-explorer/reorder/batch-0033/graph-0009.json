@@ -1,0 +1,31 @@
+{
+  "graph_id": "0033-0009",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "algebra",
+  "term": "thm:identity-domination-laws-propositional-logic",
+  "kind": "Theorem",
+  "title": "Identity and Domination Laws",
+  "root": "",
+  "statement": "Let \\(\\top\\) be any tautological formula and let \\(\\bot\\) be any contradictory formula. Then for every \\(\\varphi\\in\\WFF\\):\n\\[\n\\varphi\\land\\top\\equiv\\varphi,\n\\qquad\n\\varphi\\lor\\bot\\equiv\\varphi,\n\\]\nand\n\\[\n\\varphi\\land\\bot\\equiv\\bot,\n\\qquad\n\\varphi\\lor\\top\\equiv\\top.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:contradiction-propositional-logic",
+      "title": "Contradiction",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:logical-equivalence-propositional-logic",
+      "title": "Logical Equivalence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:tautology-propositional-logic",
+      "title": "Tautology",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

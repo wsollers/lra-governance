@@ -1,0 +1,37 @@
+{
+  "graph_id": "0014-0120",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "monotonicity",
+  "term": "thm:eventually-monotone-convergence-theorem",
+  "kind": "Theorem",
+  "title": "Eventually Monotone Convergence Theorem",
+  "root": "",
+  "statement": "Let $(x_n)$ be a real sequence.\n- [label=(\\alph*)]\n- If $(x_n)$ is eventually increasing and bounded above, then\n $(x_n)$ converges.\n- If $(x_n)$ is eventually decreasing and bounded below, then\n $(x_n)$ converges.\n- If $(x_n)$ is eventually monotone and bounded, then $(x_n)$ converges.",
+  "current_dependencies": [
+    {
+      "id": "def:eventually-decreasing-sequence",
+      "title": "Eventually Decreasing Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:eventually-increasing-sequence",
+      "title": "Eventually Increasing Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:convergence-of-tail",
+      "title": "Convergence of a Tail",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:monotone-convergence-theorem",
+      "title": "Monotone Convergence Theorem",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

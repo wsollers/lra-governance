@@ -1,0 +1,37 @@
+{
+  "graph_id": "0014-0011",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "cauchy",
+  "term": "thm:cauchy-criterion-real-sequences",
+  "kind": "Theorem",
+  "title": "Cauchy Criterion for Real Sequences",
+  "root": "",
+  "statement": "Let $(x_n)$ be a real sequence. Then $(x_n)$ converges if and only if\n$(x_n)$ is Cauchy.",
+  "current_dependencies": [
+    {
+      "id": "thm:bolzano-weierstrass-sequences",
+      "title": "Bolzano-Weierstrass Theorem for Sequences",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:cauchy-sequence-with-convergent-subsequence",
+      "title": "Cauchy Sequence with a Convergent Subsequence",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:cauchy-sequences-are-bounded",
+      "title": "Cauchy Sequences Are Bounded",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:convergent-sequences-are-cauchy",
+      "title": "Convergent Sequences Are Cauchy",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

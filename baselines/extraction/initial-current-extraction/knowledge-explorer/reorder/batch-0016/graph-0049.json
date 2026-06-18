@@ -1,0 +1,31 @@
+{
+  "graph_id": "0016-0049",
+  "volume": "iii",
+  "chapter": "functions",
+  "section": "real-valued-functions",
+  "term": "def:pointwise-quotient-of-functions",
+  "kind": "Definition",
+  "title": "Pointwise Quotient of Functions",
+  "root": "",
+  "statement": "Let $X\\subseteq\\mathbb{R}$ and let $f,g:X\\to\\mathbb{R}$. Suppose\n$g(x)\\neq 0$ for every $x\\in X$. The pointwise quotient $f/g:X\\to\\mathbb{R}$\nis the function defined by\n\\[\n (f/g)(x)=\\frac{f(x)}{g(x)}\n \\qquad (x\\in X).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:division-on-r",
+      "title": "Division on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:function",
+      "title": "Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:subset",
+      "title": "Subset",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

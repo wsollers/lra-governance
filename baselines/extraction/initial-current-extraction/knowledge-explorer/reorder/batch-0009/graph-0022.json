@@ -1,0 +1,25 @@
+{
+  "graph_id": "0009-0022",
+  "volume": "vi",
+  "chapter": "linear-algebra",
+  "section": "vector-spaces",
+  "term": "thm:direct-sum-of-two-subspaces",
+  "kind": "Theorem",
+  "title": "Direct Sum of Two Subspaces",
+  "root": "",
+  "statement": "Let $U$ and $W$ be subspaces of a vector space $V$.\nThen\n\\[\nU+W=U\\oplus W\n\\]\nif and only if\n\\[\nU \\cap W = \\{0\\}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:direct-sum",
+      "title": "Direct Sum",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:condition-for-direct-sum",
+      "title": "Condition for a Direct Sum",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

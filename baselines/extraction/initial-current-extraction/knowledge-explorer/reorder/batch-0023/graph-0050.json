@@ -1,0 +1,12 @@
+{
+  "graph_id": "0023-0050",
+  "volume": "ii",
+  "chapter": "reals",
+  "section": "multiplication-on-r",
+  "term": "lem:product-nonnegative-is-a-cut",
+  "kind": "Lemma",
+  "title": "Product of Nonnegative Cuts Is a Cut",
+  "root": "",
+  "statement": "If $\\alpha,\\beta\\ge 0_{\\mathbb{R}}$, then $\\alpha\\cdot\\beta$ is a Dedekind cut.",
+  "current_dependencies": []
+}

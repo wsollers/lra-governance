@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0070",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "mathematical-structures",
+  "term": "def:carrier-set",
+  "kind": "Definition",
+  "title": "Carrier Set",
+  "root": "",
+  "statement": "The \\textbf{carrier set} of a structure is the underlying set on which the\nstructure's operations, relations, and distinguished elements are interpreted.",
+  "current_dependencies": []
+}

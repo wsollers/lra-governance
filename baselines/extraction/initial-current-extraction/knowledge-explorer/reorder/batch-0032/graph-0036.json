@@ -1,0 +1,31 @@
+{
+  "graph_id": "0032-0036",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "functions",
+  "term": "thm:comp-id",
+  "kind": "Theorem",
+  "title": "Identity and Composition",
+  "root": "",
+  "statement": "For any $f : A \\to B$:\n\\[\nf \\circ \\id_A = f\n\\quad\\text{and}\\quad\n\\id_B \\circ f = f.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:composition",
+      "title": "Composition",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:function",
+      "title": "Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:identity",
+      "title": "Identity and Inclusion",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

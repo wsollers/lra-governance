@@ -1,0 +1,12 @@
+{
+  "graph_id": "0034-0013",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "proof-theory",
+  "term": "def:fol-completeness",
+  "kind": "Definition",
+  "title": "Completeness",
+  "root": "",
+  "statement": "A proof system is \\emph{complete} if every valid formula is provable:\n\\[\n\\Gamma \\models \\varphi \\implies \\Gamma \\vdash \\varphi.\n\\]",
+  "current_dependencies": []
+}

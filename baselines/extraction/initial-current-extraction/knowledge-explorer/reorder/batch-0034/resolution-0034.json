@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0034",
+  "term": "thm:pnf",
+  "verdict": "ok",
+  "dependencies": ["def:pnf", "thm:qdist", "thm:qneg", "thm:rename"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.55,
+  "notes": "The PNF algorithm uses capture-avoiding renaming (thm:rename), negation push-in (thm:qneg), and distribution/extraction across connectives (thm:qdist), targeting def:pnf -- all present. Possible gap: pulling a quantifier across a subformula in which its variable does not occur (prenex extraction) and dropping vacuous quantifiers (thm:vacuous, 0042) are steps thm:qdist does not literally cover; but the statement enumerates no proof steps, so there is no span to license adding them (Rule 2) -- flagged for the reviewer. def:log-equiv is transitive via def:pnf."
+}

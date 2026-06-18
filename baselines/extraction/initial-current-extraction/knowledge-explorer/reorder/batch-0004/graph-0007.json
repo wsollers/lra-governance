@@ -1,0 +1,12 @@
+{
+  "graph_id": "0004-0007",
+  "volume": "viii",
+  "chapter": "numerical-analysis",
+  "section": "ieee-floating-point",
+  "term": "def:numerical-analysis-ieee-754-nan-encoding",
+  "kind": "Definition",
+  "title": "IEEE 754 NaN Encoding",
+  "root": "",
+  "statement": "An IEEE 754 binary floating-point datum encodes \\emph{NaN} (Not a Number) if its\nexponent field is all ones and its fraction field is not all zeros.",
+  "current_dependencies": []
+}

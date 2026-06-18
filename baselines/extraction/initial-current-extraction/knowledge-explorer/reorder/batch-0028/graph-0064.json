@@ -1,0 +1,25 @@
+{
+  "graph_id": "0028-0064",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "operations-on-z-classes",
+  "term": "thm:every-integer-has-additive-inverse",
+  "kind": "Theorem",
+  "title": "Every Integer Has an Additive Inverse",
+  "root": "",
+  "statement": "For every $x\\in\\mathbb{Z}$ there exists $y\\in\\mathbb{Z}$ such that\n\\[\nx+y=0_{\\mathbb{Z}}\n\\qquad\\text{and}\\qquad\ny+x=0_{\\mathbb{Z}}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "cor:negation-right-additive-inverse-on-z",
+      "title": "Negation Gives a Right Additive Inverse on $ $",
+      "kind": "Corollary",
+      "root": ""
+    },
+    {
+      "id": "thm:negation-left-additive-inverse-on-z",
+      "title": "Negation Gives a Left Additive Inverse on $ $",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "graph_id": "0033-0129",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "syntax",
+  "term": "thm:minimality-of-well-formed-formulas",
+  "kind": "Theorem",
+  "title": "Minimality of Well-Formed Formulas",
+  "root": "",
+  "statement": "Let \\(S\\) be a set of strings over the propositional alphabet. Suppose:\n- \\(\\Prop\\subseteq S\\);\n- if \\(\\varphi\\in S\\), then \\(\\neg\\varphi\\in S\\);\n- if \\(\\varphi,\\psi\\in S\\) and\n \\(\\circ\\in\\{\\land,\\lor,\\to,\\leftrightarrow\\}\\), then\n \\((\\varphi\\circ\\psi)\\in S\\).\nThen\n\\[\n\\WFF\\subseteq S.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:well-formed-formula",
+      "title": "Well-Formed Formula",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

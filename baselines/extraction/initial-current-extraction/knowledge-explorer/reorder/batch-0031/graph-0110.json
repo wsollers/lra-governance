@@ -1,0 +1,12 @@
+{
+  "graph_id": "0031-0110",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "order-relations",
+  "term": "def:total-relation",
+  "kind": "Definition",
+  "title": "Total Relation",
+  "root": "",
+  "statement": "\\[\n\\forall x,y,\\ xRy\\lor yRx.\n\\]",
+  "current_dependencies": []
+}

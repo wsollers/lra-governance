@@ -1,0 +1,25 @@
+{
+  "graph_id": "0024-0081",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "operations-on-q-classes",
+  "term": "thm:every-nonzero-rational-has-multiplicative-inverse",
+  "kind": "Theorem",
+  "title": "Every Nonzero Rational Has a Multiplicative Inverse",
+  "root": "",
+  "statement": "For every $x\\in\\mathbb{Q}$ with $x\\ne 0_{\\mathbb{Q}}$, there exists\n$y\\in\\mathbb{Q}$ such that\n\\[\nx\\cdot y=1_{\\mathbb{Q}}\n\\qquad\\text{and}\\qquad\ny\\cdot x=1_{\\mathbb{Q}}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "cor:reciprocal-right-multiplicative-inverse-on-q",
+      "title": "Reciprocal Gives a Right Multiplicative Inverse on $ $",
+      "kind": "Corollary",
+      "root": ""
+    },
+    {
+      "id": "thm:reciprocal-left-multiplicative-inverse-on-q",
+      "title": "Reciprocal Gives a Left Multiplicative Inverse on $ $",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

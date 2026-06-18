@@ -1,0 +1,43 @@
+{
+  "graph_id": "0024-0032",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "embedding-z-into-q",
+  "term": "thm:embedding-z-into-q-preserves-addition",
+  "kind": "Theorem",
+  "title": "Embedding Preserves Addition",
+  "root": "",
+  "statement": "For all $m,n\\in\\mathbb{Z}$,\n\\[\n\\iota(m+n)=\\iota(m)+\\iota(n).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:addition-on-q-classes",
+      "title": "Addition on $ $-Classes",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:addition-on-z-classes",
+      "title": "Addition on $ $-Classes",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:rational-chapter-embedding-z-into-q",
+      "title": "Embedding of $ $ into $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:addition-on-q-well-defined",
+      "title": "Addition on $ $ Is Well-Defined",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:addition-on-z-well-defined",
+      "title": "Addition on $ $ Is Well-Defined",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

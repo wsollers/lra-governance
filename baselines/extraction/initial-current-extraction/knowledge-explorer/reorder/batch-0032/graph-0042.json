@@ -1,0 +1,49 @@
+{
+  "graph_id": "0032-0042",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "functions",
+  "term": "thm:preimage-ops",
+  "kind": "Theorem",
+  "title": "Preimages Preserve Set Operations",
+  "root": "",
+  "statement": "Let $f : A \\to B$ and $S, T \\subseteq B$. Then\n- [label=(\\roman*)]\n- $f^{-1}(S \\cup T) = f^{-1}(S) \\cup f^{-1}(T)$,\n- $f^{-1}(S \\cap T) = f^{-1}(S) \\cap f^{-1}(T)$,\n- $f^{-1}(S \\setminus T) = f^{-1}(S) \\setminus f^{-1}(T)$,\n- $f^{-1}(S^c) = (f^{-1}(S))^c$.",
+  "current_dependencies": [
+    {
+      "id": "def:complement",
+      "title": "Complement",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:function",
+      "title": "Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:intersection",
+      "title": "Intersection",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:preimage",
+      "title": "Preimage",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:set-difference",
+      "title": "Set Difference",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:union",
+      "title": "Union",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "graph_id": "0031-0070",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "field-and-ordered-field-laws",
+  "term": "thm:ordered-field-positive-inverses",
+  "kind": "Theorem",
+  "title": "Ordered Field Positive Inverses",
+  "root": "",
+  "statement": "In an ordered field,\n\\[\n0<a\n\\Longrightarrow\n0<a^{-1}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "thm:field-inverse-of-one",
+      "title": "Field Inverse of One",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:ordered-field-positive-product",
+      "title": "Ordered Field Positive Product",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

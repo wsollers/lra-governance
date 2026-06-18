@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0040",
+  "term": "thm:quantifier-double-negation",
+  "verdict": "change",
+  "dependencies": ["thm:qneg", "def:log-equiv"],
+  "rationale": "Equivalence theorem (==) proved by applying thm:qneg twice; the asserted logical equivalence makes def:log-equiv load-bearing, and it was missing -- consistent with the convention of listing def:log-equiv directly on ==-theorems (0037/0038/0039).",
+  "licensing_quote": "\\equiv",
+  "confidence": 0.6,
+  "notes": "The proof also collapses a propositional double negation (not-not phi == phi), but no standalone propositional double-negation node exists in index.json (the only 'double negation' hits are this node, a ring law, and a 'double negation on Q' corollary) -- missing-vocabulary observation, candidate for authoring in the propositional layer; left unproposed."
+}

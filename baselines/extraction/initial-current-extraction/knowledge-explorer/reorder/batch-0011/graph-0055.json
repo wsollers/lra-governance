@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0055",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "groups",
+  "term": "def:group-associativity",
+  "kind": "Definition",
+  "title": "Associativity",
+  "root": "",
+  "statement": "Let $\\star$ be a binary operation on $G$. The operation $\\star$ is\n\\textbf{associative} if\n\\[\n(a \\star b) \\star c = a \\star (b \\star c)\n\\quad \\text{for all } a, b, c \\in G.\n\\]",
+  "current_dependencies": []
+}

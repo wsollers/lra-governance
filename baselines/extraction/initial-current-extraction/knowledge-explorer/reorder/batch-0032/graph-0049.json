@@ -1,0 +1,19 @@
+{
+  "graph_id": "0032-0049",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "functions",
+  "term": "def:identity",
+  "kind": "Definition",
+  "title": "Identity and Inclusion",
+  "root": "",
+  "statement": "The \\emph{identity function} on $A$ is $\\id_A : A \\to A$, $\\id_A(a) = a$.\n\nIf $A \\subseteq B$, the \\emph{inclusion map} is $\\iota : A \\hookrightarrow B$,\n$\\iota(a) = a$.",
+  "current_dependencies": [
+    {
+      "id": "def:function",
+      "title": "Function",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

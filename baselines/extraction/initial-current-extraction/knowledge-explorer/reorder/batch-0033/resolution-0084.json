@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0084",
+  "term": "def:negative-literal-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:literal-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.75,
+  "notes": "A negative literal is the not-P case of a literal (def:literal), which is the load-bearing genus. The negation connective and the variable are carried by def:literal; the single dep is correct."
+}

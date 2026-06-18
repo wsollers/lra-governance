@@ -1,0 +1,25 @@
+{
+  "graph_id": "0032-0142",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "sets",
+  "term": "def:union",
+  "kind": "Definition",
+  "title": "Union",
+  "root": "",
+  "statement": "The \\emph{union} of $A$ and $B$, denoted $A \\cup B$, is the set of all\nelements belonging to at least one of the two sets:\n\\[\nA \\cup B \\;=\\; \\{\\, x \\mid x \\in A \\lor x \\in B \\,\\}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "ax:separation",
+      "title": "Axiom Schema of Separation",
+      "kind": "Axiom",
+      "root": "axiom"
+    },
+    {
+      "id": "def:set-membership",
+      "title": "Set and Membership",
+      "kind": "Definition",
+      "root": "definitional_truth"
+    }
+  ]
+}

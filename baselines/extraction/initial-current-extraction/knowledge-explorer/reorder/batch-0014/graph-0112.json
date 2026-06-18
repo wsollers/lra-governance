@@ -1,0 +1,25 @@
+{
+  "graph_id": "0014-0112",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "monotonicity",
+  "term": "def:eventually-increasing-sequence",
+  "kind": "Definition",
+  "title": "Eventually Increasing Sequence",
+  "root": "",
+  "statement": "Let $(x_n)$ be a real sequence. The sequence $(x_n)$ is\n\\textbf{eventually increasing} if there exists $N\\in\\mathbb{N}$ such that\n\\[\n x_n \\le x_{n+1}\n \\qquad\n \\text{for every } n\\ge N.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:increasing-sequence",
+      "title": "Increasing Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:m-tail",
+      "title": "$M$-Tail of a Sequence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

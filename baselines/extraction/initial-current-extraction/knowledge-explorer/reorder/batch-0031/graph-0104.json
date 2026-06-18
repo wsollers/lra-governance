@@ -1,0 +1,25 @@
+{
+  "graph_id": "0031-0104",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "order-compatibility",
+  "term": "prop:multiplication-order-compatibility-right",
+  "kind": "Proposition",
+  "title": "Multiplication Preserves Order on the Right",
+  "root": "",
+  "statement": "\\[\n0<x \\land y<z \\Longrightarrow y\\cdot x<z\\cdot x\n\\]\nin ordered arithmetic systems where multiplication by positive elements is\nstrictly order-preserving.",
+  "current_dependencies": [
+    {
+      "id": "def:abstract-ordered-field",
+      "title": "Ordered Field",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:left-monotony",
+      "title": "Left Monotony",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

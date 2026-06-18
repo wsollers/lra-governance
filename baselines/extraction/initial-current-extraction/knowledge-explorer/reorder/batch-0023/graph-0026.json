@@ -1,0 +1,12 @@
+{
+  "graph_id": "0023-0026",
+  "volume": "ii",
+  "chapter": "reals",
+  "section": "construction-of-r",
+  "term": "thm:zero-one-are-reals",
+  "kind": "Theorem",
+  "title": "Zero and One Are Reals",
+  "root": "",
+  "statement": "The cuts $0_{\\mathbb{R}}$ and $1_{\\mathbb{R}}$ are elements of $\\mathbb{R}$.",
+  "current_dependencies": []
+}

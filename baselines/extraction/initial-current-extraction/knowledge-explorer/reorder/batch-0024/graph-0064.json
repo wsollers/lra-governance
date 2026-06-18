@@ -1,0 +1,25 @@
+{
+  "graph_id": "0024-0064",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "operations-on-q-classes",
+  "term": "def:subtraction-on-q",
+  "kind": "Definition",
+  "title": "Subtraction on $ $",
+  "root": "",
+  "statement": "For $x,y\\in\\mathbb{Q}$, define\n\\[\nx-y:=x+(-y).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:addition-on-q-classes",
+      "title": "Addition on $ $-Classes",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:negation-on-q-classes",
+      "title": "Negation on $ $-Classes",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

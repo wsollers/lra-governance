@@ -1,0 +1,25 @@
+{
+  "graph_id": "0024-0079",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "operations-on-q-classes",
+  "term": "thm:addition-on-q-well-defined",
+  "kind": "Theorem",
+  "title": "Addition on $ $ Is Well-Defined",
+  "root": "",
+  "statement": "Addition determines a well-defined binary operation\n$\\mathbb{Q}\\times\\mathbb{Q}\\to\\mathbb{Q}$.",
+  "current_dependencies": [
+    {
+      "id": "def:addition-on-q-classes",
+      "title": "Addition on $ $-Classes",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "lem:addition-on-q-respects-equivalence",
+      "title": "Addition Respects Fraction Equivalence",
+      "kind": "Lemma",
+      "root": ""
+    }
+  ]
+}

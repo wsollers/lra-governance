@@ -1,0 +1,19 @@
+{
+  "graph_id": "0019-0015",
+  "volume": "iii",
+  "chapter": "continuity",
+  "section": "gauge",
+  "term": "def:refinement-of-partition",
+  "kind": "Definition",
+  "title": "Refinement",
+  "root": "",
+  "statement": "Let $[a,b] \\subseteq \\mathbb{R}$ and let $P$ and $Q$ be partitions of $[a,b]$. Then $Q$ is a refinement of $P$ if and only if every point of $P$ is also a point of $Q$; equivalently, $P \\subseteq Q$.",
+  "current_dependencies": [
+    {
+      "id": "def:interval-partition",
+      "title": "Partition",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

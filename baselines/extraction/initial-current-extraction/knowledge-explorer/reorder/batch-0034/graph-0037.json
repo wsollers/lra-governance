@@ -1,0 +1,25 @@
+{
+  "graph_id": "0034-0037",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "quantifiers",
+  "term": "thm:qcomm",
+  "kind": "Theorem",
+  "title": "Same-Type Quantifier Commutation",
+  "root": "",
+  "statement": "Quantifiers of the same type commute:\n\\[\n\\forall x\\,\\forall y\\,\\varphi \\equiv \\forall y\\,\\forall x\\,\\varphi,\n\\qquad\n\\exists x\\,\\exists y\\,\\varphi \\equiv \\exists y\\,\\exists x\\,\\varphi.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:existential-q",
+      "title": "Existential Formula",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:universal-q",
+      "title": "Universal Formula",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

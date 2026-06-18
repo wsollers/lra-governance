@@ -1,0 +1,31 @@
+{
+  "graph_id": "0024-0030",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "embedding-z-into-q",
+  "term": "def:rational-chapter-embedding-z-into-q",
+  "kind": "Definition",
+  "title": "Embedding of $ $ into $ $",
+  "root": "",
+  "statement": "Define\n\\[\n\\iota:\\mathbb{Z}\\to\\mathbb{Q},\n\\qquad\n\\iota(n):=[n,1_{\\mathbb{Z}}].\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:one-in-z",
+      "title": "One in $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:rationals",
+      "title": "Rational Numbers",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:zero-not-one-in-z",
+      "title": "Zero Is Not One in $ $",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "graph_id": "0025-0013",
+  "volume": "ii",
+  "chapter": "peano-systems",
+  "section": "defining-peano-systems",
+  "term": "def:predecessor-in-peano-system",
+  "kind": "Definition",
+  "title": "Predecessor in a Peano System",
+  "root": "",
+  "statement": "Let $(P,S,1)$ be a Peano system, and let $x,u \\in P$. The element $u$ is\ncalled a \\emph{predecessor} of $x$ exactly when\n\\[\nS(u)=x.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:peano-system",
+      "title": "Peano System",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

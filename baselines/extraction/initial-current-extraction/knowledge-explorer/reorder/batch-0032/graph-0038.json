@@ -1,0 +1,49 @@
+{
+  "graph_id": "0032-0038",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "functions",
+  "term": "thm:image-ops",
+  "kind": "Theorem",
+  "title": "Images and Set Operations",
+  "root": "",
+  "statement": "Let $f : A \\to B$ and $S, T \\subseteq A$. Then\n- [label=(\\roman*)]\n- $f(S \\cup T) = f(S) \\cup f(T)$,\n- $f(S \\cap T) \\subseteq f(S) \\cap f(T)$,\n- $f(S \\setminus T) \\supseteq f(S) \\setminus f(T)$.\nEquality holds in (ii) and (iii) for all $S,T$ iff $f$ is injective.",
+  "current_dependencies": [
+    {
+      "id": "def:function",
+      "title": "Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:image-set",
+      "title": "Image of a Set",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:injective",
+      "title": "Injective Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:intersection",
+      "title": "Intersection",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:set-difference",
+      "title": "Set Difference",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:union",
+      "title": "Union",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

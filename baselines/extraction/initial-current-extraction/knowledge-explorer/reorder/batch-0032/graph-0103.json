@@ -1,0 +1,19 @@
+{
+  "graph_id": "0032-0103",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "relations",
+  "term": "def:ordered-pair",
+  "kind": "Definition",
+  "title": "Ordered Pair",
+  "root": "",
+  "statement": "Let $a$ and $b$ be sets. The \\emph{ordered pair} $(a,b)$ is defined (Kuratowski)\nas\n\\[\n(a,b) \\;:=\\; \\{\\{a\\}, \\{a,b\\}\\}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "ax:pairing",
+      "title": "Axiom of Pairing",
+      "kind": "Axiom",
+      "root": "axiom"
+    }
+  ]
+}

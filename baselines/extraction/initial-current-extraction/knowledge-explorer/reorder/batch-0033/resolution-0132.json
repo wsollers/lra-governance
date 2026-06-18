@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0132",
+  "term": "thm:unique-decomposition-propositional-formulas",
+  "verdict": "ok",
+  "dependencies": ["def:well-formed-formula", "lem:constructor-disjointness-propositional-formulas", "lem:constructor-injectivity-propositional-formulas"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.8,
+  "notes": "Every wff has exactly one outermost form: existence from the formation rules (def:well-formed-formula), uniqueness from the cases being disjoint (lem:constructor-disjointness) and the constructors injective (lem:constructor-injectivity). All three load-bearing and present -- the correctly-wired lynchpin of the syntax layer. Its dep set confirms the 0124 cycle fix (it sits ABOVE constructor-disjointness)."
+}

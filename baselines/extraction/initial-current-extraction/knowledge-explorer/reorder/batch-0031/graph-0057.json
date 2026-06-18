@@ -1,0 +1,19 @@
+{
+  "graph_id": "0031-0057",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "field-and-ordered-field-laws",
+  "term": "thm:field-inverse-involution",
+  "kind": "Theorem",
+  "title": "Field Inverse Involution",
+  "root": "",
+  "statement": "In a field, if $a\\ne0$, then\n\\[\n(a^{-1})^{-1}=a.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "thm:field-uniqueness-of-inverse",
+      "title": "Field Uniqueness of Inverse",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "graph_id": "0024-0006",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "arbitrary-closeness-in-q",
+  "term": "lem:two-nonzero-in-q",
+  "kind": "Lemma",
+  "title": "Two Is Nonzero in $ $",
+  "root": "",
+  "statement": "In $\\mathbb{Q}$,\n\\[\n2_{\\mathbb{Q}}\\ne 0_{\\mathbb{Q}}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "cor:one-positive-on-q",
+      "title": "One Is Positive in $ $",
+      "kind": "Corollary",
+      "root": ""
+    },
+    {
+      "id": "thm:trichotomy-on-q",
+      "title": "Trichotomy on $ $",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

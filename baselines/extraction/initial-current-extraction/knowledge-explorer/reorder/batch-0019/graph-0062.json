@@ -1,0 +1,25 @@
+{
+  "graph_id": "0019-0062",
+  "volume": "iii",
+  "chapter": "continuity",
+  "section": "uniform-continuity",
+  "term": "thm:heine-cantor",
+  "kind": "Theorem",
+  "title": "Heine--Cantor Theorem",
+  "root": "",
+  "statement": "Let $a,b \\in \\mathbb{R}$ with $a<b$ and let $f:[a,b]\\to\\mathbb{R}$ be continuous on $[a,b]$. Then $f$ is uniformly continuous on $[a,b]$.",
+  "current_dependencies": [
+    {
+      "id": "def:continuous-at-point",
+      "title": "Continuity at a Point",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:uniform-continuity",
+      "title": "Uniform Continuity",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

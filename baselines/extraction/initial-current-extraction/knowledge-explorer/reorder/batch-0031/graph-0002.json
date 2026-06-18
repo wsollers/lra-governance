@@ -1,0 +1,19 @@
+{
+  "graph_id": "0031-0002",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "algebraic-laws",
+  "term": "def:commutativity",
+  "kind": "Definition",
+  "title": "Commutativity",
+  "root": "",
+  "statement": "\\[\n\\forall x,y,\\ x\\mathbin{O}y=y\\mathbin{O}x.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:binary-arithmetic-operation",
+      "title": "Binary Arithmetic Operation",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

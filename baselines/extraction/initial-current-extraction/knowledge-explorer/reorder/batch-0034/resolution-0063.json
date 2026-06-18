@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0063",
+  "term": "def:constant-symbol",
+  "verdict": "change",
+  "dependencies": ["def:arity", "def:variable"],
+  "rationale": "The defining property is 'a non-logical symbol of arity 0', so def:arity is the load-bearing concept and was missing. Added.",
+  "licensing_quote": "arity",
+  "confidence": 0.6,
+  "notes": "def:variable is kept but flagged: a constant symbol is not defined in terms of variables, so this edge is not load-bearing -- it reads as an authorial symbol-introduction chaining (variable -> constant -> function, cf. 0065), the same kind of stray edge as the def:truth-structure mis-attachment on def:theory (0047). Reviewer to decide whether such chaining edges are kept. 'may occur as a term' -> def:term is a candidate. Note a duplicate node def:signature-constant-symbol also exists (dedup candidate)."
+}

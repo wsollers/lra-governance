@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0054",
+  "term": "def:truth-structure",
+  "verdict": "ok",
+  "dependencies": ["def:fol-satisfaction"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.8,
+  "notes": "M |= phi (sentence) iff M,s |= phi for every assignment s -- sole content is satisfaction, with the universal over assignments carried by def:fol-satisfaction. Correct. (This is the semantic node that def:theory at 0047 wrongly depended on; truth-in-a-structure has no business in the syntactic definition of a theory, which is the basis for the 0047 removal.)"
+}

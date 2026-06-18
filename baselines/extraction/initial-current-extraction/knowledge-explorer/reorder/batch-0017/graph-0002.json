@@ -1,0 +1,12 @@
+{
+  "graph_id": "0017-0002",
+  "volume": "iii",
+  "chapter": "elementary-functions",
+  "section": "hyperbolic",
+  "term": "def:inverse-hyperbolic",
+  "kind": "Definition",
+  "title": "Inverse Hyperbolic Functions",
+  "root": "",
+  "statement": "Since $\\sinh$ is strictly increasing and bijective $\\mathbb{R} \\to\n\\mathbb{R}$, its inverse $\\operatorname{arcsinh}$ is defined on all\nof $\\mathbb{R}$. Since $\\cosh$ is strictly increasing on\n$[0,\\infty)$ with range $[1,\\infty)$, its inverse\n$\\operatorname{arccosh}$ is defined on $[1,\\infty)$. Since $\\tanh$\nis strictly increasing with range $(-1,1)$, $\\operatorname{arctanh}$\nis defined on $(-1,1)$.\n\nExplicit logarithmic formulas:\n\\begin{align*}\n \\operatorname{arcsinh} x\n &= \\ln\\!\\left(x + \\sqrt{x^2+1}\\right),\n \\quad x \\in \\mathbb{R}. \\\\\n \\operatorname{arccosh} x\n &= \\ln\\!\\left(x + \\sqrt{x^2-1}\\right),\n \\quad x \\geq 1. \\\\\n \\operatorname{arctanh} x\n &= \\tfrac{1}{2}\\ln\\!\\left(\\frac{1+x}{1-x}\\right),\n \\quad |x| < 1.\n\\end{align*}",
+  "current_dependencies": []
+}

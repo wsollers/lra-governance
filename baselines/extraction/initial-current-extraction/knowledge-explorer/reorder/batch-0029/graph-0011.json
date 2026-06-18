@@ -1,0 +1,25 @@
+{
+  "graph_id": "0029-0011",
+  "volume": "ii",
+  "chapter": "identity-equality-equivalence",
+  "section": "equivalence",
+  "term": "def:predicate-respects-equivalence",
+  "kind": "Definition",
+  "title": "Predicate Respects an Equivalence",
+  "root": "",
+  "statement": "Let $P$ be a predicate on $A$. The predicate $P$ \\emph{respects} $\\sim$ if\n\\[\n\\forall a,a'\\in A,\\,\na\\sim a'\\Longrightarrow \\bigl(P(a)\\Longleftrightarrow P(a')\\bigr).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:equivalence-relation",
+      "title": "Equivalence Relation",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:predicate",
+      "title": "Open Formula",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

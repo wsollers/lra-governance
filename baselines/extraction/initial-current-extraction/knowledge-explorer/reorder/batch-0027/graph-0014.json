@@ -1,0 +1,37 @@
+{
+  "graph_id": "0027-0014",
+  "volume": "ii",
+  "chapter": "natural-numbers",
+  "section": "algebraic-structure-of-n",
+  "term": "thm:n-multiplicative-monoid",
+  "kind": "Theorem",
+  "title": "$ $ Is a Commutative Monoid Under Multiplication",
+  "root": "",
+  "statement": "Let $(P,S,1)$ be a Peano system. The binary operation $\\cdot$ on $P$ satisfies:\n- \\textbf{Closure.} For all $a,b \\in P$, $a \\cdot b \\in P$.\n- \\textbf{Associativity.} For all $a,b,c \\in P$,\n $(a \\cdot b) \\cdot c = a \\cdot (b \\cdot c)$.\n- \\textbf{Commutativity.} For all $a,b \\in P$,\n $a \\cdot b = b \\cdot a$.\n- \\textbf{Identity.} For all $a \\in P$,\n $1 \\cdot a = a = a \\cdot 1$.\nConsequently $(P, \\cdot, 1)$ is a commutative monoid.",
+  "current_dependencies": [
+    {
+      "id": "thm:multiplication-associative",
+      "title": "Multiplication Is Associative",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:multiplication-commutative",
+      "title": "Multiplication Is Commutative",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:multiplication-with-one",
+      "title": "Multiplication With $1$",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:one-times-n",
+      "title": "One Times $n$",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

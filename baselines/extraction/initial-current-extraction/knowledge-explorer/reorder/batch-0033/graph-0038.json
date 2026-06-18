@@ -1,0 +1,19 @@
+{
+  "graph_id": "0033-0038",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "compactness-preview",
+  "term": "def:finite-subset-of-set-of-propositional-formulas",
+  "kind": "Definition",
+  "title": "Finite Subset of a Set of Propositional Formulas",
+  "root": "",
+  "statement": "Let \\(\\Gamma\\subseteq\\WFF\\). A finite subset of \\(\\Gamma\\) is a set\n\\(\\Delta\\subseteq\\Gamma\\) containing only finitely many formulas.",
+  "current_dependencies": [
+    {
+      "id": "def:well-formed-formula",
+      "title": "Well-Formed Formula",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

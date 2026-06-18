@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0002",
+  "term": "ax:predicate-logic-universal-instantiation",
+  "verdict": "change",
+  "dependencies": ["def:free-for", "def:subst-notation"],
+  "rationale": "Universal instantiation is unsound without the proviso that t be free for x in phi (variable capture), so def:free-for is load-bearing; the conclusion phi(t) is a substitution instance, so def:subst-notation is needed even to state the consequent. The bare types 'formula phi(x)' and 'term t' merely locate the objects and are ambient (same test that drops a pure type-locator in def:axiom, 0035-0002), hence omitted. The original empty set was under-specified.",
+  "licensing_quote": "every term $t$ that is free for $x$ in $\\varphi$",
+  "confidence": 0.55,
+  "notes": "def:free-for and def:subst-notation are confirmed to exist (both are dependencies of def:eq-elim, 0034-0003). def:formula/def:term treated as ambient typing and omitted; a reviewer wanting the operative term-node could add def:term. Moderate confidence because the axiom-layer convention (whether schemas carry stating-vocabulary at all) is not yet fixed by precedent -- see 0034-0001 notes; the same decision should govern both axioms."
+}

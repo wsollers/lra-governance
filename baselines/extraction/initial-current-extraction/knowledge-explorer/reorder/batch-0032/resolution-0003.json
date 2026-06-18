@@ -1,0 +1,10 @@
+{
+  "graph_id": "0032-0003",
+  "term": "def:finite-infinite",
+  "verdict": "ok",
+  "dependencies": ["def:empty-set", "def:natural-numbers", "def:same-cardinality"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.8,
+  "notes": "Finite = empty (def:empty-set) or equinumerous with an initial segment {1,...,n}, n in N (def:same-cardinality, def:natural-numbers); infinite = not finite. All three load-bearing and present. Clean."
+}

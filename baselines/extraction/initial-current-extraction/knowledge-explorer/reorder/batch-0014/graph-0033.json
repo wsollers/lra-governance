@@ -1,0 +1,25 @@
+{
+  "graph_id": "0014-0033",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "convergence",
+  "term": "def:pointwise-quotient-sequence",
+  "kind": "Definition",
+  "title": "Pointwise Quotient of Sequences",
+  "root": "",
+  "statement": "Let $(x_n)$ and $(y_n)$ be real sequences such that $y_n\\neq 0$ for every\n$n\\in\\mathbb{N}$. The \\textbf{pointwise quotient} of $(x_n)$ by $(y_n)$ is\nthe real sequence $(x_n/y_n)$ defined by\n\\[\n\\left(\\frac{x}{y}\\right)_n := \\frac{x_n}{y_n}\n\\qquad\n\\text{for every } n\\in\\mathbb{N}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:pointwise-product-sequence",
+      "title": "Pointwise Product of Sequences",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:reciprocal-sequence",
+      "title": "Reciprocal Sequence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

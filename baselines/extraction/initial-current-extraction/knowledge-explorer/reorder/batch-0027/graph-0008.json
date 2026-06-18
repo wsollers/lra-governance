@@ -1,0 +1,25 @@
+{
+  "graph_id": "0027-0008",
+  "volume": "ii",
+  "chapter": "natural-numbers",
+  "section": "addition-on-n",
+  "term": "thm:addition-well-defined-on-peano-system",
+  "kind": "Theorem",
+  "title": "Addition Is Well-Defined on a Peano System",
+  "root": "",
+  "statement": "Let $(P,S,1)$ be a Peano system. For every $m \\in P$, there exists a unique\nfunction\n\\[\nf_m : P \\to P\n\\]\nsuch that\n\\[\nf_m(1)=S(m)\n\\qquad\\text{and}\\qquad\n\\forall n \\in P\\;(f_m(S(n))=S(f_m(n))).\n\\]\nConsequently the rule\n\\[\n(m,n) \\longmapsto m+n \\coloneqq f_m(n)\n\\]\ndefines a unique binary operation on $P$.",
+  "current_dependencies": [
+    {
+      "id": "def:addition-on-peano-system",
+      "title": "Addition on a Peano System",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:peano-iterator-theorem",
+      "title": "Peano Iterator Theorem",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "graph_id": "0024-0017",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "construction-of-q",
+  "term": "def:rational-class-notation",
+  "kind": "Definition",
+  "title": "Rational Class Notation",
+  "root": "",
+  "statement": "The notation $[a,b]$ denotes the $\\sim_{\\mathbb{Q}}$-equivalence class of the\nprefraction $(a,b)$, where $b\\ne 0_{\\mathbb{Z}}$.",
+  "current_dependencies": [
+    {
+      "id": "def:fraction-equivalence",
+      "title": "Fraction Equivalence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:rationals",
+      "title": "Rational Numbers",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

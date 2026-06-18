@@ -1,0 +1,31 @@
+{
+  "graph_id": "0032-0105",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "relations",
+  "term": "thm:ordered-pair-unique",
+  "kind": "Theorem",
+  "title": "Uniqueness of Ordered Pairs",
+  "root": "",
+  "statement": "For any sets $a,b,c,d$,\n\\[\n(a,b) = (c,d)\n\\;\\;\\Longleftrightarrow\\;\\;\n(a = c \\land b = d).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "ax:extensionality",
+      "title": "Axiom of Extensionality",
+      "kind": "Axiom",
+      "root": "axiom"
+    },
+    {
+      "id": "ax:pairing",
+      "title": "Axiom of Pairing",
+      "kind": "Axiom",
+      "root": "axiom"
+    },
+    {
+      "id": "def:ordered-pair",
+      "title": "Ordered Pair",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

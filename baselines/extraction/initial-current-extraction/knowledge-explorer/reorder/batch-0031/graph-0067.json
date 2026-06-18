@@ -1,0 +1,25 @@
+{
+  "graph_id": "0031-0067",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "field-and-ordered-field-laws",
+  "term": "thm:ordered-field-fraction-comparison",
+  "kind": "Theorem",
+  "title": "Ordered Field Fraction Comparison",
+  "root": "",
+  "statement": "In an ordered field, if $b\\cdot d>0$, then\n\\[\n\\frac{a}{b}<\\frac{c}{d}\n\\quad\\Longleftrightarrow\\quad\na\\cdot d<c\\cdot b.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "thm:field-multiplicative-cancellation",
+      "title": "Field Multiplicative Cancellation",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:ordered-field-positive-multiplication-preserves-order",
+      "title": "Ordered Field Positive Multiplication Preserves Order",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "graph_id": "0019-0017",
+  "volume": "iii",
+  "chapter": "continuity",
+  "section": "global-theorems",
+  "term": "def:bounded-on-a-set",
+  "kind": "Definition",
+  "title": "Bounded on a Set",
+  "root": "",
+  "statement": "Let $A \\subseteq \\mathbb{R}$ and $f \\colon A \\to \\mathbb{R}$. The function $f$ is bounded on $A$ if and only if there exists a constant $M>0$ such that $|f(x)| \\le M$ for every $x \\in A$.",
+  "current_dependencies": [
+    {
+      "id": "def:function",
+      "title": "Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:order-on-r",
+      "title": "Order on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:real-chapter-absolute-value-on-r",
+      "title": "Absolute Value on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:subset",
+      "title": "Subset",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

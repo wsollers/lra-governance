@@ -1,0 +1,19 @@
+{
+  "graph_id": "0031-0049",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "derived-laws",
+  "term": "prop:right-zero-absorption",
+  "kind": "Proposition",
+  "title": "Right Zero Absorption",
+  "root": "",
+  "statement": "In a ring,\n\\[\na\\cdot 0=0.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:ring",
+      "title": "Ring",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "graph_id": "0022-0001",
+  "volume": "ii",
+  "chapter": "structure-of-real-line",
+  "section": "absolute-value-as-distance",
+  "term": "prop:abs-value-is-distance-to-zero",
+  "kind": "Proposition",
+  "title": "Absolute Value Is Distance to the Origin",
+  "root": "",
+  "statement": "For every $a\\in\\mathbb{R}$, $\\;|a|=d(a,0)$.",
+  "current_dependencies": [
+    {
+      "id": "def:distance-on-real-line",
+      "title": "Distance on the Real Line",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

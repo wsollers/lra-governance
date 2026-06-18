@@ -1,0 +1,25 @@
+{
+  "graph_id": "0028-0092",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "order-on-z",
+  "term": "lem:positivity-respects-equivalence",
+  "kind": "Lemma",
+  "title": "Positivity Respects Formal-Difference Equivalence",
+  "root": "",
+  "statement": "If $[a,b]=[a',b']$, then\n\\[\nb<a \\Longleftrightarrow b'<a'.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "thm:addition-on-w-cancellation",
+      "title": "Addition on $ $ Satisfies Cancellation",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:order-on-w-total",
+      "title": "Order on $ $ Is Total",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

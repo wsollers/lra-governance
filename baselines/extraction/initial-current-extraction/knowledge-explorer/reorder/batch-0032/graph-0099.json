@@ -1,0 +1,25 @@
+{
+  "graph_id": "0032-0099",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "relations",
+  "term": "def:total-order",
+  "kind": "Definition",
+  "title": "Total Order",
+  "root": "",
+  "statement": "$R$ is a \\emph{total order} on $A$ if it is a partial order and is total.",
+  "current_dependencies": [
+    {
+      "id": "def:partial-order",
+      "title": "Partial Order",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:total-rel",
+      "title": "Total (Connex) Relation",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

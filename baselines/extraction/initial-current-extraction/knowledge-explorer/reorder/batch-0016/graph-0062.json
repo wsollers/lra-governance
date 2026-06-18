@@ -1,0 +1,19 @@
+{
+  "graph_id": "0016-0062",
+  "volume": "iii",
+  "chapter": "functions",
+  "section": "subsets-real-line",
+  "term": "def:epsilon-neighbourhood",
+  "kind": "Definition",
+  "title": "$ $-Neighbourhood",
+  "root": "",
+  "statement": "Let $x\\in\\mathbb{R}$ and let $\\varepsilon>0$. The\n\\textbf{$\\varepsilon$-neighbourhood} of $x$ is\n\\[\n V_\\varepsilon(x):=(x-\\varepsilon,x+\\varepsilon)\n =\\{y\\in\\mathbb{R}: |y-x|<\\varepsilon\\}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:open-ball",
+      "title": "Open Ball on the Real Line",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

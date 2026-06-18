@@ -1,0 +1,37 @@
+{
+  "graph_id": "0015-0014",
+  "volume": "iii",
+  "chapter": "real-analysis",
+  "section": "inequality",
+  "term": "thm:ineq-square-monotone",
+  "kind": "Theorem",
+  "title": "Square Is Strictly Monotone on Nonneg Reals",
+  "root": "",
+  "statement": "For all $a, b \\in \\mathbb{R}$,\n\\[\n 0 \\le a < b \\;\\Rightarrow\\; a^2 < b^2.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:real-ordered-field",
+      "title": "Complete Ordered Field",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:ineq-add-inequalities",
+      "title": "Addition of Strict Inequalities",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:ineq-multiply-positive",
+      "title": "Multiplication by a Positive Scalar Preserves Strict Inequality",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:ordered-field-squares-nonnegative",
+      "title": "Ordered Field Squares Are Nonnegative",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

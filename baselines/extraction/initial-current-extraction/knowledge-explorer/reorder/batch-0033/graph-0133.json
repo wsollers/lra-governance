@@ -1,0 +1,25 @@
+{
+  "graph_id": "0033-0133",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "syntax",
+  "term": "thm:unique-syntax-tree-propositional-formulas",
+  "kind": "Theorem",
+  "title": "Unique Syntax Tree for Propositional Formulas",
+  "root": "",
+  "statement": "Every propositional well-formed formula has a unique parse tree.",
+  "current_dependencies": [
+    {
+      "id": "def:parse-tree-propositional-logic",
+      "title": "Parse Tree",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:unique-decomposition-propositional-formulas",
+      "title": "Unique Decomposition for Propositional Formulas",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

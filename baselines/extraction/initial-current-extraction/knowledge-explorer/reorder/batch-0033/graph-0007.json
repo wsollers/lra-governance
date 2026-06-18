@@ -1,0 +1,25 @@
+{
+  "graph_id": "0033-0007",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "algebra",
+  "term": "thm:de-morgan-laws-propositional-logic",
+  "kind": "Theorem",
+  "title": "De Morgan Laws for Propositional Logic",
+  "root": "",
+  "statement": "For all \\(\\varphi,\\psi\\in\\WFF\\),\n\\[\n\\neg(\\varphi\\land\\psi)\n\\equiv\n\\neg\\varphi\\lor\\neg\\psi,\n\\]\nand\n\\[\n\\neg(\\varphi\\lor\\psi)\n\\equiv\n\\neg\\varphi\\land\\neg\\psi.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:logical-equivalence-propositional-logic",
+      "title": "Logical Equivalence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:unique-extension-truth-assignment-propositional-logic",
+      "title": "Unique Extension of a Truth Assignment",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

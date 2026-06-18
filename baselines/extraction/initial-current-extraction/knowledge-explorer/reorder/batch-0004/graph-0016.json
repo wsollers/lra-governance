@@ -1,0 +1,12 @@
+{
+  "graph_id": "0004-0016",
+  "volume": "viii",
+  "chapter": "numerical-analysis",
+  "section": "interval-arithmetic",
+  "term": "def:interval-add",
+  "kind": "Definition",
+  "title": "Interval Addition",
+  "root": "",
+  "statement": "For closed intervals $[a,b]$ and $[c,d]$, their \\emph{sum} is\n\\[\n [a,b] + [c,d] \\;=\\; [a+c,\\; b+d].\n\\]",
+  "current_dependencies": []
+}

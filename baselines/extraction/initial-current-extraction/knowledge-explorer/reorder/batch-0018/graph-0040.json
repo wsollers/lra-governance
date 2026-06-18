@@ -1,0 +1,31 @@
+{
+  "graph_id": "0018-0040",
+  "volume": "iii",
+  "chapter": "differentiation",
+  "section": "derivative-geometry",
+  "term": "thm:first-derivative-test-maximum",
+  "kind": "Theorem",
+  "title": "First Derivative Test: Relative Maximum",
+  "root": "",
+  "statement": "Let $I := [a,b] \\subseteq \\mathbb{R}$, let $f : I \\to \\mathbb{R}$ be continuous on $I$, and let $c \\in (a,b)$. Suppose $f$ is differentiable on $(a,c)$ and $(c,b)$. If there exists $\\delta > 0$ such that $(c-\\delta,c+\\delta) \\subseteq I$ and\n\\[\nf'(x) \\geq 0 \\quad \\text{for all } x \\in (c-\\delta,c),\n\\qquad\nf'(x) \\leq 0 \\quad \\text{for all } x \\in (c,c+\\delta),\n\\]\nthen $f$ has a relative maximum at $c$.",
+  "current_dependencies": [
+    {
+      "id": "def:relative-maximum",
+      "title": "Relative Maximum",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:nondecreasing-iff-nonneg-derivative",
+      "title": "Nondecreasing Iff Nonnegative Derivative",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:nonincreasing-iff-nonpos-derivative",
+      "title": "Nonincreasing Iff Nonpositive Derivative",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

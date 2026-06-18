@@ -1,0 +1,37 @@
+{
+  "graph_id": "0014-0123",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "monotonicity",
+  "term": "thm:unbounded-monotone-divergence",
+  "kind": "Theorem",
+  "title": "Unbounded Monotone Divergence",
+  "root": "",
+  "statement": "Let $(x_n)$ be a real sequence.\n- [label=(\\alph*)]\n- If $(x_n)$ is increasing and is not bounded above, then\n $x_n\\to+\\infty$.\n- If $(x_n)$ is decreasing and is not bounded below, then\n $x_n\\to-\\infty$.",
+  "current_dependencies": [
+    {
+      "id": "def:decreasing-sequence",
+      "title": "Decreasing Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:diverges-to-negative-infinity",
+      "title": "Divergence to Negative Infinity",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:diverges-to-positive-infinity",
+      "title": "Divergence to Positive Infinity",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:increasing-sequence",
+      "title": "Increasing Sequence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

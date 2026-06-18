@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0103",
+  "term": "def:truth-function-induced-by-formula",
+  "verdict": "ok",
+  "dependencies": ["def:boolean-function-propositional-logic", "def:formula-variable-set-propositional-logic", "lem:coincidence-lemma-propositional-logic", "thm:unique-extension-truth-assignment-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.7,
+  "notes": "f_phi: B^n -> B (a Boolean function, def:boolean-function) over the variables Var(phi) (def:formula-variable-set), with value v-hat(phi) (well-defined by thm:unique-extension). Well-definedness is a Rule-4 case: independence from the choice of v extending (b_1,...,b_n) is exactly the coincidence lemma (lem:coincidence-lemma). All four load-bearing and present."
+}

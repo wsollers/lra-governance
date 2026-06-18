@@ -1,0 +1,12 @@
+{
+  "graph_id": "0029-0028",
+  "volume": "ii",
+  "chapter": "identity-equality-equivalence",
+  "section": "properties-of-equality",
+  "term": "ax:equality-reflexivity",
+  "kind": "Axiom",
+  "title": "Reflexivity of Equality",
+  "root": "axiom",
+  "statement": "\\[\n\\forall x,\\ x=x.\n\\]",
+  "current_dependencies": []
+}

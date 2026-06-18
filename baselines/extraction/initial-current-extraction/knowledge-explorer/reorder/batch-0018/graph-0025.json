@@ -1,0 +1,31 @@
+{
+  "graph_id": "0018-0025",
+  "volume": "iii",
+  "chapter": "differentiation",
+  "section": "derivative-definition",
+  "term": "thm:derivative-equivalence",
+  "kind": "Theorem",
+  "title": "Equivalence of Definitions of the Derivative at a Point",
+  "root": "",
+  "statement": "Let $f : A \\to \\mathbb{R}$ and $c \\in A$ be a limit point of $A$. The following are equivalent:\n- $f$ is differentiable at $c$ in the $\\varepsilon$-$\\delta$ sense with derivative $L$.\n- $f$ is differentiable at $c$ in the topological sense with derivative $L$.\n- $f$ is differentiable at $c$ in the sequential sense with derivative $L$.",
+  "current_dependencies": [
+    {
+      "id": "def:derivative-at-a-point",
+      "title": "Derivative at a Point",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:sequential-definition-of-derivative-at-a-point",
+      "title": "Sequential Definition of Derivative at a Point",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:topological-definition-of-derivative-at-a-point",
+      "title": "Topological Definition of Derivative at a Point",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

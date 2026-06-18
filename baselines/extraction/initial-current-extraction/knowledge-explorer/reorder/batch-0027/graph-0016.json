@@ -1,0 +1,31 @@
+{
+  "graph_id": "0027-0016",
+  "volume": "ii",
+  "chapter": "natural-numbers",
+  "section": "multiplication-on-n",
+  "term": "def:multiplication-on-peano-system",
+  "kind": "Definition",
+  "title": "Multiplication on a Peano System",
+  "root": "",
+  "statement": "Let $(P,S,1)$ be a Peano system. For each $m \\in P$, define the function\n\\[\ng_m : P \\to P\n\\]\nto be the unique function satisfying\n\\[\ng_m(1)=m\n\\qquad\\text{and}\\qquad\n\\forall n \\in P\\;(g_m(S(n))=g_m(n)+m).\n\\]\nFor $m,n \\in P$, define\n\\[\nm \\cdot n \\coloneqq g_m(n).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:addition-on-peano-system",
+      "title": "Addition on a Peano System",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:peano-system",
+      "title": "Peano System",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:general-recursion-theorem-for-peano-system",
+      "title": "General Recursion Theorem",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

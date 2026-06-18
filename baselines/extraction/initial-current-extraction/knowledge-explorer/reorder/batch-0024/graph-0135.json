@@ -1,0 +1,25 @@
+{
+  "graph_id": "0024-0135",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "order-on-q",
+  "term": "thm:strict-order-on-q-irreflexive",
+  "kind": "Theorem",
+  "title": "Strict Order on $ $ Is Irreflexive",
+  "root": "",
+  "statement": "For every $x\\in\\mathbb{Q}$, not $x<x$.",
+  "current_dependencies": [
+    {
+      "id": "def:strict-order-on-q",
+      "title": "Strict Order on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:trichotomy-on-q",
+      "title": "Trichotomy on $ $",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

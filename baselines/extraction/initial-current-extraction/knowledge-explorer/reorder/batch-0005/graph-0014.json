@@ -1,0 +1,12 @@
+{
+  "graph_id": "0005-0014",
+  "volume": "viii",
+  "chapter": "ordinary-differential-equations",
+  "section": "differential-equations-models",
+  "term": "def:ordinary-differential-equations-terminology-non-autonomous-differential-equation",
+  "kind": "Definition",
+  "title": "Non-Autonomous Differential Equation",
+  "root": "",
+  "statement": "A \\textbf{non-autonomous differential equation} is a differential equation in which the independent variable appears explicitly.\n\nFor a first-order ordinary differential equation, a non-autonomous equation has the form\n\\[\ny'=f(t,y),\n\\]\nwhere the rate of change of $y$ may depend both on the current value of $y$ and on the independent variable $t$.",
+  "current_dependencies": []
+}

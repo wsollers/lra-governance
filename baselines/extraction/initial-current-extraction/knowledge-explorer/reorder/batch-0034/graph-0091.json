@@ -1,0 +1,31 @@
+{
+  "graph_id": "0034-0091",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "translation",
+  "term": "prop:a-o-contradictory-predicate-logic",
+  "kind": "Proposition",
+  "title": "A-O Contradiction",
+  "root": "",
+  "statement": "The \\(A\\)-form \\(\\forall x\\,(A(x)\\to B(x))\\) and the \\(O\\)-form\n\\(\\exists x\\,(A(x)\\land \\neg B(x))\\) are contradictory: exactly one of them is\ntrue.",
+  "current_dependencies": [
+    {
+      "id": "def:categorical-a-form-predicate-logic",
+      "title": "Universal Affirmative Form",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:categorical-o-form-predicate-logic",
+      "title": "Particular Negative Form",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:qneg",
+      "title": "Quantifier Negation Laws",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "graph_id": "0034-0047",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "semantics",
+  "term": "def:theory",
+  "kind": "Definition",
+  "title": "Theory",
+  "root": "",
+  "statement": "In Volume I, a \\emph{theory} is a set of sentences in a fixed first-order\nlanguage.",
+  "current_dependencies": [
+    {
+      "id": "def:truth-structure",
+      "title": "Truth in a Structure",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "graph_id": "0025-0023",
+  "volume": "ii",
+  "chapter": "peano-systems",
+  "section": "recursion-on-peano-systems",
+  "term": "cor:uniqueness-of-binary-iterator-operations",
+  "kind": "Corollary",
+  "title": "Uniqueness of Binary Iterator Operations",
+  "root": "",
+  "statement": "Let $(P,S,1)$ be a Peano system, let $A$ be a set, let $W$ be a set, and\nsuppose each $a\\in A$ determines iterator data $(W,c_a,g_a)$ for $(P,S,1)$.\nIf $F,G:A\\times P\\to W$ satisfy\n\\[\nF(a,1)=c_a,\\qquad G(a,1)=c_a\n\\]\nand\n\\[\nF(a,S(n))=g_a(F(a,n)),\n\\qquad\nG(a,S(n))=g_a(G(a,n))\n\\]\nfor all $a\\in A$ and all $n\\in P$, then $F=G$.",
+  "current_dependencies": [
+    {
+      "id": "lem:uniqueness-of-iterator-functions",
+      "title": "Uniqueness of Iterator Functions",
+      "kind": "Lemma",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0030",
+  "term": "thm:simplification-validity-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:valid-argument-form-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.6,
+  "notes": "phi and psi therefore phi is valid by unfolding def:valid-argument-form and the conjunction truth condition (satisfaction, transitive and unnamed in the statement). Minimal-citation convention, consistent with addition (0022) and conjunction-introduction (0023)."
+}

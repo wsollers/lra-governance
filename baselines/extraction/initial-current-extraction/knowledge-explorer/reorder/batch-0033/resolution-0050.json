@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0050",
+  "term": "def:monotone-boolean-function-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:boolean-function-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.7,
+  "notes": "Monotonicity is a property of a Boolean function (def:boolean-function), so it is the sole load-bearing dep. The order F < T on B that 'changing inputs from False to True' presupposes is the ambient Boolean order (no separate node)."
+}

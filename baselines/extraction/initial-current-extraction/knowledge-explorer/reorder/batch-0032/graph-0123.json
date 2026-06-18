@@ -1,0 +1,12 @@
+{
+  "graph_id": "0032-0123",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "sets",
+  "term": "ax:union",
+  "kind": "Axiom",
+  "title": "Axiom of Union",
+  "root": "axiom",
+  "statement": "For any family of sets, there exists a set containing exactly the elements of\nthose sets.\n\\[\n\\forall A \\, \\exists U \\,\n\\forall x \\,\n\\bigl( x \\in U \\leftrightarrow \\exists B \\, (B \\in A \\land x \\in B) \\bigr).\n\\]",
+  "current_dependencies": []
+}

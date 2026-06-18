@@ -1,0 +1,31 @@
+{
+  "graph_id": "0024-0070",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "operations-on-q-classes",
+  "term": "lem:multiplication-on-q-respects-equivalence",
+  "kind": "Lemma",
+  "title": "Multiplication Respects Fraction Equivalence",
+  "root": "",
+  "statement": "If $[a,b]=[a',b']$ and $[c,d]=[c',d']$, then\n\\[\n[a,b]\\cdot[c,d]=[a',b']\\cdot[c',d'].\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:multiplication-on-q-classes",
+      "title": "Multiplication on $ $-Classes",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "lem:multiplication-on-q-respects-left-equivalence",
+      "title": "Multiplication Respects Fraction Equivalence on the Left",
+      "kind": "Lemma",
+      "root": ""
+    },
+    {
+      "id": "lem:multiplication-on-q-respects-right-equivalence",
+      "title": "Multiplication Respects Fraction Equivalence on the Right",
+      "kind": "Lemma",
+      "root": ""
+    }
+  ]
+}

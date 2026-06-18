@@ -1,0 +1,19 @@
+{
+  "graph_id": "0021-0016",
+  "volume": "ii",
+  "chapter": "whole-numbers",
+  "section": "extending-addition",
+  "term": "thm:left-additive-identity-on-w",
+  "kind": "Theorem",
+  "title": "Left Additive Identity on $ $",
+  "root": "",
+  "statement": "For every $a\\in\\mathbb{W}$,\n\\[\n0+_{\\mathbb{W}}a=a.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "thm:zero-additive-identity-on-w",
+      "title": "Zero Is an Additive Identity on $ $",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

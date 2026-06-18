@@ -1,0 +1,19 @@
+{
+  "graph_id": "0025-0024",
+  "volume": "ii",
+  "chapter": "peano-systems",
+  "section": "recursion-on-peano-systems",
+  "term": "def:general-recursive-function",
+  "kind": "Definition",
+  "title": "General Recursive Function",
+  "root": "",
+  "statement": "Let $(P,S,1)$ be a Peano system, let $W$ be a set, let $c\\in W$, and let\n$\\Phi:P\\times W\\to W$ be a stage-dependent step rule. A function $f:P\\to W$\nis called the \\emph{general recursive function determined by $(W,c,\\Phi)$}\nexactly when\n\\[\nf(1)=c\n\\qquad\\text{and}\\qquad\n\\forall n\\in P\\;(f(S(n))=\\Phi(n,f(n))).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:stage-dependent-step-rule",
+      "title": "Stage-Dependent Step Rule",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

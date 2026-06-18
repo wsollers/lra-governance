@@ -1,0 +1,19 @@
+{
+  "graph_id": "0028-0089",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "order-on-z",
+  "term": "def:order-on-z",
+  "kind": "Definition",
+  "title": "Order on $ $",
+  "root": "",
+  "statement": "For $x,y\\in\\mathbb{Z}$, define\n\\[\nx\\le y \\quad:\\Longleftrightarrow\\quad x<y \\text{ or } x=y.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:strict-order-on-z",
+      "title": "Strict Order on $ $",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

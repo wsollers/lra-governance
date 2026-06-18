@@ -1,0 +1,31 @@
+{
+  "graph_id": "0032-0009",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "cardinality",
+  "term": "thm:countable-union",
+  "kind": "Theorem",
+  "title": "Countable union of countable sets is countable",
+  "root": "",
+  "statement": "Let $\\{A_n\\}_{n \\in \\mathbb{N}}$ be a countable family of countable sets.\nThen $\\bigcup_{n=1}^{\\infty} A_n$ is countable.",
+  "current_dependencies": [
+    {
+      "id": "def:countable",
+      "title": "Countable and Uncountable Sets",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:natural-numbers",
+      "title": "The Natural Numbers",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:union",
+      "title": "Union",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

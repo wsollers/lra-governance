@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0033",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "",
+  "term": "def:formal-model-theoretic-structures-l275",
+  "kind": "Definition",
+  "title": "Binary Operation",
+  "root": "",
+  "statement": "Let $A$ be a set. A \\textbf{binary operation} on $A$ is a function\n \\[\n * : A \\times A \\to A\n \\]\n that assigns to each ordered pair $(a, b) \\in A \\times A$ a unique element\n $a * b \\in A$. The defining property is \\textbf{closure}:\n $\\forall\\,a, b \\in A,\\; a * b \\in A$, i.e.\\ the operation never escapes the\n set.\n\n \n Model-theoretic signature:\n \\[\n \\mathcal{L}_{\\mathrm{bin}} = \\{\\,*\\,\\},\n \\qquad * \\text{ a function symbol of arity } 2.\n \\]",
+  "current_dependencies": []
+}

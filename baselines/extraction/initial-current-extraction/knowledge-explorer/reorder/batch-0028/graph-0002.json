@@ -1,0 +1,12 @@
+{
+  "graph_id": "0028-0002",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "algebraic-structure-of-z",
+  "term": "cor:negative-one-rule-on-z",
+  "kind": "Corollary",
+  "title": "Negative One Rule on $ $",
+  "root": "",
+  "statement": "For every $x\\in\\mathbb{Z}$,\n\\[\n(-1)\\cdot x=-x.\n\\]",
+  "current_dependencies": []
+}

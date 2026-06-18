@@ -1,0 +1,25 @@
+{
+  "graph_id": "0035-0016",
+  "volume": "i",
+  "chapter": "axiom-systems",
+  "section": "signatures",
+  "term": "def:relation-symbol",
+  "kind": "Definition",
+  "title": "Relation Symbol",
+  "root": "",
+  "statement": "A \\emph{relation symbol}, or predicate symbol, is a non-logical symbol\n$R\\in\\mathcal{R}$ whose assigned arity determines how many terms it must take\nas inputs. If $\\operatorname{ar}(R)=n$, then $R$ is an $n$-ary formula\nconstructor: it takes exactly $n$ terms and produces an atomic formula, hence\nsomething with a truth value rather than an object.",
+  "current_dependencies": [
+    {
+      "id": "def:arity",
+      "title": "Arity",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:signature",
+      "title": "First-Order Signature",
+      "kind": "Definition",
+      "root": "definitional_truth"
+    }
+  ]
+}

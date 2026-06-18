@@ -1,0 +1,12 @@
+{
+  "graph_id": "0012-0013",
+  "volume": "vi",
+  "chapter": "algebraic-geometry",
+  "section": "polynomial-rings",
+  "term": "def:total-degree",
+  "kind": "Definition",
+  "title": "Total Degree",
+  "root": "",
+  "statement": "The \\emph{total degree} of the monomial $x^\\alpha$ is\n\\[\n|\\alpha| := \\alpha_1 + \\alpha_2 + \\cdots + \\alpha_n.\n\\]\nThe degree of a polynomial $f \\in R[x_1,\\dots,x_n]$ is\nthe maximum total degree among all monomials with nonzero coefficient.",
+  "current_dependencies": []
+}

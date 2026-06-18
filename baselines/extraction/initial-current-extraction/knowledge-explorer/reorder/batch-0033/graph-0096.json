@@ -1,0 +1,25 @@
+{
+  "graph_id": "0033-0096",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "semantics",
+  "term": "def:logical-equivalence-propositional-logic",
+  "kind": "Definition",
+  "title": "Logical Equivalence",
+  "root": "",
+  "statement": "Formulas \\(\\varphi,\\psi\\in\\WFF\\) are logically equivalent, written\n\\[\n\\varphi\\equiv\\psi,\n\\]\nif they have the same truth value under every truth assignment.",
+  "current_dependencies": [
+    {
+      "id": "def:truth-assignment-propositional-logic",
+      "title": "Truth Assignment",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:unique-extension-truth-assignment-propositional-logic",
+      "title": "Unique Extension of a Truth Assignment",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

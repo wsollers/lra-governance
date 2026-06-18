@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0052",
+  "term": "def:fol-satisfaction",
+  "verdict": "ok",
+  "dependencies": ["def:mod-assign", "def:structure", "def:term-interp", "def:var-assign", "def:wff-pred"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.75,
+  "notes": "Complete for the recursive clauses: structure <D,I> (def:structure), assignment s (def:var-assign), formula phi (def:wff-pred), atomic clause via term values (def:term-interp) and the interpretation I inside def:structure, and the quantifier clauses via the modified assignment s[x -> d] over D (def:mod-assign). The connective truth-conditions for not/and/or/->/<-> are ambient propositional scaffolding. This node fixes the transitivity reasoning used at 0014/0048/0050: satisfaction's own direct deps are exactly these five."
+}

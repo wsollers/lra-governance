@@ -1,0 +1,25 @@
+{
+  "graph_id": "0032-0067",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "order",
+  "term": "def:order-embedding",
+  "kind": "Definition",
+  "title": "Order Embedding",
+  "root": "",
+  "statement": "Let $(A, \\leq)$ and $(B, \\leq')$ be partially ordered sets. A function\n$f : A \\to B$ is an \\emph{order embedding} if for all $x, y \\in A$:\n\\[\nx \\;\\leq\\; y\n\\;\\;\\Longleftrightarrow\\;\\;\nf(x) \\;\\leq'\\; f(y).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:function",
+      "title": "Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:ordered-set",
+      "title": "Ordered Set",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

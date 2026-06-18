@@ -1,0 +1,31 @@
+{
+  "graph_id": "0015-0024",
+  "volume": "iii",
+  "chapter": "real-analysis",
+  "section": "modulus",
+  "term": "thm:absolute-value-nonneg",
+  "kind": "Theorem",
+  "title": "Absolute Value Is Nonnegative",
+  "root": "",
+  "statement": "For all $a \\in \\mathbb{R}$,\n\\[\n \\lvert a \\rvert \\ge 0.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:absolute-value",
+      "title": "Absolute Value",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:real-ordered-field",
+      "title": "Complete Ordered Field",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:ordered-field-squares-nonnegative",
+      "title": "Ordered Field Squares Are Nonnegative",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

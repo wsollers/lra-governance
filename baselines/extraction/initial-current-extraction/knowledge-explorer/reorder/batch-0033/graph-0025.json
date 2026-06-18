@@ -1,0 +1,25 @@
+{
+  "graph_id": "0033-0025",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "argument-forms",
+  "term": "thm:destructive-dilemma-validity-propositional-logic",
+  "kind": "Theorem",
+  "title": "Destructive Dilemma is Valid",
+  "root": "",
+  "statement": "The argument form\n\\[\n\\varphi\\to\\chi,\\qquad \\psi\\to\\theta,\\qquad \\neg\\chi\\lor\\neg\\theta\n\\quad\\therefore\\quad\n\\neg\\varphi\\lor\\neg\\psi\n\\]\nis valid.",
+  "current_dependencies": [
+    {
+      "id": "def:valid-argument-form-propositional-logic",
+      "title": "Valid Argument Form",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:modus-tollens-validity-propositional-logic",
+      "title": "Modus Tollens is Valid",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

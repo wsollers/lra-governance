@@ -1,0 +1,19 @@
+{
+  "graph_id": "0019-0028",
+  "volume": "iii",
+  "chapter": "continuity",
+  "section": "monotone-functions",
+  "term": "prop:limsup-geq-liminf-function",
+  "kind": "Proposition",
+  "title": "$ $",
+  "root": "",
+  "statement": "Let $A\\subseteq \\mathbb{R}$, let $x_0$ be a limit point of $A$, and let $f:A\\to\\mathbb{R}$. Then\n\\[\n\\limsup_{x\\to x_0} f(x) \\ge \\liminf_{x\\to x_0} f(x).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:limsup-liminf-function",
+      "title": "Limits Superior and Inferior of a Function",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

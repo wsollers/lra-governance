@@ -1,0 +1,43 @@
+{
+  "graph_id": "0028-0018",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "construction-of-z",
+  "term": "thm:formal-difference-equivalence-relation",
+  "kind": "Theorem",
+  "title": "Formal-Difference Equivalence Is an Equivalence Relation",
+  "root": "",
+  "statement": "The relation $\\sim_{\\mathbb{Z}}$ is an equivalence relation on\n$\\operatorname{Pre}\\mathbb{Z}$.",
+  "current_dependencies": [
+    {
+      "id": "def:equivalence-relation",
+      "title": "Equivalence Relation",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:formal-difference-equivalence",
+      "title": "Formal-Difference Equivalence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "lem:formal-difference-equivalence-reflexive",
+      "title": "Formal-Difference Equivalence Is Reflexive",
+      "kind": "Lemma",
+      "root": ""
+    },
+    {
+      "id": "lem:formal-difference-equivalence-symmetric",
+      "title": "Formal-Difference Equivalence Is Symmetric",
+      "kind": "Lemma",
+      "root": ""
+    },
+    {
+      "id": "lem:formal-difference-equivalence-transitive",
+      "title": "Formal-Difference Equivalence Is Transitive",
+      "kind": "Lemma",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0075",
+  "term": "def:scope",
+  "verdict": "ok",
+  "dependencies": ["def:existential-q", "def:formula", "def:universal-q", "def:variable"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.7,
+  "notes": "Complete and load-bearing: scope is defined for phi of the form forall x psi / exists x psi (def:universal-q/def:existential-q) over a formula (def:formula), binding occurrences of the variable x (def:variable). DUPLICATE FLAG: this 'Scope of a Quantifier' node coexists with def:quantifier-scope (0019, 'Quantifier Scope'), which carries only {existential-q, universal-q}. Two scope nodes -- dedup candidate; note 0019 would then also be the lighter/less-complete of the pair."
+}

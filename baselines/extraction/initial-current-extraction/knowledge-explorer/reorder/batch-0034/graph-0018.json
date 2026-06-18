@@ -1,0 +1,25 @@
+{
+  "graph_id": "0034-0018",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "quantifiers",
+  "term": "def:open-formula-quantifiers",
+  "kind": "Definition",
+  "title": "Open Formula",
+  "root": "",
+  "statement": "An \\emph{open formula} is a well-formed formula with at least one free\nvariable.",
+  "current_dependencies": [
+    {
+      "id": "def:predicate",
+      "title": "Open Formula",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:wff-pred",
+      "title": "Well-Formed Formula",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

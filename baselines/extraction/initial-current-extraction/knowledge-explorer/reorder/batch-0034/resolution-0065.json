@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0065",
+  "term": "def:function-symbol",
+  "verdict": "change",
+  "dependencies": ["def:arity", "def:constant-symbol"],
+  "rationale": "The defining property is 'a non-logical symbol of arity n >= 1', so def:arity is the load-bearing concept and was missing. Added.",
+  "licensing_quote": "arity",
+  "confidence": 0.6,
+  "notes": "def:constant-symbol is kept but flagged: a function symbol and a constant symbol are siblings (non-logical symbols differing by arity), not one depending on the other -- same chaining pattern as 0063. Reviewer to decide. 'forms terms f(t_1,...,t_n)' -> def:term is a candidate. Duplicate node def:signature-function-symbol also exists (dedup candidate)."
+}

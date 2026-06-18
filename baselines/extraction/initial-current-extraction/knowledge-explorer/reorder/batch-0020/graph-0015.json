@@ -1,0 +1,37 @@
+{
+  "graph_id": "0020-0015",
+  "volume": "iii",
+  "chapter": "bounding",
+  "section": "bounds-algebra",
+  "term": "thm:negation-exchange-sup-inf",
+  "kind": "Theorem",
+  "title": "Negation Exchanges Supremum and Infimum",
+  "root": "",
+  "statement": "Let $A\\subseteq\\mathbb{R}$ be nonempty and bounded below. Then $-A=\\{-a:a\\in A\\}$ is bounded above and\n\\[\n \\sup(-A)=-\\inf A.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:infimum",
+      "title": "Infimum",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:lower-bound",
+      "title": "Lower Bound",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:supremum",
+      "title": "Supremum",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:upper-bound",
+      "title": "Upper Bound",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

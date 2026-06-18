@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0121",
+  "term": "def:truth-value-propositional-logic",
+  "verdict": "ok",
+  "dependencies": [],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.75,
+  "notes": "Root definition (root=definitional_truth) declaring B := {False, True}. Empty deps correct -- a DAG root, like def:propositional-language (0118) and def:truth-value's role as the codomain B in def:truth-assignment (0102) and def:boolean-function (0091)."
+}

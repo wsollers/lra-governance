@@ -1,0 +1,25 @@
+{
+  "graph_id": "0031-0055",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "field-and-ordered-field-laws",
+  "term": "def:field-integer-power",
+  "kind": "Definition",
+  "title": "Field Integer Power",
+  "root": "",
+  "statement": "Let $F$ be a field. For $a\\in F$, powers $a^n$ with $n\\in\\mathbb{W}$ are\ndefined recursively. If $a\\ne0$ and $n\\in\\mathbb{Z}$ is negative, define\n\\[\na^n:=(a^{-1})^{-n}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:abstract-field",
+      "title": "Field",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:field-uniqueness-of-inverse",
+      "title": "Field Uniqueness of Inverse",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

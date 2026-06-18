@@ -1,0 +1,19 @@
+{
+  "graph_id": "0009-0008",
+  "volume": "vi",
+  "chapter": "linear-algebra",
+  "section": "vector-spaces",
+  "term": "def:complex-vector-space",
+  "kind": "Definition",
+  "title": "Complex Vector Space",
+  "root": "",
+  "statement": "A \\textbf{complex vector space} is a vector space over $\\mathbb{C}$.",
+  "current_dependencies": [
+    {
+      "id": "def:vector-space",
+      "title": "Vector Space",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

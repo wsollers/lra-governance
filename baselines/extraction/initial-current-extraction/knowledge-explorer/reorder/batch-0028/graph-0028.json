@@ -1,0 +1,12 @@
+{
+  "graph_id": "0028-0028",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "divisibility-in-z",
+  "term": "prop:divisibility-compatible-with-negation-divisor-on-z",
+  "kind": "Proposition",
+  "title": "Divisibility Is Compatible with Negation on the Divisor",
+  "root": "",
+  "statement": "For all $a,b\\in\\mathbb{Z}$,\n\\[\na\\mid b \\Longleftrightarrow (-a)\\mid b.\n\\]",
+  "current_dependencies": []
+}

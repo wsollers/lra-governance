@@ -1,0 +1,12 @@
+{
+  "graph_id": "0024-0088",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "operations-on-q-classes",
+  "term": "thm:negation-left-additive-inverse-on-q",
+  "kind": "Theorem",
+  "title": "Negation Gives a Left Additive Inverse on $ $",
+  "root": "",
+  "statement": "For every $x\\in\\mathbb{Q}$,\n\\[\n(-x)+x=0_{\\mathbb{Q}}.\n\\]",
+  "current_dependencies": []
+}

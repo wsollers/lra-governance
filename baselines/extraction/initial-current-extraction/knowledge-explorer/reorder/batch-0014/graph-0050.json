@@ -1,0 +1,37 @@
+{
+  "graph_id": "0014-0050",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "convergence",
+  "term": "thm:polynomial-sequence-limit",
+  "kind": "Theorem",
+  "title": "Polynomial Sequence Limit",
+  "root": "",
+  "statement": "Let $(x_n)$ be a real sequence, let $L\\in\\mathbb{R}$, and let\n$p\\in\\mathbb{R}[t]$ be a polynomial. If $x_n\\to L$, then\n$p(x_n)\\to p(L)$.",
+  "current_dependencies": [
+    {
+      "id": "thm:limit-of-a-product",
+      "title": "Limit of a Product",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:limit-of-a-square",
+      "title": "Limit of a Square",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:limit-of-a-sum",
+      "title": "Limit of a Sum",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:limit-of-scalar-multiple",
+      "title": "Limit of a Scalar Multiple",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

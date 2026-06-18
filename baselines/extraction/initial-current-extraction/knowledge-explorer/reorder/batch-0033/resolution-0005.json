@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0005",
+  "term": "thm:biconditional-equivalence-laws-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:logical-equivalence-propositional-logic", "thm:conditional-equivalence-laws-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.6,
+  "notes": "phi <-> psi == (phi -> psi) and (psi -> phi) expands the biconditional via the conditional laws (thm:conditional-equivalence-laws); the second form (phi and psi) or (not phi and not psi) additionally uses basic boolean/distributive manipulation, which is reachable from the conditional + foundational laws, so not a missing direct edge. == is def:logical-equivalence."
+}

@@ -1,0 +1,25 @@
+{
+  "graph_id": "0034-0080",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "translation",
+  "term": "def:translation-constants-variables",
+  "kind": "Definition",
+  "title": "Constants and Variables in a Translation",
+  "root": "",
+  "statement": "A \\emph{constant} names a fixed object from the translation key, while a\n\\emph{variable} marks a place bound by a quantifier or left open for later\nbinding.",
+  "current_dependencies": [
+    {
+      "id": "def:constant-symbol",
+      "title": "Constant Symbol",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:variable",
+      "title": "Variable",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

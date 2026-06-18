@@ -1,0 +1,31 @@
+{
+  "graph_id": "0014-0097",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "liminf-limsup",
+  "term": "def:tail-infimum-sequence",
+  "kind": "Definition",
+  "title": "Tail Infimum Sequence",
+  "root": "",
+  "statement": "Let $(x_n)$ be a bounded real sequence. The \\textbf{tail infimum\nsequence} of $(x_n)$ is the real sequence $(i_n)$ defined by\n\\[\n i_n:=\\inf\\{x_k:k\\ge n\\}\n \\qquad\\text{for every } n\\in\\mathbb{N}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:bounded-sequence",
+      "title": "Bounded Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:infimum",
+      "title": "Infimum",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:m-tail",
+      "title": "$M$-Tail of a Sequence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

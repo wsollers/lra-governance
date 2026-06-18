@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0052",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "functions",
+  "term": "def:monomorphism",
+  "kind": "Definition",
+  "title": "Monomorphism",
+  "root": "",
+  "statement": "A \\textbf{monomorphism} is an injective homomorphism.",
+  "current_dependencies": []
+}

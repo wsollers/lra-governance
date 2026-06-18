@@ -1,0 +1,25 @@
+{
+  "graph_id": "0020-0041",
+  "volume": "iii",
+  "chapter": "bounding",
+  "section": "completeness",
+  "term": "thm:density-of-irrationals-in-reals",
+  "kind": "Theorem",
+  "title": "Density of the Irrational Numbers in $ $",
+  "root": "",
+  "statement": "For every $a,b\\in\\mathbb{R}$ with $a<b$, there exists $s\\in\\mathbb{R}\\setminus\\mathbb{Q}$ such that $a<s<b$.",
+  "current_dependencies": [
+    {
+      "id": "def:order-dense-subset",
+      "title": "Order Dense Subset",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:density-of-rationals-in-reals",
+      "title": "Density of the Rational Numbers in $ $",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

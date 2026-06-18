@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0049",
+  "term": "def:incomplete-connective-set-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:boolean-function-propositional-logic", "def:functionally-complete-connective-set-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.6,
+  "notes": "Incomplete = not functionally complete; def:functionally-complete-connective-set is the sole load-bearing dep. def:boolean-function is transitive through it (functional completeness is already defined in terms of Boolean functions), so it is a redundant direct edge the reviewer may trim."
+}

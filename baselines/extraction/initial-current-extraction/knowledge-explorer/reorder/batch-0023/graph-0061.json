@@ -1,0 +1,12 @@
+{
+  "graph_id": "0023-0061",
+  "volume": "ii",
+  "chapter": "reals",
+  "section": "order-on-r",
+  "term": "thm:comparability-of-cuts",
+  "kind": "Theorem",
+  "title": "Comparability of Cuts",
+  "root": "",
+  "statement": "For all cuts $\\alpha,\\beta\\in\\mathbb{R}$,\n\\[\n\\alpha\\subseteq\\beta \\lor \\beta\\subseteq\\alpha.\n\\]",
+  "current_dependencies": []
+}

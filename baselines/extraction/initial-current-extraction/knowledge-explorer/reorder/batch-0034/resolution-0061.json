@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0061",
+  "term": "def:formula-depth",
+  "verdict": "change",
+  "dependencies": ["def:atomic-formula", "def:wff-pred"],
+  "rationale": "The empty set omits the structure this recursion is built on. The base case is explicitly 'If phi is atomic' (def:atomic-formula), and the recursion ranges over the formula-formation cases (def:wff-pred) -- exactly the pair carried by the sibling def:molecular (0066), which is the same atomic-vs-built distinction. Both are load-bearing.",
+  "licensing_quote": "is atomic",
+  "confidence": 0.6,
+  "notes": "The codomain 'is a natural number' points at def:natural-numbers -- a candidate edge, left unproposed because the chapter convention treats the recursion's value type as ambient (and naturals live in a different volume). The connective/quantifier inductive cases are ambient formation steps. Recursive definitions in this chapter do carry deps (cf. def:fol-satisfaction 0052), so [] was an omission."
+}

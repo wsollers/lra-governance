@@ -1,0 +1,31 @@
+{
+  "graph_id": "0019-0008",
+  "volume": "iii",
+  "chapter": "continuity",
+  "section": "gauge",
+  "term": "def:gauge",
+  "kind": "Definition",
+  "title": "Gauge",
+  "root": "",
+  "statement": "Let $a,b \\in \\mathbb{R}$ with $a<b$ and set $I=[a,b]$. A gauge on $I$ is a function $\\delta:I\\to(0,\\infty)$.",
+  "current_dependencies": [
+    {
+      "id": "def:closed-interval",
+      "title": "Closed Interval",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:function",
+      "title": "Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:order-on-r",
+      "title": "Order on $ $",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

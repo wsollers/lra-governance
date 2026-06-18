@@ -1,0 +1,10 @@
+{
+  "graph_id": "0032-0018",
+  "term": "thm:quotient-universal",
+  "verdict": "ok",
+  "dependencies": ["def:canonical-surj", "def:composition", "def:equivalence-relation", "def:function", "def:quotient-set"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.7,
+  "notes": "Universal property: f: A -> B (def:function) constant on classes of R (def:equivalence-relation) factors uniquely as f = f-bar o pi (def:composition) through the canonical surjection pi (def:canonical-surj) onto A/R (def:quotient-set). All five genuinely load-bearing -- this is the node those edges belong to (contrast 0017). def:equiv-class ([a] in f-bar([a])=f(a)) is carried by def:quotient-set. The hypothesis 'constant on classes' supplies f-bar's well-definedness, so lem:rep-independence is not separately required."
+}

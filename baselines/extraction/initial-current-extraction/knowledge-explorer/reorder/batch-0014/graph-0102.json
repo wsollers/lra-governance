@@ -1,0 +1,31 @@
+{
+  "graph_id": "0014-0102",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "liminf-limsup",
+  "term": "thm:liminf-smallest-subsequential-limit",
+  "kind": "Theorem",
+  "title": "Liminf Is the Smallest Subsequential Limit",
+  "root": "",
+  "statement": "Let $(x_n)$ be a bounded real sequence, and let\n$I=\\liminf_{n\\to\\infty}x_n$. Then $I$ is a subsequential limit of\n$(x_n)$, and every subsequential limit of $(x_n)$ is greater than or\nequal to $I$.",
+  "current_dependencies": [
+    {
+      "id": "def:liminf-sequence",
+      "title": "Limit Inferior of a Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:subsequential-limit",
+      "title": "Subsequential Limit",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:bolzano-weierstrass-sequences",
+      "title": "Bolzano-Weierstrass Theorem for Sequences",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

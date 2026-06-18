@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0089",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "relations",
+  "term": "def:rel-asymmetric",
+  "kind": "Definition",
+  "title": "Asymmetric Relation",
+  "root": "",
+  "statement": "Let $R$ be a binary relation on $A$.\nThe relation $R$ is \\textbf{asymmetric} if\n\\[\n\\forall a,b \\in A,\\quad\na \\mathrel{R} b \\Rightarrow \\lnot(b \\mathrel{R} a).\n\\]",
+  "current_dependencies": []
+}

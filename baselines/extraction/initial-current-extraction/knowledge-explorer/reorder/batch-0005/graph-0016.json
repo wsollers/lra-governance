@@ -1,0 +1,12 @@
+{
+  "graph_id": "0005-0016",
+  "volume": "viii",
+  "chapter": "ordinary-differential-equations",
+  "section": "differential-equations-models",
+  "term": "def:ordinary-differential-equations-terminology-solution-of-a-differential-equation",
+  "kind": "Definition",
+  "title": "Solution of a Differential Equation",
+  "root": "",
+  "statement": "A \\textbf{solution} of a differential equation is a function that satisfies the equation on a specified interval.\n\nMore precisely, if a differential equation is written in the form\n\\[\nF(t,y,y',y'',\\dots,y^{(n)})=0,\n\\]\nthen a solution on an interval $I$ is a function $y:I\\to\\mathbb{R}$ such that $y$ has all derivatives required by the equation and\n\\[\nF(t,y(t),y'(t),y''(t),\\dots,y^{(n)}(t))=0\n\\]\nfor every $t\\in I$.",
+  "current_dependencies": []
+}

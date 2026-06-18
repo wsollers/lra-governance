@@ -1,0 +1,19 @@
+{
+  "graph_id": "0010-0025",
+  "volume": "vi",
+  "chapter": "lattice-order",
+  "section": "ordered-sets",
+  "term": "def:lattice-order-partial-order",
+  "kind": "Definition",
+  "title": "Partial Order",
+  "root": "",
+  "statement": "A relation $\\leq$ on a set $S$ is a \\emph{partial order} if it satisfies,\nfor all $a, b, c \\in S$:\n- \\textbf{Reflexivity:} $a \\leq a$.\n- \\textbf{Anti-symmetry:} $a \\leq b \\land b \\leq a \\Longrightarrow a = b$.\n- \\textbf{Transitivity:} $a \\leq b \\land b \\leq c \\Longrightarrow a \\leq c$.\nThe pair $(S, \\leq)$ is called a \\emph{partially ordered set}, or \\emph{poset}.",
+  "current_dependencies": [
+    {
+      "id": "def:partial-order",
+      "title": "Partial Order",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

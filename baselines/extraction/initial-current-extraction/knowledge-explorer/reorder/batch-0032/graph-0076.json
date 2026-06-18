@@ -1,0 +1,12 @@
+{
+  "graph_id": "0032-0076",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "order",
+  "term": "def:lattice",
+  "kind": "Definition",
+  "title": "Lattice",
+  "root": "",
+  "statement": "A \\emph{lattice} is a poset $(L, \\leq)$ in which every two-element subset\n$\\{a, b\\} \\subseteq L$ has both a supremum and an infimum in $L$.\n\nThe supremum $\\sup\\{a,b\\}$ is called the \\emph{join} of $a$ and $b$,\nwritten $a \\vee b$.\nThe infimum $\\inf\\{a,b\\}$ is called the \\emph{meet} of $a$ and $b$,\nwritten $a \\wedge b$.",
+  "current_dependencies": []
+}

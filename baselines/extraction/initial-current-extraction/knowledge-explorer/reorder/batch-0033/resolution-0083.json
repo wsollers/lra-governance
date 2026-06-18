@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0083",
+  "term": "def:literal-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:logical-connective", "def:propositional-variable"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.75,
+  "notes": "A literal is a propositional variable (def:propositional-variable) or its negation (the negation connective, def:logical-connective). Both load-bearing and present. This is the atom that clause/term/elementary-conjunction/disjunction all bottom out at."
+}

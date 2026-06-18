@@ -1,0 +1,19 @@
+{
+  "graph_id": "0029-0038",
+  "volume": "ii",
+  "chapter": "identity-equality-equivalence",
+  "section": "substitution",
+  "term": "prop:substitution-preserves-predicates",
+  "kind": "Proposition",
+  "title": "Substitution Preserves Predicates",
+  "root": "",
+  "statement": "\\[\nx=y \\Longrightarrow \\bigl(P(x)\\Longleftrightarrow P(y)\\bigr).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "ax:equality-substitution",
+      "title": "Substitution of Equals",
+      "kind": "Axiom",
+      "root": "axiom"
+    }
+  ]
+}

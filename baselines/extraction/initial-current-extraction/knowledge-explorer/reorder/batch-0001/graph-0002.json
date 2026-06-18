@@ -1,0 +1,12 @@
+{
+  "graph_id": "0001-0002",
+  "volume": "viii",
+  "chapter": "model-theory",
+  "section": "l-structures",
+  "term": "def:l-structure",
+  "kind": "Definition",
+  "title": "$ $-Structure",
+  "root": "",
+  "statement": "Let $\\mathcal{L} = (\\mathcal{F}, \\mathcal{R}, \\mathcal{C})$ be a\nfirst-order language.\nAn \\textbf{$\\mathcal{L}$-structure} $\\mathcal{M}$ consists of:\n- a non-empty set $M$ called the \\textbf{domain} (or\n \\textbf{universe}) of $\\mathcal{M}$, written $|\\mathcal{M}|$;\n- for each $n$-ary relation symbol $R \\in \\mathcal{R}$,\n a relation $R^{\\mathcal{M}} \\subseteq M^n$;\n- for each $n$-ary function symbol $f \\in \\mathcal{F}$,\n a function $f^{\\mathcal{M}} : M^n \\to M$;\n- for each constant symbol $c \\in \\mathcal{C}$,\n a distinguished element $c^{\\mathcal{M}} \\in M$.\nThe superscript notation $f^{\\mathcal{M}}, R^{\\mathcal{M}}, c^{\\mathcal{M}}$\ndenotes the \\textbf{interpretation} of each symbol in $\\mathcal{M}$.",
+  "current_dependencies": []
+}

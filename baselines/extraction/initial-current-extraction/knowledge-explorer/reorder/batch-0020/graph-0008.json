@@ -1,0 +1,25 @@
+{
+  "graph_id": "0020-0008",
+  "volume": "iii",
+  "chapter": "bounding",
+  "section": "bounds-algebra",
+  "term": "prop:supremum-in-the-set-is-the-maximum",
+  "kind": "Proposition",
+  "title": "Supremum in the Set Is the Maximum",
+  "root": "",
+  "statement": "Let $A\\subseteq\\mathbb{R}$ and let $s=\\sup A$. If $s\\in A$, then $s$ is a maximum of $A$.",
+  "current_dependencies": [
+    {
+      "id": "def:maximum",
+      "title": "Maximum",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:supremum",
+      "title": "Supremum",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

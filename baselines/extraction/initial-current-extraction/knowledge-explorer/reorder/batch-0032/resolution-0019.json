@@ -1,0 +1,10 @@
+{
+  "graph_id": "0032-0019",
+  "term": "def:cover-full",
+  "verdict": "ok",
+  "dependencies": ["def:subset", "def:union"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.75,
+  "notes": "C covers A iff A is a subset (def:subset) of the union of C (def:union). Both load-bearing and present. Clean base notion for the covers section."
+}

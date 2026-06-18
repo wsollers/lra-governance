@@ -1,0 +1,12 @@
+{
+  "graph_id": "0017-0017",
+  "volume": "iii",
+  "chapter": "elementary-functions",
+  "section": "trigonometric",
+  "term": "def:sine-cosine",
+  "kind": "Definition",
+  "title": "Sine and Cosine via Power Series",
+  "root": "",
+  "statement": "The \\textbf{sine} and \\textbf{cosine} functions are defined for all\n$x \\in \\mathbb{R}$ by the absolutely convergent power series\n\\[\n \\sin x \\;:=\\;\n \\sum_{n=0}^{\\infty} \\frac{(-1)^n x^{2n+1}}{(2n+1)!}\n \\;=\\; x - \\frac{x^3}{3!} + \\frac{x^5}{5!} - \\cdots\n\\]\n\\[\n \\cos x \\;:=\\;\n \\sum_{n=0}^{\\infty} \\frac{(-1)^n x^{2n}}{(2n)!}\n \\;=\\; 1 - \\frac{x^2}{2!} + \\frac{x^4}{4!} - \\cdots\n\\]",
+  "current_dependencies": []
+}

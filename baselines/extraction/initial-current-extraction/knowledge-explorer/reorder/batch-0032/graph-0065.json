@@ -1,0 +1,12 @@
+{
+  "graph_id": "0032-0065",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "order",
+  "term": "def:f-indist",
+  "kind": "Definition",
+  "title": "$f$-Indistinguishable Elements",
+  "root": "",
+  "statement": "Let $f : A \\to B$ and $\\leq_f$ be the induced order. Two elements\n$x, y \\in A$ are \\emph{$f$-indistinguishable}, written $x \\sim_f y$,\nif both $x \\leq_f y$ and $y \\leq_f x$, i.e.\\ if\n\\[\nf(x) \\leq' f(y) \\quad \\text{and} \\quad f(y) \\leq' f(x).\n\\]",
+  "current_dependencies": []
+}

@@ -1,0 +1,19 @@
+{
+  "graph_id": "0018-0053",
+  "volume": "iii",
+  "chapter": "differentiation",
+  "section": "taylor-expansion",
+  "term": "def:maclaurin-polynomial",
+  "kind": "Definition",
+  "title": "Maclaurin Polynomial",
+  "root": "",
+  "statement": "Let $n\\in\\mathbb{N}$, and let $f$ be defined on an interval containing\n$0$ with derivatives $f^{(k)}(0)$ for $0\\le k\\le n$. The\n\\textbf{Maclaurin polynomial of order} $n$ for $f$ is\n\\[\n T_{n,0}f(x)\n :=\n \\sum_{k=0}^{n}\\frac{f^{(k)}(0)}{k!}x^k.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:taylor-polynomial-at-a-point",
+      "title": "Taylor Polynomial at a Point",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "graph_id": "0032-0028",
+  "term": "def:indexed-union",
+  "verdict": "change",
+  "dependencies": ["def:indexed-family"],
+  "rationale": "The indexed union is an operation on the indexed family {A_i} (def:indexed-family), which was missing from the empty set.",
+  "licensing_quote": "the indexed family",
+  "confidence": 0.7,
+  "notes": "Under-specified []. Defined directly by set-builder ({x | exists i, x in A_i}), so no dependency on the binary def:union -- it is the indexed generalization. No nonempty-index restriction needed (unlike 0027), so no def:empty-set."
+}

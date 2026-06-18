@@ -1,0 +1,25 @@
+{
+  "graph_id": "0021-0022",
+  "volume": "ii",
+  "chapter": "whole-numbers",
+  "section": "extending-multiplication",
+  "term": "thm:multiplication-on-w-associative",
+  "kind": "Theorem",
+  "title": "Multiplication on $ $ Is Associative",
+  "root": "",
+  "statement": "For all $a,b,c\\in\\mathbb{W}$,\n\\[\n(a\\cdot_{\\mathbb{W}}b)\\cdot_{\\mathbb{W}}c\n=\na\\cdot_{\\mathbb{W}}(b\\cdot_{\\mathbb{W}}c).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "thm:multiplication-associative",
+      "title": "Multiplication Is Associative",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:zero-absorbing-for-multiplication-on-w",
+      "title": "Zero Is Absorbing for Multiplication on $ $",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

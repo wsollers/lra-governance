@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0057",
+  "term": "def:mod-assign",
+  "verdict": "ok",
+  "dependencies": ["def:var-assign"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.85,
+  "notes": "The modified assignment s[x -> d] is a point update of a variable assignment, so def:var-assign is the sole, correct stating-dependency. Var_L and D are carried by def:var-assign."
+}

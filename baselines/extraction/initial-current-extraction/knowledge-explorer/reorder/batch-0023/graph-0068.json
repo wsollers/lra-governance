@@ -1,0 +1,25 @@
+{
+  "graph_id": "0023-0068",
+  "volume": "ii",
+  "chapter": "reals",
+  "section": "the-gap-filled",
+  "term": "cor:r-fills-the-gap",
+  "kind": "Corollary",
+  "title": "$ $ Contains the Supremum $ $ Was Missing",
+  "root": "",
+  "statement": "Let\n\\[\nS=\\{q\\in\\mathbb{Q}:0_{\\mathbb{Q}}<q\\land q\\cdot q<2_{\\mathbb{Q}}\\}.\n\\]\nThen\n\\[\n\\sqrt{2}=\\sup \\iota(S).\n\\]\nThus the bounded-above rational set with no rational supremum has a supremum\nin $\\mathbb{R}$.",
+  "current_dependencies": [
+    {
+      "id": "def:gap-set-q",
+      "title": "The Gap Set in $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:gap-set-no-rational-supremum-q",
+      "title": "The Square-Two Gap Has No Rational Supremum",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

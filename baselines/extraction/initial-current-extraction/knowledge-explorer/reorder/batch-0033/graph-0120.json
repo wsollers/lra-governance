@@ -1,0 +1,25 @@
+{
+  "graph_id": "0033-0120",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "syntax",
+  "term": "def:subformula-propositional-logic",
+  "kind": "Definition",
+  "title": "Subformula",
+  "root": "",
+  "statement": "The set \\(\\operatorname{Sub}(\\varphi)\\) of subformulas of a formula \\(\\varphi\\) is defined recursively:\n- if \\(\\varphi\\) is atomic, then \\(\\operatorname{Sub}(\\varphi)=\\{\\varphi\\}\\);\n- if \\(\\varphi=\\neg\\psi\\), then\n\\[\n\\operatorname{Sub}(\\varphi)=\\{\\varphi\\}\\cup\\operatorname{Sub}(\\psi);\n\\]\n- if \\(\\varphi=(\\psi\\circ\\chi)\\), then\n\\[\n\\operatorname{Sub}(\\varphi)=\\{\\varphi\\}\\cup\\operatorname{Sub}(\\psi)\\cup\\operatorname{Sub}(\\chi).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:well-formed-formula",
+      "title": "Well-Formed Formula",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:unique-decomposition-propositional-formulas",
+      "title": "Unique Decomposition for Propositional Formulas",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

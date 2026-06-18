@@ -1,0 +1,12 @@
+{
+  "graph_id": "0023-0034",
+  "volume": "ii",
+  "chapter": "reals",
+  "section": "embedding-q-into-r",
+  "term": "thm:q-embeds-into-r",
+  "kind": "Theorem",
+  "title": "$ $ Embeds into $ $ as an Ordered Field",
+  "root": "",
+  "statement": "The map $\\iota$ is an injective order-preserving field homomorphism.",
+  "current_dependencies": []
+}

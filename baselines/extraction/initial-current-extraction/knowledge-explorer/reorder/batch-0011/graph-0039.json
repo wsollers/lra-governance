@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0039",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "",
+  "term": "def:formal-model-theoretic-structures-l562",
+  "kind": "Definition",
+  "title": "Abelian Group",
+  "root": "",
+  "statement": "A \\textbf{group} $(A, +, 0, -)$ is called \\textbf{abelian} (or\n \\textbf{commutative}) if it additionally satisfies:\n \\[\n \\forall\\,a, b \\in A:\\; a + b = b + a. \\tag{Commutativity}\n \\]\n By convention, the operation is written $+$, the identity as $0$, and the\n inverse of $a$ as $-a$. An abelian group is thus a quintuple $(A, +, 0, -)$\n satisfying closure, associativity, identity, inverses, and commutativity.\n\n \n Model-theoretic signature:\n \\[\n \\mathcal{L}_{\\mathrm{ab}} = \\{\\,+,\\, 0,\\, -\\,\\},\n \\quad + \\text{ arity } 2,\\quad - \\text{ arity } 1,\\quad\n 0 \\text{ a constant.}\n \\]",
+  "current_dependencies": []
+}

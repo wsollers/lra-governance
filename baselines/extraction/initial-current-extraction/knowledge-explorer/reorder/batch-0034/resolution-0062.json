@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0062",
+  "term": "def:atomic-formula",
+  "verdict": "ok",
+  "dependencies": ["def:predicate-symbol", "def:term"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.85,
+  "notes": "P(t_1,...,t_n) with P an n-ary predicate symbol (def:predicate-symbol) and t_i terms (def:term) -- both load-bearing and present. Arity is ambient. Correct."
+}

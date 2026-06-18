@@ -1,0 +1,31 @@
+{
+  "graph_id": "0031-0011",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "algebraic-laws",
+  "term": "prop:invertibility-implies-right-cancellation",
+  "kind": "Proposition",
+  "title": "Invertibility Implies Right Cancellation",
+  "root": "",
+  "statement": "In an associative operation with identity, invertible elements satisfy right\ncancellation.",
+  "current_dependencies": [
+    {
+      "id": "def:associativity",
+      "title": "Associativity",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:two-sided-identity",
+      "title": "Two-Sided Identity",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:two-sided-inverse",
+      "title": "Two-Sided Inverse",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

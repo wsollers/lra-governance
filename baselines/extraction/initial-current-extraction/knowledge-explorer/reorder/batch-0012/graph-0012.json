@@ -1,0 +1,12 @@
+{
+  "graph_id": "0012-0012",
+  "volume": "vi",
+  "chapter": "algebraic-geometry",
+  "section": "polynomial-rings",
+  "term": "def:quotient-ring",
+  "kind": "Definition",
+  "title": "Quotient Ring",
+  "root": "",
+  "statement": "Let $R$ be a commutative ring and let $I \\subseteq R$ be an ideal.\nThe \\emph{quotient ring} $R/I$ is the set of cosets\n\\[\nR/I := \\{ a + I : a \\in R \\},\n\\]\nequipped with addition and multiplication defined by\n\\[\n(a + I) + (b + I) := (a + b) + I,\n\\]\n\\[\n(a + I) \\cdot (b + I) := (a \\cdot b) + I.\n\\]",
+  "current_dependencies": []
+}

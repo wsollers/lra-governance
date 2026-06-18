@@ -1,0 +1,43 @@
+{
+  "graph_id": "0034-0015",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "proof-theory",
+  "term": "thm:fol-sound",
+  "kind": "Theorem",
+  "title": "Soundness of First-Order Logic",
+  "root": "",
+  "statement": "The standard inference rules for first-order logic (UI, UG, EI, EG, and the\npropositional rules) are sound: they preserve truth in all structures.\n\nIf $\\Gamma \\vdash \\varphi$, then $\\Gamma \\models \\varphi$.",
+  "current_dependencies": [
+    {
+      "id": "ax:predicate-logic-quantifier-distribution",
+      "title": "Quantifier Distribution",
+      "kind": "Axiom",
+      "root": "axiom"
+    },
+    {
+      "id": "ax:predicate-logic-universal-instantiation",
+      "title": "Universal Instantiation",
+      "kind": "Axiom",
+      "root": "axiom"
+    },
+    {
+      "id": "def:fol-satisfaction",
+      "title": "Satisfaction",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:fol-soundness",
+      "title": "Soundness",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:log-consequence",
+      "title": "Logical Consequence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

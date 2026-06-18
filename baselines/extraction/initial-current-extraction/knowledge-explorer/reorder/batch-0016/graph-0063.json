@@ -1,0 +1,19 @@
+{
+  "graph_id": "0016-0063",
+  "volume": "iii",
+  "chapter": "functions",
+  "section": "subsets-real-line",
+  "term": "def:interior-point-r",
+  "kind": "Definition",
+  "title": "Interior Point",
+  "root": "",
+  "statement": "Let $X\\subseteq\\mathbb{R}$ and let $x\\in\\mathbb{R}$. The point $x$ is\nan \\textbf{interior point} of $X$ if\n\\[\n \\exists\\varepsilon>0\\;\\bigl(V_\\varepsilon(x)\\subseteq X\\bigr).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:epsilon-neighbourhood",
+      "title": "$ $-Neighbourhood",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

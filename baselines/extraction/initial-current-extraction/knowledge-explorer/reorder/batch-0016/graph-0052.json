@@ -1,0 +1,25 @@
+{
+  "graph_id": "0016-0052",
+  "volume": "iii",
+  "chapter": "functions",
+  "section": "subsets-real-line",
+  "term": "cor:closed-iff-seq-limits",
+  "kind": "Corollary",
+  "title": "Closed iff Sequentially Closed",
+  "root": "",
+  "statement": "$X\\text{ is closed} \\iff \\forall (a_n)\\subseteq X,\\;\na_n \\to x \\Rightarrow x \\in X$.",
+  "current_dependencies": [
+    {
+      "id": "def:closed-set-r",
+      "title": "Closed Subset of $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:cluster-point-sequential",
+      "title": "Sequential Characterization of Cluster Points",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

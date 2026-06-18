@@ -1,0 +1,19 @@
+{
+  "graph_id": "0033-0091",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "semantics",
+  "term": "def:boolean-function-propositional-logic",
+  "kind": "Definition",
+  "title": "Boolean Function",
+  "root": "",
+  "statement": "An \\(n\\)-ary Boolean function is a function\n\\[\nf:\\mathbb{B}^n\\to\\mathbb{B}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:truth-value-propositional-logic",
+      "title": "Truth Value",
+      "kind": "Definition",
+      "root": "definitional_truth"
+    }
+  ]
+}

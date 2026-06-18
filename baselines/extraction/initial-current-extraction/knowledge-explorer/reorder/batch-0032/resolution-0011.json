@@ -1,0 +1,10 @@
+{
+  "graph_id": "0032-0011",
+  "term": "def:canonical-surj",
+  "verdict": "ok",
+  "dependencies": ["def:equiv-class", "def:function", "def:quotient-set", "def:surjective"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.7,
+  "notes": "pi: A -> A/R (def:quotient-set), a |-> [a] (def:equiv-class), is the function (def:function) that is a surjection (def:surjective). All four load-bearing and present. def:function is the genus and def:surjective the asserted property; kept both. Clean."
+}

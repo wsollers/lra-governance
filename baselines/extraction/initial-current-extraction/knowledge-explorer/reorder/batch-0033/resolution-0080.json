@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0080",
+  "term": "def:complementary-literals-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:literal-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.65,
+  "notes": "Two literals (def:literal) are complementary when they are P and not-P for the same variable. def:propositional-variable is named ('the same propositional variable P') but is transitive through def:literal (which is itself defined over propositional variables), so the single dep is the correct direct one."
+}

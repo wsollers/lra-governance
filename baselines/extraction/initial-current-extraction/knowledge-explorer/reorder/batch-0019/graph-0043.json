@@ -1,0 +1,19 @@
+{
+  "graph_id": "0019-0043",
+  "volume": "iii",
+  "chapter": "continuity",
+  "section": "point-continuity",
+  "term": "def:neighborhood-discontinuity-at-a-point",
+  "kind": "Definition",
+  "title": "Neighbourhood Characterization of Discontinuity",
+  "root": "",
+  "statement": "Let $A \\subseteq \\mathbb{R}$, let $f \\colon A \\to \\mathbb{R}$, and let $c \\in A$. The function $f$ is discontinuous at $c$ if and only if there exists a neighborhood $V$ of $f(c)$ such that for every neighborhood $U$ of $c$ relative to $A$ there exists $x \\in U \\cap A$ with $f(x) \\notin V$.",
+  "current_dependencies": [
+    {
+      "id": "def:relative-neighborhood",
+      "title": "Relative Neighborhood",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

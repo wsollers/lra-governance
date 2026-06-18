@@ -1,0 +1,19 @@
+{
+  "graph_id": "0025-0030",
+  "volume": "ii",
+  "chapter": "peano-systems",
+  "section": "recursion-on-peano-systems",
+  "term": "def:stage-dependent-step-rule",
+  "kind": "Definition",
+  "title": "Stage-Dependent Step Rule",
+  "root": "",
+  "statement": "Let $(P,S,1)$ be a Peano system and let $W$ be a set. A\n\\emph{stage-dependent step rule} on $W$ over $P$ is a function\n\\[\n\\Phi:P\\times W\\to W.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:peano-system",
+      "title": "Peano System",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

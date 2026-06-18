@@ -1,0 +1,245 @@
+subject: bounding
+display_title: ''
+volume: volume-iii
+status: in-progress
+dependencies:
+  prior: ''
+  next: ''
+path: volume-iii/analysis/bounding
+environments:
+- label: prop:uniqueness-of-the-maximum
+  type: prop
+  file: notes\bounds-algebra\notes-algebra-of-supremum-infimum.tex
+  display_title: Uniqueness of the Maximum
+  proof_file: null
+- label: prop:uniqueness-of-the-supremum
+  type: prop
+  file: notes\bounds-algebra\notes-algebra-of-supremum-infimum.tex
+  display_title: Uniqueness of the Supremum
+  proof_file: null
+- label: prop:maximum-implies-supremum
+  type: prop
+  file: notes\bounds-algebra\notes-algebra-of-supremum-infimum.tex
+  display_title: Maximum Implies Supremum
+  proof_file: null
+- label: prop:supremum-in-the-set-is-the-maximum
+  type: prop
+  file: notes\bounds-algebra\notes-algebra-of-supremum-infimum.tex
+  display_title: Supremum in the Set Is the Maximum
+  proof_file: null
+- label: lem:subset-inclusion-preserves-upper-bounds
+  type: lem
+  file: notes\bounds-algebra\notes-algebra-of-supremum-infimum.tex
+  display_title: Subset Inclusion Preserves Upper Bounds
+  proof_file: null
+- label: thm:supremum-is-monotone-under-inclusion
+  type: thm
+  file: notes\bounds-algebra\notes-algebra-of-supremum-infimum.tex
+  display_title: Supremum Is Monotone Under Inclusion
+  proof_file: null
+- label: prop:upper-bound-comparison-with-the-supremum
+  type: prop
+  file: notes\bounds-algebra\notes-algebra-of-supremum-infimum.tex
+  display_title: Upper Bound Comparison with the Supremum
+  proof_file: null
+- label: prop:every-element-lies-below-the-supremum
+  type: prop
+  file: notes\bounds-algebra\notes-algebra-of-supremum-infimum.tex
+  display_title: Every Element Lies Below the Supremum
+  proof_file: null
+- label: thm:infimum-less-than-supremum
+  type: thm
+  file: notes\bounds-algebra\notes-algebra-of-supremum-infimum.tex
+  display_title: Infimum Is Less Than or Equal to the Supremum
+  proof_file: null
+- label: prop:order-comparison-of-suprema
+  type: prop
+  file: notes\bounds-algebra\notes-algebra-of-supremum-infimum.tex
+  display_title: Order Comparison of Suprema
+  proof_file: null
+- label: thm:translation-invariance-supremum
+  type: thm
+  file: notes\bounds-algebra\notes-algebra-of-supremum-infimum.tex
+  display_title: Translation Invariance of the Supremum
+  proof_file: null
+- label: thm:scalar-mult-positive
+  type: thm
+  file: notes\bounds-algebra\notes-algebra-of-supremum-infimum.tex
+  display_title: Scalar Multiplication by a Positive Scalar
+  proof_file: null
+- label: thm:scalar-mult-negative
+  type: thm
+  file: notes\bounds-algebra\notes-algebra-of-supremum-infimum.tex
+  display_title: Scalar Multiplication by a Negative Scalar
+  proof_file: null
+- label: thm:negation-exchange-sup-inf
+  type: thm
+  file: notes\bounds-algebra\notes-algebra-of-supremum-infimum.tex
+  display_title: Negation Exchanges Supremum and Infimum
+  proof_file: null
+- label: thm:supremum-sum-set
+  type: thm
+  file: notes\bounds-algebra\notes-algebra-of-supremum-infimum.tex
+  display_title: Supremum of a Sum Set
+  proof_file: null
+- label: thm:supremum-difference-set
+  type: thm
+  file: notes\bounds-algebra\notes-algebra-of-supremum-infimum.tex
+  display_title: Supremum of a Difference Set
+  proof_file: null
+- label: thm:supremum-dilation
+  type: thm
+  file: notes\bounds-algebra\notes-algebra-of-supremum-infimum.tex
+  display_title: Supremum of a Dilation
+  proof_file: null
+- label: thm:supremum-absolute-value-image
+  type: thm
+  file: notes\bounds-algebra\notes-algebra-of-supremum-infimum.tex
+  display_title: Supremum of the Absolute-Value Image
+  proof_file: null
+- label: prop:bounds-sum-set
+  type: prop
+  file: notes\bounds-algebra\notes-algebra-of-supremum-infimum.tex
+  display_title: Bounds for Suprema and Infima Under Set Addition
+  proof_file: null
+- label: prop:upper-bounds-ambient-order
+  type: prop
+  file: notes\bounds-algebra\notes-algebra-of-supremum-infimum.tex
+  display_title: Upper Bounds Depend on the Ambient Order
+  proof_file: null
+- label: prop:suprema-ambient-set
+  type: prop
+  file: notes\bounds-algebra\notes-algebra-of-supremum-infimum.tex
+  display_title: Suprema Depend on the Ambient Set
+  proof_file: null
+- label: thm:ambient-existence-supremum
+  type: thm
+  file: notes\bounds-algebra\notes-algebra-of-supremum-infimum.tex
+  display_title: Ambient Existence of Supremum
+  proof_file: null
+- label: lem:rational-gap-suprema
+  type: lem
+  file: notes\bounds-algebra\notes-algebra-of-supremum-infimum.tex
+  display_title: Rational Gap Example for Suprema
+  proof_file: null
+- label: def:epsilon-characterization-of-supremum
+  type: def
+  file: notes\bounds-extremals\notes-epsilon-characterization-supremum.tex
+  display_title: Epsilon Characterization of Supremum
+  proof_file: null
+- label: def:epsilon-characterization-of-infimum
+  type: def
+  file: notes\bounds-extremals\notes-epsilon-characterization-supremum.tex
+  display_title: Epsilon Characterization of Infimum
+  proof_file: null
+- label: def:bound
+  type: def
+  file: notes\bounds-extremals\notes-supremum.tex
+  display_title: Bound
+  proof_file: null
+- label: def:upper-bound
+  type: def
+  file: notes\bounds-extremals\notes-supremum.tex
+  display_title: Upper Bound
+  proof_file: null
+- label: def:bounded-above
+  type: def
+  file: notes\bounds-extremals\notes-supremum.tex
+  display_title: Bounded Above
+  proof_file: null
+- label: def:lower-bound
+  type: def
+  file: notes\bounds-extremals\notes-supremum.tex
+  display_title: Lower Bound
+  proof_file: null
+- label: def:bounded-below
+  type: def
+  file: notes\bounds-extremals\notes-supremum.tex
+  display_title: Bounded Below
+  proof_file: null
+- label: def:bounded
+  type: def
+  file: notes\bounds-extremals\notes-supremum.tex
+  display_title: Bounded
+  proof_file: null
+- label: def:minimum
+  type: def
+  file: notes\bounds-extremals\notes-supremum.tex
+  display_title: Minimum
+  proof_file: null
+- label: def:maximum
+  type: def
+  file: notes\bounds-extremals\notes-supremum.tex
+  display_title: Maximum
+  proof_file: null
+- label: def:supremum
+  type: def
+  file: notes\bounds-extremals\notes-supremum.tex
+  display_title: Supremum
+  proof_file: null
+- label: def:infimum
+  type: def
+  file: notes\bounds-extremals\notes-supremum.tex
+  display_title: Infimum
+  proof_file: null
+- label: thm:lub-property-implies-existence-of-suprema
+  type: thm
+  file: notes\bounds-extremals\notes-supremum.tex
+  display_title: Least Upper Bound Property Implies Existence of Suprema
+  proof_file: null
+- label: prop:upper-bound-property-of-supremum
+  type: prop
+  file: notes\bounds-extremals\notes-supremum.tex
+  display_title: Upper Bound Property of Supremum
+  proof_file: null
+- label: thm:archimedean-property
+  type: thm
+  file: notes\completeness\notes-archimedean-property.tex
+  display_title: Archimedean Property
+  proof_file: null
+- label: cor:archimedean-reciprocal
+  type: cor
+  file: notes\completeness\notes-archimedean-property.tex
+  display_title: Archimedean Reciprocal Corollary
+  proof_file: null
+- label: def:least-upper-bound-property
+  type: def
+  file: notes\completeness\notes-axiom-of-completess.tex
+  display_title: Least Upper Bound Property
+  proof_file: null
+- label: ax:completeness-of-reals
+  type: ax
+  file: notes\completeness\notes-axiom-of-completess.tex
+  display_title: Completeness of $\mathbb{R}$
+  proof_file: null
+- label: def:dense-subset
+  type: def
+  file: notes\completeness\notes-density.tex
+  display_title: Dense Subset
+  proof_file: null
+- label: def:order-dense-subset
+  type: def
+  file: notes\completeness\notes-density.tex
+  display_title: Order Dense Subset
+  proof_file: null
+- label: thm:density-of-rationals-in-reals
+  type: thm
+  file: notes\completeness\notes-density.tex
+  display_title: Density of the Rational Numbers in $\mathbb{R}$
+  proof_file: null
+- label: thm:density-of-irrationals-in-reals
+  type: thm
+  file: notes\completeness\notes-density.tex
+  display_title: Density of the Irrational Numbers in $\mathbb{R}$
+  proof_file: null
+- label: cor:every-open-interval-contains-rational-and-irrational
+  type: cor
+  file: notes\completeness\notes-density.tex
+  display_title: Rational and Irrational Points in Every Open Interval
+  proof_file: null
+- label: thm:nested-interval-theorem
+  type: thm
+  file: notes\completeness\notes-nested-interval-property.tex
+  display_title: Nested Interval Property
+  proof_file: null
+proof_files: []

@@ -1,0 +1,25 @@
+{
+  "graph_id": "0021-0023",
+  "volume": "ii",
+  "chapter": "whole-numbers",
+  "section": "extending-multiplication",
+  "term": "thm:multiplication-on-w-commutative",
+  "kind": "Theorem",
+  "title": "Multiplication on $ $ Is Commutative",
+  "root": "",
+  "statement": "For all $a,b\\in\\mathbb{W}$,\n\\[\na\\cdot_{\\mathbb{W}}b=b\\cdot_{\\mathbb{W}}a.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:multiplication-on-w",
+      "title": "Multiplication on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:multiplication-commutative",
+      "title": "Multiplication Is Commutative",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

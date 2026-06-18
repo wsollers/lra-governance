@@ -1,0 +1,19 @@
+{
+  "graph_id": "0016-0060",
+  "volume": "iii",
+  "chapter": "functions",
+  "section": "subsets-real-line",
+  "term": "def:cluster-point-r",
+  "kind": "Definition",
+  "title": "Cluster Point",
+  "root": "",
+  "statement": "Let $X \\subseteq \\mathbb{R}$ and $x \\in \\mathbb{R}$. The point $x$\nis a \\textbf{cluster point} of $X$ if\n\\[\n \\forall\\varepsilon > 0,\\;\n \\exists\\, y \\in X \\setminus \\{x\\} :\\;\n |y-x|<\\varepsilon.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:deleted-epsilon-neighbourhood",
+      "title": "Deleted $ $-Neighbourhood",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

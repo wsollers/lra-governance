@@ -1,0 +1,43 @@
+{
+  "graph_id": "0028-0077",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "operations-on-z-classes",
+  "term": "thm:z-multiplicative-commutative-monoid",
+  "kind": "Theorem",
+  "title": "$ $ Is a Multiplicative Commutative Monoid",
+  "root": "",
+  "statement": "The structure $(\\mathbb{Z},\\cdot,1_{\\mathbb{Z}})$ is a commutative monoid.",
+  "current_dependencies": [
+    {
+      "id": "def:commutative-monoid",
+      "title": "Commutative Monoid",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:multiplication-on-z-classes",
+      "title": "Multiplication on $ $-Classes",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:multiplication-on-z-associative",
+      "title": "Multiplication on $ $ Is Associative",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:multiplication-on-z-commutative",
+      "title": "Multiplication on $ $ Is Commutative",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:one-multiplicative-identity-on-z",
+      "title": "One Is a Multiplicative Identity on $ $",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

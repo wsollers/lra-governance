@@ -1,0 +1,37 @@
+{
+  "graph_id": "0024-0035",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "embedding-z-into-q",
+  "term": "thm:embedding-z-into-q-preserves-order",
+  "kind": "Theorem",
+  "title": "Embedding Preserves Order",
+  "root": "",
+  "statement": "For all $m,n\\in\\mathbb{Z}$,\n\\[\nm\\le n\n\\Longleftrightarrow\n\\iota(m)\\le\\iota(n).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:addition-on-q-classes",
+      "title": "Addition on $ $-Classes",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:multiplication-on-q-classes",
+      "title": "Multiplication on $ $-Classes",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:order-on-q",
+      "title": "Order on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:z-totally-ordered-set",
+      "title": "$ $ Is a Totally Ordered Set",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

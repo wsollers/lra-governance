@@ -1,0 +1,25 @@
+{
+  "graph_id": "0032-0100",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "relations",
+  "term": "def:total-rel",
+  "kind": "Definition",
+  "title": "Total (Connex) Relation",
+  "root": "",
+  "statement": "$R$ is \\emph{total} (or \\emph{connex}) if every pair is comparable:\n\\[\n\\forall a,b \\in A, \\;\n(a,b) \\in R \\lor (b,a) \\in R.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:relation",
+      "title": "Relation",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:universal-q",
+      "title": "Universal Formula",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

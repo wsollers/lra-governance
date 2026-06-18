@@ -1,0 +1,12 @@
+{
+  "graph_id": "0012-0008",
+  "volume": "vi",
+  "chapter": "algebraic-geometry",
+  "section": "polynomial-rings",
+  "term": "def:noetherian-ring",
+  "kind": "Definition",
+  "title": "Noetherian Ring",
+  "root": "",
+  "statement": "A commutative ring $R$ is \\emph{Noetherian} if every ideal of $R$\nis finitely generated.",
+  "current_dependencies": []
+}

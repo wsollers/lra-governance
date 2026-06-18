@@ -1,0 +1,19 @@
+{
+  "graph_id": "0033-0086",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "normal-forms",
+  "term": "def:term-propositional-logic",
+  "kind": "Definition",
+  "title": "Term",
+  "root": "",
+  "statement": "A \\emph{term}, also called a \\emph{conjunction term}, is a finite conjunction\nof literals.",
+  "current_dependencies": [
+    {
+      "id": "def:literal-propositional-logic",
+      "title": "Literal",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

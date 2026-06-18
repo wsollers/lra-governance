@@ -1,0 +1,12 @@
+{
+  "graph_id": "0032-0085",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "order",
+  "term": "def:initial-segment",
+  "kind": "Definition",
+  "title": "Initial Segment",
+  "root": "",
+  "statement": "A subset $I \\subseteq A$ is an \\emph{initial segment} of $(A,\\leq)$ if\n\\[\na \\in I \\text{ and } b \\leq a \\;\\Rightarrow\\; b \\in I.\n\\]",
+  "current_dependencies": []
+}

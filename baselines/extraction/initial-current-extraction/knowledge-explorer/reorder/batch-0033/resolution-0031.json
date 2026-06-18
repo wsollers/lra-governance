@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0031",
+  "term": "ax:propositional-classical-contraposition",
+  "verdict": "ok",
+  "dependencies": [],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.55,
+  "notes": "Axiom schema (not-Q => not-P) => (P => Q). Its stating vocabulary is just the implication and negation connectives, which are ambient/primitive. [] is consistent with treating logical axiom schemas as DAG roots -- the same convention question raised for the predicate-logic axioms (batch-0034 0001), and resolved the same way here."
+}

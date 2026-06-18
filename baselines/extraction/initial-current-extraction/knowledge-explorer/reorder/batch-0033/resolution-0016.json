@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0016",
+  "term": "def:informal-proof-pattern-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:logical-consequence-propositional-logic", "def:valid-argument-form-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.5,
+  "notes": "An informal proof pattern is a 'truth-preserving strategy', grounded in validity (def:valid-argument-form) / logical consequence (def:logical-consequence) -- both reasonable. This is a deliberately informal/meta definition, so the dependency set is necessarily loose; low confidence reflects that rather than a specific defect."
+}

@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0028",
+  "term": "thm:modus-ponens-validity-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:truth-assignment-propositional-logic", "def:valid-argument-form-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.65,
+  "notes": "Semantic proof: any assignment satisfying phi and phi->psi satisfies psi. def:truth-assignment is the semantic base; satisfaction is transitive via def:valid-argument-form. Both load-bearing and present."
+}

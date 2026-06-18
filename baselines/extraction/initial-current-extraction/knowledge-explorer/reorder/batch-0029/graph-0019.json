@@ -1,0 +1,19 @@
+{
+  "graph_id": "0029-0019",
+  "volume": "ii",
+  "chapter": "identity-equality-equivalence",
+  "section": "equivalence",
+  "term": "prop:representatives-related-iff-classes-equal",
+  "kind": "Proposition",
+  "title": "Representatives Related iff Classes Equal",
+  "root": "",
+  "statement": "\\[\na\\sim b \\Longleftrightarrow [a]=[b].\n\\]",
+  "current_dependencies": [
+    {
+      "id": "thm:equivalence-classes-partition-domain",
+      "title": "Equivalence Classes Partition the Domain",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

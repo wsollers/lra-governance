@@ -1,0 +1,12 @@
+{
+  "graph_id": "0024-0054",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "operations-on-q-classes",
+  "term": "cor:negation-right-additive-inverse-on-q",
+  "kind": "Corollary",
+  "title": "Negation Gives a Right Additive Inverse on $ $",
+  "root": "",
+  "statement": "For every $x\\in\\mathbb{Q}$,\n\\[\nx+(-x)=0_{\\mathbb{Q}}.\n\\]",
+  "current_dependencies": []
+}

@@ -1,0 +1,25 @@
+{
+  "graph_id": "0024-0063",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "operations-on-q-classes",
+  "term": "def:reciprocal-on-q-classes",
+  "kind": "Definition",
+  "title": "Reciprocal on Nonzero $ $-Classes",
+  "root": "",
+  "statement": "For $[a,b]\\ne 0_{\\mathbb{Q}}$, define\n\\[\n[a,b]^{-1}:=[b,a].\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:rational-class-notation",
+      "title": "Rational Class Notation",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "lem:vanishing-criterion-q",
+      "title": "Vanishing Criterion in $ $",
+      "kind": "Lemma",
+      "root": ""
+    }
+  ]
+}

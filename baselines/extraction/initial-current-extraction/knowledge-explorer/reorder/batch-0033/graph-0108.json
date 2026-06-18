@@ -1,0 +1,37 @@
+{
+  "graph_id": "0033-0108",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "semantics",
+  "term": "thm:unique-extension-truth-assignment-propositional-logic",
+  "kind": "Theorem",
+  "title": "Unique Extension of a Truth Assignment",
+  "root": "",
+  "statement": "Every truth assignment\n\\[\nv:\\Prop\\to\\mathbb{B}\n\\]\nhas a unique extension\n\\[\n\\widehat v:\\WFF\\to\\mathbb{B}\n\\]\nsatisfying the recursive truth clauses for propositional variables and the\nprimitive connectives.",
+  "current_dependencies": [
+    {
+      "id": "def:extended-truth-assignment-propositional-logic",
+      "title": "Extension of a Truth Assignment to Formulas",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:truth-assignment-propositional-logic",
+      "title": "Truth Assignment",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:structural-recursion-propositional-formulas",
+      "title": "Structural Recursion for Propositional Formulas",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:unique-decomposition-propositional-formulas",
+      "title": "Unique Decomposition for Propositional Formulas",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

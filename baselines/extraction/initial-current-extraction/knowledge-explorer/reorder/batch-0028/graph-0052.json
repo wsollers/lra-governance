@@ -1,0 +1,19 @@
+{
+  "graph_id": "0028-0052",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "operations-on-z-classes",
+  "term": "def:negation-on-z-classes",
+  "kind": "Definition",
+  "title": "Negation on $ $-Classes",
+  "root": "",
+  "statement": "Define negation on representatives by\n\\[\n-[a,b]:=[b,a].\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:integer-class-notation",
+      "title": "Integer Class Notation",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

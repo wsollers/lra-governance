@@ -1,0 +1,12 @@
+{
+  "graph_id": "0007-0012",
+  "volume": "vii",
+  "chapter": "euclidean-geometry",
+  "section": "foundations",
+  "term": "def:euclid-circle",
+  "kind": "Definition",
+  "title": "Circle",
+  "root": "",
+  "statement": "A circle is a plane figure contained by one line such that all the straight\nlines falling upon it from one point among those lying within the figure equal\none another.",
+  "current_dependencies": []
+}

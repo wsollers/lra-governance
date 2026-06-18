@@ -1,0 +1,19 @@
+{
+  "graph_id": "0034-0004",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "proof-theory",
+  "term": "def:eq-refl",
+  "kind": "Definition",
+  "title": "Equality Introduction — Reflexivity",
+  "root": "",
+  "statement": "For any term $t$, one may infer $t = t$.",
+  "current_dependencies": [
+    {
+      "id": "def:term",
+      "title": "Term",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

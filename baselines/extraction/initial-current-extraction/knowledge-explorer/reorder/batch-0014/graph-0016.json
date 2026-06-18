@@ -1,0 +1,25 @@
+{
+  "graph_id": "0014-0016",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "cauchy",
+  "term": "thm:cauchy-tail-diameter-criterion",
+  "kind": "Theorem",
+  "title": "Cauchy Tail Diameter Criterion",
+  "root": "",
+  "statement": "Let $(x_n)$ be a real sequence. Then $(x_n)$ is Cauchy if and only if\nevery sufficiently late tail has arbitrarily small pairwise diameter.",
+  "current_dependencies": [
+    {
+      "id": "def:cauchy-sequence",
+      "title": "Cauchy Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:m-tail",
+      "title": "$M$-Tail of a Sequence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

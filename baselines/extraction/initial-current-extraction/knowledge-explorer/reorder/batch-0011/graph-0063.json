@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0063",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "groups",
+  "term": "prop:group-socks-shoes",
+  "kind": "Proposition",
+  "title": "Socks-Shoes Property",
+  "root": "",
+  "statement": "Let $G$ be a group and let $a, b \\in G$. Then\n\\[\n(ab)^{-1} = b^{-1} a^{-1}.\n\\]",
+  "current_dependencies": []
+}

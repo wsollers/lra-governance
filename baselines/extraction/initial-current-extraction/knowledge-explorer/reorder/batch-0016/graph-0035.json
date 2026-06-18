@@ -1,0 +1,12 @@
+{
+  "graph_id": "0016-0035",
+  "volume": "iii",
+  "chapter": "functions",
+  "section": "real-valued-functions",
+  "term": "def:function-constant",
+  "kind": "Definition",
+  "title": "Constant Function",
+  "root": "",
+  "statement": "Let $A\\subseteq\\mathbb{R}$ and let $f:A\\to\\mathbb{R}$. The function\n$f$ is constant on $A$ if\n\\[\n f(x_1)=f(x_2)\n \\qquad (x_1,x_2\\in A).\n\\]",
+  "current_dependencies": []
+}

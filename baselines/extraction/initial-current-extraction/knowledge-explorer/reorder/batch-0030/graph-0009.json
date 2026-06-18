@@ -1,0 +1,31 @@
+{
+  "graph_id": "0030-0009",
+  "volume": "ii",
+  "chapter": "embedding-number-systems",
+  "section": "embedding-z-into-q",
+  "term": "thm:z-embeds-in-q",
+  "kind": "Theorem",
+  "title": "$ $ Embeds in $ $",
+  "root": "",
+  "statement": "The canonical map $\\iota:\\mathbb{Z}\\to \\mathbb{Q}$ is an embedding of ordered arithmetic systems: it is injective, preserves $0$, $1$, addition, and multiplication, and reflects the order.",
+  "current_dependencies": [
+    {
+      "id": "def:embedding-z-into-q",
+      "title": "Embedding $ $ into $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:rationals",
+      "title": "Rational Numbers",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:embedding-identifies-with-image",
+      "title": "Embeddings Identify a System with Its Image",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

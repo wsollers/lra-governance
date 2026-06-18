@@ -1,0 +1,19 @@
+{
+  "graph_id": "0025-0028",
+  "volume": "ii",
+  "chapter": "peano-systems",
+  "section": "recursion-on-peano-systems",
+  "term": "def:iterator-relation",
+  "kind": "Definition",
+  "title": "Iterator Relation",
+  "root": "",
+  "statement": "Let $(P,S,1)$ be a Peano system, and let $(W,c,g)$ be iterator data for it. A\nrelation $R\\subseteq P\\times W$ is called an \\emph{iterator relation} for\n$(W,c,g)$ exactly when\n\\[\n(1,c)\\in R\n\\]\nand\n\\[\n\\forall n\\in P\\;\\forall w\\in W\\;\n\\bigl((n,w)\\in R\\Longrightarrow (S(n),g(w))\\in R\\bigr).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:iterator-data-on-peano-system",
+      "title": "Iterator Data",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

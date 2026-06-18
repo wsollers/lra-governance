@@ -1,0 +1,31 @@
+{
+  "graph_id": "0032-0068",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "order",
+  "term": "def:suborder",
+  "kind": "Definition",
+  "title": "Suborder / Restriction",
+  "root": "",
+  "statement": "Let $(B, \\leq')$ be a partially ordered set and $S \\subseteq B$. The\n\\emph{suborder} on $S$ (or \\emph{induced order on $S$}) is the relation\n$\\leq'_S$ defined by:\n\\[\nx \\;\\leq'_S\\; y\n\\;\\;\\Longleftrightarrow\\;\\;\nx \\leq' y,\n\\quad \\text{for } x, y \\in S.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:partial-order",
+      "title": "Partial Order",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:relation",
+      "title": "Relation",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:subset",
+      "title": "Subset",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "graph_id": "0035-0023",
+  "volume": "i",
+  "chapter": "axiom-systems",
+  "section": "theories",
+  "term": "def:deductive-closure",
+  "kind": "Definition",
+  "title": "Deductive Closure",
+  "root": "",
+  "statement": "Let $\\Gamma\\subseteq\\operatorname{Sentences}(\\mathcal{L})$ be a set of\npremises. The \\emph{deductive closure} of $\\Gamma$, denoted\n$\\operatorname{Cn}(\\Gamma)$, is the set of all sentences derivable from\n$\\Gamma$:\n\\[\n \\operatorname{Cn}(\\Gamma)\n =\n \\{\\varphi\\in\\operatorname{Sentences}(\\mathcal{L})\\mid\n \\Gamma\\vdash\\varphi\\}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:axiom-system",
+      "title": "Axiom System",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

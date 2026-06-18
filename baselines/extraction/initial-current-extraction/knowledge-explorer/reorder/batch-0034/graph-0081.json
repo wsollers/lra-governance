@@ -1,0 +1,25 @@
+{
+  "graph_id": "0034-0081",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "translation",
+  "term": "def:translation-key-predicate-logic",
+  "kind": "Definition",
+  "title": "Translation Key",
+  "root": "",
+  "statement": "A \\emph{translation key} is a finite record that fixes a domain of discourse and\nassigns intended English readings to the constant symbols, predicate symbols,\nand relation symbols used in a translation.",
+  "current_dependencies": [
+    {
+      "id": "def:constant-symbol",
+      "title": "Constant Symbol",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:predicate-symbol",
+      "title": "Predicate Symbol",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

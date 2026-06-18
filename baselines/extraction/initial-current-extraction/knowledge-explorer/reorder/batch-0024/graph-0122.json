@@ -1,0 +1,12 @@
+{
+  "graph_id": "0024-0122",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "order-on-q",
+  "term": "thm:negative-multiplication-reverses-strict-order-on-q",
+  "kind": "Theorem",
+  "title": "Multiplication by Negatives Reverses Strict Order on $ $",
+  "root": "",
+  "statement": "For all $x,y,z\\in\\mathbb{Q}$,\n\\[\nz<0_{\\mathbb{Q}}\\land x<y\n\\Longrightarrow\nz\\cdot y<z\\cdot x.\n\\]",
+  "current_dependencies": []
+}

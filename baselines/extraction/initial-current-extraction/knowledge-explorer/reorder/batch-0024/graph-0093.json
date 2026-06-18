@@ -1,0 +1,19 @@
+{
+  "graph_id": "0024-0093",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "operations-on-q-classes",
+  "term": "thm:q-is-a-field",
+  "kind": "Theorem",
+  "title": "$ $ Is a Field",
+  "root": "",
+  "statement": "The structure $(\\mathbb{Q},+,\\cdot,0_{\\mathbb{Q}},1_{\\mathbb{Q}})$ is a field.",
+  "current_dependencies": [
+    {
+      "id": "thm:zero-not-one-in-q",
+      "title": "Zero Is Not One in $ $",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

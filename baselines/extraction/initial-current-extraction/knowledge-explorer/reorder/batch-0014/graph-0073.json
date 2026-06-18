@@ -1,0 +1,25 @@
+{
+  "graph_id": "0014-0073",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "definition",
+  "term": "thm:constant-null-sequence",
+  "kind": "Theorem",
+  "title": "Constant Null Sequence",
+  "root": "",
+  "statement": "Let $(x_n)$ be a real sequence, and let $c \\in \\mathbb{R}$. If $x_n = c$\nfor every $n \\in \\mathbb{N}$, then $(x_n)$ is a null sequence if and only if\n$c = 0$.",
+  "current_dependencies": [
+    {
+      "id": "def:constant-sequence",
+      "title": "Constant Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:null-sequence",
+      "title": "Null Sequence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

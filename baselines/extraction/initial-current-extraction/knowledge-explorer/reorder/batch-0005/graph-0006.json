@@ -1,0 +1,12 @@
+{
+  "graph_id": "0005-0006",
+  "volume": "viii",
+  "chapter": "ordinary-differential-equations",
+  "section": "differential-equations-models",
+  "term": "def:ordinary-differential-equations-solutions-general-solution",
+  "kind": "Definition",
+  "title": "General Solution",
+  "root": "",
+  "statement": "A \\textbf{general solution} of a differential equation is a family of solutions containing one or more arbitrary constants.\n\nFor an $n$th-order ordinary differential equation, the general solution typically contains $n$ arbitrary constants:\n\\[\ny(t)=\\Phi(t,C_1,C_2,\\dots,C_n).\n\\]\nEach choice of the constants $C_1,C_2,\\dots,C_n$ gives a particular solution of the differential equation.",
+  "current_dependencies": []
+}

@@ -1,0 +1,25 @@
+{
+  "graph_id": "0032-0012",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "equivalence",
+  "term": "def:equiv-class",
+  "kind": "Definition",
+  "title": "Equivalence Class",
+  "root": "",
+  "statement": "Let $R$ be an equivalence relation on $A$. For $a \\in A$, the\n\\emph{equivalence class} of $a$ is:\n\\[\n[a]_R \\;:=\\; \\{\\, x \\in A \\mid (a,x) \\in R \\,\\}.\n\\]\nWhen $R$ is clear from context, we write $[a]$.",
+  "current_dependencies": [
+    {
+      "id": "def:equivalence-relation",
+      "title": "Equivalence Relation",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:relation",
+      "title": "Relation",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

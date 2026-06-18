@@ -1,0 +1,19 @@
+{
+  "graph_id": "0031-0046",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "derived-laws",
+  "term": "prop:left-zero-absorption",
+  "kind": "Proposition",
+  "title": "Left Zero Absorption",
+  "root": "",
+  "statement": "In a ring,\n\\[\n0\\cdot a=0.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:ring",
+      "title": "Ring",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "graph_id": "0027-0056",
+  "volume": "ii",
+  "chapter": "natural-numbers",
+  "section": "well-ordering-principle",
+  "term": "thm:well-ordering-principle",
+  "kind": "Theorem",
+  "title": "Well-Ordering Principle",
+  "root": "",
+  "statement": "Let $(P,S,1)$ be a Peano system. Every nonempty subset of $P$ has a least\nelement with respect to the order $\\le$ on $P$.",
+  "current_dependencies": [
+    {
+      "id": "def:less-than-or-equal-on-peano-system",
+      "title": "Less Than or Equal on a Peano System",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:peano-system",
+      "title": "Peano System",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:induction-principle-for-peano-system",
+      "title": "Induction Principle for a Peano System",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:trichotomy-on-peano-system",
+      "title": "Trichotomy on a Peano System",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

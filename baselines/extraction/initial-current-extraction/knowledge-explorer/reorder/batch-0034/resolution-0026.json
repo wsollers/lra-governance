@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0026",
+  "term": "thm:dependent-witness-not-uniform",
+  "verdict": "change",
+  "dependencies": ["thm:uniform-witness-implies-dependent-witness", "def:log-consequence"],
+  "rationale": "The claim is a semantic non-entailment (|/=), which is the negation of def:log-consequence -- a load-bearing dependency that was missing. The non-entailment direction is exactly the one the sibling 0029-cluster establishes via def:log-consequence.",
+  "licensing_quote": "\\not\\models",
+  "confidence": 0.6,
+  "notes": "A non-entailment is proved by exhibiting a counterexample structure (def:structure), which is the real witness -- but the statement names no domain/structure (unlike 0029's 'Over nonempty domains'), so per Rule 2 there is no span to license adding def:structure; flagged at the proof layer instead. The edge to the converse thm:uniform-witness-implies-dependent-witness reads as a contrast pairing rather than a used proof step; reviewer may drop it."
+}

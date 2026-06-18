@@ -1,0 +1,25 @@
+{
+  "graph_id": "0033-0082",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "normal-forms",
+  "term": "def:empty-conjunction-propositional-logic",
+  "kind": "Definition",
+  "title": "Empty Conjunction",
+  "root": "",
+  "statement": "The \\emph{empty conjunction} is the conjunction over no literals. Semantically,\nit is read as true.",
+  "current_dependencies": [
+    {
+      "id": "def:tautology-propositional-logic",
+      "title": "Tautology",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:term-propositional-logic",
+      "title": "Term",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

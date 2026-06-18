@@ -1,0 +1,31 @@
+{
+  "graph_id": "0029-0023",
+  "volume": "ii",
+  "chapter": "identity-equality-equivalence",
+  "section": "equivalence",
+  "term": "thm:induced-operation-on-quotient",
+  "kind": "Theorem",
+  "title": "Induced Operation on a Quotient",
+  "root": "",
+  "statement": "If $O:A\\times A\\to A$ respects $\\sim$, then\n\\[\n[a]\\mathbin{\\overline{O}}[b]:=[a\\mathbin{O}b]\n\\]\ndefines a well-defined binary operation on $A/{\\sim}$.",
+  "current_dependencies": [
+    {
+      "id": "def:operation-respects-equivalence",
+      "title": "Operation Respects an Equivalence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "prop:representatives-related-iff-classes-equal",
+      "title": "Representatives Related iff Classes Equal",
+      "kind": "Proposition",
+      "root": ""
+    },
+    {
+      "id": "thm:existence-of-a-quotient",
+      "title": "Existence of a Quotient",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

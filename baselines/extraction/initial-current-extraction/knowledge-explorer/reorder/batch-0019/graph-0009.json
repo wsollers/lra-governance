@@ -1,0 +1,31 @@
+{
+  "graph_id": "0019-0009",
+  "volume": "iii",
+  "chapter": "continuity",
+  "section": "gauge",
+  "term": "def:interval-partition",
+  "kind": "Definition",
+  "title": "Partition",
+  "root": "",
+  "statement": "Let $a<b$ and set $I=[a,b]$. A finite ordered set $P=\\{x_0,\\ldots,x_n\\}$ with $n\\in\\mathbb{N}$ and $n\\ge 1$ is a partition of $I$ if and only if $x_0=a$, $x_n=b$, and $x_0<x_1<\\cdots<x_n$. In this case the closed subintervals $[x_{i-1},x_i]$ for $i=1,\\ldots,n$ subdivide $I$.",
+  "current_dependencies": [
+    {
+      "id": "def:closed-interval",
+      "title": "Closed Interval",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:natural-numbers",
+      "title": "The Natural Numbers",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:order-on-r",
+      "title": "Order on $ $",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0079",
+  "term": "def:scope-ambiguity-translation",
+  "verdict": "ok",
+  "dependencies": ["def:q-alt", "def:quantifier-scope"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.65,
+  "notes": "Scope ambiguity = same wording, different quantifier nesting (def:q-alt) or connective scope (def:quantifier-scope). Both load-bearing. Note this node correctly uses def:quantifier-scope (0019, the translation-oriented scope node, whose gloss is about translation errors) rather than def:scope (0075, the formal syntactic one) -- evidence the two 'scope' nodes serve different sections and may be intentional rather than pure duplicates."
+}

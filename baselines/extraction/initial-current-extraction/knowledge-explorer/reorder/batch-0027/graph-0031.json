@@ -1,0 +1,12 @@
+{
+  "graph_id": "0027-0031",
+  "volume": "ii",
+  "chapter": "natural-numbers",
+  "section": "nz-axioms",
+  "term": "ax:n-induction",
+  "kind": "Axiom",
+  "title": "N5, Induction",
+  "root": "axiom",
+  "statement": "For every predicate $\\varphi$ on $\\mathbb{N}$,\n\\[\n\\Bigl(\\varphi(1)\\land\n\\forall n\\in\\mathbb{N}\\;(\\varphi(n)\\Longrightarrow \\varphi(S(n)))\\Bigr)\n\\Longrightarrow\n\\forall n\\in\\mathbb{N}\\;\\varphi(n).\n\\]",
+  "current_dependencies": []
+}

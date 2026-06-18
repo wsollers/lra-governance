@@ -1,0 +1,19 @@
+{
+  "graph_id": "0033-0130",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "syntax",
+  "term": "thm:structural-induction-propositional-formulas",
+  "kind": "Theorem",
+  "title": "Structural Induction for Propositional Formulas",
+  "root": "",
+  "statement": "Let \\(A(\\varphi)\\) be a property of well-formed formulas. Suppose:\n- \\(A(P)\\) holds for every \\(P\\in\\Prop\\);\n- if \\(A(\\varphi)\\) holds, then \\(A(\\neg\\varphi)\\) holds;\n- if \\(A(\\varphi)\\) and \\(A(\\psi)\\) hold, then \\(A((\\varphi\\circ\\psi))\\) holds for every \\(\\circ\\in\\{\\land,\\lor,\\to,\\leftrightarrow\\}\\).\nThen \\(A(\\theta)\\) holds for every \\(\\theta\\in\\WFF\\).",
+  "current_dependencies": [
+    {
+      "id": "def:well-formed-formula",
+      "title": "Well-Formed Formula",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

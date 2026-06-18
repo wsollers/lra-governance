@@ -1,0 +1,19 @@
+{
+  "graph_id": "0023-0035",
+  "volume": "ii",
+  "chapter": "reals",
+  "section": "field-and-ordered-field-structure-of-r",
+  "term": "cor:field-laws-on-r",
+  "kind": "Corollary",
+  "title": "Field Laws Hold on $ $",
+  "root": "",
+  "statement": "Every theorem proved generically for fields holds in $\\mathbb{R}$, including\nzero product, double negation, sign rules, cancellation, uniqueness of\ninverses, inverse laws, and exponent laws.",
+  "current_dependencies": [
+    {
+      "id": "cor:generic-field-laws",
+      "title": "Generic Field Laws",
+      "kind": "Corollary",
+      "root": ""
+    }
+  ]
+}

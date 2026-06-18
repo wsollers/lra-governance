@@ -1,0 +1,10 @@
+{
+  "graph_id": "0034-0001",
+  "term": "ax:predicate-logic-quantifier-distribution",
+  "verdict": "ok",
+  "dependencies": [],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.5,
+  "notes": "The soundness-critical side condition 'x is not free in phi' rests on a free-variable/freeness notion; if a node exists for it (e.g. def:free / def:free-variable) it would be the one load-bearing candidate edge here. Not proposed because (a) the id is unconfirmed from the graph alone, and (b) no logical-axiom-schema precedent yet fixes whether this graph attaches stating-vocabulary to axiom schemas (root:axiom) or treats them as DAG roots. Parallel case: 0034-0002, whose freeness analogue ('free for') IS a confirmed node. Whatever axiom-layer convention is chosen should govern both."
+}

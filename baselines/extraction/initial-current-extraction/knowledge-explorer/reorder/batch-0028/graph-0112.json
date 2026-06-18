@@ -1,0 +1,12 @@
+{
+  "graph_id": "0028-0112",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "order-on-z",
+  "term": "thm:positive-multiplication-preserves-strict-order-on-z",
+  "kind": "Theorem",
+  "title": "Multiplication by Positives Preserves Strict Order on $ $",
+  "root": "",
+  "statement": "Multiplication by a positive integer preserves strict order on both sides.",
+  "current_dependencies": []
+}

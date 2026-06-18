@@ -1,0 +1,43 @@
+{
+  "graph_id": "0023-0044",
+  "volume": "ii",
+  "chapter": "reals",
+  "section": "multiplication-on-r",
+  "term": "def:multiplication-on-r",
+  "kind": "Definition",
+  "title": "Multiplication of Cuts",
+  "root": "",
+  "statement": "For cuts $\\alpha,\\beta\\in\\mathbb{R}$, define $\\alpha\\cdot\\beta$ by sign cases:\nuse $|\\alpha|\\cdot|\\beta|$ when $\\alpha$ and $\\beta$ have the same sign, use\n$-(|\\alpha|\\cdot|\\beta|)$ when they have opposite signs, and use\n$0_{\\mathbb{R}}$ when either factor is $0_{\\mathbb{R}}$.",
+  "current_dependencies": [
+    {
+      "id": "def:negation-on-r",
+      "title": "Negation of a Cut",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:product-nonnegative-on-r",
+      "title": "Product of Nonnegative Cuts",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:real-chapter-absolute-value-on-r",
+      "title": "Absolute Value on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:reals",
+      "title": "The Real Numbers",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:zero-in-r",
+      "title": "Zero in $ $",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

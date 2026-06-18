@@ -1,0 +1,31 @@
+{
+  "graph_id": "0024-0037",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "embedding-z-into-q",
+  "term": "thm:q-is-field-of-fractions-of-z",
+  "kind": "Theorem",
+  "title": "$ $ Is the Field of Fractions of $ $",
+  "root": "",
+  "statement": "For every $x\\in\\mathbb{Q}$, there exist $m,n\\in\\mathbb{Z}$ with\n$n\\ne0_{\\mathbb{Z}}$ such that\n\\[\nx=\\iota(m)\\cdot \\iota(n)^{-1}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:rational-class-notation",
+      "title": "Rational Class Notation",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "lem:vanishing-criterion-q",
+      "title": "Vanishing Criterion in $ $",
+      "kind": "Lemma",
+      "root": ""
+    },
+    {
+      "id": "thm:every-nonzero-rational-has-multiplicative-inverse",
+      "title": "Every Nonzero Rational Has a Multiplicative Inverse",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

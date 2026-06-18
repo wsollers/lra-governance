@@ -1,0 +1,19 @@
+{
+  "graph_id": "0024-0140",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "ordered-field-structure-of-q",
+  "term": "cor:natural-numbers-positive-on-q",
+  "kind": "Corollary",
+  "title": "Natural Numbers Are Positive in $ $",
+  "root": "",
+  "statement": "Every natural number embedded in $\\mathbb{Q}$ is positive.",
+  "current_dependencies": [
+    {
+      "id": "cor:one-positive-on-q",
+      "title": "One Is Positive in $ $",
+      "kind": "Corollary",
+      "root": ""
+    }
+  ]
+}

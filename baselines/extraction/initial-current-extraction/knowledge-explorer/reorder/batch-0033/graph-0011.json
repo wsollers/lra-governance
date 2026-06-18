@@ -1,0 +1,37 @@
+{
+  "graph_id": "0033-0011",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "algebra",
+  "term": "thm:replacement-of-logical-equivalents-propositional-logic",
+  "kind": "Theorem",
+  "title": "Replacement of Logical Equivalents",
+  "root": "",
+  "statement": "Replacing logically equivalent formulas inside a formula context preserves logical equivalence:\n\\[\n\\varphi\\equiv\\psi\n\\Longrightarrow\nC[\\varphi]\\equiv C[\\psi].\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:formula-context-propositional-logic",
+      "title": "Formula Context",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:logical-equivalence-propositional-logic",
+      "title": "Logical Equivalence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "lem:coincidence-lemma-propositional-logic",
+      "title": "Coincidence Lemma for Propositional Logic",
+      "kind": "Lemma",
+      "root": ""
+    },
+    {
+      "id": "thm:unique-extension-truth-assignment-propositional-logic",
+      "title": "Unique Extension of a Truth Assignment",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

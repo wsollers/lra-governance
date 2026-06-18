@@ -1,0 +1,31 @@
+{
+  "graph_id": "0016-0050",
+  "volume": "iii",
+  "chapter": "functions",
+  "section": "real-valued-functions",
+  "term": "def:pointwise-scalar-multiple-of-a-function",
+  "kind": "Definition",
+  "title": "Pointwise Scalar Multiple of a Function",
+  "root": "",
+  "statement": "Let $X\\subseteq\\mathbb{R}$, let $f:X\\to\\mathbb{R}$, and let\n$c\\in\\mathbb{R}$. The pointwise scalar multiple $cf:X\\to\\mathbb{R}$ is\nthe function defined by\n\\[\n (cf)(x)=c f(x)\n \\qquad (x\\in X).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:function",
+      "title": "Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:multiplication-on-r",
+      "title": "Multiplication of Cuts",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:subset",
+      "title": "Subset",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

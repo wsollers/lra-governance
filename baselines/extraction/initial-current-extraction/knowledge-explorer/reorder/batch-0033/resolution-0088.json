@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0088",
+  "term": "def:nnf-conversion-procedure-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["thm:basic-boolean-equivalence-laws-propositional-logic", "thm:biconditional-equivalence-laws-propositional-logic", "thm:conditional-equivalence-laws-propositional-logic", "thm:de-morgan-laws-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.7,
+  "notes": "Each conversion step is licensed by the named equivalence law: eliminate biconditionals (thm:biconditional-equivalence-laws), eliminate conditionals (thm:conditional-equivalence-laws), eliminate double negations (thm:basic-boolean-equivalence-laws), push negations inward (thm:de-morgan-laws). All four load-bearing and present."
+}

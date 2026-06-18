@@ -1,0 +1,19 @@
+{
+  "graph_id": "0014-0136",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "subsequences",
+  "term": "thm:frequent-properties-yield-subsequences",
+  "kind": "Theorem",
+  "title": "Frequent Properties Yield Subsequences",
+  "root": "",
+  "statement": "Let $P(n)$ be a property of indices. If for every $N\\in\\mathbb{N}$ there\nexists $n\\ge N$ such that $P(n)$ holds, then there exists a strictly\nincreasing index map $\\sigma:\\mathbb{N}\\to\\mathbb{N}$ such that\n$P(\\sigma(k))$ holds for every $k\\in\\mathbb{N}$.",
+  "current_dependencies": [
+    {
+      "id": "def:subsequence",
+      "title": "Subsequence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

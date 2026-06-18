@@ -1,0 +1,12 @@
+{
+  "graph_id": "0024-0027",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "construction-of-q",
+  "term": "thm:zero-is-a-rational",
+  "kind": "Theorem",
+  "title": "Zero Is a Rational",
+  "root": "",
+  "statement": "The class $0_{\\mathbb{Q}}$ is an element of $\\mathbb{Q}$.",
+  "current_dependencies": []
+}

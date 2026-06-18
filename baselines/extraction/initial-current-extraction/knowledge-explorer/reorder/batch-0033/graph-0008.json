@@ -1,0 +1,25 @@
+{
+  "graph_id": "0033-0008",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "algebra",
+  "term": "thm:distributive-laws-propositional-logic",
+  "kind": "Theorem",
+  "title": "Distributive Laws for Propositional Logic",
+  "root": "",
+  "statement": "For all \\(\\varphi,\\psi,\\chi\\in\\WFF\\),\n\\[\n\\varphi\\land(\\psi\\lor\\chi)\n\\equiv\n(\\varphi\\land\\psi)\\lor(\\varphi\\land\\chi),\n\\]\nand\n\\[\n\\varphi\\lor(\\psi\\land\\chi)\n\\equiv\n(\\varphi\\lor\\psi)\\land(\\varphi\\lor\\chi).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:logical-equivalence-propositional-logic",
+      "title": "Logical Equivalence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:unique-extension-truth-assignment-propositional-logic",
+      "title": "Unique Extension of a Truth Assignment",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "graph_id": "0018-0034",
+  "volume": "iii",
+  "chapter": "differentiation",
+  "section": "derivative-geometry",
+  "term": "cor:equal-derivatives-constant-difference",
+  "kind": "Corollary",
+  "title": "Equal Derivatives Imply Difference Is Constant",
+  "root": "",
+  "statement": "Let $I := [a,b] \\subseteq \\mathbb{R}$, and let $f, g : I \\to \\mathbb{R}$ be continuous on $I$ and differentiable on $(a,b)$. If\n\\[\nf'(x) = g'(x) \\qquad \\text{for all } x \\in (a,b),\n\\]\nthen there exists $C \\in \\mathbb{R}$ such that $f(x) = g(x) + C$ for all $x \\in I$.",
+  "current_dependencies": [
+    {
+      "id": "thm:zero-derivative-implies-constant",
+      "title": "Zero Derivative Implies Constant",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

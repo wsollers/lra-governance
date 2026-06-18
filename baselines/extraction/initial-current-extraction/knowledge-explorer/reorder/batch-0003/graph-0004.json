@@ -1,0 +1,25 @@
+{
+  "graph_id": "0003-0004",
+  "volume": "viii",
+  "chapter": "algebras-of-sets",
+  "section": "rings-of-sets",
+  "term": "lem:self-additive-inverse",
+  "kind": "Lemma",
+  "title": "Self Additive Inverse",
+  "root": "",
+  "statement": "In any Boolean ring $R$,\n\\[\np + p = 0 \\qquad \\text{for all } p \\in R.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:boolean-ring",
+      "title": "Boolean Ring",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:characteristic-2",
+      "title": "Characteristic 2",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

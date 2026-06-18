@@ -1,0 +1,31 @@
+{
+  "graph_id": "0032-0010",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "cardinality",
+  "term": "thm:schroder-bernstein",
+  "kind": "Theorem",
+  "title": "Schröder--Bernstein Theorem",
+  "root": "",
+  "statement": "If $|A| \\leq |B|$ and $|B| \\leq |A|$, then $A \\sim B$.\n\nEquivalently: if there exist injections $f : A \\hookrightarrow B$ and\n$g : B \\hookrightarrow A$, then there exists a bijection $h : A \\to B$.",
+  "current_dependencies": [
+    {
+      "id": "def:bijective",
+      "title": "Bijective Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:cardinality-order",
+      "title": "Comparing Cardinalities",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:injective",
+      "title": "Injective Function",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

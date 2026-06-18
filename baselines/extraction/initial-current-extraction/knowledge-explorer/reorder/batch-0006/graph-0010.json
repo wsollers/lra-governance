@@ -1,0 +1,43 @@
+{
+  "graph_id": "0006-0010",
+  "volume": "viii",
+  "chapter": "computational-geometry",
+  "section": "convex-hulls",
+  "term": "thm:computational-geometry-supporting-functional-hull-vertices",
+  "kind": "Theorem",
+  "title": "Supporting functional characterization of hull vertices",
+  "root": "",
+  "statement": "Let \\(P\\subset\\mathbb{R}^2\\) be finite and in general position. A point \\(p\\in P\\)\nis a vertex of \\(\\conv(P)\\) if and only if there exists a direction\n\\(d\\in\\mathbb{R}^2\\setminus\\{0\\}\\) such that\n\\[\n \\langle d,p\\rangle>\\langle d,q\\rangle\n \\qquad\n \\text{for all } q\\in P\\setminus\\{p\\}.\n\\]\nEquivalently, \\(p\\) is the unique point of \\(P\\) attaining\n\\[\n \\max_{q\\in P}\\langle d,q\\rangle.\n\\]\nThus every hull vertex is a maximum of \\(P\\) under some linear functional.",
+  "current_dependencies": [
+    {
+      "id": "def:computational-geometry-convex-combination",
+      "title": "Convex Combination",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:computational-geometry-convex-hull",
+      "title": "Convex Hull",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:computational-geometry-extreme-point",
+      "title": "Extreme Point",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:computational-geometry-supporting-line",
+      "title": "Supporting Line",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "lem:computational-geometry-linear-functionals-convex-combinations",
+      "title": "Linear functionals preserve convex combinations",
+      "kind": "Lemma",
+      "root": ""
+    }
+  ]
+}

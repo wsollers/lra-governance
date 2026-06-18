@@ -1,0 +1,31 @@
+{
+  "graph_id": "0032-0071",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "order",
+  "term": "prop:induced-poset",
+  "kind": "Proposition",
+  "title": "$ _f$ is a partial order iff $f$ is injective",
+  "root": "",
+  "statement": "Let $(B, \\leq')$ be a partially ordered set and $f : A \\to B$.\nThe induced order $\\leq_f$ is a partial order on $A$ if and only if\n$f$ is injective.",
+  "current_dependencies": [
+    {
+      "id": "def:induced-order",
+      "title": "Induced Order",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:injective",
+      "title": "Injective Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:partial-order",
+      "title": "Partial Order",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

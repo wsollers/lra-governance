@@ -1,0 +1,12 @@
+{
+  "graph_id": "0028-0023",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "divisibility-in-z",
+  "term": "def:divisibility-in-z",
+  "kind": "Definition",
+  "title": "Divisibility in $ $",
+  "root": "",
+  "statement": "For $a,b\\in\\mathbb{Z}$, define\n\\[\na\\mid b\n\\quad:\\Longleftrightarrow\\quad\n\\exists c\\in\\mathbb{Z}\\;(b=a\\cdot c).\n\\]",
+  "current_dependencies": []
+}

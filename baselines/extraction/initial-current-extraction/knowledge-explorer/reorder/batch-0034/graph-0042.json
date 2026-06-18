@@ -1,0 +1,19 @@
+{
+  "graph_id": "0034-0042",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "quantifiers",
+  "term": "thm:vacuous",
+  "kind": "Theorem",
+  "title": "Vacuous Quantification",
+  "root": "",
+  "statement": "If \\(x\\) does not occur free in \\(\\varphi\\), then\n\\[\n\\forall x\\,\\varphi\\equiv\\varphi,\n\\qquad\n\\exists x\\,\\varphi\\equiv\\varphi.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:quantifier-scope",
+      "title": "Quantifier Scope",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

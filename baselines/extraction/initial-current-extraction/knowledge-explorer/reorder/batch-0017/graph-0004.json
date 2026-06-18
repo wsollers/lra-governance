@@ -1,0 +1,12 @@
+{
+  "graph_id": "0017-0004",
+  "volume": "iii",
+  "chapter": "elementary-functions",
+  "section": "hyperbolic",
+  "term": "prop:hyperbolic-pythagorean",
+  "kind": "Proposition",
+  "title": "Hyperbolic Pythagorean Identity",
+  "root": "",
+  "statement": "For all $x \\in \\mathbb{R}$:\n\\[\n \\cosh^2 x - \\sinh^2 x = 1.\n\\]",
+  "current_dependencies": []
+}

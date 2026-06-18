@@ -1,0 +1,19 @@
+{
+  "graph_id": "0022-0006",
+  "volume": "ii",
+  "chapter": "structure-of-real-line",
+  "section": "covers-and-subcovers",
+  "term": "def:finite-subcover",
+  "kind": "Definition",
+  "title": "Subcover and Finite Subcover",
+  "root": "",
+  "statement": "Let $\\{U_{i}\\}_{i\\in I}$ be an open cover of $E$. A \\emph{subcover} is a subfamily $\\{U_{i}\\}_{i\\in J}$ with $J\\subseteq I$ that still covers $E$. It is a \\emph{finite subcover} when $J$ is finite.",
+  "current_dependencies": [
+    {
+      "id": "def:real-open-cover",
+      "title": "Open Cover",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

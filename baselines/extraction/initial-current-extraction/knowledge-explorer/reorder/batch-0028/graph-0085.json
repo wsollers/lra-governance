@@ -1,0 +1,25 @@
+{
+  "graph_id": "0028-0085",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "order-on-z",
+  "term": "cor:right-addition-preserves-strict-order-on-z",
+  "kind": "Corollary",
+  "title": "Right Addition Preserves Strict Order on $ $",
+  "root": "",
+  "statement": "For all $x,y,z\\in\\mathbb{Z}$,\n\\[\nx<y \\Longrightarrow x+z<y+z.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "thm:addition-on-z-commutative",
+      "title": "Addition on $ $ Is Commutative",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:left-addition-preserves-strict-order-on-z",
+      "title": "Left Addition Preserves Strict Order on $ $",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0007",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "algebraic-structures",
+  "term": "def:zero-divisor",
+  "kind": "Definition",
+  "title": "Zero Divisor",
+  "root": "",
+  "statement": "Let $R$ be a ring.\nA nonzero element $a\\in R$ is a \\textbf{zero divisor} if there exists a\nnonzero element $b\\in R$ such that $ab=0$.",
+  "current_dependencies": []
+}

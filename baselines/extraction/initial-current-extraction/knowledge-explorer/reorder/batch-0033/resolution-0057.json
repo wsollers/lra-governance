@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0057",
+  "term": "def:nor-connective-propositional-logic",
+  "verdict": "change",
+  "dependencies": ["def:logical-connective", "def:logical-equivalence-propositional-logic", "def:truth-assignment-propositional-logic"],
+  "rationale": "NOR is defined by the equivalence phi NOR psi == not(phi or psi), so def:logical-equivalence (the ==) is the load-bearing semantic relation and was missing. Added, exactly as for NAND (0054).",
+  "licensing_quote": "\\equiv",
+  "confidence": 0.6,
+  "notes": "def:truth-assignment kept but flagged as the transitive dep beneath def:logical-equivalence -- same situation as 0054. Reviewer may replace rather than keep both."
+}

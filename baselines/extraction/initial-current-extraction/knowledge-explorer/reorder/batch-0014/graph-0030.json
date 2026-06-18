@@ -1,0 +1,25 @@
+{
+  "graph_id": "0014-0030",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "convergence",
+  "term": "def:pointwise-difference-sequence",
+  "kind": "Definition",
+  "title": "Pointwise Difference of Sequences",
+  "root": "",
+  "statement": "Let $(x_n)$ and $(y_n)$ be real sequences. The \\textbf{pointwise difference}\nof $(x_n)$ and $(y_n)$ is the real sequence $(x_n-y_n)$ defined by\n\\[\n(x-y)_n := x_n-y_n\n\\qquad\n\\text{for every } n\\in\\mathbb{N}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:pointwise-sum-sequence",
+      "title": "Pointwise Sum of Sequences",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:sequence",
+      "title": "Sequence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

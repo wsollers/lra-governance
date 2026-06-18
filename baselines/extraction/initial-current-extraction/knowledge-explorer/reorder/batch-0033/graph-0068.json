@@ -1,0 +1,37 @@
+{
+  "graph_id": "0033-0068",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "normal-forms",
+  "term": "thm:canonical-conjunctive-normal-form-propositional-logic",
+  "kind": "Theorem",
+  "title": "Canonical Conjunctive Normal Form Theorem",
+  "root": "",
+  "statement": "Every formula \\(\\varphi\\in\\WFF\\) is\n\nto its\n\nrelative to a fixed ordering of its finitely many variables.\n\\[\n\\varphi\\equiv \\operatorname{CCNF}_{P_1,\\ldots,P_n}(\\varphi).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:canonical-conjunctive-normal-form-propositional-logic",
+      "title": "Canonical Conjunctive Normal Form",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:logical-equivalence-propositional-logic",
+      "title": "Logical Equivalence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "lem:coincidence-lemma-propositional-logic",
+      "title": "Coincidence Lemma for Propositional Logic",
+      "kind": "Lemma",
+      "root": ""
+    },
+    {
+      "id": "thm:finite-truth-table-propositional-logic",
+      "title": "Finite Truth-Table Theorem",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

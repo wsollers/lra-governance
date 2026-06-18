@@ -1,0 +1,25 @@
+{
+  "graph_id": "0019-0011",
+  "volume": "iii",
+  "chapter": "continuity",
+  "section": "gauge",
+  "term": "lem:every-point-covered-by-tag",
+  "kind": "Lemma",
+  "title": "Every Point Is Covered by a Tag",
+  "root": "",
+  "statement": "Let $\\dot{\\mathcal{P}}=\\{([x_{i-1},x_i],t_i)\\}_{i=1}^n$ be a tagged partition of $[a,b]$ that is $\\delta$-fine on $[a,b]$, and let $x\\in[a,b]$. Then there exists $i\\in\\{1,\\ldots,n\\}$ such that $|x-t_i|<\\delta(t_i)$.",
+  "current_dependencies": [
+    {
+      "id": "def:delta-fine-partition",
+      "title": "$ $-Fine Partition",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:tagged-partition",
+      "title": "Tagged Partition",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

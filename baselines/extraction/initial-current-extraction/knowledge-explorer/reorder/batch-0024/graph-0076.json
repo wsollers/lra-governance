@@ -1,0 +1,31 @@
+{
+  "graph_id": "0024-0076",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "operations-on-q-classes",
+  "term": "lem:reciprocal-on-q-respects-equivalence",
+  "kind": "Lemma",
+  "title": "Reciprocal Respects Fraction Equivalence",
+  "root": "",
+  "statement": "If $[a,b]=[a',b']$ and $[a,b]\\ne 0_{\\mathbb{Q}}$, then\n\\[\n[a,b]^{-1}=[a',b']^{-1}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:fraction-equivalence",
+      "title": "Fraction Equivalence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:reciprocal-on-q-classes",
+      "title": "Reciprocal on Nonzero $ $-Classes",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "lem:reciprocal-denominator-nonzero-q",
+      "title": "Reciprocal Lands in $ $",
+      "kind": "Lemma",
+      "root": ""
+    }
+  ]
+}

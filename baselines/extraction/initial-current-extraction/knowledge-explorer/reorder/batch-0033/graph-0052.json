@@ -1,0 +1,25 @@
+{
+  "graph_id": "0033-0052",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "functional-completeness",
+  "term": "def:minimal-complete-basis-propositional-logic",
+  "kind": "Definition",
+  "title": "Minimal Complete Basis",
+  "root": "",
+  "statement": "A functionally complete connective basis \\(B\\) is \\emph{minimal complete} if no\nproper subset of \\(B\\) is functionally complete.",
+  "current_dependencies": [
+    {
+      "id": "def:connective-basis-propositional-logic",
+      "title": "Connective Basis",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:functionally-complete-connective-set-propositional-logic",
+      "title": "Functionally Complete Connective Set",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

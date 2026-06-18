@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0002",
+  "term": "def:propositional-equivalence-law",
+  "verdict": "ok",
+  "dependencies": ["def:logical-equivalence-propositional-logic", "def:well-formed-formula"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.7,
+  "notes": "A schema phi == psi over wffs (def:well-formed-formula) asserting logical equivalence (def:logical-equivalence-propositional-logic) -- both load-bearing and present. 'same truth value under every truth assignment' is precisely the unfolding of def:logical-equivalence, so the truth-assignment notion is transitive, not a missing direct edge."
+}

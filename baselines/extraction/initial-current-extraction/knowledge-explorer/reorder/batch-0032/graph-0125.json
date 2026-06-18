@@ -1,0 +1,31 @@
+{
+  "graph_id": "0032-0125",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "sets",
+  "term": "thm:associativity",
+  "kind": "Theorem",
+  "title": "Associativity of Union and Intersection",
+  "root": "",
+  "statement": "Let $A,B,C$ be sets. Then\n\\[\n(A \\cup B) \\cup C = A \\cup (B \\cup C)\n\\quad\\text{and}\\quad\n(A \\cap B) \\cap C = A \\cap (B \\cap C).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "ax:extensionality",
+      "title": "Axiom of Extensionality",
+      "kind": "Axiom",
+      "root": "axiom"
+    },
+    {
+      "id": "def:intersection",
+      "title": "Intersection",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:union",
+      "title": "Union",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

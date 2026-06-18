@@ -1,0 +1,25 @@
+{
+  "graph_id": "0028-0010",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "construction-of-z",
+  "term": "def:integer-prepair",
+  "kind": "Definition",
+  "title": "Integer Prepair",
+  "root": "",
+  "statement": "An \\emph{integer prepair} is an ordered pair $(a,b)\\in\\mathbb{W}\\times\\mathbb{W}$,\nread as the formal difference $a-b$.",
+  "current_dependencies": [
+    {
+      "id": "def:ordered-pair",
+      "title": "Ordered Pair",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:whole-numbers",
+      "title": "Whole Numbers",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "graph_id": "0014-0077",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "definition",
+  "term": "thm:eventually-bounded-below-tail-formulation",
+  "kind": "Theorem",
+  "title": "Eventually Bounded Below Tail Formulation",
+  "root": "",
+  "statement": "Let $(x_n)$ be a real sequence. The sequence $(x_n)$ is bounded below if and\nonly if there exist $N_0 \\in \\mathbb{N}$ and $m \\in \\mathbb{R}$ such that\n$m \\le x_n$ for every $n \\ge N_0$.",
+  "current_dependencies": [
+    {
+      "id": "def:sequence-bounded-below",
+      "title": "Sequence Bounded Below",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

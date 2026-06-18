@@ -1,0 +1,25 @@
+{
+  "graph_id": "0009-0015",
+  "volume": "vi",
+  "chapter": "linear-algebra",
+  "section": "vector-spaces",
+  "term": "thm:unique-additive-inverse",
+  "kind": "Theorem",
+  "title": "Unique Additive Inverse",
+  "root": "",
+  "statement": "Every vector in a vector space has a unique additive inverse.",
+  "current_dependencies": [
+    {
+      "id": "def:vector-space",
+      "title": "Vector Space",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:unique-additive-identity",
+      "title": "Unique Additive Identity",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

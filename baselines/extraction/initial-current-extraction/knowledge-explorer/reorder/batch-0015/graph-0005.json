@@ -1,0 +1,31 @@
+{
+  "graph_id": "0015-0005",
+  "volume": "iii",
+  "chapter": "real-analysis",
+  "section": "inequality",
+  "term": "thm:ineq-mixed-add",
+  "kind": "Theorem",
+  "title": "Mixed Addition of Inequalities",
+  "root": "",
+  "statement": "For all $a, b, c, d \\in \\mathbb{R}$,\n\\[\n a \\le b \\;\\land\\; c < d \\;\\Rightarrow\\; a + c < b + d.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "thm:ineq-add-both-sides",
+      "title": "Addition Preserves Strict Inequality",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:ineq-nonstrict-add-both-sides",
+      "title": "Addition Preserves Nonstrict Inequality",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:ineq-transitivity-mixed",
+      "title": "Mixed Transitivity",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

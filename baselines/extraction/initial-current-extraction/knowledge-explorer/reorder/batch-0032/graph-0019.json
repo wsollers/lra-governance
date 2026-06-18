@@ -1,0 +1,25 @@
+{
+  "graph_id": "0032-0019",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "families",
+  "term": "def:cover-full",
+  "kind": "Definition",
+  "title": "Cover",
+  "root": "",
+  "statement": "Let $A$ be a set and $\\mathcal{C}$ a collection of sets.\n$\\mathcal{C}$ is a \\emph{cover} of $A$ if every element of $A$ belongs to\nat least one member of $\\mathcal{C}$:\n\\[\nA \\;\\subseteq\\; \\bigcup_{C \\in \\mathcal{C}} C.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:subset",
+      "title": "Subset",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:union",
+      "title": "Union",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

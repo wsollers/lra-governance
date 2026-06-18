@@ -1,0 +1,31 @@
+{
+  "graph_id": "0028-0107",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "order-on-z",
+  "term": "thm:order-on-z-antisymmetric",
+  "kind": "Theorem",
+  "title": "Order on $ $ Is Antisymmetric",
+  "root": "",
+  "statement": "For all $x,y\\in\\mathbb{Z}$,\n\\[\nx\\le y\\land y\\le x \\Longrightarrow x=y.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:order-on-z",
+      "title": "Order on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:strict-order-on-z",
+      "title": "Strict Order on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:trichotomy-on-z",
+      "title": "Trichotomy on $ $",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

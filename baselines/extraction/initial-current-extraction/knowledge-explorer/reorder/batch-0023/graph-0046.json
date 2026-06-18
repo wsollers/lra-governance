@@ -1,0 +1,31 @@
+{
+  "graph_id": "0023-0046",
+  "volume": "ii",
+  "chapter": "reals",
+  "section": "multiplication-on-r",
+  "term": "def:product-nonnegative-on-r",
+  "kind": "Definition",
+  "title": "Product of Nonnegative Cuts",
+  "root": "",
+  "statement": "For nonnegative cuts $\\alpha,\\beta\\in\\mathbb{R}$, define\n\\[\n\\alpha\\cdot\\beta\n:=\n\\{r\\in\\mathbb{Q}:r<0_{\\mathbb{Q}}\\}\n\\cup\n\\{p\\cdot q:p\\in\\alpha,\\ q\\in\\beta,\\ p\\ge 0_{\\mathbb{Q}},\\ q\\ge 0_{\\mathbb{Q}}\\}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:multiplication-on-q-classes",
+      "title": "Multiplication on $ $-Classes",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:nonnegative-cut",
+      "title": "Nonnegative Cut",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:order-on-q",
+      "title": "Order on $ $",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

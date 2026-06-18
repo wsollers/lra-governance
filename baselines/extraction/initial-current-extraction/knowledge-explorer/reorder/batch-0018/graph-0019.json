@@ -1,0 +1,37 @@
+{
+  "graph_id": "0018-0019",
+  "volume": "iii",
+  "chapter": "differentiation",
+  "section": "chain-rule",
+  "term": "thm:chain-rule",
+  "kind": "Theorem",
+  "title": "Chain Rule",
+  "root": "",
+  "statement": "Let $I, J \\subseteq \\mathbb{R}$ be intervals, let $f : I \\to \\mathbb{R}$ and $g : J \\to \\mathbb{R}$, and suppose that $f(I) \\subseteq J$. Let $c \\in I$. If $f$ is differentiable at $c$ and $g$ is differentiable at $f(c)$, then the composition $g \\circ f$ is differentiable at $c$, and\n\\[\n(g \\circ f)'(c) = g'(f(c))\\,f'(c).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "thm:caratheodory-characterization-of-differentiability",
+      "title": "Carathéodory Characterization of Differentiability",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:composition-of-limits",
+      "title": "Composition of Limits",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:differentiable-implies-continuous",
+      "title": "Differentiable Implies Continuous",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:limit-product",
+      "title": "Product Rule for Function Limits",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

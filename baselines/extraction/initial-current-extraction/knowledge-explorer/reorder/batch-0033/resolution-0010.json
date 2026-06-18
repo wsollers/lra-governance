@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0010",
+  "term": "thm:logical-equivalence-equivalence-relation",
+  "verdict": "ok",
+  "dependencies": ["def:logical-equivalence-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.6,
+  "notes": "Reflexivity/symmetry/transitivity of == follow by unfolding def:logical-equivalence (identical truth-table columns) and inheriting the corresponding properties of equality of truth-value functions -- so the single dep suffices. A reference to a general def:equivalence-relation (or to equality being an equivalence relation) is a candidate if the convention cites the inherited structure, but it reads as the conclusion's framing rather than a used premise; left unproposed."
+}

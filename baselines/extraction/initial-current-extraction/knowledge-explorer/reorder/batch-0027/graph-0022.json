@@ -1,0 +1,25 @@
+{
+  "graph_id": "0027-0022",
+  "volume": "ii",
+  "chapter": "natural-numbers",
+  "section": "multiplication-on-n",
+  "term": "thm:multiplication-distributes-over-addition-both-sides",
+  "kind": "Theorem",
+  "title": "Multiplication Distributes over Addition on Both Sides",
+  "root": "",
+  "statement": "Let $(P,S,1)$ be a Peano system. For every $a,b,c \\in P$,\n\\[\na\\cdot(b+c)=(a\\cdot b)+(a\\cdot c)\n\\qquad\\text{and}\\qquad\n(a+b)\\cdot c=(a\\cdot c)+(b\\cdot c).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "thm:left-distributivity-of-multiplication-over-addition",
+      "title": "Left Distributivity of Multiplication Over Addition",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:multiplication-distributes-over-addition",
+      "title": "Multiplication Distributes Over Addition",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

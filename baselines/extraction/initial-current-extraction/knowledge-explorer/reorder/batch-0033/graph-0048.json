@@ -1,0 +1,31 @@
+{
+  "graph_id": "0033-0048",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "functional-completeness",
+  "term": "def:functionally-complete-connective-set-propositional-logic",
+  "kind": "Definition",
+  "title": "Functionally Complete Connective Set",
+  "root": "",
+  "statement": "A connective basis \\(B\\) is \\emph{functionally complete} if every Boolean\nfunction \\(f:\\mathbb{B}^n\\to\\mathbb{B}\\), for every \\(n\\ge 1\\), is represented\nby some formula using only connectives from \\(B\\).",
+  "current_dependencies": [
+    {
+      "id": "def:boolean-function-propositional-logic",
+      "title": "Boolean Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:boolean-function-representation-propositional-logic",
+      "title": "Representation of a Boolean Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:connective-basis-propositional-logic",
+      "title": "Connective Basis",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "graph_id": "0024-0132",
+  "volume": "ii",
+  "chapter": "rationals",
+  "section": "order-on-q",
+  "term": "thm:sign-of-reciprocal-q",
+  "kind": "Theorem",
+  "title": "Sign of a Reciprocal on $ $",
+  "root": "",
+  "statement": "For every nonzero $x\\in\\mathbb{Q}$,\n\\[\n0_{\\mathbb{Q}}<x \\Longrightarrow 0_{\\mathbb{Q}}<x^{-1},\n\\qquad\nx<0_{\\mathbb{Q}} \\Longrightarrow x^{-1}<0_{\\mathbb{Q}}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:order-on-q",
+      "title": "Order on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:reciprocal-on-q-classes",
+      "title": "Reciprocal on Nonzero $ $-Classes",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "prop:product-of-positives-is-positive-q",
+      "title": "Product of Positives Is Positive on $ $",
+      "kind": "Proposition",
+      "root": ""
+    },
+    {
+      "id": "thm:reciprocal-left-multiplicative-inverse-on-q",
+      "title": "Reciprocal Gives a Left Multiplicative Inverse on $ $",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

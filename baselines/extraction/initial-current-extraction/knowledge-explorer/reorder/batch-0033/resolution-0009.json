@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0009",
+  "term": "thm:identity-domination-laws-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:contradiction-propositional-logic", "def:logical-equivalence-propositional-logic", "def:tautology-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.6,
+  "notes": "The laws are stated over a tautological top (def:tautology) and a contradictory bottom (def:contradiction), with == as def:logical-equivalence -- all three load-bearing and present. The underlying truth-assignment evaluation (thm:unique-extension-truth-assignment) is transitive through def:tautology/def:contradiction (both defined via truth assignments), so it is not a missing direct edge."
+}

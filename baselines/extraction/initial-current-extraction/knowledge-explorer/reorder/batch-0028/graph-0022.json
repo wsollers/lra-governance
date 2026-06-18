@@ -1,0 +1,12 @@
+{
+  "graph_id": "0028-0022",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "divisibility-in-z",
+  "term": "def:associates-in-z",
+  "kind": "Definition",
+  "title": "Associates in $ $",
+  "root": "",
+  "statement": "Integers $a,b\\in\\mathbb{Z}$ are \\emph{associates} if $a=u\\cdot b$ for some\nunit $u\\in\\mathbb{Z}$.",
+  "current_dependencies": []
+}

@@ -1,0 +1,10 @@
+{
+  "graph_id": "0032-0030",
+  "term": "def:set-cover",
+  "verdict": "change",
+  "dependencies": ["def:power-set", "def:subset", "def:union"],
+  "rationale": "A cover is a subcollection C (def:subset) of the power set P(A) (def:power-set) whose union equals A (def:union). All three were missing from the empty set.",
+  "licensing_quote": "$\\bigcup_{C \\in \\mathcal{C}} C = A$",
+  "confidence": 0.65,
+  "notes": "Under-specified []. DUPLICATE FLAG: this node (def:set-cover, title 'Cover', condition union C = A) duplicates def:cover-full (0019, title 'Cover', condition A subset of union C). Two 'Cover' definitions differing only by = vs subset (equivalent when C subset of P(A)). Strong dedup candidate -- recommend the reviewer merge."
+}

@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0049",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "functions",
+  "term": "def:epimorphism",
+  "kind": "Definition",
+  "title": "Epimorphism",
+  "root": "",
+  "statement": "An \\textbf{epimorphism} is a surjective homomorphism.",
+  "current_dependencies": []
+}

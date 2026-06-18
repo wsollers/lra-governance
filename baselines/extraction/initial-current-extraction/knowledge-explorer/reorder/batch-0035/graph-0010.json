@@ -1,0 +1,19 @@
+{
+  "graph_id": "0035-0010",
+  "volume": "i",
+  "chapter": "axiom-systems",
+  "section": "models",
+  "term": "def:axiom-systems-interpretation",
+  "kind": "Definition",
+  "title": "Interpretation",
+  "root": "",
+  "statement": "Let $\\Sigma=(\\mathcal{C},\\mathcal{F},\\mathcal{R},\\operatorname{ar})$ be a\nfirst-order signature, and let $M$ be a nonempty set. An\n\\emph{interpretation of $\\Sigma$ on $M$} is an assignment $\\mathcal{I}$ that\nmaps each symbol of $\\Sigma$ to concrete data over $M$: constants are assigned\nelements of $M$, function symbols are assigned operations on $M$, and relation\nsymbols are assigned relations on $M$.",
+  "current_dependencies": [
+    {
+      "id": "def:signature",
+      "title": "First-Order Signature",
+      "kind": "Definition",
+      "root": "definitional_truth"
+    }
+  ]
+}

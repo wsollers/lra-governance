@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0026",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "fields",
+  "term": "prop:field-zero-product",
+  "kind": "Proposition",
+  "title": "Zero Product Property in a Field",
+  "root": "",
+  "statement": "Let $\\mathbb{F}$ be a field and $a, b \\in \\mathbb{F}$. Then\n\\[\nab = 0 \\;\\Longrightarrow\\; a = 0 \\;\\text{ or }\\; b = 0.\n\\]",
+  "current_dependencies": []
+}

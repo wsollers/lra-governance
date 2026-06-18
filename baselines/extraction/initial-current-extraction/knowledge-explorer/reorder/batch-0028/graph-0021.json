@@ -1,0 +1,19 @@
+{
+  "graph_id": "0028-0021",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "construction-of-z",
+  "term": "thm:zero-not-one-in-z",
+  "kind": "Theorem",
+  "title": "Zero Is Not One in $ $",
+  "root": "",
+  "statement": "In $\\mathbb{Z}$,\n\\[\n0_{\\mathbb{Z}}\\ne 1_{\\mathbb{Z}}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "thm:zero-not-in-n",
+      "title": "$0 $",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "graph_id": "0010-0008",
+  "volume": "vi",
+  "chapter": "lattice-order",
+  "section": "ordered-sets",
+  "term": "def:up-set",
+  "kind": "Definition",
+  "title": "Up-Set",
+  "root": "",
+  "statement": "Let $(P, \\leq)$ be a partially ordered set. A subset $Q \\subseteq P$ is\nan \\emph{up-set} (or \\emph{increasing set}, or \\emph{order filter}) if it\nis closed upward:\n\\[\n\\forall x \\in Q,\\; \\forall y \\in P,\\quad x \\leq y \\;\\Longrightarrow\\; y \\in Q.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:down-set",
+      "title": "Down-Set",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "prop:duality-principle",
+      "title": "Duality Principle",
+      "kind": "Proposition",
+      "root": ""
+    }
+  ]
+}

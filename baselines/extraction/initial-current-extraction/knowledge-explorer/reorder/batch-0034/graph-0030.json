@@ -1,0 +1,19 @@
+{
+  "graph_id": "0034-0030",
+  "volume": "i",
+  "chapter": "predicate-logic",
+  "section": "quantifiers",
+  "term": "def:matrix-prenex",
+  "kind": "Definition",
+  "title": "Matrix",
+  "root": "",
+  "statement": "In a formula \\(Q_1x_1\\cdots Q_nx_n\\,\\psi\\), the \\emph{matrix} is the trailing\nformula \\(\\psi\\). For prenex normal form, the matrix is required to be\nquantifier-free.",
+  "current_dependencies": [
+    {
+      "id": "def:wff-pred",
+      "title": "Well-Formed Formula",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

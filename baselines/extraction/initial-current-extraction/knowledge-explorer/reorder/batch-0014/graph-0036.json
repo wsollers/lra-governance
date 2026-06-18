@@ -1,0 +1,19 @@
+{
+  "graph_id": "0014-0036",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "convergence",
+  "term": "def:scalar-multiple-sequence",
+  "kind": "Definition",
+  "title": "Scalar Multiple of a Sequence",
+  "root": "",
+  "statement": "Let $(x_n)$ be a real sequence, and let $\\alpha\\in\\mathbb{R}$. The\n\\textbf{scalar multiple} $\\alpha(x_n)$ is the real sequence\n$(\\alpha x_n)$ defined by\n\\[\n(\\alpha x)_n := \\alpha x_n\n\\qquad\n\\text{for every } n\\in\\mathbb{N}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:sequence",
+      "title": "Sequence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

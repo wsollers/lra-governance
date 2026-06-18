@@ -1,0 +1,12 @@
+{
+  "graph_id": "0013-0001",
+  "volume": "iv",
+  "chapter": "foundations",
+  "section": "binomial-theorem",
+  "term": "prop:higher-diff-formula",
+  "kind": "Proposition",
+  "title": "Higher difference formula",
+  "root": "",
+  "statement": "For any function \\(f\\),\n\\[\n\\Delta^n f(x)\n=\n\\sum_{k=0}^{n} (-1)^{\\,n-k}\n\\binom{n}{k}\nf(x+k).\n\\]",
+  "current_dependencies": []
+}

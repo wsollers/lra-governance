@@ -1,0 +1,49 @@
+{
+  "graph_id": "0032-0041",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "functions",
+  "term": "thm:one-sided",
+  "kind": "Theorem",
+  "title": "One-Sided Inverses and Function Properties",
+  "root": "",
+  "statement": "Let $f : A \\to B$.\n- [label=(\\roman*)]\n- $f$ has a left inverse $\\iff$ $f$ is injective (and $A \\neq \\varnothing$ or $A=B=\\varnothing$).\n- $f$ has a right inverse $\\iff$ $f$ is surjective.\n- If $f$ has both a left inverse $g$ and a right inverse $h$, then $g = h$\nand $f$ is bijective.",
+  "current_dependencies": [
+    {
+      "id": "def:bijective",
+      "title": "Bijective Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:composition",
+      "title": "Composition",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:function",
+      "title": "Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:injective",
+      "title": "Injective Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:left-right-inverse",
+      "title": "Left and Right Inverses",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:surjective",
+      "title": "Surjective Function",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "graph_id": "0031-0108",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "order-relations",
+  "term": "def:reflexive-relation",
+  "kind": "Definition",
+  "title": "Reflexive Relation",
+  "root": "",
+  "statement": "\\[\n\\forall x,\\ xRx.\n\\]",
+  "current_dependencies": []
+}

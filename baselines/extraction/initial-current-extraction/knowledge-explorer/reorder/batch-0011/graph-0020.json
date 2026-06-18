@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0020",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "distinguished-elements",
+  "term": "def:inverse-element",
+  "kind": "Definition",
+  "title": "Inverse Element",
+  "root": "",
+  "statement": "Let $(G,\\star)$ be a group with identity element $e$.\nAn element $b\\in G$ is an \\textbf{inverse} of $a\\in G$ if\n\\[\na\\star b=b\\star a=e.\n\\]",
+  "current_dependencies": []
+}

@@ -1,0 +1,31 @@
+{
+  "graph_id": "0032-0002",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "cardinality",
+  "term": "def:countable",
+  "kind": "Definition",
+  "title": "Countable and Uncountable Sets",
+  "root": "",
+  "statement": "A set $A$ is \\emph{countably infinite} if $A \\sim \\mathbb{N}$. A set is\n\\emph{countable} if it is finite or countably infinite. A set is\n\\emph{uncountable} if it is infinite but not countable.",
+  "current_dependencies": [
+    {
+      "id": "def:finite-infinite",
+      "title": "Finite and Infinite Sets",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:natural-numbers",
+      "title": "The Natural Numbers",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:same-cardinality",
+      "title": "Same Cardinality",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

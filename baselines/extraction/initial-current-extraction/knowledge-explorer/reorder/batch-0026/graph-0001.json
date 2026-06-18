@@ -1,0 +1,19 @@
+{
+  "graph_id": "0026-0001",
+  "volume": "ii",
+  "chapter": "number-lines",
+  "section": "intervals-on-a-number-line",
+  "term": "def:closed-interval",
+  "kind": "Definition",
+  "title": "Closed Interval",
+  "root": "",
+  "statement": "Let $a,b\\in\\mathbb{R}$ with $a\\le b$. The \\emph{closed interval} with endpoints $a$ and $b$ is\n\\[\n[a,b]=\\{\\,x\\in\\mathbb{R} : a\\le x\\le b\\,\\}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:abstract-ordered-field",
+      "title": "Ordered Field",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

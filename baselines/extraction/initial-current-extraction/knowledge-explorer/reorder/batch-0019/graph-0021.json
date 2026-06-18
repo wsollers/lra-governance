@@ -1,0 +1,25 @@
+{
+  "graph_id": "0019-0021",
+  "volume": "iii",
+  "chapter": "continuity",
+  "section": "global-theorems",
+  "term": "thm:extreme-value-theorem",
+  "kind": "Theorem",
+  "title": "Extreme Value Theorem",
+  "root": "",
+  "statement": "Let $a,b \\in \\mathbb{R}$ with $a<b$, and let $f:[a,b] \\to \\mathbb{R}$ be continuous. There exist points $x_m,x_M \\in [a,b]$ such that $f(x_m) \\le f(x) \\le f(x_M)$ for every $x \\in [a,b]$. Equivalently, $f$ attains both an absolute maximum and an absolute minimum on $[a,b]$.",
+  "current_dependencies": [
+    {
+      "id": "def:absolute-extrema",
+      "title": "Absolute Maximum and Absolute Minimum",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:boundedness-theorem",
+      "title": "Boundedness Theorem",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

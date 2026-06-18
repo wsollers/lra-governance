@@ -1,0 +1,19 @@
+{
+  "graph_id": "0035-0020",
+  "volume": "i",
+  "chapter": "axiom-systems",
+  "section": "theories",
+  "term": "def:axiom-systems-consequence",
+  "kind": "Definition",
+  "title": "Consequence",
+  "root": "",
+  "statement": "A sentence $\\varphi$ is a \\emph{semantic consequence} of a set of premises\n$\\Gamma$, written $\\Gamma\\vDash\\varphi$, if every model of $\\Gamma$ is also a\nmodel of $\\varphi$. Equivalently, there is no structure in which all sentences\nof $\\Gamma$ are true while $\\varphi$ is false.",
+  "current_dependencies": [
+    {
+      "id": "def:axiom-systems-theory",
+      "title": "Theory",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

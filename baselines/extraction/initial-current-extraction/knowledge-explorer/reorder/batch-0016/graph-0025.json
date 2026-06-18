@@ -1,0 +1,37 @@
+{
+  "graph_id": "0016-0025",
+  "volume": "iii",
+  "chapter": "functions",
+  "section": "limits",
+  "term": "thm:monotone-limit-theorem",
+  "kind": "Theorem",
+  "title": "Monotone Limit Theorem",
+  "root": "",
+  "statement": "Let $a < b$ and let $f : (a,b) \\to \\mathbb{R}$ be monotone and\nbounded. Then both one-sided limits exist at every interior point.\nFor increasing $f$ and every $x_0 \\in (a,b)$:\n\\[\n f(x_0^-) = \\sup\\{\\,f(x) : a < x < x_0\\,\\},\n \\qquad\n f(x_0^+) = \\inf\\{\\,f(x) : x_0 < x < b\\,\\}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:function-bounded",
+      "title": "Bounded Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:function-monotone",
+      "title": "Monotone Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:left-hand-limit",
+      "title": "Left-Hand Limit",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:right-hand-limit",
+      "title": "Right-Hand Limit",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

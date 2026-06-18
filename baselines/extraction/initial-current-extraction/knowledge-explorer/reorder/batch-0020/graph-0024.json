@@ -1,0 +1,19 @@
+{
+  "graph_id": "0020-0024",
+  "volume": "iii",
+  "chapter": "bounding",
+  "section": "bounds-extremals",
+  "term": "def:epsilon-characterization-of-infimum",
+  "kind": "Definition",
+  "title": "Epsilon Characterization of Infimum",
+  "root": "",
+  "statement": "Let $A\\subseteq\\mathbb{R}$ and let $t\\in\\mathbb{R}$. The element $t$ satisfies the \\emph{epsilon characterization of the infimum} of $A$ if and only if $t$ is a lower bound of $A$ and for every $\\varepsilon>0$ there exists $a\\in A$ such that $a<t+\\varepsilon$.",
+  "current_dependencies": [
+    {
+      "id": "def:lower-bound",
+      "title": "Lower Bound",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "graph_id": "0004-0011",
+  "volume": "viii",
+  "chapter": "numerical-analysis",
+  "section": "interval-arithmetic",
+  "term": "def:box-add",
+  "kind": "Definition",
+  "title": "Minkowski Addition of Boxes",
+  "root": "",
+  "statement": "For boxes $X=[a,b]$ and $Y=[c,d]$ in $\\mathbb{R}^n$, their \\emph{Minkowski sum} is\n\\[\nX\\oplus Y \\;:=\\; \\{x+y : x\\in X,\\ y\\in Y\\}.\n\\]\nFor boxes, this closes in the class of boxes and satisfies the endpoint rule\n\\[\n[a,b]\\oplus[c,d] \\;=\\; [a+c,\\; b+d].\n\\]",
+  "current_dependencies": []
+}

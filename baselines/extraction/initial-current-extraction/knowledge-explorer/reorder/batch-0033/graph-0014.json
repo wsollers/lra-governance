@@ -1,0 +1,31 @@
+{
+  "graph_id": "0033-0014",
+  "volume": "i",
+  "chapter": "propositional-logic",
+  "section": "argument-forms",
+  "term": "def:valid-argument-form-propositional-logic",
+  "kind": "Definition",
+  "title": "Valid Argument Form",
+  "root": "",
+  "statement": "An argument form with premises \\(\\Gamma\\) and conclusion \\(\\varphi\\) is\n\\emph{valid} if every truth assignment that satisfies every formula in\n\\(\\Gamma\\) also satisfies \\(\\varphi\\).",
+  "current_dependencies": [
+    {
+      "id": "def:argument-form-propositional-logic",
+      "title": "Argument Form",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:logical-consequence-propositional-logic",
+      "title": "Logical Consequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:satisfaction-propositional-formula",
+      "title": "Satisfaction of a Formula",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

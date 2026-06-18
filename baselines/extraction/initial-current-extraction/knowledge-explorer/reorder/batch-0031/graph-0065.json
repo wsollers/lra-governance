@@ -1,0 +1,25 @@
+{
+  "graph_id": "0031-0065",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "field-and-ordered-field-laws",
+  "term": "thm:group-cancellation",
+  "kind": "Theorem",
+  "title": "Group Cancellation",
+  "root": "",
+  "statement": "In a group, cancellation holds on both sides:\n\\[\na\\ast c=b\\ast c\\Longrightarrow a=b\n\\qquad\\text{and}\\qquad\nc\\ast a=c\\ast b\\Longrightarrow a=b.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:group",
+      "title": "Group",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:uniqueness-of-inverse",
+      "title": "Uniqueness of Inverse",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

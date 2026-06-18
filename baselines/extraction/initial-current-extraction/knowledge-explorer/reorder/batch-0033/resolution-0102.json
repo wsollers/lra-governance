@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0102",
+  "term": "def:truth-assignment-propositional-logic",
+  "verdict": "change",
+  "dependencies": ["def:propositional-variable", "def:truth-value-propositional-logic"],
+  "rationale": "A truth assignment is a function v: Prop -> B assigning a truth value (def:truth-value) to each propositional variable (def:propositional-variable). It does not involve well-formed formulas at all -- the gloss confirms it values the ATOMIC formulas, and the connective clauses 'then determine the truth value of every well-formed formula' only at the separate extension v-hat (def:extended-truth-assignment, 0094). So def:well-formed-formula is not load-bearing and is removed.",
+  "licensing_quote": "",
+  "confidence": 0.65,
+  "notes": "Same shape as the spurious semantic/wff edges removed at 0047 (theory->truth-structure) and 0087 (NNF->logical-equivalence): a downstream notion (wff evaluation) attached to an upstream base object (the atomic-level assignment). This node is depended on very widely, so the stray def:well-formed-formula edge propagates noise -- worth the removal. Removal -> no licensing span."
+}

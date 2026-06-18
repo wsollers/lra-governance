@@ -1,0 +1,25 @@
+{
+  "graph_id": "0032-0013",
+  "volume": "i",
+  "chapter": "sets-relations-functions",
+  "section": "equivalence",
+  "term": "def:index",
+  "kind": "Definition",
+  "title": "Index of an Equivalence Relation",
+  "root": "",
+  "statement": "The \\emph{index} of $R$ on $A$ is the cardinality $|A/R|$, i.e.\\ the number\nof equivalence classes.",
+  "current_dependencies": [
+    {
+      "id": "def:quotient-set",
+      "title": "Quotient Set",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:same-cardinality",
+      "title": "Same Cardinality",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

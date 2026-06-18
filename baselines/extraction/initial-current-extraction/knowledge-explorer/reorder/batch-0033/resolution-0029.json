@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0029",
+  "term": "thm:modus-tollens-validity-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:valid-argument-form-propositional-logic", "thm:conditional-equivalence-laws-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.6,
+  "notes": "phi->psi is equivalent to its contrapositive not-psi -> not-phi (thm:conditional-equivalence-laws), from which not-psi yields not-phi. The conditional-equivalence edge is the load-bearing proof ingredient; both deps present."
+}

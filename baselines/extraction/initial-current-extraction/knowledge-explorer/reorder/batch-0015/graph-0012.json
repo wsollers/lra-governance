@@ -1,0 +1,25 @@
+{
+  "graph_id": "0015-0012",
+  "volume": "iii",
+  "chapter": "real-analysis",
+  "section": "inequality",
+  "term": "thm:ineq-reciprocal-flip",
+  "kind": "Theorem",
+  "title": "Reciprocal Equivalence for Positives",
+  "root": "",
+  "statement": "For all $a, b \\in \\mathbb{R}$ with $a > 0$ and $b > 0$,\n\\[\n a < b \\iff \\frac{1}{b} < \\frac{1}{a}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "thm:ineq-reciprocal-positive",
+      "title": "Reciprocal Reverses Strict Inequality for Positives",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:reciprocal-reverses-order-on-positives-q",
+      "title": "Reciprocal Reverses Order on Positives in $ $",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

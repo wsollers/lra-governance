@@ -1,0 +1,25 @@
+{
+  "graph_id": "0031-0069",
+  "volume": "ii",
+  "chapter": "arithmetic-operations-relations",
+  "section": "field-and-ordered-field-laws",
+  "term": "thm:ordered-field-one-positive",
+  "kind": "Theorem",
+  "title": "Ordered Field One Is Positive",
+  "root": "",
+  "statement": "In an ordered field,\n\\[\n0<1.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:abstract-ordered-field",
+      "title": "Ordered Field",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:ordered-field-squares-nonnegative",
+      "title": "Ordered Field Squares Are Nonnegative",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

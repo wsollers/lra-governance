@@ -1,0 +1,55 @@
+{
+  "graph_id": "0028-0121",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "order-on-z",
+  "term": "thm:z-totally-ordered-set",
+  "kind": "Theorem",
+  "title": "$ $ Is a Totally Ordered Set",
+  "root": "",
+  "statement": "The ordered pair $(\\mathbb{Z},\\le)$ is a totally ordered set.",
+  "current_dependencies": [
+    {
+      "id": "def:order-on-z",
+      "title": "Order on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:ordered-set",
+      "title": "Ordered Set",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:total-order",
+      "title": "Total Order",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "thm:order-on-z-antisymmetric",
+      "title": "Order on $ $ Is Antisymmetric",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:order-on-z-reflexive",
+      "title": "Order on $ $ Is Reflexive",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:order-on-z-total",
+      "title": "Order on $ $ Is Total",
+      "kind": "Theorem",
+      "root": ""
+    },
+    {
+      "id": "thm:order-on-z-transitive",
+      "title": "Order on $ $ Is Transitive",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

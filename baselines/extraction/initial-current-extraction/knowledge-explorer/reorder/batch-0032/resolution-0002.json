@@ -1,0 +1,10 @@
+{
+  "graph_id": "0032-0002",
+  "term": "def:countable",
+  "verdict": "ok",
+  "dependencies": ["def:finite-infinite", "def:natural-numbers", "def:same-cardinality"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.8,
+  "notes": "Countably infinite = equinumerous with N (def:same-cardinality, def:natural-numbers); countable = finite or countably infinite (def:finite-infinite); uncountable = infinite but not countable. All three load-bearing and present. Clean."
+}

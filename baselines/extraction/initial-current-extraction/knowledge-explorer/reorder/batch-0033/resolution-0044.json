@@ -1,0 +1,10 @@
+{
+  "graph_id": "0033-0044",
+  "term": "thm:dnf-representation-of-boolean-functions-propositional-logic",
+  "verdict": "ok",
+  "dependencies": ["def:boolean-function-representation-propositional-logic", "def:canonical-disjunctive-normal-form-propositional-logic", "def:disjunctive-normal-form-propositional-logic", "thm:canonical-disjunctive-normal-form-propositional-logic"],
+  "rationale": "",
+  "licensing_quote": "",
+  "confidence": 0.65,
+  "notes": "Every Boolean function is represented (def:boolean-function-representation) by a DNF formula (def:disjunctive-normal-form), constructed as the canonical DNF (def:canonical-disjunctive-normal-form) guaranteed by thm:canonical-disjunctive-normal-form. All four load-bearing and present; def:boolean-function (the f) is transitive via the representation node."
+}

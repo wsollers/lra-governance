@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0040",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "",
+  "term": "def:formal-model-theoretic-structures-l62",
+  "kind": "Definition",
+  "title": "$ $-Structure",
+  "root": "",
+  "statement": "Given a signature $\\mathcal{L}$, an \\textbf{$\\mathcal{L}$-structure}\n $\\mathcal{A}$ consists of:\n - A nonempty set $A$, called the \\textbf{universe} (or\n \\emph{carrier set}),\n- For each constant symbol $c$: an element $c^{\\mathcal{A}} \\in A$,\n- For each $n$-ary function symbol $f$: a function\n $f^{\\mathcal{A}} : A^n \\to A$,\n- For each $n$-ary relation symbol $R$: a subset\n $R^{\\mathcal{A}} \\subseteq A^n$.\n We write $\\mathcal{A} = (A, \\ldots)$, listing the universe and\n interpretations.",
+  "current_dependencies": []
+}

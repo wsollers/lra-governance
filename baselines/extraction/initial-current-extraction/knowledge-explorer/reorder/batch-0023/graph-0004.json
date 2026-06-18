@@ -1,0 +1,12 @@
+{
+  "graph_id": "0023-0004",
+  "volume": "ii",
+  "chapter": "reals",
+  "section": "addition-on-r",
+  "term": "lem:negation-of-cut-is-a-cut",
+  "kind": "Lemma",
+  "title": "Negation of a Cut Is a Cut",
+  "root": "",
+  "statement": "If $\\alpha\\in\\mathbb{R}$, then $-\\alpha$ is a Dedekind cut.",
+  "current_dependencies": []
+}

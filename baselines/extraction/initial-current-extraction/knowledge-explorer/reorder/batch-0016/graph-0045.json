@@ -1,0 +1,31 @@
+{
+  "graph_id": "0016-0045",
+  "volume": "iii",
+  "chapter": "functions",
+  "section": "real-valued-functions",
+  "term": "def:pointwise-absolute-value-of-a-function",
+  "kind": "Definition",
+  "title": "Pointwise Absolute Value of a Function",
+  "root": "",
+  "statement": "Let $X\\subseteq\\mathbb{R}$ and let $f:X\\to\\mathbb{R}$. The pointwise\nabsolute value $|f|:X\\to\\mathbb{R}$ is the function defined by\n\\[\n |f|(x)=|f(x)|\n \\qquad (x\\in X).\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:function",
+      "title": "Function",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:real-chapter-absolute-value-on-r",
+      "title": "Absolute Value on $ $",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:subset",
+      "title": "Subset",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

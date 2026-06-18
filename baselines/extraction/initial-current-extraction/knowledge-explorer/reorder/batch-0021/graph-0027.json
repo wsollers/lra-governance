@@ -1,0 +1,19 @@
+{
+  "graph_id": "0021-0027",
+  "volume": "ii",
+  "chapter": "whole-numbers",
+  "section": "extending-multiplication",
+  "term": "thm:right-zero-absorption-on-w",
+  "kind": "Theorem",
+  "title": "Right Zero Absorption on $ $",
+  "root": "",
+  "statement": "For every $a\\in\\mathbb{W}$,\n\\[\na\\cdot_{\\mathbb{W}}0=0.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "thm:zero-absorbing-for-multiplication-on-w",
+      "title": "Zero Is Absorbing for Multiplication on $ $",
+      "kind": "Theorem",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "graph_id": "0016-0056",
+  "volume": "iii",
+  "chapter": "functions",
+  "section": "subsets-real-line",
+  "term": "def:boundary-r",
+  "kind": "Definition",
+  "title": "Boundary",
+  "root": "",
+  "statement": "Let $X\\subseteq\\mathbb{R}$. The \\textbf{boundary} of $X$ is\n\\[\n \\partial X:=\\{x\\in\\mathbb{R}:\\forall\\varepsilon>0\\;(V_\\varepsilon(x)\\cap X\\neq\\emptyset\\wedge V_\\varepsilon(x)\\cap X^c\\neq\\emptyset)\\}.\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:boundary-point-r",
+      "title": "Boundary Point",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "graph_id": "0020-0005",
+  "volume": "iii",
+  "chapter": "bounding",
+  "section": "bounds-algebra",
+  "term": "prop:maximum-implies-supremum",
+  "kind": "Proposition",
+  "title": "Maximum Implies Supremum",
+  "root": "",
+  "statement": "Let $A\\subseteq\\mathbb{R}$ and let $m\\in A$. If $m$ is a maximum of $A$, then $m=\\sup A$.",
+  "current_dependencies": [
+    {
+      "id": "def:maximum",
+      "title": "Maximum",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:supremum",
+      "title": "Supremum",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "graph_id": "0011-0069",
+  "volume": "vi",
+  "chapter": "algebraic-structures",
+  "section": "laws-of-operations",
+  "term": "def:idempotent-operation",
+  "kind": "Definition",
+  "title": "Idempotent Operation",
+  "root": "",
+  "statement": "Let $\\star$ be a binary operation on $A$.\nThe operation $\\star$ is \\textbf{idempotent} if\n\\[\n\\forall a \\in A,\\quad a \\star a = a.\n\\]",
+  "current_dependencies": []
+}

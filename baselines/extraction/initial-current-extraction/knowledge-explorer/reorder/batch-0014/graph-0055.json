@@ -1,0 +1,25 @@
+{
+  "graph_id": "0014-0055",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "convergence",
+  "term": "thm:equivalence-of-convergence-formulations",
+  "kind": "Theorem",
+  "title": "Equivalence of Convergence Formulations",
+  "root": "",
+  "statement": "Let $(x_n) \\subseteq \\mathbb{R}$ and let $L \\in \\mathbb{R}$. The following\nstatements are equivalent.\n- [label=\\textup{(\\alph*)}]\n- $x_n \\to L$.\n- $\\forall \\varepsilon > 0 \\;\\exists K \\in \\mathbb{N} \\;\\forall n \\ge K\n \\;\\bigl(|x_n - L| < \\varepsilon\\bigr)$.\n- $\\forall \\varepsilon > 0 \\;\\exists K \\in \\mathbb{N} \\;\\forall n \\ge K\n \\;\\bigl(L - \\varepsilon < x_n < L + \\varepsilon\\bigr)$.\n- $\\forall \\varepsilon > 0 \\;\\exists K \\in \\mathbb{N} \\;\\forall n \\ge K\n \\;\\bigl(x_n \\in V_\\varepsilon(L)\\bigr)$.",
+  "current_dependencies": [
+    {
+      "id": "def:convergent-sequence",
+      "title": "Convergence of a Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:convergent-sequence-neighborhood",
+      "title": "Convergence --- Neighborhood Formulation",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

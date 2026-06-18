@@ -1,0 +1,12 @@
+{
+  "graph_id": "0028-0094",
+  "volume": "ii",
+  "chapter": "integers",
+  "section": "order-on-z",
+  "term": "thm:absolute-value-bounds-on-z",
+  "kind": "Theorem",
+  "title": "Bounding by Absolute Value",
+  "root": "",
+  "statement": "For every $x\\in\\mathbb{Z}$,\n\\[\n-|x|\\le x\\le |x|.\n\\]",
+  "current_dependencies": []
+}

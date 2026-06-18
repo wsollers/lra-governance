@@ -1,0 +1,25 @@
+{
+  "graph_id": "0014-0086",
+  "volume": "iii",
+  "chapter": "sequences",
+  "section": "divergence",
+  "term": "def:divergent-sequence",
+  "kind": "Definition",
+  "title": "Divergent Sequence",
+  "root": "",
+  "statement": "Let $(x_n)$ be a real sequence. The sequence $(x_n)$ is\n\\textbf{divergent} if there is no $L\\in\\mathbb{R}$ such that\n$x_n\\to L$.",
+  "current_dependencies": [
+    {
+      "id": "def:convergent-sequence",
+      "title": "Convergence of a Sequence",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:sequence",
+      "title": "Sequence",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

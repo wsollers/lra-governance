@@ -1,0 +1,12 @@
+{
+  "graph_id": "0012-0006",
+  "volume": "vi",
+  "chapter": "algebraic-geometry",
+  "section": "polynomial-rings",
+  "term": "def:ideal",
+  "kind": "Definition",
+  "title": "Ideal",
+  "root": "",
+  "statement": "Let $R$ be a commutative ring.\nA subset $I \\subseteq R$ is an \\emph{ideal} of $R$ if:\n- $0 \\in I$,\n- $a + b \\in I$ for all $a, b \\in I$,\n- $r \\cdot a \\in I$ for all $r \\in R$ and $a \\in I$.",
+  "current_dependencies": []
+}

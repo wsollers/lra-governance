@@ -1,0 +1,25 @@
+{
+  "graph_id": "0003-0002",
+  "volume": "viii",
+  "chapter": "algebras-of-sets",
+  "section": "rings-of-sets",
+  "term": "def:characteristic-2",
+  "kind": "Definition",
+  "title": "Characteristic 2",
+  "root": "",
+  "statement": "A ring $R$ is said to have \\textbf{characteristic~$2$} if\n\\[\np + p = 0 \\qquad \\text{for all } p \\in R. \\tag{10}\n\\]",
+  "current_dependencies": [
+    {
+      "id": "def:boolean-ring",
+      "title": "Boolean Ring",
+      "kind": "Definition",
+      "root": ""
+    },
+    {
+      "id": "def:idempotent-element",
+      "title": "Idempotent Element",
+      "kind": "Definition",
+      "root": ""
+    }
+  ]
+}

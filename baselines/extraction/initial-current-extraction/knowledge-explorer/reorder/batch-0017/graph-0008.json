@@ -1,0 +1,12 @@
+{
+  "graph_id": "0017-0008",
+  "volume": "iii",
+  "chapter": "elementary-functions",
+  "section": "logarithmic",
+  "term": "prop:power-dominates-log",
+  "kind": "Proposition",
+  "title": "Every Power Dominates the Logarithm",
+  "root": "",
+  "statement": "For every $r > 0$:\n\\[\n \\lim_{x \\to \\infty} \\frac{\\ln x}{x^r} = 0\n \\qquad\\text{and}\\qquad\n \\lim_{x \\to 0^+} x^r \\ln x = 0.\n\\]",
+  "current_dependencies": []
+}
