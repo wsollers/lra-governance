@@ -88,8 +88,13 @@ def chapter_manifest(universe: dependency_graph.Universe) -> dict[str, Any]:
 
 
 def issue_counts(issues: list[Any]) -> dict[str, Any]:
-    by_severity = Counter(getattr(issue, "severity", issue.get("severity", "")) for issue in issues)
-    by_code = Counter(getattr(issue, "code", issue.get("code", "")) for issue in issues)
+    def field(issue: Any, name: str) -> str:
+        if isinstance(issue, dict):
+            return str(issue.get(name, ""))
+        return str(getattr(issue, name, ""))
+
+    by_severity = Counter(field(issue, "severity") for issue in issues)
+    by_code = Counter(field(issue, "code") for issue in issues)
     return {
         "total": len(issues),
         "by_severity": dict(sorted(by_severity.items())),
@@ -303,4 +308,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
