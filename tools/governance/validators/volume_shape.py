@@ -7,7 +7,7 @@ from pathlib import Path
 from core.finding import Finding, finding
 from core.file_inventory import reachable_files
 from core.tex import read_text, strip_latex_comments
-from core.volume import chapter_roots, is_ignored
+from core.volume import chapter_roots, is_ignored, latex_input_path
 
 
 DEFAULT_SCHEMA = {
@@ -76,7 +76,34 @@ def validate(volume_root: Path) -> list[Finding]:
 
     for chapter in chapters:
         _validate_chapter(volume_root, chapter, findings, schema)
+    _validate_chapter_reachability(volume_root, chapters, findings)
     return findings
+
+
+def _volume_index_inputs(volume_root: Path) -> set[str]:
+    index = volume_root / "index.tex"
+    if not index.is_file():
+        return set()
+    text = strip_latex_comments(read_text(index))
+    return {
+        match.group(1)
+        for match in re.finditer(r"\\input\{([^}]+)\}", text)
+    }
+
+
+def _validate_chapter_reachability(volume_root: Path, chapters: list[Path], findings: list[Finding]) -> None:
+    routed = _volume_index_inputs(volume_root)
+    for chapter in chapters:
+        canonical = f"{latex_input_path(chapter / 'index.tex')}"
+        local = f"{chapter.name}/index"
+        if canonical not in routed and local not in routed:
+            _add(
+                findings,
+                volume_root,
+                chapter / "index.tex",
+                "chapter_not_in_volume_index",
+                f"Canonical chapter root is not routed from {volume_root.name}/index.tex: expected \\input{{{canonical}}}.",
+            )
 
 
 def _validate_chapter(volume_root: Path, chapter: Path, findings: list[Finding], schema: dict) -> None:

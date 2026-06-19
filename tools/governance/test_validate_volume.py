@@ -1289,6 +1289,37 @@ class ValidateVolumeTests(unittest.TestCase):
         for name, validator in VALIDATORS:
             self.assertEqual(validator.validate(volume), [], name)
 
+    def test_volume_shape_flags_canonical_chapter_not_routed_from_volume_index(self):
+        volume = make_volume()
+        chapter = volume / "orphaned"
+        write(chapter / "chapter.yaml", "subject: orphaned\n")
+        write(
+            chapter / "index.tex",
+            "\n".join(
+                [
+                    r"\chapter{Orphaned}",
+                    r"\label{chap:orphaned}",
+                    r"\breadcrumb{orphaned}{}{Orphaned}{}",
+                    r"\input{volume-ii/orphaned/notes/index}",
+                    r"\LRAExcludeFromPrintEditionBegin",
+                    r"\section*{Proofs}",
+                    r"\input{volume-ii/orphaned/proofs/index}",
+                    r"\section*{Capstone}",
+                    r"\input{volume-ii/orphaned/proofs/exercises/index}",
+                    r"\LRAExcludeFromPrintEditionEnd",
+                    "",
+                ]
+            ),
+        )
+        write(chapter / "notes" / "index.tex", "")
+        write(chapter / "proofs" / "index.tex", "")
+        write(chapter / "proofs" / "exercises" / "index.tex", "")
+        write(chapter / "proofs" / "exercises" / "capstone-orphaned.tex", "")
+
+        codes = {finding.code for finding in volume_shape.validate(volume)}
+
+        self.assertIn("chapter_not_in_volume_index", codes)
+
     def test_section_generator_emits_shape_accepted_by_validators(self):
         if TMP.exists():
             shutil.rmtree(TMP)
