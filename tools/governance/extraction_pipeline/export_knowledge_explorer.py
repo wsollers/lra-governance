@@ -30,6 +30,17 @@ KIND_DISPLAY = {
 }
 
 CHAPTER_WRAPPERS = {"analysis", "algebra"}
+WORKED_EXAMPLE_RE = re.compile(
+    r"\\begin\{workedexample\}(?:\[(?P<title>[^\]]*)\])?(?P<body>[\s\S]*?)\\end\{workedexample\}",
+    re.IGNORECASE,
+)
+WORKED_EXAMPLE_FOR_RE = re.compile(r"\\LRAWorkedExampleFor\{(?P<labels>[^{}]*)\}", re.IGNORECASE)
+WORKED_EXAMPLE_USES_RE = re.compile(r"\\LRAWorkedExampleUses\{(?P<labels>[^{}]*)\}", re.IGNORECASE)
+WORKED_EXAMPLE_TAGS_RE = re.compile(r"\\LRAWorkedExampleTags\{(?P<tags>[^{}]*)\}", re.IGNORECASE)
+WORKED_EXAMPLE_METADATA_RE = re.compile(
+    r"\\LRAWorkedExample(?:For|Uses|Tags)\{[^{}]*\}\s*",
+    re.IGNORECASE,
+)
 
 
 def load_json(path: Path) -> Any:
@@ -38,6 +49,10 @@ def load_json(path: Path) -> Any:
 
 def write_json(path: Path, payload: Any) -> None:
     path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+
+
+def split_csv(value: str) -> list[str]:
+    return [item.strip() for item in re.split(r"[,;\n]+", value or "") if item.strip()]
 
 
 def next_version(explorer: Path, generated_at: str) -> dict[str, Any]:
@@ -151,6 +166,38 @@ def statement_for_node(repos_root: Path, node: dict[str, Any]) -> str:
     return node.get("title") or node["label"]
 
 
+def collect_worked_examples(repos_root: Path, nodes: list[dict[str, Any]]) -> dict[str, list[dict[str, Any]]]:
+    examples: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    files = sorted({(node["repo"], node["file"]) for node in nodes})
+    for repo, file in files:
+        path = repos_root / repo / file
+        if not path.exists():
+            continue
+        text = dependency_graph.strip_comments(path.read_text(encoding="utf-8", errors="replace"))
+        for index, match in enumerate(WORKED_EXAMPLE_RE.finditer(text), start=1):
+            body = match.group("body").strip()
+            target_match = WORKED_EXAMPLE_FOR_RE.search(body)
+            if not target_match:
+                continue
+            title = (match.group("title") or f"Example {index}").strip()
+            uses_match = WORKED_EXAMPLE_USES_RE.search(body)
+            tags_match = WORKED_EXAMPLE_TAGS_RE.search(body)
+            cleaned_body = WORKED_EXAMPLE_METADATA_RE.sub("", body).strip()
+            line = text.count("\n", 0, match.start()) + 1
+            record = {
+                "label": title,
+                "title": title,
+                "body_tex": cleaned_body,
+                "uses": split_csv(uses_match.group("labels") if uses_match else ""),
+                "tags": split_csv(tags_match.group("tags") if tags_match else ""),
+                "source": source_from_file(file),
+                "source_line": line,
+            }
+            for target in split_csv(target_match.group("labels")):
+                examples[target].append(record)
+    return examples
+
+
 def title_for(node: dict[str, Any]) -> str:
     title = strip_statement_navigation(node.get("title") or node["label"])
     if r"\hyperref[" in title or r"\texorpdfstring" in title:
@@ -180,6 +227,7 @@ def build_export(run_dir: Path, repos_root: Path, version: dict[str, Any]) -> tu
     exported_nodes: list[dict[str, Any]] = []
     chapter_order: list[str] = []
     seen_chapters: set[str] = set()
+    examples_by_label = collect_worked_examples(repos_root, nodes)
 
     for node in sorted(nodes, key=lambda item: item["source_order"]):
         label = node["label"]
@@ -194,36 +242,37 @@ def build_export(run_dir: Path, repos_root: Path, version: dict[str, Any]) -> tu
         statement = statement_for_node(repos_root, node)
         kind = KIND_DISPLAY.get(node["kind"], node["kind"])
         name = title_for(node)
-        exported_nodes.append(
-            {
-                "id": label,
-                "kind": kind,
-                "name": name,
-                "deck": "",
-                "chapter": chapter,
-                "volume": volume,
-                "source": source_from_file(node["file"]),
-                "statement_display": statement,
-                "statement_tex": statement,
-                "source_text": statement,
-                "section": section_from_file(node["file"]),
-                "depends_on_ids": deps,
-                "used_by_ids": users,
-                "prereq_ids": [],
-                "equivalent_to_ids": [],
-                "implies_ids": [],
-                "depends_on_titles": [title_for(by_label[target]) for target in deps if target in by_label],
-                "used_by_titles": [title_for(by_label[source]) for source in users if source in by_label],
-                "dependencies": deps,
-                "ignored": False,
-                "is_theorem_like": kind in {"Theorem", "Lemma", "Proposition", "Corollary"},
-                "definitional_root": node.get("root_kind") == "definitional",
-                "is_root": bool(node.get("root_kind")) or kind == "Axiom",
-                "root_kind": node.get("root_kind") or ("axiom" if kind == "Axiom" else ""),
-                "env_name": node.get("env", ""),
-                "text_preview": re.sub(r"\s+", " ", statement)[:240],
-            }
-        )
+        exported = {
+            "id": label,
+            "kind": kind,
+            "name": name,
+            "deck": "",
+            "chapter": chapter,
+            "volume": volume,
+            "source": source_from_file(node["file"]),
+            "statement_display": statement,
+            "statement_tex": statement,
+            "source_text": statement,
+            "section": section_from_file(node["file"]),
+            "depends_on_ids": deps,
+            "used_by_ids": users,
+            "prereq_ids": [],
+            "equivalent_to_ids": [],
+            "implies_ids": [],
+            "depends_on_titles": [title_for(by_label[target]) for target in deps if target in by_label],
+            "used_by_titles": [title_for(by_label[source]) for source in users if source in by_label],
+            "dependencies": deps,
+            "ignored": False,
+            "is_theorem_like": kind in {"Theorem", "Lemma", "Proposition", "Corollary"},
+            "definitional_root": node.get("root_kind") == "definitional",
+            "is_root": bool(node.get("root_kind")) or kind == "Axiom",
+            "root_kind": node.get("root_kind") or ("axiom" if kind == "Axiom" else ""),
+            "env_name": node.get("env", ""),
+            "text_preview": re.sub(r"\s+", " ", statement)[:240],
+        }
+        if examples_by_label.get(label):
+            exported["examples"] = examples_by_label[label]
+        exported_nodes.append(exported)
 
     knowledge = {
         "metadata": {
