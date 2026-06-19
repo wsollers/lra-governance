@@ -34,24 +34,92 @@ jobs:
       - name: Build LaTeX Docker image
         run: docker build -t learning-real-analysis-latex -f docker/Dockerfile docker
 
-      - name: Compile volume PDF
+      - name: Compile digital PDF
         run: |
           docker run --rm \
             -v "${{ github.workspace }}:/workspace" \
             -w /workspace \
             learning-real-analysis-latex \
             latexmk -lualatex -interaction=nonstopmode -file-line-error -synctex=1 -shell-escape main.tex
+          mkdir -p pdf-output
+          cp build/main.pdf pdf-output/digital.pdf
 
-      - name: Verify PDF output
+      - name: Verify digital PDF
         run: |
-          test -s build/main.pdf
+          test -s pdf-output/digital.pdf
           python3 - <<'PY'
           from pathlib import Path
 
-          pdf = Path("build/main.pdf")
+          pdf = Path("pdf-output/digital.pdf")
           data = pdf.read_bytes()
           if not data.startswith(b"%PDF-"):
-              raise SystemExit("build/main.pdf does not start with a PDF header")
+              raise SystemExit("digital PDF does not start with a PDF header")
           if b"%%EOF" not in data[-2048:]:
-              raise SystemExit("build/main.pdf is missing a PDF EOF trailer")
+              raise SystemExit("digital PDF is missing a PDF EOF trailer")
           PY
+
+      - name: Clean LaTeX build output
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}:/workspace" \
+            -w /workspace \
+            learning-real-analysis-latex \
+            latexmk -C
+
+      - name: Compile print PDF
+        run: |
+          docker run --rm \
+            -e LRA_PRINT_EDITION=1 \
+            -v "${{ github.workspace }}:/workspace" \
+            -w /workspace \
+            learning-real-analysis-latex \
+            latexmk -lualatex -interaction=nonstopmode -file-line-error -synctex=1 -shell-escape main.tex
+          cp build/main.pdf pdf-output/print.pdf
+
+      - name: Verify print PDF
+        run: |
+          test -s pdf-output/print.pdf
+          python3 - <<'PY'
+          from pathlib import Path
+
+          pdf = Path("pdf-output/print.pdf")
+          data = pdf.read_bytes()
+          if not data.startswith(b"%PDF-"):
+              raise SystemExit("print PDF does not start with a PDF header")
+          if b"%%EOF" not in data[-2048:]:
+              raise SystemExit("print PDF is missing a PDF EOF trailer")
+          PY
+
+      - name: Checkout output repository
+        uses: actions/checkout@v4
+        with:
+          repository: wsollers/lra-volumes-output
+          token: ${{ secrets.SYNC_PAT }}
+          ref: main
+          path: output
+          fetch-depth: 0
+
+      - name: Publish PDFs to output repository
+        run: |
+          repo="${GITHUB_REPOSITORY##*/}"
+          mkdir -p output/digital output/print
+          cp pdf-output/digital.pdf "output/digital/${repo}.pdf"
+          cp pdf-output/print.pdf "output/print/${repo}.pdf"
+          cd output
+          git config core.autocrlf false
+          git config user.name "lra-pdf-bot"
+          git config user.email "lra-pdf-bot@noreply.github.com"
+          git add digital/ print/
+          if git diff --cached --quiet; then
+            echo "No PDF changes to publish"
+            exit 0
+          fi
+          git commit -m "Update ${repo} PDFs"
+          for attempt in 1 2 3; do
+            git pull --rebase origin main
+            if git push origin main; then
+              exit 0
+            fi
+            sleep 5
+          done
+          exit 1
