@@ -40,6 +40,22 @@ def write_json(path: Path, payload: Any) -> None:
     path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
+def next_version(explorer: Path, generated_at: str) -> dict[str, Any]:
+    path = explorer / "knowledge-version.json"
+    if path.exists():
+        current = load_json(path)
+        version_id = int(current.get("version_id", 0)) + 1
+    else:
+        version_id = 1
+    payload = {
+        "version_id": version_id,
+        "updated_at": generated_at,
+        "source": "lra-governance/tools/governance/extraction_pipeline/export_knowledge_explorer.py",
+    }
+    write_json(path, payload)
+    return payload
+
+
 def chapter_from_file(file: str) -> str:
     parts = Path(file.replace("\\", "/")).parts
     if len(parts) < 2:
@@ -142,7 +158,7 @@ def title_for(node: dict[str, Any]) -> str:
     return title
 
 
-def build_export(run_dir: Path, repos_root: Path) -> tuple[dict[str, Any], list[dict[str, str]]]:
+def build_export(run_dir: Path, repos_root: Path, version: dict[str, Any]) -> tuple[dict[str, Any], list[dict[str, str]]]:
     universe = load_json(run_dir / "universe.json")
     combined = load_json(run_dir / "combined-edges.json")
     nodes = universe["nodes"]
@@ -211,7 +227,8 @@ def build_export(run_dir: Path, repos_root: Path) -> tuple[dict[str, Any], list[
 
     knowledge = {
         "metadata": {
-            "generated_at": datetime.now(timezone.utc).isoformat(),
+            "generated_at": version["updated_at"],
+            "version_id": version["version_id"],
             "chapters": chapter_order,
             "node_count": len(exported_nodes),
             "edge_count": len(graph_edges),
@@ -254,7 +271,9 @@ def main() -> int:
     if not (explorer / ".git").exists():
         raise SystemExit(f"Missing lra-knowledge-explorer repo: {explorer}")
 
-    knowledge, graph_edges = build_export(run_dir, repos_root)
+    generated_at = datetime.now(timezone.utc).isoformat()
+    version = next_version(explorer, generated_at)
+    knowledge, graph_edges = build_export(run_dir, repos_root, version)
     write_json(explorer / "knowledge.json", knowledge)
     write_json(explorer / "graph-edges.json", graph_edges)
     write_json(
