@@ -383,7 +383,7 @@ def structural_roadmap_purge(text: str, info: FileInfo, ctx: Context):
                 "Retired role text is present; remove the block or wording.","error",n)
 
 # ============================================================
-# Folded in from validate_chapter_house_rules.py (logic moved, not rewritten).
+# Integrated structural rule coverage.
 #   block_discipline   -> top_level_prose, unexpected_top_level_environment,
 #                         plain_remark_or_example, unclosed_environment
 #   label_quality      -> weak_label_slug, ocr_like_label (prefix/presence stay
@@ -509,8 +509,8 @@ def capstone_structure(text: str, info: FileInfo, ctx: Context):
         yield Issue("invalid_capstone_box_count","Capstone must contain exactly one problem tcolorbox.","error",0)
 
 # ============================================================
-# Folded in from validate_chapter_house_rules.py -- structural IDENTITY of
-# chapter/section/subsection headings + labels (logic moved, not rewritten).
+# Integrated structural identity coverage for chapter/section/subsection
+# headings and labels.
 #   chapter_identity       -> missing_chapter_heading, starred_chapter_heading,
 #                             missing_chapter_label
 #   section_router_heading -> starred_section_router_heading,
@@ -609,7 +609,7 @@ def note_body_heading(text: str, info: FileInfo, ctx: Context):
             "error", _line_at(t, sub.start()))
 
 # ============================================================
-# Folded in from validate_chapter_house_rules.py (logic moved, not rewritten).
+# Integrated prose, reference-voice, and LaTeX integrity coverage.
 #   reference_voice          -> non_reference_voice            (was validate_voice)
 #   latex_integrity          -> mismatched_environment, unbalanced_display_math,
 #                               unbalanced_tcolorbox           (was validate_latex_integrity

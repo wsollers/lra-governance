@@ -71,6 +71,8 @@ jobs:
           if [[ "${{ matrix.repo }}" == lra-volume-* ]]; then
             rsync -av --delete governance/tools/ target/tools/
             rsync -av --delete governance/scripts/ target/scripts/
+            mkdir -p target/.github/workflows
+            cp governance/templates/volume-validate-and-compile.yml target/.github/workflows/validate-and-compile.yml
           fi
 
       - name: Commit and push if changed
@@ -80,7 +82,7 @@ jobs:
           git config user.email "governance-bot@noreply.github.com"
           git add .gitignore DESIGN.md REPOSITORY_STRUCTURE.md constitution/ docs/
           if [[ "${{ matrix.repo }}" == lra-volume-* ]]; then
-            git add tools/ scripts/
+            git add tools/ scripts/ .github/workflows/validate-and-compile.yml
           fi
           git diff --cached --quiet && echo "No governance changes for ${{ matrix.repo }}" && exit 0
           git commit -m "chore: sync governance files"

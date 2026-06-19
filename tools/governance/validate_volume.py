@@ -7,7 +7,7 @@ from collections import Counter
 from pathlib import Path
 
 from core.reporting import print_report, write_json_report
-from core.volume import resolve_volume
+from core.volume import chapter_roots, resolve_volume
 from validators import block_discipline, capstones, chapter_router, dependency_blocks, dependency_graphs, formal_decoration, formal_reading_required, input_resolution, interpretation_blocks, labels, latex_integrity, math_boxes, notes_structure, print_edition_routing, proof_coverage, proof_file_contract, proof_layout, proof_order, proof_routing, proof_stub_state, reference_voice, structural_chrome, structural_positions, volume_shape
 
 
@@ -39,9 +39,43 @@ VALIDATORS = [
 ]
 
 
+def _counts(findings):
+    sev = Counter(f.severity for f in findings)
+    return sev.get("error", 0), sev.get("warning", 0), sev.get("review", 0)
+
+
+def _resolve_chapter_filter(volume_root: Path, value: str | None) -> str | None:
+    if not value:
+        return None
+    chapters = chapter_roots(volume_root)
+    matches = []
+    raw = Path(value)
+    for chapter in chapters:
+        rel = chapter.relative_to(volume_root).as_posix()
+        if value == chapter.name or value == rel or raw == chapter or raw.resolve() == chapter:
+            matches.append(rel)
+    if not matches:
+        names = ", ".join(chapter.relative_to(volume_root).as_posix() for chapter in chapters)
+        raise ValueError(f"No chapter target matches {value!r}. Available chapters: {names}")
+    if len(matches) > 1:
+        raise ValueError(f"Chapter target {value!r} is ambiguous: {', '.join(matches)}")
+    return matches[0]
+
+
+def _filter_findings_for_chapter(findings, chapter_rel: str | None):
+    if not chapter_rel:
+        return findings
+    prefix = f"{chapter_rel}/"
+    return [finding for finding in findings if finding.path == chapter_rel or finding.path.startswith(prefix)]
+
+
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description="Run all LRA governance validators over one volume.")
     parser.add_argument("volume", help="Volume repo root or volume-* source directory.")
+    parser.add_argument(
+        "--chapter",
+        help="Filter the printed/JSON report to one chapter. The full volume is still validated and remains the failure gate.",
+    )
     parser.add_argument("--json", help="Write machine-readable report.")
     parser.add_argument("--fail-on-errors", action="store_true")
     args = parser.parse_args(argv)
@@ -52,16 +86,29 @@ def main(argv=None) -> int:
         print(f"fatal: {exc}", file=sys.stderr)
         return 1
 
+    try:
+        chapter_filter = _resolve_chapter_filter(volume.root, args.chapter)
+    except ValueError as exc:
+        print(f"fatal: {exc}", file=sys.stderr)
+        return 1
+
     all_findings = []
     for _name, validator in VALIDATORS:
         all_findings.extend(validator.validate(volume.root))
 
-    print_report(f"validate volume: {volume.root}", all_findings)
+    report_findings = _filter_findings_for_chapter(all_findings, chapter_filter)
+    report_title = f"validate volume: {volume.root}"
+    if chapter_filter:
+        report_title += f" (report filtered to chapter: {chapter_filter}; gate: full volume)"
+    print_report(report_title, report_findings)
+    if chapter_filter:
+        errors, warnings, reviews = _counts(all_findings)
+        print(f"\nfull volume gate: {len(all_findings)} issue(s) [{errors} error, {warnings} warning, {reviews} review]")
     if args.json:
-        write_json_report(Path(args.json), volume.root, all_findings)
+        write_json_report(Path(args.json), volume.root, report_findings)
         print(f"\njson report: {args.json}")
 
-    errors = Counter(f.severity for f in all_findings).get("error", 0)
+    errors = _counts(all_findings)[0]
     if args.fail_on_errors and errors:
         return 2
     return 0

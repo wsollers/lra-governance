@@ -1,0 +1,54 @@
+name: Validate and Compile Volume
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validate-compile-${{ github.repository }}
+  cancel-in-progress: true
+
+jobs:
+  validate-and-compile:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Run governance validator
+        run: python scripts/build_volume.py --validate-only
+
+      - name: Build LaTeX Docker image
+        run: docker build -t learning-real-analysis-latex -f docker/Dockerfile docker
+
+      - name: Compile volume PDF
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}:/workspace" \
+            -w /workspace \
+            learning-real-analysis-latex \
+            latexmk -lualatex -interaction=nonstopmode -file-line-error -synctex=1 -shell-escape main.tex
+
+      - name: Verify PDF output
+        run: |
+          test -s build/main.pdf
+          python3 - <<'PY'
+          from pathlib import Path
+
+          pdf = Path("build/main.pdf")
+          data = pdf.read_bytes()
+          if not data.startswith(b"%PDF-"):
+              raise SystemExit("build/main.pdf does not start with a PDF header")
+          if b"%%EOF" not in data[-2048:]:
+              raise SystemExit("build/main.pdf is missing a PDF EOF trailer")
+          PY

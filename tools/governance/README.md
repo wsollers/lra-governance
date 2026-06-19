@@ -24,8 +24,6 @@ Available and planned tools:
 - `sync_agent_wrappers.py` - guarded wrapper sync tool; dry-run by default,
   requires explicit repo selection, and write mode is not used until a pilot is
   approved.
-- `validate_chapter_house_rules.py` - chapter-scoped acceptance validator for
-  current LRA house rules.
 - `validate_volume.py` - integrated volume validator for current LRA house
   rules and volume acceptance.
 - `validate_repo_rules.py`
@@ -75,75 +73,31 @@ Run from `lra-governance` against the target leaf volume repository:
 python tools\governance\validate_volume.py F:\repos\lra-volume-ii --fail-on-errors
 ```
 
+To reduce noise during chapter work, filter the report while still validating
+the full volume:
+
+```powershell
+python tools\governance\validate_volume.py F:\repos\lra-volume-ii --chapter peano-systems
+```
+
+The filtered mode changes only the printed/JSON report. The validator still
+runs every volume validator across the full volume, and `--fail-on-errors`
+continues to use full-volume errors as the failure gate.
+
 Use scoped audit tools such as `audit_proof_layout.py` and
 `audit_volume_layout.py` only when a task needs a focused report.
 
-## Chapter House-Rule Validation
+## Schema Coverage Rule
 
-Run from `lra-governance` against a single chapter root when a chapter is
-expected to satisfy current house rules:
-
-```powershell
-python tools\governance\validate_chapter_house_rules.py --chapter F:\repos\lra-volume-i\volume-i\propositional-logic
-```
-
-Use `--format json` for machine-readable reports. The validator is intentionally
-strict: it checks chapter routing, capstone presence, breadcrumb and roadmap
-structure, note/proof/exercise router structure, notes/proofs topic pairing,
-Toolkit boxes, prose block discipline, formal block decoration and order,
-dependency references, proof navigation, proof-file layers, labels, exercise
-routing, capstone structure, reference-voice discipline in remark/example/
-exposition blocks, LaTeX structural balance, generated artifact boundaries,
-index ordering, proof stub/full TODO placement, box discipline, source
-crosswalk citations, exercise-ledger consistency, predicate/relation review
-warnings, and offline figure rules.
-
-The notes/proofs topic-pairing rule allows `notes/notation` as a notes-only
-topic, since notation ledgers are expected in notation-heavy chapters and do
-not require mirrored proof folders.
-
-Voice validation rejects classroom, workbook, motivational, and direct-address
-prose in `remark*`, `example*`, and `exposition` blocks. Examples include
-first-person plural wording (`we`, `us`, `our`), direct reader address (`you`,
-`your`), and classroom roles (`student`, `reader`, `learner`, `instructor`,
-`course`, `lecture`, `homework`). Use impersonal reference prose instead.
-
-For proof files, the validator checks that each file has exactly one proof
-label before all environments, exactly one `\LRAProofFor{...}` association,
-correct return navigation, the correct starred theorem-like restatement type,
-one professional proof layer marker, one detailed learning/instructional proof
-layer marker, a proof-structure remark, dependencies with statement-target
-hyperrefs or `\NoLocalDependencies`, no labels inside restatement/proof
-environments, and terminal `\clearpage`.
-
-Normal validation is read-only. To create the standardized planned capstone
-stub when `proofs/exercises/capstone-{chapter}.tex` is missing, run:
-
-```powershell
-python tools\governance\validate_chapter_house_rules.py --chapter F:\repos\lra-volume-i\volume-i\propositional-logic --generate-missing-capstone
-```
-
-The generator writes a compile-safe placeholder only. It does not invent the
-mathematical capstone problem.
-
-Predicate/relation scanning reports unknown `\operatorname{...}` terms as
-warnings rather than errors. Those warnings require author guidance: the term
-may be a legitimate new predicate/relation that should be added to canonical
-YAML, or it may be an invented/unreviewed symbol that should be removed.
-
-### Schema Coverage Rule
-
-The chapter house-rule validator is the deterministic acceptance gate for
-chapter-local requirements from:
+The integrated volume validator is the deterministic acceptance gate for
+machine-checkable requirements from:
 
 - `constitution/schema/file-schema.yaml`;
 - `constitution/schema/block-registry.yaml`;
 - `constitution/schema/artifact-matrix.yaml`.
 
-When those schema files change, the same change must update this validator or
-document why a requirement is handled by another deterministic tool. Repo-wide
-requirements such as monorepo root shape, volume repository root shape,
-canonical YAML locations, and source-of-truth repository roles are outside the
-chapter validator and belong to repo/layout audits. Semantic requirements such
-as whether a capstone truly avoids later chapter material require source or
-knowledge-graph audits in addition to this structural validator.
+When those schema files change, the same change must update the relevant
+`validate_volume.py` module or document why a requirement is handled by another
+deterministic tool. Semantic requirements such as whether a capstone truly
+avoids later chapter material require source or knowledge-graph audits in
+addition to structural validation.
