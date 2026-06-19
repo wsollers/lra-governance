@@ -74,6 +74,52 @@ def section_from_file(file: str) -> str:
     return parts[0] if parts else ""
 
 
+HYPERREF_RE = re.compile(r"\\hyperref\[([^\]]+)\]\{((?:[^{}]|\{[^{}]*\})*)\}", re.DOTALL)
+
+
+def strip_statement_navigation(text: str) -> str:
+    def replace_ref(match: re.Match[str]) -> str:
+        target = match.group(1)
+        display = match.group(2)
+        plain = re.sub(r"\\(?:textit|emph|textbf)\{([^{}]*)\}", r"\1", display)
+        if re.search(r"\bGo to .*proof\.?|\bReturn to (?:Theorem|theorem|Proof|proof)\b", plain, re.IGNORECASE):
+            return ""
+        if target.startswith("prf:"):
+            return plain
+        return match.group(0)
+
+    text = HYPERREF_RE.sub(replace_ref, text)
+    text = re.sub(r"\\texorpdfstring\{([^{}]*)\}\{([^{}]*)\}", r"\1", text)
+    text = re.sub(r"\\(?:smallskip|medskip|bigskip|noindent)\b", "", text)
+    text = re.sub(r"[ \t]+\n", "\n", text)
+    text = re.sub(r"\n{3,}", "\n\n", text)
+    return text.strip()
+
+
+def strip_formal_environment_wrapper(block: str, env: str) -> str:
+    begin = re.match(rf"^\\begin\{{{re.escape(env)}\}}", block, flags=re.IGNORECASE)
+    if begin:
+        block = block[begin.end() :].lstrip()
+        if block.startswith("["):
+            brace_depth = 0
+            for index, char in enumerate(block[1:], start=1):
+                prev = block[index - 1] if index else ""
+                if char == "{" and prev != "\\":
+                    brace_depth += 1
+                elif char == "}" and prev != "\\" and brace_depth:
+                    brace_depth -= 1
+                elif char == "]" and brace_depth == 0:
+                    block = block[index + 1 :].lstrip()
+                    break
+    block = re.sub(rf"\s*\\end\{{{re.escape(env)}\}}\s*$", "", block, flags=re.IGNORECASE)
+    return block
+
+
+def title_from_label(label: str) -> str:
+    slug = label.split(":", 1)[-1]
+    return " ".join(part.capitalize() for part in slug.split("-") if part)
+
+
 def statement_for_node(repos_root: Path, node: dict[str, Any]) -> str:
     path = repos_root / node["repo"] / node["file"]
     text = dependency_graph.strip_comments(path.read_text(encoding="utf-8", errors="replace"))
@@ -83,15 +129,17 @@ def statement_for_node(repos_root: Path, node: dict[str, Any]) -> str:
         if node["label"] not in labels:
             continue
         env = begin.group("env")
-        block = re.sub(rf"^\\begin\{{{re.escape(env)}\}}(?:\[[^\]]*\])?\s*", "", block, flags=re.IGNORECASE)
-        block = re.sub(rf"\s*\\end\{{{re.escape(env)}\}}\s*$", "", block, flags=re.IGNORECASE)
+        block = strip_formal_environment_wrapper(block, env)
         block = re.sub(r"\\label\{[^{}]+\}\s*", "", block)
-        return block.strip()
+        return strip_statement_navigation(block)
     return node.get("title") or node["label"]
 
 
 def title_for(node: dict[str, Any]) -> str:
-    return node.get("title") or node["label"]
+    title = strip_statement_navigation(node.get("title") or node["label"])
+    if r"\hyperref[" in title or r"\texorpdfstring" in title:
+        return title_from_label(node["label"])
+    return title
 
 
 def build_export(run_dir: Path, repos_root: Path) -> tuple[dict[str, Any], list[dict[str, str]]]:
