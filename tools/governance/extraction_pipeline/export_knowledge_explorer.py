@@ -41,6 +41,9 @@ WORKED_EXAMPLE_METADATA_RE = re.compile(
     r"\\LRAWorkedExample(?:For|Uses|Tags)\{[^{}]*\}\s*",
     re.IGNORECASE,
 )
+INPUT_RE = re.compile(r"\\input\{(?P<path>[^{}]+)\}")
+CHAPTER_RE = re.compile(r"\\chapter\*?\{(?P<title>(?:[^{}]|\{[^{}]*\})*)\}", re.DOTALL)
+SECTION_RE = re.compile(r"\\section\*?\{(?P<title>(?:[^{}]|\{[^{}]*\})*)\}", re.DOTALL)
 
 
 def load_json(path: Path) -> Any:
@@ -95,6 +98,110 @@ def source_from_file(file: str) -> str:
     if len(parts) >= 4 and parts[1] in CHAPTER_WRAPPERS:
         return Path(*parts[3:]).as_posix()
     return Path(*parts[2:]).as_posix()
+
+
+def read_tex(path: Path) -> str:
+    if not path.exists():
+        return ""
+    return dependency_graph.strip_comments(path.read_text(encoding="utf-8", errors="replace"))
+
+
+def input_path(root: Path, raw: str) -> Path:
+    raw = raw.strip()
+    path = root / raw
+    if path.suffix:
+        return path
+    return path.with_suffix(".tex")
+
+
+def first_tex_title(path: Path, pattern: re.Pattern[str], fallback: str = "") -> str:
+    text = read_tex(path)
+    match = pattern.search(text)
+    if not match:
+        return title_from_slug(fallback) if fallback else ""
+    return re.sub(r"\s+", " ", match.group("title")).strip()
+
+
+def title_from_slug(slug: str) -> str:
+    specials = {
+        "r": r"$\mathbb{R}$",
+        "q": r"$\mathbb{Q}$",
+        "z": r"$\mathbb{Z}$",
+        "w": r"$\mathbb{W}$",
+        "n": r"$\mathbb{N}$",
+        "c": r"$\mathbb{C}$",
+    }
+    words = []
+    for part in slug.split("-"):
+        words.append(specials.get(part, part.capitalize()))
+    return " ".join(words)
+
+
+def toc_for_repo(repo_root: Path) -> dict[str, Any]:
+    repo_name = repo_root.name
+    volume = volume_from_repo(repo_name)
+    volume_dir = repo_root / f"volume-{volume}"
+    volume_index = volume_dir / "index.tex"
+    chapters: list[dict[str, Any]] = []
+
+    def chapter_inputs(path: Path, depth: int = 0) -> list[str]:
+        if depth > 4:
+            return []
+        text = read_tex(path)
+        if CHAPTER_RE.search(text):
+            rel_path = path.resolve().relative_to(repo_root.resolve()).with_suffix("").as_posix()
+            return [rel_path]
+        out: list[str] = []
+        for input_match in INPUT_RE.finditer(text):
+            child = input_path(repo_root, input_match.group("path").replace("\\", "/"))
+            out.extend(chapter_inputs(child, depth + 1))
+        return out
+
+    for raw in chapter_inputs(volume_index):
+        parts = Path(raw).parts
+        if len(parts) < 2 or parts[0] != f"volume-{volume}":
+            continue
+        chapter_key = parts[2] if len(parts) >= 3 and parts[1] in CHAPTER_WRAPPERS else parts[1]
+        if chapter_key in {chapter["id"] for chapter in chapters}:
+            continue
+        chapter_index = input_path(repo_root, raw)
+        chapter_title = first_tex_title(chapter_index, CHAPTER_RE)
+        if not chapter_title:
+            continue
+        notes_index = chapter_index.parent / "notes" / "index.tex"
+        sections: list[dict[str, str]] = []
+        for section_match in INPUT_RE.finditer(read_tex(notes_index)):
+            section_raw = section_match.group("path").replace("\\", "/")
+            section_parts = Path(section_raw).parts
+            if len(section_parts) < 4 or section_parts[0] != f"volume-{volume}":
+                continue
+            try:
+                notes_index_part = section_parts.index("notes")
+            except ValueError:
+                continue
+            if notes_index_part + 1 >= len(section_parts):
+                continue
+            section_key = section_parts[notes_index_part + 1]
+            if section_key in {section["id"] for section in sections}:
+                continue
+            section_index = input_path(repo_root, section_raw)
+            section_title = first_tex_title(section_index, SECTION_RE, section_key)
+            sections.append({"id": section_key, "title": section_title})
+        chapters.append({"id": chapter_key, "title": chapter_title, "sections": sections})
+    return {"id": volume, "repo": repo_name, "chapters": chapters}
+
+
+def build_toc(repos_root: Path) -> list[dict[str, Any]]:
+    def key(path: Path) -> int:
+        value = volume_from_repo(path.name)
+        roman = {"i": 1, "ii": 2, "iii": 3, "iv": 4, "v": 5, "vi": 6, "vii": 7, "viii": 8}
+        return roman.get(value, 999)
+
+    volumes = []
+    for repo_root in sorted(repos_root.glob("lra-volume-*"), key=key):
+        if (repo_root / ".git").exists():
+            volumes.append(toc_for_repo(repo_root))
+    return volumes
 
 
 def section_from_file(file: str) -> str:
@@ -228,11 +335,24 @@ def build_export(run_dir: Path, repos_root: Path, version: dict[str, Any]) -> tu
     chapter_order: list[str] = []
     seen_chapters: set[str] = set()
     examples_by_label = collect_worked_examples(repos_root, nodes)
+    toc = build_toc(repos_root)
+    chapter_titles = {
+        (volume["id"], chapter["id"]): chapter["title"]
+        for volume in toc
+        for chapter in volume.get("chapters", [])
+    }
+    section_titles = {
+        (volume["id"], chapter["id"], section["id"]): section["title"]
+        for volume in toc
+        for chapter in volume.get("chapters", [])
+        for section in chapter.get("sections", [])
+    }
 
     for node in sorted(nodes, key=lambda item: item["source_order"]):
         label = node["label"]
         chapter = chapter_from_file(node["file"])
         volume = volume_from_repo(node.get("repo", ""))
+        section = section_from_file(node["file"])
         if chapter not in seen_chapters:
             seen_chapters.add(chapter)
             chapter_order.append(chapter)
@@ -248,12 +368,14 @@ def build_export(run_dir: Path, repos_root: Path, version: dict[str, Any]) -> tu
             "name": name,
             "deck": "",
             "chapter": chapter,
+            "chapter_title": chapter_titles.get((volume, chapter), title_from_slug(chapter)),
             "volume": volume,
             "source": source_from_file(node["file"]),
             "statement_display": statement,
             "statement_tex": statement,
             "source_text": statement,
-            "section": section_from_file(node["file"]),
+            "section": section,
+            "section_title": section_titles.get((volume, chapter, section), title_from_slug(section)),
             "depends_on_ids": deps,
             "used_by_ids": users,
             "prereq_ids": [],
@@ -285,6 +407,7 @@ def build_export(run_dir: Path, repos_root: Path, version: dict[str, Any]) -> tu
             "schema_version": "governance-export-1",
             "script": "lra-governance/tools/governance/extraction_pipeline/export_knowledge_explorer.py",
             "source_run": str(run_dir),
+            "toc": toc,
         },
         "nodes": exported_nodes,
         "edges": graph_edges,
