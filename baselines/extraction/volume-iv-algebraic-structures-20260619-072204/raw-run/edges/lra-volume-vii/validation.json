@@ -1,0 +1,174 @@
+{
+  "issues": [
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:abelian-group appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:abelian-group",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:abstract-field appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:abstract-field",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:abstract-integral-domain appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:abstract-integral-domain",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:associativity appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:associativity",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:commutative-ring appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:commutative-ring",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:commutativity appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:commutativity",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:group appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:group",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:homomorphism appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:homomorphism",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:l-structure appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:l-structure",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:left-distributivity appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:left-distributivity",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:monoid appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:monoid",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:partial-order appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:partial-order",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:right-distributivity appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:right-distributivity",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:ring appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:ring",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:semigroup appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:semigroup",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:strict-partial-order appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:strict-partial-order",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:total-order appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:total-order",
+      "target": ""
+    }
+  ]
+}

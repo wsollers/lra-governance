@@ -1,0 +1,49 @@
+{
+  "schema_version": "reorder-section-batch-1",
+  "batch_id": "batch-0016.volume-ii.peano-systems.presburger-arithmetic",
+  "scope": {
+    "volume": "ii",
+    "chapter": "peano-systems",
+    "section": "presburger-arithmetic",
+    "chapter_title": "Peano Systems",
+    "section_title": "Presburger Arithmetic",
+    "context_note": "Volume II section from an undergraduate real analysis note set. The local mathematical setting is chapter 'Peano Systems', section 'Presburger Arithmetic'. The audit goal is in-depth learning of the structure: direct dependencies should be concepts needed to state each node precisely, with common ambient structure carried by the nearest appropriate ancestor."
+  },
+  "review_instructions": {
+    "order": "Nodes are topologically sorted so dependencies and ambient ancestors appear before their users when possible.",
+    "state": "Use reorder/state/working-delta.json as cumulative accepted state across all batches.",
+    "checker": "Run reorder/tools/check_dependency_edge.py before accepting any add/remove."
+  },
+  "base_graph": "../state/base-graph.json",
+  "working_delta": "../state/working-delta.json",
+  "nodes": [
+    {
+      "review_order": 1,
+      "id": "def:presburger-arithmetic",
+      "title": "Presburger Arithmetic",
+      "kind": "Definition",
+      "source": "notes/presburger-arithmetic/notes-presburger-arithmetic.tex",
+      "source_order": null,
+      "statement_display": "\\emph{Presburger arithmetic} is the first-order theory of the natural numbers\nin the Presburger signature. Its intended structure is\n\\[\n(\\mathbb{N},0,S,+,<,=),\n\\]\nand its axioms describe the behavior of zero, successor, addition, order, and\ninduction for formulas written in the language\n$\\mathcal{L}_{\\mathrm{Pres}}$.",
+      "statement_tex": "\\emph{Presburger arithmetic} is the first-order theory of the natural numbers\nin the Presburger signature. Its intended structure is\n\\[\n(\\mathbb{N},0,S,+,<,=),\n\\]\nand its axioms describe the behavior of zero, successor, addition, order, and\ninduction for formulas written in the language\n$\\mathcal{L}_{\\mathrm{Pres}}$.",
+      "direct_dependencies": [],
+      "transitive_dependencies": [],
+      "ancestor_tree": [],
+      "used_by_in_section": []
+    },
+    {
+      "review_order": 2,
+      "id": "def:presburger-signature",
+      "title": "Presburger Signature",
+      "kind": "Definition",
+      "source": "notes/presburger-arithmetic/notes-presburger-arithmetic.tex",
+      "source_order": null,
+      "statement_display": "The \\emph{Presburger signature} is the first-order signature\n\\[\n\\mathcal{L}_{\\mathrm{Pres}} = \\{0, S, +, <, =\\},\n\\]\nwhere $0$ is a constant symbol, $S$ is a unary function symbol, $+$ is a\nbinary function symbol, and $<$ and $=$ are binary relation symbols.",
+      "statement_tex": "The \\emph{Presburger signature} is the first-order signature\n\\[\n\\mathcal{L}_{\\mathrm{Pres}} = \\{0, S, +, <, =\\},\n\\]\nwhere $0$ is a constant symbol, $S$ is a unary function symbol, $+$ is a\nbinary function symbol, and $<$ and $=$ are binary relation symbols.",
+      "direct_dependencies": [],
+      "transitive_dependencies": [],
+      "ancestor_tree": [],
+      "used_by_in_section": []
+    }
+  ]
+}

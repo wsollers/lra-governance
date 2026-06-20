@@ -1,0 +1,290 @@
+subject: natural-numbers
+display_title: Natural Numbers
+volume: volume-ii
+status: in-progress
+dependencies:
+  prior: ''
+  next: ''
+path: volume-ii/natural-numbers
+environments:
+- label: def:addition-on-peano-system
+  type: def
+  file: notes\addition-on-n\notes-addition-on-n.tex
+  display_title: Addition on a Peano System
+  proof_file: null
+- label: thm:addition-well-defined-on-peano-system
+  type: thm
+  file: notes\addition-on-n\notes-addition-on-n.tex
+  display_title: Addition Is Well-Defined on a Peano System
+  proof_file: null
+- label: thm:addition-with-one
+  type: thm
+  file: notes\addition-on-n\notes-addition-on-n.tex
+  display_title: Addition With $1$
+  proof_file: null
+- label: thm:addition-successor-on-right
+  type: thm
+  file: notes\addition-on-n\notes-addition-on-n.tex
+  display_title: Addition Successor on the Right
+  proof_file: null
+- label: thm:one-plus-n
+  type: thm
+  file: notes\addition-on-n\notes-addition-on-n.tex
+  display_title: One Plus $n$
+  proof_file: null
+- label: thm:addition-associative
+  type: thm
+  file: notes\addition-on-n\notes-addition-on-n.tex
+  display_title: Addition Is Associative
+  proof_file: null
+- label: thm:addition-commutative
+  type: thm
+  file: notes\addition-on-n\notes-addition-on-n.tex
+  display_title: Addition Is Commutative
+  proof_file: null
+- label: thm:addition-left-cancellation
+  type: thm
+  file: notes\addition-on-n\notes-addition-on-n.tex
+  display_title: Left Cancellation for Addition
+  proof_file: null
+- label: thm:addition-right-cancellation
+  type: thm
+  file: notes\addition-on-n\notes-addition-on-n.tex
+  display_title: Right Cancellation for Addition
+  proof_file: null
+- label: thm:addition-cancellation
+  type: thm
+  file: notes\addition-on-n\notes-addition-on-n.tex
+  display_title: Cancellation for Addition
+  proof_file: null
+- label: thm:no-natural-number-equals-itself-plus-a-natural-number
+  type: thm
+  file: notes\addition-on-n\notes-addition-on-n.tex
+  display_title: No Natural Number Equals Itself Plus a Natural Number
+  proof_file: null
+- label: thm:n-additive-structure
+  type: thm
+  file: notes\algebraic-structure-of-n\notes-algebraic-structure-of-n.tex
+  display_title: $\mathbb{N}$ Is Closed, Associative, and Commutative Under Addition
+  proof_file: null
+- label: thm:n-multiplicative-monoid
+  type: thm
+  file: notes\algebraic-structure-of-n\notes-algebraic-structure-of-n.tex
+  display_title: $\mathbb{N}$ Is a Commutative Monoid Under Multiplication
+  proof_file: null
+- label: thm:n-is-semiring
+  type: thm
+  file: notes\algebraic-structure-of-n\notes-algebraic-structure-of-n.tex
+  display_title: $\mathbb{N}$ Is a Semiring
+  proof_file: null
+- label: thm:induction-from-arbitrary-base
+  type: thm
+  file: notes\induction\notes-induction.tex
+  display_title: Induction from an Arbitrary Base
+  proof_file: null
+- label: def:multiplication-on-peano-system
+  type: def
+  file: notes\multiplication-on-n\notes-multiplication-on-n.tex
+  display_title: Multiplication on a Peano System
+  proof_file: null
+- label: thm:multiplication-well-defined-on-peano-system
+  type: thm
+  file: notes\multiplication-on-n\notes-multiplication-on-n.tex
+  display_title: Multiplication Is Well-Defined on a Peano System
+  proof_file: null
+- label: thm:multiplication-with-one
+  type: thm
+  file: notes\multiplication-on-n\notes-multiplication-on-n.tex
+  display_title: Multiplication With $1$
+  proof_file: null
+- label: thm:multiplication-successor-on-right
+  type: thm
+  file: notes\multiplication-on-n\notes-multiplication-on-n.tex
+  display_title: Multiplication Successor on the Right
+  proof_file: null
+- label: thm:one-times-n
+  type: thm
+  file: notes\multiplication-on-n\notes-multiplication-on-n.tex
+  display_title: One Times $n$
+  proof_file: null
+- label: thm:multiplication-distributes-over-addition
+  type: thm
+  file: notes\multiplication-on-n\notes-multiplication-on-n.tex
+  display_title: Multiplication Distributes Over Addition
+  proof_file: null
+- label: thm:left-distributivity-of-multiplication-over-addition
+  type: thm
+  file: notes\multiplication-on-n\notes-multiplication-on-n.tex
+  display_title: Left Distributivity of Multiplication Over Addition
+  proof_file: null
+- label: thm:multiplication-distributes-over-addition-both-sides
+  type: thm
+  file: notes\multiplication-on-n\notes-multiplication-on-n.tex
+  display_title: Multiplication Distributes over Addition on Both Sides
+  proof_file: null
+- label: thm:multiplication-associative
+  type: thm
+  file: notes\multiplication-on-n\notes-multiplication-on-n.tex
+  display_title: Multiplication Is Associative
+  proof_file: null
+- label: thm:multiplication-commutative
+  type: thm
+  file: notes\multiplication-on-n\notes-multiplication-on-n.tex
+  display_title: Multiplication Is Commutative
+  proof_file: null
+- label: thm:multiplication-left-cancellation
+  type: thm
+  file: notes\multiplication-on-n\notes-multiplication-on-n.tex
+  display_title: Left Cancellation for Multiplication
+  proof_file: null
+- label: thm:multiplication-right-cancellation
+  type: thm
+  file: notes\multiplication-on-n\notes-multiplication-on-n.tex
+  display_title: Right Cancellation for Multiplication
+  proof_file: null
+- label: thm:multiplication-cancellation
+  type: thm
+  file: notes\multiplication-on-n\notes-multiplication-on-n.tex
+  display_title: Cancellation for Multiplication
+  proof_file: null
+- label: def:natural-numbers
+  type: def
+  file: notes\nz-axioms\notes-nz-axioms.tex
+  display_title: The Natural Numbers
+  proof_file: null
+- label: ax:n-base
+  type: ax
+  file: notes\nz-axioms\notes-nz-axioms.tex
+  display_title: N1, Base
+  proof_file: null
+- label: ax:n-successor-closure
+  type: ax
+  file: notes\nz-axioms\notes-nz-axioms.tex
+  display_title: N2, Successor Closure
+  proof_file: null
+- label: ax:n-base-has-no-predecessor
+  type: ax
+  file: notes\nz-axioms\notes-nz-axioms.tex
+  display_title: N3, Base Has No Predecessor
+  proof_file: null
+- label: ax:n-successor-injective
+  type: ax
+  file: notes\nz-axioms\notes-nz-axioms.tex
+  display_title: N4, Successor Injectivity
+  proof_file: null
+- label: ax:n-induction
+  type: ax
+  file: notes\nz-axioms\notes-nz-axioms.tex
+  display_title: N5, Induction
+  proof_file: null
+- label: def:strict-less-than-on-peano-system
+  type: def
+  file: notes\order-on-n\notes-order-on-n.tex
+  display_title: Strict Less Than on a Peano System
+  proof_file: null
+- label: def:less-than-or-equal-on-peano-system
+  type: def
+  file: notes\order-on-n\notes-order-on-n.tex
+  display_title: Less Than or Equal on a Peano System
+  proof_file: null
+- label: thm:order-reflexive-on-peano-system
+  type: thm
+  file: notes\order-on-n\notes-order-on-n.tex
+  display_title: Order Is Reflexive on a Peano System
+  proof_file: null
+- label: thm:order-transitive-on-peano-system
+  type: thm
+  file: notes\order-on-n\notes-order-on-n.tex
+  display_title: Order Is Transitive on a Peano System
+  proof_file: null
+- label: thm:order-antisymmetric-on-peano-system
+  type: thm
+  file: notes\order-on-n\notes-order-on-n.tex
+  display_title: Order Is Antisymmetric on a Peano System
+  proof_file: null
+- label: thm:addition-preserves-order-on-right
+  type: thm
+  file: notes\order-on-n\notes-order-on-n.tex
+  display_title: Addition Preserves Order on the Right
+  proof_file: null
+- label: thm:addition-preserves-order-on-left
+  type: thm
+  file: notes\order-on-n\notes-order-on-n.tex
+  display_title: Addition Preserves Order on the Left
+  proof_file: null
+- label: thm:addition-preserves-order
+  type: thm
+  file: notes\order-on-n\notes-order-on-n.tex
+  display_title: Addition Preserves Order
+  proof_file: null
+- label: thm:multiplication-preserves-and-reflects-strict-order
+  type: thm
+  file: notes\order-on-n\notes-order-on-n.tex
+  display_title: Multiplication Preserves and Reflects Strict Order
+  proof_file: null
+- label: thm:strict-order-successor-characterization
+  type: thm
+  file: notes\order-on-n\notes-order-on-n.tex
+  display_title: Strict Order Successor Characterization
+  proof_file: null
+- label: thm:trichotomy-on-peano-system
+  type: thm
+  file: notes\order-on-n\notes-order-on-n.tex
+  display_title: Trichotomy on a Peano System
+  proof_file: null
+- label: thm:natural-number-order-is-total
+  type: thm
+  file: notes\order-on-n\notes-order-on-n.tex
+  display_title: Natural-Number Order Is Total
+  proof_file: null
+- label: def:exponentiation-on-peano-system
+  type: def
+  file: notes\powers-and-growth\notes-powers-and-growth.tex
+  display_title: Exponentiation on a Peano System
+  proof_file: null
+- label: thm:exponentiation-well-defined-on-peano-system
+  type: thm
+  file: notes\powers-and-growth\notes-powers-and-growth.tex
+  display_title: Exponentiation Is Well-Defined on a Peano System
+  proof_file: null
+- label: thm:exponent-sum-law
+  type: thm
+  file: notes\powers-and-growth\notes-powers-and-growth.tex
+  display_title: Exponent Sum Law
+  proof_file: null
+- label: thm:exponent-product-law
+  type: thm
+  file: notes\powers-and-growth\notes-powers-and-growth.tex
+  display_title: Exponent Product Law
+  proof_file: null
+- label: thm:exponent-power-law
+  type: thm
+  file: notes\powers-and-growth\notes-powers-and-growth.tex
+  display_title: Exponent Power Law
+  proof_file: null
+- label: thm:powers-with-common-exponent-preserve-strict-order
+  type: thm
+  file: notes\powers-and-growth\notes-powers-and-growth.tex
+  display_title: Powers with Common Exponent Preserve Strict Order
+  proof_file: null
+- label: thm:powers-with-common-base-preserve-strict-order
+  type: thm
+  file: notes\powers-and-growth\notes-powers-and-growth.tex
+  display_title: Powers with Common Base Preserve Strict Order
+  proof_file: null
+- label: thm:n-less-than-2-to-n
+  type: thm
+  file: notes\powers-and-growth\notes-powers-and-growth.tex
+  display_title: $n < 2^n$ for All $n \in \mathbb{N}$
+  proof_file: null
+- label: thm:well-ordering-principle
+  type: thm
+  file: notes\well-ordering-principle\notes-well-ordering-principle.tex
+  display_title: Well-Ordering Principle
+  proof_file: null
+- label: thm:induction-well-ordering-equivalence
+  type: thm
+  file: notes\well-ordering-principle\notes-well-ordering-principle.tex
+  display_title: Induction, Strong Induction, and Well-Ordering Are Equivalent
+  proof_file: null
+proof_files: []

@@ -41,6 +41,7 @@ BEGIN_FORMAL_RE = re.compile(
 )
 LABEL_RE = re.compile(r"\\label\{(?P<label>[a-z]+:[^{}]+)\}")
 HYPERREF_RE = re.compile(r"\\hyperref\[(?P<label>[^\]]+)\](?:\{(?P<text>[^{}]*)\})?")
+DEPENDENCY_ITEM_RE = re.compile(r"^[ \t]*\\item\s+(?P<text>[^\n]+)$", re.MULTILINE)
 DEPENDENCIES_ENV_RE = re.compile(
     r"\\begin\{dependencies\}(?P<body>[\s\S]*?)\\end\{dependencies\}",
     re.IGNORECASE,
@@ -353,6 +354,22 @@ def extract_edges_from_universe(root: Path, universe: Universe, universe_ref: st
             hyperrefs = list(HYPERREF_RE.finditer(body))
             if not hyperrefs and "TODO" not in body:
                 issues.append(Issue("error", "dependencies_without_hyperref", f"{source} dependency block has no hyperref targets.", repo, rel(path, root), int(declaration["dependency_line"]), source))
+            for item in DEPENDENCY_ITEM_RE.finditer(body):
+                item_text = item.group("text").strip()
+                if "TODO" in item_text or HYPERREF_RE.search(item_text):
+                    continue
+                item_line = line_at(text, window_start + block_offset + item.start())
+                issues.append(
+                    Issue(
+                        "error",
+                        "dependency_item_without_hyperref",
+                        f"{source} dependency item lacks a hyperref target: {item_text}",
+                        repo,
+                        rel(path, root),
+                        item_line,
+                        source,
+                    )
+                )
             for ref in hyperrefs:
                 target = ref.group("label").strip()
                 display = (ref.group("text") or "").strip()

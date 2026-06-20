@@ -1,0 +1,225 @@
+subject: peano-systems
+display_title: Peano Systems
+volume: volume-ii
+status: in-progress
+dependencies:
+  prior: ''
+  next: ''
+path: volume-ii/peano-systems
+environments:
+- label: def:peano-system
+  type: def
+  file: notes\defining-peano-systems\notes-defining-peano-systems.tex
+  display_title: Peano System
+  proof_file: null
+- label: ax:peano-base-in-set
+  type: ax
+  file: notes\defining-peano-systems\notes-defining-peano-systems.tex
+  display_title: Distinguished Element Lies in the Underlying Set
+  proof_file: null
+- label: ax:peano-successor-closure
+  type: ax
+  file: notes\defining-peano-systems\notes-defining-peano-systems.tex
+  display_title: Closure Under Successor
+  proof_file: null
+- label: ax:peano-base-not-successor
+  type: ax
+  file: notes\defining-peano-systems\notes-defining-peano-systems.tex
+  display_title: Distinguished Element Is Not a Successor
+  proof_file: null
+- label: ax:peano-successor-injective
+  type: ax
+  file: notes\defining-peano-systems\notes-defining-peano-systems.tex
+  display_title: Injectivity of Successor
+  proof_file: null
+- label: ax:peano-induction
+  type: ax
+  file: notes\defining-peano-systems\notes-defining-peano-systems.tex
+  display_title: Induction Axiom
+  proof_file: null
+- label: ax:peano-system-existence
+  type: ax
+  file: notes\defining-peano-systems\notes-defining-peano-systems.tex
+  display_title: Existence of a Peano System
+  proof_file: null
+- label: thm:induction-principle-for-peano-system
+  type: thm
+  file: notes\defining-peano-systems\notes-peano-system-theorems.tex
+  display_title: Induction Principle for a Peano System
+  proof_file: null
+- label: thm:strong-induction-on-peano-system
+  type: thm
+  file: notes\defining-peano-systems\notes-peano-system-theorems.tex
+  display_title: Strong Induction on a Peano System
+  proof_file: null
+- label: def:successor-closed-subset
+  type: def
+  file: notes\defining-peano-systems\notes-peano-system-theorems.tex
+  display_title: Successor-Closed Subset
+  proof_file: null
+- label: def:inductive-subset-of-peano-system
+  type: def
+  file: notes\defining-peano-systems\notes-peano-system-theorems.tex
+  display_title: Inductive Subset of a Peano System
+  proof_file: null
+- label: thm:peano-minimality
+  type: thm
+  file: notes\defining-peano-systems\notes-peano-system-theorems.tex
+  display_title: Minimality of a Peano System
+  proof_file: null
+- label: def:predecessor-in-peano-system
+  type: def
+  file: notes\defining-peano-systems\notes-peano-system-theorems.tex
+  display_title: Predecessor in a Peano System
+  proof_file: null
+- label: thm:every-element-is-one-or-a-successor
+  type: thm
+  file: notes\defining-peano-systems\notes-peano-system-theorems.tex
+  display_title: Every Element Is Either $1$ or a Successor
+  proof_file: null
+- label: thm:successor-inequality-reflection
+  type: thm
+  file: notes\defining-peano-systems\notes-peano-system-theorems.tex
+  display_title: Successor Inequality Reflection
+  proof_file: null
+- label: cor:non-one-elements-have-a-predecessor
+  type: cor
+  file: notes\defining-peano-systems\notes-peano-system-theorems.tex
+  display_title: Non-One Elements Have a Predecessor
+  proof_file: null
+- label: cor:predecessor-exists-unique-away-from-one
+  type: cor
+  file: notes\defining-peano-systems\notes-peano-system-theorems.tex
+  display_title: Predecessor Existence and Uniqueness Away from $1$
+  proof_file: null
+- label: cor:unique-predecessor-characterization-away-from-one
+  type: cor
+  file: notes\defining-peano-systems\notes-peano-system-theorems.tex
+  display_title: Unique Predecessor Characterization Away from $1$
+  proof_file: null
+- label: cor:one-is-unique-non-successor
+  type: cor
+  file: notes\defining-peano-systems\notes-peano-system-theorems.tex
+  display_title: The Distinguished Element Is the Unique Non-Successor
+  proof_file: null
+- label: thm:no-object-is-its-own-successor
+  type: thm
+  file: notes\defining-peano-systems\notes-peano-system-theorems.tex
+  display_title: No Object Is Its Own Successor
+  proof_file: null
+- label: def:presburger-signature
+  type: def
+  file: notes\presburger-arithmetic\notes-presburger-arithmetic.tex
+  display_title: Presburger Signature
+  proof_file: null
+- label: def:presburger-arithmetic
+  type: def
+  file: notes\presburger-arithmetic\notes-presburger-arithmetic.tex
+  display_title: Presburger Arithmetic
+  proof_file: null
+- label: def:iterator-data-on-peano-system
+  type: def
+  file: notes\recursion-on-peano-systems\notes-recursion-on-peano-systems.tex
+  display_title: Iterator Data
+  proof_file: null
+- label: def:iterator-relation
+  type: def
+  file: notes\recursion-on-peano-systems\notes-recursion-on-peano-systems.tex
+  display_title: Iterator Relation
+  proof_file: null
+- label: def:minimal-iterator-relation
+  type: def
+  file: notes\recursion-on-peano-systems\notes-recursion-on-peano-systems.tex
+  display_title: Minimal Iterator Relation
+  proof_file: null
+- label: lem:iterator-relation-consistency
+  type: lem
+  file: notes\recursion-on-peano-systems\notes-recursion-on-peano-systems.tex
+  display_title: Consistency of the Minimal Iterator Relation
+  proof_file: null
+- label: lem:forced-values-are-unique
+  type: lem
+  file: notes\recursion-on-peano-systems\notes-recursion-on-peano-systems.tex
+  display_title: Forced Values Are Unique
+  proof_file: null
+- label: lem:minimal-iterator-relation-deterministic
+  type: lem
+  file: notes\recursion-on-peano-systems\notes-recursion-on-peano-systems.tex
+  display_title: Determinism of the Minimal Iterator Relation
+  proof_file: null
+- label: lem:minimal-iterator-relation-complete
+  type: lem
+  file: notes\recursion-on-peano-systems\notes-recursion-on-peano-systems.tex
+  display_title: Completeness of the Minimal Iterator Relation
+  proof_file: null
+- label: lem:uniqueness-of-iterator-functions
+  type: lem
+  file: notes\recursion-on-peano-systems\notes-recursion-on-peano-systems.tex
+  display_title: Uniqueness of Iterator Functions
+  proof_file: null
+- label: lem:existence-of-iterator-function
+  type: lem
+  file: notes\recursion-on-peano-systems\notes-recursion-on-peano-systems.tex
+  display_title: Existence of an Iterator Function
+  proof_file: null
+- label: thm:peano-iterator-theorem
+  type: thm
+  file: notes\recursion-on-peano-systems\notes-recursion-on-peano-systems.tex
+  display_title: Peano Iterator Theorem
+  proof_file: null
+- label: def:iterator-generated-function
+  type: def
+  file: notes\recursion-on-peano-systems\notes-recursion-on-peano-systems.tex
+  display_title: Iterator-Generated Function
+  proof_file: null
+- label: thm:iterator-base-value
+  type: thm
+  file: notes\recursion-on-peano-systems\notes-recursion-on-peano-systems.tex
+  display_title: Iterator Base Clause
+  proof_file: null
+- label: thm:iterator-successor-step
+  type: thm
+  file: notes\recursion-on-peano-systems\notes-recursion-on-peano-systems.tex
+  display_title: Iterator Successor Clause
+  proof_file: null
+- label: def:iteration-of-a-self-map
+  type: def
+  file: notes\recursion-on-peano-systems\notes-recursion-on-peano-systems.tex
+  display_title: Iteration of a Self-Map
+  proof_file: null
+- label: cor:uniqueness-of-binary-iterator-operations
+  type: cor
+  file: notes\recursion-on-peano-systems\notes-recursion-on-peano-systems.tex
+  display_title: Uniqueness of Binary Iterator Operations
+  proof_file: null
+- label: def:stage-dependent-step-rule
+  type: def
+  file: notes\recursion-on-peano-systems\notes-recursion-on-peano-systems.tex
+  display_title: Stage-Dependent Step Rule
+  proof_file: null
+- label: def:general-recursive-function
+  type: def
+  file: notes\recursion-on-peano-systems\notes-recursion-on-peano-systems.tex
+  display_title: General Recursive Function
+  proof_file: null
+- label: lem:uniqueness-of-general-recursive-functions
+  type: lem
+  file: notes\recursion-on-peano-systems\notes-recursion-on-peano-systems.tex
+  display_title: Uniqueness of General Recursive Functions
+  proof_file: null
+- label: thm:general-recursion-by-state-encoding
+  type: thm
+  file: notes\recursion-on-peano-systems\notes-recursion-on-peano-systems.tex
+  display_title: General Recursion by State Encoding
+  proof_file: null
+- label: thm:general-recursion-theorem-for-peano-system
+  type: thm
+  file: notes\recursion-on-peano-systems\notes-recursion-on-peano-systems.tex
+  display_title: General Recursion Theorem
+  proof_file: null
+- label: thm:uniqueness-of-peano-systems-up-to-isomorphism
+  type: thm
+  file: notes\recursion-on-peano-systems\notes-recursion-on-peano-systems.tex
+  display_title: Uniqueness of Peano Systems up to Isomorphism
+  proof_file: null
+proof_files: []

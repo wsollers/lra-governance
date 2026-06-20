@@ -1,0 +1,1374 @@
+{
+  "issues": [
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:abelian-group appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:abelian-group",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:abstract-field appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:abstract-field",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:abstract-integral-domain appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:abstract-integral-domain",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:associativity appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:associativity",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:commutative-ring appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:commutative-ring",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:commutativity appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:commutativity",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:group appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:group",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:homomorphism appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:homomorphism",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:l-structure appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:l-structure",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:left-distributivity appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:left-distributivity",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:monoid appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:monoid",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:partial-order appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:partial-order",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:right-distributivity appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:right-distributivity",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:ring appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:ring",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:semigroup appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:semigroup",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:strict-partial-order appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:strict-partial-order",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:total-order appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:total-order",
+      "target": ""
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "def:algebraic-geometry-ring has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-geometry/notes/polynomial-rings/notes-polynomial-rings.tex",
+      "line": 9,
+      "label": "def:algebraic-geometry-ring",
+      "target": ""
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "def:algebraic-geometry-commutative-ring has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-geometry/notes/polynomial-rings/notes-polynomial-rings.tex",
+      "line": 55,
+      "label": "def:algebraic-geometry-commutative-ring",
+      "target": ""
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "def:polynomial-over-ring has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-geometry/notes/polynomial-rings/notes-polynomial-rings.tex",
+      "line": 88,
+      "label": "def:polynomial-over-ring",
+      "target": ""
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "def:degree-of-polynomial has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-geometry/notes/polynomial-rings/notes-polynomial-rings.tex",
+      "line": 110,
+      "label": "def:degree-of-polynomial",
+      "target": ""
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "def:polynomial-ring has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-geometry/notes/polynomial-rings/notes-polynomial-rings.tex",
+      "line": 132,
+      "label": "def:polynomial-ring",
+      "target": ""
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "def:polynomial-ring-in-n-variables has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-geometry/notes/polynomial-rings/notes-polynomial-rings.tex",
+      "line": 188,
+      "label": "def:polynomial-ring-in-n-variables",
+      "target": ""
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "def:monomial has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-geometry/notes/polynomial-rings/notes-polynomial-rings.tex",
+      "line": 214,
+      "label": "def:monomial",
+      "target": ""
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "def:total-degree has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-geometry/notes/polynomial-rings/notes-polynomial-rings.tex",
+      "line": 228,
+      "label": "def:total-degree",
+      "target": ""
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "def:ideal has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-geometry/notes/polynomial-rings/notes-polynomial-rings.tex",
+      "line": 267,
+      "label": "def:ideal",
+      "target": ""
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "def:generated-ideal has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-geometry/notes/polynomial-rings/notes-polynomial-rings.tex",
+      "line": 283,
+      "label": "def:generated-ideal",
+      "target": ""
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "def:finitely-generated-ideal has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-geometry/notes/polynomial-rings/notes-polynomial-rings.tex",
+      "line": 299,
+      "label": "def:finitely-generated-ideal",
+      "target": ""
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "def:noetherian-ring has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-geometry/notes/polynomial-rings/notes-polynomial-rings.tex",
+      "line": 310,
+      "label": "def:noetherian-ring",
+      "target": ""
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "thm:hilbert-basis-theorem has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-geometry/notes/polynomial-rings/notes-polynomial-rings.tex",
+      "line": 321,
+      "label": "thm:hilbert-basis-theorem",
+      "target": ""
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "def:quotient-ring has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-geometry/notes/polynomial-rings/notes-polynomial-rings.tex",
+      "line": 346,
+      "label": "def:quotient-ring",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:abelian-group dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/algebraic-structures/abelian-groups.tex",
+      "line": 43,
+      "label": "def:abelian-group",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:abstract-field dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/algebraic-structures/fields.tex",
+      "line": 56,
+      "label": "def:abstract-field",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "prop:abstract-field-is-domain dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/algebraic-structures/fields.tex",
+      "line": 94,
+      "label": "prop:abstract-field-is-domain",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:group dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/algebraic-structures/groups.tex",
+      "line": 50,
+      "label": "def:group",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:order-of-a-group dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/algebraic-structures/groups.tex",
+      "line": 90,
+      "label": "def:order-of-a-group",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:zero-divisor dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/algebraic-structures/integral-domains.tex",
+      "line": 41,
+      "label": "def:zero-divisor",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:abstract-integral-domain dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/algebraic-structures/integral-domains.tex",
+      "line": 90,
+      "label": "def:abstract-integral-domain",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "prop:abstract-domain-cancellation dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/algebraic-structures/integral-domains.tex",
+      "line": 130,
+      "label": "prop:abstract-domain-cancellation",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:magma dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/algebraic-structures/magmas.tex",
+      "line": 43,
+      "label": "def:magma",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:monoid dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/algebraic-structures/monoids.tex",
+      "line": 50,
+      "label": "def:monoid",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:ring dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/algebraic-structures/rings.tex",
+      "line": 55,
+      "label": "def:ring",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:commutative-ring dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/algebraic-structures/rings.tex",
+      "line": 100,
+      "label": "def:commutative-ring",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:ring-with-unity dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/algebraic-structures/rings.tex",
+      "line": 149,
+      "label": "def:ring-with-unity",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:semigroup dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/algebraic-structures/semigroups.tex",
+      "line": 51,
+      "label": "def:semigroup",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:first-order-signature dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/algebraic-structures/structure-signatures.tex",
+      "line": 35,
+      "label": "def:first-order-signature",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:l-structure dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/algebraic-structures/structure-signatures.tex",
+      "line": 81,
+      "label": "def:l-structure",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:absorbing-element dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/distinguished-elements/absorbing-elements.tex",
+      "line": 47,
+      "label": "def:absorbing-element",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:identity-element dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/distinguished-elements/identity-elements.tex",
+      "line": 43,
+      "label": "def:identity-element",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "prop:identity-element-unique dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/distinguished-elements/identity-elements.tex",
+      "line": 85,
+      "label": "prop:identity-element-unique",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:inverse-element dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/distinguished-elements/inverses.tex",
+      "line": 45,
+      "label": "def:inverse-element",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "prop:inverse-element-unique dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/distinguished-elements/inverses.tex",
+      "line": 89,
+      "label": "prop:inverse-element-unique",
+      "target": ""
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "def:notes-fields-definition-l19 has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/fields/notes-fields-definition.tex",
+      "line": 19,
+      "label": "def:notes-fields-definition-l19",
+      "target": ""
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "prop:field-is-domain has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/fields/notes-fields-theorems.tex",
+      "line": 12,
+      "label": "prop:field-is-domain",
+      "target": ""
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "prop:field-zero-product has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/fields/notes-fields-theorems.tex",
+      "line": 34,
+      "label": "prop:field-zero-product",
+      "target": ""
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "prop:field-inverse-exists has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/fields/notes-fields-theorems.tex",
+      "line": 53,
+      "label": "prop:field-inverse-exists",
+      "target": ""
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "prop:field-characteristic has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/fields/notes-fields-theorems.tex",
+      "line": 77,
+      "label": "prop:field-characteristic",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:alg-bijective dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/functions/bijective-functions.tex",
+      "line": 39,
+      "label": "def:alg-bijective",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:alg-function dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/functions/functions-as-structure-preserving-objects.tex",
+      "line": 54,
+      "label": "def:alg-function",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:alg-injective dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/functions/injective-functions.tex",
+      "line": 43,
+      "label": "def:alg-injective",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:homomorphism dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/functions/morphisms.tex",
+      "line": 39,
+      "label": "def:homomorphism",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:monomorphism dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/functions/morphisms.tex",
+      "line": 79,
+      "label": "def:monomorphism",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:epimorphism dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/functions/morphisms.tex",
+      "line": 119,
+      "label": "def:epimorphism",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:isomorphism dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/functions/morphisms.tex",
+      "line": 159,
+      "label": "def:isomorphism",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:endomorphism dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/functions/morphisms.tex",
+      "line": 196,
+      "label": "def:endomorphism",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:automorphism dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/functions/morphisms.tex",
+      "line": 235,
+      "label": "def:automorphism",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:alg-surjective dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/functions/surjective-functions.tex",
+      "line": 42,
+      "label": "def:alg-surjective",
+      "target": ""
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "def:notes-groups-abelian-l6 has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/groups/notes-groups-abelian.tex",
+      "line": 6,
+      "label": "def:notes-groups-abelian-l6",
+      "target": ""
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "def:group-binary-operation has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/groups/notes-groups-binary-operations.tex",
+      "line": 16,
+      "label": "def:group-binary-operation",
+      "target": ""
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "def:group-associativity has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/groups/notes-groups-binary-operations.tex",
+      "line": 88,
+      "label": "def:group-associativity",
+      "target": ""
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "def:group-commutativity has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/groups/notes-groups-binary-operations.tex",
+      "line": 165,
+      "label": "def:group-commutativity",
+      "target": ""
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "def:notes-groups-definition-l6 has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/groups/notes-groups-definition.tex",
+      "line": 6,
+      "label": "def:notes-groups-definition-l6",
+      "target": ""
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "def:notes-groups-definition-l54 has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/groups/notes-groups-definition.tex",
+      "line": 55,
+      "label": "def:notes-groups-definition-l54",
+      "target": ""
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "prop:group-identity-unique has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/groups/notes-groups-theorems.tex",
+      "line": 19,
+      "label": "prop:group-identity-unique",
+      "target": ""
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "prop:group-inverse-unique has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/groups/notes-groups-theorems.tex",
+      "line": 44,
+      "label": "prop:group-inverse-unique",
+      "target": ""
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "prop:group-cancellation-in-groups has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/groups/notes-groups-theorems.tex",
+      "line": 65,
+      "label": "prop:group-cancellation-in-groups",
+      "target": ""
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "prop:group-socks-shoes has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/groups/notes-groups-theorems.tex",
+      "line": 84,
+      "label": "prop:group-socks-shoes",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:associativity dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/laws-of-operations/associativity.tex",
+      "line": 44,
+      "label": "def:associativity",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "prop:group-cancellation dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/laws-of-operations/cancellation-laws.tex",
+      "line": 43,
+      "label": "prop:group-cancellation",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:commutativity dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/laws-of-operations/commutativity.tex",
+      "line": 42,
+      "label": "def:commutativity",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:left-distributivity dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/laws-of-operations/distributivity.tex",
+      "line": 39,
+      "label": "def:left-distributivity",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:right-distributivity dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/laws-of-operations/distributivity.tex",
+      "line": 85,
+      "label": "def:right-distributivity",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:idempotent-operation dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/laws-of-operations/idempotence.tex",
+      "line": 39,
+      "label": "def:idempotent-operation",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:carrier-set dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/mathematical-structures/carrier-sets.tex",
+      "line": 32,
+      "label": "def:carrier-set",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:structure-expansion dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/number-systems-as-models/structure-expansion.tex",
+      "line": 37,
+      "label": "def:structure-expansion",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:structure-reduction dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/number-systems-as-models/structure-reduction.tex",
+      "line": 37,
+      "label": "def:structure-reduction",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:arithmetic-signature dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/number-systems-as-structures/arithmetic-signature.tex",
+      "line": 36,
+      "label": "def:arithmetic-signature",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "missing_dependency_target",
+      "message": "def:complex-number-model targets unknown label def:field.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/number-systems-as-structures/complex-numbers-as-a-structure.tex",
+      "line": 384,
+      "label": "def:complex-number-model",
+      "target": "def:field"
+    },
+    {
+      "severity": "error",
+      "code": "ambiguous_dependency_target",
+      "message": "def:integer-model target def:ring has multiple global matches.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/number-systems-as-structures/integers-as-a-structure.tex",
+      "line": 451,
+      "label": "def:integer-model",
+      "target": "def:ring"
+    },
+    {
+      "severity": "error",
+      "code": "missing_dependency_target",
+      "message": "def:integer-model targets unknown label def:integer-operations.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/number-systems-as-structures/integers-as-a-structure.tex",
+      "line": 451,
+      "label": "def:integer-model",
+      "target": "def:integer-operations"
+    },
+    {
+      "severity": "error",
+      "code": "missing_dependency_target",
+      "message": "def:natural-number-model targets unknown label def:natural-number-operations.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/number-systems-as-structures/natural-numbers-as-a-structure.tex",
+      "line": 169,
+      "label": "def:natural-number-model",
+      "target": "def:natural-number-operations"
+    },
+    {
+      "severity": "error",
+      "code": "missing_dependency_target",
+      "message": "def:rational-field-model targets unknown label def:field.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/number-systems-as-structures/rational-numbers-as-a-structure.tex",
+      "line": 141,
+      "label": "def:rational-field-model",
+      "target": "def:field"
+    },
+    {
+      "severity": "error",
+      "code": "missing_dependency_target",
+      "message": "def:rational-field-model targets unknown label def:rational-operations.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/number-systems-as-structures/rational-numbers-as-a-structure.tex",
+      "line": 141,
+      "label": "def:rational-field-model",
+      "target": "def:rational-operations"
+    },
+    {
+      "severity": "error",
+      "code": "missing_dependency_target",
+      "message": "def:real-number-model targets unknown label def:field.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/number-systems-as-structures/real-numbers-as-a-structure.tex",
+      "line": 387,
+      "label": "def:real-number-model",
+      "target": "def:field"
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "def:whole-number-model has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/number-systems-as-structures/whole-numbers-as-a-structure.tex",
+      "line": 21,
+      "label": "def:whole-number-model",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:binary-relation dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/relations/binary-relations.tex",
+      "line": 42,
+      "label": "def:binary-relation",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:equiv-relation dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/relations/equivalence-relations.tex",
+      "line": 53,
+      "label": "def:equiv-relation",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:partial-order dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/relations/order-relations.tex",
+      "line": 48,
+      "label": "def:partial-order",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:strict-partial-order dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/relations/order-relations.tex",
+      "line": 96,
+      "label": "def:strict-partial-order",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:total-order dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/relations/order-relations.tex",
+      "line": 147,
+      "label": "def:total-order",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:rel-reflexive dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/relations/properties-of-relations.tex",
+      "line": 40,
+      "label": "def:rel-reflexive",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:rel-irreflexive dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/relations/properties-of-relations.tex",
+      "line": 82,
+      "label": "def:rel-irreflexive",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:rel-symmetric dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/relations/properties-of-relations.tex",
+      "line": 124,
+      "label": "def:rel-symmetric",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:rel-antisymmetric dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/relations/properties-of-relations.tex",
+      "line": 170,
+      "label": "def:rel-antisymmetric",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:rel-asymmetric dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/relations/properties-of-relations.tex",
+      "line": 213,
+      "label": "def:rel-asymmetric",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:rel-transitive dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/relations/properties-of-relations.tex",
+      "line": 258,
+      "label": "def:rel-transitive",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "dependencies_without_hyperref",
+      "message": "def:rel-total dependency block has no hyperref targets.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/relations/properties-of-relations.tex",
+      "line": 301,
+      "label": "def:rel-total",
+      "target": ""
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "def:notes-rings-definition-l19 has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/rings/notes-rings-definition.tex",
+      "line": 19,
+      "label": "def:notes-rings-definition-l19",
+      "target": ""
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "def:notes-rings-definition-l65 has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/rings/notes-rings-definition.tex",
+      "line": 66,
+      "label": "def:notes-rings-definition-l65",
+      "target": ""
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "def:notes-rings-definition-l72 has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/rings/notes-rings-definition.tex",
+      "line": 74,
+      "label": "def:notes-rings-definition-l72",
+      "target": ""
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "def:notes-rings-integral-domains-l19 has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/rings/notes-rings-integral-domains.tex",
+      "line": 19,
+      "label": "def:notes-rings-integral-domains-l19",
+      "target": ""
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "def:notes-rings-integral-domains-l25 has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/rings/notes-rings-integral-domains.tex",
+      "line": 26,
+      "label": "def:notes-rings-integral-domains-l25",
+      "target": ""
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "prop:domain-cancellation has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/rings/notes-rings-integral-domains.tex",
+      "line": 46,
+      "label": "prop:domain-cancellation",
+      "target": ""
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "prop:ring-mult-zero has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/rings/notes-rings-theorems.tex",
+      "line": 17,
+      "label": "prop:ring-mult-zero",
+      "target": ""
+    },
+    {
+      "severity": "warning",
+      "code": "missing_dependency_declaration",
+      "message": "prop:ring-mult-neg has no dependency declaration.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/rings/notes-rings-theorems.tex",
+      "line": 46,
+      "label": "prop:ring-mult-neg",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "ambiguous_dependency_target",
+      "message": "def:lattice-order-partial-order target def:partial-order has multiple global matches.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/lattice-order/notes/ordered-sets/notes-ordered-sets.tex",
+      "line": 79,
+      "label": "def:lattice-order-partial-order",
+      "target": "def:partial-order"
+    },
+    {
+      "severity": "warning",
+      "code": "closure_leaf_not_allowed_root",
+      "message": "prop:abstract-field-is-domain dependency closure reaches non-root leaf prop:abstract-field-is-domain.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/algebraic-structures/fields.tex",
+      "line": 63,
+      "label": "prop:abstract-field-is-domain",
+      "target": "prop:abstract-field-is-domain"
+    },
+    {
+      "severity": "warning",
+      "code": "closure_leaf_not_allowed_root",
+      "message": "prop:abstract-domain-cancellation dependency closure reaches non-root leaf prop:abstract-domain-cancellation.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/algebraic-structures/integral-domains.tex",
+      "line": 98,
+      "label": "prop:abstract-domain-cancellation",
+      "target": "prop:abstract-domain-cancellation"
+    },
+    {
+      "severity": "warning",
+      "code": "closure_leaf_not_allowed_root",
+      "message": "prop:identity-element-unique dependency closure reaches non-root leaf prop:identity-element-unique.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/distinguished-elements/identity-elements.tex",
+      "line": 49,
+      "label": "prop:identity-element-unique",
+      "target": "prop:identity-element-unique"
+    },
+    {
+      "severity": "warning",
+      "code": "closure_leaf_not_allowed_root",
+      "message": "prop:inverse-element-unique dependency closure reaches non-root leaf prop:inverse-element-unique.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/distinguished-elements/inverses.tex",
+      "line": 52,
+      "label": "prop:inverse-element-unique",
+      "target": "prop:inverse-element-unique"
+    },
+    {
+      "severity": "warning",
+      "code": "closure_leaf_not_allowed_root",
+      "message": "prop:group-cancellation dependency closure reaches non-root leaf prop:group-cancellation.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/algebraic-structures/notes/laws-of-operations/cancellation-laws.tex",
+      "line": 4,
+      "label": "prop:group-cancellation",
+      "target": "prop:group-cancellation"
+    },
+    {
+      "severity": "warning",
+      "code": "closure_leaf_not_allowed_root",
+      "message": "lem:order-iso-finite-characterizations dependency closure reaches non-root leaf def:lattice-order-partial-order.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/lattice-order/notes/ordered-sets/notes-ordered-sets.tex",
+      "line": 30,
+      "label": "lem:order-iso-finite-characterizations",
+      "target": "def:lattice-order-partial-order"
+    },
+    {
+      "severity": "warning",
+      "code": "closure_leaf_not_allowed_root",
+      "message": "prop:hasse-diagram-characterization dependency closure reaches non-root leaf def:lattice-order-partial-order.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/lattice-order/notes/ordered-sets/notes-ordered-sets.tex",
+      "line": 30,
+      "label": "prop:hasse-diagram-characterization",
+      "target": "def:lattice-order-partial-order"
+    },
+    {
+      "severity": "warning",
+      "code": "closure_leaf_not_allowed_root",
+      "message": "prop:duality-principle dependency closure reaches non-root leaf def:lattice-order-partial-order.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/lattice-order/notes/ordered-sets/notes-ordered-sets.tex",
+      "line": 30,
+      "label": "prop:duality-principle",
+      "target": "def:lattice-order-partial-order"
+    },
+    {
+      "severity": "warning",
+      "code": "closure_leaf_not_allowed_root",
+      "message": "prop:finite-poset-maximal dependency closure reaches non-root leaf def:lattice-order-partial-order.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/lattice-order/notes/ordered-sets/notes-ordered-sets.tex",
+      "line": 30,
+      "label": "prop:finite-poset-maximal",
+      "target": "def:lattice-order-partial-order"
+    },
+    {
+      "severity": "warning",
+      "code": "closure_leaf_not_allowed_root",
+      "message": "prop:predicates-power-sets-iso dependency closure reaches non-root leaf def:lattice-order-partial-order.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/lattice-order/notes/ordered-sets/notes-ordered-sets.tex",
+      "line": 30,
+      "label": "prop:predicates-power-sets-iso",
+      "target": "def:lattice-order-partial-order"
+    },
+    {
+      "severity": "warning",
+      "code": "closure_leaf_not_allowed_root",
+      "message": "lem:order-embedding-injective dependency closure reaches non-root leaf def:lattice-order-partial-order.",
+      "repo": "lra-volume-iv",
+      "file": "volume-iv/algebra/lattice-order/notes/ordered-sets/notes-ordered-sets.tex",
+      "line": 30,
+      "label": "lem:order-embedding-injective",
+      "target": "def:lattice-order-partial-order"
+    },
+    {
+      "severity": "warning",
+      "code": "closure_leaf_not_allowed_root",
+      "message": "thm:addition-commutative-in-fn dependency closure reaches non-root leaf def:whole-numbers.",
+      "repo": "lra-volume-ii",
+      "file": "volume-ii/whole-numbers/notes/definition-of-whole-numbers/notes-definition-of-whole-numbers.tex",
+      "line": 4,
+      "label": "thm:addition-commutative-in-fn",
+      "target": "def:whole-numbers"
+    },
+    {
+      "severity": "warning",
+      "code": "closure_leaf_not_allowed_root",
+      "message": "thm:unique-additive-identity dependency closure reaches non-root leaf def:whole-numbers.",
+      "repo": "lra-volume-ii",
+      "file": "volume-ii/whole-numbers/notes/definition-of-whole-numbers/notes-definition-of-whole-numbers.tex",
+      "line": 4,
+      "label": "thm:unique-additive-identity",
+      "target": "def:whole-numbers"
+    },
+    {
+      "severity": "warning",
+      "code": "closure_leaf_not_allowed_root",
+      "message": "thm:unique-additive-inverse dependency closure reaches non-root leaf def:whole-numbers.",
+      "repo": "lra-volume-ii",
+      "file": "volume-ii/whole-numbers/notes/definition-of-whole-numbers/notes-definition-of-whole-numbers.tex",
+      "line": 4,
+      "label": "thm:unique-additive-inverse",
+      "target": "def:whole-numbers"
+    },
+    {
+      "severity": "warning",
+      "code": "closure_leaf_not_allowed_root",
+      "message": "thm:zero-scalar-times-vector dependency closure reaches non-root leaf def:whole-numbers.",
+      "repo": "lra-volume-ii",
+      "file": "volume-ii/whole-numbers/notes/definition-of-whole-numbers/notes-definition-of-whole-numbers.tex",
+      "line": 4,
+      "label": "thm:zero-scalar-times-vector",
+      "target": "def:whole-numbers"
+    },
+    {
+      "severity": "warning",
+      "code": "closure_leaf_not_allowed_root",
+      "message": "thm:scalar-times-zero-vector dependency closure reaches non-root leaf def:whole-numbers.",
+      "repo": "lra-volume-ii",
+      "file": "volume-ii/whole-numbers/notes/definition-of-whole-numbers/notes-definition-of-whole-numbers.tex",
+      "line": 4,
+      "label": "thm:scalar-times-zero-vector",
+      "target": "def:whole-numbers"
+    },
+    {
+      "severity": "warning",
+      "code": "closure_leaf_not_allowed_root",
+      "message": "thm:minus-one-times-vector dependency closure reaches non-root leaf def:whole-numbers.",
+      "repo": "lra-volume-ii",
+      "file": "volume-ii/whole-numbers/notes/definition-of-whole-numbers/notes-definition-of-whole-numbers.tex",
+      "line": 4,
+      "label": "thm:minus-one-times-vector",
+      "target": "def:whole-numbers"
+    },
+    {
+      "severity": "warning",
+      "code": "closure_leaf_not_allowed_root",
+      "message": "thm:conditions-for-a-subspace dependency closure reaches non-root leaf def:whole-numbers.",
+      "repo": "lra-volume-ii",
+      "file": "volume-ii/whole-numbers/notes/definition-of-whole-numbers/notes-definition-of-whole-numbers.tex",
+      "line": 4,
+      "label": "thm:conditions-for-a-subspace",
+      "target": "def:whole-numbers"
+    },
+    {
+      "severity": "warning",
+      "code": "closure_leaf_not_allowed_root",
+      "message": "thm:sum-of-subspaces-smallest-containing dependency closure reaches non-root leaf def:whole-numbers.",
+      "repo": "lra-volume-ii",
+      "file": "volume-ii/whole-numbers/notes/definition-of-whole-numbers/notes-definition-of-whole-numbers.tex",
+      "line": 4,
+      "label": "thm:sum-of-subspaces-smallest-containing",
+      "target": "def:whole-numbers"
+    },
+    {
+      "severity": "warning",
+      "code": "closure_leaf_not_allowed_root",
+      "message": "thm:condition-for-direct-sum dependency closure reaches non-root leaf def:whole-numbers.",
+      "repo": "lra-volume-ii",
+      "file": "volume-ii/whole-numbers/notes/definition-of-whole-numbers/notes-definition-of-whole-numbers.tex",
+      "line": 4,
+      "label": "thm:condition-for-direct-sum",
+      "target": "def:whole-numbers"
+    },
+    {
+      "severity": "warning",
+      "code": "closure_leaf_not_allowed_root",
+      "message": "thm:direct-sum-of-two-subspaces dependency closure reaches non-root leaf def:whole-numbers.",
+      "repo": "lra-volume-ii",
+      "file": "volume-ii/whole-numbers/notes/definition-of-whole-numbers/notes-definition-of-whole-numbers.tex",
+      "line": 4,
+      "label": "thm:direct-sum-of-two-subspaces",
+      "target": "def:whole-numbers"
+    }
+  ]
+}

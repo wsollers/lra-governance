@@ -1,0 +1,456 @@
+{
+  "schema_version": "reorder-working-delta-1",
+  "description": "Accepted review deltas. Preserved across batch regeneration unless --reset-delta is used.",
+  "adds": [
+    {
+      "batch": "batch-0003.volume-ii.identity-equality-equivalence.properties-of-equality",
+      "reason": "The statement uses the equality relation symbol x=x.",
+      "recorded_at": "2026-06-19T06:48:32.430050+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0003.resolutions.json",
+      "source": "ax:equality-reflexivity",
+      "target": "def:equality-relation"
+    },
+    {
+      "batch": "batch-0004.volume-ii.identity-equality-equivalence.substitution",
+      "reason": "The substitution schema is stated using x=y.",
+      "recorded_at": "2026-06-19T06:48:32.711060+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+      "source": "ax:equality-substitution",
+      "target": "def:equality-relation"
+    },
+    {
+      "batch": "batch-0004.volume-ii.identity-equality-equivalence.substitution",
+      "reason": "The statement quantifies over formulas phi(z).",
+      "recorded_at": "2026-06-19T06:48:32.766663+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+      "source": "ax:equality-substitution",
+      "target": "def:formula"
+    },
+    {
+      "batch": "batch-0003.volume-ii.identity-equality-equivalence.properties-of-equality",
+      "reason": "The statement explicitly names the equality relation.",
+      "recorded_at": "2026-06-19T06:48:32.605070+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0003.resolutions.json",
+      "source": "cor:equality-is-equivalence-relation",
+      "target": "def:equality-relation"
+    },
+    {
+      "batch": "batch-0003.volume-ii.identity-equality-equivalence.properties-of-equality",
+      "reason": "Reflexive, symmetric, and transitive are the equivalence-relation conditions.",
+      "recorded_at": "2026-06-19T06:48:32.657642+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0003.resolutions.json",
+      "source": "cor:equality-is-equivalence-relation",
+      "target": "def:equivalence-relation"
+    },
+    {
+      "batch": "batch-0002.volume-ii.identity-equality-equivalence.equivalence",
+      "reason": "The statement uses propositional equality a=b in the implication.",
+      "recorded_at": "2026-06-19T06:35:41.904090+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0002.resolutions.json",
+      "source": "cor:equality-is-finest-equivalence",
+      "target": "def:equality-relation"
+    },
+    {
+      "batch": "batch-0002.volume-ii.identity-equality-equivalence.equivalence",
+      "reason": "The canonical projection is stated as a map A to A/~.",
+      "recorded_at": "2026-06-19T06:36:03.987185+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0002.resolutions.json",
+      "source": "def:canonical-projection",
+      "target": "def:function"
+    },
+    {
+      "batch": "batch-0001.volume-ii.identity-equality-equivalence.equality",
+      "reason": "Identity is stated as sameness, so equality is the nearer ancestor than generic relation.",
+      "recorded_at": "2026-06-19T06:35:59.079146+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0001.resolutions.json",
+      "source": "def:identity-relation",
+      "target": "def:equality-relation"
+    },
+    {
+      "batch": "batch-0004.volume-ii.identity-equality-equivalence.substitution",
+      "reason": "The statement says the structures respect equality.",
+      "recorded_at": "2026-06-19T06:48:33.710204+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+      "source": "prop:congruence-with-respect-to-equality-is-automatic",
+      "target": "def:equality-relation"
+    },
+    {
+      "batch": "batch-0004.volume-ii.identity-equality-equivalence.substitution",
+      "reason": "The statement explicitly includes functions.",
+      "recorded_at": "2026-06-19T06:48:33.765765+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+      "source": "prop:congruence-with-respect-to-equality-is-automatic",
+      "target": "def:function"
+    },
+    {
+      "batch": "batch-0004.volume-ii.identity-equality-equivalence.substitution",
+      "reason": "The statement uses respect/congruence language for operations.",
+      "recorded_at": "2026-06-19T06:48:33.820196+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+      "source": "prop:congruence-with-respect-to-equality-is-automatic",
+      "target": "def:operation-respects-equivalence"
+    },
+    {
+      "batch": "batch-0004.volume-ii.identity-equality-equivalence.substitution",
+      "reason": "The statement uses respect/congruence language for predicates.",
+      "recorded_at": "2026-06-19T06:48:33.873505+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+      "source": "prop:congruence-with-respect-to-equality-is-automatic",
+      "target": "def:predicate-respects-equivalence"
+    },
+    {
+      "batch": "batch-0004.volume-ii.identity-equality-equivalence.substitution",
+      "reason": "The statement uses respect/congruence language for relations.",
+      "recorded_at": "2026-06-19T06:48:33.929067+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+      "source": "prop:congruence-with-respect-to-equality-is-automatic",
+      "target": "def:relation-respects-equivalence"
+    },
+    {
+      "batch": "batch-0002.volume-ii.identity-equality-equivalence.equivalence",
+      "reason": "The statement asserts that the canonical projection is surjective.",
+      "recorded_at": "2026-06-19T06:36:09.047347+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0002.resolutions.json",
+      "source": "prop:projection-is-surjective",
+      "target": "def:surjective"
+    },
+    {
+      "batch": "batch-0004.volume-ii.identity-equality-equivalence.substitution",
+      "reason": "The statement compares x=y and f(x)=f(y).",
+      "recorded_at": "2026-06-19T06:48:32.825581+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+      "source": "prop:substitution-preserves-functions",
+      "target": "def:equality-relation"
+    },
+    {
+      "batch": "batch-0004.volume-ii.identity-equality-equivalence.substitution",
+      "reason": "The expression f(x) requires function vocabulary.",
+      "recorded_at": "2026-06-19T06:48:32.880983+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+      "source": "prop:substitution-preserves-functions",
+      "target": "def:function"
+    },
+    {
+      "batch": "batch-0004.volume-ii.identity-equality-equivalence.substitution",
+      "reason": "The notation x O y uses a binary operation.",
+      "recorded_at": "2026-06-19T06:48:33.206396+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+      "source": "prop:substitution-preserves-operations-full",
+      "target": "def:binary-arithmetic-operation"
+    },
+    {
+      "batch": "batch-0004.volume-ii.identity-equality-equivalence.substitution",
+      "reason": "The statement compares equal inputs and outputs.",
+      "recorded_at": "2026-06-19T06:48:33.152797+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+      "source": "prop:substitution-preserves-operations-full",
+      "target": "def:equality-relation"
+    },
+    {
+      "batch": "batch-0004.volume-ii.identity-equality-equivalence.substitution",
+      "reason": "The notation x O y uses a binary operation.",
+      "recorded_at": "2026-06-19T06:48:32.990352+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+      "source": "prop:substitution-preserves-operations-left",
+      "target": "def:binary-arithmetic-operation"
+    },
+    {
+      "batch": "batch-0004.volume-ii.identity-equality-equivalence.substitution",
+      "reason": "The statement compares equal inputs and outputs.",
+      "recorded_at": "2026-06-19T06:48:32.935308+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+      "source": "prop:substitution-preserves-operations-left",
+      "target": "def:equality-relation"
+    },
+    {
+      "batch": "batch-0004.volume-ii.identity-equality-equivalence.substitution",
+      "reason": "The notation x O y uses a binary operation.",
+      "recorded_at": "2026-06-19T06:48:33.098960+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+      "source": "prop:substitution-preserves-operations-right",
+      "target": "def:binary-arithmetic-operation"
+    },
+    {
+      "batch": "batch-0004.volume-ii.identity-equality-equivalence.substitution",
+      "reason": "The statement compares equal inputs and outputs.",
+      "recorded_at": "2026-06-19T06:48:33.044535+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+      "source": "prop:substitution-preserves-operations-right",
+      "target": "def:equality-relation"
+    },
+    {
+      "batch": "batch-0004.volume-ii.identity-equality-equivalence.substitution",
+      "reason": "The statement uses equality in the antecedent.",
+      "recorded_at": "2026-06-19T06:48:33.267084+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+      "source": "prop:substitution-preserves-predicates",
+      "target": "def:equality-relation"
+    },
+    {
+      "batch": "batch-0004.volume-ii.identity-equality-equivalence.substitution",
+      "reason": "The statement compares predicate values P(x) and P(y).",
+      "recorded_at": "2026-06-19T06:48:33.321401+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+      "source": "prop:substitution-preserves-predicates",
+      "target": "def:predicate"
+    },
+    {
+      "batch": "batch-0004.volume-ii.identity-equality-equivalence.substitution",
+      "reason": "The statement compares equal inputs in both relation slots.",
+      "recorded_at": "2026-06-19T06:48:33.604020+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+      "source": "prop:substitution-preserves-relations-full",
+      "target": "def:equality-relation"
+    },
+    {
+      "batch": "batch-0004.volume-ii.identity-equality-equivalence.substitution",
+      "reason": "The statement compares binary relation instances.",
+      "recorded_at": "2026-06-19T06:48:33.658817+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+      "source": "prop:substitution-preserves-relations-full",
+      "target": "def:relation"
+    },
+    {
+      "batch": "batch-0004.volume-ii.identity-equality-equivalence.substitution",
+      "reason": "The statement uses equality in the antecedent.",
+      "recorded_at": "2026-06-19T06:48:33.381982+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+      "source": "prop:substitution-preserves-relations-left",
+      "target": "def:equality-relation"
+    },
+    {
+      "batch": "batch-0004.volume-ii.identity-equality-equivalence.substitution",
+      "reason": "The statement compares relation instances R(x,z) and R(y,z).",
+      "recorded_at": "2026-06-19T06:48:33.437029+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+      "source": "prop:substitution-preserves-relations-left",
+      "target": "def:relation"
+    },
+    {
+      "batch": "batch-0004.volume-ii.identity-equality-equivalence.substitution",
+      "reason": "The statement uses equality in the antecedent.",
+      "recorded_at": "2026-06-19T06:48:33.492375+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+      "source": "prop:substitution-preserves-relations-right",
+      "target": "def:equality-relation"
+    },
+    {
+      "batch": "batch-0004.volume-ii.identity-equality-equivalence.substitution",
+      "reason": "The statement compares relation instances R(z,x) and R(z,y).",
+      "recorded_at": "2026-06-19T06:48:33.549374+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+      "source": "prop:substitution-preserves-relations-right",
+      "target": "def:relation"
+    },
+    {
+      "batch": "batch-0003.volume-ii.identity-equality-equivalence.properties-of-equality",
+      "reason": "The statement is a property of the equality relation.",
+      "recorded_at": "2026-06-19T06:48:32.485174+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0003.resolutions.json",
+      "source": "thm:equality-symmetry",
+      "target": "def:equality-relation"
+    },
+    {
+      "batch": "batch-0003.volume-ii.identity-equality-equivalence.properties-of-equality",
+      "reason": "The statement is a property of the equality relation.",
+      "recorded_at": "2026-06-19T06:48:32.543699+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0003.resolutions.json",
+      "source": "thm:equality-transitivity",
+      "target": "def:equality-relation"
+    }
+  ],
+  "removes": [
+    {
+      "batch": "batch-0003.volume-ii.identity-equality-equivalence.properties-of-equality",
+      "reason": "The fact is proof support; the statement needs equality and equivalence vocabulary.",
+      "recorded_at": "2026-06-19T06:47:32.685486+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0003.resolutions.json",
+      "source": "cor:equality-is-equivalence-relation",
+      "target": "ax:equality-reflexivity"
+    },
+    {
+      "batch": "batch-0003.volume-ii.identity-equality-equivalence.properties-of-equality",
+      "reason": "The fact is proof support; the statement needs equality and equivalence vocabulary.",
+      "recorded_at": "2026-06-19T06:47:32.741340+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0003.resolutions.json",
+      "source": "cor:equality-is-equivalence-relation",
+      "target": "thm:equality-symmetry"
+    },
+    {
+      "batch": "batch-0003.volume-ii.identity-equality-equivalence.properties-of-equality",
+      "reason": "The fact is proof support; the statement needs equality and equivalence vocabulary.",
+      "recorded_at": "2026-06-19T06:47:32.797807+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0003.resolutions.json",
+      "source": "cor:equality-is-equivalence-relation",
+      "target": "thm:equality-transitivity"
+    },
+    {
+      "batch": "batch-0001.volume-ii.identity-equality-equivalence.equality",
+      "reason": "Generic relation machinery is not needed to state identity once equality is the ancestor.",
+      "recorded_at": "2026-06-19T06:35:41.910779+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0001.resolutions.json",
+      "source": "def:identity-relation",
+      "target": "def:relation"
+    },
+    {
+      "batch": "batch-0002.volume-ii.identity-equality-equivalence.equivalence",
+      "reason": "Binary operation already carries the cartesian product machinery.",
+      "recorded_at": "2026-06-19T06:36:14.230298+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0002.resolutions.json",
+      "source": "def:operation-respects-equivalence",
+      "target": "def:cartesian-product-rel"
+    },
+    {
+      "batch": "batch-0004.volume-ii.identity-equality-equivalence.substitution",
+      "reason": "Specific substitution proposition is proof support; the statement needs respect/equality vocabulary.",
+      "recorded_at": "2026-06-19T06:47:33.427065+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+      "source": "prop:congruence-with-respect-to-equality-is-automatic",
+      "target": "prop:substitution-preserves-functions"
+    },
+    {
+      "batch": "batch-0004.volume-ii.identity-equality-equivalence.substitution",
+      "reason": "Specific operation congruence fact is proof support; the statement needs respect/equality vocabulary.",
+      "recorded_at": "2026-06-19T06:47:33.483985+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+      "source": "prop:congruence-with-respect-to-equality-is-automatic",
+      "target": "prop:substitution-preserves-operations-full"
+    },
+    {
+      "batch": "batch-0004.volume-ii.identity-equality-equivalence.substitution",
+      "reason": "Specific predicate substitution fact is proof support; the statement needs respect/equality vocabulary.",
+      "recorded_at": "2026-06-19T06:47:33.544474+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+      "source": "prop:congruence-with-respect-to-equality-is-automatic",
+      "target": "prop:substitution-preserves-predicates"
+    },
+    {
+      "batch": "batch-0004.volume-ii.identity-equality-equivalence.substitution",
+      "reason": "Specific relation congruence fact is proof support; the statement needs respect/equality vocabulary.",
+      "recorded_at": "2026-06-19T06:47:33.599926+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+      "source": "prop:congruence-with-respect-to-equality-is-automatic",
+      "target": "prop:substitution-preserves-relations-full"
+    },
+    {
+      "batch": "batch-0004.volume-ii.identity-equality-equivalence.substitution",
+      "reason": "Substitution axiom is proof support; the statement needs function and equality vocabulary.",
+      "recorded_at": "2026-06-19T06:47:32.853727+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+      "source": "prop:substitution-preserves-functions",
+      "target": "ax:equality-substitution"
+    },
+    {
+      "batch": "batch-0004.volume-ii.identity-equality-equivalence.substitution",
+      "reason": "One-sided congruence is proof support; the statement needs operation and equality vocabulary.",
+      "recorded_at": "2026-06-19T06:47:33.023397+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+      "source": "prop:substitution-preserves-operations-full",
+      "target": "prop:substitution-preserves-operations-left"
+    },
+    {
+      "batch": "batch-0004.volume-ii.identity-equality-equivalence.substitution",
+      "reason": "One-sided congruence is proof support; the statement needs operation and equality vocabulary.",
+      "recorded_at": "2026-06-19T06:47:33.081813+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+      "source": "prop:substitution-preserves-operations-full",
+      "target": "prop:substitution-preserves-operations-right"
+    },
+    {
+      "batch": "batch-0004.volume-ii.identity-equality-equivalence.substitution",
+      "reason": "Function substitution is proof support; the statement needs operation and equality vocabulary.",
+      "recorded_at": "2026-06-19T06:47:32.910441+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+      "source": "prop:substitution-preserves-operations-left",
+      "target": "prop:substitution-preserves-functions"
+    },
+    {
+      "batch": "batch-0004.volume-ii.identity-equality-equivalence.substitution",
+      "reason": "Function substitution is proof support; the statement needs operation and equality vocabulary.",
+      "recorded_at": "2026-06-19T06:47:32.965833+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+      "source": "prop:substitution-preserves-operations-right",
+      "target": "prop:substitution-preserves-functions"
+    },
+    {
+      "batch": "batch-0004.volume-ii.identity-equality-equivalence.substitution",
+      "reason": "Substitution axiom is proof support; the statement needs predicate and equality vocabulary.",
+      "recorded_at": "2026-06-19T06:47:33.137656+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+      "source": "prop:substitution-preserves-predicates",
+      "target": "ax:equality-substitution"
+    },
+    {
+      "batch": "batch-0004.volume-ii.identity-equality-equivalence.substitution",
+      "reason": "One-sided relation substitution is proof support; the statement needs relation and equality vocabulary.",
+      "recorded_at": "2026-06-19T06:47:33.312010+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+      "source": "prop:substitution-preserves-relations-full",
+      "target": "prop:substitution-preserves-relations-left"
+    },
+    {
+      "batch": "batch-0004.volume-ii.identity-equality-equivalence.substitution",
+      "reason": "One-sided relation substitution is proof support; the statement needs relation and equality vocabulary.",
+      "recorded_at": "2026-06-19T06:47:33.371548+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+      "source": "prop:substitution-preserves-relations-full",
+      "target": "prop:substitution-preserves-relations-right"
+    },
+    {
+      "batch": "batch-0004.volume-ii.identity-equality-equivalence.substitution",
+      "reason": "Substitution axiom is proof support; the statement needs relation and equality vocabulary.",
+      "recorded_at": "2026-06-19T06:47:33.194522+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+      "source": "prop:substitution-preserves-relations-left",
+      "target": "ax:equality-substitution"
+    },
+    {
+      "batch": "batch-0004.volume-ii.identity-equality-equivalence.substitution",
+      "reason": "Substitution axiom is proof support; the statement needs relation and equality vocabulary.",
+      "recorded_at": "2026-06-19T06:47:33.253203+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+      "source": "prop:substitution-preserves-relations-right",
+      "target": "ax:equality-substitution"
+    },
+    {
+      "batch": "batch-0003.volume-ii.identity-equality-equivalence.properties-of-equality",
+      "reason": "Reflexivity is proof support, not needed to state equality symmetry.",
+      "recorded_at": "2026-06-19T06:47:32.409072+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0003.resolutions.json",
+      "source": "thm:equality-symmetry",
+      "target": "ax:equality-reflexivity"
+    },
+    {
+      "batch": "batch-0003.volume-ii.identity-equality-equivalence.properties-of-equality",
+      "reason": "Leibniz law is proof support, not needed to state equality symmetry.",
+      "recorded_at": "2026-06-19T06:47:32.465068+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0003.resolutions.json",
+      "source": "thm:equality-symmetry",
+      "target": "ax:leibniz-law"
+    },
+    {
+      "batch": "batch-0003.volume-ii.identity-equality-equivalence.properties-of-equality",
+      "reason": "Reflexivity is proof support, not needed to state equality transitivity.",
+      "recorded_at": "2026-06-19T06:47:32.523785+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0003.resolutions.json",
+      "source": "thm:equality-transitivity",
+      "target": "ax:equality-reflexivity"
+    },
+    {
+      "batch": "batch-0003.volume-ii.identity-equality-equivalence.properties-of-equality",
+      "reason": "Leibniz law is proof support, not needed to state equality transitivity.",
+      "recorded_at": "2026-06-19T06:47:32.576986+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0003.resolutions.json",
+      "source": "thm:equality-transitivity",
+      "target": "ax:leibniz-law"
+    },
+    {
+      "batch": "batch-0003.volume-ii.identity-equality-equivalence.properties-of-equality",
+      "reason": "Symmetry is proof support, not needed to state equality transitivity.",
+      "recorded_at": "2026-06-19T06:47:32.629406+00:00",
+      "resolution": "reorder\\section-batches\\trial-resolutions\\batch-0003.resolutions.json",
+      "source": "thm:equality-transitivity",
+      "target": "thm:equality-symmetry"
+    }
+  ]
+}

@@ -1,0 +1,534 @@
+{
+  "issues": [
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:abelian-group appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:abelian-group",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:abstract-field appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:abstract-field",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:abstract-integral-domain appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:abstract-integral-domain",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:associativity appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:associativity",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:commutative-ring appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:commutative-ring",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:commutativity appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:commutativity",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:group appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:group",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:homomorphism appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:homomorphism",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:l-structure appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:l-structure",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:left-distributivity appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:left-distributivity",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:monoid appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:monoid",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:partial-order appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:partial-order",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:right-distributivity appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:right-distributivity",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:ring appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:ring",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:semigroup appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:semigroup",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:strict-partial-order appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:strict-partial-order",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "duplicate_global_label",
+      "message": "Label def:total-order appears 2 times globally.",
+      "repo": "",
+      "file": "",
+      "line": 1,
+      "label": "def:total-order",
+      "target": ""
+    },
+    {
+      "severity": "error",
+      "code": "ambiguous_dependency_target",
+      "message": "def:cover-relation target def:partial-order has multiple global matches.",
+      "repo": "lra-volume-i",
+      "file": "volume-i/sets-relations-functions/notes/order/notes-order-hasse-sup-duality.tex",
+      "line": 54,
+      "label": "def:cover-relation",
+      "target": "def:partial-order"
+    },
+    {
+      "severity": "error",
+      "code": "ambiguous_dependency_target",
+      "message": "def:hasse target def:partial-order has multiple global matches.",
+      "repo": "lra-volume-i",
+      "file": "volume-i/sets-relations-functions/notes/order/notes-order-hasse-sup-duality.tex",
+      "line": 74,
+      "label": "def:hasse",
+      "target": "def:partial-order"
+    },
+    {
+      "severity": "error",
+      "code": "ambiguous_dependency_target",
+      "message": "def:dual-poset target def:partial-order has multiple global matches.",
+      "repo": "lra-volume-i",
+      "file": "volume-i/sets-relations-functions/notes/order/notes-order-hasse-sup-duality.tex",
+      "line": 149,
+      "label": "def:dual-poset",
+      "target": "def:partial-order"
+    },
+    {
+      "severity": "error",
+      "code": "ambiguous_dependency_target",
+      "message": "prop:order-duality target def:partial-order has multiple global matches.",
+      "repo": "lra-volume-i",
+      "file": "volume-i/sets-relations-functions/notes/order/notes-order-hasse-sup-duality.tex",
+      "line": 191,
+      "label": "prop:order-duality",
+      "target": "def:partial-order"
+    },
+    {
+      "severity": "error",
+      "code": "ambiguous_dependency_target",
+      "message": "def:induced-order target def:partial-order has multiple global matches.",
+      "repo": "lra-volume-i",
+      "file": "volume-i/sets-relations-functions/notes/order/notes-order-induced.tex",
+      "line": 48,
+      "label": "def:induced-order",
+      "target": "def:partial-order"
+    },
+    {
+      "severity": "error",
+      "code": "ambiguous_dependency_target",
+      "message": "prop:induced-preorder target def:partial-order has multiple global matches.",
+      "repo": "lra-volume-i",
+      "file": "volume-i/sets-relations-functions/notes/order/notes-order-induced.tex",
+      "line": 71,
+      "label": "prop:induced-preorder",
+      "target": "def:partial-order"
+    },
+    {
+      "severity": "error",
+      "code": "ambiguous_dependency_target",
+      "message": "def:f-indist target def:partial-order has multiple global matches.",
+      "repo": "lra-volume-i",
+      "file": "volume-i/sets-relations-functions/notes/order/notes-order-induced.tex",
+      "line": 101,
+      "label": "def:f-indist",
+      "target": "def:partial-order"
+    },
+    {
+      "severity": "error",
+      "code": "ambiguous_dependency_target",
+      "message": "prop:induced-poset target def:partial-order has multiple global matches.",
+      "repo": "lra-volume-i",
+      "file": "volume-i/sets-relations-functions/notes/order/notes-order-induced.tex",
+      "line": 129,
+      "label": "prop:induced-poset",
+      "target": "def:partial-order"
+    },
+    {
+      "severity": "error",
+      "code": "ambiguous_dependency_target",
+      "message": "def:suborder target def:partial-order has multiple global matches.",
+      "repo": "lra-volume-i",
+      "file": "volume-i/sets-relations-functions/notes/order/notes-order-induced.tex",
+      "line": 179,
+      "label": "def:suborder",
+      "target": "def:partial-order"
+    },
+    {
+      "severity": "error",
+      "code": "ambiguous_dependency_target",
+      "message": "prop:embedding-injective target def:partial-order has multiple global matches.",
+      "repo": "lra-volume-i",
+      "file": "volume-i/sets-relations-functions/notes/order/notes-order-induced.tex",
+      "line": 251,
+      "label": "prop:embedding-injective",
+      "target": "def:partial-order"
+    },
+    {
+      "severity": "error",
+      "code": "ambiguous_dependency_target",
+      "message": "prop:embedding-iso target def:partial-order has multiple global matches.",
+      "repo": "lra-volume-i",
+      "file": "volume-i/sets-relations-functions/notes/order/notes-order-induced.tex",
+      "line": 280,
+      "label": "prop:embedding-iso",
+      "target": "def:partial-order"
+    },
+    {
+      "severity": "error",
+      "code": "ambiguous_dependency_target",
+      "message": "def:lattice target def:partial-order has multiple global matches.",
+      "repo": "lra-volume-i",
+      "file": "volume-i/sets-relations-functions/notes/order/notes-order-lattices.tex",
+      "line": 117,
+      "label": "def:lattice",
+      "target": "def:partial-order"
+    },
+    {
+      "severity": "error",
+      "code": "ambiguous_dependency_target",
+      "message": "def:sup-inf target def:partial-order has multiple global matches.",
+      "repo": "lra-volume-i",
+      "file": "volume-i/sets-relations-functions/notes/order/notes-order-sup-inf.tex",
+      "line": 94,
+      "label": "def:sup-inf",
+      "target": "def:partial-order"
+    },
+    {
+      "severity": "error",
+      "code": "ambiguous_dependency_target",
+      "message": "prop:sup-unique target def:partial-order has multiple global matches.",
+      "repo": "lra-volume-i",
+      "file": "volume-i/sets-relations-functions/notes/order/notes-order-sup-inf.tex",
+      "line": 136,
+      "label": "prop:sup-unique",
+      "target": "def:partial-order"
+    },
+    {
+      "severity": "error",
+      "code": "ambiguous_dependency_target",
+      "message": "prop:sup-char target def:partial-order has multiple global matches.",
+      "repo": "lra-volume-i",
+      "file": "volume-i/sets-relations-functions/notes/order/notes-order-sup-inf.tex",
+      "line": 254,
+      "label": "prop:sup-char",
+      "target": "def:partial-order"
+    },
+    {
+      "severity": "error",
+      "code": "ambiguous_dependency_target",
+      "message": "prop:sup-inf-duality target def:partial-order has multiple global matches.",
+      "repo": "lra-volume-i",
+      "file": "volume-i/sets-relations-functions/notes/order/notes-order-sup-inf.tex",
+      "line": 296,
+      "label": "prop:sup-inf-duality",
+      "target": "def:partial-order"
+    },
+    {
+      "severity": "error",
+      "code": "ambiguous_dependency_target",
+      "message": "def:ordered-set target def:partial-order has multiple global matches.",
+      "repo": "lra-volume-i",
+      "file": "volume-i/sets-relations-functions/notes/order/notes-order.tex",
+      "line": 19,
+      "label": "def:ordered-set",
+      "target": "def:partial-order"
+    },
+    {
+      "severity": "error",
+      "code": "ambiguous_dependency_target",
+      "message": "def:strict-order target def:partial-order has multiple global matches.",
+      "repo": "lra-volume-i",
+      "file": "volume-i/sets-relations-functions/notes/order/notes-order.tex",
+      "line": 39,
+      "label": "def:strict-order",
+      "target": "def:partial-order"
+    },
+    {
+      "severity": "error",
+      "code": "ambiguous_dependency_target",
+      "message": "def:linear-order target def:total-order has multiple global matches.",
+      "repo": "lra-volume-i",
+      "file": "volume-i/sets-relations-functions/notes/order/notes-order.tex",
+      "line": 90,
+      "label": "def:linear-order",
+      "target": "def:total-order"
+    },
+    {
+      "severity": "error",
+      "code": "ambiguous_dependency_target",
+      "message": "def:well-order target def:total-order has multiple global matches.",
+      "repo": "lra-volume-i",
+      "file": "volume-i/sets-relations-functions/notes/order/notes-order.tex",
+      "line": 179,
+      "label": "def:well-order",
+      "target": "def:total-order"
+    },
+    {
+      "severity": "error",
+      "code": "ambiguous_dependency_target",
+      "message": "def:directed-set target def:partial-order has multiple global matches.",
+      "repo": "lra-volume-i",
+      "file": "volume-i/sets-relations-functions/notes/order/notes-order.tex",
+      "line": 257,
+      "label": "def:directed-set",
+      "target": "def:partial-order"
+    },
+    {
+      "severity": "error",
+      "code": "ambiguous_dependency_target",
+      "message": "def:total-order target def:partial-order has multiple global matches.",
+      "repo": "lra-volume-i",
+      "file": "volume-i/sets-relations-functions/notes/relations/notes-relation-properties.tex",
+      "line": 353,
+      "label": "def:total-order",
+      "target": "def:partial-order"
+    },
+    {
+      "severity": "warning",
+      "code": "closure_leaf_not_allowed_root",
+      "message": "thm:Q-countable dependency closure reaches non-root leaf def:natural-numbers.",
+      "repo": "lra-volume-ii",
+      "file": "volume-ii/natural-numbers/notes/nz-axioms/notes-nz-axioms.tex",
+      "line": 14,
+      "label": "thm:Q-countable",
+      "target": "def:natural-numbers"
+    },
+    {
+      "severity": "warning",
+      "code": "closure_leaf_not_allowed_root",
+      "message": "thm:countable-union dependency closure reaches non-root leaf def:natural-numbers.",
+      "repo": "lra-volume-ii",
+      "file": "volume-ii/natural-numbers/notes/nz-axioms/notes-nz-axioms.tex",
+      "line": 14,
+      "label": "thm:countable-union",
+      "target": "def:natural-numbers"
+    },
+    {
+      "severity": "warning",
+      "code": "closure_leaf_not_allowed_root",
+      "message": "thm:R-uncountable dependency closure reaches non-root leaf def:natural-numbers.",
+      "repo": "lra-volume-ii",
+      "file": "volume-ii/natural-numbers/notes/nz-axioms/notes-nz-axioms.tex",
+      "line": 14,
+      "label": "thm:R-uncountable",
+      "target": "def:natural-numbers"
+    },
+    {
+      "severity": "warning",
+      "code": "closure_leaf_not_allowed_root",
+      "message": "lem:rep-independence dependency closure reaches non-root leaf def:equivalence-relation.",
+      "repo": "lra-volume-ii",
+      "file": "volume-ii/identity-equality-equivalence/notes/equivalence/notes-equivalence.tex",
+      "line": 2,
+      "label": "lem:rep-independence",
+      "target": "def:equivalence-relation"
+    },
+    {
+      "severity": "warning",
+      "code": "closure_leaf_not_allowed_root",
+      "message": "thm:equiv-partition dependency closure reaches non-root leaf def:equivalence-relation.",
+      "repo": "lra-volume-ii",
+      "file": "volume-ii/identity-equality-equivalence/notes/equivalence/notes-equivalence.tex",
+      "line": 2,
+      "label": "thm:equiv-partition",
+      "target": "def:equivalence-relation"
+    },
+    {
+      "severity": "warning",
+      "code": "closure_leaf_not_allowed_root",
+      "message": "thm:quotient-universal dependency closure reaches non-root leaf def:equivalence-relation.",
+      "repo": "lra-volume-ii",
+      "file": "volume-ii/identity-equality-equivalence/notes/equivalence/notes-equivalence.tex",
+      "line": 2,
+      "label": "thm:quotient-universal",
+      "target": "def:equivalence-relation"
+    },
+    {
+      "severity": "warning",
+      "code": "closure_leaf_not_allowed_root",
+      "message": "prop:fip-duality dependency closure reaches non-root leaf def:natural-numbers.",
+      "repo": "lra-volume-ii",
+      "file": "volume-ii/natural-numbers/notes/nz-axioms/notes-nz-axioms.tex",
+      "line": 14,
+      "label": "prop:fip-duality",
+      "target": "def:natural-numbers"
+    },
+    {
+      "severity": "warning",
+      "code": "closure_leaf_not_allowed_root",
+      "message": "cor:complete-preorder-extension dependency closure reaches non-root leaf def:equivalence-relation.",
+      "repo": "lra-volume-ii",
+      "file": "volume-ii/identity-equality-equivalence/notes/equivalence/notes-equivalence.tex",
+      "line": 2,
+      "label": "cor:complete-preorder-extension",
+      "target": "def:equivalence-relation"
+    },
+    {
+      "severity": "warning",
+      "code": "closure_leaf_not_allowed_root",
+      "message": "prop:embedding-injective dependency closure reaches non-root leaf def:ordered-set.",
+      "repo": "lra-volume-i",
+      "file": "volume-i/sets-relations-functions/notes/order/notes-order.tex",
+      "line": 12,
+      "label": "prop:embedding-injective",
+      "target": "def:ordered-set"
+    },
+    {
+      "severity": "warning",
+      "code": "closure_leaf_not_allowed_root",
+      "message": "prop:embedding-iso dependency closure reaches non-root leaf def:ordered-set.",
+      "repo": "lra-volume-i",
+      "file": "volume-i/sets-relations-functions/notes/order/notes-order.tex",
+      "line": 12,
+      "label": "prop:embedding-iso",
+      "target": "def:ordered-set"
+    },
+    {
+      "severity": "warning",
+      "code": "closure_leaf_not_allowed_root",
+      "message": "prop:sup-unique dependency closure reaches non-root leaf def:ordered-set.",
+      "repo": "lra-volume-i",
+      "file": "volume-i/sets-relations-functions/notes/order/notes-order.tex",
+      "line": 12,
+      "label": "prop:sup-unique",
+      "target": "def:ordered-set"
+    },
+    {
+      "severity": "warning",
+      "code": "closure_leaf_not_allowed_root",
+      "message": "prop:sup-char dependency closure reaches non-root leaf def:ordered-set.",
+      "repo": "lra-volume-i",
+      "file": "volume-i/sets-relations-functions/notes/order/notes-order.tex",
+      "line": 12,
+      "label": "prop:sup-char",
+      "target": "def:ordered-set"
+    },
+    {
+      "severity": "warning",
+      "code": "closure_leaf_not_allowed_root",
+      "message": "prop:sup-inf-duality dependency closure reaches non-root leaf def:ordered-set.",
+      "repo": "lra-volume-i",
+      "file": "volume-i/sets-relations-functions/notes/order/notes-order.tex",
+      "line": 12,
+      "label": "prop:sup-inf-duality",
+      "target": "def:ordered-set"
+    },
+    {
+      "severity": "warning",
+      "code": "closure_leaf_not_allowed_root",
+      "message": "thm:sigma-intersection dependency closure reaches non-root leaf def:natural-numbers.",
+      "repo": "lra-volume-ii",
+      "file": "volume-ii/natural-numbers/notes/nz-axioms/notes-nz-axioms.tex",
+      "line": 14,
+      "label": "thm:sigma-intersection",
+      "target": "def:natural-numbers"
+    }
+  ]
+}

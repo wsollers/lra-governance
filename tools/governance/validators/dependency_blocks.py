@@ -21,6 +21,7 @@ DEPENDENCIES_REMARK_RE = re.compile(r"\\begin\{remark\*\}\[Dependencies\](?P<bod
 NO_LOCAL_RE = re.compile(r"\\NoLocalDependencies\b")
 DEFINITIONAL_ROOT_RE = re.compile(r"\\DefinitionalRoot\b")
 HYPERREF_RE = re.compile(r"\\hyperref\[(?P<label>[^\]]+)\]")
+ITEM_RE = re.compile(r"^[ \t]*\\item\s+(?P<text>[^\n]+)$", re.MULTILINE)
 LABEL_RE = re.compile(r"\\label\{(?P<label>[a-z]+:[^{}]+)\}")
 
 
@@ -90,7 +91,21 @@ def _validate_file(volume_root: Path, path: Path, findings: list[Finding]) -> No
                     path,
                     volume_root,
                     dep_line,
-                    "warning",
+                    "error",
+                )
+            )
+        for item in ITEM_RE.finditer(body):
+            item_text = item.group("text").strip()
+            if "TODO" in item_text or HYPERREF_RE.search(item_text):
+                continue
+            findings.append(
+                finding(
+                    "dependency_item_without_hyperref",
+                    f"{label} dependency item lacks a hyperref target: {item_text}",
+                    path,
+                    volume_root,
+                    text.count("\n", 0, window_start + offset + item.start()) + 1,
+                    "error",
                 )
             )
         for ref in refs:

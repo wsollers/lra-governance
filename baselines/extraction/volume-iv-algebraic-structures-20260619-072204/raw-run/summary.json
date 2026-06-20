@@ -1,0 +1,217 @@
+{
+  "run_id": "extraction-20260619-072204",
+  "created_at_utc": "2026-06-19T07:22:10.289813+00:00",
+  "repos_root": "F:\\repos",
+  "output_root": "F:\\repos\\lra-governance\\runs\\extraction-20260619-072204",
+  "universe": {
+    "repos": 8,
+    "nodes": 1805,
+    "issues": {
+      "total": 17,
+      "by_severity": {
+        "error": 17
+      },
+      "by_code": {
+        "duplicate_global_label": 17
+      }
+    }
+  },
+  "chapter_manifest": {
+    "chapter_count": 27,
+    "formal_count": 1805
+  },
+  "edges_by_repo": {
+    "lra-volume-i": {
+      "edges": 910,
+      "declarations": 392,
+      "edge_status": {
+        "ambiguous_target": 22,
+        "ok": 888
+      },
+      "declaration_shape": {
+        "definitional_root": 4,
+        "dependencies_env": 369,
+        "no_local": 19
+      },
+      "issues": {
+        "total": 22,
+        "by_severity": {
+          "error": 22
+        },
+        "by_code": {
+          "ambiguous_dependency_target": 22
+        }
+      }
+    },
+    "lra-volume-ii": {
+      "edges": 1768,
+      "declarations": 754,
+      "edge_status": {
+        "ambiguous_target": 54,
+        "ok": 1714
+      },
+      "declaration_shape": {
+        "dependencies_env": 708,
+        "missing": 27,
+        "no_local": 19
+      },
+      "issues": {
+        "total": 81,
+        "by_severity": {
+          "error": 54,
+          "warning": 27
+        },
+        "by_code": {
+          "ambiguous_dependency_target": 54,
+          "missing_dependency_declaration": 27
+        }
+      }
+    },
+    "lra-volume-iii": {
+      "edges": 922,
+      "declarations": 408,
+      "edge_status": {
+        "ambiguous_target": 1,
+        "ok": 921
+      },
+      "declaration_shape": {
+        "dependencies_env": 403,
+        "no_local": 5
+      },
+      "issues": {
+        "total": 1,
+        "by_severity": {
+          "error": 1
+        },
+        "by_code": {
+          "ambiguous_dependency_target": 1
+        }
+      }
+    },
+    "lra-volume-iv": {
+      "edges": 100,
+      "declarations": 151,
+      "edge_status": {
+        "ambiguous_target": 2,
+        "missing_target": 6,
+        "ok": 92
+      },
+      "declaration_shape": {
+        "dependencies_env": 112,
+        "missing": 38,
+        "no_local": 1
+      },
+      "issues": {
+        "total": 99,
+        "by_severity": {
+          "error": 61,
+          "warning": 38
+        },
+        "by_code": {
+          "ambiguous_dependency_target": 2,
+          "dependencies_without_hyperref": 53,
+          "missing_dependency_declaration": 38,
+          "missing_dependency_target": 6
+        }
+      }
+    },
+    "lra-volume-v": {
+      "edges": 97,
+      "declarations": 44,
+      "edge_status": {
+        "ok": 97
+      },
+      "declaration_shape": {
+        "dependencies_env": 32,
+        "no_local": 12
+      },
+      "issues": {
+        "total": 0,
+        "by_severity": {},
+        "by_code": {}
+      }
+    },
+    "lra-volume-vi": {
+      "edges": 20,
+      "declarations": 26,
+      "edge_status": {
+        "ok": 20
+      },
+      "declaration_shape": {
+        "dependencies_env": 5,
+        "no_local": 21
+      },
+      "issues": {
+        "total": 0,
+        "by_severity": {},
+        "by_code": {}
+      }
+    },
+    "lra-volume-vii": {
+      "edges": 27,
+      "declarations": 19,
+      "edge_status": {
+        "ok": 27
+      },
+      "declaration_shape": {
+        "dependencies_env": 11,
+        "no_local": 8
+      },
+      "issues": {
+        "total": 0,
+        "by_severity": {},
+        "by_code": {}
+      }
+    },
+    "lra-volume-viii": {
+      "edges": 33,
+      "declarations": 11,
+      "edge_status": {
+        "ambiguous_target": 4,
+        "ok": 29
+      },
+      "declaration_shape": {
+        "dependencies_env": 9,
+        "no_local": 2
+      },
+      "issues": {
+        "total": 4,
+        "by_severity": {
+          "error": 4
+        },
+        "by_code": {
+          "ambiguous_dependency_target": 4
+        }
+      }
+    }
+  },
+  "combined": {
+    "edges": 3877,
+    "declarations": 1805
+  },
+  "validation": {
+    "issues": {
+      "total": 1117,
+      "by_severity": {
+        "error": 278,
+        "warning": 839
+      },
+      "by_code": {
+        "ambiguous_dependency_target": 83,
+        "closure_leaf_not_allowed_root": 774,
+        "dependencies_without_hyperref": 53,
+        "duplicate_global_label": 136,
+        "missing_dependency_declaration": 65,
+        "missing_dependency_target": 6
+      }
+    }
+  },
+  "artifacts": {
+    "universe": "F:\\repos\\lra-governance\\runs\\extraction-20260619-072204\\universe.json",
+    "chapter_manifest": "F:\\repos\\lra-governance\\runs\\extraction-20260619-072204\\chapter-manifest.json",
+    "combined_edges": "F:\\repos\\lra-governance\\runs\\extraction-20260619-072204\\combined-edges.json",
+    "validation": "F:\\repos\\lra-governance\\runs\\extraction-20260619-072204\\validation.json",
+    "log": "F:\\repos\\lra-governance\\logs\\extraction-log-20260619-072204.log",
+    "report": "F:\\repos\\lra-governance\\logs\\extraction-report-20260619-072204.md"
+  }
+}

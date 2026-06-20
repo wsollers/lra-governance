@@ -29,13 +29,11 @@ IGNORED_DIR_NAMES = {
 
 IGNORED_RELATIVE_DIRS = {
     "analysis/real-analysis",
-    "algebra/algebraic-structures",
     "integers/notes/mendelson-construction",
     "integers/notes/tao-construction",
     "integers/proofs/mendelson-construction",
     "integers/proofs/tao-construction",
     "volume-iii/analysis/real-analysis",
-    "volume-iv/algebra/algebraic-structures",
     "volume-ii/integers/notes/mendelson-construction",
     "volume-ii/integers/notes/tao-construction",
     "volume-ii/integers/proofs/mendelson-construction",

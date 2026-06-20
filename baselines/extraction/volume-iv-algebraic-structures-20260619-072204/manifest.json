@@ -1,0 +1,1417 @@
+{
+  "run_id": "volume-iv-algebraic-structures-20260619-072204",
+  "created_at_utc": "2026-06-19T08:47:29.134970+00:00",
+  "repos_root": "F:\\repos",
+  "archive_root": "F:\\repos\\lra-governance\\baselines\\extraction\\volume-iv-algebraic-structures-20260619-072204",
+  "counts": {
+    "volume_repos": 8,
+    "chapter_yamls": 71,
+    "explorer_files": 151,
+    "archived_files": 222
+  },
+  "repos": {
+    "volumes": [
+      {
+        "repo": "lra-volume-i",
+        "path": "F:\\repos\\lra-volume-i",
+        "branch": "main",
+        "head": "1c0e720bf285a6c4e6ec85ca962ba118a8ae7171",
+        "status": ""
+      },
+      {
+        "repo": "lra-volume-ii",
+        "path": "F:\\repos\\lra-volume-ii",
+        "branch": "main",
+        "head": "434f3a34079fb872a00a5d90760959647b57f4a2",
+        "status": ""
+      },
+      {
+        "repo": "lra-volume-iii",
+        "path": "F:\\repos\\lra-volume-iii",
+        "branch": "main",
+        "head": "716142d0e036e44bc58bb3857721e90057df0807",
+        "status": ""
+      },
+      {
+        "repo": "lra-volume-iv",
+        "path": "F:\\repos\\lra-volume-iv",
+        "branch": "main",
+        "head": "bbf33abce3edc4fee4eab2385f379da3190bd40d",
+        "status": "M volume-iv/algebra/algebraic-structures/index.tex\n M volume-iv/algebra/algebraic-structures/notes.tex\n M volume-iv/algebra/algebraic-structures/notes/algebraic-structures/abelian-groups.tex\n M volume-iv/algebra/algebraic-structures/notes/algebraic-structures/fields.tex\n M volume-iv/algebra/algebraic-structures/notes/algebraic-structures/groups.tex\n M volume-iv/algebra/algebraic-structures/notes/algebraic-structures/index.tex\n M volume-iv/algebra/algebraic-structures/notes/algebraic-structures/integral-domains.tex\n M volume-iv/algebra/algebraic-structures/notes/algebraic-structures/magmas.tex\n M volume-iv/algebra/algebraic-structures/notes/algebraic-structures/monoids.tex\n M volume-iv/algebra/algebraic-structures/notes/algebraic-structures/rings.tex\n M volume-iv/algebra/algebraic-structures/notes/algebraic-structures/semigroups.tex\n M volume-iv/algebra/algebraic-structures/notes/algebraic-structures/structure-signatures.tex\n M volume-iv/algebra/algebraic-structures/notes/distinguished-elements/absorbing-elements.tex\n M volume-iv/algebra/algebraic-structures/notes/distinguished-elements/index.tex\n M volume-iv/algebra/algebraic-structures/notes/functions/bijective-functions.tex\n M volume-iv/algebra/algebraic-structures/notes/functions/functions-as-structure-preserving-objects.tex\n M volume-iv/algebra/algebraic-structures/notes/functions/index.tex\n M volume-iv/algebra/algebraic-structures/notes/functions/injective-functions.tex\n M volume-iv/algebra/algebraic-structures/notes/functions/morphisms.tex\n M volume-iv/algebra/algebraic-structures/notes/functions/surjective-functions.tex\n M volume-iv/algebra/algebraic-structures/notes/groups/notes-groups-binary-operations.tex\n M volume-iv/algebra/algebraic-structures/notes/laws-of-operations/associativity.tex\n M volume-iv/algebra/algebraic-structures/notes/laws-of-operations/commutativity.tex\n M volume-iv/algebra/algebraic-structures/notes/laws-of-operations/distributivity.tex\n M volume-iv/algebra/algebraic-structures/notes/laws-of-operations/idempotence.tex\n M volume-iv/algebra/algebraic-structures/notes/laws-of-operations/index.tex\n M volume-iv/algebra/algebraic-structures/notes/mathematical-structures/index.tex\n M volume-iv/algebra/algebraic-structures/notes/number-systems-as-models/blueprint-position-of-each-number-system.tex\n M volume-iv/algebra/algebraic-structures/notes/number-systems-as-models/index.tex\n M volume-iv/algebra/algebraic-structures/notes/number-systems-as-structures/complex-numbers-as-a-structure.tex\n M volume-iv/algebra/algebraic-structures/notes/number-systems-as-structures/index.tex\n M volume-iv/algebra/algebraic-structures/notes/number-systems-as-structures/integers-as-a-structure.tex\n M volume-iv/algebra/algebraic-structures/notes/number-systems-as-structures/natural-numbers-as-a-structure.tex\n M volume-iv/algebra/algebraic-structures/notes/number-systems-as-structures/rational-numbers-as-a-structure.tex\n M volume-iv/algebra/algebraic-structures/notes/number-systems-as-structures/real-numbers-as-a-structure.tex\n M volume-iv/algebra/algebraic-structures/notes/number-systems-as-structures/whole-numbers-as-a-structure.tex\n M volume-iv/algebra/algebraic-structures/notes/operations/binary-operations.tex\n M volume-iv/algebra/algebraic-structures/notes/operations/index.tex\n M volume-iv/algebra/algebraic-structures/notes/operations/nullary-operations.tex\n M volume-iv/algebra/algebraic-structures/notes/operations/unary-operations.tex\n M volume-iv/algebra/algebraic-structures/notes/relations/binary-relations.tex\n M volume-iv/algebra/algebraic-structures/notes/relations/equivalence-relations.tex\n M volume-iv/algebra/algebraic-structures/notes/relations/index.tex\n M volume-iv/algebra/algebraic-structures/notes/relations/order-relations.tex\n M volume-iv/algebra/algebraic-structures/proofs/index.tex\n M volume-iv/algebra/index.tex\n M volume-iv/index.tex\n?? volume-iv/algebra/algebraic-structures/notes/index.tex\n?? volume-iv/algebra/algebraic-structures/proofs/functions/\n?? volume-iv/algebra/algebraic-structures/proofs/mathematical-structures/\n?? volume-iv/algebra/algebraic-structures/proofs/number-systems-as-models/\n?? volume-iv/algebra/algebraic-structures/proofs/number-systems-as-structures/\n?? volume-iv/algebra/algebraic-structures/proofs/operations/\n?? volume-iv/algebra/algebraic-structures/proofs/relations/"
+      },
+      {
+        "repo": "lra-volume-v",
+        "path": "F:\\repos\\lra-volume-v",
+        "branch": "main",
+        "head": "efe3937a697d6b73b0e4c90bcb23124a98fb6784",
+        "status": ""
+      },
+      {
+        "repo": "lra-volume-vi",
+        "path": "F:\\repos\\lra-volume-vi",
+        "branch": "main",
+        "head": "b84a4022490b9a5940c0b0f075da68f5f9e2d8c3",
+        "status": ""
+      },
+      {
+        "repo": "lra-volume-vii",
+        "path": "F:\\repos\\lra-volume-vii",
+        "branch": "main",
+        "head": "639a27e5c4ceff0064820569ed7208a901ece9e0",
+        "status": ""
+      },
+      {
+        "repo": "lra-volume-viii",
+        "path": "F:\\repos\\lra-volume-viii",
+        "branch": "main",
+        "head": "c48eb4aff1210505e1f8f25bafcce5959f4df76d",
+        "status": ""
+      }
+    ],
+    "knowledge_explorer": {
+      "repo": "lra-knowledge-explorer",
+      "path": "F:\\repos\\lra-knowledge-explorer",
+      "branch": "main",
+      "head": "f8ea42fe7d10447a71b9282d10e39fe95bd5f10b",
+      "status": "M reorder/.gitignore\n M reorder/README.md\n D reorder/fixed-resolution-excludes.json\n D reorder/processed-batches-status.md\n D reorder/progress.yaml\n D reorder/review-decisions.json\n D reorder/suspicious.yaml\n?? reorder/SECTION_TRIAGE_PROMPT.md\n?? reorder/generate_section_batches.py\n?? reorder/state/\n?? reorder/tools/"
+    }
+  },
+  "files": {
+    "chapter_yamls": [
+      {
+        "source": "F:\\repos\\lra-volume-i\\volume-i\\axiom-systems\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-i/volume-i/axiom-systems/chapter.yaml",
+        "bytes": 3428,
+        "sha256": "0717a6e69080e73d000871bf4a3b7b10938702868c76aaa1866d3501e6bacfe4"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-i\\volume-i\\predicate-logic\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-i/volume-i/predicate-logic/chapter.yaml",
+        "bytes": 14780,
+        "sha256": "6430cdc9c6deed221a76ab8e833ab76be9d6e100d3c1563ade820162aa0d6fcf"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-i\\volume-i\\proof-techniques\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-i/volume-i/proof-techniques/chapter.yaml",
+        "bytes": 387,
+        "sha256": "56d656abdbb787fe7c54c87bbae0d7cd5d98c71058b583731509f4a7ba0f27f0"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-i\\volume-i\\propositional-logic\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-i/volume-i/propositional-logic/chapter.yaml",
+        "bytes": 25017,
+        "sha256": "22f7548be3f34b5e145e713184b18fe60de1bdf4c1783251afc1ed1b9eafb57d"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-i\\volume-i\\sets-relations-functions\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-i/volume-i/sets-relations-functions/chapter.yaml",
+        "bytes": 20070,
+        "sha256": "7d9e8fed40a1b65886cfe7ef3330424d01f9a989fe9987a05a4e92754e704171"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-ii\\volume-ii\\arithmetic-operations-relations\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-ii/volume-ii/arithmetic-operations-relations/chapter.yaml",
+        "bytes": 20187,
+        "sha256": "6849703255319512776d2d4329edc1f5919ed89e266432d0db66277ada0ab28e"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-ii\\volume-ii\\complex-numbers\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-ii/volume-ii/complex-numbers/chapter.yaml",
+        "bytes": 8875,
+        "sha256": "0b5741576505f56ed572ff9d7abbf1f21616fbcf3d9b396fae0dda70a22ba726"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-ii\\volume-ii\\constructing-number-systems\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-ii/volume-ii/constructing-number-systems/chapter.yaml",
+        "bytes": 3867,
+        "sha256": "dea169f3e0b54a8e19b75efa37d9cbfc55d5b0d8c659b4caa88cacb1f8e2705b"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-ii\\volume-ii\\embedding-number-systems\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-ii/volume-ii/embedding-number-systems/chapter.yaml",
+        "bytes": 2776,
+        "sha256": "6c045f4cdb2244d6673912b088700e2fbb8a36503ddf465a5beade071f60a253"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-ii\\volume-ii\\formalizing-number-systems\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-ii/volume-ii/formalizing-number-systems/chapter.yaml",
+        "bytes": 236,
+        "sha256": "5da600a6019b8561b49b20c3bd16a78c1ffba035c84b419c177deb1516d63e1e"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-ii\\volume-ii\\identity-equality-equivalence\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-ii/volume-ii/identity-equality-equivalence/chapter.yaml",
+        "bytes": 7364,
+        "sha256": "be0d87156855da14898d4cdec72ef063fff1ef23b395df49eeaa10d226674228"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-ii\\volume-ii\\integers\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-ii/volume-ii/integers/chapter.yaml",
+        "bytes": 29398,
+        "sha256": "2c1605de8717d8ea1309d790f7bd56fa6b10fbaf5da10d6c3a6056db34a55002"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-ii\\volume-ii\\lean\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-ii/volume-ii/lean/chapter.yaml",
+        "bytes": 189,
+        "sha256": "a1a59cc312d33b86bbc2f1533451b4ad48629c3eadd1ee5a36a2951b40264e60"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-ii\\volume-ii\\natural-numbers\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-ii/volume-ii/natural-numbers/chapter.yaml",
+        "bytes": 10537,
+        "sha256": "043f337c4fced3b742d28ce180343da6fe5771780c273ee27169ef5997751d27"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-ii\\volume-ii\\number-lines\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-ii/volume-ii/number-lines/chapter.yaml",
+        "bytes": 1192,
+        "sha256": "8592c90b16584418391de6d95fdc2aeae67bd8ab05bcc20418241d19f755685d"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-ii\\volume-ii\\numbers-summary\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-ii/volume-ii/numbers-summary/chapter.yaml",
+        "bytes": 215,
+        "sha256": "fd820feded44077ff30fb811c70a9e1840df75ef2b144228ad07eb63b471e9e8"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-ii\\volume-ii\\peano-systems\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-ii/volume-ii/peano-systems/chapter.yaml",
+        "bytes": 8825,
+        "sha256": "84076fcdaf2807fa6c7ae54ff969b897c5d5aaa98d8debc6faee33c7e6ce5d10"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-ii\\volume-ii\\rationals\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-ii/volume-ii/rationals/chapter.yaml",
+        "bytes": 47561,
+        "sha256": "4dc68b1445a9f18d3d8d463b5bd0fdc570f044a721b180e9336f9e7571a17582"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-ii\\volume-ii\\reals\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-ii/volume-ii/reals/chapter.yaml",
+        "bytes": 19794,
+        "sha256": "062d66cb5e9d214838cee1ffbda6e37e4b42320b2dd731776ea93e9452f4b91d"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-ii\\volume-ii\\structure-of-real-line\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-ii/volume-ii/structure-of-real-line/chapter.yaml",
+        "bytes": 5165,
+        "sha256": "42ae5e09be6503b4f9a3a5b50dfc6b3c16856e9c8abc1ce05be624c89676208a"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-ii\\volume-ii\\whole-numbers\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-ii/volume-ii/whole-numbers/chapter.yaml",
+        "bytes": 8793,
+        "sha256": "083bfb32c97c59fdaa91791dc3f264f61b64ac8b87fd2e164e125daf73b40cd0"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-iii\\volume-iii\\analysis\\bounding\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-iii/volume-iii/analysis/bounding/chapter.yaml",
+        "bytes": 8392,
+        "sha256": "55d8700677ec00e788d483349599a4d4ef966344657714e3b1dd84044ef0e3e0"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-iii\\volume-iii\\analysis\\continuity\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-iii/volume-iii/analysis/continuity/chapter.yaml",
+        "bytes": 11102,
+        "sha256": "8eefd83ec53ac8784f733de2e7a18032a615209844100f0519447f50dcbe1458"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-iii\\volume-iii\\analysis\\differentiation\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-iii/volume-iii/analysis/differentiation/chapter.yaml",
+        "bytes": 10799,
+        "sha256": "9e9dc0b91f576f7992944d800a956d3700065e34e5ffef749c71c218b54b8c6e"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-iii\\volume-iii\\analysis\\elementary-functions\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-iii/volume-iii/analysis/elementary-functions/chapter.yaml",
+        "bytes": 3631,
+        "sha256": "809912dff9834cb294e13d8557afb4adeda2b91821f1e50710ee67f66f88f149"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-iii\\volume-iii\\analysis\\function-sequences\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-iii/volume-iii/analysis/function-sequences/chapter.yaml",
+        "bytes": 210,
+        "sha256": "fde4e1602c7aad8a771e2ac5846a145c18b41d2a810f35ea49edbd822f11910c"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-iii\\volume-iii\\analysis\\functions\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-iii/volume-iii/analysis/functions/chapter.yaml",
+        "bytes": 12067,
+        "sha256": "394c1295c6148f78d16c6c12cc933656c0441a34a503a8ea926214b072dfb7c8"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-iii\\volume-iii\\analysis\\real-analysis\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-iii/volume-iii/analysis/real-analysis/chapter.yaml",
+        "bytes": 7756,
+        "sha256": "dce71fff8fec5156641524631f9609698f639a08e6498d30f4148e4583bc3930"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-iii\\volume-iii\\analysis\\riemann-integration\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-iii/volume-iii/analysis/riemann-integration/chapter.yaml",
+        "bytes": 212,
+        "sha256": "43c140017df89255da0648932ff4ae19875649afbe2ffda88acd7740a68670d5"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-iii\\volume-iii\\analysis\\sequences\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-iii/volume-iii/analysis/sequences/chapter.yaml",
+        "bytes": 26510,
+        "sha256": "19fec1ebf071262b920881eba86480f9ade6d39b48fe8f778fb837875afa61bd"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-iii\\volume-iii\\analysis\\series\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-iii/volume-iii/analysis/series/chapter.yaml",
+        "bytes": 186,
+        "sha256": "05cf18a9537db683bc9d57dcd5e78d9702aad46cef2eb06805f7f6915dd150a4"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-iii\\volume-iii\\complex-analysis\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-iii/volume-iii/complex-analysis/chapter.yaml",
+        "bytes": 207,
+        "sha256": "dd21a9ac40b0de1128aae23940a2e81790e724c53cc7239f3ea6819cddcbe300"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-iii\\volume-iii\\discrete-calculus\\foundations\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-iii/volume-iii/discrete-calculus/foundations/chapter.yaml",
+        "bytes": 390,
+        "sha256": "37297821ed7270f9bc8950defa7051542cc769ca7964bafbd442d286d16087c3"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-iii\\volume-iii\\discrete-calculus\\summation-algebra\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-iii/volume-iii/discrete-calculus/summation-algebra/chapter.yaml",
+        "bytes": 155,
+        "sha256": "adc74aef50deb2f7be65c98b3efff2285b5c7d0bdf697de0fce604708b01a7df"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-iii\\volume-iii\\functional-analysis\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-iii/volume-iii/functional-analysis/chapter.yaml",
+        "bytes": 216,
+        "sha256": "4f236df12d7c9d8ee70df19615fcd123a10846c4235d4c41e251518f5c4f459a"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-iii\\volume-iii\\measure-theory\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-iii/volume-iii/measure-theory/chapter.yaml",
+        "bytes": 201,
+        "sha256": "8751d91e3ef5f790b9d35ef32f787b96f4cd5c1d915395eceed13dea36067315"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-iii\\volume-iii\\number-theory\\elementary-number-theory\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-iii/volume-iii/number-theory/elementary-number-theory/chapter.yaml",
+        "bytes": 275,
+        "sha256": "d994b76a4b024dc4de2475f96a18c9553dd251c9032f55e239839d6f73a32ecd"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-iii\\volume-iii\\probability-theory\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-iii/volume-iii/probability-theory/chapter.yaml",
+        "bytes": 213,
+        "sha256": "92eaacd7e4955eebab8e01335e042bb18ea28a250feb470508b50b4e3e2cef68"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-iii\\volume-iii\\quantum-calculus\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-iii/volume-iii/quantum-calculus/chapter.yaml",
+        "bytes": 207,
+        "sha256": "b69cc53f45383e930220822f67688779e246f55957c62813e89cef4995d99dd5"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-iv\\volume-iv\\algebra\\abstract-algebra\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-iv/volume-iv/algebra/abstract-algebra/chapter.yaml",
+        "bytes": 203,
+        "sha256": "5dfa303a8e8612fb3fba702e2a72fc730953de07643dbabbb5b89d034b23625b"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-iv\\volume-iv\\algebra\\algebraic-geometry\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-iv/volume-iv/algebra/algebraic-geometry/chapter.yaml",
+        "bytes": 2432,
+        "sha256": "61675e1c169e01d71a6ba93acf9e1e517244d1b000891040d573e17a75356b2a"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-iv\\volume-iv\\algebra\\algebraic-structures\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-iv/volume-iv/algebra/algebraic-structures/chapter.yaml",
+        "bytes": 16335,
+        "sha256": "fc1949bb8a9f2b4bcfa9a6fc56255efda963077bc08991e177e49d42caecbba8"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-iv\\volume-iv\\algebra\\lattice-order\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-iv/volume-iv/algebra/lattice-order/chapter.yaml",
+        "bytes": 4700,
+        "sha256": "f4d8489fccf7aaedd8629b25d1dc085bf8b4b1993d49e86fb0d91721db9ec91e"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-iv\\volume-iv\\algebra\\linear-algebra\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-iv/volume-iv/algebra/linear-algebra/chapter.yaml",
+        "bytes": 4001,
+        "sha256": "a6ad52ed90768109cc74db4848d507ad57a0746e3d9fc8fc7e7508a67c6da39f"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-iv\\volume-iv\\algebra\\set-algebra\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-iv/volume-iv/algebra/set-algebra/chapter.yaml",
+        "bytes": 197,
+        "sha256": "e0322a6a0166353aa6a0a6c8709e72ef112c0fd8f4f83f87522024fc712c95d1"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-v\\volume-v\\analytical-geometry\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-v/volume-v/analytical-geometry/chapter.yaml",
+        "bytes": 146,
+        "sha256": "f72e0dd07bd51c660e11e7a99854961bc5287dbaf36465ce0091feda141ecfaf"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-v\\volume-v\\differential-geometry\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-v/volume-v/differential-geometry/chapter.yaml",
+        "bytes": 152,
+        "sha256": "5e2e506c1c32960d890f186abe8d5c3e507e2245813ebdd7c6dac8c9c0690299"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-v\\volume-v\\euclidean-geometry\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-v/volume-v/euclidean-geometry/chapter.yaml",
+        "bytes": 142,
+        "sha256": "798835c3156cbab5ae9b446d3062cf8bae3a13422e8ed1ca4bfbe2c7ef3a03c9"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-v\\volume-v\\non-euclidean-geometry\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-v/volume-v/non-euclidean-geometry/chapter.yaml",
+        "bytes": 155,
+        "sha256": "35fe8ea00602d425bb1dd3f0a7a322bd0f50f855a611ac0c77c7edc05ea7ca07"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-v\\volume-v\\riemannian-geometry\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-v/volume-v/riemannian-geometry/chapter.yaml",
+        "bytes": 146,
+        "sha256": "66b72b789a06dd6bda1e6203b6fe95f28baa0f3f7b734c0c0c0f0fec88ab255d"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-v\\volume-v\\topology\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-v/volume-v/topology/chapter.yaml",
+        "bytes": 119,
+        "sha256": "34809a335767758a86c4976116a97238666f426d58d73fbbbaa99b0bbe6f408b"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-v\\volume-v\\trigonometry\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-v/volume-v/trigonometry/chapter.yaml",
+        "bytes": 104,
+        "sha256": "80d66db2318eb75ba5ba48b7774f4fb3c16895ac97358628d6154365e61170d8"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-vi\\volume-vi\\calculus\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-vi/volume-vi/calculus/chapter.yaml",
+        "bytes": 114,
+        "sha256": "14b9b1de0558830c4b84880aba46dac6c1afd67e31bd7ab3765655302d8bfe0f"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-vi\\volume-vi\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-vi/volume-vi/chapter.yaml",
+        "bytes": 280,
+        "sha256": "5a9f2693e340e8a0958104eaa69311076212b2ca3e6d7272b8397cfd6938e25a"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-vi\\volume-vi\\computational-geometry\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-vi/volume-vi/computational-geometry/chapter.yaml",
+        "bytes": 107,
+        "sha256": "4e355c343690fd12a03a2ad4a5b1a58914a338af7716038ae4487ea483380ac5"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-vi\\volume-vi\\computational-linear-algebra\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-vi/volume-vi/computational-linear-algebra/chapter.yaml",
+        "bytes": 517,
+        "sha256": "1cdf5f8f5f51c69c39c38c2c53327f283b22eebff0fa0a8c37939de6400b73aa"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-vi\\volume-vi\\computational-probability\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-vi/volume-vi/computational-probability/chapter.yaml",
+        "bytes": 172,
+        "sha256": "f15b8deb2fbf6609fc535c8537edc6e8559375b2def0f23c4f7df935ddd03b15"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-vi\\volume-vi\\fourier-analysis\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-vi/volume-vi/fourier-analysis/chapter.yaml",
+        "bytes": 124,
+        "sha256": "b0163b8f9e0fd6c8d8eb00f19dad1c26e4d5068e83d08158c47286cbf6732e4d"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-vi\\volume-vi\\geometric-modeling\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-vi/volume-vi/geometric-modeling/chapter.yaml",
+        "bytes": 477,
+        "sha256": "c921ddc4818a3892cea8aa9b8a002c45544dc790dda136718107def6a86e7d5e"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-vi\\volume-vi\\ordinary-differential-equations\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-vi/volume-vi/ordinary-differential-equations/chapter.yaml",
+        "bytes": 529,
+        "sha256": "0a3aec41371688bfa3c7c0d4c59866933e80c772ad54d377c7c71b4701218276"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-vi\\volume-vi\\partial-differential-equations\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-vi/volume-vi/partial-differential-equations/chapter.yaml",
+        "bytes": 187,
+        "sha256": "e662363427cc358dd9c2ec6a707db9325a6d108fb0f785c69b406a5c782af14f"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-vii\\volume-vii\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-vii/volume-vii/chapter.yaml",
+        "bytes": 296,
+        "sha256": "a5c96b14860ed34f3514ddb6fe1f2740fef991944ef0fbe281f29ddb94bd298d"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-vii\\volume-vii\\numerical-analysis\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-vii/volume-vii/numerical-analysis/chapter.yaml",
+        "bytes": 1997,
+        "sha256": "c1138fce7e780c2969956ebe9207c45c280fb6d932160d677557a82ebcc64113"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-vii\\volume-vii\\numerical-pde\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-vii/volume-vii/numerical-pde/chapter.yaml",
+        "bytes": 138,
+        "sha256": "f941a73fcca90bb00fd3024169a8fcc07cd11f41da2aaac405abe0606a3d03f5"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-viii\\volume-viii\\algebras-of-sets\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-viii/volume-viii/algebras-of-sets/chapter.yaml",
+        "bytes": 510,
+        "sha256": "dab647df75da3978f928c5b7e1b025d02ee1741fb475be7a8a832b2b5effa305"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-viii\\volume-viii\\category-theory\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-viii/volume-viii/category-theory/chapter.yaml",
+        "bytes": 146,
+        "sha256": "6b5b7afba9864bec887039246e77956e0f56833fe4a99b3e194de6116d1ae9a0"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-viii\\volume-viii\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-viii/volume-viii/chapter.yaml",
+        "bytes": 296,
+        "sha256": "12786fc8078152baeee41a36aeb7055eabf49579c17645824589c02be9dc2ba4"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-viii\\volume-viii\\lambda-calculus\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-viii/volume-viii/lambda-calculus/chapter.yaml",
+        "bytes": 505,
+        "sha256": "f938e305f11cb56708807659e2b8e2cd3596e1622e65c135cb67ab7bbb2a364e"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-viii\\volume-viii\\model-theory\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-viii/volume-viii/model-theory/chapter.yaml",
+        "bytes": 490,
+        "sha256": "be40c55584e535269f9a7dcc75359b46ea1ac2867d7a31cc71af90a01c85bf22"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-viii\\volume-viii\\proof-theory\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-viii/volume-viii/proof-theory/chapter.yaml",
+        "bytes": 490,
+        "sha256": "f834489324ccd7ad64e4e5012261e1846b77f212129bd48437403056e7fa08ca"
+      },
+      {
+        "source": "F:\\repos\\lra-volume-viii\\volume-viii\\type-theory\\chapter.yaml",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/chapter-yamls/lra-volume-viii/volume-viii/type-theory/chapter.yaml",
+        "bytes": 485,
+        "sha256": "ae0f995b296b6ded54ab55a52abdea2e16a9b8dedb51ec4d52261ba8a167bb2b"
+      }
+    ],
+    "knowledge_explorer": [
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\knowledge.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/knowledge.json",
+        "bytes": 4142644,
+        "sha256": "5a7ef4dadf78c4d0dbb0e34ee4c3f31cd1c8264490dac56c3284e0e6cf524b66"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\graph-edges.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/graph-edges.json",
+        "bytes": 474588,
+        "sha256": "d65e887b5b38cba6ae8aeceb6b4052905c5e85f6311712a2e8d9ebc4521f3773"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\graph-edge-errors.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/graph-edge-errors.json",
+        "bytes": 960,
+        "sha256": "929f0c8594011c06f846fbe9e0af669c9248af921bde2ce38f9c03332d772abe"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\proof-errors.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/proof-errors.json",
+        "bytes": 960,
+        "sha256": "929f0c8594011c06f846fbe9e0af669c9248af921bde2ce38f9c03332d772abe"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\proof-vault-index.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/proof-vault-index.json",
+        "bytes": 38323,
+        "sha256": "cae0545b92cc9a657d21d775df24dfd94ca1082aa1af6eb441c962003ce81209"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\apply_resolution.py",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/apply_resolution.py",
+        "bytes": 8566,
+        "sha256": "96a8f5f8a84832673e5e1c3a4c989b82cc6af04d109136bca2e40409c4106c6d"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\build_dependency_universe.py",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/build_dependency_universe.py",
+        "bytes": 6687,
+        "sha256": "67bfb02d521aa2bd85deadb77a2fb1b986451cd10dfabbb6d84f2aaf3e45d81f"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\build_fixed_resolution_excludes.py",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/build_fixed_resolution_excludes.py",
+        "bytes": 5384,
+        "sha256": "dcf561c9083f838ffb6d36c27799441ba636c092676d5cb999593b09ae2d2856"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\chapter-volumes.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/chapter-volumes.json",
+        "bytes": 2937,
+        "sha256": "763f296f21a336722140cc663907962401a1824b47ca3d28c3d6949501c1f68f"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\chapter_to_volume.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/chapter_to_volume.json",
+        "bytes": 2871,
+        "sha256": "4fe5c772b5cac4fb0e772c68f71a642447eafd2592d416ca2204b4e6fc95b989"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\examples\\graph-sample-change.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/examples/graph-sample-change.json",
+        "bytes": 1255,
+        "sha256": "1bcbc526ad9057b8e4dc2a990c59850e0c8d4ccc8ca94ee2e1845fea6583081d"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\examples\\graph-sample-ok.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/examples/graph-sample-ok.json",
+        "bytes": 1275,
+        "sha256": "fafd2510c41409f04ad96ff591eed9ba4a6c6d6a514f39baf061297ca0785a65"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\examples\\graph-sample-reorder.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/examples/graph-sample-reorder.json",
+        "bytes": 1140,
+        "sha256": "555417ca7c1907b344491a8d60724675e949836b1381e0092a733ba02c51f6b4"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\examples\\resolution-sample-change.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/examples/resolution-sample-change.json",
+        "bytes": 1023,
+        "sha256": "b6f9b42b793d696fce91646787443c2803a02f30704f1a797fc40f88e5a04f83"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\examples\\resolution-sample-ok.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/examples/resolution-sample-ok.json",
+        "bytes": 412,
+        "sha256": "6905ee2b93efb89de404f1294a9072eebff430da5e0f583521726a297979c3a8"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\examples\\resolution-sample-reorder.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/examples/resolution-sample-reorder.json",
+        "bytes": 496,
+        "sha256": "572f03640f297483562ce06ef2aa991d8ab35de97db17f6210ed67c338d5df70"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\generate_section_batches.py",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/generate_section_batches.py",
+        "bytes": 16611,
+        "sha256": "dae6ce530048ef9e18bcd052937d89ba42bec55a8080b8656ca2f912193e93ad"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\index.py",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/index.py",
+        "bytes": 6426,
+        "sha256": "b3e7e50f5ba94f80a6695262917423f23be4dc256f5fa7ac0cc39d18e331e467"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\policy.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/policy.json",
+        "bytes": 530,
+        "sha256": "9c10ef968a7e8d65c023a5857143fd7ff0d657a900f5a61c956ad016d95ca9a2"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\PROMPT.md",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/PROMPT.md",
+        "bytes": 9868,
+        "sha256": "aa4340329b387be4459a5e3462c26f155d3a142468606fd33135b85ec395d801"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\README.md",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/README.md",
+        "bytes": 4924,
+        "sha256": "45cd8702bd26290966b95b277c97d9e0c30fca80e04b6de34ef89d526281718d"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\REPORT_PROMPT.md",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/REPORT_PROMPT.md",
+        "bytes": 3529,
+        "sha256": "d70979e7497c5dcafcaef8f662860743a3635d26144aba7ce269bfaf9f5325f1"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0001.volume-ii.identity-equality-equivalence.equality.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0001.volume-ii.identity-equality-equivalence.equality.json",
+        "bytes": 37420,
+        "sha256": "7baccf3dbf21d37f027fea4d67df2817e72a46752eafa70bc370c02bcb125450"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0002.volume-ii.identity-equality-equivalence.equivalence.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0002.volume-ii.identity-equality-equivalence.equivalence.json",
+        "bytes": 2754592,
+        "sha256": "07a84b987aabc85d7045d22a9f1d0b52a7424b4037e770707cee1522b90c5b64"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0003.volume-ii.identity-equality-equivalence.properties-of-equality.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0003.volume-ii.identity-equality-equivalence.properties-of-equality.json",
+        "bytes": 22124,
+        "sha256": "16bef6796f49ec2662dd95259208235ab21e547ad32ed181fa9b5b72744f603c"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0004.volume-ii.identity-equality-equivalence.substitution.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0004.volume-ii.identity-equality-equivalence.substitution.json",
+        "bytes": 49265,
+        "sha256": "2b8d33850f08fdb67d7d1092403ee1493ea706cbddff16db0a5761f3da1185b0"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0005.volume-ii.arithmetic-operations-relations.algebraic-laws.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0005.volume-ii.arithmetic-operations-relations.algebraic-laws.json",
+        "bytes": 762038,
+        "sha256": "7628f8b22e3b22607f7ce5c5714a1591f28e3dd8ec4e11cd3efd0e918073f414"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0006.volume-ii.arithmetic-operations-relations.algebraic-structures.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0006.volume-ii.arithmetic-operations-relations.algebraic-structures.json",
+        "bytes": 1062384,
+        "sha256": "2326101e8aad8b7c62171759120582c0ac1307b3b1d8919b1b8074ce241979ea"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0007.volume-ii.arithmetic-operations-relations.closure.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0007.volume-ii.arithmetic-operations-relations.closure.json",
+        "bytes": 395782,
+        "sha256": "f09420202c1a8af6131573db9f0badd736370a0743bc99d5c47f5096593d8e5e"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0008.volume-ii.arithmetic-operations-relations.composed-relations.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0008.volume-ii.arithmetic-operations-relations.composed-relations.json",
+        "bytes": 150476,
+        "sha256": "682df46bfba1ec41d3074dce3213d382c4c9dfd3c4dd870e01f7b64a49253488"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0009.volume-ii.arithmetic-operations-relations.derived-laws.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0009.volume-ii.arithmetic-operations-relations.derived-laws.json",
+        "bytes": 595887,
+        "sha256": "de9d10c13854358621c863b51e2f3fc871ec78afc2c0e12756c35b08bbb814d2"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0010.volume-ii.arithmetic-operations-relations.field-and-ordered-field-laws.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0010.volume-ii.arithmetic-operations-relations.field-and-ordered-field-laws.json",
+        "bytes": 1949180,
+        "sha256": "0c21723b4b926f1f339a451dc1c39021c141187b68b6b49e878af24483294fb8"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0011.volume-ii.arithmetic-operations-relations.identity-elements.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0011.volume-ii.arithmetic-operations-relations.identity-elements.json",
+        "bytes": 188698,
+        "sha256": "3463114c9b050d09df750221167e3e31d9a667d3d52dd8fd6637d15e5a198baf"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0012.volume-ii.arithmetic-operations-relations.inverse-operations.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0012.volume-ii.arithmetic-operations-relations.inverse-operations.json",
+        "bytes": 687412,
+        "sha256": "0e23c72e82f3403ce97668c37915b0dfa56084866ca61d419ff2c9fc7f39bf2c"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0013.volume-ii.arithmetic-operations-relations.order-compatibility.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0013.volume-ii.arithmetic-operations-relations.order-compatibility.json",
+        "bytes": 721265,
+        "sha256": "3cc0b062a4c5e68ba0766c14da59a8b6926270db40315ab26c4349632108d7c3"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0014.volume-ii.arithmetic-operations-relations.order-relations.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0014.volume-ii.arithmetic-operations-relations.order-relations.json",
+        "bytes": 296588,
+        "sha256": "0be93fa3def5090e5c2054606c19bc28522112d84f9aca668034a141b50d7ddf"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0015.volume-ii.arithmetic-operations-relations.structure-preserving-maps.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0015.volume-ii.arithmetic-operations-relations.structure-preserving-maps.json",
+        "bytes": 357759,
+        "sha256": "bbd546a7a016b47ed0d52e4914d9efbbd2cee8ac2af18cb717905934397b3519"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0016.volume-ii.peano-systems.presburger-arithmetic.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0016.volume-ii.peano-systems.presburger-arithmetic.json",
+        "bytes": 3292,
+        "sha256": "1584acbdc06b323a848c9e308fb8aeaffd12c1ac0b37be3f9202be09530d0cb4"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0017.volume-ii.peano-systems.defining-peano-systems.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0017.volume-ii.peano-systems.defining-peano-systems.json",
+        "bytes": 429127,
+        "sha256": "a8ff9cf869e9aa1f0190c219e6a5deb33342fb19fdb2c3d6e101be13ec7657b1"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0018.volume-ii.peano-systems.recursion-on-peano-systems.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0018.volume-ii.peano-systems.recursion-on-peano-systems.json",
+        "bytes": 450682,
+        "sha256": "6b6b8aa8d361bbde9ca12e0793794cd651b5eabf8c8837a305827a2d70f67be6"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0019.volume-ii.natural-numbers.nz-axioms.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0019.volume-ii.natural-numbers.nz-axioms.json",
+        "bytes": 11531,
+        "sha256": "92c0f7198f27f459a0b65e758de5be8221b13f4897d7eee9be6848e1d1f9a0b9"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0020.volume-ii.natural-numbers.addition-on-n.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0020.volume-ii.natural-numbers.addition-on-n.json",
+        "bytes": 973998,
+        "sha256": "2681b40534699a272a675f972b10956ad51cf81694abbde207c76181a19ca016"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0021.volume-ii.natural-numbers.multiplication-on-n.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0021.volume-ii.natural-numbers.multiplication-on-n.json",
+        "bytes": 3017983,
+        "sha256": "45c4ea3569090e70762ec1be3fdb5536f00455c641ffa16a529db6a2e49bb75b"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0022.volume-ii.natural-numbers.order-on-n.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0022.volume-ii.natural-numbers.order-on-n.json",
+        "bytes": 1906942,
+        "sha256": "4032fdcc95dea25771eeff2686cd40b5976f94001cf08a5600d6d0ed829cb5d1"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0023.volume-ii.natural-numbers.powers-and-growth.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0023.volume-ii.natural-numbers.powers-and-growth.json",
+        "bytes": 1882850,
+        "sha256": "7012b8df9133f87fac5be372f4e280fb9876d42f5671771c3c2727d5b07b8ed2"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0024.volume-ii.natural-numbers.well-ordering-principle.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0024.volume-ii.natural-numbers.well-ordering-principle.json",
+        "bytes": 500632,
+        "sha256": "854ec9bfca9b36fbb8517fba76f621bec4ee419d45cc5f69e8dbd00ab8c1b45e"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0025.volume-ii.natural-numbers.induction.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0025.volume-ii.natural-numbers.induction.json",
+        "bytes": 30868,
+        "sha256": "9a7b47aa448df610a8222eff06ac502bb3e3631a4e2f04dd816662218086c663"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0026.volume-ii.natural-numbers.algebraic-structure-of-n.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0026.volume-ii.natural-numbers.algebraic-structure-of-n.json",
+        "bytes": 1144237,
+        "sha256": "510ef0f64cb5fb5972f77872413f6904c2efddfc6b115a9e0e52378fabaef015"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0027.volume-ii.whole-numbers.definition-of-whole-numbers.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0027.volume-ii.whole-numbers.definition-of-whole-numbers.json",
+        "bytes": 17220,
+        "sha256": "3bfce3fb8f1bcd2f1276b8afdf63b639f9efaacd8cd7580f556243d140ead4ce"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0028.volume-ii.whole-numbers.extending-successor.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0028.volume-ii.whole-numbers.extending-successor.json",
+        "bytes": 134258,
+        "sha256": "9daecf6693d2b33d4f2418c7b1b25a2a50f686711f44634faaf514d2c3f1f8a4"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0029.volume-ii.whole-numbers.extending-addition.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0029.volume-ii.whole-numbers.extending-addition.json",
+        "bytes": 536433,
+        "sha256": "78584686a72aee72e5b4b61fa47346b2d846d571f179d191fecf10c766a829d7"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0030.volume-ii.whole-numbers.extending-multiplication.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0030.volume-ii.whole-numbers.extending-multiplication.json",
+        "bytes": 1015140,
+        "sha256": "e3b31cb33a0c96736cd0fa758fce7ed34b6ccac651e491048674fbfb3084da87"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0031.volume-ii.whole-numbers.order-on-w.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0031.volume-ii.whole-numbers.order-on-w.json",
+        "bytes": 761367,
+        "sha256": "dd3c4e06b18919aeefcc0b50649a4c2bacedf3847e2e19fba56557163f8fe673"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0032.volume-ii.whole-numbers.algebraic-structure-of-w.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0032.volume-ii.whole-numbers.algebraic-structure-of-w.json",
+        "bytes": 1521595,
+        "sha256": "bbe9892337cace8fa011cd27bf91566ca6d9d3b6d576576d480072b42770147f"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0033.volume-ii.integers.construction-of-z.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0033.volume-ii.integers.construction-of-z.json",
+        "bytes": 1498537,
+        "sha256": "3866be53c4bdb4e10486e0886c145f80b0c59636104f80c3dbc5dbc657b0949a"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0034.volume-ii.integers.operations-on-z-classes.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0034.volume-ii.integers.operations-on-z-classes.json",
+        "bytes": 9303249,
+        "sha256": "c3de5d472d357da0db75029052dcd94a96300c441ed125a3f70b0f199d8cd4ff"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0035.volume-ii.integers.algebraic-structure-of-z.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0035.volume-ii.integers.algebraic-structure-of-z.json",
+        "bytes": 3017636,
+        "sha256": "3ddcaf2571e6b8ed3d5d8ee756aee54768faf1b03c2ca4b53a0f998fa118b478"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0036.volume-ii.integers.order-on-z.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0036.volume-ii.integers.order-on-z.json",
+        "bytes": 12899909,
+        "sha256": "9961fbab5d88d30d5787b05701b5d9dc0a3426912d2080cb80dd1f8c0462809c"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0037.volume-ii.integers.embedding-w-into-z.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0037.volume-ii.integers.embedding-w-into-z.json",
+        "bytes": 2178846,
+        "sha256": "ddc987e14cf4e114546935b2a9768ba0a24ecfb4510e422bb13968783e553a4a"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0038.volume-ii.integers.divisibility-in-z.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0038.volume-ii.integers.divisibility-in-z.json",
+        "bytes": 5651596,
+        "sha256": "452f0b4b714027f4188fd3e7ce3d7bcdd1749d3fcc8f0e26766dd993daceb698"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0039.volume-ii.rationals.construction-of-q.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0039.volume-ii.rationals.construction-of-q.json",
+        "bytes": 4421759,
+        "sha256": "41f3573f2f0244478398c7bf87dfa42d273bdaad663173cfe255010b317b5ae3"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0040.volume-ii.rationals.operations-on-q-classes.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0040.volume-ii.rationals.operations-on-q-classes.json",
+        "bytes": 22547253,
+        "sha256": "87913bc31850b4ee3f39da7f12cf24ce7134fb9a08a95caa8d3e8f4039b91ed7"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0041.volume-ii.rationals.field-structure-of-q.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0041.volume-ii.rationals.field-structure-of-q.json",
+        "bytes": 7248218,
+        "sha256": "8cb83059b72f9a82b96531952e75845c71067c5c8fbe4a69371678a60f996642"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0042.volume-ii.rationals.order-on-q.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0042.volume-ii.rationals.order-on-q.json",
+        "bytes": 12500136,
+        "sha256": "dea2e5bb4a4a75c4d40f9bbd2fd700ae7d69265e6603df4a9a0ca8f2fe9c6729"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0043.volume-ii.rationals.ordered-field-structure-of-q.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0043.volume-ii.rationals.ordered-field-structure-of-q.json",
+        "bytes": 3317478,
+        "sha256": "03e0a90f4d26cd3cb546e3c16a105f723995c1f7e3a0407962ecc2f29843bfed"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0044.volume-ii.rationals.arbitrary-closeness-in-q.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0044.volume-ii.rationals.arbitrary-closeness-in-q.json",
+        "bytes": 3824557,
+        "sha256": "8c9308e1643cc8deef20f5b7621c384686cabbe8055458802e650474afc75a82"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0045.volume-ii.rationals.rational-gaps.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0045.volume-ii.rationals.rational-gaps.json",
+        "bytes": 3888307,
+        "sha256": "d0b0f257d63453ca06b859bcb27c4cf57f3204ad702e4a8e6b06b981204dfbe8"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0046.volume-ii.rationals.embedding-z-into-q.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0046.volume-ii.rationals.embedding-z-into-q.json",
+        "bytes": 4771360,
+        "sha256": "2a6009589a287b8da23d307e115012f6dc81892d3be0e69f1769c87d6155b6d4"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0047.volume-ii.reals.construction-of-r.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0047.volume-ii.reals.construction-of-r.json",
+        "bytes": 1971484,
+        "sha256": "c2af27d0c232af9ced96f736eef13e99aadc5671d41bd5371ec24df467d189e0"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0048.volume-ii.reals.order-on-r.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0048.volume-ii.reals.order-on-r.json",
+        "bytes": 1834963,
+        "sha256": "834d9f14d995695dd476ae839cc9ca2c44b0a6c9fc9127c1ba7c00f84739376a"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0049.volume-ii.reals.completeness-of-r.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0049.volume-ii.reals.completeness-of-r.json",
+        "bytes": 1168984,
+        "sha256": "0f7dc30e14b316ca8a39f5af060f4c580f5b3b4e867904aab14a5a8cd95eba9e"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0050.volume-ii.reals.addition-on-r.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0050.volume-ii.reals.addition-on-r.json",
+        "bytes": 5106727,
+        "sha256": "2fafb387aff3900ecb7a390b34b2779b87ea277024a1df8f6f8ffc9a5530ec58"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0051.volume-ii.reals.multiplication-on-r.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0051.volume-ii.reals.multiplication-on-r.json",
+        "bytes": 8924749,
+        "sha256": "c8416bee312ea599b63f8970c5a8279ce0795c3055aabd39cff720d74a926fcf"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0052.volume-ii.reals.field-and-ordered-field-structure-of-r.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0052.volume-ii.reals.field-and-ordered-field-structure-of-r.json",
+        "bytes": 5156220,
+        "sha256": "3881df34a7567d14263b81acfb7cff718a52e237c2df08a7f4d3ebf84fe8443b"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0053.volume-ii.reals.embedding-q-into-r.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0053.volume-ii.reals.embedding-q-into-r.json",
+        "bytes": 4002064,
+        "sha256": "51d178997184e79a6afb65e2b6cfd80a58058d06e3b962504feaa17d51c3b864"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0054.volume-ii.reals.the-gap-filled.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0054.volume-ii.reals.the-gap-filled.json",
+        "bytes": 1822144,
+        "sha256": "b7f9df3037f68d373ad7e9fa52b47f99f8f26d917c87226053ec04e3b1696fdc"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0055.volume-ii.reals.characterization-of-r.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0055.volume-ii.reals.characterization-of-r.json",
+        "bytes": 1246430,
+        "sha256": "f1f34f668791675a0c061d66334f06131ee40fc9eb298b681a877892b9b122ce"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0056.volume-ii.complex-numbers.construction-of-c.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0056.volume-ii.complex-numbers.construction-of-c.json",
+        "bytes": 1092362,
+        "sha256": "3a29982f5d286007035fed01b2cd23077a3aa1888959241c34e871549a04d84c"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0057.volume-ii.complex-numbers.operations-on-c-classes.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0057.volume-ii.complex-numbers.operations-on-c-classes.json",
+        "bytes": 1549848,
+        "sha256": "058e5a033d3a12104e987149349ad5ade6f9214346c2a26c87e380ebdfd96a78"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0058.volume-ii.complex-numbers.field-structure-of-c.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0058.volume-ii.complex-numbers.field-structure-of-c.json",
+        "bytes": 271994,
+        "sha256": "fb2d0141923d1a693e9c2db2db05d13e88ef9f411f03b62ce958ff6ee724147c"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0059.volume-ii.complex-numbers.embedding-r-into-c.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0059.volume-ii.complex-numbers.embedding-r-into-c.json",
+        "bytes": 221197,
+        "sha256": "bfdab8c845c1fe90102cb7b0b932de966fe0be012ea69b9c9efe6c29021798e3"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0060.volume-ii.constructing-number-systems.ground-rules.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0060.volume-ii.constructing-number-systems.ground-rules.json",
+        "bytes": 630798,
+        "sha256": "88c24a20539259b0af8bd2c083dad9efe558a89995068566b192e915d35a1c44"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0061.volume-ii.constructing-number-systems.finite-modular-number-systems.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0061.volume-ii.constructing-number-systems.finite-modular-number-systems.json",
+        "bytes": 3420691,
+        "sha256": "4176da89e56eafaeda45eb28a5bbebe70bf1bd7cb26eab4f0b3ef1ce05cbaa44"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0062.volume-ii.constructing-number-systems.zero-one-number-system.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0062.volume-ii.constructing-number-systems.zero-one-number-system.json",
+        "bytes": 1263993,
+        "sha256": "bd99afe03461d6af301beb261b148554901f86d01a9c0082116fc12925c31cc2"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0063.volume-ii.embedding-number-systems.embeddings-as-structure-preserving-maps.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0063.volume-ii.embedding-number-systems.embeddings-as-structure-preserving-maps.json",
+        "bytes": 500230,
+        "sha256": "1d9f51e32baaf06460a20338bbe4a86b5caba7e54f4f800bd358b483b94615b6"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0064.volume-ii.embedding-number-systems.embedding-n-into-w.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0064.volume-ii.embedding-number-systems.embedding-n-into-w.json",
+        "bytes": 237888,
+        "sha256": "e7a817961d3d2cfa720736ecaea7de979a610bd0b66a2807e99c3824ae2ab16e"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0065.volume-ii.embedding-number-systems.embedding-w-into-z.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0065.volume-ii.embedding-number-systems.embedding-w-into-z.json",
+        "bytes": 630458,
+        "sha256": "90eb522a6bb92542672ab81f7d7eb733eff8be1d42aabdd1e2ce8f1d7ace1530"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0066.volume-ii.embedding-number-systems.embedding-z-into-q.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0066.volume-ii.embedding-number-systems.embedding-z-into-q.json",
+        "bytes": 583577,
+        "sha256": "9c903039f190a4607fb7b55c4b8b4e380ff8b1923eb93c4605953fce50b97d5c"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0067.volume-ii.embedding-number-systems.embedding-q-into-r.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0067.volume-ii.embedding-number-systems.embedding-q-into-r.json",
+        "bytes": 444563,
+        "sha256": "747ec2a37800c0715e1f9e3c885cc5fb798d271afb787aa3b4c1cd894b531d1c"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0068.volume-ii.embedding-number-systems.compatibility-of-arithmetic-and-order.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0068.volume-ii.embedding-number-systems.compatibility-of-arithmetic-and-order.json",
+        "bytes": 560800,
+        "sha256": "9e70781913262d002ceffc4dd34f988c8c95211740d09742f23ab6a1dc4890f3"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0069.volume-ii.number-lines.number-lines.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0069.volume-ii.number-lines.number-lines.json",
+        "bytes": 44514,
+        "sha256": "9e13e7f9101f25c6375717f529e4f3cf14e2fa577a82521f186bf83d7e4b5844"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0070.volume-ii.number-lines.intervals-on-a-number-line.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0070.volume-ii.number-lines.intervals-on-a-number-line.json",
+        "bytes": 219560,
+        "sha256": "4d28d4c5730c79e7892d0c10ab10d533f962cdec7eadcf76bc1844c41eedeeef"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0071.volume-ii.structure-of-real-line.order-distance-length.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0071.volume-ii.structure-of-real-line.order-distance-length.json",
+        "bytes": 1080296,
+        "sha256": "0500cd910e341f51e43ac9c57e7af13145dc3d9c1f9e5050084f2f71e77566a1"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0072.volume-ii.structure-of-real-line.absolute-value-as-distance.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0072.volume-ii.structure-of-real-line.absolute-value-as-distance.json",
+        "bytes": 248160,
+        "sha256": "91cdca0d1a7dcbc903928c698aa68509fbfd1b1db897379ffb1f84a79a67c85e"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0073.volume-ii.structure-of-real-line.intervals-as-subsets.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0073.volume-ii.structure-of-real-line.intervals-as-subsets.json",
+        "bytes": 694702,
+        "sha256": "2afc0048c5f3f1d5cb104e5226441e9af02fa6308f991feb3f6390e47404ad93"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0074.volume-ii.structure-of-real-line.neighborhoods-and-balls.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0074.volume-ii.structure-of-real-line.neighborhoods-and-balls.json",
+        "bytes": 463866,
+        "sha256": "e740e03511883c0730f151656a62417cf2a7c3a32c48dbd850adf412b5acf824"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0075.volume-ii.structure-of-real-line.open-sets.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0075.volume-ii.structure-of-real-line.open-sets.json",
+        "bytes": 566995,
+        "sha256": "09ccb5c6acf01c9e745f6bf127e13056785c0d3cf496a579da7ee7b8a9ca0967"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0076.volume-ii.structure-of-real-line.closed-sets.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0076.volume-ii.structure-of-real-line.closed-sets.json",
+        "bytes": 363754,
+        "sha256": "d5a4052acacc4824ff79a2d061460a79e55c9f9ab86c5712dd93df3bf9b6ae09"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0077.volume-ii.structure-of-real-line.interior-exterior-boundary.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0077.volume-ii.structure-of-real-line.interior-exterior-boundary.json",
+        "bytes": 778137,
+        "sha256": "0fd929a7138fc55289138be7ff9de87364ad59a4c582858045385b3ef80996f1"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0078.volume-ii.structure-of-real-line.limit-and-isolated-points.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0078.volume-ii.structure-of-real-line.limit-and-isolated-points.json",
+        "bytes": 402058,
+        "sha256": "ec854f7c4711f41b073394c5f9d7f82f566a63ed4a2f5ee57f64ad3df80ddf7b"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0079.volume-ii.structure-of-real-line.unions-and-intersections.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0079.volume-ii.structure-of-real-line.unions-and-intersections.json",
+        "bytes": 180532,
+        "sha256": "442a13217cfafe95fb4b5e85744d7f48e68129a3977e8b0671eda8e3e8f5e766"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0080.volume-ii.structure-of-real-line.covers-and-subcovers.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0080.volume-ii.structure-of-real-line.covers-and-subcovers.json",
+        "bytes": 345257,
+        "sha256": "8345df0dd65bc97b80335b5332dfd737368f733fe23fc1f08808b2e18dce10ac"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0081.volume-ii.structure-of-real-line.compactness-on-r.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0081.volume-ii.structure-of-real-line.compactness-on-r.json",
+        "bytes": 460086,
+        "sha256": "bff271372f6ad9c3097e66dffe537c80dbc5934823c3d6f529c0c1ba4d06d6bd"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0082.volume-ii.structure-of-real-line.heine-borel.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0082.volume-ii.structure-of-real-line.heine-borel.json",
+        "bytes": 552269,
+        "sha256": "966b36b536b65278d23ee9690590965c933341a047305b961066f122555b3f32"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0083.volume-iii.bounding.completeness.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0083.volume-iii.bounding.completeness.json",
+        "bytes": 1779464,
+        "sha256": "789e211a42f25a4fb17117bb7e75c91a4f5bbf67316c795f9eb0fee0b8bba0fd"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0084.volume-iii.bounding.bounds-extremals.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0084.volume-iii.bounding.bounds-extremals.json",
+        "bytes": 1294052,
+        "sha256": "595f6b0c9e2cadf94d3d4e0270dcb706d6d38a4e389c627b4d6fe8c775c992cf"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0085.volume-iii.bounding.bounds-algebra.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0085.volume-iii.bounding.bounds-algebra.json",
+        "bytes": 3140058,
+        "sha256": "45c41ec13bd5852238f76f1d4bc180fa027b3bad1f3042f4812bd9bd380579d1"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0086.volume-iii.sequences.definition.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0086.volume-iii.sequences.definition.json",
+        "bytes": 946568,
+        "sha256": "8344ca11df843b3e3d71c039c3346c33c804188fd39fc8176d8e7ba688bfde3c"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0087.volume-iii.sequences.convergence.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0087.volume-iii.sequences.convergence.json",
+        "bytes": 5020841,
+        "sha256": "c82ff3ec785dcc57337d6962b4bbfd88103d3ea4d27ce4fa8f16db89aa25f170"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0088.volume-iii.sequences.tails.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0088.volume-iii.sequences.tails.json",
+        "bytes": 471290,
+        "sha256": "21ef49ace7d4e641b91084b2afadd25c712650a2b3f2a826e5f29fe890c33be0"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0089.volume-iii.sequences.monotonicity.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0089.volume-iii.sequences.monotonicity.json",
+        "bytes": 1522178,
+        "sha256": "b1c96f79399ac5556b0a79e195cebb31b4b92d86e936511298891a849c365188"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0090.volume-iii.sequences.subsequences.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0090.volume-iii.sequences.subsequences.json",
+        "bytes": 3266221,
+        "sha256": "778c1d3721601b9c9177eeade1da16b069708594ef6fcdbbc0bd07af036c6b71"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0091.volume-iii.sequences.divergence.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0091.volume-iii.sequences.divergence.json",
+        "bytes": 1345105,
+        "sha256": "71b144d00fbffdf55a7bb3154e7f940e66f6af11316b46b26f96e48024707320"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0092.volume-iii.sequences.liminf-limsup.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0092.volume-iii.sequences.liminf-limsup.json",
+        "bytes": 3233500,
+        "sha256": "d76b489730b89061c7414d2975a247b1ffbcc6cf1e6a1ac153f77bdddf663d33"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0093.volume-iii.sequences.order-limits.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0093.volume-iii.sequences.order-limits.json",
+        "bytes": 1192980,
+        "sha256": "0442a111ff2ac6a43ff5d20959498b9b82e8cd226b8d1d7b3ead8b1587c217df"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0094.volume-iii.sequences.cluster-values.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0094.volume-iii.sequences.cluster-values.json",
+        "bytes": 792280,
+        "sha256": "6b14ed46e18df9b527147582a5c318563be83fcdabc94d215a0069192b1a99cf"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0095.volume-iii.sequences.cauchy.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0095.volume-iii.sequences.cauchy.json",
+        "bytes": 1269077,
+        "sha256": "e796ef0fb4eb7726946b97204eb0091e68d0f1b97ea94564d2783aeb2ccf8e27"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0096.volume-iii.sequences.applications.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0096.volume-iii.sequences.applications.json",
+        "bytes": 1203115,
+        "sha256": "122cfef22a81ab7ba8fd474f9bd6ed908a4300f50ea293005136147e8cbe80bc"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0097.volume-iii.elementary-functions.hyperbolic.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0097.volume-iii.elementary-functions.hyperbolic.json",
+        "bytes": 3619366,
+        "sha256": "6fd236129b945d596857cb7be6036d9b334d3ef4e2ee3de389ccb0cd4fa1889f"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0098.volume-iii.elementary-functions.logarithmic.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0098.volume-iii.elementary-functions.logarithmic.json",
+        "bytes": 1493948,
+        "sha256": "780218147bcb7b4c79f31a785ad0f2fb61148df732d99b881258e2e80ef11d21"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0099.volume-iii.elementary-functions.power-exponential.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0099.volume-iii.elementary-functions.power-exponential.json",
+        "bytes": 2080633,
+        "sha256": "e572b44527f7ed65f2b0e47077f3f66840dad95f5b2ca10e955d6f40f5e99f98"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0100.volume-iii.elementary-functions.trigonometric.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0100.volume-iii.elementary-functions.trigonometric.json",
+        "bytes": 2899621,
+        "sha256": "36445612c2f33a56223fe0206d719b0c97b2a35d2b2785eb4739bd416baaf241"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0101.volume-iii.functions.limits.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0101.volume-iii.functions.limits.json",
+        "bytes": 4973556,
+        "sha256": "8a68ceaeaf460cdc9b49b3d71b5f57770e9426f074f3149ffdcccf209a3540e3"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0102.volume-iii.functions.algebra-of-functions.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0102.volume-iii.functions.algebra-of-functions.json",
+        "bytes": 193830,
+        "sha256": "f2abffb833898540045e99c1cb04d62c9f642fb5fe84295952591b4ea2d83784"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0103.volume-iii.functions.real-valued-functions.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0103.volume-iii.functions.real-valued-functions.json",
+        "bytes": 4642122,
+        "sha256": "259a35726472cf64d6286251f6308d1ee8bcf4ecbb5fe6bb2042a7ffde499359"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0104.volume-iii.functions.subsets-real-line.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0104.volume-iii.functions.subsets-real-line.json",
+        "bytes": 3263336,
+        "sha256": "6c9eeeb58d330634022dbac520030f237732d217ddf68e9cf1edb53b079db465"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0105.volume-iii.continuity.point-continuity.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0105.volume-iii.continuity.point-continuity.json",
+        "bytes": 2455962,
+        "sha256": "2674111d6e59ab975a35392604309e5867b9d2fbc1372f3f654a1575fb61c753"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0106.volume-iii.continuity.global-theorems.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0106.volume-iii.continuity.global-theorems.json",
+        "bytes": 2622827,
+        "sha256": "a9807fc855c741a09779547a53e17369d357c324a37295d32782284143db65bc"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0107.volume-iii.continuity.uniform-continuity.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0107.volume-iii.continuity.uniform-continuity.json",
+        "bytes": 2142316,
+        "sha256": "62391d1d4b8b926e679e092c483fc7416cbded4bf160b205cc28adcb880230a0"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0108.volume-iii.continuity.monotone-functions.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0108.volume-iii.continuity.monotone-functions.json",
+        "bytes": 3391449,
+        "sha256": "17a3a32854c54eac6717cebe947b6e088426f6610637507b2bce5fe1b62c43de"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0109.volume-iii.continuity.limits-at-infinity.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0109.volume-iii.continuity.limits-at-infinity.json",
+        "bytes": 5447,
+        "sha256": "64c0dc8c39da8568764e3773c6502f1158a9c04432202b12f711c3d0f7b1edb4"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0110.volume-iii.continuity.approximation.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0110.volume-iii.continuity.approximation.json",
+        "bytes": 1605996,
+        "sha256": "4317e394dc612f6c6ea650d19c8e6bc9c1033e79fcee329d2598f819a911055e"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0111.volume-iii.continuity.gauge.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0111.volume-iii.continuity.gauge.json",
+        "bytes": 1578781,
+        "sha256": "70fbc1fa67e375ffc48549f30b6abd04b720302f3fffb4c87aad87c78aa2354e"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0112.volume-iii.differentiation.derivative-definition.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0112.volume-iii.differentiation.derivative-definition.json",
+        "bytes": 1928683,
+        "sha256": "f519ed5df8c8606d7a2fd96a9beb132e88eef5308c6ff96c39b5fd9c6f21940a"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0113.volume-iii.differentiation.secant-tangent.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0113.volume-iii.differentiation.secant-tangent.json",
+        "bytes": 169838,
+        "sha256": "00ce1cead66c784f0d67c61a101cbdaa7afbe3a795664b55c34e9fb976013000"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0114.volume-iii.differentiation.one-sided-derivatives.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0114.volume-iii.differentiation.one-sided-derivatives.json",
+        "bytes": 522742,
+        "sha256": "5b724228c76e84afb4a7df14bf67e55de569eb7afa8099eb6e91fee7e9e8c4c3"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0115.volume-iii.differentiation.algebra-of-derivatives.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0115.volume-iii.differentiation.algebra-of-derivatives.json",
+        "bytes": 3980266,
+        "sha256": "85f86be40a0196e98c37919d20b408bd40c1beeb95d2bb9d7418f54f2a2b3e3e"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0116.volume-iii.differentiation.chain-rule.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0116.volume-iii.differentiation.chain-rule.json",
+        "bytes": 614906,
+        "sha256": "a32fa84caeb8a4a55c4defed45234dae2dad8c3cbee3a2270f99edcccc5d6524"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0117.volume-iii.differentiation.derivative-geometry.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0117.volume-iii.differentiation.derivative-geometry.json",
+        "bytes": 3679561,
+        "sha256": "d1718f076cc292ee7e402a5de95a2533bfdc1f579f58b49d2d552c3c79d3a6d9"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0118.volume-iii.differentiation.mean-value-theorem.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0118.volume-iii.differentiation.mean-value-theorem.json",
+        "bytes": 622492,
+        "sha256": "991721f8aebb5878d03ae2a73b9ab38fe0b653a615cdf5f91592014a6d2cd14a"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\batch-0119.volume-iii.differentiation.taylor-expansion.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/batch-0119.volume-iii.differentiation.taylor-expansion.json",
+        "bytes": 1252522,
+        "sha256": "85262357f7745cc887d185d94c6e669ccc528cae8dbe0417ec7c193fb509d8db"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\manifest.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/manifest.json",
+        "bytes": 49332,
+        "sha256": "17e4838e868839ec9092173d809f7abd11fdb92de1d0b547cdd4d5e90b48da36"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\trial-resolutions\\batch-0003.resolutions.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/trial-resolutions/batch-0003.resolutions.json",
+        "bytes": 4608,
+        "sha256": "ce47d4bb5880907477929632c72d0c28c35327395a1ec9498dc90178a370f90b"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\section-batches\\trial-resolutions\\batch-0004.resolutions.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/section-batches/trial-resolutions/batch-0004.resolutions.json",
+        "bytes": 12866,
+        "sha256": "e20b2e6500e166a0bcce80895f5f15c1378235a1858521e8a8ea61339d3fa115"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\SECTION_TRIAGE_PROMPT.md",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/SECTION_TRIAGE_PROMPT.md",
+        "bytes": 5771,
+        "sha256": "225b09d3252799ae316bf5cdd3589144b3c37ec71ef446be719e361f781d27b5"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\state\\base-graph.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/state/base-graph.json",
+        "bytes": 2067105,
+        "sha256": "4f7b39fd72d47c2e48bef257048ef5238d291824fffbeb5436abc4dee5a1f2d6"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\state\\working-delta.json",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/state/working-delta.json",
+        "bytes": 25274,
+        "sha256": "da23c77419dd53848376cd34872f79ead970b81ce9d7dd19ab9dc8dc10c633d6"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\tools\\check_dependency_edge.py",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/tools/check_dependency_edge.py",
+        "bytes": 4695,
+        "sha256": "7f7a08b9c15ef882143593441e923c3cd3afe6fff88703c0f70d0dd49eb8645c"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\tools\\record_delta.py",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/tools/record_delta.py",
+        "bytes": 4150,
+        "sha256": "cd3c767782d12e2b2315f08df75c8e66dff0b57a6017575ca14b28d274075465"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\TRIAGE_PROMPT.md",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/TRIAGE_PROMPT.md",
+        "bytes": 16307,
+        "sha256": "93a1c8fe7408ce31dc66aab5bba54ccbe888fdeb2b42ec47f2c01171a33a97b7"
+      },
+      {
+        "source": "F:\\repos\\lra-knowledge-explorer\\reorder\\triage_real_ambient_noise.py",
+        "archived_as": "F:/repos/lra-governance/baselines/extraction/volume-iv-algebraic-structures-20260619-072204/knowledge-explorer/reorder/triage_real_ambient_noise.py",
+        "bytes": 17045,
+        "sha256": "8febda5c908f43a2684e9f9ef34985435303f25bf29c2e82ebda64ef8fec1406"
+      }
+    ]
+  }
+}

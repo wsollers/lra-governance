@@ -43,7 +43,6 @@ EXCLUDED_RELATIVE_DIRS = {
     "volume-ii/integers/proofs/mendelson-construction",
     "volume-ii/integers/proofs/tao-construction",
     "volume-iii/analysis/real-analysis",
-    "volume-iv/algebra/algebraic-structures",
 }
 
 

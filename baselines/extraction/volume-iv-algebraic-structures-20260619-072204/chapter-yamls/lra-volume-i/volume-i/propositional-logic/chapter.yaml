@@ -1,0 +1,676 @@
+subject: propositional-logic
+display_title: Propositional Logic
+volume: volume-i
+status: generated-from-artifact-registry
+dependencies:
+  prior: ''
+  next: ''
+environments:
+- label: def:propositional-equivalence-law
+  type: def
+  file: notes\algebra\notes-algebra.tex
+  display_title: Propositional Equivalence Law
+  proof_file: null
+- label: thm:logical-equivalence-equivalence-relation
+  type: thm
+  file: notes\algebra\notes-algebra.tex
+  display_title: Logical Equivalence is an Equivalence Relation
+  proof_file: null
+- label: thm:basic-boolean-equivalence-laws-propositional-logic
+  type: thm
+  file: notes\algebra\notes-algebra.tex
+  display_title: Basic Boolean Equivalence Laws
+  proof_file: null
+- label: thm:identity-domination-laws-propositional-logic
+  type: thm
+  file: notes\algebra\notes-algebra.tex
+  display_title: Identity and Domination Laws
+  proof_file: null
+- label: thm:de-morgan-laws-propositional-logic
+  type: thm
+  file: notes\algebra\notes-algebra.tex
+  display_title: De Morgan Laws for Propositional Logic
+  proof_file: null
+- label: thm:distributive-laws-propositional-logic
+  type: thm
+  file: notes\algebra\notes-algebra.tex
+  display_title: Distributive Laws for Propositional Logic
+  proof_file: null
+- label: thm:absorption-laws-propositional-logic
+  type: thm
+  file: notes\algebra\notes-algebra.tex
+  display_title: Absorption Laws
+  proof_file: null
+- label: thm:conditional-equivalence-laws-propositional-logic
+  type: thm
+  file: notes\algebra\notes-algebra.tex
+  display_title: Conditional Equivalence Laws
+  proof_file: null
+- label: thm:biconditional-equivalence-laws-propositional-logic
+  type: thm
+  file: notes\algebra\notes-algebra.tex
+  display_title: Biconditional Equivalence Laws
+  proof_file: null
+- label: def:formula-context-propositional-logic
+  type: def
+  file: notes\algebra\notes-algebra.tex
+  display_title: Formula Context
+  proof_file: null
+- label: thm:replacement-of-logical-equivalents-propositional-logic
+  type: thm
+  file: notes\algebra\notes-algebra.tex
+  display_title: Replacement of Logical Equivalents
+  proof_file: null
+- label: def:argument-form-propositional-logic
+  type: def
+  file: notes\argument-forms\argument-forms.tex
+  display_title: Argument Form
+  proof_file: null
+- label: def:valid-argument-form-propositional-logic
+  type: def
+  file: notes\argument-forms\argument-forms.tex
+  display_title: Valid Argument Form
+  proof_file: null
+- label: def:counterexample-assignment-propositional-logic
+  type: def
+  file: notes\argument-forms\argument-forms.tex
+  display_title: Counterexample Assignment
+  proof_file: null
+- label: thm:truth-table-validity-test-argument-forms-propositional-logic
+  type: thm
+  file: notes\argument-forms\argument-forms.tex
+  display_title: Truth-Table Validity Test for Argument Forms
+  proof_file: null
+- label: def:informal-proof-pattern-propositional-logic
+  type: def
+  file: notes\argument-forms\informal-proof-patterns.tex
+  display_title: Informal Proof Pattern
+  proof_file: null
+- label: thm:affirming-consequent-invalid-propositional-logic
+  type: thm
+  file: notes\argument-forms\invalid-argument-forms.tex
+  display_title: Affirming the Consequent is Invalid
+  proof_file: null
+- label: thm:denying-antecedent-invalid-propositional-logic
+  type: thm
+  file: notes\argument-forms\invalid-argument-forms.tex
+  display_title: Denying the Antecedent is Invalid
+  proof_file: null
+- label: def:rule-of-replacement-propositional-logic
+  type: def
+  file: notes\argument-forms\rules-of-replacement.tex
+  display_title: Rule of Replacement
+  proof_file: null
+- label: thm:replacement-rules-preserve-logical-equivalence-propositional-logic
+  type: thm
+  file: notes\argument-forms\rules-of-replacement.tex
+  display_title: Replacement Rules Preserve Logical Equivalence
+  proof_file: null
+- label: thm:tautological-implication-valid-argument-form-propositional-logic
+  type: thm
+  file: notes\argument-forms\semantic-justification.tex
+  display_title: Tautological Implication Gives a Valid Argument Form
+  proof_file: null
+- label: thm:modus-ponens-validity-propositional-logic
+  type: thm
+  file: notes\argument-forms\valid-inference-patterns.tex
+  display_title: Modus Ponens is Valid
+  proof_file: null
+- label: thm:modus-tollens-validity-propositional-logic
+  type: thm
+  file: notes\argument-forms\valid-inference-patterns.tex
+  display_title: Modus Tollens is Valid
+  proof_file: null
+- label: thm:hypothetical-syllogism-validity-propositional-logic
+  type: thm
+  file: notes\argument-forms\valid-inference-patterns.tex
+  display_title: Hypothetical Syllogism is Valid
+  proof_file: null
+- label: thm:disjunctive-syllogism-validity-propositional-logic
+  type: thm
+  file: notes\argument-forms\valid-inference-patterns.tex
+  display_title: Disjunctive Syllogism is Valid
+  proof_file: null
+- label: thm:addition-validity-propositional-logic
+  type: thm
+  file: notes\argument-forms\valid-inference-patterns.tex
+  display_title: Addition is Valid
+  proof_file: null
+- label: thm:simplification-validity-propositional-logic
+  type: thm
+  file: notes\argument-forms\valid-inference-patterns.tex
+  display_title: Simplification is Valid
+  proof_file: null
+- label: thm:conjunction-introduction-validity-propositional-logic
+  type: thm
+  file: notes\argument-forms\valid-inference-patterns.tex
+  display_title: Conjunction Introduction is Valid
+  proof_file: null
+- label: thm:constructive-dilemma-validity-propositional-logic
+  type: thm
+  file: notes\argument-forms\valid-inference-patterns.tex
+  display_title: Constructive Dilemma is Valid
+  proof_file: null
+- label: thm:destructive-dilemma-validity-propositional-logic
+  type: thm
+  file: notes\argument-forms\valid-inference-patterns.tex
+  display_title: Destructive Dilemma is Valid
+  proof_file: null
+- label: ax:propositional-weakening
+  type: ax
+  file: notes\axioms\notes-axioms.tex
+  display_title: Propositional Weakening
+  proof_file: null
+- label: ax:propositional-implication-distribution
+  type: ax
+  file: notes\axioms\notes-axioms.tex
+  display_title: Implication Distribution
+  proof_file: null
+- label: ax:propositional-classical-contraposition
+  type: ax
+  file: notes\axioms\notes-axioms.tex
+  display_title: Classical Contraposition
+  proof_file: null
+- label: def:unsatisfiability-witness-propositional-logic
+  type: def
+  file: notes\compactness-preview\finite-unsatisfiability-witness.tex
+  display_title: Unsatisfiability Witness
+  proof_file: null
+- label: def:finite-unsatisfiability-witness-propositional-logic
+  type: def
+  file: notes\compactness-preview\finite-unsatisfiability-witness.tex
+  display_title: Finite Unsatisfiability Witness
+  proof_file: null
+- label: thm:finite-unsatisfiability-witness-propositional-logic
+  type: thm
+  file: notes\compactness-preview\finite-unsatisfiability-witness.tex
+  display_title: Finite Unsatisfiability Witness
+  proof_file: null
+- label: cor:finite-unsatisfiability-witness-contrapositive-propositional-logic
+  type: cor
+  file: notes\compactness-preview\finite-unsatisfiability-witness.tex
+  display_title: Finite Witness Contrapositive
+  proof_file: null
+- label: def:finite-subset-of-set-of-propositional-formulas
+  type: def
+  file: notes\compactness-preview\finitely-satisfiable-sets.tex
+  display_title: Finite Subset of a Set of Propositional Formulas
+  proof_file: null
+- label: def:finitely-satisfiable-set-of-propositional-formulas
+  type: def
+  file: notes\compactness-preview\finitely-satisfiable-sets.tex
+  display_title: Finitely Satisfiable Set of Propositional Formulas
+  proof_file: null
+- label: thm:propositional-compactness
+  type: thm
+  file: notes\compactness-preview\propositional-compactness.tex
+  display_title: Propositional Compactness
+  proof_file: null
+- label: def:satisfiable-set-of-propositional-formulas
+  type: def
+  file: notes\compactness-preview\satisfiable-sets.tex
+  display_title: Satisfiable Set of Propositional Formulas
+  proof_file: null
+- label: def:unsatisfiable-set-of-propositional-formulas
+  type: def
+  file: notes\compactness-preview\satisfiable-sets.tex
+  display_title: Unsatisfiable Set of Propositional Formulas
+  proof_file: null
+- label: def:boolean-function-representation-propositional-logic
+  type: def
+  file: notes\functional-completeness\boolean-functions.tex
+  display_title: Representation of a Boolean Function
+  proof_file: null
+- label: thm:dnf-representation-of-boolean-functions-propositional-logic
+  type: thm
+  file: notes\functional-completeness\boolean-functions.tex
+  display_title: DNF Representation of Boolean Functions
+  proof_file: null
+- label: def:connective-basis-propositional-logic
+  type: def
+  file: notes\functional-completeness\connective-bases.tex
+  display_title: Connective Basis
+  proof_file: null
+- label: def:definable-connective-propositional-logic
+  type: def
+  file: notes\functional-completeness\connective-bases.tex
+  display_title: Definable Connective
+  proof_file: null
+- label: def:functionally-complete-connective-set-propositional-logic
+  type: def
+  file: notes\functional-completeness\connective-bases.tex
+  display_title: Functionally Complete Connective Set
+  proof_file: null
+- label: def:expressively-equivalent-connective-sets-propositional-logic
+  type: def
+  file: notes\functional-completeness\connective-bases.tex
+  display_title: Expressively Equivalent Connective Sets
+  proof_file: null
+- label: def:incomplete-connective-set-propositional-logic
+  type: def
+  file: notes\functional-completeness\incomplete-connective-sets.tex
+  display_title: Incomplete Connective Set
+  proof_file: null
+- label: def:monotone-boolean-function-propositional-logic
+  type: def
+  file: notes\functional-completeness\incomplete-connective-sets.tex
+  display_title: Monotone Boolean Function
+  proof_file: null
+- label: thm:conjunction-disjunction-not-functionally-complete-propositional-logic
+  type: thm
+  file: notes\functional-completeness\incomplete-connective-sets.tex
+  display_title: Conjunction and Disjunction are not Functionally Complete
+  proof_file: null
+- label: def:minimal-complete-basis-propositional-logic
+  type: def
+  file: notes\functional-completeness\minimal-complete-bases.tex
+  display_title: Minimal Complete Basis
+  proof_file: null
+- label: thm:nand-nor-minimal-complete-bases-propositional-logic
+  type: thm
+  file: notes\functional-completeness\minimal-complete-bases.tex
+  display_title: NAND and NOR are Minimal Complete Bases
+  proof_file: null
+- label: def:nand-connective-propositional-logic
+  type: def
+  file: notes\functional-completeness\nand.tex
+  display_title: NAND Connective
+  proof_file: null
+- label: def:nand-only-formula-propositional-logic
+  type: def
+  file: notes\functional-completeness\nand.tex
+  display_title: NAND-Only Formula
+  proof_file: null
+- label: thm:nand-functionally-complete-propositional-logic
+  type: thm
+  file: notes\functional-completeness\nand.tex
+  display_title: NAND is Functionally Complete
+  proof_file: null
+- label: def:nor-connective-propositional-logic
+  type: def
+  file: notes\functional-completeness\nor.tex
+  display_title: NOR Connective
+  proof_file: null
+- label: def:nor-only-formula-propositional-logic
+  type: def
+  file: notes\functional-completeness\nor.tex
+  display_title: NOR-Only Formula
+  proof_file: null
+- label: thm:nor-functionally-complete-propositional-logic
+  type: thm
+  file: notes\functional-completeness\nor.tex
+  display_title: NOR is Functionally Complete
+  proof_file: null
+- label: def:connective-reduction-propositional-logic
+  type: def
+  file: notes\functional-completeness\reduction-of-connectives.tex
+  display_title: Connective Reduction
+  proof_file: null
+- label: thm:standard-connectives-functionally-complete-propositional-logic
+  type: thm
+  file: notes\functional-completeness\standard-connectives.tex
+  display_title: Standard Connectives are Functionally Complete
+  proof_file: null
+- label: thm:negation-conjunction-functionally-complete-propositional-logic
+  type: thm
+  file: notes\functional-completeness\standard-connectives.tex
+  display_title: Negation and Conjunction are Functionally Complete
+  proof_file: null
+- label: thm:negation-disjunction-functionally-complete-propositional-logic
+  type: thm
+  file: notes\functional-completeness\standard-connectives.tex
+  display_title: Negation and Disjunction are Functionally Complete
+  proof_file: null
+- label: def:truth-table-row-conjunction-propositional-logic
+  type: def
+  file: notes\normal-forms\canonical-normal-forms.tex
+  display_title: Truth-Table Row Conjunction
+  proof_file: null
+- label: def:truth-table-row-clause-propositional-logic
+  type: def
+  file: notes\normal-forms\canonical-normal-forms.tex
+  display_title: Truth-Table Row Clause
+  proof_file: null
+- label: def:canonical-disjunctive-normal-form-propositional-logic
+  type: def
+  file: notes\normal-forms\canonical-normal-forms.tex
+  display_title: Canonical Disjunctive Normal Form
+  proof_file: null
+- label: def:canonical-conjunctive-normal-form-propositional-logic
+  type: def
+  file: notes\normal-forms\canonical-normal-forms.tex
+  display_title: Canonical Conjunctive Normal Form
+  proof_file: null
+- label: thm:canonical-disjunctive-normal-form-propositional-logic
+  type: thm
+  file: notes\normal-forms\canonical-normal-forms.tex
+  display_title: Canonical Disjunctive Normal Form Theorem
+  proof_file: null
+- label: thm:canonical-conjunctive-normal-form-propositional-logic
+  type: thm
+  file: notes\normal-forms\canonical-normal-forms.tex
+  display_title: Canonical Conjunctive Normal Form Theorem
+  proof_file: null
+- label: def:elementary-disjunction-propositional-logic
+  type: def
+  file: notes\normal-forms\conjunctive-normal-form.tex
+  display_title: Elementary Disjunction
+  proof_file: null
+- label: def:maxterm-propositional-logic
+  type: def
+  file: notes\normal-forms\conjunctive-normal-form.tex
+  display_title: Maxterm
+  proof_file: null
+- label: def:conjunctive-normal-form-propositional-logic
+  type: def
+  file: notes\normal-forms\conjunctive-normal-form.tex
+  display_title: Conjunctive Normal Form
+  proof_file: null
+- label: thm:existence-conjunctive-normal-form-propositional-logic
+  type: thm
+  file: notes\normal-forms\conjunctive-normal-form.tex
+  display_title: Existence of Conjunctive Normal Form
+  proof_file: null
+- label: def:elementary-conjunction-propositional-logic
+  type: def
+  file: notes\normal-forms\disjunctive-normal-form.tex
+  display_title: Elementary Conjunction
+  proof_file: null
+- label: def:minterm-propositional-logic
+  type: def
+  file: notes\normal-forms\disjunctive-normal-form.tex
+  display_title: Minterm
+  proof_file: null
+- label: def:disjunctive-normal-form-propositional-logic
+  type: def
+  file: notes\normal-forms\disjunctive-normal-form.tex
+  display_title: Disjunctive Normal Form
+  proof_file: null
+- label: thm:existence-disjunctive-normal-form-propositional-logic
+  type: thm
+  file: notes\normal-forms\disjunctive-normal-form.tex
+  display_title: Existence of Disjunctive Normal Form
+  proof_file: null
+- label: thm:dnf-satisfiability-criterion-propositional-logic
+  type: thm
+  file: notes\normal-forms\disjunctive-normal-form.tex
+  display_title: DNF Satisfiability Criterion
+  proof_file: null
+- label: def:literal-propositional-logic
+  type: def
+  file: notes\normal-forms\literals-clauses.tex
+  display_title: Literal
+  proof_file: null
+- label: def:positive-literal-propositional-logic
+  type: def
+  file: notes\normal-forms\literals-clauses.tex
+  display_title: Positive Literal
+  proof_file: null
+- label: def:negative-literal-propositional-logic
+  type: def
+  file: notes\normal-forms\literals-clauses.tex
+  display_title: Negative Literal
+  proof_file: null
+- label: def:complementary-literals-propositional-logic
+  type: def
+  file: notes\normal-forms\literals-clauses.tex
+  display_title: Complementary Literals
+  proof_file: null
+- label: def:clause-propositional-logic
+  type: def
+  file: notes\normal-forms\literals-clauses.tex
+  display_title: Clause
+  proof_file: null
+- label: def:term-propositional-logic
+  type: def
+  file: notes\normal-forms\literals-clauses.tex
+  display_title: Term
+  proof_file: null
+- label: def:empty-clause-propositional-logic
+  type: def
+  file: notes\normal-forms\literals-clauses.tex
+  display_title: Empty Clause
+  proof_file: null
+- label: def:empty-conjunction-propositional-logic
+  type: def
+  file: notes\normal-forms\literals-clauses.tex
+  display_title: Empty Conjunction
+  proof_file: null
+- label: def:negation-normal-form-propositional-logic
+  type: def
+  file: notes\normal-forms\negation-normal-form.tex
+  display_title: Negation Normal Form
+  proof_file: null
+- label: def:nnf-conversion-procedure-propositional-logic
+  type: def
+  file: notes\normal-forms\negation-normal-form.tex
+  display_title: NNF Conversion Procedure
+  proof_file: null
+- label: thm:existence-negation-normal-form-propositional-logic
+  type: thm
+  file: notes\normal-forms\negation-normal-form.tex
+  display_title: Existence of Negation Normal Form
+  proof_file: null
+- label: thm:normal-form-semantic-classification-propositional-logic
+  type: thm
+  file: notes\normal-forms\semantic-classification.tex
+  display_title: Semantic Classification by Normal Forms
+  proof_file: null
+- label: def:truth-assignment-propositional-logic
+  type: def
+  file: notes\semantics\notes-semantics.tex
+  display_title: Truth Assignment
+  proof_file: null
+- label: def:truth-assignment-domain-propositional-logic
+  type: def
+  file: notes\semantics\notes-semantics.tex
+  display_title: Domain of a Truth Assignment
+  proof_file: null
+- label: def:extended-truth-assignment-propositional-logic
+  type: def
+  file: notes\semantics\notes-semantics.tex
+  display_title: Extension of a Truth Assignment to Formulas
+  proof_file: null
+- label: thm:unique-extension-truth-assignment-propositional-logic
+  type: thm
+  file: notes\semantics\notes-semantics.tex
+  display_title: Unique Extension of a Truth Assignment
+  proof_file: null
+- label: def:satisfaction-propositional-formula
+  type: def
+  file: notes\semantics\notes-semantics.tex
+  display_title: Satisfaction of a Formula
+  proof_file: null
+- label: def:satisfaction-set-propositional-logic
+  type: def
+  file: notes\semantics\notes-semantics.tex
+  display_title: Satisfaction of a Set of Formulas
+  proof_file: null
+- label: def:truth-table-propositional-logic
+  type: def
+  file: notes\semantics\notes-semantics.tex
+  display_title: Truth Table
+  proof_file: null
+- label: def:tautology-propositional-logic
+  type: def
+  file: notes\semantics\notes-semantics.tex
+  display_title: Tautology
+  proof_file: null
+- label: def:contradiction-propositional-logic
+  type: def
+  file: notes\semantics\notes-semantics.tex
+  display_title: Contradiction
+  proof_file: null
+- label: def:satisfiable-formula-propositional-logic
+  type: def
+  file: notes\semantics\notes-semantics.tex
+  display_title: Satisfiable Formula
+  proof_file: null
+- label: def:contingency-propositional-logic
+  type: def
+  file: notes\semantics\notes-semantics.tex
+  display_title: Contingency
+  proof_file: null
+- label: def:logical-consequence-propositional-logic
+  type: def
+  file: notes\semantics\notes-semantics.tex
+  display_title: Logical Consequence
+  proof_file: null
+- label: def:logical-equivalence-propositional-logic
+  type: def
+  file: notes\semantics\notes-semantics.tex
+  display_title: Logical Equivalence
+  proof_file: null
+- label: lem:coincidence-lemma-propositional-logic
+  type: lem
+  file: notes\semantics\notes-semantics.tex
+  display_title: Coincidence Lemma for Propositional Logic
+  proof_file: null
+- label: thm:finite-truth-table-propositional-logic
+  type: thm
+  file: notes\semantics\notes-semantics.tex
+  display_title: Finite Truth-Table Theorem
+  proof_file: null
+- label: def:boolean-function-propositional-logic
+  type: def
+  file: notes\semantics\notes-semantics.tex
+  display_title: Boolean Function
+  proof_file: null
+- label: def:truth-function-induced-by-formula
+  type: def
+  file: notes\semantics\notes-semantics.tex
+  display_title: Truth Function Induced by a Formula
+  proof_file: null
+- label: thm:counting-boolean-functions
+  type: thm
+  file: notes\semantics\notes-semantics.tex
+  display_title: Counting Boolean Functions
+  proof_file: null
+- label: def:truth-value-propositional-logic
+  type: def
+  file: notes\syntax\notes-syntax.tex
+  display_title: Truth Value
+  proof_file: null
+  root_kind: definitional
+- label: def:propositional-language
+  type: def
+  file: notes\syntax\notes-syntax.tex
+  display_title: Propositional Language
+  proof_file: null
+  root_kind: definitional
+- label: def:propositional-variable
+  type: def
+  file: notes\syntax\notes-syntax.tex
+  display_title: Propositional Variable
+  proof_file: null
+- label: def:logical-connective
+  type: def
+  file: notes\syntax\notes-syntax.tex
+  display_title: Logical Connective
+  proof_file: null
+- label: def:well-formed-formula
+  type: def
+  file: notes\syntax\notes-syntax.tex
+  display_title: Well-Formed Formula
+  proof_file: null
+- label: lem:closure-under-formation-propositional-formulas
+  type: lem
+  file: notes\syntax\notes-syntax.tex
+  display_title: Closure Under Formation
+  proof_file: null
+- label: thm:minimality-of-well-formed-formulas
+  type: thm
+  file: notes\syntax\notes-syntax.tex
+  display_title: Minimality of Well-Formed Formulas
+  proof_file: null
+- label: def:atomic-formula-propositional-logic
+  type: def
+  file: notes\syntax\notes-syntax.tex
+  display_title: Atomic Formula
+  proof_file: null
+- label: def:molecular-formula-propositional-logic
+  type: def
+  file: notes\syntax\notes-syntax.tex
+  display_title: Molecular Formula
+  proof_file: null
+- label: def:main-connective-propositional-logic
+  type: def
+  file: notes\syntax\notes-syntax.tex
+  display_title: Main Connective
+  proof_file: null
+- label: thm:structural-induction-propositional-formulas
+  type: thm
+  file: notes\syntax\notes-syntax.tex
+  display_title: Structural Induction for Propositional Formulas
+  proof_file: null
+- label: thm:structural-recursion-propositional-formulas
+  type: thm
+  file: notes\syntax\notes-syntax.tex
+  display_title: Structural Recursion for Propositional Formulas
+  proof_file: null
+- label: lem:constructor-disjointness-propositional-formulas
+  type: lem
+  file: notes\syntax\notes-syntax.tex
+  display_title: Constructor Disjointness for Propositional Formulas
+  proof_file: null
+- label: lem:constructor-injectivity-propositional-formulas
+  type: lem
+  file: notes\syntax\notes-syntax.tex
+  display_title: Constructor Injectivity for Propositional Formulas
+  proof_file: null
+- label: thm:unique-decomposition-propositional-formulas
+  type: thm
+  file: notes\syntax\notes-syntax.tex
+  display_title: Unique Decomposition for Propositional Formulas
+  proof_file: null
+- label: def:parse-tree-propositional-logic
+  type: def
+  file: notes\syntax\notes-syntax.tex
+  display_title: Parse Tree
+  proof_file: null
+- label: thm:unique-syntax-tree-propositional-formulas
+  type: thm
+  file: notes\syntax\notes-syntax.tex
+  display_title: Unique Syntax Tree for Propositional Formulas
+  proof_file: null
+- label: def:formula-variable-set-propositional-logic
+  type: def
+  file: notes\syntax\notes-syntax.tex
+  display_title: Variable Set of a Formula
+  proof_file: null
+- label: def:subformula-propositional-logic
+  type: def
+  file: notes\syntax\notes-syntax.tex
+  display_title: Subformula
+  proof_file: null
+- label: def:proper-subformula
+  type: def
+  file: notes\syntax\notes-syntax.tex
+  display_title: Proper Subformula
+  proof_file: null
+- label: def:formula-depth-propositional-logic
+  type: def
+  file: notes\syntax\notes-syntax.tex
+  display_title: Formula Depth
+  proof_file: null
+- label: def:connective-count-propositional-logic
+  type: def
+  file: notes\syntax\notes-syntax.tex
+  display_title: Connective Count
+  proof_file: null
+- label: lem:proper-subformula-depth-propositional-logic
+  type: lem
+  file: notes\syntax\notes-syntax.tex
+  display_title: Proper Subformula Depth
+  proof_file: null
+- label: lem:finiteness-of-variables-propositional-formulas
+  type: lem
+  file: notes\syntax\notes-syntax.tex
+  display_title: Finiteness of Variables in a Formula
+  proof_file: null
+- label: lem:finiteness-of-subformulas-propositional-formulas
+  type: lem
+  file: notes\syntax\notes-syntax.tex
+  display_title: Finiteness of Subformulas
+  proof_file: null
+proof_files: []
