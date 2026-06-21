@@ -584,6 +584,18 @@ class ValidateVolumeTests(unittest.TestCase):
 
         self.assertNotIn("notes_topic_index_contains_rendered_content", codes)
 
+    def test_notes_structure_allows_texorpdfstring_section_in_topic_index(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "index.tex",
+            r"\section{\texorpdfstring{Order on $\mathbb{R}$}{Order on R}}" "\n"
+            r"\input{volume-ii/integers/notes/order/notes-order}" "\n",
+        )
+
+        codes = {finding.code for finding in notes_structure.validate(volume)}
+
+        self.assertNotIn("notes_topic_index_contains_rendered_content", codes)
+
     def test_notes_structure_allows_subsection_in_multi_file_topic_index(self):
         volume = make_volume()
         write(volume / "integers" / "notes" / "order" / "notes-extra.tex", "% extra body\n")
@@ -592,6 +604,22 @@ class ValidateVolumeTests(unittest.TestCase):
             r"\subsection*{Order Foundations}" "\n"
             r"\input{volume-ii/integers/notes/order/notes-order}" "\n"
             r"\subsection*{Extra Order Notes}" "\n"
+            r"\input{volume-ii/integers/notes/order/notes-extra}" "\n",
+        )
+
+        codes = {finding.code for finding in notes_structure.validate(volume)}
+
+        self.assertNotIn("notes_topic_index_contains_rendered_content", codes)
+        self.assertNotIn("unrouted_notes_topic_body", codes)
+
+    def test_notes_structure_allows_texorpdfstring_subsection_in_multi_file_topic_index(self):
+        volume = make_volume()
+        write(volume / "integers" / "notes" / "order" / "notes-extra.tex", "% extra body\n")
+        write(
+            volume / "integers" / "notes" / "order" / "index.tex",
+            r"\subsection*{\texorpdfstring{Order on $\mathbb{Q}$}{Order on Q}}" "\n"
+            r"\input{volume-ii/integers/notes/order/notes-order}" "\n"
+            r"\subsection*{\texorpdfstring{Order on $\mathbb{R}$}{Order on R}}" "\n"
             r"\input{volume-ii/integers/notes/order/notes-extra}" "\n",
         )
 

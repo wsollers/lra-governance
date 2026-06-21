@@ -13,8 +13,6 @@ FORMAL_ENV_RE = re.compile(r"\\begin\{(?:definition|axiom|theorem|lemma|proposit
 PROOF_ENV_RE = re.compile(r"\\begin\{proof\}")
 _SECTION_TITLE = r"(?:[^{}]|\{[^{}]*\})+"
 UNSTARRED_SUBSECTION_RE = re.compile(rf"\\sub(?:sub)?section(?:\[[^\]]*\])?\{{{_SECTION_TITLE}\}}")
-TOPIC_SECTION_RE = re.compile(rf"\\section(?:\[[^\]]*\])?\{{{_SECTION_TITLE}\}}")
-TOPIC_SUBSECTION_RE = re.compile(rf"\\subsection\*(?:\[[^\]]*\])?\{{{_SECTION_TITLE}\}}")
 TOOLKIT_BEGIN_RE = re.compile(r"\\begin\{toolkitbox\}(?:\{.*\})?")
 TOOLKIT_END_RE = re.compile(r"\\end\{toolkitbox\}")
 
@@ -96,12 +94,12 @@ def _check_topic_router_only(volume_root: Path, index: Path, included: set[Path]
             continue
         if not line:
             continue
-        if INPUT_RE.fullmatch(line) or TOPIC_SECTION_RE.fullmatch(line):
+        if INPUT_RE.fullmatch(line) or _is_topic_section_line(line):
             continue
         if TOOLKIT_BEGIN_RE.fullmatch(line):
             in_toolkit = True
             continue
-        if TOPIC_SUBSECTION_RE.fullmatch(line) and topic_body_count > 1:
+        if _is_topic_subsection_line(line) and topic_body_count > 1:
             continue
         else:
             findings.append(
@@ -129,3 +127,46 @@ def _check_body_heading(volume_root: Path, body: Path, findings: list[Finding]) 
                 line,
             )
         )
+
+
+def _is_topic_section_line(line: str) -> bool:
+    return _is_heading_line(line, command="section", starred=False)
+
+
+def _is_topic_subsection_line(line: str) -> bool:
+    return _is_heading_line(line, command="subsection", starred=True)
+
+
+def _is_heading_line(line: str, *, command: str, starred: bool) -> bool:
+    prefix = f"\\{command}"
+    if not line.startswith(prefix):
+        return False
+    pos = len(prefix)
+    has_star = pos < len(line) and line[pos] == "*"
+    if has_star != starred:
+        return False
+    if has_star:
+        pos += 1
+    if pos < len(line) and line[pos] == "[":
+        pos = _consume_balanced_group(line, pos, "[", "]")
+        if pos is None:
+            return False
+    if pos >= len(line) or line[pos] != "{":
+        return False
+    pos = _consume_balanced_group(line, pos, "{", "}")
+    return pos == len(line)
+
+
+def _consume_balanced_group(line: str, start: int, opener: str, closer: str) -> int | None:
+    if start >= len(line) or line[start] != opener:
+        return None
+    depth = 0
+    for pos in range(start, len(line)):
+        char = line[pos]
+        if char == opener:
+            depth += 1
+        elif char == closer:
+            depth -= 1
+            if depth == 0:
+                return pos + 1
+    return None
