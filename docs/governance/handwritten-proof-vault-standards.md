@@ -198,8 +198,12 @@ should perform the following steps:
 5. Commit the proof vault repository.
 6. Push the proof vault repository.
 7. Add a `\ProofVaultURL{...}` backlink to the canonical theorem proof file.
-8. Commit the canonical repository.
-9. Push the canonical repository.
+8. If the proof was accepted as correct and the canonical proof file has been
+   populated, update the owning volume repo's tracked `proofs-to-do.md`
+   artifact: change the proof label marker from `()` to `(✅)` and update the
+   open/completed counts.
+9. Commit the canonical repository.
+10. Push the canonical repository.
 
 No raw image may be committed at any stage of this workflow.
 
@@ -240,6 +244,9 @@ Backlinks must satisfy the following rules:
 - it must not make the handwritten proof the source of truth;
 - it must preserve existing labels, dependency blocks, and extraction-visible
   structure.
+- if the memorialized proof is reviewed correct and used to populate the
+  canonical proof file, the owning volume's tracked `proofs-to-do.md` must mark
+  the proof with `(✅)`.
 
 If a canonical theorem or proof file does not exist, report the missing target
 instead of inventing one.
