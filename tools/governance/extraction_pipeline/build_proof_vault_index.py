@@ -69,6 +69,25 @@ def resolve_attempt_path(folder: Path, value: str) -> Path:
     return folder / candidate
 
 
+def read_optional_text(folder: Path, attempt: dict[str, Any], key: str, warnings: list[dict[str, str]], metadata_path: Path, vault_root: Path) -> str:
+    value = str(attempt.get(key) or "").strip()
+    if not value:
+        return ""
+    path = resolve_attempt_path(folder, value)
+    if not path.exists():
+        warnings.append(
+            {
+                "type": "missing_attempt_text_file",
+                "metadata": rel_posix(metadata_path, vault_root),
+                "attempt_id": str(attempt.get("attempt_id") or "proof-attempt"),
+                "field": key,
+                "path": value,
+            }
+        )
+        return ""
+    return path.read_text(encoding="utf-8", errors="replace").strip()
+
+
 def attempt_record(
     metadata_path: Path,
     metadata: dict[str, Any],
@@ -109,6 +128,10 @@ def attempt_record(
     if isinstance(tags, list) and tags:
         tag_text = "\n\nTags: " + ", ".join(str(tag) for tag in tags)
 
+    ocr_text = read_optional_text(folder, attempt, "ocr_text_path", warnings, metadata_path, vault_root)
+    markdown = read_optional_text(folder, attempt, "markdown_path", warnings, metadata_path, vault_root)
+    tex = read_optional_text(folder, attempt, "tex_path", warnings, metadata_path, vault_root)
+
     return {
         "title": f"{theorem_title} ({attempt_id})",
         "path": path,
@@ -118,6 +141,11 @@ def attempt_record(
         "review_status": str(attempt.get("review_status") or ""),
         "images": image_links,
         "body": notes + tag_text,
+        "ocr_text": ocr_text,
+        "markdown": markdown,
+        "tex": tex,
+        "text_source": str(attempt.get("text_source") or ""),
+        "text_review_status": str(attempt.get("text_review_status") or ""),
     }
 
 
@@ -139,7 +167,7 @@ def add_markdown_records(records: dict[str, list[dict[str, Any]]], vault_root: P
     md_paths = [
         path
         for path in vault_root.rglob("proof-*.md")
-        if ".git" not in path.parts and path.is_file()
+        if ".git" not in path.parts and path.is_file() and not path.name.endswith(".proof.md")
     ]
 
     for md_path in sorted(md_paths):

@@ -104,6 +104,11 @@ attempts:
   medium: handwritten-photo
   source_path: attempts/proof-YYYY-MM-DD-001.jpg
   rendered_html:
+  ocr_text_path:
+  markdown_path:
+  tex_path:
+  text_source:
+  text_review_status:
   origin:
   review_status:
   notes:
@@ -194,16 +199,22 @@ should perform the following steps:
 1. Store the incoming image in a staging area outside tracked git content.
 2. Sanitize the image by removing embedded metadata.
 3. Create or update route-style proof-vault metadata.
-4. Optionally create a markdown transcription record for the proof artifact.
-5. Commit the proof vault repository.
-6. Push the proof vault repository.
-7. Add a `\ProofVaultURL{...}` backlink to the canonical theorem proof file.
-8. If the proof was accepted as correct and the canonical proof file has been
+4. OCR the sanitized image into a plain-text artifact, preserving OCR mistakes
+   rather than silently correcting them.
+5. Translate the OCR text into a reviewed Markdown proof artifact and a
+   reviewed TeX proof artifact. The TeX artifact is the display source consumed
+   by Knowledge Explorer.
+6. Record `ocr_text_path`, `markdown_path`, `tex_path`, `text_source`, and
+   `text_review_status` on the attempt metadata.
+7. Commit the proof vault repository.
+8. Push the proof vault repository.
+9. Add a `\ProofVaultURL{...}` backlink to the canonical theorem proof file.
+10. If the proof was accepted as correct and the canonical proof file has been
    populated, update the owning volume repo's tracked `proofs-to-do.md`
    artifact: change the proof label marker from `()` to `(✅)` and update the
    open/completed counts.
-9. Commit the canonical repository.
-10. Push the canonical repository.
+11. Commit the canonical repository.
+12. Push the canonical repository.
 
 No raw image may be committed at any stage of this workflow.
 
@@ -264,3 +275,21 @@ The extracted proof content must be converted into:
 - a dependencies block using extraction-visible `\hyperref[...]` targets.
 
 A direct transcription alone is not a complete canonical proof file.
+
+## Explorer Text Artifacts
+
+Each reviewed proof attempt should carry three text artifacts:
+
+- `*.ocr.txt`: source-faithful OCR output from the sanitized image;
+- `*.proof.md`: reviewed Markdown presentation of the proof;
+- `*.proof.tex`: reviewed TeX presentation suitable for KaTeX rendering.
+
+The governance extraction pipeline copies the contents of these files into
+`lra-knowledge-explorer/proof-vault-index.json` as `ocr_text`, `markdown`, and
+`tex`. The Knowledge Explorer renders `tex` with KaTeX and keeps the OCR and
+Markdown artifacts available for inspection.
+
+When an older accepted attempt is backfilled and OCR is unavailable, the OCR
+artifact must say so explicitly. The generated Markdown and TeX may be
+reconstructed from the accepted canonical proof, but the attempt metadata must
+set `text_source: canonical-proof-reconstruction` rather than claiming OCR.

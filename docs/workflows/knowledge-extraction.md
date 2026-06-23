@@ -85,7 +85,9 @@ Stage 4 deploys data:
 
 - copy validated explorer artifacts into `lra-knowledge-explorer`;
 - build `proof-vault-index.json` from route-style metadata in
-  `lra-proof-vault`;
+  `lra-proof-vault`, including reviewed proof attempt OCR text, Markdown, and
+  TeX display artifacts when `ocr_text_path`, `markdown_path`, and `tex_path`
+  are present;
 - commit and push generated data from that repo;
 - invoke the Pages/deploy workflow only when commit/push does not already do it.
 
