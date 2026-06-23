@@ -126,6 +126,12 @@ def parse_args() -> argparse.Namespace:
         help="Path to lra-knowledge-explorer. Defaults to <repos-root>/lra-knowledge-explorer.",
     )
     parser.add_argument(
+        "--proof-vault",
+        type=Path,
+        default=None,
+        help="Path to lra-proof-vault. Defaults to <repos-root>/lra-proof-vault.",
+    )
+    parser.add_argument(
         "--allow-ahead",
         action="store_true",
         help="Allow repos that are ahead of upstream. Behind repos still fail.",
@@ -143,10 +149,12 @@ def main() -> int:
     repos_root = args.repos_root.resolve()
     governance = args.governance.resolve()
     knowledge_explorer = (args.knowledge_explorer or repos_root / "lra-knowledge-explorer").resolve()
+    proof_vault = (args.proof_vault or repos_root / "lra-proof-vault").resolve()
 
     checks = [
         check_repo(governance, "main", require_even=True),
         check_repo(knowledge_explorer, "main", require_even=True),
+        check_repo(proof_vault, "master", require_even=True),
     ]
     checks.extend(check_repo(repo, "main", require_even=True) for repo in volume_repos(repos_root))
 

@@ -38,7 +38,7 @@ When the refresh is initiated from a local multi-repo checkout, run it from
 
 Stage 1 prepares repositories:
 
-- verify `lra-governance`, every `lra-volume-*` repo, and
+- verify `lra-governance`, `lra-proof-vault`, every `lra-volume-*` repo, and
   `lra-knowledge-explorer` are on expected branches;
 - verify those repos are clean and even with their GitHub remotes;
 - pull only when a repo is clean and behind;
@@ -84,6 +84,8 @@ Stage 3 combines data:
 Stage 4 deploys data:
 
 - copy validated explorer artifacts into `lra-knowledge-explorer`;
+- build `proof-vault-index.json` from route-style metadata in
+  `lra-proof-vault`;
 - commit and push generated data from that repo;
 - invoke the Pages/deploy workflow only when commit/push does not already do it.
 

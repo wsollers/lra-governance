@@ -18,6 +18,7 @@ if str(GOVERNANCE_TOOL_ROOT) not in sys.path:
     sys.path.insert(0, str(GOVERNANCE_TOOL_ROOT))
 
 import dependency_graph  # noqa: E402
+from extraction_pipeline.build_proof_vault_index import build_index as build_proof_vault_index  # noqa: E402
 
 
 KIND_DISPLAY = {
@@ -430,6 +431,12 @@ def parse_args() -> argparse.Namespace:
         default=Path(__file__).resolve().parents[4] / "lra-knowledge-explorer",
         help="lra-knowledge-explorer repo to receive generated artifacts.",
     )
+    parser.add_argument(
+        "--proof-vault",
+        type=Path,
+        default=Path(__file__).resolve().parents[4] / "lra-proof-vault",
+        help="lra-proof-vault repo used to build proof-vault-index.json.",
+    )
     return parser.parse_args()
 
 
@@ -438,16 +445,21 @@ def main() -> int:
     run_dir = args.run_dir.resolve()
     repos_root = args.repos_root.resolve()
     explorer = args.knowledge_explorer.resolve()
+    proof_vault = args.proof_vault.resolve()
     if not (run_dir / "universe.json").exists() or not (run_dir / "combined-edges.json").exists():
         raise SystemExit(f"Missing extraction artifacts in {run_dir}")
     if not (explorer / ".git").exists():
         raise SystemExit(f"Missing lra-knowledge-explorer repo: {explorer}")
+    if not (proof_vault / ".git").exists():
+        raise SystemExit(f"Missing lra-proof-vault repo: {proof_vault}")
 
     generated_at = datetime.now(timezone.utc).isoformat()
     version = next_version(explorer, generated_at)
     knowledge, graph_edges = build_export(run_dir, repos_root, version)
+    proof_vault_index = build_proof_vault_index(proof_vault, generated_at=generated_at)
     write_json(explorer / "knowledge.json", knowledge)
     write_json(explorer / "graph-edges.json", graph_edges)
+    write_json(explorer / "proof-vault-index.json", proof_vault_index)
     write_json(
         explorer / "proof-errors.json",
         {"generated_at": knowledge["metadata"]["generated_at"], "chapters": knowledge["metadata"]["chapters"], "error_count": 0, "errors": []},
@@ -456,7 +468,10 @@ def main() -> int:
         explorer / "graph-edge-errors.json",
         {"generated_at": knowledge["metadata"]["generated_at"], "chapters": knowledge["metadata"]["chapters"], "error_count": 0, "errors": []},
     )
-    print(f"Wrote {len(knowledge['nodes'])} nodes and {len(graph_edges)} edges to {explorer}")
+    print(
+        f"Wrote {len(knowledge['nodes'])} nodes, {len(graph_edges)} edges, "
+        f"and {proof_vault_index['record_count']} proof-vault records to {explorer}"
+    )
     return 0
 
 

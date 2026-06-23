@@ -58,8 +58,8 @@ theorem directory:
 volume-i/
   chapter-01-propositional-logic/
     thm-unique-readability/
-      proof-2026-05-31-001.jpg
-      proof-2026-05-31-001.md
+      attempts/
+        proof-2026-05-31-001.jpg
       metadata.yaml
 ```
 
@@ -68,51 +68,52 @@ the repository.
 
 ## Metadata Requirements
 
-Each memorialized proof record should include a `metadata.yaml` file using the
-current template fields:
+Each memorialized proof folder must include a `metadata.yaml` file keyed by
+the route snapshot imported into `lra-proof-vault/routing/`. The stable
+identity is `theorem_id`; route fields such as `vault_path`, `theorem_tex`,
+and `proof_tex` may move when leaf volume routes are regenerated.
+
+The current route-style metadata shape is:
 
 ```yaml
+theorem_id:
+theorem_title:
+route_confidence: confirmed
+source_repo:
 volume:
 chapter:
-chapter_slug:
-
-theorem_label:
-theorem_title:
-
-proof_file:
-image_file:
-
-review_status:
-reviewed_with_chatgpt:
-review_date:
-created_date:
-
-canonical_repo:
-canonical_path:
-
-github_url:
-
-notes_file:
+section:
+subsection:
+theorem_tex:
+proof_tex:
+proof_label:
+vault_path:
+source_commit:
+route_version:
+canonical_routes:
+  theorem_tex:
+  proof_tex:
+  proof_label:
+  vault_path:
+  source_repo:
+  source_commit:
+  route_version:
+attempts:
+- attempt_id:
+  date:
+  medium: handwritten-photo
+  source_path: attempts/proof-YYYY-MM-DD-001.jpg
+  rendered_html:
+  origin:
+  review_status:
+  notes:
+  tags: []
 ```
 
-The root `theorem-map.yaml` file must also include one entry for each
-memorialized proof record. Each map entry must include at least:
-
-```yaml
-theorem_label:
-theorem_title:
-canonical_repo:
-canonical_path:
-vault_record:
-github_url:
-image_file:
-review_status:
-```
-
-The `github_url` field is required in both `metadata.yaml` and
-`theorem-map.yaml`. This allows consumers such as the Knowledge Explorer to
-read proof-vault links from the root map without opening each per-record
-metadata file.
+Consumers such as the Knowledge Explorer should not depend on the legacy root
+`theorem-map.yaml` file. The governance extraction pipeline builds
+`lra-knowledge-explorer/proof-vault-index.json` directly from route-style
+metadata and legacy markdown records where present.
 
 Allowed metadata includes:
 
@@ -192,8 +193,8 @@ should perform the following steps:
 
 1. Store the incoming image in a staging area outside tracked git content.
 2. Sanitize the image by removing embedded metadata.
-3. Create proof-vault metadata.
-4. Create a markdown record for the proof artifact.
+3. Create or update route-style proof-vault metadata.
+4. Optionally create a markdown transcription record for the proof artifact.
 5. Commit the proof vault repository.
 6. Push the proof vault repository.
 7. Add a `\ProofVaultURL{...}` backlink to the canonical theorem proof file.
