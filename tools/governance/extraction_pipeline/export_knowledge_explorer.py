@@ -321,16 +321,23 @@ def build_export(run_dir: Path, repos_root: Path, version: dict[str, Any]) -> tu
 
     depends_on: dict[str, list[str]] = defaultdict(list)
     used_by: dict[str, list[str]] = defaultdict(list)
+    proof_depends_on: dict[str, list[str]] = defaultdict(list)
+    proof_used_by: dict[str, list[str]] = defaultdict(list)
     graph_edges: list[dict[str, str]] = []
     seen_edges: set[tuple[str, str, str]] = set()
     for edge in combined["edges"]:
-        key = (edge["source"], edge["target"], "depends_on")
+        kind = edge.get("kind") or "depends_on"
+        key = (edge["source"], edge["target"], kind)
         if key in seen_edges:
             continue
         seen_edges.add(key)
-        graph_edges.append({"from": edge["source"], "to": edge["target"], "kind": "depends_on"})
-        depends_on[edge["source"]].append(edge["target"])
-        used_by[edge["target"]].append(edge["source"])
+        graph_edges.append({"from": edge["source"], "to": edge["target"], "kind": kind})
+        if kind == "proof_depends_on":
+            proof_depends_on[edge["source"]].append(edge["target"])
+            proof_used_by[edge["target"]].append(edge["source"])
+        else:
+            depends_on[edge["source"]].append(edge["target"])
+            used_by[edge["target"]].append(edge["source"])
 
     exported_nodes: list[dict[str, Any]] = []
     chapter_order: list[str] = []
@@ -360,6 +367,8 @@ def build_export(run_dir: Path, repos_root: Path, version: dict[str, Any]) -> tu
 
         deps = depends_on.get(label, [])
         users = used_by.get(label, [])
+        proof_deps = proof_depends_on.get(label, [])
+        proof_users = proof_used_by.get(label, [])
         statement = statement_for_node(repos_root, node)
         kind = KIND_DISPLAY.get(node["kind"], node["kind"])
         name = title_for(node)
@@ -379,12 +388,17 @@ def build_export(run_dir: Path, repos_root: Path, version: dict[str, Any]) -> tu
             "section_title": section_titles.get((volume, chapter, section), title_from_slug(section)),
             "depends_on_ids": deps,
             "used_by_ids": users,
+            "proof_depends_on_ids": proof_deps,
+            "proof_used_by_ids": proof_users,
             "prereq_ids": [],
             "equivalent_to_ids": [],
             "implies_ids": [],
             "depends_on_titles": [title_for(by_label[target]) for target in deps if target in by_label],
             "used_by_titles": [title_for(by_label[source]) for source in users if source in by_label],
+            "proof_depends_on_titles": [title_for(by_label[target]) for target in proof_deps if target in by_label],
+            "proof_used_by_titles": [title_for(by_label[source]) for source in proof_users if source in by_label],
             "dependencies": deps,
+            "proof_dependencies": proof_deps,
             "ignored": False,
             "is_theorem_like": kind in {"Theorem", "Lemma", "Proposition", "Corollary"},
             "definitional_root": node.get("root_kind") == "definitional",

@@ -42,6 +42,7 @@ BEGIN_FORMAL_RE = re.compile(
 LABEL_RE = re.compile(r"\\label\{(?P<label>[a-z]+:[^{}]+)\}")
 HYPERREF_RE = re.compile(r"\\hyperref\[(?P<label>[^\]]+)\](?:\{(?P<text>[^{}]*)\})?")
 DEPENDENCY_ITEM_RE = re.compile(r"^[ \t]*\\item\s+(?P<text>[^\n]+)$", re.MULTILINE)
+PROOF_FOR_RE = re.compile(r"\\LRAProofFor\{(?P<label>(?:thm|lem|prop|cor):[^{}]+)\}", re.IGNORECASE)
 DEPENDENCIES_ENV_RE = re.compile(
     r"\\begin\{dependencies\}(?P<body>[\s\S]*?)\\end\{dependencies\}",
     re.IGNORECASE,
@@ -83,6 +84,7 @@ class Edge:
     line: int
     block_kind: str
     status: str = "ok"
+    kind: str = "depends_on"
 
 
 @dataclass
@@ -301,6 +303,80 @@ def dependency_blocks(window: str) -> list[tuple[str, str, int]]:
     return sorted(blocks, key=lambda item: item[2])
 
 
+def append_dependency_edges(
+    *,
+    edges: list[Edge],
+    issues: list[Issue],
+    body: str,
+    text: str,
+    root: Path,
+    path: Path,
+    repo: str,
+    source: str,
+    source_id: str | None,
+    source_line: int,
+    block_kind: str,
+    block_line: int,
+    block_start: int,
+    by_label: dict[str, list[Node]],
+    edge_kind: str,
+) -> None:
+    hyperrefs = list(HYPERREF_RE.finditer(body))
+    if not hyperrefs and "TODO" not in body:
+        issues.append(Issue("error", "dependencies_without_hyperref", f"{source} dependency block has no hyperref targets.", repo, rel(path, root), block_line, source))
+    for item in DEPENDENCY_ITEM_RE.finditer(body):
+        item_text = item.group("text").strip()
+        if "TODO" in item_text or HYPERREF_RE.search(item_text):
+            continue
+        item_line = line_at(text, block_start + item.start())
+        issues.append(
+            Issue(
+                "error",
+                "dependency_item_without_hyperref",
+                f"{source} dependency item lacks a hyperref target: {item_text}",
+                repo,
+                rel(path, root),
+                item_line,
+                source,
+            )
+        )
+    for ref in hyperrefs:
+        target = ref.group("label").strip()
+        display = (ref.group("text") or "").strip()
+        target_matches = by_label.get(target, [])
+        status = "ok"
+        target_id = None
+        if target.startswith("prf:"):
+            status = "invalid_proof_target"
+            issues.append(Issue("error", "dependency_targets_proof", f"{source} targets proof label {target}.", repo, rel(path, root), block_line, source, target))
+        elif ":" not in target or target.split(":", 1)[0] not in FORMAL_PREFIXES:
+            status = "invalid_target_prefix"
+            issues.append(Issue("error", "invalid_dependency_target_prefix", f"{source} targets non-formal label {target}.", repo, rel(path, root), block_line, source, target))
+        elif len(target_matches) == 0:
+            status = "missing_target"
+            issues.append(Issue("error", "missing_dependency_target", f"{source} targets unknown label {target}.", repo, rel(path, root), block_line, source, target))
+        elif len(target_matches) > 1:
+            status = "ambiguous_target"
+            issues.append(Issue("error", "ambiguous_dependency_target", f"{source} target {target} has multiple global matches.", repo, rel(path, root), block_line, source, target))
+        else:
+            target_id = target_matches[0].id
+        edges.append(
+            Edge(
+                source=source,
+                target=target,
+                source_id=source_id,
+                target_id=target_id,
+                display=display,
+                repo=repo,
+                file=rel(path, root),
+                line=block_line or source_line,
+                block_kind=block_kind,
+                status=status,
+                kind=edge_kind,
+            )
+        )
+
+
 def extract_edges_from_universe(root: Path, universe: Universe, universe_ref: str = "") -> EdgeReport:
     by_label = label_index(universe)
     repo = root.name
@@ -351,59 +427,79 @@ def extract_edges_from_universe(root: Path, universe: Universe, universe_ref: st
             if block_kind in {"no_local", "definitional_root"}:
                 declarations.append(declaration)
                 continue
-            hyperrefs = list(HYPERREF_RE.finditer(body))
-            if not hyperrefs and "TODO" not in body:
-                issues.append(Issue("error", "dependencies_without_hyperref", f"{source} dependency block has no hyperref targets.", repo, rel(path, root), int(declaration["dependency_line"]), source))
-            for item in DEPENDENCY_ITEM_RE.finditer(body):
-                item_text = item.group("text").strip()
-                if "TODO" in item_text or HYPERREF_RE.search(item_text):
-                    continue
-                item_line = line_at(text, window_start + block_offset + item.start())
-                issues.append(
-                    Issue(
-                        "error",
-                        "dependency_item_without_hyperref",
-                        f"{source} dependency item lacks a hyperref target: {item_text}",
-                        repo,
-                        rel(path, root),
-                        item_line,
-                        source,
-                    )
-                )
-            for ref in hyperrefs:
-                target = ref.group("label").strip()
-                display = (ref.group("text") or "").strip()
-                target_matches = by_label.get(target, [])
-                status = "ok"
-                target_id = None
-                if target.startswith("prf:"):
-                    status = "invalid_proof_target"
-                    issues.append(Issue("error", "dependency_targets_proof", f"{source} targets proof label {target}.", repo, rel(path, root), int(declaration["dependency_line"]), source, target))
-                elif ":" not in target or target.split(":", 1)[0] not in FORMAL_PREFIXES:
-                    status = "invalid_target_prefix"
-                    issues.append(Issue("error", "invalid_dependency_target_prefix", f"{source} targets non-formal label {target}.", repo, rel(path, root), int(declaration["dependency_line"]), source, target))
-                elif len(target_matches) == 0:
-                    status = "missing_target"
-                    issues.append(Issue("error", "missing_dependency_target", f"{source} targets unknown label {target}.", repo, rel(path, root), int(declaration["dependency_line"]), source, target))
-                elif len(target_matches) > 1:
-                    status = "ambiguous_target"
-                    issues.append(Issue("error", "ambiguous_dependency_target", f"{source} target {target} has multiple global matches.", repo, rel(path, root), int(declaration["dependency_line"]), source, target))
-                else:
-                    target_id = target_matches[0].id
-                edges.append(
-                    Edge(
-                        source=source,
-                        target=target,
-                        source_id=source_id,
-                        target_id=target_id,
-                        display=display,
-                        repo=repo,
-                        file=rel(path, root),
-                        line=int(declaration["dependency_line"]),
-                        block_kind=block_kind,
-                        status=status,
-                    )
-                )
+            append_dependency_edges(
+                edges=edges,
+                issues=issues,
+                body=body,
+                text=text,
+                root=root,
+                path=path,
+                repo=repo,
+                source=source,
+                source_id=source_id,
+                source_line=line,
+                block_kind=block_kind,
+                block_line=int(declaration["dependency_line"]),
+                block_start=window_start + block_offset,
+                by_label=by_label,
+                edge_kind="depends_on",
+            )
+            declarations.append(declaration)
+
+        proof_fors = list(PROOF_FOR_RE.finditer(text))
+        if len(proof_fors) > 1:
+            issues.append(Issue("warning", "multiple_proof_for_declarations", f"{rel(path, root)} has multiple LRAProofFor declarations.", repo, rel(path, root), line_at(text, proof_fors[1].start())))
+        for proof_for in proof_fors:
+            source = proof_for.group("label").strip()
+            source_matches = by_label.get(source, [])
+            source_id = source_matches[0].id if len(source_matches) == 1 else None
+            line = line_at(text, proof_for.start())
+            if len(source_matches) == 0:
+                issues.append(Issue("error", "missing_proof_target", f"Proof targets unknown formal label {source}.", repo, rel(path, root), line, source))
+            elif len(source_matches) > 1:
+                issues.append(Issue("error", "ambiguous_proof_target", f"Proof target {source} has multiple global matches.", repo, rel(path, root), line, source))
+
+            dep_blocks = [block for block in dependency_blocks(text[proof_for.end():]) if block[0] in {"dependencies_env", "dependencies_remark", "no_local"}]
+            declaration = {
+                "source": source,
+                "source_id": source_id,
+                "repo": repo,
+                "file": rel(path, root),
+                "line": line,
+                "dependency_scope": "proof",
+                "dependency_block_count": len(dep_blocks),
+                "declaration": "missing",
+            }
+            if not dep_blocks:
+                declarations.append(declaration)
+                continue
+            if len(dep_blocks) > 1:
+                issues.append(Issue("warning", "multiple_proof_dependency_declarations", f"{source} proof has multiple dependency declarations.", repo, rel(path, root), line, source))
+            block_kind, body, block_offset = dep_blocks[-1]
+            declaration["declaration"] = f"proof_{block_kind}"
+            declaration["dependency_line"] = line_at(text, proof_for.end() + block_offset)
+            if block_kind == "dependencies_remark":
+                issues.append(Issue("warning", "legacy_proof_dependency_remark", f"{source} proof uses remark*[Dependencies] instead of dependencies environment.", repo, rel(path, root), int(declaration["dependency_line"]), source))
+            if block_kind == "no_local":
+                declarations.append(declaration)
+                continue
+            append_dependency_edges(
+                edges=edges,
+                issues=issues,
+                body=body,
+                text=text,
+                root=root,
+                path=path,
+                repo=repo,
+                source=source,
+                source_id=source_id,
+                source_line=line,
+                block_kind=f"proof_{block_kind}",
+                block_line=int(declaration["dependency_line"]),
+                block_start=proof_for.end() + block_offset,
+                by_label=by_label,
+                edge_kind="proof_depends_on",
+            )
             declarations.append(declaration)
 
     return EdgeReport(str(root), repo, universe_ref, edges, declarations, issues)
@@ -481,6 +577,8 @@ def validate_graph(universe: Universe, edge_report: EdgeReport, policy: dict[str
     adjacency: dict[str, list[str]] = defaultdict(list)
     indegree: dict[str, int] = defaultdict(int)
     for edge in edge_report.edges:
+        if edge.kind != "depends_on":
+            continue
         if is_excluded_path(edge.repo, edge.file, policy):
             continue
         if edge.status != "ok" or not edge.source_id or not edge.target_id:
@@ -505,7 +603,11 @@ def validate_graph(universe: Universe, edge_report: EdgeReport, policy: dict[str
     if len(seen) != len(graph_nodes):
         issues.append(Issue("error", "dependency_cycle", "Dependency graph contains at least one cycle in extracted edges."))
 
-    missing_decls = {item.get("source_id") for item in edge_report.declarations if item.get("declaration") == "missing"}
+    missing_decls = {
+        item.get("source_id")
+        for item in edge_report.declarations
+        if item.get("declaration") == "missing" and item.get("dependency_scope", "statement") != "proof"
+    }
     definitional_roots = definitional_root_ids(edge_report)
     for node in universe.nodes:
         if node.id not in ids_in_scope or node.kind not in THEOREM_LIKE:
@@ -579,8 +681,10 @@ def universe_markdown(universe: Universe) -> list[str]:
 
 def edges_markdown(report: EdgeReport) -> list[str]:
     counts = defaultdict(int)
+    kind_counts = defaultdict(int)
     for edge in report.edges:
         counts[edge.status] += 1
+        kind_counts[edge.kind] += 1
     decl_counts = defaultdict(int)
     for decl in report.declarations:
         decl_counts[decl.get("declaration", "missing")] += 1
@@ -601,6 +705,9 @@ def edges_markdown(report: EdgeReport) -> list[str]:
         lines.append(f"- `{name}`: {count}")
     lines += ["", "## Edge Status Counts", ""]
     for name, count in sorted(counts.items()):
+        lines.append(f"- `{name}`: {count}")
+    lines += ["", "## Edge Kind Counts", ""]
+    for name, count in sorted(kind_counts.items()):
         lines.append(f"- `{name}`: {count}")
     if report.issues:
         lines += ["", "## Issues", ""]

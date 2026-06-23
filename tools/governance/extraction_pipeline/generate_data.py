@@ -106,6 +106,7 @@ def edge_counts(report: dependency_graph.EdgeReport) -> dict[str, Any]:
     return {
         "edges": len(report.edges),
         "declarations": len(report.declarations),
+        "edge_kind": dict(sorted(Counter(edge.kind for edge in report.edges).items())),
         "edge_status": dict(sorted(Counter(edge.status for edge in report.edges).items())),
         "declaration_shape": dict(sorted(Counter(item.get("declaration", "missing") for item in report.declarations).items())),
         "issues": issue_counts(report.issues),
