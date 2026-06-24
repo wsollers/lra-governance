@@ -1,7 +1,7 @@
-# Generated Wrapper Sync Workflow
+# Generated Wrapper Workflow
 
-Generated agent wrappers are derived from `lra-governance` and copied
-downstream only through a controlled process.
+Generated agent wrappers are derived from `lra-governance` and should delegate
+back to the canonical checkout.
 
 ## Source Flow
 
@@ -31,15 +31,16 @@ a task explicitly asks for a report artifact.
 
 ## Controlled Write
 
-Wrapper sync is dry-run by default. Write mode must be explicit,
-repo-selected, and guarded. It must not silently sync every repo.
+Wrapper generation is dry-run by default. Write mode must be explicit,
+repo-selected, and guarded. It must not silently update every repo.
 
-The sync tool writes only generated wrapper files defined by the generated-file
-policy and the selected provider wrapper.
+The generation tool writes only generated wrapper files defined by the
+generated-file policy and the selected provider wrapper.
 
 Write mode must refuse dirty target repos and non-main target branches unless a
-task explicitly authorizes an exception. The sync tool does not stage, commit,
-or push downstream repos.
+task explicitly authorizes an exception. The tool does not stage, commit, or
+push downstream repos. It must not copy canonical governance implementations or
+shared docs into downstream repos.
 
 ## Review
 

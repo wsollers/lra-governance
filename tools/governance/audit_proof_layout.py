@@ -221,6 +221,26 @@ def has_todo(text: str) -> bool:
     return bool(re.search(r"\bTODO\b", "\n".join(uncommented_lines), re.IGNORECASE))
 
 
+def meaningful_text(text: str) -> str:
+    text = re.sub(r"(?<!\\)%.*$", "", text, flags=re.MULTILINE)
+    text = re.sub(r"\\LRAProofBodyStart", "", text)
+    text = re.sub(r"^\[[^\]]+\]", "", text.strip())
+    text = re.sub(r"\\begin\{itemize\}|\\end\{itemize\}|\\item", "", text)
+    text = re.sub(r"\\hyperref\[[^\]]+\]\{([^{}]*)\}", r"\1", text)
+    text = re.sub(r"\\[A-Za-z]+(?:\[[^\]]*\])?(?:\{[^{}]*\})?", "", text)
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def is_populated_proof_body(text: str) -> bool:
+    return bool(text and not has_todo(text) and meaningful_text(text))
+
+
+def is_populated_dependencies(text: str) -> bool:
+    if r"\NoLocalDependencies" in text:
+        return True
+    return bool(text and not has_todo(text) and meaningful_text(text))
+
+
 def position(text: str, pattern: str) -> int:
     found = re.search(pattern, text, re.DOTALL)
     return found.start() if found else -1
@@ -356,6 +376,23 @@ def audit_proof(path: Path, chapter_root: Path, root: Path, notes: dict[str, str
         "proof_structure": has_todo(structure_body),
         "dependencies": has_todo(dependencies_body),
     }
+    professional_populated = is_populated_proof_body(professional_body)
+    detailed_populated = is_populated_proof_body(detailed_body)
+    any_proof_populated = professional_populated or detailed_populated
+    if professional_populated != detailed_populated:
+        add(
+            audit,
+            "error",
+            "partial_proof_population",
+            "Professional and Detailed proof bodies must be populated together.",
+        )
+    if any_proof_populated and not is_populated_dependencies(dependencies_body):
+        add(
+            audit,
+            "error",
+            "dependencies_unpopulated_for_populated_proof",
+            "Dependencies must be populated when either proof body is populated.",
+        )
     proof_todo = todo_parts["professional_standard_proof"] or todo_parts["detailed_learning_proof"]
     if proof_todo and not (todo_parts["professional_standard_proof"] and todo_parts["detailed_learning_proof"]):
         add(audit, "error", "partial_stub", "Stub proofs must TODO both proof bodies or neither.")

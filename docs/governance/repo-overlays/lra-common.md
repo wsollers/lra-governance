@@ -7,13 +7,14 @@ Owned concerns:
 - `common/`,
 - bibliography helper scripts,
 - shared LaTeX macros, environments, boxes, colors, and preambles,
-- common-to-volume sync expectations.
+- canonical shared LaTeX infrastructure consumed directly by builds.
 
 ## Agent Scope
 
-Edit shared LaTeX infrastructure here, not in volume repo copies. When changing
-`common/`, expect sync workflows to propagate updates to volume repos and the
-monorepo.
+Edit shared LaTeX infrastructure here, not in volume repo copies. Do not expect
+`common/` to be synced into volume repos or the monorepo. Build workflows should
+obtain `lra-common` directly, normally through the Docker image or an explicit
+checkout.
 
 Add bibliography entries in the owning `lra-volume-*` repository shard.
 `lra-common/bibliography/` is a retired mirror, not a sync source. Mobile photo,

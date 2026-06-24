@@ -1,12 +1,13 @@
-# Multi-Repo Sync
+# Multi-Repo Integration
 
 Source: `REPOSITORY_STRUCTURE.md` and current GitHub Actions workflows.
 
-## Sync Direction
+## Integration Direction
 
-- `lra-governance` syncs governance artifacts outward.
-- `lra-common` syncs `common/` outward to the monorepo and
-  all split volume repos.
+- `lra-governance` is consumed directly by agents, wrappers, and the build
+  image; it does not fan-out sync governance artifacts into other repos.
+- `lra-common` is consumed directly by builds, normally through the Docker image
+  or an explicit checkout; it does not fan-out sync `common/` into other repos.
 - `lra-volume-*` sync volume content into `Learning-Real-Analysis`.
 - `lra-lean` syncs into `Learning-Real-Analysis/lean/`.
 - `lra-nurbs` syncs into `Learning-Real-Analysis/nurbs_dde/`.
@@ -25,22 +26,16 @@ available.
 
 ## Full-Replace Policy
 
-Existing workflows use `rsync --delete` for full-replace sync. Future
-governance generation must include dry-run output and drift checks before any
-full replacement.
+Existing content-integration workflows may use `rsync --delete` for
+full-replace content sync. Governance and common fan-out syncs are disabled.
 
-Phase 4 generated wrapper work is preview-only. Full-replace downstream sync is
-a later phase. Generated wrapper previews must be reviewed before any write mode
-or downstream sync mode exists.
-
-Phase 7 introduces controlled, repo-selected wrapper sync planning. The first
-planned pilot target is `lra-numerical-analysis`. All-repo wrapper sync remains
-blocked until pilot results are reviewed.
+Generated wrapper work is local and wrapper-only. It must not copy canonical
+governance implementations into downstream repos.
 
 ## Emergency Local Edits
 
 Emergency downstream edits are temporary. The fix must be ported back to the
-owning source repo before the next sync.
+owning source repo.
 
 ## lra-pdf-extractor
 
@@ -51,8 +46,8 @@ synced into downstream repos.
 Integration into `lra-common`, `Learning-Real-Analysis`, `lra-volume-*`, or
 `lra-knowledge-explorer` must occur through reviewable PRs in the owning repo.
 
-Future governance sync may deliver generated agent wrappers to this repo, using
-the `lra-pdf-extractor` overlay.
+Generated agent wrappers for this repo, if needed, must delegate to
+`lra-governance` instead of copying governance implementations.
 
 ## lra-source-profiles
 
@@ -65,5 +60,5 @@ Integration into `Learning-Real-Analysis`, `lra-volume-*`,
 `lra-knowledge-explorer`, or final bibliography shards must occur through
 reviewable changes in the owning repo.
 
-Future governance sync may deliver generated agent wrappers to this repo, using
-the `lra-source-profiles` overlay.
+Generated agent wrappers for this repo, if needed, must delegate to
+`lra-governance` instead of copying governance implementations.

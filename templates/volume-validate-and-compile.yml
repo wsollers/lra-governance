@@ -19,6 +19,20 @@ jobs:
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
+        with:
+          path: volume
+
+      - name: Checkout governance
+        uses: actions/checkout@v4
+        with:
+          repository: wsollers/lra-governance
+          path: lra-governance
+
+      - name: Checkout common
+        uses: actions/checkout@v4
+        with:
+          repository: wsollers/lra-common
+          path: lra-common
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -29,20 +43,26 @@ jobs:
         run: python -m pip install pyyaml
 
       - name: Run governance validator
-        run: python scripts/build_volume.py --validate-only
+        working-directory: volume
+        env:
+          LRA_GOVERNANCE_ROOT: ${{ github.workspace }}/lra-governance
+        run: python ../lra-governance/scripts/build_volume.py --root . --validate-only
 
       - name: Build LaTeX Docker image
-        run: docker build -t learning-real-analysis-latex -f docker/Dockerfile docker
+        run: docker build -t learning-real-analysis-latex -f lra-common/docker/Dockerfile lra-common/docker
 
       - name: Compile digital PDF
         run: |
           docker run --rm \
-            -v "${{ github.workspace }}:/workspace" \
+            -e LRA_GOVERNANCE_ROOT=/lra-governance \
+            -v "${{ github.workspace }}/volume:/workspace" \
+            -v "${{ github.workspace }}/lra-common/common:/workspace/common:ro" \
+            -v "${{ github.workspace }}/lra-governance:/lra-governance:ro" \
             -w /workspace \
             learning-real-analysis-latex \
             latexmk -lualatex -interaction=nonstopmode -file-line-error -synctex=1 -shell-escape main.tex
           mkdir -p pdf-output
-          cp build/main.pdf pdf-output/digital.pdf
+          cp volume/build/main.pdf pdf-output/digital.pdf
 
       - name: Verify digital PDF
         run: |
@@ -61,7 +81,10 @@ jobs:
       - name: Clean LaTeX build output
         run: |
           docker run --rm \
-            -v "${{ github.workspace }}:/workspace" \
+            -e LRA_GOVERNANCE_ROOT=/lra-governance \
+            -v "${{ github.workspace }}/volume:/workspace" \
+            -v "${{ github.workspace }}/lra-common/common:/workspace/common:ro" \
+            -v "${{ github.workspace }}/lra-governance:/lra-governance:ro" \
             -w /workspace \
             learning-real-analysis-latex \
             latexmk -C
@@ -70,11 +93,14 @@ jobs:
         run: |
           docker run --rm \
             -e LRA_PRINT_EDITION=1 \
-            -v "${{ github.workspace }}:/workspace" \
+            -e LRA_GOVERNANCE_ROOT=/lra-governance \
+            -v "${{ github.workspace }}/volume:/workspace" \
+            -v "${{ github.workspace }}/lra-common/common:/workspace/common:ro" \
+            -v "${{ github.workspace }}/lra-governance:/lra-governance:ro" \
             -w /workspace \
             learning-real-analysis-latex \
             latexmk -lualatex -interaction=nonstopmode -file-line-error -synctex=1 -shell-escape main.tex
-          cp build/main.pdf pdf-output/print.pdf
+          cp volume/build/main.pdf pdf-output/print.pdf
 
       - name: Verify print PDF
         run: |

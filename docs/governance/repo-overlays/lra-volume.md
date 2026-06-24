@@ -9,7 +9,7 @@ Owned concerns:
 
 - volume content only,
 - Overleaf-ready volume roots,
-- local copies of synced `common/`,
+- external `lra-common` consumed by the build environment,
 - volume-to-monorepo content sync.
 
 This overlay may contain negative guard rails that say specialist rules do not
@@ -20,8 +20,10 @@ extraction workflow rules.
 ## Agent Scope
 
 Volume agents may edit only the owning `volume-N/` content unless a task
-explicitly says otherwise. They should not edit synced `common/`,
-`bibliography/`, generated governance wrappers, or canonical YAML.
+explicitly says otherwise. They should not edit copied `common/`, generated
+governance wrappers, or canonical YAML. Shared LaTeX infrastructure belongs in
+`lra-common` and is supplied to builds by the Docker image or an explicit
+checkout.
 
 Volume tasks should preserve Overleaf readiness and monorepo sync shape.
 

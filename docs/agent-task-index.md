@@ -5,8 +5,8 @@ user explicitly asks to modify it; workflows sync changes from the leaf
 `lra-*` repositories into that aggregate monorepo.
 
 Governance scope: `lra-governance` is the master governance and script
-repository; shared scripts, rules, prompts, schemas, and workflows belong here,
-and commit syncs copy those rules into the leaf repositories.
+repository; shared scripts, rules, prompts, schemas, and workflows belong here.
+They are not fan-out synced into leaf repositories.
 
 This index tells agents which authority to load for common LRA tasks. It is a
 router, not a replacement for the referenced standards.
@@ -19,7 +19,8 @@ workflow, prompt, schema, tool, and overlay rules.
 
 When an agent is running inside an isolated repository checkout, such as a
 GitHub workflow or a single leaf repo clone without adjacent `lra-governance`,
-use that repo's synced local copies under `docs/`.
+use the build image or an explicit `lra-governance` checkout. Do not rely on
+synced local copies under `docs/`.
 
 Do not read every governance, workflow, architecture, schema, and prompt file by
 default. Select the smallest file set that matches the task.
@@ -32,9 +33,9 @@ task inputs, not local `lra-governance` files.
 Governance tool implementations are canonical in
 `lra-governance/tools/governance/`.
 
-Leaf repositories receive the canonical `tools/` and `scripts/` trees from
-`lra-governance`. Volume build wrappers and governance validators must use those
-synced canonical files directly, not legacy leaf-local validator copies.
+Leaf repositories must not carry copied governance implementations. Volume build
+wrappers and governance validators must resolve the canonical implementation
+from `lra-governance` directly, not from legacy leaf-local validator copies.
 
 When a task requires a governance validator:
 
@@ -127,12 +128,12 @@ or data files. Prose docs should point to them instead of restating them.
 | Memorialize exercise artifacts | `docs/workflows/exercise-vault-memorialization.md`, `docs/governance/exercise-vault-standards.md` | `exercise-ledger.yaml` in the owning chapter | YAML parser, route existence checks, build command | `docs/governance/refactoring-standards.md`, `docs/architecture/volume-layout.md` | copied source photo when present, TeX exercise set, updated ledger, regenerated reports, exercise index routing | ledger parse, duplicate-ID check, route check, build |
 | Extract knowledge | `docs/workflows/knowledge-extraction.md`, `docs/governance/extraction-standards.md`, `docs/governance/dependency-standards.md` | `constitution/schema/block-registry.yaml`, `constitution/schema/artifact-matrix.yaml`, target repo route schema | target extractor scripts | `docs/architecture/knowledge-pipeline.md`, `docs/architecture/canonical-yaml.md` | knowledge artifacts and route artifacts | extractor validation, schema parse, route validation |
 | Update predicates, relations, or notation | `docs/governance/notation-standards.md`, `docs/architecture/canonical-yaml.md` | canonical YAML files in the owning repo | YAML parser, symbol audit when available | `docs/governance/dependency-standards.md`, `constitution/prompts/audit-chapter-symbols.md` | canonical YAML changes or audit report | YAML parse, extractor/build if affected |
-| Sync generated wrappers or downstream docs | `docs/workflows/generated-wrapper-sync.md`, `docs/governance/agent-instruction-policy.md` | wrapper manifest/config files when present | `tools/governance/generate_agent_wrappers.py`, `tools/governance/report_wrapper_drift.py`, `tools/governance/sync_agent_wrappers.py`, `tools/governance/validate_repo_rules.py` | `docs/governance/repo-overlays/README.md`, exactly one relevant overlay | generated wrapper previews or synced downstream docs | drift report, repo-rule validation, dry-run before write |
-| Edit shared LaTeX infrastructure | `docs/governance/repo-overlays/lra-common.md`, `docs/architecture/repository-layout.md` | affected macro/schema docs if any | target repo build/tests | `docs/governance/notation-standards.md`, `docs/governance/decoration-box-standards.md` | macro/package changes in `lra-common` | compile target volumes or affected smoke build |
+| Generate local governance wrappers | `docs/workflows/generated-wrapper-sync.md`, `docs/governance/agent-instruction-policy.md` | wrapper manifest/config files when present | `tools/governance/generate_agent_wrappers.py`, `tools/governance/report_wrapper_drift.py`, `tools/governance/validate_repo_rules.py` | `docs/governance/repo-overlays/README.md`, exactly one relevant overlay | generated wrapper previews only; no fan-out sync | drift report, repo-rule validation |
+| Edit shared LaTeX infrastructure | `docs/governance/repo-overlays/lra-common.md`, `docs/architecture/repository-layout.md` | affected macro/schema docs if any | target repo build/tests using the Docker image or explicit `lra-common` checkout | `docs/governance/notation-standards.md`, `docs/governance/decoration-box-standards.md` | macro/package changes in `lra-common`; no fan-out sync | compile target volumes or affected smoke build |
 | Work in `lra-source-profiles` | `docs/governance/repo-overlays/lra-source-profiles.md`, `[external:lra-source-profiles] README.md` | source manifests, `volumes/<volume>/<chapter>/source-index.yaml`, `active-sources.yaml`, named-profile indexes, active-profile index | `[external:lra-source-profiles] scripts/validate_source_indexes.py`, relevant local source-profile scripts | `docs/architecture/repository-layout.md`, `docs/governance/repo-overlays/lra-pdf-extractor.md` only when comparing ingestion boundaries | source profile metadata, active-profile exports, category placements, review queues, markdown cache | source index validation, YAML parse, no destructive PDF moves, no direct downstream note/bibliography/YAML edits |
 | Work in a leaf volume repo | `docs/governance/repo-overlays/lra-volume.md`, `docs/architecture/volume-architecture.md` | task-specific schema rows above | task-specific validators above | relevant workflow row for the task | leaf source, proof, route, or build artifacts | leaf build wrapper and task-specific validators |
 | Work in `Learning-Real-Analysis` | `docs/governance/repo-overlays/learning-real-analysis.md`, `docs/architecture/multi-repo-sync.md` | integration repo manifests/artifacts only | integration build/sync checks | `docs/architecture/generated-file-policy.md`, `docs/architecture/latex-build-and-rendering.md` | integration-only changes unless explicitly authorized | verify canonical source repo ownership before editing content |
-| Memorialize handwritten proof artifacts | `[external:lra-proof-vault] README.md`, `[external:lra-proof-vault] routing/theorem-routes.json`, `[external:lra-proof-vault] docs/workflows/route-refactor-migration.md` | route snapshot in `[external:lra-proof-vault] routing/`, owning volume `proofs-to-do.md` when the proof is accepted and populated | `[external:lra-proof-vault] scripts/memorialize_attempt.py`, `[external:lra-proof-vault] scripts/validate_vault.py` | `docs/governance/handwritten-proof-vault-standards.md` | copied attempt file, vault metadata, canonical backlink/proof update, and `(✅)` marker in volume `proofs-to-do.md` for completed proofs | proof-vault validator, exact route match or explicit user choice, volume validator when canonical proof content changes |
+| Memorialize handwritten proof artifacts | `[external:lra-proof-vault] README.md`, `[external:lra-proof-vault] routing/theorem-routes.json`, `[external:lra-proof-vault] docs/workflows/route-refactor-migration.md` | route snapshot in `[external:lra-proof-vault] routing/`, owning volume `proofs-to-do.md` when the proof is accepted and memorialized | `[external:lra-proof-vault] scripts/memorialize_attempt.py`, `[external:lra-proof-vault] scripts/apply_leaf_backlinks.py`, `[external:lra-proof-vault] scripts/validate_vault.py --require-leaf-backlinks` | `docs/governance/handwritten-proof-vault-standards.md` | copied attempt file, vault metadata, canonical backlink, both canonical proof bodies populated, dependencies populated, and `(✅)` marker in volume `proofs-to-do.md` for completed proofs | proof-vault validator with leaf backlink and tracker enforcement, proof-layout validator, exact route match or explicit user choice, volume validator when canonical proof content changes |
 | Audit decoration boxes | `docs/workflows/decoration-audit.md`, `docs/governance/decoration-audit-standards.md` | `constitution/schema/block-registry.yaml`, `constitution/schema/artifact-matrix.yaml` | `tools/governance/audit_latex_decoration.py` when available | `docs/governance/decoration-box-standards.md` | decoration inventory/audit report | decoration audit, statement audit when available |
 | Add bibliography entries | `docs/workflows/bibliography-entry.md` | bibliography layout docs/data in target repo | bibliography build/check scripts when present | `docs/governance/authoring-standards.md` | `.bib` entries or split bibliography files | BibTeX/biber parse or target build |
 | Audit governance | `docs/workflows/governance-audit.md`, `docs/reports/governance-bloat-audit.md`, this index | `constitution/schema/*.yaml`, `constitution/schemas/*.json` | grep/path/schema sanity scripts | full corpus only as explicit audit exception | audit report or consolidation plan | schema parse, task-index path check, repeated-heading/phrase scan |

@@ -217,11 +217,14 @@ should perform the following steps:
    `text_review_status` on the attempt metadata.
 8. Commit the proof vault repository.
 9. Push the proof vault repository.
-10. Add a `\ProofVaultURL{...}` backlink to the canonical theorem proof file.
-11. If the proof was accepted as correct and the canonical proof file has been
-   populated, update the owning volume repo's tracked `proofs-to-do.md`
-   artifact: change the proof label marker from `()` to `(✅)` and update the
-   open/completed counts.
+10. Add a `\ProofVaultURL{...}` backlink to the canonical theorem proof file
+    with `lra-proof-vault/scripts/apply_leaf_backlinks.py`, or an equivalent
+    deterministic step that validates the exact leaf proof file.
+11. If the proof was accepted as correct and memorialized, update the owning
+   volume repo's tracked `proofs-to-do.md` artifact: change the proof label
+   marker from `()` to `(✅)` and update the open/completed counts. The standard
+   backlink applicator performs this tracker update by default only after the
+   canonical proof file has both proof bodies and dependencies populated.
 12. Commit the canonical repository.
 13. Push the canonical repository.
 
@@ -262,6 +265,17 @@ complete, or the run must stop for repair before deployment.
 
 Backlinks from canonical proof files to proof-vault records are required for
 proofs created from memorialized handwritten proof images.
+
+The photo pipeline must either write the backlink or fail a strict validation
+step. It must also mark the owning volume `proofs-to-do.md` tracker for
+route-confirmed, reviewed-correct attempts. A successful vault-only validation
+is not sufficient to close a memorialization task.
+
+When a memorialized proof is used as canonical content, the canonical proof
+file must populate both the Professional Standard Proof body and the Detailed
+Learning Proof body. Populating only one of the two proof bodies is invalid.
+If either proof body is populated, the dependencies block must also be
+populated.
 
 The backlink must use the shared macro:
 

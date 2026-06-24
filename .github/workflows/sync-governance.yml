@@ -1,9 +1,6 @@
 # =============================================================
 # sync-governance.yml
-# Syncs governance files and rule docs one-way into all LRA repos.
-#
-# Required secret:
-#   SYNC_PAT: GitHub PAT with repo scope for the target repositories.
+# Disabled: governance is no longer synced one-way into other LRA repos.
 #
 # NOTE: This workflow no longer generates per-leaf sync-to-monorepo.yml
 # files. Leaf -> monorepo syncing was inverted to a single mono-side
@@ -11,80 +8,16 @@
 # so the old fan-in template is intentionally not emitted here anymore.
 # =============================================================
 
-name: Sync governance files
+name: Governance sync disabled
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'DESIGN.md'
-      - 'REPOSITORY_STRUCTURE.md'
-      - '.gitignore'
-      - 'constitution/**'
-      - 'docs/**'
-      - 'scripts/**'
-      - 'templates/**'
-      - 'tools/**'
-      - '.github/workflows/sync-governance.yml'
   workflow_dispatch:
 
 jobs:
-  sync:
+  disabled:
     runs-on: ubuntu-latest
-
-    strategy:
-      fail-fast: false
-      matrix:
-        repo:
-          - Learning-Real-Analysis
-          - lra-common
-          - lra-volume-i
-          - lra-volume-ii
-          - lra-volume-iii
-          - lra-volume-iv
-          - lra-volume-v
-          - lra-volume-vi
-          - lra-volume-vii
-          - lra-volume-viii
-          - lra-source-profiles
-
     steps:
-      - name: Checkout governance source
-        uses: actions/checkout@v4
-        with:
-          path: governance
-
-      - name: Checkout target repo
-        uses: actions/checkout@v4
-        with:
-          repository: wsollers/${{ matrix.repo }}
-          token: ${{ secrets.SYNC_PAT }}
-          path: target
-
-      - name: Sync governance files
+      - name: Explain disabled sync
         run: |
-          rsync -av --delete governance/constitution/ target/constitution/
-          rsync -av --delete governance/docs/ target/docs/
-          cp governance/.gitignore target/.gitignore
-          cp governance/DESIGN.md target/DESIGN.md
-          cp governance/REPOSITORY_STRUCTURE.md target/REPOSITORY_STRUCTURE.md
-          if [[ "${{ matrix.repo }}" == lra-volume-* ]]; then
-            rsync -av --delete governance/tools/ target/tools/
-            rsync -av --delete governance/scripts/ target/scripts/
-            mkdir -p target/.github/workflows
-            cp governance/templates/volume-validate-and-compile.yml target/.github/workflows/validate-and-compile.yml
-            rm -f target/.github/workflows/build-and-publish-pdf.yml
-          fi
-
-      - name: Commit and push if changed
-        run: |
-          cd target
-          git config user.name  "lra-governance-bot"
-          git config user.email "governance-bot@noreply.github.com"
-          git add .gitignore DESIGN.md REPOSITORY_STRUCTURE.md constitution/ docs/
-          if [[ "${{ matrix.repo }}" == lra-volume-* ]]; then
-            git add tools/ scripts/ .github/workflows/
-          fi
-          git diff --cached --quiet && echo "No governance changes for ${{ matrix.repo }}" && exit 0
-          git commit -m "chore: sync governance files"
-          git push
+          echo "Governance fan-out sync is disabled."
+          echo "Leaf repos must use lra-governance directly via LRA_GOVERNANCE_ROOT, ../lra-governance, F:/repos/lra-governance, or the build Docker image."

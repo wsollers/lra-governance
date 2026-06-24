@@ -58,16 +58,16 @@ Every generated agent file must identify:
 
 ## Secret Rule
 
-Generated instructions may name required secret variables, such as `SYNC_PAT`,
-but must never contain token values, credentials, or machine-local secrets.
+Generated instructions must never contain token values, credentials, or
+machine-local secrets.
 
 ## Drift Rule
 
 Downstream generated files must not become local sources of truth. Emergency
-local repairs must be ported back to `lra-governance` before the next sync.
+local repairs must be ported back to `lra-governance`.
 
 ## Local Edit Rule
 
-Generated files are full-replaced by governance sync. Emergency downstream
-edits are allowed only as temporary repair and must be ported upstream into
-`lra-governance` before the next generation or sync.
+Generated files are local wrappers or instructions, not synced governance
+copies. Emergency downstream edits are allowed only as temporary repair and
+must be ported upstream into `lra-governance` before regeneration.
