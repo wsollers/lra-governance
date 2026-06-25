@@ -28,16 +28,16 @@ IGNORED_DIR_NAMES = {
 }
 
 IGNORED_RELATIVE_DIRS = {
-    "analysis/real-analysis",
-    "integers/notes/mendelson-construction",
-    "integers/notes/tao-construction",
-    "integers/proofs/mendelson-construction",
-    "integers/proofs/tao-construction",
-    "volume-iii/analysis/real-analysis",
-    "volume-ii/integers/notes/mendelson-construction",
-    "volume-ii/integers/notes/tao-construction",
-    "volume-ii/integers/proofs/mendelson-construction",
-    "volume-ii/integers/proofs/tao-construction",
+    "book-analysis-i/real-analysis",
+    "book-discrete-algebraic/integers/notes/mendelson-construction",
+    "book-discrete-algebraic/integers/notes/tao-construction",
+    "book-discrete-algebraic/integers/proofs/mendelson-construction",
+    "book-discrete-algebraic/integers/proofs/tao-construction",
+    "volume-iii/book-analysis-i/real-analysis",
+    "volume-ii/book-discrete-algebraic/integers/notes/mendelson-construction",
+    "volume-ii/book-discrete-algebraic/integers/notes/tao-construction",
+    "volume-ii/book-discrete-algebraic/integers/proofs/mendelson-construction",
+    "volume-ii/book-discrete-algebraic/integers/proofs/tao-construction",
 }
 
 

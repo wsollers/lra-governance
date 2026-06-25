@@ -55,13 +55,83 @@ Do not create extra directories unless local conventions require them.
 The machine-readable authority for volume, chapter, and topic layout is
 `docs/governance/volume-structure.schema.json`.
 
+## Canonical Stub-Chapter Skeleton
+
+Copy these verbatim and substitute only the angle-bracketed parts. This is the
+real, validator-passing shape; do not improvise a different structure.
+
+`<chapter-slug>/index.tex` (chapter router):
+
+```latex
+% =========================================================
+% Chapter: <Chapter Display Title>
+% =========================================================
+\chapter{<Chapter Display Title>}
+\label{ch:<chapter-slug>}
+
+\breadcrumb{<chapter-slug>}{<prior-neighbor>}{<Chapter Display Title>}{<next-neighbor>}
+
+\input{volume-<n>/<chapter-slug>/notes/index}
+
+\LRAExcludeFromPrintEditionBegin
+\section*{Proofs}
+\input{volume-<n>/<chapter-slug>/proofs/index}
+
+\section*{Capstone}
+\input{volume-<n>/<chapter-slug>/proofs/exercises/index}
+\LRAExcludeFromPrintEditionEnd
+```
+
+`<chapter-slug>/notes/index.tex` (router only — one `\input` per topic, in chapter order):
+
+```latex
+\input{volume-<n>/<chapter-slug>/notes/<topic>/index}
+```
+
+`<chapter-slug>/proofs/index.tex` (router only — topic indexes only; the exercises router is NOT listed here, it is input from the chapter index above):
+
+```latex
+\input{volume-<n>/<chapter-slug>/proofs/<topic>/index}
+```
+
+`<chapter-slug>/proofs/exercises/index.tex` (router only):
+
+```latex
+\input{volume-<n>/<chapter-slug>/proofs/exercises/capstone-<chapter-slug>}
+```
+
+Chapter-index points that are easy to get wrong:
+
+- The chapter label is `\label{ch:<chapter-slug>}` — prefix `ch:`, not `chap:`.
+- `\breadcrumb` takes four arguments: current slug, prior neighbor, current
+  display title, next neighbor. Neighbors come from the chapter registry (see
+  the breadcrumb rules in `constitution/schema/file-schema.yaml`).
+- The `Proofs` and `Capstone` headings and their `\input`s sit inside the
+  `\LRAExcludeFromPrintEditionBegin ... \LRAExcludeFromPrintEditionEnd` block so
+  print builds omit them.
+
+Real example (`volume-ii/peano-systems/index.tex`):
+
+```latex
+\chapter{Peano Systems}
+\label{ch:peano-systems}
+\breadcrumb{peano-systems}{proof-techniques}{Peano Systems}{Identity, Equality, and Equivalence}
+\input{volume-ii/peano-systems/notes/index}
+\LRAExcludeFromPrintEditionBegin
+\section*{Proofs}
+\input{volume-ii/peano-systems/proofs/index}
+\section*{Capstone}
+\input{volume-ii/peano-systems/proofs/exercises/index}
+\LRAExcludeFromPrintEditionEnd
+```
+
 ## Chapter Index
 
 The chapter `index.tex` is the chapter-level router. It should contain, in the
 canonical shape:
 
 - `\chapter{...}`;
-- `\label{chap:...}`;
+- `\label{ch:...}`;
 - `\breadcrumb{...}{...}{...}{...}`;
 - `\input{volume-x/chapter-slug/notes/index}`;
 - `\LRAExcludeFromPrintEditionBegin`;
@@ -126,14 +196,23 @@ content.
 The `chapter.yaml` file must follow current repo conventions. Add only fields
 already used by nearby chapters or documented by the local repo schema.
 
-If no global or repo-local schema exists, require at least:
+If no global or repo-local schema exists, match the shape nearby chapters use:
 
 ```yaml
-title:
-slug:
+subject: <chapter-slug>
+display_title: <Chapter Display Title>
+volume: volume-<n>
 status: planned
-type: chapter
+dependencies:
+  prior: ''
+  next: ''
+path: volume-<n>/<chapter-slug>
+environments: []
+proof_files: []
 ```
+
+The `environments` and `proof_files` lists are populated as content is added or
+regenerated from source; a fresh stub leaves them empty.
 
 Do not invent a new metadata schema incompatible with existing extraction,
 rendering, or sync tools.
@@ -192,7 +271,7 @@ documented build command.
 For LRA volume repos, try:
 
 ```powershell
-latexmk -lualatex main.tex
+python ..\lra-governance\scripts\build_volume.py --root .
 ```
 
 unless local instructions say otherwise.

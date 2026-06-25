@@ -1,8 +1,14 @@
+Generated downstream instruction files are not canonical, and there are no
+synced governance copies in downstream repos. The former one-way governance
+fan-out and volume-to-monorepo sync are retired; repos read `lra-governance` and
+`lra-common` directly from a sibling checkout, `LRA_GOVERNANCE_ROOT`, or the
+build image.
+
 # lra-governance Agent Router
 
 `lra-governance` is the source of truth for LRA governance docs, architecture
-docs, repo overlays, prompts, schemas, governance tools, generators, and sync
-policy.
+docs, repo overlays, prompts, schemas, governance tools, generators, the
+canonical YAML vocabulary, and integration policy.
 
 Detailed rules live under:
 
@@ -15,15 +21,16 @@ Detailed rules live under:
 
 When working from a local multi-repo checkout such as `F:\repos`, use
 `docs/agent-task-index.md` to choose the smallest relevant set of canonical
-governance files. Do not read every synced downstream copy just because it
-exists.
+governance files. Do not read every downstream copy just because it exists.
 
-When working inside an isolated repository checkout without adjacent
-`lra-governance`, use that repo's local synced `docs/` copies.
+When working inside an isolated repository checkout without an adjacent
+`lra-governance`, resolve governance through `LRA_GOVERNANCE_ROOT`, an explicit
+`lra-governance` checkout, or the build Docker image. There are no local synced
+governance copies to fall back on; if none resolves, stop and report that
+`lra-governance` is not present.
 
-Generated downstream instruction files are not canonical. Do not edit
-downstream generated instruction files by hand except for emergency repair; any
-emergency repair must be ported upstream into `lra-governance`.
+Do not edit downstream generated instruction files by hand except for emergency
+repair; any emergency repair must be ported upstream into `lra-governance`.
 
 For agent wrapper generation, combine:
 
@@ -34,7 +41,8 @@ For agent wrapper generation, combine:
 Do not include secrets, credentials, tokens, or machine-local private values in
 generated files.
 
-Do not modify mathematical content during governance tasks.
-
-Do not touch `Learning-Real-Analysis/scripts/`.
+Do not modify mathematical content during governance tasks. The canonical
+vocabulary (`predicates.yaml`, `notation.yaml`, `relations.yaml`) lives in
+`lra-governance`; do not invent predicates, notation, relations, labels, or
+dependencies.
 

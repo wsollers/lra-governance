@@ -80,6 +80,59 @@ content, or proof material.
 Do not create proof files for nonexistent statements. Proof file creation must
 also satisfy `proof-standards.md`.
 
+## Canonical Topic-Pair Skeleton
+
+Copy these verbatim and substitute only the angle-bracketed parts. This is the
+real, validator-passing shape; do not invent a different structure. A new topic
+`<topic>` in chapter `<chapter-slug>` of `volume-<n>` is exactly two files plus
+two parent-router edits.
+
+`notes/<topic>/index.tex` (topic router — rendered heading plus body input):
+
+```latex
+\section{<Topic Display Title>}
+\input{volume-<n>/<chapter-slug>/notes/<topic>/notes-<topic>}
+```
+
+`proofs/<topic>/index.tex` (router only — one `\input` per proof file in
+dependency order; empty for a fresh stub with no proofs yet):
+
+```latex
+\input{volume-<n>/<chapter-slug>/proofs/<topic>/prf-<theorem-root>}
+```
+
+Then add the topic to the two chapter routers, in matching order — `notes/index.tex`:
+
+```latex
+\input{volume-<n>/<chapter-slug>/notes/<topic>/index}
+```
+
+and `proofs/index.tex` (topic index only — never the exercises router here):
+
+```latex
+\input{volume-<n>/<chapter-slug>/proofs/<topic>/index}
+```
+
+Real example (chapter `peano-systems`, topic `recursion-on-peano-systems`):
+
+```latex
+% notes/recursion-on-peano-systems/index.tex
+\section{Recursion on Peano Systems}
+\input{volume-ii/peano-systems/notes/recursion-on-peano-systems/notes-recursion-on-peano-systems}
+```
+
+Non-negotiable points:
+
+- The topic identifier is shared: `notes/<topic>/` pairs with `proofs/<topic>/`,
+  same slug, lowercase-hyphen ASCII.
+- The topic router is the only place the `\section{...}` heading appears; the
+  body file `notes-<topic>.tex` carries no heading.
+- A fresh section stub creates the routers only. It creates no proof files for
+  statements that do not exist, and invents no definitions, theorems, examples,
+  or labels.
+- `proofs/index.tex` lists topic indexes only. The `proofs/exercises/index`
+  (capstone) router is input from the chapter `index.tex`, not here.
+
 ## Router Updates
 
 After generating a section stub, update the chapter's notes router:
@@ -111,15 +164,16 @@ Then update the chapter's proofs router:
 proofs/index.tex
 ```
 
-to include the matching proof section, using the repository's preferred
-routing style. The exercises router remains last:
+to include the matching proof topic index, in the same order as the notes
+router:
 
 ```latex
 \input{volume-x/chapter-slug/proofs/axioms/index}
-\input{volume-x/chapter-slug/proofs/exercises/index}
 ```
 
-Do not route proof topics after `proofs/exercises/index`.
+`proofs/index.tex` routes topic indexes only. Do not route
+`proofs/exercises/index` here: the exercises/capstone router is input from the
+chapter `index.tex` under `\section*{Capstone}` (see `stub-chapter-standards.md`).
 
 ## Ordering Rule
 

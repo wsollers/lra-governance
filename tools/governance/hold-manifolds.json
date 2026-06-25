@@ -1,0 +1,5 @@
+{
+  "source_volume": "volume-v",
+  "chapters": ["non-euclidean-geometry", "differential-geometry", "riemannian-geometry"],
+  "_note": "Enactment step 3, second cross-volume move: park the manifold/future-fan geometry trio from old Vol V into the flat lra-hold parking lot (lra-hold/non-euclidean-geometry/, etc.). lra-hold is NOT a volume -- no book router, no volume index, not built or validated -- so this only moves dirs, flattens internal paths (volume-v/<ch> -> <ch>, including intra-group refs among the trio), stamps held_from provenance, and removes the three inputs from Vol V's index. After this Vol V holds only topology, which leaves for the new Vol IV (Spaces) once that container is scaffolded; then the V shell is re-tasked as Modern Analysis. Residual volume-v/<other> refs the tool reports (e.g. to topology) are informational -- lra-hold does not render -- and dormant unless a chapter is revived into a real volume. Gate after apply: verify_book_move + validate + build on volume-v ONLY (lra-hold has no gate)."
+}

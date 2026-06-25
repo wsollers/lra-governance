@@ -7,10 +7,10 @@ Local conventions:
   proofs under `.../proofs/<section>/prf-<slug>.tex`.
 - Definitions use ordinary `definition` environments by default; wrap only load-bearing definitions in the semantic `definitionbox` family.
 - Decoration blocks are unboxed `remark*`; dependencies use `\begin{dependencies}` or `\NoLocalDependencies`.
-- Chapters route into BOTH `volume-viii/index.tex` (monorepo) and `main.tex` (local build).
+- Chapters route through `volume-viii/index.tex` and the owning book root.
 - Canonical YAML registries live at the monorepo root; cross-volume `\hyperref` targets resolve
   only in the assembled monorepo build.
-- Volume success requires both governance validation and `latexmk -lualatex main.tex`.
+- Volume success requires governance validation and a successful governance book build.
 
 Applicable capabilities: author-statement, author-stub-chapter, author-stub-section.
 

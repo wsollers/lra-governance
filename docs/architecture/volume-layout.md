@@ -1,7 +1,5 @@
 # Volume Layout
 
-Source: `DESIGN.md` sections 2.2, 2.5, 2.6, and `REPOSITORY_STRUCTURE.md`.
-
 Volume repos are self-contained and Overleaf-ready.
 
 ```text
@@ -28,8 +26,9 @@ Top-level `exercises/` is reserved for the chapter exercise vault. It is
 separate from theorem proof material under `proofs/`; stable exercise IDs are
 canonical, while exercise paths are mutable routing details.
 
-`common/` are synced copies from `lra-common`. They are not
-owned by volume repos.
+`common/` is supplied to the build by the environment (Docker image or explicit
+`lra-common` checkout). It is not owned by, or stored as a synced copy in,
+volume repos.
 
 Volume repos own volume content only. They do not own Lean formalization,
 C++/Vulkan simulation, numerical benchmarking, or global governance.

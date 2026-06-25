@@ -84,12 +84,37 @@ volume:
     are authoritative — a chapter must use a subject from the registry.
     Chapter subject names are repository identifiers, not display titles.
 
+# ---------------------------------------------------------------------------
+# Book (subject partition inside a volume)
+# ---------------------------------------------------------------------------
+# A book sits between the volume and its chapters. Uniform path grammar
+# volume-{n}/book-{b}/{chapter}/ applies everywhere, including single-book
+# volumes. Bourbaki's "Book" is this tier: in this project the repo is the
+# Volume and the subject folder inside it is the Book.
+
+book:
+  location: volume-{n}/book-{b}/
+  name_pattern: ^book-[a-z0-9]+(?:-[a-z0-9]+)*$
+  required_files:
+    - index.tex            # book router: inputs this book's chapter routers
+  router_rule: >
+    The volume index.tex inputs each book-{b}/index.tex in book order. Each
+    book index.tex inputs its chapter index.tex files in chapter order.
+    Chapter routers and everything below them are unchanged by the book tier.
+  chapter_field: >
+    Each chapter.yaml declares book: book-{b} naming its book. Reachability is
+    by the router chain (volume -> book -> chapter), not by this field; the
+    field is metadata for tooling and registries and is populated when a
+    chapter is placed under its book.
+
 volume_chapter_topic_layout:
+  # Names retained for compatibility; layout is volume -> book -> chapter -> topic.
   volume_root: volume-{n}/
-  chapter_location: volume-{n}/{chapter}/
+  book_location: volume-{n}/book-{b}/
+  chapter_location: volume-{n}/book-{b}/{chapter}/
   topic_location:
-    notes: volume-{n}/{chapter}/notes/{topic}/
-    proofs: volume-{n}/{chapter}/proofs/{topic}/
+    notes: volume-{n}/book-{b}/{chapter}/notes/{topic}/
+    proofs: volume-{n}/book-{b}/{chapter}/proofs/{topic}/
   required_volume_files:
     - index.tex
     - chapter.yaml
@@ -107,12 +132,14 @@ volume_chapter_topic_layout:
       - index.tex
   router_files:
     volume_index: volume-{n}/index.tex
-    chapter_index: volume-{n}/{chapter}/index.tex
-    notes_index: volume-{n}/{chapter}/notes/index.tex
-    proofs_index: volume-{n}/{chapter}/proofs/index.tex
-    proofs_topic_index: volume-{n}/{chapter}/proofs/{topic}/index.tex
+    book_index: volume-{n}/book-{b}/index.tex
+    chapter_index: volume-{n}/book-{b}/{chapter}/index.tex
+    notes_index: volume-{n}/book-{b}/{chapter}/notes/index.tex
+    proofs_index: volume-{n}/book-{b}/{chapter}/proofs/index.tex
+    proofs_topic_index: volume-{n}/book-{b}/{chapter}/proofs/{topic}/index.tex
   router_rules:
-    - volume index.tex inputs chapter/index.tex files in chapter order when local convention requires explicit routing
+    - volume index.tex inputs each book-{b}/index.tex in book order
+    - book index.tex inputs its chapter index.tex files in chapter order
     - chapter index.tex inputs notes/index.tex and proofs/index.tex
     - notes/index.tex inputs each notes/{topic}/index.tex
     - proofs/index.tex inputs each proofs/{topic}/index.tex

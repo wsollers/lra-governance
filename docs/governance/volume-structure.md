@@ -13,7 +13,13 @@ volume-root/
   index.tex
 
 repo-root-or-volume-root/
-  main.tex
+  volume-{roman}-{book-slug}-main.tex
+                               (one root per book)
+  main-book-{book}.tex         (legacy migration alias)
+  main.tex                     (transitional single-root alias)
+
+book/                       (book-{slug}/; subject partition inside a volume)
+  index.tex
 
 chapter/
   index.tex
@@ -32,11 +38,16 @@ proofs/
   {topic}/prf-*.tex
 ```
 
-Every canonical chapter root must be routed from the volume root `index.tex`.
-The accepted route target is the chapter router, for example
-`\input{volume-ii/complex-numbers/index}`. A chapter directory that has the
-canonical shape but is absent from the volume root router is an orphaned chapter
-and must fail validation.
+Every canonical chapter root must be reachable from the volume root `index.tex`
+through the router chain. Chapters live under a book tier
+(`volume/book-{slug}/{chapter}/`): the volume index routes each
+`book-{slug}/index.tex`, and each book index routes its chapter routers — for
+example `\input{volume-ii/book-continuum/complex-numbers/index}`. A volume may
+also route a chapter directly (`\input{volume-ii/complex-numbers/index}`) where
+no book tier is present; both are accepted because reachability follows the
+`\input` chain rather than a fixed depth. A chapter directory that has the
+canonical shape but is not reachable from the volume root router is an orphaned
+chapter and must fail validation.
 
 Topic index files under `notes/{topic}/` and `proofs/{topic}/` are router-only:
 comments and input lines only. Rendered sectioning belongs in chapter-level

@@ -2,6 +2,37 @@
 
 Audit date: 2026-06-03
 
+## Update — 2026-06-24
+
+The multi-repo architecture changed after this audit, so several findings below
+are now partially superseded:
+
+- **Canonical YAML Ownership**: the canonical YAML (`predicates.yaml`,
+  `notation.yaml`, `relations.yaml`) no longer lives in `Learning-Real-Analysis`.
+  The assembled monorepo is retired; the YAML now lives in `lra-governance`. The
+  consolidation goal still holds — keep storage details in
+  `docs/architecture/canonical-yaml.md` and only a short principle in
+  `constitution/master.md`.
+- **Repository Map And Sync Ownership**: governance/common fan-out and
+  volume-to-monorepo sync are retired. "Sync direction" is no longer a fact to
+  consolidate; the equivalent is the integration/resolution behavior in
+  `docs/architecture/multi-repo-sync.md`.
+- **Proof Stub Invariant** (duplication finding): resolved. The proof-stub shape
+  now has a single authoritative, example-bearing home in
+  `docs/governance/proof-standards.md` (a literal copy-paste template), enforced
+  by `constitution/schema/file-schema.yaml`; the workflow docs and the
+  section-generation loop point to it instead of restating it.
+- `constitution/master.md` has since adopted an Authority Pointers section, so
+  the "remove repo map from master.md" target is largely done.
+
+Known still-stale data file: `constitution/schema/file-schema.yaml` retains an
+old `monorepo_root` block and `auditor_paths` that point canonical YAML at a
+retired `REPO_ROOT`; fixing it correctly requires touching the validator/auditor
+code and is tracked separately.
+
+The corpus measurements and remaining duplication findings below predate these
+changes and should be re-measured before the next consolidation pass.
+
 ## Scope
 
 This audit inspected the canonical governance repo only. It intentionally read

@@ -54,7 +54,7 @@ appropriate modular document instead.
 | LaTeX build and rendering expectations | `docs/architecture/latex-build-and-rendering.md` |
 | Numerical-analysis software workbench tasks | `docs/governance/repo-overlays/lra-numerical-analysis.md` |
 | Source profile selection, classification, active-profile export, and review workflow | `docs/governance/repo-overlays/lra-source-profiles.md` |
-| Multi-repo sync boundaries | `docs/architecture/multi-repo-sync.md` |
+| Multi-repo integration boundaries | `docs/architecture/multi-repo-sync.md` |
 | Generated file headers, drift, and full-replace policy | `docs/architecture/generated-file-policy.md` |
 | Knowledge extraction workflow | `docs/workflows/knowledge-extraction.md` |
 | Bibliography entry workflow | `docs/workflows/bibliography-entry.md` |
@@ -70,7 +70,6 @@ interpreting repo-local agent rules.
 
 | Repository | Overlay |
 | --- | --- |
-| `Learning-Real-Analysis` | `docs/governance/repo-overlays/learning-real-analysis.md` |
 | `lra-common` | `docs/governance/repo-overlays/lra-common.md` |
 | `lra-volume-i` through `lra-volume-viii` | `docs/governance/repo-overlays/lra-volume.md` |
 | `lra-lean` | `docs/governance/repo-overlays/lra-lean.md` |
@@ -88,15 +87,15 @@ they do not fork or weaken global governance.
 - Governance docs in `lra-governance` are canonical.
 - Generated downstream files are not canonical.
 - Downstream generated wrapper edits are emergency-only and must be ported
-  upstream before the next sync.
+  upstream before the next regeneration.
 - Generated wrapper sync is controlled, repo-selected, drift-checked, and
   full-replace only after review.
 - Volume repos must not receive positive Lean, NURBS/Vulkan,
   numerical-analysis, PDF-extractor, or source-profile specialist rules.
-- `Learning-Real-Analysis/scripts/` is protected and out of scope for
-  governance migration.
-- Canonical YAML remains owned by `Learning-Real-Analysis`.
+- Canonical YAML is owned by `lra-governance`.
 - Shared LaTeX infrastructure remains owned by `lra-common`.
+- `Learning-Real-Analysis` (the former assembled monorepo) is retired; there is
+  no fan-out sync and no volume-to-monorepo sync.
 - Local model and Ollama output is advisory only.
 - Do not invent predicates, labels, dependencies, or mathematical content.
 

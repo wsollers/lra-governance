@@ -10,7 +10,7 @@ Owned concerns:
 - volume content only,
 - Overleaf-ready volume roots,
 - external `lra-common` consumed by the build environment,
-- volume-to-monorepo content sync.
+- independent volume PDF builds published to `lra-volumes-output`.
 
 This overlay may contain negative guard rails that say specialist rules do not
 apply to volume repos. It must not contain positive Lean-specific, C++ /
@@ -25,13 +25,15 @@ governance wrappers, or canonical YAML. Shared LaTeX infrastructure belongs in
 `lra-common` and is supplied to builds by the Docker image or an explicit
 checkout.
 
-Volume tasks should preserve Overleaf readiness and monorepo sync shape.
+Volume tasks should preserve Overleaf readiness and the independent volume build
+shape. There is no monorepo to sync into.
 
 ## Stub Chapters
 
 Volume chapter stubs follow the global `stub-chapter-standards.md` standard.
 After stub generation, run the local volume build command when available; for
-standard LRA volume roots, try `latexmk -lualatex main.tex` unless local
+standard LRA volume roots, use
+`python ..\lra-governance\scripts\build_volume.py --root .` unless local
 instructions say otherwise.
 
 ## Stub Sections

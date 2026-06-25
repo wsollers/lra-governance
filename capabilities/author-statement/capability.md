@@ -34,7 +34,7 @@ is specifically to define a term.
 
 - `python tools/governance/validate_decoration.py --root <volume-root> --chapter <chapter> --canonical-dir <canonical-root>`
 - For provable statements: `python tools/governance/audit_proof_layout.py --root <volume-root> --chapter <chapter> --strict`
-- `cd <volume-root> && latexmk -lualatex main.tex`
+- `cd <volume-root> && python ../lra-governance/scripts/build_volume.py --root .`
 
 ## Reference Escalation
 

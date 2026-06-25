@@ -1,7 +1,5 @@
 # Build And Render Standards
 
-Source sections: `DESIGN.md` section 2.9, repo READMEs, and repo workflows.
-
 ## Global Expectation
 
 Use the build or render path owned by the repository being edited. Do not
@@ -10,14 +8,18 @@ task.
 
 ## Volume Repos
 
-Volume repos are Overleaf-ready and build through their local `main.tex` with
-synced `common/`.
+Volume repos are Overleaf-ready and build through book-level roots named
+`volume-{roman}-{book-slug}-main.tex`, with `common/` supplied by the build
+environment (Docker image or explicit `lra-common` checkout) rather than a
+synced copy. Legacy `main-book-*.tex` roots and transitional `main.tex` roots
+are accepted only during migration.
 
-## Monorepo
+## Independent Builds
 
-`Learning-Real-Analysis` owns omnibus integration builds and canonical YAML
-sources. Docker and extraction integration live there unless a repo overlay
-states otherwise.
+There is no monorepo; `Learning-Real-Analysis` is retired. Each volume builds
+its own digital and print PDFs independently in Docker, checking out
+`lra-common` and `lra-governance` at build time, and publishes to
+`lra-volumes-output`. Canonical YAML lives in `lra-governance`.
 
 ## Specialist Repos
 

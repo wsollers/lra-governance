@@ -2,107 +2,81 @@
 
 This file is the canonical map for the Learning Real Analysis multi-repo
 workspace. `DESIGN.md` contains the writing and artifact rules; this file
-contains the repository ownership and layout rules.
+contains repository ownership, layout, and integration rules.
 
 ## Source Of Truth Map
 
-| Repository | Canonical ownership | Sync direction |
-|---|---|---|
-| `lra-governance` | `DESIGN.md`, `REPOSITORY_STRUCTURE.md`, `.gitignore`, `constitution/` | to all repos |
-| `Learning-Real-Analysis` | assembled monorepo, omnibus builds, canonical YAML sources, docker, cross-volume tooling | receives volume/common/governance syncs; dispatches knowledge rebuild |
-| `lra-common` | shared LaTeX infrastructure: `common/` | to volume repos and monorepo |
-| `lra-volume-i` | Volume I content under `volume-i/` | to monorepo `volume-i/` |
-| `lra-volume-ii` | Volume II content under `volume-ii/` | to monorepo `volume-ii/` |
-| `lra-volume-iii` | Volume III content under `volume-iii/` | to monorepo `volume-iii/` |
-| `lra-volume-iv` | Volume IV content under `volume-iv/` | to monorepo `volume-iv/` |
-| `lra-volume-v` | Volume V content under `volume-v/` | to monorepo `volume-v/` |
-| `lra-volume-vi` | Volume VI content under `volume-vi/` | to monorepo `volume-vi/` |
-| `lra-volume-vii` | Volume VII content under `volume-vii/` | to monorepo `volume-vii/` |
-| `lra-volume-viii` | Volume VIII content under `volume-viii/` | to monorepo `volume-viii/` |
-| `lra-lean` | Lean 4 formalization workspace | independent/specialized |
-| `lra-nurbs` | NURBS/DDE C++ engine | independent/specialized |
-| `lra-knowledge-explorer` | extraction pipeline, HTML theorem graph, GitHub Pages site | triggered by monorepo CI dispatch |
-| `lra-numerical-analysis` | numerical methods, computational experiments, benchmarks, plots, numerical reports | independent/specialized |
-| `lra-pdf-extractor` | PDF/source ingestion, bibliography extraction, candidate artifact staging | independent tool repo; produces reviewable candidates only |
-| `lra-source-profiles` | dynamic mathematical source profiles, source classification, active source indexes, stable project attachment exports | receives governance sync; otherwise independent profile/staging repo; produces reviewed source-profile artifacts only |
+| Repository | Canonical ownership |
+|---|---|
+| `lra-governance` | `DESIGN.md`, `REPOSITORY_STRUCTURE.md`, `AGENTS.md`, `.gitignore`, `constitution/`, `docs/`, `tools/`, generators, schemas, prompts, and the canonical YAML (`predicates.yaml`, `notation.yaml`, `relations.yaml`) |
+| `lra-common` | shared LaTeX infrastructure: `common/` |
+| `lra-volume-i` through `lra-volume-viii` | volume content under `volume-N/`; self-contained, Overleaf-ready, independently built |
+| `lra-lean` | Lean 4 formalization workspace; independent |
+| `lra-nurbs` | NURBS/DDE C++ / Vulkan / geometry / simulation engine; independent |
+| `lra-knowledge-explorer` | extraction pipeline, HTML theorem graph, GitHub Pages site |
+| `lra-numerical-analysis` | numerical methods, experiments, benchmarks, plots, numerical reports; independent |
+| `lra-pdf-extractor` | PDF/source ingestion, bibliography extraction, candidate staging; independent tool repo, reviewable candidates only |
+| `lra-source-profiles` | dynamic source profiles, classification, active source indexes, attachment exports; independent profile/staging repo |
+| `lra-volumes-output` | published digital and print PDFs from independent volume builds |
+
+`Learning-Real-Analysis`, the former assembled monorepo, is **retired**. There
+is no omnibus assembly target and no volume-to-monorepo sync; each volume builds
+independently. The canonical YAML formerly owned there now lives in
+`lra-governance`.
+
+## Integration Model
+
+Repositories are independent. There is no governance/common fan-out sync and no
+volume-to-monorepo content sync.
+
+- `lra-governance` and `lra-common` are read directly, never copied downstream.
+- Each repo resolves them via `LRA_GOVERNANCE_ROOT` (and the common equivalent),
+  a sibling `../lra-governance` / `../lra-common` checkout, or the build Docker
+  image, in that order.
+- Local wrapper scripts hard-error if neither resolves. There are no synced
+  local copies to fall back on.
+- Each `lra-volume-*` repo builds its own digital and print PDFs in a Docker
+  container that checks out `lra-governance` and `lra-common` at build time
+  (`templates/volume-validate-and-compile.yml`) and publishes the results to
+  `lra-volumes-output`.
 
 ## Governance Repo Layout
 
 ```text
 lra-governance/
-  .github/
-    workflows/
-      sync-governance.yml
-  .gitignore
+  AGENTS.md
   DESIGN.md
   REPOSITORY_STRUCTURE.md
   README.md
+  .gitignore
+  predicates.yaml             canonical vocabulary (moved from the retired monorepo)
+  notation.yaml
+  relations.yaml
   constitution/
     master.md
     prompts/
     schema/
     schemas/
-    auditor/
-```
-
-Governance files are edited here and synced outward. Downstream repos should not
-edit their synced copies except as an emergency repair that is immediately
-ported back to `lra-governance`.
-
-## Monorepo Layout
-
-```text
-Learning-Real-Analysis/
-  .gitignore                  synced from lra-governance
-  DESIGN.md                   synced from lra-governance
-  REPOSITORY_STRUCTURE.md     synced from lra-governance
-  constitution/               synced from lra-governance
-  .github/
+  docs/
+    agent-task-index.md
+    architecture/
+    governance/
+      repo-overlays/
     workflows/
-      trigger-knowledge-rebuild.yml   dispatches lra-rebuild to lra-knowledge-explorer
-  main.tex                    omnibus build root
-  volume-i-main.tex           per-volume standalone roots
-  volume-ii-main.tex
-  volume-iii-main.tex
-  volume-iv-main.tex
-  volume-v-main.tex
-  volume-vi-main.tex
-  volume-vii-main.tex
-  volume-viii-main.tex
-  bibliography/               volume-owned shard copied into monorepo by volume sync
-  common/                     synced from lra-common
-  predicates.yaml             canonical YAML source
-  notation.yaml               canonical YAML source
-  relations.yaml              canonical YAML source
-  volume-i/
-  volume-ii/
-  volume-iii/
-  volume-iv/
-  volume-v/
-  volume-vi/
-  volume-vii/
-  volume-viii/
-  docker/
-  theorem-explorer/
-  lean/
-  nurbs_dde/
-  ontology/
-  rules/
+  tools/
+    governance/
+  templates/
+    volume-validate-and-compile.yml    independent per-volume build
+  scripts/
 ```
 
-The monorepo is the assembled master project. It receives volume content from
-the volume repos, shared TeX infrastructure from `lra-common`, and governance
-from `lra-governance`. It is also the single dispatch point for the knowledge
-explorer rebuild (see Knowledge Explorer Pipeline below).
+Governance files are edited here and consumed in place. Downstream repos do not
+carry synced copies.
 
 ## Common Repo Layout
 
 ```text
 lra-common/
-  .gitignore                  synced from lra-governance
-  DESIGN.md                   synced from lra-governance
-  REPOSITORY_STRUCTURE.md     synced from lra-governance
-  constitution/               synced from lra-governance
   common/
     preamble.tex
     colors.tex
@@ -115,24 +89,19 @@ lra-common/
     README.md                 retired mirror note; not a sync source
 ```
 
-`common/` is edited in `lra-common` and propagated outward. Bibliography
-entries are edited in the owning `lra-volume-*` shard and copied into
-`Learning-Real-Analysis` by that volume repo.
+`common/` is owned by `lra-common` and consumed directly by builds through the
+Docker image or an explicit checkout. It is not copied into volume repos.
+Bibliography entries are edited in the owning `lra-volume-*` shard.
 
 ## Volume Repo Layout
 
-Each volume repo is self-contained and Overleaf-ready.
+Each volume repo is self-contained, Overleaf-ready, and independently built.
 
 ```text
 lra-volume-N/
-  .gitignore                  synced from lra-governance
-  DESIGN.md                   synced from lra-governance
-  REPOSITORY_STRUCTURE.md     synced from lra-governance
-  constitution/               synced from lra-governance
-  main.tex                    Overleaf main document
+  main.tex                    Overleaf / Docker build root
   .latexmkrc                  local build config
-  common/                     synced copy from lra-common
-  bibliography/               volume-owned shard for standalone builds
+  bibliography/               volume-owned bibliography shard
   volume-N/
     index.tex
     <chapter>/
@@ -142,8 +111,10 @@ lra-volume-N/
       proofs/
 ```
 
-`main.tex` in each volume repo inputs `common/volume-preamble` and
-`volume-N/index`. Paths are intentionally the same shape as in the monorepo.
+At build time the volume checks out `lra-common` (for `common/`) and
+`lra-governance` (for validators and canonical YAML). These are supplied by the
+build environment, not stored as synced copies in the volume repo. `main.tex`
+inputs the volume preamble and `volume-N/index`.
 
 ## Canonical Chapter Layout
 
@@ -170,98 +141,51 @@ The chapter `index.tex` is the only file that inputs `proofs/index.tex`.
 `proofs/notes/index.tex` inputs proof files in dependency order. Exercise and
 capstone material lives under `proofs/exercises/`.
 
-## Sync Rules
+## Integration Rules
 
-- Governance files flow from `lra-governance` to every repo.
-- Shared LaTeX files flow from `lra-common` outward. Bibliography shards are owned by volume repos and flow from each volume repo into the monorepo.
-- Volume content flows from each `lra-volume-N` repo to the monorepo.
-- Governance files are excluded from volume-to-monorepo sync by path scope:
-  volume workflows sync only `volume-N/**`.
-- Canonical YAML files stay at the monorepo root and are not copied to volume
-  repos.
-- When LaTeX source content lands in the monorepo on `main`, the monorepo CI
-  dispatches a rebuild event to `lra-knowledge-explorer` (see below).
+- Governance and shared LaTeX infrastructure are read directly from
+  `lra-governance` and `lra-common`; nothing is fanned out.
+- Bibliography shards are owned by each volume repo.
+- Canonical YAML lives in `lra-governance`. Tools resolve it the same way they
+  resolve the rest of governance; it is not duplicated into volume repos.
+- Volume builds are independent and publish PDFs to `lra-volumes-output`.
 
 ---
 
 ## Knowledge Explorer Pipeline
 
-The knowledge explorer at `lra-knowledge-explorer` is rebuilt automatically
-whenever LaTeX source content is pushed to the monorepo. The full chain is:
+The knowledge explorer at `lra-knowledge-explorer` is rebuilt from the
+independent volume repositories through a governance-orchestrated refresh, not
+from an assembled monorepo. The refresh is run from `lra-governance` (see
+`docs/workflows/knowledge-extraction.md`).
 
-```
-lra-common push        ─┐
-lra-volume-i push       ├─► Learning-Real-Analysis (sync CI)
-lra-volume-* push       │     └── trigger-knowledge-rebuild.yml
-       ...             ─┘               └── repository_dispatch: lra-rebuild
-                                                  └── lra-knowledge-explorer
-                                                        ├── checkout LRA
-                                                        ├── run extraction pipeline
-                                                        ├── commit knowledge.json
-                                                        └── deploy to GitHub Pages
+```text
+lra-volume-i ... lra-volume-viii      canonical TeX source
+        |
+        v
+lra-governance refresh                preflight, extract, validate, combine
+        |
+        v
+lra-knowledge-explorer                knowledge.json, graph-edges.json
+        |
+        v
+GitHub Pages explorer
 ```
 
 The live explorer is published at:
 
-```
+```text
 https://wsollers.github.io/lra-knowledge-explorer/
 ```
 
-### Why dispatch from the monorepo, not from each leaf repo
+### Source rule
 
-All leaf repos (`lra-common`, `lra-volume-*`) already sync their content to
-`Learning-Real-Analysis` on push. The monorepo is therefore the correct and
-only place to watch for content changes — it is the single integration point.
-Putting dispatch triggers in each leaf repo would cause redundant rebuilds
-and would require every leaf to hold the `SYNC_PAT` secret.
-
-### Trigger path filter
-
-The monorepo workflow (`.github/workflows/trigger-knowledge-rebuild.yml`)
-fires only when these paths change on `main`:
-
-| Path | Reason |
-|---|---|
-| `volume-i/**` through `volume-viii/**` | Volume LaTeX chapters extracted by the pipeline |
-| `common/**` | Shared macro/environment changes can affect extraction output |
-| `bibliography/**` | Same reasoning |
-| `theorem-explorer/**.py` | Script changes in the pipeline itself warrant a rebuild |
-
-Cosmetic or structural files (`DESIGN.md`, `BACKLOG.md`, `curriculum.html`,
-etc.) do not trigger a rebuild.
-
-### Required secret
-
-The workflow requires a repository secret named `SYNC_PAT` — a GitHub PAT
-with `repo` scope. This is the same PAT used by the leaf-repo sync workflows.
-Add it at:
-
-```
-https://github.com/wsollers/Learning-Real-Analysis/settings/secrets/actions
-```
-
-### Knowledge Explorer repo layout
-
-```text
-lra-knowledge-explorer/
-  .github/
-    workflows/
-      rebuild.yml             triggered by repository_dispatch lra-rebuild
-  index.html                  redirect → knowledge-explorer.html
-  knowledge-explorer.html     interactive theorem graph (GitHub Pages entry)
-  real-analysis-explorer.html alternate UI
-  scripts/
-    extract_lra_chapter.py    Pass 1: LaTeX → seed JSON
-    seed_to_knowledge_json_v3_fixed6.py   Pass 2: seed → explorer JSON
-    run_extraction.py         orchestrator
-  knowledge.json              generated — overwritten by CI
-  graph-edges.json            generated — overwritten by CI
-  PIPELINE.md                 pipeline documentation
-```
-
-For full pipeline documentation see `PIPELINE.md` in `lra-knowledge-explorer`.
+Extraction reads the split volume repos directly. The retired monorepo is not an
+extraction source. Missing volume repos, chapter directories, `notes/index.tex`,
+or `proofs/index.tex` are hard errors.
 
 ### Manual rebuild
 
-Go to **Actions → Rebuild Knowledge Explorer → Run workflow** in
-`lra-knowledge-explorer` to trigger a rebuild without a code push.
+Run the governance refresh from `lra-governance`, or trigger
+**Actions -> Rebuild Knowledge Explorer -> Run workflow** in
+`lra-knowledge-explorer`.

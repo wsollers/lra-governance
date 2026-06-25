@@ -6,8 +6,11 @@ provider-specific agent behavior.
 
 ## Ownership
 
-- `Learning-Real-Analysis` owns the integrated LaTeX source tree and canonical
-  YAML sources.
+- `lra-governance` owns the integrated extraction standards, the canonical YAML
+  sources (`predicates.yaml`, `notation.yaml`, `relations.yaml`), and the
+  orchestration scripts, schemas, validators, prompts, logs, reports, and
+  committed comparison baselines for the refresh.
+- The independent `lra-volume-*` repos are the canonical TeX source inputs.
 - `lra-knowledge-explorer` owns theorem extraction, graph generation, explorer
   internals, and generated explorer data.
 - `lra-pdf-extractor` may produce candidate source-ingestion artifacts, but it
@@ -15,12 +18,10 @@ provider-specific agent behavior.
 - `lra-source-profiles` may produce reviewed source-profile selections,
   source indexes, and cached source extracts, but it does not own final notes,
   graph data, canonical YAML, or explorer internals.
-- `lra-governance` owns the standards that make extraction possible.
 
-For the direct multi-repo refresh path, `lra-governance` owns the orchestration
-scripts, schemas, validators, prompts, logs, reports, and committed comparison
-baselines. The volume repos are source inputs. `lra-knowledge-explorer` is the
-publication target for validated generated data and LLM audit batches.
+For the multi-repo refresh path, the refresh is run from `lra-governance` over
+the volume repos. `lra-knowledge-explorer` is the publication target for
+validated generated data and LLM audit batches.
 
 ## Extraction Inputs
 
@@ -32,7 +33,7 @@ The pipeline relies on:
 - statement labels using `def:`, `ax:`, `thm:`, `lem:`, `prop:`, or `cor:`,
 - proof labels using `prf:` only for proof locations,
 - canonical chapter and proof file structure,
-- canonical YAML from `Learning-Real-Analysis`.
+- canonical YAML from `lra-governance`.
 
 Dependency edges must target mathematical statement labels. A `prf:` label may
 support theorem/proof navigation, but it is not a dependency target.

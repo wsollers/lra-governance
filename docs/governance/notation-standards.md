@@ -1,8 +1,5 @@
 # Notation Standards
 
-Source sections: `DESIGN.md` primary rules A-C, section 3, and the canonical
-source rule after section 3.
-
 ## Layer-Gated Notation
 
 Before editing or generating a formal block, classify its role. Definition,
@@ -19,7 +16,7 @@ predicate-language version.
 
 ## Canonical Sources
 
-The source-of-truth files remain in `Learning-Real-Analysis`:
+The source-of-truth files live in `lra-governance`:
 
 - `predicates.yaml`
 - `notation.yaml`

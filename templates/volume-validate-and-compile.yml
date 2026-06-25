@@ -28,12 +28,6 @@ jobs:
           repository: wsollers/lra-governance
           path: lra-governance
 
-      - name: Checkout common
-        uses: actions/checkout@v4
-        with:
-          repository: wsollers/lra-common
-          path: lra-common
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -48,74 +42,68 @@ jobs:
           LRA_GOVERNANCE_ROOT: ${{ github.workspace }}/lra-governance
         run: python ../lra-governance/scripts/build_volume.py --root . --validate-only
 
-      - name: Build LaTeX Docker image
-        run: docker build -t learning-real-analysis-latex -f lra-common/docker/Dockerfile lra-common/docker
-
       - name: Compile digital PDF
         run: |
-          docker run --rm \
-            -e LRA_GOVERNANCE_ROOT=/lra-governance \
-            -v "${{ github.workspace }}/volume:/workspace" \
-            -v "${{ github.workspace }}/lra-common/common:/workspace/common:ro" \
-            -v "${{ github.workspace }}/lra-governance:/lra-governance:ro" \
-            -w /workspace \
-            learning-real-analysis-latex \
-            latexmk -lualatex -interaction=nonstopmode -file-line-error -synctex=1 -shell-escape main.tex
-          mkdir -p pdf-output
-          cp volume/build/main.pdf pdf-output/digital.pdf
+          python lra-governance/tools/governance/build_volume_docker.py \
+            --root volume \
+            --checkout-common lra-common \
+            --skip-validate \
+            --output-dir pdf-output/digital
 
       - name: Verify digital PDF
         run: |
-          test -s pdf-output/digital.pdf
           python3 - <<'PY'
           from pathlib import Path
 
-          pdf = Path("pdf-output/digital.pdf")
-          data = pdf.read_bytes()
-          if not data.startswith(b"%PDF-"):
-              raise SystemExit("digital PDF does not start with a PDF header")
-          if b"%%EOF" not in data[-2048:]:
-              raise SystemExit("digital PDF is missing a PDF EOF trailer")
+          pdfs = sorted(Path("pdf-output/digital").glob("*.pdf"))
+          if not pdfs:
+              raise SystemExit("no digital PDFs were produced")
+          for pdf in pdfs:
+              data = pdf.read_bytes()
+              if not data.startswith(b"%PDF-"):
+                  raise SystemExit(f"{pdf} does not start with a PDF header")
+              if b"%%EOF" not in data[-2048:]:
+                  raise SystemExit(f"{pdf} is missing a PDF EOF trailer")
           PY
 
       - name: Clean LaTeX build output
         run: |
-          docker run --rm \
-            -e LRA_GOVERNANCE_ROOT=/lra-governance \
-            -v "${{ github.workspace }}/volume:/workspace" \
-            -v "${{ github.workspace }}/lra-common/common:/workspace/common:ro" \
-            -v "${{ github.workspace }}/lra-governance:/lra-governance:ro" \
-            -w /workspace \
-            learning-real-analysis-latex \
-            latexmk -C
+          python lra-governance/tools/governance/build_volume_docker.py \
+            --root volume \
+            --common-root lra-common \
+            --skip-validate \
+            --skip-image-build \
+            --latex-command latexmk -C
 
       - name: Compile print PDF
         run: |
-          docker run --rm \
-            -e LRA_PRINT_EDITION=1 \
-            -e LRA_GOVERNANCE_ROOT=/lra-governance \
-            -v "${{ github.workspace }}/volume:/workspace" \
-            -v "${{ github.workspace }}/lra-common/common:/workspace/common:ro" \
-            -v "${{ github.workspace }}/lra-governance:/lra-governance:ro" \
-            -w /workspace \
-            learning-real-analysis-latex \
-            latexmk -lualatex -interaction=nonstopmode -file-line-error -synctex=1 -shell-escape main.tex
-          cp volume/build/main.pdf pdf-output/print.pdf
+          python lra-governance/tools/governance/build_volume_docker.py \
+            --root volume \
+            --common-root lra-common \
+            --skip-validate \
+            --skip-image-build \
+            --print-edition \
+            --output-dir pdf-output/print
 
       - name: Verify print PDF
         run: |
-          test -s pdf-output/print.pdf
           python3 - <<'PY'
           from pathlib import Path
 
-          pdf = Path("pdf-output/print.pdf")
-          data = pdf.read_bytes()
-          if not data.startswith(b"%PDF-"):
-              raise SystemExit("print PDF does not start with a PDF header")
-          if b"%%EOF" not in data[-2048:]:
-              raise SystemExit("print PDF is missing a PDF EOF trailer")
+          pdfs = sorted(Path("pdf-output/print").glob("*.pdf"))
+          if not pdfs:
+              raise SystemExit("no print PDFs were produced")
+          for pdf in pdfs:
+              data = pdf.read_bytes()
+              if not data.startswith(b"%PDF-"):
+                  raise SystemExit(f"{pdf} does not start with a PDF header")
+              if b"%%EOF" not in data[-2048:]:
+                  raise SystemExit(f"{pdf} is missing a PDF EOF trailer")
           PY
 
+      # SYNC_PAT here authorizes publishing built PDFs to lra-volumes-output.
+      # It is NOT the retired governance/volume sync; it is the independent
+      # build's publish step.
       - name: Checkout output repository
         uses: actions/checkout@v4
         with:
@@ -129,14 +117,34 @@ jobs:
         run: |
           repo="${GITHUB_REPOSITORY##*/}"
           mkdir -p output/digital output/print
-          cp pdf-output/digital.pdf "output/digital/${repo}.pdf"
-          cp pdf-output/print.pdf "output/print/${repo}.pdf"
+          python3 - <<'PY'
+          from pathlib import Path
+
+          repo = Path("${{ github.repository }}").name
+
+          def publish(edition: str) -> None:
+              source = Path("pdf-output") / edition
+              target = Path("output") / edition
+              for pdf in sorted(source.glob("*.pdf")):
+                  if pdf.stem == "main":
+                      name = f"{repo}.pdf"
+                  elif pdf.stem.startswith("volume-") and pdf.stem.endswith("-main"):
+                      name = pdf.name
+                  elif pdf.stem.startswith("main-book-"):
+                      name = f"{repo}-{pdf.stem.removeprefix('main-')}.pdf"
+                  else:
+                      name = f"{repo}-{pdf.stem}.pdf"
+                  (target / name).write_bytes(pdf.read_bytes())
+
+          publish("digital")
+          publish("print")
+          PY
           cd output
           git config core.autocrlf false
           git config user.name "lra-pdf-bot"
           git config user.email "lra-pdf-bot@noreply.github.com"
           git add digital/.gitkeep print/.gitkeep
-          git add -f "digital/${repo}.pdf" "print/${repo}.pdf"
+          git add -f digital/*.pdf print/*.pdf
           if git diff --cached --quiet; then
             echo "No PDF changes to publish"
             exit 0

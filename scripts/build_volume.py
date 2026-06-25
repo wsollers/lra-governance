@@ -19,6 +19,27 @@ def run(cmd: list[str], cwd: Path, env: dict[str, str] | None = None) -> None:
         raise SystemExit(exc.returncode) from None
 
 
+def governance_root() -> Path:
+    env = os.environ.get("LRA_GOVERNANCE_ROOT")
+    if env:
+        return Path(env).expanduser().resolve()
+    return Path(__file__).resolve().parents[1]
+
+
+def discover_tex_roots(root: Path) -> list[Path]:
+    roots = sorted(root.glob("volume-*-*-main.tex"))
+    if not roots:
+        roots = sorted(root.glob("main-book-*.tex"))
+    if not roots and (root / "main.tex").exists():
+        roots = [root / "main.tex"]
+    if not roots:
+        raise SystemExit(
+            "no TeX build roots found: expected volume-{roman}-{book-slug}-main.tex, "
+            "legacy main-book-*.tex, or transitional main.tex"
+        )
+    return roots
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Validate and build a leaf LRA volume.")
     parser.add_argument("--root", type=Path, default=Path("."))
@@ -37,20 +58,26 @@ def main() -> int:
     args = parser.parse_args()
 
     root = args.root.resolve()
-    validator = root / "tools" / "governance" / "validate_volume.py"
+    validator = governance_root() / "tools" / "governance" / "validate_volume.py"
+    if not validator.exists():
+        raise SystemExit(
+            f"canonical governance validator not found: {validator}. "
+            "Set LRA_GOVERNANCE_ROOT or run from the lra-governance checkout."
+        )
     run([sys.executable, str(validator), str(root), "--fail-on-errors"], root)
 
-    latex_cmd = args.latex_command or ["latexmk", "-lualatex", "main.tex"]
     if not args.validate_only:
-        if shutil.which(latex_cmd[0]) is None:
+        latex_cmd_base = args.latex_command or ["latexmk", "-lualatex"]
+        if shutil.which(latex_cmd_base[0]) is None:
             raise SystemExit(
-                f"Build command not found: {latex_cmd[0]}. Validation already passed; "
+                f"Build command not found: {latex_cmd_base[0]}. Validation already passed; "
                 "install latexmk or use --validate-only."
             )
         env = os.environ.copy()
         if args.print_edition:
             env["LRA_PRINT_EDITION"] = "1"
-        run(latex_cmd, root, env=env)
+        for tex_root in discover_tex_roots(root):
+            run([*latex_cmd_base, tex_root.name], root, env=env)
 
     return 0
 

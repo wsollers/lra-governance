@@ -4,20 +4,25 @@ LaTeX build behavior follows repository ownership. Agents should use the build
 path for the repository being edited and avoid importing specialist validation
 workflows into unrelated repos.
 
-## Monorepo
+## Independent Volume Builds
 
-`Learning-Real-Analysis` owns omnibus integration builds, Docker build
-infrastructure, cross-volume assembly, canonical YAML, and downstream rebuild
-dispatch.
+Each `lra-volume-*` repo builds its own digital and print PDFs independently in
+a Docker container, checking out `lra-common` (for shared LaTeX infrastructure)
+and `lra-governance` (for validators and canonical YAML) at build time, and
+publishing to `lra-volumes-output`. There is no assembled monorepo or omnibus
+build; `Learning-Real-Analysis` is retired.
 
-Docker build details remain in the monorepo's Docker documentation. Governance
-docs record ownership and safety boundaries rather than duplicating every build
-command.
+Docker build details live in `lra-common/docker`. Governance docs record
+ownership and safety boundaries rather than duplicating every build command.
 
 ## Volume Repos
 
-Each `lra-volume-*` repo is Overleaf-ready. Its local `main.tex` uses synced
-`common/` copies and inputs only that volume's content.
+Each `lra-volume-*` repo is Overleaf-ready. Each book builds from a root named
+`volume-{roman}-{book-slug}-main.tex`; legacy `main-book-*.tex` roots and
+transitional `main.tex` roots are accepted only while the book split is being
+migrated. The root uses `common/` supplied by the build environment (Docker
+image or explicit `lra-common` checkout) and inputs only that volume's content.
+`common/` is not stored as a synced copy in the volume repo.
 
 Volume repos own volume content only. They do not own shared LaTeX
 infrastructure, canonical YAML, Lean formalization, NURBS/Vulkan simulation,
@@ -35,8 +40,9 @@ numerical-analysis benchmark workflows, or PDF extraction tooling.
 - colors,
 - preambles.
 
-Changes to shared LaTeX infrastructure must be made in `lra-common`, then
-propagated through the approved sync path.
+Changes to shared LaTeX infrastructure must be made in `lra-common`. Builds
+consume it directly through the Docker image or an explicit checkout; it is not
+fanned out into other repos.
 
 ## Figures
 

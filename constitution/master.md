@@ -16,13 +16,14 @@ concerns that must never be mixed:
 
 ## Authority Pointers
 
-Repository ownership, volume ownership, sync direction, generated-file policy,
+Repository ownership, volume ownership, integration boundaries, generated-file
+policy,
 canonical YAML storage, and agent loading discipline are not constitutional
 rules. They are maintained in the architecture, governance, and routing docs:
 
 - repository and repo ownership map:
   `docs/architecture/repository-layout.md`
-- multi-repo sync direction and emergency downstream edits:
+- multi-repo integration boundaries and emergency downstream edits:
   `docs/architecture/multi-repo-sync.md`
 - canonical predicate, notation, and relation YAML storage:
   `docs/architecture/canonical-yaml.md`

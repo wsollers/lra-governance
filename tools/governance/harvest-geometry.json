@@ -1,0 +1,7 @@
+{
+  "source_volume": "volume-v",
+  "dest_volume": "volume-i",
+  "dest_book": "book-geometry",
+  "chapters": ["euclidean-geometry", "trigonometry", "analytical-geometry"],
+  "_note": "Enactment step 3, first cross-volume harvest: lift the three geometry chapters out of old Vol V into Vol I's new book-geometry (the Cantor->Ito spine's Foundations volume). Order follows the enactment layout (euclidean -> trigonometry -> analytical-geometry). This CREATES book-geometry in Vol I (book-logic, book-sets already exist; book-geometry appends after them) and removes the three chapters from Vol V's index, leaving non-euclidean/differential/riemannian geometry (-> lra-hold) and topology (-> new Vol IV) behind for later moves. The chapter.yaml volume token flips volume-v -> volume-i. Any residual 'volume-v/<other>' references the tool reports are genuine cross-volume refs to re-point in the next gated step (verified search-replace, compile between) -- expected, not damage. Gate after apply: verify_book_move on BOTH volume-i and volume-v, then build both."
+}

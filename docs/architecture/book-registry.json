@@ -1,0 +1,246 @@
+{
+  "naming": {
+    "tex_root_pattern": "volume-{roman}-{book_slug}-main.tex",
+    "pdf_pattern": "volume-{roman}-{book_slug}-main.pdf",
+    "default_series_title": "From Cantor to Ito",
+    "applied_series_title": "From Turing to Carmack",
+    "legacy_tex_root_patterns": [
+      "main-book-*.tex",
+      "main.tex"
+    ]
+  },
+  "volumes": [
+    {
+      "volume_number": 1,
+      "roman": "i",
+      "display_title": "Logic, Sets, and Proof",
+      "series_title": "From Cantor to Ito",
+      "books": [
+        {
+          "order": 1,
+          "slug": "mathematical-logic-and-proof",
+          "title": "Mathematical Logic and Proof",
+          "tex_root": "volume-i-mathematical-logic-and-proof-main.tex",
+          "legacy_roots": ["main-book-logic.tex"]
+        },
+        {
+          "order": 2,
+          "slug": "set-theory",
+          "title": "Set Theory",
+          "tex_root": "volume-i-set-theory-main.tex",
+          "legacy_roots": ["main-book-sets.tex"]
+        },
+        {
+          "order": 3,
+          "slug": "foundational-geometry",
+          "title": "Foundational Geometry",
+          "tex_root": "volume-i-foundational-geometry-main.tex",
+          "legacy_roots": ["main-book-geometry.tex"]
+        }
+      ]
+    },
+    {
+      "volume_number": 2,
+      "roman": "ii",
+      "display_title": "Origins of Numbers",
+      "series_title": "From Cantor to Ito",
+      "books": [
+        {
+          "order": 1,
+          "slug": "discrete-number-systems",
+          "title": "Discrete Number Systems",
+          "tex_root": "volume-ii-discrete-number-systems-main.tex",
+          "legacy_roots": ["main-book-discrete-algebraic.tex"]
+        },
+        {
+          "order": 2,
+          "slug": "the-continuum",
+          "title": "The Continuum",
+          "tex_root": "volume-ii-the-continuum-main.tex",
+          "legacy_roots": ["main-book-continuum.tex"]
+        }
+      ]
+    },
+    {
+      "volume_number": 3,
+      "roman": "iii",
+      "display_title": "Classical Analysis",
+      "series_title": "From Cantor to Ito",
+      "books": [
+        {
+          "order": 1,
+          "slug": "bounds-sequences-and-series",
+          "title": "Bounds, Sequences, and Series",
+          "tex_root": "volume-iii-bounds-sequences-and-series-main.tex",
+          "legacy_roots": ["main-book-analysis-i.tex"]
+        },
+        {
+          "order": 2,
+          "slug": "continuity",
+          "title": "Continuity",
+          "tex_root": "volume-iii-continuity-main.tex",
+          "legacy_roots": ["main-book-analysis-ii.tex"]
+        },
+        {
+          "order": 3,
+          "slug": "differentiation",
+          "title": "Differentiation",
+          "tex_root": "volume-iii-differentiation-main.tex",
+          "legacy_roots": ["main-book-analysis-iii.tex"]
+        },
+        {
+          "order": 4,
+          "slug": "integration",
+          "title": "Integration",
+          "tex_root": "volume-iii-integration-main.tex",
+          "legacy_roots": ["main-book-integration.tex"]
+        }
+      ]
+    },
+    {
+      "volume_number": 4,
+      "roman": "iv",
+      "display_title": "Mathematical Spaces",
+      "series_title": "From Cantor to Ito",
+      "books": [
+        {
+          "order": 1,
+          "slug": "mathematical-spaces",
+          "title": "Mathematical Spaces",
+          "tex_root": "volume-iv-mathematical-spaces-main.tex",
+          "legacy_roots": ["main-book-spaces.tex"]
+        }
+      ]
+    },
+    {
+      "volume_number": 5,
+      "roman": "v",
+      "display_title": "Modern Analysis",
+      "series_title": "From Cantor to Ito",
+      "books": [
+        {
+          "order": 1,
+          "slug": "measure-theory",
+          "title": "Measure Theory",
+          "tex_root": "volume-v-measure-theory-main.tex",
+          "legacy_roots": ["main-book-measure.tex"]
+        },
+        {
+          "order": 2,
+          "slug": "probability",
+          "title": "Probability",
+          "tex_root": "volume-v-probability-main.tex",
+          "legacy_roots": ["main-book-probability.tex"]
+        },
+        {
+          "order": 3,
+          "slug": "functional-analysis",
+          "title": "Functional Analysis",
+          "tex_root": "volume-v-functional-analysis-main.tex",
+          "legacy_roots": ["main-book-functional-analysis.tex"]
+        },
+        {
+          "order": 4,
+          "slug": "complex-analysis",
+          "title": "Complex Analysis",
+          "tex_root": "volume-v-complex-analysis-main.tex",
+          "legacy_roots": ["main-book-complex-analysis.tex"]
+        }
+      ]
+    },
+    {
+      "volume_number": 6,
+      "roman": "vi",
+      "display_title": "Algebra",
+      "series_title": "From Cantor to Ito",
+      "books": [
+        {
+          "order": 1,
+          "slug": "algebra",
+          "title": "Algebra",
+          "tex_root": "volume-vi-algebra-main.tex",
+          "legacy_roots": ["main-book-algebra.tex"]
+        },
+        {
+          "order": 2,
+          "slug": "linear-algebra",
+          "title": "Linear Algebra",
+          "tex_root": "volume-vi-linear-algebra-main.tex",
+          "legacy_roots": ["main-book-linear-algebra.tex"]
+        },
+        {
+          "order": 3,
+          "slug": "lattice-and-order-theory",
+          "title": "Lattice and Order Theory",
+          "tex_root": "volume-vi-lattice-and-order-theory-main.tex",
+          "legacy_roots": ["main-book-lattice-order.tex"]
+        }
+      ]
+    },
+    {
+      "volume_number": 7,
+      "roman": "vii",
+      "display_title": "Advanced Logic",
+      "series_title": "From Cantor to Ito",
+      "books": [
+        {
+          "order": 1,
+          "slug": "category-theory",
+          "title": "Category Theory",
+          "tex_root": "volume-vii-category-theory-main.tex",
+          "legacy_roots": ["main-book-category-theory.tex"]
+        },
+        {
+          "order": 2,
+          "slug": "model-theory",
+          "title": "Model Theory",
+          "tex_root": "volume-vii-model-theory-main.tex",
+          "legacy_roots": ["main-book-model-theory.tex"]
+        },
+        {
+          "order": 3,
+          "slug": "proof-theory",
+          "title": "Proof Theory",
+          "tex_root": "volume-vii-proof-theory-main.tex",
+          "legacy_roots": ["main-book-proof-theory.tex"]
+        },
+        {
+          "order": 4,
+          "slug": "type-theory",
+          "title": "Type Theory",
+          "tex_root": "volume-vii-type-theory-main.tex",
+          "legacy_roots": ["main-book-type-theory.tex"]
+        },
+        {
+          "order": 5,
+          "slug": "lambda-calculus",
+          "title": "Lambda Calculus",
+          "tex_root": "volume-vii-lambda-calculus-main.tex",
+          "legacy_roots": ["main-book-lambda-calculus.tex"]
+        }
+      ]
+    },
+    {
+      "volume_number": 8,
+      "roman": "viii",
+      "display_title": "Applied and Computational Mathematics",
+      "series_title": "From Turing to Carmack",
+      "books": [
+        {
+          "order": 1,
+          "slug": "applied-methods",
+          "title": "Applied Methods",
+          "tex_root": "volume-viii-applied-methods-main.tex",
+          "legacy_roots": ["main-book-applied-methods.tex"]
+        },
+        {
+          "order": 2,
+          "slug": "numerical-foundations",
+          "title": "Numerical Foundations",
+          "tex_root": "volume-viii-numerical-foundations-main.tex",
+          "legacy_roots": ["main-book-numerical-foundations.tex"]
+        }
+      ]
+    }
+  ]
+}

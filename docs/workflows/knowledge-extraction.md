@@ -12,20 +12,20 @@ explorer extraction:
 - `lra-volume-ii`
 - `lra-volume-iii`
 
-The integrated `Learning-Real-Analysis` monorepo must not be used as an
-extraction source; it may lag the split repositories. Missing expected volume
-repositories, missing chapter directories, missing `notes/index.tex`, or
-missing `proofs/index.tex` are hard errors.
+There is no integrated `Learning-Real-Analysis` monorepo; it is retired. Extract
+only from the split volume repos. Missing expected volume repositories, missing
+chapter directories, missing `notes/index.tex`, or missing `proofs/index.tex`
+are hard errors.
 
-Canonical YAML remains in `Learning-Real-Analysis` until those shared metadata
-files are split out:
+Canonical YAML lives in `lra-governance`:
 
 - `predicates.yaml`
 - `notation.yaml`
 - `relations.yaml`
 
-Tools that need canonical YAML should receive the monorepo root explicitly, but
-formal statements and proofs must be read from the split volume repos.
+Tools that need canonical YAML resolve it from the `lra-governance` root
+(`LRA_GOVERNANCE_ROOT`, a sibling checkout, or the build image), while formal
+statements and proofs are read from the split volume repos.
 
 ## Expected Source Shape
 

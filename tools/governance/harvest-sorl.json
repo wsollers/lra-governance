@@ -1,0 +1,7 @@
+{
+  "source_volume": "volume-ii",
+  "dest_volume": "volume-iii",
+  "dest_book": "book-analysis-i",
+  "chapters": ["structure-of-real-line"],
+  "_note": "Enactment step 3, third cross-volume move: lift structure-of-real-line out of Vol II (where it has sat as a directly-routed stay-chapter since the Vol II partition) into Vol III's EXISTING book-analysis-i -- the chapter that book was always meant to end with ('after toolkit'). The merge-aware gen_book_index appends it after the six existing chapters (real-analysis, bounding, sequences, series, function-sequences, functions); Vol III's volume index is unchanged since book-analysis-i is already routed. Vol II's index drops structure-of-real-line, leaving book-discrete-algebraic, book-continuum, lean. The chapter.yaml volume token flips volume-ii -> volume-iii. Expect cross-volume ref-warnings on BOTH sides afterward (structure-of-real-line references Vol II number-system construction; anything in Vol II referencing it now dangles) -- that is the step-4 re-point work, not damage; builds still complete. Any residual 'volume-ii/<other>' the tool reports should be classified: \\ref/\\hyperref = warning (re-point next), hard \\input{volume-ii/...} = would break Vol III's build (resolve with the move). Gate after apply: verify_book_move + validate + build on BOTH volume-ii and volume-iii."
+}

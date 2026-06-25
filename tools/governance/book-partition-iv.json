@@ -1,0 +1,18 @@
+{
+  "volume": "volume-iv",
+  "_note": "Mechanical whole-chapter partition of old Vol IV (Algebra; becomes new Vol VI 'Algebraic Structures' after the later renumber sweep -- book slugs are renumber-stable, so partitioning under volume-iv/ now is safe). Chapters currently nest under algebra/; the five book-bound chapters move OUT of algebra/ into book-* dirs at the volume root (same as Vol III's analysis/ partition). set-algebra is intentionally NOT in any book -- it harvests to the NEW Vol IV (Spaces, measure foundation) in enactment step 3 -- so it stays at algebra/set-algebra as a directly-routed stay-chapter, preserved in place by the reconciler. The pre-existing algebra/index.tex router is already dead (the volume index bypasses it and it lists only 4 of 6 chapters); it is left untouched and will be removed when set-algebra departs and algebra/ empties. No ignore-list edits needed. The volume index's \\microtypesetup{expansion=false/true} guards sit outside the routing region and are preserved. Pagination is invariant under the reorder (every chapter is \\clearpage-isolated). Edit chapter lists/order freely before --apply.",
+  "books": [
+    {
+      "name": "book-algebra",
+      "chapters": ["algebraic-structures", "abstract-algebra", "algebraic-geometry"]
+    },
+    {
+      "name": "book-linear-algebra",
+      "chapters": ["linear-algebra"]
+    },
+    {
+      "name": "book-lattice-order",
+      "chapters": ["lattice-order"]
+    }
+  ]
+}

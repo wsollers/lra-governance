@@ -1,6 +1,11 @@
 {
   "required_volume_files": ["index.tex"],
   "required_volume_entry_files": ["main.tex"],
+  "required_volume_entry_patterns": ["volume-*-*-main.tex", "main-book-*.tex", "main.tex"],
+  "canonical_volume_entry_pattern": "^volume-(i|ii|iii|iv|v|vi|vii|viii)-[a-z0-9]+(?:-[a-z0-9]+)*-main\\.tex$",
+  "legacy_volume_entry_patterns": ["main-book-*.tex", "main.tex"],
+  "required_book_files": ["index.tex"],
+  "book_name_pattern": "^book-[a-z0-9]+(?:-[a-z0-9]+)*$",
   "required_chapter_files": ["index.tex", "chapter.yaml", "notes/index.tex", "proofs/index.tex", "proofs/exercises/index.tex"],
   "required_chapter_dirs": ["notes", "proofs", "proofs/exercises"],
   "note_only_topics": ["notation"],

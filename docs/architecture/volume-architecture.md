@@ -1,22 +1,97 @@
 # Eight-Volume Architecture
 
-This document defines the canonical target volume architecture for Learning
-Real Analysis. It is governance for future migration work only. It does not
-rename current displayed titles, move content, create repositories, alter
-archives, or change build and sync scripts.
+This document defines the canonical target volume and book architecture for
+Learning Real Analysis. A volume is the broad shelf title. A book is a
+named subject partition inside a volume and has its own
+`volume-{roman}-{book-slug}-main.tex` entry root.
 
 ## Target Volumes
 
 | Volume | Roman | Repository | Display title | Frontispiece | Lifespan | Image path | Status |
 |---:|---|---|---|---|---|---|---|
 | 1 | I | `wsollers/lra-volume-i` | `Logic, Sets, and Proof` | Georg Cantor | 1845-1918 | `images/cantor.png` | active |
-| 2 | II | `wsollers/lra-volume-ii` | `Origins of the Numbers` | Giuseppe Peano | 1858-1932 | `images/peano.png` | active |
-| 3 | III | `wsollers/lra-volume-iii` | `Analysis` | Augustin-Louis Cauchy | 1789-1857 | `images/cauchy.png` | active |
-| 4 | IV | `wsollers/lra-volume-iv` | `Algebra and Abstract Structures` | Emmy Noether | 1882-1935 | `images/noether.png` | active |
-| 5 | V | `wsollers/lra-volume-v` | `Topology and Geometry` | Henri Poincare | 1854-1912 | `images/poincare.png` | active |
-| 6 | VI | `wsollers/lra-volume-vi` | `Computational Mathematics` | Leonhard Euler | 1707-1783 | `images/euler.png` | active |
-| 7 | VII | `wsollers/lra-volume-vii` | `Numerical and Approximation Mathematics` | Isaac Newton | 1643-1727 | `images/newton.png` | active |
-| 8 | VIII | `wsollers/lra-volume-viii` | `Mathematical Logic and Foundations` | David Hilbert | 1862-1943 | `images/hilbert.png` | active |
+| 2 | II | `wsollers/lra-volume-ii` | `Origins of Numbers` | Giuseppe Peano | 1858-1932 | `images/peano.png` | active |
+| 3 | III | `wsollers/lra-volume-iii` | `Classical Analysis` | Augustin-Louis Cauchy | 1789-1857 | `images/cauchy.png` | active |
+| 4 | IV | `wsollers/lra-volume-iv` | `Mathematical Spaces` | Emmy Noether | 1882-1935 | `images/noether.png` | active |
+| 5 | V | `wsollers/lra-volume-v` | `Modern Analysis` | Henri Poincare | 1854-1912 | `images/poincare.png` | active |
+| 6 | VI | `wsollers/lra-volume-vi` | `Algebra` | Leonhard Euler | 1707-1783 | `images/euler.png` | active |
+| 7 | VII | `wsollers/lra-volume-vii` | `Advanced Logic` | David Hilbert | 1862-1943 | `images/hilbert.png` | active |
+| 8 | VIII | `wsollers/lra-volume-viii` | `Applied and Computational Mathematics` | Isaac Newton | 1643-1727 | `images/newton.png` | active |
+
+## Canonical Book Naming Table
+
+This table summarizes the book-level display titles. The machine-readable
+registry for exact TeX root names, output names, and migration aliases is
+`docs/architecture/book-registry.json`. Book titles must not be confused with
+volume titles.
+
+| Volume | Volume title | Canonical book title | Current root slug | Notes |
+|---|---|---|---|---|
+| I | Logic, Sets, and Proof | Mathematical Logic and Proof | `book-logic` | Introductory formal logic, proof systems, and axiom-system tooling. |
+| I | Logic, Sets, and Proof | Set Theory | `book-sets` | Set-theoretic foundations. |
+| I | Logic, Sets, and Proof | Foundational Geometry | `book-geometry` | Euclidean, trigonometric, and analytic geometry foundations. |
+| II | Origins of Numbers | Discrete Number Systems | `book-discrete-algebraic` | Formalizing number systems through natural, whole, and integer systems. |
+| II | Origins of Numbers | The Continuum | `book-continuum` | Embeddings, rationals, reals, complex numbers, and number-line constructions. |
+| III | Classical Analysis | Bounds, Sequences, and Series | `book-analysis-i` | Foundational real-analysis toolkit, bounds, functions without limits, sequences, series, and function sequences. |
+| III | Classical Analysis | Continuity | `book-analysis-ii` | Elementary functions, limits, and continuity. |
+| III | Classical Analysis | Differentiation | `book-analysis-iii` | Differentiation. |
+| III | Classical Analysis | Integration | `book-integration` | Riemann integration and related classical integration material. |
+| IV | Mathematical Spaces | Mathematical Spaces | `book-spaces` | Metric spaces, topological spaces, measure spaces, set algebra, and algebras of sets. |
+| V | Modern Analysis | Modern Analysis | `book-measure`, `book-probability`, `book-functional-analysis`, `book-complex-analysis` | Current roots are subject partitions under the Modern Analysis volume. |
+| VI | Algebra | Algebra | `book-algebra`, `book-linear-algebra`, `book-lattice-order` | Current roots are algebraic subject partitions under the Algebra volume. |
+| VII | Advanced Logic | Advanced Logic | `book-category-theory`, `book-model-theory`, `book-proof-theory`, `book-type-theory`, `book-lambda-calculus` | Current roots are advanced-logic subject partitions. |
+| VIII | Applied and Computational Mathematics | Applied and Computational Mathematics | `book-applied-methods`, `book-numerical-foundations` | Applied methods and numerical foundations. |
+
+## Book Root Naming
+
+Every book must eventually build from a readable root named:
+
+```text
+volume-{roman}-{book-slug}-main.tex
+```
+
+The produced PDF uses the same stem:
+
+```text
+volume-{roman}-{book-slug}-main.pdf
+```
+
+Examples:
+
+- `volume-i-mathematical-logic-and-proof-main.tex`;
+- `volume-ii-the-continuum-main.tex`;
+- `volume-iii-differentiation-main.tex`.
+
+Legacy `main-book-*.tex` roots and transitional `main.tex` roots are accepted
+only while repositories are being migrated to book-level frontmatter and build
+roots.
+
+Open naming decisions:
+
+- whether Volume III `Continuity` later merges into `Differentiation` or
+  remains a separate bridge book before differentiation;
+- whether Modern Analysis, Algebra, Advanced Logic, and Applied and
+  Computational Mathematics should keep subject-level roots as book titles or
+  collapse under one book title per volume.
+
+## Book Migration Checklist
+
+1. Verify governance ground rules first: book registry, metadata fields,
+   filename rules, validators, Docker build discovery, and output naming must
+   all agree before content roots are renamed.
+2. Rename or create book roots using
+   `volume-{roman}-{book-slug}-main.tex`.
+3. Duplicate and specialize book frontmatter so each book has its own title
+   page, copyright/frontmatter policy, table of contents, and introduction
+   hook.
+4. Build each book independently and publish PDFs using the matching
+   `volume-{roman}-{book-slug}-main.pdf` names.
+5. Update Knowledge Explorer navigation from volume-only selection to
+   volume/book/chapter selection.
+6. Update knowledge extraction so records carry volume metadata and book
+   metadata, including `book_slug`, `book_title`, and source root.
+7. Add expected book-level TOC validation so misplaced or missing sections are
+   caught mechanically.
 
 ## Canonical Volume Metadata Fields
 
@@ -28,9 +103,11 @@ fields:
 - `roman_numeral`: Roman numeral, such as `I`.
 - `repository`: GitHub repository name, such as `wsollers/lra-volume-i`.
 - `display_title`: canonical displayed volume title.
+- `series_title`: frontmatter series title; normally `From Cantor to Ito`, or
+  `From Turing to Carmack` for applied and computational books.
 - `frontispiece_mathematician`: full mathematician name.
 - `mathematician_lifespan`: birth-death years, formatted as `YYYY-YYYY`.
-- `image_path`: monorepo-relative image path, formatted as
+- `image_path`: volume-relative image path, formatted as
   `images/<filename>.png`.
 - `frontispiece_file`: preferred frontispiece source file, normally
   `volume-*/frontispiece.tex`.
@@ -90,28 +167,18 @@ When content eventually moves:
 
 ## Current Integration Points
 
-The monorepo has active directories and standalone roots for Volumes I-VIII.
-Local Docker/migration tooling recognizes the eight-volume identifier set.
-Split repositories and volume-to-monorepo sync workflows exist for all eight
-volume repositories. The monorepo root inputs Volumes I-VIII, and the knowledge
-rebuild workflow watches all eight `volume-*` source trees.
+Each volume has an active `lra-volume-*` repository with a standalone build
+root. Local Docker/build tooling recognizes the eight-volume identifier set.
+The volume repos build independently; there is no monorepo and no
+volume-to-monorepo sync. The knowledge refresh, orchestrated from
+`lra-governance`, reads all eight `lra-volume-*` source trees.
 
 ## Deferred Phase 0 Findings
 
-The Phase 0 inventory found the following issues. They are intentionally
-deferred and must not be fixed as part of this governance phase:
-
-- Volume I title rename from `Sets and Logic` to
-  `Logic, Sets, and Proof`;
-- Volume II duplicate `peano-quote` input;
-- Volume II misspelling `Guiseppe`;
-- Volume III mismatch between `Advanced Mathematics` and
-  `Abstract Mathematics`;
-- Volume III Hilbert frontispiece eventually moving to Volume VIII;
-- Volume IV Euler frontispiece eventually moving to Volume VI;
-- Volume V numerical content eventually moving to Volume VII;
-- untracked monorepo images for Hausdorff, Kolmogorov, Newton, Noether,
-  Poincare, and misspelled `reimann`.
+The deferred Phase 0 inventory (title, frontispiece, and image issues) is
+recorded once in `docs/architecture/frontmatter-and-frontispiece-standard.md`.
+Those items are intentionally deferred and must not be fixed as part of this
+governance phase.
 
 ## Related Documents
 

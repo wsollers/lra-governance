@@ -1,23 +1,23 @@
 # Theorem Explorer Pipeline
 
-Source: `REPOSITORY_STRUCTURE.md`, `Learning-Real-Analysis/.github/workflows/trigger-knowledge-rebuild.yml`, and `lra-knowledge-explorer/README.md`.
+Source: `REPOSITORY_STRUCTURE.md`, `docs/workflows/knowledge-extraction.md`, and `lra-knowledge-explorer/README.md`.
 
 ## Ownership
 
 `lra-knowledge-explorer` owns the extractor implementation, graph generation,
 and explorer UI.
 
-`Learning-Real-Analysis` owns the integrated LaTeX source tree and dispatches
-rebuilds after relevant content or pipeline changes land on `main`.
+`lra-governance` owns the extraction standards and orchestrates the refresh; the
+independent `lra-volume-*` repos are the canonical TeX source.
 
 ## Dispatch Model
 
-The monorepo is the single dispatch point because leaf repos already sync their
-content into it. This avoids duplicated rebuild triggers across every volume
-and shared infrastructure repo.
+The rebuild is orchestrated from `lra-governance`, which reads the independent
+volume repos directly. There is no monorepo and no fan-in sync, so there is no
+mono-side dispatch point; the governance refresh is the single trigger (see
+`docs/workflows/knowledge-extraction.md`).
 
 ## Extraction Inputs
 
-Extractor runs should point at the local `Learning-Real-Analysis` clone. The
-pipeline depends on stable labels, dependency blocks, and canonical chapter
-structure.
+Extractor runs point at the split `lra-volume-*` clones. The pipeline depends on
+stable labels, dependency blocks, and canonical chapter structure.

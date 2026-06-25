@@ -90,6 +90,191 @@ When a block is present, use this order:
 Do not reorder blocks for aesthetics. Omit only blocks that the governing
 artifact standard does not require.
 
+## Canonical Statement Skeleton
+
+Three sources govern a statement artifact, and the decoration audit in
+`tools/governance/validate_volume.py` enforces them:
+
+- **Order** of blocks: the Ordering Rule above (this document).
+- **Which blocks are required vs conditional per artifact type**:
+  `constitution/schema/artifact-matrix.yaml` (R / C / D / N for
+  def / thm / lem / prop / cor / ax).
+- **Block identity, exact titles, and trigger conditions**:
+  `constitution/schema/block-registry.yaml`.
+
+Copy the matching skeleton below and keep the block order exactly. Each block is
+annotated with its requirement level so you include only what the artifact type
+and its triggers call for. Do not reorder, rename block titles, or invent
+blocks. `R` = always present; `C` = only if its trigger holds; `D` = only if its
+parent block is present; omit anything not triggered.
+
+### Definition (and axiom)
+
+A definition is wrapped in `definitionbox`; an axiom in `axiombox`. The unboxed
+variant drops only the box wrapper, never the label or the required blocks.
+
+```latex
+\begin{definitionbox}{Definition (<Display Title>)}   % box: C (load-bearing def); axioms: always boxed
+\begin{definition}[<Display Title>]                    % R: environment + label
+\label{def:<root>}                                     % R: prefix def: (ax: for axioms)
+<statement text>
+\end{definition}
+\end{definitionbox}
+
+\begin{remark*}[Standard quantified statement]         % R: standard notation only, no predicate names
+<formal statement>
+\end{remark*}
+
+\begin{remark*}[Definition predicate reading]          % C: a canonical predicate exists in predicates.yaml
+\[ \operatorname{<Name>}(<args>) \coloneqq <formula>. \]
+\end{remark*}
+
+\begin{remark*}[Negated quantified statement]          % C: the negation is a standard proof tool
+<formal negation>
+\end{remark*}
+
+\begin{remark*}[Negation predicate reading]            % D: only if the negated block is present
+<predicate-form negation>
+\end{remark*}
+
+\begin{remark*}[Failure modes]                         % C: multiple distinct failure branches worth naming
+<prose failure branches>
+\end{remark*}
+
+\begin{remark*}[Failure mode decomposition]            % D: only if Failure modes is present
+<underbrace decomposition>
+\end{remark*}
+
+\begin{remark*}[Interpretation]                        % C, but treat as R unless nearby exposition already covers it
+<prose meaning, why it matters, geometric picture>
+\end{remark*}
+
+\begin{remark*}[Historical note]                       % C: known source correspondence (or "Comparison with Feferman")
+<short provenance prose with \citet{...}>
+\end{remark*}
+
+\begin{remark*}[Exposition]                            % C: broader conceptual framing, not a restatement
+<narrative>
+\end{remark*}
+
+\begin{remark*}[Examples]                              % C: definitions only
+<examples>
+\end{remark*}
+
+\begin{remark*}[Non-Examples]                          % C: definitions only; name the failed condition
+<non-examples>
+\end{remark*}
+
+\begin{dependencies}                                   % R  (or \NoLocalDependencies if foundational)
+\begin{itemize}
+  \item \hyperref[<dep-label>]{<Readable Name>}
+\end{itemize}
+\end{dependencies}
+```
+
+### Theorem / lemma / proposition / corollary
+
+Same order, with three differences: a proof-navigation link goes **inside** the
+environment; there are **no** Examples / Non-Examples; and the **contrapositive**
+blocks become available. Use the matching box (`theorembox`, `lemmabox`,
+`propositionbox`, `corollarybox`).
+
+```latex
+\begin{theorembox}{Theorem (<Display Title>)}          % box: C (named / primary result)
+\begin{theorem}[<Display Title>]                       % R: environment + label
+\label{thm:<root>}                                     % R: prefix thm:/lem:/prop:/cor:
+<statement text>
+
+\smallskip
+\noindent
+\hyperref[prf:<root>]{\textit{Go to proof.}}           % R for thm/lem/prop/cor (N for def/ax); inside the env
+\end{theorem}
+\end{theorembox}
+
+\begin{remark*}[Standard quantified statement]         % R
+<formal statement>
+\end{remark*}
+
+\begin{remark*}[Predicate reading]                     % C  (title is "Predicate reading", NOT "Definition predicate reading")
+<predicate form>
+\end{remark*}
+
+\begin{remark*}[Negated quantified statement]          % C
+<formal negation>
+\end{remark*}
+
+\begin{remark*}[Negation predicate reading]            % D: only if the negated block is present
+<predicate-form negation>
+\end{remark*}
+
+\begin{remark*}[Failure modes]                         % C
+<prose failure branches>
+\end{remark*}
+
+\begin{remark*}[Failure mode decomposition]            % D: only if Failure modes is present
+<underbrace decomposition>
+\end{remark*}
+
+\begin{remark*}[Contrapositive quantified statement]   % C: contrapositive is a standard proof tool (thm-like only)
+<formal contrapositive>
+\end{remark*}
+
+\begin{remark*}[Contrapositive predicate reading]      % D: only if the contrapositive block is present
+<predicate-form contrapositive>
+\end{remark*}
+
+\begin{remark*}[Interpretation]                        % C, treat as R unless nearby exposition covers it
+<prose meaning>
+\end{remark*}
+
+\begin{remark*}[Historical note]                       % C: known source correspondence
+<provenance prose>
+\end{remark*}
+
+\begin{remark*}[Exposition]                            % C
+<narrative>
+\end{remark*}
+
+\begin{dependencies}                                   % R
+\begin{itemize}
+  \item \hyperref[<dep-label>]{<Readable Name>}
+\end{itemize}
+\end{dependencies}
+```
+
+Real, validator-passing references: the definition skeleton matches
+`def:upper-bound` / `def:supremum`, and the theorem skeleton matches
+`thm:lub-property-implies-existence-of-suprema`, in
+`volume-iii/analysis/bounding/notes/bounds-extremals/notes-supremum.tex`.
+
+Easy-to-get-wrong points:
+
+- The predicate-reading title differs by type: `Definition predicate reading`
+  for definitions, `Predicate reading` for theorem-like environments.
+- The proof link is `\hyperref[prf:<root>]{\textit{Go to proof.}}`, placed inside
+  the environment body before `\end{...}`, and only for thm/lem/prop/cor — never
+  definitions or axioms.
+- Contrapositive blocks are theorem-like only; definitions and axioms never get
+  them (no hypothesis–conclusion structure).
+- Predicate names use `\operatorname{...}`. Do not invent a predicate to fill the
+  block; if none is canonical, omit the predicate reading and (if one clearly
+  deserves to exist) flag a missing-predicate audit entry.
+- `dependencies` is the shared environment; use `\NoLocalDependencies` (a silent
+  marker that renders nothing) for foundational items with nothing local to
+  list.
+
+### Print / digital handling
+
+The `dependencies` environment is already print-aware: it renders in the digital
+edition and silently swallows its body in the print edition, so it is never
+wrapped by hand. `workedexample` is likewise digital-only by construction.
+
+In the current corpus (verified in Volume II and the decorated Volume III), the
+decoration `remark*` blocks above are **not** wrapped in
+`\LRAExcludeFromPrintEditionBegin … \LRAExcludeFromPrintEditionEnd`; they render
+in both editions. Whether these supplemental blocks should become digital-only
+is an open policy decision, not yet reflected in the corpus or this skeleton.
+
 ## Standard Quantified Statement
 
 Use a `remark*` block titled `Standard quantified statement`.

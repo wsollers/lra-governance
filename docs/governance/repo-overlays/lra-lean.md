@@ -7,12 +7,11 @@ Owned concerns:
 - Lean-specific proof architecture,
 - Mathlib policy,
 - Lean module and namespace rules,
-- Lean CI and validation,
-- sync into the monorepo `lean/` tree.
+- Lean CI and validation.
 
 ## Agent Scope
 
-Lean guidance applies only to `lra-lean` and the monorepo `lean/` mirror.
+Lean guidance applies only to `lra-lean`.
 It must not be injected into volume content instructions.
 
 Use the local Lean build and CI expectations for validation. Do not use

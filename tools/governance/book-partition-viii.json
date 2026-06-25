@@ -1,0 +1,11 @@
+{
+  "volume": "volume-viii",
+  "_note": "Mechanical whole-chapter partition of old Vol VIII (Mathematical Logic & Foundations; becomes new Vol VII 'Advanced Logic' after the later renumber sweep -- book slugs are renumber-stable). Five subject chapters each become their own single-chapter book (they grow more chapters later). algebras-of-sets is intentionally NOT in any book -- it harvests to the NEW Vol IV (Spaces, measure foundation) in enactment step 3 -- so it stays as a directly-routed stay-chapter, preserved in place by the reconciler. Book order follows first-appearance in the current volume index (category, model, proof, type, lambda); since the subjects are independent and pagination is \\clearpage/\\chapter-driven, the order is cosmetic. The volume-root chapter.yaml is volume-level metadata (misnamed), not a chapter manifest -- left untouched. frontispiece + volume title + \\microtypesetup guards sit outside the routing region and are preserved. No ignore-list edits needed. Edit chapter lists/order freely before --apply.",
+  "books": [
+    {"name": "book-category-theory", "chapters": ["category-theory"]},
+    {"name": "book-model-theory", "chapters": ["model-theory"]},
+    {"name": "book-proof-theory", "chapters": ["proof-theory"]},
+    {"name": "book-type-theory", "chapters": ["type-theory"]},
+    {"name": "book-lambda-calculus", "chapters": ["lambda-calculus"]}
+  ]
+}

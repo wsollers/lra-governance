@@ -18,6 +18,25 @@ volume metadata record:
 The displayed volume title must be identical in all five places once the title
 standardization phase has run.
 
+## Series Title Rule
+
+Every book title page and book frontmatter sequence must display a series title
+at the bottom of the page. The default series title is:
+
+```text
+From Cantor to Ito
+```
+
+Applied and computational books use the applied series title instead:
+
+```text
+From Turing to Carmack
+```
+
+The series title is metadata, not part of the volume title or book title. It
+must be visually subordinate to the book title and volume title, and must not
+replace the frontispiece plaque text.
+
 ## Standard Frontispiece File Name
 
 The preferred frontispiece file name is:
@@ -36,7 +55,7 @@ phases.
 
 ## Image Path Rule
 
-All LaTeX image paths for volume frontispieces must be monorepo-relative.
+All LaTeX image paths for volume frontispieces must be volume-root-relative.
 
 Allowed:
 
@@ -52,9 +71,8 @@ volume-ii/images/...
 volume-*/images/...
 ```
 
-The path rule applies to both split volume repositories and the monorepo. Even
-inside a volume repository, the LaTeX source must reference
-`images/<filename>.png`.
+The path rule applies in each volume repository: the LaTeX source must reference
+`images/<filename>.png` from the volume root, not a volume-prefixed path.
 
 ## House Image Style
 
@@ -77,13 +95,13 @@ extra commentary.
 | Volume | Display title | Mathematician | Lifespan | Image path |
 |---|---|---|---|---|
 | Volume I | `Logic, Sets, and Proof` | Georg Cantor | 1845-1918 | `images/cantor.png` |
-| Volume II | `Origins of the Numbers` | Giuseppe Peano | 1858-1932 | `images/peano.png` |
-| Volume III | `Analysis` | Augustin-Louis Cauchy | 1789-1857 | `images/cauchy.png` |
-| Volume IV | `Algebra and Abstract Structures` | Emmy Noether | 1882-1935 | `images/noether.png` |
-| Volume V | `Topology and Geometry` | Henri Poincare | 1854-1912 | `images/poincare.png` |
-| Volume VI | `Computational Mathematics` | Leonhard Euler | 1707-1783 | `images/euler.png` |
-| Volume VII | `Numerical and Approximation Mathematics` | Isaac Newton | 1643-1727 | `images/newton.png` |
-| Volume VIII | `Mathematical Logic and Foundations` | David Hilbert | 1862-1943 | `images/hilbert.png` |
+| Volume II | `Origins of Numbers` | Giuseppe Peano | 1858-1932 | `images/peano.png` |
+| Volume III | `Classical Analysis` | Augustin-Louis Cauchy | 1789-1857 | `images/cauchy.png` |
+| Volume IV | `Mathematical Spaces` | Emmy Noether | 1882-1935 | `images/noether.png` |
+| Volume V | `Modern Analysis` | Henri Poincare | 1854-1912 | `images/poincare.png` |
+| Volume VI | `Algebra` | Leonhard Euler | 1707-1783 | `images/euler.png` |
+| Volume VII | `Advanced Logic` | David Hilbert | 1862-1943 | `images/hilbert.png` |
+| Volume VIII | `Applied and Computational Mathematics` | Isaac Newton | 1643-1727 | `images/newton.png` |
 
 ## Generation Boundary
 
@@ -117,7 +135,7 @@ explicitly requires it.
 The following known issues are deferred and must not be fixed in this
 governance phase:
 
-- Volume I title rename from `Sets and Logic` to
+- Volume I title rename from the current working title to
   `Logic, Sets, and Proof`;
 - Volume II duplicate `peano-quote` input;
 - Volume II misspelling `Guiseppe`;
@@ -126,5 +144,5 @@ governance phase:
 - Volume III Hilbert frontispiece eventually moving to Volume VIII;
 - Volume IV Euler frontispiece eventually moving to Volume VI;
 - Volume V numerical content eventually moving to Volume VII;
-- untracked monorepo images for Hausdorff, Kolmogorov, Newton, Noether,
+- untracked frontispiece images for Hausdorff, Kolmogorov, Newton, Noether,
   Poincare, and misspelled `reimann`.

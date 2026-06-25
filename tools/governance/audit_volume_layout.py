@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import sys
 from dataclasses import asdict, dataclass, field
@@ -101,9 +102,18 @@ def find_chapter_roots(root: Path) -> list[Path]:
         return [root]
     chapters: list[Path] = []
     for volume in find_volume_roots(root):
-        for path in volume.iterdir():
-            if path.is_dir() and not is_ignored_path(path, root) and (path / "notes").is_dir() and (path / "proofs").is_dir():
-                chapters.append(path)
+        # Descend through any intermediate tier (e.g. book-*/) to find chapter
+        # roots, identified by having both notes/ and proofs/. Single-tier
+        # chapters that are direct children of the volume are still found.
+        for dirpath, dirnames, _filenames in os.walk(volume):
+            current = Path(dirpath)
+            dirnames[:] = [
+                name for name in dirnames
+                if not is_ignored_path(current / name, root)
+            ]
+            if (current / "notes").is_dir() and (current / "proofs").is_dir():
+                chapters.append(current)
+                dirnames[:] = [name for name in dirnames if name not in {"notes", "proofs"}]
     return sorted(set(path.resolve() for path in chapters))
 
 

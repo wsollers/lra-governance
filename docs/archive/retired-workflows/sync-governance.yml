@@ -1,11 +1,13 @@
 # =============================================================
-# sync-governance.yml
-# Disabled: governance is no longer synced one-way into other LRA repos.
+# sync-governance.yml  (RETIRED — archived, not active)
 #
-# NOTE: This workflow no longer generates per-leaf sync-to-monorepo.yml
-# files. Leaf -> monorepo syncing was inverted to a single mono-side
-# orchestrator (Learning-Real-Analysis/.github/workflows/assemble-from-leaves.yml),
-# so the old fan-in template is intentionally not emitted here anymore.
+# Moved out of .github/workflows/ when governance fan-out sync was retired.
+# Governance is no longer synced one-way into other LRA repos, and there is no
+# monorepo to assemble into. Leaf repos read lra-governance directly via
+# LRA_GOVERNANCE_ROOT, a sibling ../lra-governance checkout, or the build
+# Docker image.
+#
+# Kept only for historical reference. Safe to `git rm`.
 # =============================================================
 
 name: Governance sync disabled

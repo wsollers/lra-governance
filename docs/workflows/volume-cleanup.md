@@ -7,10 +7,10 @@ decoration, and extraction readiness.
 ## Scope
 
 Edit only the named volume repo and named content scope. Do not turn a local
-cleanup into a multi-repo sync, shared-LaTeX edit, Lean task, NURBS/Vulkan task,
-numerical-analysis task, PDF-extractor task, or source-profile task.
+cleanup into a cross-repo migration, shared-LaTeX edit, Lean task, NURBS/Vulkan
+task, numerical-analysis task, PDF-extractor task, or source-profile task.
 
-Volume repos own `volume-N/` content only. Synced `common/`,
+Volume repos own `volume-N/` content only. Build-supplied `common/`,
 generated wrappers, canonical YAML, and governance files are not volume-owned
 source.
 

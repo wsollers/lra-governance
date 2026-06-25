@@ -7,9 +7,9 @@ TODO proof bodies with canonical proof content.
 
 1. Work in the leaf volume repository that owns the proof file.
 2. Locate the existing proof file by theorem label and `\LRAProofFor{...}`.
-3. Preserve the durable proof container described in
-   `docs/governance/proof-standards.md` and
-   `constitution/schema/file-schema.yaml`.
+3. Preserve the durable proof container (see "Proof Stub Durability" in
+   `docs/governance/proof-standards.md`, enforced by
+   `constitution/schema/file-schema.yaml`).
 4. Replace only the professional proof TODO body and detailed learning proof
    TODO body unless the task explicitly authorizes broader edits.
 5. Add or refine dependency/proof-structure remarks as needed.

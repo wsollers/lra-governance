@@ -1,16 +1,17 @@
 # Proof Standards
 
-Source sections: `DESIGN.md` sections 8, 9, 10.4, 14, and proof lifecycle
-rules after section 14.
+The enforced shape authority is `constitution/schema/file-schema.yaml`
+(`proof_file.required_layers_in_order`), checked by
+`tools/governance/validate_volume.py`. This document is the human-readable
+companion and carries the canonical copy-paste template.
 
 ## Proof Ownership
 
 No proof file may be created for a statement unless the corresponding statement
 label already exists in the notes file.
 
-Leaf volume repositories own theorem and proof source files. The
-`Learning-Real-Analysis` monorepo is an assembled integration target and must
-not be edited as the canonical source for theorem/proof files.
+Leaf volume repositories own theorem and proof source files and build
+independently. There is no assembled monorepo.
 
 Handwritten proof artifacts, reviewed handwritten proof attempts, and
 proof-vault backlinks are governed by `handwritten-proof-vault-standards.md`.
@@ -40,50 +41,112 @@ the primary theorem association.
 
 ## Proof File Structure
 
-Proof files live under the owning chapter's `proofs/` tree and use lowercase,
-hyphen-separated ASCII filenames. Each notes proof file begins on a new page
-and ends with `\clearpage`, so the next proof topic or proof section cannot
-start on the same page as the previous proof.
+Proof files live under the owning chapter's `proofs/{topic}/` tree and use
+lowercase, hyphen-separated ASCII filenames of the form `prf-<theorem-root>.tex`.
 
-The machine-readable authority for proof folder architecture, topic matching,
-legacy refactor mode, and proof index reachability is
-`docs/governance/volume-structure.schema.json`, enforced through
-`tools/governance/validate_volume.py`. Use
-`tools/governance/audit_proof_layout.py` for deterministic proof-layout
-classification when a task needs compliant/non-compliant proof-file lists.
+There is exactly one authority for the proof-file shape, and it is enforced:
+`proof_file.required_layers_in_order` in `constitution/schema/file-schema.yaml`,
+checked by `tools/governance/validate_volume.py`. The same schema defines folder
+architecture, topic matching, and index reachability (mirrored in
+`docs/governance/volume-structure.schema.json`). Use
+`tools/governance/audit_proof_layout.py` for compliant/non-compliant proof-file
+lists.
 
-A full proof file contains:
+Do not paraphrase, reorder, abbreviate, or "improve" this shape from memory. If a
+generated stub does not match the template below layer-for-layer, it is wrong
+even if it looks reasonable.
 
-1. proof-level label,
-2. `\LRAProofFor{...}`,
-3. theorem-side navigation link,
-4. proof-vault backlink when the proof came from a memorialized handwritten
-   proof artifact,
-5. unnumbered theorem-like restatement,
-6. professional standard proof,
-7. detailed learning proof,
-8. proof structure remark,
-9. dependencies remark,
-10. `\clearpage`.
+The required layers, in order, are exactly twelve:
 
-Proof-vault backlinks must use the shared `\ProofVaultURL{...}` macro and
-must be placed immediately after the `Return` remark and before the theorem
-restatement. Do not use raw `\href` or ad hoc URL text for proof-vault links.
-The macro argument must point to the sanitized proof-vault record, not to a raw
-or unsanitized image.
+1. `\newpage`
+2. `\phantomsection`
+3. `\label{prf:<theorem-root>}`
+4. `\LRAProofFor{<theorem-label>}`
+5. return-navigation `remark*` titled `Return`
+6. optional `\ProofVaultURL{...}` (only for memorialized handwritten proofs)
+7. unnumbered `theorem*` restatement (no `\label` inside)
+8. `proof` titled `Professional Standard Proof`
+9. `proof` titled `Detailed Learning Proof`
+10. `remark*` titled `Proof structure`
+11. `dependencies` environment with `\hyperref` links
+12. `\clearpage`
 
-## Proof Stub Structure
+A full proof and a proof stub use the **same twelve layers in the same order**.
+The only difference is content: a stub keeps TODO-safe placeholders in the
+restatement, both proof bodies, the proof-structure remark, and the dependency
+block, and both proof bodies must still be present.
 
-A proof stub is a compile-safe proof file that preserves the full proof-file
-structure. It may replace the professional standard proof and detailed learning
-proof bodies with TODO placeholders, but it must still include the proof-level
-label, `\LRAProofFor{...}`, theorem restatement, navigation,
-proof-structure remark, and dependency block.
+## Canonical Proof-Stub Template
 
-Proof stubs are durable canonical containers. Later proof population must
-modify the existing proof file in place. It must preserve labels, theorem
-navigation, `\LRAProofFor{...}`, proof-vault backlinks, theorem restatement,
-dependency remarks, proof-structure remarks, and extraction metadata unless an
+Copy this verbatim and substitute only the angle-bracketed parts. It is a real,
+validator-passing stub shape and is the source of truth for "generate a proof
+stub" tasks.
+
+```latex
+\newpage
+\phantomsection
+\label{prf:<theorem-root>}
+\LRAProofFor{thm:<theorem-root>}
+
+\begin{remark*}[Return]
+\hyperref[thm:<theorem-root>]{Return to Theorem}
+\end{remark*}
+
+\begin{theorem*}[<Theorem Display Title>]
+<verbatim restatement of the theorem-like statement; no \label here>
+\end{theorem*}
+
+\begin{proof}[Professional Standard Proof]
+\LRAProofBodyStart
+TODO: professional standard proof for <theorem-root>.
+\end{proof}
+
+\begin{proof}[Detailed Learning Proof]
+\LRAProofBodyStart
+TODO: detailed learning proof for <theorem-root>.
+\end{proof}
+
+\begin{remark*}[Proof structure]
+\end{remark*}
+
+\begin{dependencies}
+\begin{itemize}
+  \item \hyperref[<dep-label>]{<Readable Dependency Name>}
+\end{itemize}
+\end{dependencies}
+
+\clearpage
+```
+
+Things that are easy to get wrong, and are non-negotiable:
+
+- The proof label root, the `\LRAProofFor{...}` argument, and the `Return`
+  hyperref all share the same `<theorem-root>`. The proof label uses `prf:`; the
+  theorem references use the statement's actual prefix
+  (`thm:`/`lem:`/`prop:`/`cor:`).
+- Each proof body opens with `\LRAProofBodyStart` on its own line, before the
+  `TODO` line. This macro is required and is easy to omit.
+- The `Proof structure` remark is present but **empty** in a stub.
+- Include `\ProofVaultURL{...}` (layer 6) only for proofs memorialized from a
+  handwritten artifact; otherwise omit it. When present it sits immediately
+  after the `Return` remark and before the `theorem*` restatement and points to
+  the sanitized record, never a raw image.
+- Every dependency item targets a mathematical statement label
+  (`def:`/`ax:`/`thm:`/`lem:`/`prop:`/`cor:`), never a `prf:` label. If the
+  target is not yet formalized, write a `TODO` dependency line instead of
+  inventing a label.
+
+For a full (non-stub) proof, replace each `TODO` body with real content: the
+professional body is compact and rigorous; the detailed body teaches the same
+proof using inline bold step headings only (`\textbf{Step 1.} ...`) with no step
+macros and no flash macros.
+
+## Proof Stub Durability
+
+Proof stubs are durable canonical containers. Later proof population modifies the
+existing proof file in place and preserves the proof label, `\LRAProofFor{...}`,
+return navigation, any `\ProofVaultURL{...}`, the theorem restatement, the
+proof-structure remark, the dependency block, and extraction metadata, unless an
 explicit refactor task says otherwise.
 
 ## Two-Layer Proof Rule

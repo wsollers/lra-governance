@@ -7,13 +7,13 @@ Owned concerns:
 - extraction pipeline implementation,
 - knowledge graph and edge generation,
 - explorer UI,
-- rebuild dispatch expectations.
+- rebuild refresh expectations.
 
 ## Agent Scope
 
-Extraction implementation and UI changes belong here. Monorepo changes may
-trigger rebuild dispatch, but extractor code ownership remains with
-`lra-knowledge-explorer`.
+Extraction implementation and UI changes belong here. The rebuild is
+orchestrated from `lra-governance` over the independent volume repos, but
+extractor code ownership remains with `lra-knowledge-explorer`.
 
 Do not duplicate canonical YAML ownership here.
 

@@ -1,0 +1,14 @@
+{
+  "volume": "volume-i",
+  "_note": "Mechanical whole-chapter partition of Vol I (Foundations: Logic, Sets & Geometry) into two books. book-geometry (euclidean-geometry, trigonometry, analytical-geometry) is NOT formed here -- those chapters are harvested from old Vol V in enactment step 3, and appendix-lean is generated later; both seed in a later pass. All nine current chapters belong to a book, so there are no stay-chapters. proof-techniques is validation-suppressed by name (IGNORED_DIR_NAMES), which is move-invariant, so no ignore re-point is needed. Chapter order within each book follows the enactment plan's pedagogical sequence; pagination is invariant under the reorder since every chapter is \\clearpage-isolated. The volume index's \\microtypesetup{expansion=false/true} guards sit outside the routing region and are preserved as front-matter/trailing, continuing to wrap the book inputs. Edit chapter lists/order freely before --apply.",
+  "books": [
+    {
+      "name": "book-logic",
+      "chapters": ["propositional-logic", "predicate-logic", "axiom-systems", "proof-techniques"]
+    },
+    {
+      "name": "book-sets",
+      "chapters": ["set-theory", "relations", "functions", "orderings", "cardinality"]
+    }
+  ]
+}

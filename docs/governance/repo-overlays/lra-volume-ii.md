@@ -8,7 +8,7 @@ Owned concerns:
 - Volume II content and Overleaf-ready source layout,
 - stable theorem, definition, axiom, lemma, proposition, and corollary labels,
 - cross-repository verification metadata that points to `lra-lean`,
-- volume-to-monorepo content sync.
+- independent volume PDF builds published to `lra-volumes-output`.
 
 ## Agent Scope
 

@@ -1,0 +1,14 @@
+{
+  "volume": "volume-ii",
+  "_note": "Mechanical whole-chapter partition of Vol II (Numbers) into two books. structure-of-real-line and lean are intentionally NOT in any book this pass -- structure-of-real-line moves to Vol III and lean dissolves to a generated appendix in later cross-volume steps. They stay as direct volume-index inputs; the reconciler preserves them in place. Chapter order within each book follows the enactment plan's pedagogical sequence; total pagination is invariant under this reorder since every chapter is \\clearpage-isolated. Edit chapter lists/order freely before --apply.",
+  "books": [
+    {
+      "name": "book-discrete-algebraic",
+      "chapters": ["formalizing-number-systems", "identity-equality-equivalence", "arithmetic-operations-relations", "constructing-number-systems", "peano-systems", "natural-numbers", "whole-numbers", "integers"]
+    },
+    {
+      "name": "book-continuum",
+      "chapters": ["embedding-number-systems", "rationals", "reals", "complex-numbers", "number-lines", "numbers-summary"]
+    }
+  ]
+}

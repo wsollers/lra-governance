@@ -1,34 +1,73 @@
 # LRA Governance
 
-This repository is the canonical source for project-wide governance files used
-by the Learning Real Analysis split-repo workspace.
+This repository is the canonical source for project-wide governance,
+architecture, prompts, schemas, validators, generators, and the canonical
+mathematical vocabulary used across the Learning Real Analysis multi-repo
+workspace.
 
 ## Source Of Truth
 
 - `DESIGN.md`
 - `REPOSITORY_STRUCTURE.md`
+- `AGENTS.md`
 - `.gitignore`
 - `constitution/`
+- `docs/`
+- `tools/`
+- canonical YAML: `predicates.yaml`, `notation.yaml`, `relations.yaml`
 
-These files are synced one-way into the monorepo, volume repos, and shared
-common repo so local work in any repo has the same project rules available at
-the repository root.
+These files are consumed in place. They are **not** copied or synced into the
+other repositories.
 
-## Sync Direction
+## How Repos Reach Governance
+
+`lra-governance` is no longer fanned out into downstream repos. Each repo reads
+it directly from a sibling checkout in a shared multi-repo workspace:
 
 ```text
-lra-governance -> Learning-Real-Analysis
-lra-governance -> lra-common
-lra-governance -> lra-volume-i
-lra-governance -> lra-volume-ii
-lra-governance -> lra-volume-iii
-lra-governance -> lra-volume-iv
-lra-governance -> lra-volume-v
-lra-governance -> lra-volume-vi
-lra-governance -> lra-volume-vii
-lra-governance -> lra-volume-viii
-lra-governance -> lra-source-profiles
+<workspace>/
+  lra-governance/     <- this repo (canonical)
+  lra-common/         <- shared LaTeX infrastructure (canonical)
+  lra-volume-i/
+  lra-volume-ii/
+  ...
 ```
 
-Do not edit synced governance files in downstream repos. Make changes here and
-let the workflow distribute them.
+From any repo at `<workspace>/<repo>`, governance resolves as
+`<repo>/../lra-governance` and shared LaTeX infrastructure as
+`<repo>/../lra-common`.
+
+Resolution order used by the local wrapper scripts:
+
+1. `LRA_GOVERNANCE_ROOT` (and the equivalent for common) when set;
+2. a sibling `../lra-governance` / `../lra-common` checkout;
+3. the path baked into the build Docker image.
+
+If none resolve, the wrappers **hard-error** with an actionable setup message
+instead of silently degrading. There are no local synced copies to fall back
+on.
+
+## Independence (No More Sync)
+
+The previous one-way governance/common fan-out sync and the volume-to-monorepo
+content sync are both retired:
+
+- governance and common are read directly, never copied downstream;
+- each `lra-volume-*` repo is self-contained and builds its own PDFs
+  independently, checking out `lra-governance` and `lra-common` at build time in
+  a Docker container (see `templates/volume-validate-and-compile.yml`);
+- there is no assembled monorepo. `Learning-Real-Analysis` is retired.
+
+## Per-Repo Overlays
+
+Each repo may carry a local overlay document that adds repo-specific context on
+top of the canonical governance. Overlays are additive: they refine the global
+rules for that repo's owned work and must not fork or weaken them. The canonical
+overlay sources live in `docs/governance/repo-overlays/`.
+
+## Where To Edit
+
+Make every governance change here, in the smallest applicable document. Do not
+treat a downstream repo's generated wrappers or local overlay as a source of
+truth; those are generated or additive artifacts. See `DESIGN.md` for the task
+router.

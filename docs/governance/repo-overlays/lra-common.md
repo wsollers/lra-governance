@@ -22,4 +22,4 @@ screenshot, OCR, and extractor
 candidates must be searched and deduplicated before promotion to a canonical
 `.bib` file.
 
-Do not edit canonical YAML here; that remains owned by `Learning-Real-Analysis`.
+Do not edit canonical YAML here; that is owned by `lra-governance`.

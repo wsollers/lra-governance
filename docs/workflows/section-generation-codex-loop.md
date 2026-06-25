@@ -48,7 +48,10 @@ The prompt must specify:
 
 1. The target repo and exact task scope.
 2. The rule files Codex must read before editing.
-3. The exact file structure to create.
+3. The exact file structure to create, matching the canonical skeletons in
+   `docs/governance/stub-section-standards.md` (topic pair) and
+   `docs/governance/stub-chapter-standards.md` (chapter). Copy those skeletons;
+   do not improvise the directory, router, or index shape.
 4. The exact index files to update.
 5. The exact topic files to populate.
 6. The file-splitting rule: for a new content section, create one section
@@ -59,19 +62,13 @@ The prompt must specify:
    examples, exercises, figures, proof obligations, or sections beyond the
    prompt.
 8. The requirement to generate one proof stub per theorem-like artifact.
-9. The proof-stub requirements:
-   - starts with `\newpage`;
-   - includes `\phantomsection`;
-   - includes a proof label `\label{prf:...}`;
-   - includes `\LRAProofFor{...}`;
-   - includes return navigation to the source theorem-like artifact;
-   - restates the theorem, lemma, proposition, or corollary in a starred
-     environment;
-   - includes TODO professional proof;
-   - includes TODO detailed learning proof;
-   - includes a proof-structure remark;
-   - includes a dependency block;
-   - ends with `\clearpage`.
+9. The proof-stub requirements: every stub must match the canonical
+   proof-stub template in `docs/governance/proof-standards.md`, which is the
+   single source of truth and is enforced by
+   `constitution/schema/file-schema.yaml` via
+   `tools/governance/validate_volume.py`. Do not restate or improvise the stub
+   shape in the prompt; instruct Codex to copy the template verbatim and
+   substitute only the theorem root, restatement, and dependency links.
 10. Validation and build commands.
 11. The required final report format.
 12. The instruction to delete `codex-prompt` before committing.

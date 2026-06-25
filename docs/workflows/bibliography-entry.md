@@ -22,20 +22,15 @@ standalone build:
 3. Add the entry to that volume-owned `.bib` file only.
 4. Use the entry from the volume content with natbib-compatible commands such
    as `\citep{...}` or `\citet{...}`.
-5. Build the volume root, for example `latexmk -lualatex main.tex` from the
-   owning volume repo.
-6. Let the volume sync workflow copy both `volume-N/**` and the volume
-   bibliography shard into `Learning-Real-Analysis`.
+5. Build the owning book root through governance, for example
+   `python ../lra-governance/scripts/build_volume.py --root .` from the owning
+   volume repo.
 
-## Monorepo Assembly
+## Independent Volume Builds
 
-The monorepo full build assembles the bibliography by listing the volume-owned
-shards in `main.tex`. Per-volume monorepo roots list only their corresponding
-volume shard.
-
-The monorepo bibliography directory is an integration target. Do not edit a
-monorepo bibliography shard as the source of truth; make the change in the
-owning volume repo and sync it in.
+There is no monorepo and no bibliography aggregation. Each book-level root
+uses only its owning volume's bibliography shard, and the volume builds its PDFs
+independently. Make every bibliography change in the owning volume repo.
 
 ## Candidate Material
 

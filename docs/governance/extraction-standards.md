@@ -1,8 +1,5 @@
 # Extraction Standards
 
-Source sections: `DESIGN.md` sections 2.4, 8, 10, 13, and the knowledge
-explorer pipeline notes in `REPOSITORY_STRUCTURE.md`.
-
 ## Extraction Contract
 
 Extraction depends on stable labels, one theorem-like object per environment,
@@ -215,6 +212,6 @@ expositions:
 
 ## Theorem Explorer
 
-The theorem explorer implementation is owned by `lra-knowledge-explorer`.
-`Learning-Real-Analysis` remains the integration point for LaTeX source and
-rebuild dispatch.
+The theorem explorer implementation is owned by `lra-knowledge-explorer`. The
+independent `lra-volume-*` repos are the LaTeX source, and the rebuild is
+orchestrated from `lra-governance` (see `docs/workflows/knowledge-extraction.md`).

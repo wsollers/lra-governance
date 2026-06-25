@@ -22,7 +22,7 @@ hyphens.
 ## Success Gate
 
 - `python tools/governance/validate_volume.py <volume-root> --fail-on-errors`
-- `cd <volume-root> && latexmk -lualatex main.tex`
+- `cd <volume-root> && python ../lra-governance/scripts/build_volume.py --root .`
 
 ## Reference Escalation
 

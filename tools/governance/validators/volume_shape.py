@@ -13,6 +13,9 @@ from core.volume import chapter_roots, is_ignored, latex_input_path
 DEFAULT_SCHEMA = {
     "required_volume_files": ["index.tex"],
     "required_volume_entry_files": ["main.tex"],
+    "required_volume_entry_patterns": ["volume-*-*-main.tex", "main-book-*.tex", "main.tex"],
+    "canonical_volume_entry_pattern": r"^volume-(i|ii|iii|iv|v|vi|vii|viii)-[a-z0-9]+(?:-[a-z0-9]+)*-main\.tex$",
+    "legacy_volume_entry_patterns": ["main-book-*.tex", "main.tex"],
     "required_chapter_files": ["index.tex", "chapter.yaml", "notes/index.tex", "proofs/index.tex", "proofs/exercises/index.tex"],
     "required_chapter_dirs": ["notes", "proofs", "proofs/exercises"],
     "note_only_topics": ["notation"],
@@ -64,10 +67,7 @@ def validate(volume_root: Path) -> list[Finding]:
     schema = _schema()
     for relative in schema["required_volume_files"]:
         _required_file(findings, volume_root, volume_root / relative, f"volume {relative}")
-    for relative in schema["required_volume_entry_files"]:
-        candidates = [volume_root / relative, volume_root.parent / relative]
-        if not any(path.is_file() for path in candidates):
-            _add(findings, volume_root, volume_root / relative, "missing_volume_shape_file", f"Missing required volume entry {relative}.")
+    _validate_entry_roots(volume_root, findings, schema)
 
     chapters = chapter_roots(volume_root)
     if not chapters:
@@ -78,6 +78,30 @@ def validate(volume_root: Path) -> list[Finding]:
         _validate_chapter(volume_root, chapter, findings, schema)
     _validate_chapter_reachability(volume_root, chapters, findings)
     return findings
+
+
+def _validate_entry_roots(volume_root: Path, findings: list[Finding], schema: dict) -> None:
+    patterns = schema.get("required_volume_entry_patterns")
+    if patterns:
+        matches = []
+        for pattern in patterns:
+            matches.extend(path for path in volume_root.glob(pattern) if path.is_file())
+            matches.extend(path for path in volume_root.parent.glob(pattern) if path.is_file())
+        if not matches:
+            expected = ", ".join(patterns)
+            _add(
+                findings,
+                volume_root,
+                volume_root / "volume-{roman}-{book-slug}-main.tex",
+                "missing_volume_shape_file",
+                f"Missing volume entry root. Expected one or more of: {expected}.",
+            )
+        return
+
+    for relative in schema["required_volume_entry_files"]:
+        candidates = [volume_root / relative, volume_root.parent / relative]
+        if not any(path.is_file() for path in candidates):
+            _add(findings, volume_root, volume_root / relative, "missing_volume_shape_file", f"Missing required volume entry {relative}.")
 
 
 def _volume_index_inputs(volume_root: Path) -> set[str]:
@@ -92,17 +116,20 @@ def _volume_index_inputs(volume_root: Path) -> set[str]:
 
 
 def _validate_chapter_reachability(volume_root: Path, chapters: list[Path], findings: list[Finding]) -> None:
-    routed = _volume_index_inputs(volume_root)
+    # Book-aware: a chapter is correctly routed if its index.tex is reachable from
+    # the volume index through the router chain (volume -> book -> chapter). This
+    # follows \input chains, so it accepts both single-tier (volume -> chapter)
+    # and book-tier (volume -> book -> chapter) layouts.
+    reachable = reachable_files(volume_root)
     for chapter in chapters:
-        canonical = f"{latex_input_path(chapter / 'index.tex')}"
-        local = f"{chapter.name}/index"
-        if canonical not in routed and local not in routed:
+        if (chapter / "index.tex").resolve() not in reachable:
             _add(
                 findings,
                 volume_root,
                 chapter / "index.tex",
                 "chapter_not_in_volume_index",
-                f"Canonical chapter root is not routed from {volume_root.name}/index.tex: expected \\input{{{canonical}}}.",
+                f"Canonical chapter root is not reachable from {volume_root.name}/index.tex "
+                f"through the router chain (volume -> book -> chapter).",
             )
 
 

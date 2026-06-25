@@ -19,8 +19,8 @@ reasonably own the content.
    schemas, tools, outputs, and validation checks.
 3. Confirm constitution files answer what is valid, not repository layout or
    workflow procedure.
-4. Confirm architecture docs own repo maps, volume maps, folder layout, sync
-   topology, build boundaries, and generated-file ownership.
+4. Confirm architecture docs own repo maps, volume maps, folder layout,
+   integration topology, build boundaries, and generated-file ownership.
 5. Confirm governance docs state authored-content rules without duplicating
    detailed workflow steps.
 6. Confirm workflow docs state how to perform a task and point to canonical
@@ -28,8 +28,9 @@ reasonably own the content.
 7. Confirm repo overlays add local constraints without forking global rules.
 8. Confirm prompts consume schema/data files instead of embedding large copied
    rule lists when the rule is machine-readable.
-9. Confirm synced downstream copies are treated as redundant by design for
-   isolated checkouts, not as additional canonical sources.
+9. Confirm downstream repos resolve governance from `lra-governance` (a sibling
+   checkout, `LRA_GOVERNANCE_ROOT`, or the build image) rather than carrying
+   canonical copies; there are no synced governance copies by design.
 10. Confirm machine-checkable rules are represented in existing schema/data
     files before proposing a new schema system.
 11. When any file under `constitution/schema/` changes, update or explicitly
@@ -80,4 +81,4 @@ Report:
 - schema/data extraction candidates,
 - task routes that need tightening,
 - validation commands run,
-- downstream synced copies that need regeneration.
+- downstream generated wrappers that need regeneration.

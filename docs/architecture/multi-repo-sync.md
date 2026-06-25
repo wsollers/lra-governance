@@ -4,38 +4,48 @@ Source: `REPOSITORY_STRUCTURE.md` and current GitHub Actions workflows.
 
 ## Integration Direction
 
+Repositories are independent. Nothing is fanned out, and there is no
+volume-to-monorepo content sync.
+
 - `lra-governance` is consumed directly by agents, wrappers, and the build
-  image; it does not fan-out sync governance artifacts into other repos.
+  image. It does not fan out governance artifacts into other repos. It also owns
+  the canonical YAML vocabulary (`predicates.yaml`, `notation.yaml`,
+  `relations.yaml`).
 - `lra-common` is consumed directly by builds, normally through the Docker image
-  or an explicit checkout; it does not fan-out sync `common/` into other repos.
-- `lra-volume-*` sync volume content into `Learning-Real-Analysis`.
-- `lra-lean` syncs into `Learning-Real-Analysis/lean/`.
-- `lra-nurbs` syncs into `Learning-Real-Analysis/nurbs_dde/`.
-- `Learning-Real-Analysis` dispatches theorem-explorer rebuilds.
-- `lra-pdf-extractor` is an independent tool repo and is not currently a
-  source of direct sync into notes.
-- `lra-source-profiles` is an independent profile/staging repo and is not
-  currently a source of direct sync into notes, bibliography shards, canonical
-  YAML, or theorem-explorer data.
+  or an explicit checkout. It does not fan out `common/` into other repos.
+- `lra-volume-*` build independently and publish PDFs to `lra-volumes-output`.
+  They do not sync content into any monorepo.
+- `lra-lean` and `lra-nurbs` are independent specialist repos. They do not sync
+  into a monorepo.
+- The theorem-explorer rebuild is orchestrated from `lra-governance`, reading the
+  independent volume repos (see `docs/workflows/knowledge-extraction.md`).
+- `Learning-Real-Analysis`, the former assembled monorepo, is retired.
+- `lra-pdf-extractor` is an independent tool repo and is not a source of direct
+  sync into notes.
+- `lra-source-profiles` is an independent profile/staging repo and is not a
+  source of direct sync into notes, bibliography shards, canonical YAML, or
+  theorem-explorer data.
+
+## Governance Resolution
 
 Governance validator and audit tool implementations are not forked into leaf
-repositories. Leaf-local `tools/governance/*.py` files, when present, are
+repositories. Leaf-local `tools/governance/*.py` files, when present, are thin
 wrappers that delegate to the canonical implementation in
-`lra-governance/tools/governance/` and fail if that canonical checkout is not
-available.
+`lra-governance/tools/governance/`. Wrappers resolve `lra-governance` through
+`LRA_GOVERNANCE_ROOT`, a sibling `../lra-governance` checkout, or the build
+Docker image, and fail with an actionable message if none is available.
 
-## Full-Replace Policy
-
-Existing content-integration workflows may use `rsync --delete` for
-full-replace content sync. Governance and common fan-out syncs are disabled.
+## Generated Wrapper Policy
 
 Generated wrapper work is local and wrapper-only. It must not copy canonical
-governance implementations into downstream repos.
+governance implementations or shared docs into downstream repos. Wrapper
+generation is dry-run by default and full-replace only after review (see
+`docs/workflows/generated-wrapper-sync.md`).
 
 ## Emergency Local Edits
 
 Emergency downstream edits are temporary. The fix must be ported back to the
-owning source repo.
+owning source repo before the next regeneration.
 
 ## lra-pdf-extractor
 
@@ -43,8 +53,8 @@ owning source repo.
 BibTeX, JSON, and review artifacts, but those outputs are not automatically
 synced into downstream repos.
 
-Integration into `lra-common`, `Learning-Real-Analysis`, `lra-volume-*`, or
-`lra-knowledge-explorer` must occur through reviewable PRs in the owning repo.
+Integration into `lra-common`, `lra-volume-*`, or `lra-knowledge-explorer` must
+occur through reviewable PRs in the owning repo.
 
 Generated agent wrappers for this repo, if needed, must delegate to
 `lra-governance` instead of copying governance implementations.
@@ -56,9 +66,8 @@ generate source manifests, category placements, active profile selections,
 cached Markdown extracts, and stable project attachment exports, but those
 outputs are not automatically synced into downstream repos.
 
-Integration into `Learning-Real-Analysis`, `lra-volume-*`,
-`lra-knowledge-explorer`, or final bibliography shards must occur through
-reviewable changes in the owning repo.
+Integration into `lra-volume-*`, `lra-knowledge-explorer`, or final bibliography
+shards must occur through reviewable changes in the owning repo.
 
 Generated agent wrappers for this repo, if needed, must delegate to
 `lra-governance` instead of copying governance implementations.

@@ -1,12 +1,15 @@
 # Agent Task Index
 
-Repository scope: `Learning-Real-Analysis` is read-only by default unless the
-user explicitly asks to modify it; workflows sync changes from the leaf
-`lra-*` repositories into that aggregate monorepo.
+Repository scope: repositories are independent. There is no assembled monorepo
+(`Learning-Real-Analysis` is retired) and no volume-to-monorepo sync; each
+`lra-volume-*` repo builds independently.
 
 Governance scope: `lra-governance` is the master governance and script
-repository; shared scripts, rules, prompts, schemas, and workflows belong here.
-They are not fan-out synced into leaf repositories.
+repository; shared scripts, rules, prompts, schemas, workflows, and the
+canonical YAML vocabulary (`predicates.yaml`, `notation.yaml`, `relations.yaml`)
+belong here. They are not fan-out synced into leaf repositories; repos resolve
+them through `LRA_GOVERNANCE_ROOT`, a sibling `../lra-governance` checkout, or
+the build Docker image.
 
 This index tells agents which authority to load for common LRA tasks. It is a
 router, not a replacement for the referenced standards.
@@ -132,7 +135,6 @@ or data files. Prose docs should point to them instead of restating them.
 | Edit shared LaTeX infrastructure | `docs/governance/repo-overlays/lra-common.md`, `docs/architecture/repository-layout.md` | affected macro/schema docs if any | target repo build/tests using the Docker image or explicit `lra-common` checkout | `docs/governance/notation-standards.md`, `docs/governance/decoration-box-standards.md` | macro/package changes in `lra-common`; no fan-out sync | compile target volumes or affected smoke build |
 | Work in `lra-source-profiles` | `docs/governance/repo-overlays/lra-source-profiles.md`, `[external:lra-source-profiles] README.md` | source manifests, `volumes/<volume>/<chapter>/source-index.yaml`, `active-sources.yaml`, named-profile indexes, active-profile index | `[external:lra-source-profiles] scripts/validate_source_indexes.py`, relevant local source-profile scripts | `docs/architecture/repository-layout.md`, `docs/governance/repo-overlays/lra-pdf-extractor.md` only when comparing ingestion boundaries | source profile metadata, active-profile exports, category placements, review queues, markdown cache | source index validation, YAML parse, no destructive PDF moves, no direct downstream note/bibliography/YAML edits |
 | Work in a leaf volume repo | `docs/governance/repo-overlays/lra-volume.md`, `docs/architecture/volume-architecture.md` | task-specific schema rows above | task-specific validators above | relevant workflow row for the task | leaf source, proof, route, or build artifacts | leaf build wrapper and task-specific validators |
-| Work in `Learning-Real-Analysis` | `docs/governance/repo-overlays/learning-real-analysis.md`, `docs/architecture/multi-repo-sync.md` | integration repo manifests/artifacts only | integration build/sync checks | `docs/architecture/generated-file-policy.md`, `docs/architecture/latex-build-and-rendering.md` | integration-only changes unless explicitly authorized | verify canonical source repo ownership before editing content |
 | Memorialize handwritten proof artifacts | `[external:lra-proof-vault] README.md`, `[external:lra-proof-vault] routing/theorem-routes.json`, `[external:lra-proof-vault] docs/workflows/route-refactor-migration.md` | route snapshot in `[external:lra-proof-vault] routing/`, owning volume `proofs-to-do.md` when the proof is accepted and memorialized | `[external:lra-proof-vault] scripts/memorialize_attempt.py`, `[external:lra-proof-vault] scripts/apply_leaf_backlinks.py`, `[external:lra-proof-vault] scripts/validate_vault.py --require-leaf-backlinks` | `docs/governance/handwritten-proof-vault-standards.md` | copied attempt file, vault metadata, canonical backlink, both canonical proof bodies populated, dependencies populated, and `(✅)` marker in volume `proofs-to-do.md` for completed proofs | proof-vault validator with leaf backlink and tracker enforcement, proof-layout validator, exact route match or explicit user choice, volume validator when canonical proof content changes |
 | Audit decoration boxes | `docs/workflows/decoration-audit.md`, `docs/governance/decoration-audit-standards.md` | `constitution/schema/block-registry.yaml`, `constitution/schema/artifact-matrix.yaml` | `tools/governance/audit_latex_decoration.py` when available | `docs/governance/decoration-box-standards.md` | decoration inventory/audit report | decoration audit, statement audit when available |
 | Add bibliography entries | `docs/workflows/bibliography-entry.md` | bibliography layout docs/data in target repo | bibliography build/check scripts when present | `docs/governance/authoring-standards.md` | `.bib` entries or split bibliography files | BibTeX/biber parse or target build |
