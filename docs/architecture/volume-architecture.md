@@ -25,6 +25,11 @@ registry for exact TeX root names, output names, and migration aliases is
 `docs/architecture/book-registry.json`. Book titles must not be confused with
 volume titles.
 
+The registry also stores each book's expected source TOC: canonical book
+directory, routed chapter order, and each chapter's notes-topic route order.
+The governance validator compares current routers against that expected TOC so
+missing or misplaced chapters and sections are caught before rendering.
+
 | Volume | Volume title | Canonical book title | Current root slug | Notes |
 |---|---|---|---|---|
 | I | Logic, Sets, and Proof | Mathematical Logic and Proof | `book-logic` | Introductory formal logic, proof systems, and axiom-system tooling. |

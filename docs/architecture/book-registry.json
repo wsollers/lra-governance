@@ -21,21 +21,133 @@
           "slug": "mathematical-logic-and-proof",
           "title": "Mathematical Logic and Proof",
           "tex_root": "volume-i-mathematical-logic-and-proof-main.tex",
-          "legacy_roots": ["main-book-logic.tex"]
+          "legacy_roots": [
+            "main-book-logic.tex"
+          ],
+          "book_dir": "volume-i/book-logic",
+          "expected_toc": [
+            {
+              "chapter": "propositional-logic",
+              "notes": [
+                "model",
+                "axioms",
+                "notation",
+                "syntax",
+                "semantics",
+                "algebra",
+                "normal-forms",
+                "functional-completeness",
+                "argument-forms",
+                "compactness-preview"
+              ]
+            },
+            {
+              "chapter": "predicate-logic",
+              "notes": [
+                "model",
+                "axioms",
+                "syntax",
+                "semantics",
+                "quantifiers",
+                "proof-theory",
+                "translation",
+                "reference"
+              ]
+            },
+            {
+              "chapter": "axiom-systems",
+              "notes": [
+                "signatures",
+                "axioms",
+                "theories",
+                "models",
+                "consistency",
+                "independence",
+                "comparing-theories",
+                "examples-and-previews",
+                "summary"
+              ]
+            },
+            {
+              "chapter": "proof-techniques",
+              "notes": []
+            }
+          ]
         },
         {
           "order": 2,
           "slug": "set-theory",
           "title": "Set Theory",
           "tex_root": "volume-i-set-theory-main.tex",
-          "legacy_roots": ["main-book-sets.tex"]
+          "legacy_roots": [
+            "main-book-sets.tex"
+          ],
+          "book_dir": "volume-i/book-sets",
+          "expected_toc": [
+            {
+              "chapter": "set-theory",
+              "notes": [
+                "model",
+                "sets",
+                "families"
+              ]
+            },
+            {
+              "chapter": "relations",
+              "notes": [
+                "relations",
+                "equivalence"
+              ]
+            },
+            {
+              "chapter": "functions",
+              "notes": [
+                "functions"
+              ]
+            },
+            {
+              "chapter": "orderings",
+              "notes": [
+                "order",
+                "zorn"
+              ]
+            },
+            {
+              "chapter": "cardinality",
+              "notes": [
+                "cardinality"
+              ]
+            }
+          ]
         },
         {
           "order": 3,
           "slug": "foundational-geometry",
           "title": "Foundational Geometry",
           "tex_root": "volume-i-foundational-geometry-main.tex",
-          "legacy_roots": ["main-book-geometry.tex"]
+          "legacy_roots": [
+            "main-book-geometry.tex"
+          ],
+          "book_dir": "volume-i/book-geometry",
+          "expected_toc": [
+            {
+              "chapter": "euclidean-geometry",
+              "notes": [
+                "foundations",
+                "compass-and-straightedge-constructions"
+              ]
+            },
+            {
+              "chapter": "trigonometry",
+              "notes": []
+            },
+            {
+              "chapter": "analytical-geometry",
+              "notes": [
+                "lines"
+              ]
+            }
+          ]
         }
       ]
     },
@@ -50,14 +162,160 @@
           "slug": "discrete-number-systems",
           "title": "Discrete Number Systems",
           "tex_root": "volume-ii-discrete-number-systems-main.tex",
-          "legacy_roots": ["main-book-discrete-algebraic.tex"]
+          "legacy_roots": [
+            "main-book-discrete-algebraic.tex"
+          ],
+          "book_dir": "volume-ii/book-discrete-algebraic",
+          "expected_toc": [
+            {
+              "chapter": "formalizing-number-systems",
+              "notes": []
+            },
+            {
+              "chapter": "identity-equality-equivalence",
+              "notes": [
+                "identity-equality-equivalence"
+              ]
+            },
+            {
+              "chapter": "arithmetic-operations-relations",
+              "notes": [
+                "arithmetic-operations-relations"
+              ]
+            },
+            {
+              "chapter": "constructing-number-systems",
+              "notes": [
+                "ground-rules",
+                "finite-modular-number-systems",
+                "zero-one-number-system"
+              ]
+            },
+            {
+              "chapter": "peano-systems",
+              "notes": [
+                "presburger-arithmetic",
+                "defining-peano-systems",
+                "examples-of-peano-systems",
+                "recursion-on-peano-systems"
+              ]
+            },
+            {
+              "chapter": "natural-numbers",
+              "notes": [
+                "nz-axioms",
+                "canonical-natural-number-system",
+                "addition-on-n",
+                "multiplication-on-n",
+                "order-on-n",
+                "powers-and-growth",
+                "well-ordering-principle",
+                "induction",
+                "algebraic-structure-of-n"
+              ]
+            },
+            {
+              "chapter": "whole-numbers",
+              "notes": [
+                "why-whole-numbers-are-introduced",
+                "definition-of-whole-numbers",
+                "extending-successor",
+                "extending-addition",
+                "extending-multiplication",
+                "order-on-w",
+                "algebraic-structure-of-w",
+                "transition-to-z"
+              ]
+            },
+            {
+              "chapter": "integers",
+              "notes": [
+                "construction-of-z",
+                "operations-on-z-classes",
+                "algebraic-structure-of-z",
+                "order-on-z",
+                "embedding-w-into-z",
+                "divisibility-in-z",
+                "transition-to-q"
+              ]
+            }
+          ]
         },
         {
           "order": 2,
           "slug": "the-continuum",
           "title": "The Continuum",
           "tex_root": "volume-ii-the-continuum-main.tex",
-          "legacy_roots": ["main-book-continuum.tex"]
+          "legacy_roots": [
+            "main-book-continuum.tex"
+          ],
+          "book_dir": "volume-ii/book-continuum",
+          "expected_toc": [
+            {
+              "chapter": "embedding-number-systems",
+              "notes": [
+                "embeddings-as-structure-preserving-maps",
+                "embedding-n-into-w",
+                "embedding-w-into-z",
+                "embedding-z-into-q",
+                "embedding-q-into-r",
+                "compatibility-of-arithmetic-and-order",
+                "one-chain-many-structures"
+              ]
+            },
+            {
+              "chapter": "rationals",
+              "notes": [
+                "construction-of-q",
+                "operations-on-q-classes",
+                "field-structure-of-q",
+                "order-on-q",
+                "ordered-field-structure-of-q",
+                "arbitrary-closeness-in-q",
+                "rational-gaps",
+                "embedding-z-into-q",
+                "transition-to-r",
+                "canonical-statement-plan"
+              ]
+            },
+            {
+              "chapter": "reals",
+              "notes": [
+                "construction-of-r",
+                "order-on-r",
+                "completeness-of-r",
+                "addition-on-r",
+                "multiplication-on-r",
+                "field-and-ordered-field-structure-of-r",
+                "embedding-q-into-r",
+                "the-gap-filled",
+                "characterization-of-r",
+                "transition-and-forward"
+              ]
+            },
+            {
+              "chapter": "complex-numbers",
+              "notes": [
+                "construction-of-c",
+                "operations-on-c-classes",
+                "field-structure-of-c",
+                "embedding-r-into-c"
+              ]
+            },
+            {
+              "chapter": "number-lines",
+              "notes": [
+                "number-lines",
+                "intervals-on-a-number-line"
+              ]
+            },
+            {
+              "chapter": "numbers-summary",
+              "notes": [
+                "number-systems-summary"
+              ]
+            }
+          ]
         }
       ]
     },
@@ -72,28 +330,158 @@
           "slug": "bounds-sequences-and-series",
           "title": "Bounds, Sequences, and Series",
           "tex_root": "volume-iii-bounds-sequences-and-series-main.tex",
-          "legacy_roots": ["main-book-analysis-i.tex"]
+          "legacy_roots": [
+            "main-book-analysis-i.tex"
+          ],
+          "book_dir": "volume-iii/book-analysis-i",
+          "expected_toc": [
+            {
+              "chapter": "real-analysis",
+              "notes": [
+                "proof-techniques",
+                "asymptotic-notation",
+                "inequality",
+                "modulus"
+              ]
+            },
+            {
+              "chapter": "bounding",
+              "notes": [
+                "completeness",
+                "bounds-extremals",
+                "bounds-algebra"
+              ]
+            },
+            {
+              "chapter": "functions",
+              "notes": [
+                "algebra-of-functions",
+                "real-valued-functions",
+                "subsets-real-line"
+              ]
+            },
+            {
+              "chapter": "sequences",
+              "notes": [
+                "definition",
+                "examples-counterexamples",
+                "convergence",
+                "tails",
+                "monotonicity",
+                "subsequences",
+                "divergence",
+                "liminf-limsup",
+                "order-limits",
+                "cluster-values",
+                "cauchy",
+                "applications"
+              ]
+            },
+            {
+              "chapter": "series",
+              "notes": [
+                "finite-series",
+                "infinite-series"
+              ]
+            },
+            {
+              "chapter": "function-sequences",
+              "notes": []
+            },
+            {
+              "chapter": "structure-of-real-line",
+              "notes": [
+                "real-line-one-dimensional",
+                "order-distance-length",
+                "absolute-value-as-distance",
+                "intervals-as-subsets",
+                "neighborhoods-and-balls",
+                "open-sets",
+                "closed-sets",
+                "interior-exterior-boundary",
+                "limit-and-isolated-points",
+                "unions-and-intersections",
+                "covers-and-subcovers",
+                "compactness-on-r",
+                "heine-borel"
+              ]
+            }
+          ]
         },
         {
           "order": 2,
           "slug": "continuity",
           "title": "Continuity",
           "tex_root": "volume-iii-continuity-main.tex",
-          "legacy_roots": ["main-book-analysis-ii.tex"]
+          "legacy_roots": [
+            "main-book-analysis-ii.tex"
+          ],
+          "book_dir": "volume-iii/book-analysis-ii",
+          "expected_toc": [
+            {
+              "chapter": "elementary-functions",
+              "notes": [
+                "hyperbolic",
+                "logarithmic",
+                "power-exponential",
+                "trigonometric"
+              ]
+            },
+            {
+              "chapter": "continuity",
+              "notes": [
+                "limits",
+                "point-continuity",
+                "global-theorems",
+                "uniform-continuity",
+                "monotone-functions",
+                "limits-at-infinity",
+                "approximation",
+                "gauge"
+              ]
+            }
+          ]
         },
         {
           "order": 3,
           "slug": "differentiation",
           "title": "Differentiation",
           "tex_root": "volume-iii-differentiation-main.tex",
-          "legacy_roots": ["main-book-analysis-iii.tex"]
+          "legacy_roots": [
+            "main-book-analysis-iii.tex"
+          ],
+          "book_dir": "volume-iii/book-analysis-iii",
+          "expected_toc": [
+            {
+              "chapter": "differentiation",
+              "notes": [
+                "derivative-definition",
+                "secant-tangent",
+                "one-sided-derivatives",
+                "algebra-of-derivatives",
+                "chain-rule",
+                "derivative-geometry",
+                "mean-value-theorem",
+                "taylor-expansion"
+              ]
+            }
+          ]
         },
         {
           "order": 4,
           "slug": "integration",
           "title": "Integration",
           "tex_root": "volume-iii-integration-main.tex",
-          "legacy_roots": ["main-book-integration.tex"]
+          "legacy_roots": [
+            "main-book-integration.tex"
+          ],
+          "book_dir": "volume-iii/book-integration",
+          "expected_toc": [
+            {
+              "chapter": "riemann-integration",
+              "notes": []
+            }
+          ]
         }
       ]
     },
@@ -108,7 +496,41 @@
           "slug": "mathematical-spaces",
           "title": "Mathematical Spaces",
           "tex_root": "volume-iv-mathematical-spaces-main.tex",
-          "legacy_roots": ["main-book-spaces.tex"]
+          "legacy_roots": [
+            "main-book-spaces.tex"
+          ],
+          "book_dir": "volume-iv/book-spaces",
+          "expected_toc": [
+            {
+              "chapter": "metric-spaces",
+              "notes": []
+            },
+            {
+              "chapter": "topological-spaces",
+              "notes": []
+            },
+            {
+              "chapter": "set-algebra",
+              "notes": [
+                "set-algebra",
+                "power-set-and-characteristic-functions"
+              ]
+            },
+            {
+              "chapter": "algebras-of-sets",
+              "notes": [
+                "set-operations-and-hierarchy",
+                "boolean-algebra-of-sets",
+                "rings-of-sets",
+                "sigma-algebras",
+                "borel-sets"
+              ]
+            },
+            {
+              "chapter": "measure-spaces",
+              "notes": []
+            }
+          ]
         }
       ]
     },
@@ -123,28 +545,64 @@
           "slug": "measure-theory",
           "title": "Measure Theory",
           "tex_root": "volume-v-measure-theory-main.tex",
-          "legacy_roots": ["main-book-measure.tex"]
+          "legacy_roots": [
+            "main-book-measure.tex"
+          ],
+          "book_dir": "volume-v/book-measure",
+          "expected_toc": [
+            {
+              "chapter": "measure-theory",
+              "notes": []
+            }
+          ]
         },
         {
           "order": 2,
           "slug": "probability",
           "title": "Probability",
           "tex_root": "volume-v-probability-main.tex",
-          "legacy_roots": ["main-book-probability.tex"]
+          "legacy_roots": [
+            "main-book-probability.tex"
+          ],
+          "book_dir": "volume-v/book-probability",
+          "expected_toc": [
+            {
+              "chapter": "probability-theory",
+              "notes": []
+            }
+          ]
         },
         {
           "order": 3,
           "slug": "functional-analysis",
           "title": "Functional Analysis",
           "tex_root": "volume-v-functional-analysis-main.tex",
-          "legacy_roots": ["main-book-functional-analysis.tex"]
+          "legacy_roots": [
+            "main-book-functional-analysis.tex"
+          ],
+          "book_dir": "volume-v/book-functional-analysis",
+          "expected_toc": [
+            {
+              "chapter": "functional-analysis",
+              "notes": []
+            }
+          ]
         },
         {
           "order": 4,
           "slug": "complex-analysis",
           "title": "Complex Analysis",
           "tex_root": "volume-v-complex-analysis-main.tex",
-          "legacy_roots": ["main-book-complex-analysis.tex"]
+          "legacy_roots": [
+            "main-book-complex-analysis.tex"
+          ],
+          "book_dir": "volume-v/book-complex-analysis",
+          "expected_toc": [
+            {
+              "chapter": "complex-analysis",
+              "notes": []
+            }
+          ]
         }
       ]
     },
@@ -159,21 +617,76 @@
           "slug": "algebra",
           "title": "Algebra",
           "tex_root": "volume-vi-algebra-main.tex",
-          "legacy_roots": ["main-book-algebra.tex"]
+          "legacy_roots": [
+            "main-book-algebra.tex"
+          ],
+          "book_dir": "volume-vi/book-algebra",
+          "expected_toc": [
+            {
+              "chapter": "algebraic-structures",
+              "notes": [
+                "mathematical-structures",
+                "relations",
+                "operations",
+                "laws-of-operations",
+                "functions",
+                "distinguished-elements",
+                "algebraic-structures",
+                "groups",
+                "rings",
+                "fields",
+                "number-systems-as-structures",
+                "number-systems-as-models"
+              ]
+            },
+            {
+              "chapter": "abstract-algebra",
+              "notes": []
+            },
+            {
+              "chapter": "algebraic-geometry",
+              "notes": [
+                "polynomial-rings"
+              ]
+            }
+          ]
         },
         {
           "order": 2,
           "slug": "linear-algebra",
           "title": "Linear Algebra",
           "tex_root": "volume-vi-linear-algebra-main.tex",
-          "legacy_roots": ["main-book-linear-algebra.tex"]
+          "legacy_roots": [
+            "main-book-linear-algebra.tex"
+          ],
+          "book_dir": "volume-vi/book-linear-algebra",
+          "expected_toc": [
+            {
+              "chapter": "linear-algebra",
+              "notes": [
+                "vector-spaces"
+              ]
+            }
+          ]
         },
         {
           "order": 3,
           "slug": "lattice-and-order-theory",
           "title": "Lattice and Order Theory",
           "tex_root": "volume-vi-lattice-and-order-theory-main.tex",
-          "legacy_roots": ["main-book-lattice-order.tex"]
+          "legacy_roots": [
+            "main-book-lattice-order.tex"
+          ],
+          "book_dir": "volume-vi/book-lattice-order",
+          "expected_toc": [
+            {
+              "chapter": "lattice-order",
+              "notes": [
+                "breadcrumb",
+                "ordered-sets"
+              ]
+            }
+          ]
         }
       ]
     },
@@ -188,35 +701,84 @@
           "slug": "category-theory",
           "title": "Category Theory",
           "tex_root": "volume-vii-category-theory-main.tex",
-          "legacy_roots": ["main-book-category-theory.tex"]
+          "legacy_roots": [
+            "main-book-category-theory.tex"
+          ],
+          "book_dir": "volume-vii/book-category-theory",
+          "expected_toc": [
+            {
+              "chapter": "category-theory",
+              "notes": []
+            }
+          ]
         },
         {
           "order": 2,
           "slug": "model-theory",
           "title": "Model Theory",
           "tex_root": "volume-vii-model-theory-main.tex",
-          "legacy_roots": ["main-book-model-theory.tex"]
+          "legacy_roots": [
+            "main-book-model-theory.tex"
+          ],
+          "book_dir": "volume-vii/book-model-theory",
+          "expected_toc": [
+            {
+              "chapter": "model-theory",
+              "notes": [
+                "l-structures"
+              ]
+            }
+          ]
         },
         {
           "order": 3,
           "slug": "proof-theory",
           "title": "Proof Theory",
           "tex_root": "volume-vii-proof-theory-main.tex",
-          "legacy_roots": ["main-book-proof-theory.tex"]
+          "legacy_roots": [
+            "main-book-proof-theory.tex"
+          ],
+          "book_dir": "volume-vii/book-proof-theory",
+          "expected_toc": [
+            {
+              "chapter": "proof-theory",
+              "notes": []
+            }
+          ]
         },
         {
           "order": 4,
           "slug": "type-theory",
           "title": "Type Theory",
           "tex_root": "volume-vii-type-theory-main.tex",
-          "legacy_roots": ["main-book-type-theory.tex"]
+          "legacy_roots": [
+            "main-book-type-theory.tex"
+          ],
+          "book_dir": "volume-vii/book-type-theory",
+          "expected_toc": [
+            {
+              "chapter": "type-theory",
+              "notes": []
+            }
+          ]
         },
         {
           "order": 5,
           "slug": "lambda-calculus",
           "title": "Lambda Calculus",
           "tex_root": "volume-vii-lambda-calculus-main.tex",
-          "legacy_roots": ["main-book-lambda-calculus.tex"]
+          "legacy_roots": [
+            "main-book-lambda-calculus.tex"
+          ],
+          "book_dir": "volume-vii/book-lambda-calculus",
+          "expected_toc": [
+            {
+              "chapter": "lambda-calculus",
+              "notes": [
+                "introduction"
+              ]
+            }
+          ]
         }
       ]
     },
@@ -231,14 +793,96 @@
           "slug": "applied-methods",
           "title": "Applied Methods",
           "tex_root": "volume-viii-applied-methods-main.tex",
-          "legacy_roots": ["main-book-applied-methods.tex"]
+          "legacy_roots": [
+            "main-book-applied-methods.tex"
+          ],
+          "book_dir": "volume-viii/book-applied-methods",
+          "expected_toc": [
+            {
+              "chapter": "computational-calculus",
+              "notes": [
+                "limits",
+                "continuity",
+                "derivatives",
+                "integrals",
+                "sequences-and-series",
+                "multivariable-calculus"
+              ]
+            },
+            {
+              "chapter": "geometric-modeling",
+              "notes": [
+                "curves-and-surfaces",
+                "bezier-curves"
+              ]
+            },
+            {
+              "chapter": "computational-geometry",
+              "notes": [
+                "convex-hulls"
+              ]
+            },
+            {
+              "chapter": "computational-linear-algebra",
+              "notes": [
+                "vectors",
+                "solving-linear-equations",
+                "vector-spaces",
+                "orthogonality",
+                "determinants",
+                "eigenvalues",
+                "svd",
+                "linear-transformations",
+                "complex-vectors-matrices",
+                "applications",
+                "numerical-linear-algebra",
+                "probability-statistics"
+              ]
+            },
+            {
+              "chapter": "fourier-analysis",
+              "notes": []
+            },
+            {
+              "chapter": "ordinary-differential-equations",
+              "notes": [
+                "breadcrumb",
+                "differential-equations-models"
+              ]
+            },
+            {
+              "chapter": "partial-differential-equations",
+              "notes": []
+            },
+            {
+              "chapter": "computational-probability",
+              "notes": []
+            }
+          ]
         },
         {
           "order": 2,
           "slug": "numerical-foundations",
           "title": "Numerical Foundations",
           "tex_root": "volume-viii-numerical-foundations-main.tex",
-          "legacy_roots": ["main-book-numerical-foundations.tex"]
+          "legacy_roots": [
+            "main-book-numerical-foundations.tex"
+          ],
+          "book_dir": "volume-viii/book-numerical-foundations",
+          "expected_toc": [
+            {
+              "chapter": "numerical-analysis",
+              "notes": [
+                "ieee-floating-point",
+                "interval-arithmetic",
+                "numerical-geometry"
+              ]
+            },
+            {
+              "chapter": "numerical-pde",
+              "notes": []
+            }
+          ]
         }
       ]
     }
