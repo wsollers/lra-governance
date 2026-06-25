@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -27,15 +28,23 @@ def governance_root() -> Path:
 
 
 def discover_tex_roots(root: Path) -> list[Path]:
-    roots = sorted(root.glob("volume-*-*-main.tex"))
+    volume_entry_re = re.compile(r"^volume-(i|ii|iii|iv|v|vi|vii|viii)\.tex$")
+    book_entry_re = re.compile(r"^volume-(i|ii|iii|iv|v|vi|vii|viii)-[a-z0-9]+(?:-[a-z0-9]+)*\.tex$")
+    roots = sorted(
+        tex_root for tex_root in root.glob("volume-*.tex")
+        if volume_entry_re.fullmatch(tex_root.name) or book_entry_re.fullmatch(tex_root.name)
+    )
+    if not roots:
+        roots = sorted(root.glob("volume-*-*-main.tex"))
     if not roots:
         roots = sorted(root.glob("main-book-*.tex"))
     if not roots and (root / "main.tex").exists():
         roots = [root / "main.tex"]
     if not roots:
         raise SystemExit(
-            "no TeX build roots found: expected volume-{roman}-{book-slug}-main.tex, "
-            "legacy main-book-*.tex, or transitional main.tex"
+            "no TeX build roots found: expected volume-{roman}.tex or "
+            "volume-{roman}-{book-slug}.tex, legacy volume-{roman}-{book-slug}-main.tex "
+            "or main-book-*.tex, or transitional main.tex"
         )
     return roots
 

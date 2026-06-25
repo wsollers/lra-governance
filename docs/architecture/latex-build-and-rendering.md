@@ -17,12 +17,14 @@ ownership and safety boundaries rather than duplicating every build command.
 
 ## Volume Repos
 
-Each `lra-volume-*` repo is Overleaf-ready. Each book builds from a root named
-`volume-{roman}-{book-slug}-main.tex`; legacy `main-book-*.tex` roots and
-transitional `main.tex` roots are accepted only while the book split is being
-migrated. The root uses `common/` supplied by the build environment (Docker
-image or explicit `lra-common` checkout) and inputs only that volume's content.
-`common/` is not stored as a synced copy in the volume repo.
+Each `lra-volume-*` repo is Overleaf-ready. The full volume builds from
+`volume-{roman}.tex`; each book builds from
+`volume-{roman}-{book-slug}.tex`. Legacy `volume-{roman}-{book-slug}-main.tex`,
+`main-book-*.tex`, and transitional `main.tex` roots are accepted only while old
+branches finish migration. The root uses `common/` supplied by the build
+environment (Docker image, explicit `lra-common` checkout, or Overleaf upload)
+and inputs only that volume's content. `common/` is ignored by every volume repo
+and is not stored as a synced copy in the volume repo.
 
 Volume repos own volume content only. They do not own shared LaTeX
 infrastructure, canonical YAML, Lean formalization, NURBS/Vulkan simulation,
@@ -33,7 +35,6 @@ numerical-analysis benchmark workflows, or PDF extraction tooling.
 `lra-common` owns shared LaTeX infrastructure:
 
 - `common/`,
-- `bibliography/`,
 - macros,
 - environments,
 - boxes,

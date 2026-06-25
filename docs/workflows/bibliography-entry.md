@@ -1,39 +1,35 @@
 # Bibliography Entry Workflow
 
-Bibliography is owned by the volume that uses it. Do not add new canonical
-BibTeX entries to `lra-common`.
+Bibliography is owned by the book that uses it. Do not add new canonical BibTeX
+entries to `lra-common`.
 
-Each `lra-volume-*` repository maintains the bibliography shard needed for its
-standalone build:
+Each book root has a matching bibliography shard:
 
-- `lra-volume-i/bibliography/volume-i-foundations.bib`
-- `lra-volume-ii/bibliography/volume-ii-number-systems.bib`
-- `lra-volume-iii/bibliography/volume-iii-analysis.bib`
-- `lra-volume-iv/bibliography/volume-iv-algebra.bib`
-- `lra-volume-v/bibliography/volume-v-topology-geometry.bib`
-- `lra-volume-vi/bibliography/volume-vi-computational.bib`
-- `lra-volume-vii/bibliography/volume-vii-numerical-approximation.bib`
-- `lra-volume-viii/bibliography/volume-viii-logic-foundations.bib`
+- Book root: `lra-volume-iii/volume-iii-continuity.tex`
+- Book bibliography: `lra-volume-iii/bibliography/volume-iii-continuity.bib`
+
+The volume-level root, such as `volume-iii.tex`, cites every per-book `.bib`
+file in that volume. It must not point at a retired aggregate volume `.bib`.
 
 ## Standard Process
 
-1. Identify the volume whose notes cite the source.
-2. Search that volume's bibliography shard for an existing entry or nearby key.
-3. Add the entry to that volume-owned `.bib` file only.
+1. Identify the book whose notes cite the source.
+2. Search that book's bibliography shard for an existing entry or nearby key.
+3. Add the entry to that book-owned `.bib` file only.
 4. Use the entry from the volume content with natbib-compatible commands such
    as `\citep{...}` or `\citet{...}`.
 5. Build the owning book root through governance, for example
-   `python ../lra-governance/scripts/build_volume.py --root .` from the owning
-   volume repo.
+   `python tools/governance/build_volume_docker.py --root ../lra-volume-iii --tex-root volume-iii-continuity.tex`.
 
 ## Independent Volume Builds
 
-There is no monorepo and no bibliography aggregation. Each book-level root
-uses only its owning volume's bibliography shard, and the volume builds its PDFs
-independently. Make every bibliography change in the owning volume repo.
+There is no monorepo and no common bibliography aggregation. Each book-level
+root uses only its matching bibliography shard, and the volume-level root
+combines those book shards only for the volume PDF. Make every bibliography
+change in the owning volume repo.
 
 ## Candidate Material
 
 Extractor-generated `.bib` output is candidate material only. Review candidate
-entries before adding them to the owning volume shard. Do not write candidate
+entries before adding them to the owning book shard. Do not write candidate
 entries into `lra-common` or an aggregate bibliography file.

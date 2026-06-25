@@ -128,7 +128,7 @@ jobs:
               for pdf in sorted(source.glob("*.pdf")):
                   if pdf.stem == "main":
                       name = f"{repo}.pdf"
-                  elif pdf.stem.startswith("volume-") and pdf.stem.endswith("-main"):
+                  elif pdf.stem.startswith("volume-"):
                       name = pdf.name
                   elif pdf.stem.startswith("main-book-"):
                       name = f"{repo}-{pdf.stem.removeprefix('main-')}.pdf"

@@ -99,9 +99,12 @@ Each volume repo is self-contained, Overleaf-ready, and independently built.
 
 ```text
 lra-volume-N/
-  main.tex                    Overleaf / Docker build root
+  volume-N.tex                volume-level Overleaf / Docker build root
+  volume-N-book-slug.tex      book-level Overleaf / Docker build root(s)
   .latexmkrc                  local build config
-  bibliography/               volume-owned bibliography shard
+  .gitignore                  must ignore common/
+  bibliography/               book-owned bibliography shards
+    volume-N-book-slug.bib
   volume-N/
     index.tex
     <chapter>/
@@ -113,8 +116,11 @@ lra-volume-N/
 
 At build time the volume checks out `lra-common` (for `common/`) and
 `lra-governance` (for validators and canonical YAML). These are supplied by the
-build environment, not stored as synced copies in the volume repo. `main.tex`
-inputs the volume preamble and `volume-N/index`.
+build environment, not stored as synced copies in the volume repo. For Overleaf,
+upload or checkout `common/` beside the volume roots; every `lra-volume-*`
+repository must ignore `common/` so that local/Overleaf staging does not commit
+the shared source. `volume-N.tex` inputs the volume preamble, volume front
+matter, an independent table of contents, and then `volume-N/index`.
 
 ## Canonical Chapter Layout
 
@@ -145,7 +151,9 @@ capstone material lives under `proofs/exercises/`.
 
 - Governance and shared LaTeX infrastructure are read directly from
   `lra-governance` and `lra-common`; nothing is fanned out.
-- Bibliography shards are owned by each volume repo.
+- Bibliography shards are owned by each book root. A volume-level build cites
+  all `bibliography/volume-N-book-slug.bib` files for the books in that volume;
+  an individual book root cites only its matching book `.bib`.
 - Canonical YAML lives in `lra-governance`. Tools resolve it the same way they
   resolve the rest of governance; it is not duplicated into volume repos.
 - Volume builds are independent and publish PDFs to `lra-volumes-output`.

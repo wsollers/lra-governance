@@ -49,18 +49,23 @@ lra-proof-vault/
   volume-ii/
   volume-iii/
   volume-iv/
+  volume-v/
+  volume-vi/
+  volume-vii/
+  volume-viii/
 ```
 
-Future memorialized proofs should live under the relevant volume, chapter, and
-theorem directory:
+Future memorialized proofs should live under the relevant volume, book,
+chapter, and theorem directory:
 
 ```text
 volume-i/
-  chapter-01-propositional-logic/
-    thm-unique-readability/
-      attempts/
-        proof-2026-05-31-001.jpg
-      metadata.yaml
+  book-logic/
+    propositional-logic/
+      thm-unique-readability/
+        attempts/
+          proof-2026-05-31-001.jpg
+        metadata.yaml
 ```
 
 Use lowercase, hyphen-separated, ASCII paths. Do not store raw mobile images in
@@ -81,6 +86,10 @@ theorem_title:
 route_confidence: confirmed
 source_repo:
 volume:
+book:
+book_slug:
+book_title:
+book_dir:
 chapter:
 section:
 subsection:
@@ -95,6 +104,10 @@ canonical_routes:
   proof_tex:
   proof_label:
   vault_path:
+  book:
+  book_slug:
+  book_title:
+  book_dir:
   source_repo:
   source_commit:
   route_version:
@@ -119,6 +132,27 @@ Consumers such as the Knowledge Explorer should not depend on the legacy root
 `theorem-map.yaml` file. The governance extraction pipeline builds
 `lra-knowledge-explorer/proof-vault-index.json` directly from route-style
 metadata and legacy markdown records where present.
+
+After any volume/book/chapter refactor, regenerate each affected volume's
+`build/knowledge/theorem-routes.json` artifact and import all available volume
+route files into the proof vault. The standard dry-run command is:
+
+```powershell
+python scripts\sync_routes.py --root . `
+  --source ..\lra-volume-i\build\knowledge\theorem-routes.json `
+  --source ..\lra-volume-ii\build\knowledge\theorem-routes.json `
+  --source ..\lra-volume-iii\build\knowledge\theorem-routes.json `
+  --source ..\lra-volume-iv\build\knowledge\theorem-routes.json `
+  --source ..\lra-volume-v\build\knowledge\theorem-routes.json `
+  --source ..\lra-volume-vi\build\knowledge\theorem-routes.json `
+  --source ..\lra-volume-vii\build\knowledge\theorem-routes.json `
+  --source ..\lra-volume-viii\build\knowledge\theorem-routes.json `
+  --migrate-paths --dry-run
+```
+
+Run the same command with `--apply` only after reviewing planned and blocked
+moves. The proof vault must not run path migration against stale route
+artifacts.
 
 Allowed metadata includes:
 

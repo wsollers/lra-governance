@@ -8,11 +8,13 @@ task.
 
 ## Volume Repos
 
-Volume repos are Overleaf-ready and build through book-level roots named
-`volume-{roman}-{book-slug}-main.tex`, with `common/` supplied by the build
-environment (Docker image or explicit `lra-common` checkout) rather than a
-synced copy. Legacy `main-book-*.tex` roots and transitional `main.tex` roots
-are accepted only during migration.
+Volume repos are Overleaf-ready. The full volume builds through
+`volume-{roman}.tex`, and each book builds through
+`volume-{roman}-{book-slug}.tex`, with `common/` supplied by the build
+environment (Docker image, explicit `lra-common` checkout, or Overleaf upload)
+rather than a synced copy. Every volume repo ignores `common/`. Legacy
+`volume-{roman}-{book-slug}-main.tex`, `main-book-*.tex`, and transitional
+`main.tex` roots are accepted only during migration.
 
 ## Independent Builds
 

@@ -3,18 +3,18 @@
 This document defines the canonical target volume and book architecture for
 Learning Real Analysis. A volume is the broad shelf title. A book is a
 named subject partition inside a volume and has its own
-`volume-{roman}-{book-slug}-main.tex` entry root.
+`volume-{roman}-{book-slug}.tex` entry root.
 
 ## Target Volumes
 
 | Volume | Roman | Repository | Display title | Frontispiece | Lifespan | Image path | Status |
 |---:|---|---|---|---|---|---|---|
 | 1 | I | `wsollers/lra-volume-i` | `Logic, Sets, and Proof` | Georg Cantor | 1845-1918 | `images/cantor.png` | active |
-| 2 | II | `wsollers/lra-volume-ii` | `Origins of Numbers` | Giuseppe Peano | 1858-1932 | `images/peano.png` | active |
+| 2 | II | `wsollers/lra-volume-ii` | `Origins of Numbers` | Richard Dedekind | 1831-1916 | `images/dedekind.png` | active |
 | 3 | III | `wsollers/lra-volume-iii` | `Classical Analysis` | Augustin-Louis Cauchy | 1789-1857 | `images/cauchy.png` | active |
-| 4 | IV | `wsollers/lra-volume-iv` | `Mathematical Spaces` | Emmy Noether | 1882-1935 | `images/noether.png` | active |
-| 5 | V | `wsollers/lra-volume-v` | `Modern Analysis` | Henri Poincare | 1854-1912 | `images/poincare.png` | active |
-| 6 | VI | `wsollers/lra-volume-vi` | `Algebra` | Leonhard Euler | 1707-1783 | `images/euler.png` | active |
+| 4 | IV | `wsollers/lra-volume-iv` | `Mathematical Spaces` | Constantin Caratheodory | 1873-1950 | `images/caratheodory.png` | active |
+| 5 | V | `wsollers/lra-volume-v` | `Modern Analysis` | Stefan Banach | 1892-1945 | `images/banach.png` | active |
+| 6 | VI | `wsollers/lra-volume-vi` | `Algebra` | Emmy Noether | 1882-1935 | `images/noether.png` | active |
 | 7 | VII | `wsollers/lra-volume-vii` | `Advanced Logic` | David Hilbert | 1862-1943 | `images/hilbert.png` | active |
 | 8 | VIII | `wsollers/lra-volume-viii` | `Applied and Computational Mathematics` | Isaac Newton | 1643-1727 | `images/newton.png` | active |
 
@@ -47,29 +47,62 @@ missing or misplaced chapters and sections are caught before rendering.
 | VII | Advanced Logic | Advanced Logic | `book-category-theory`, `book-model-theory`, `book-proof-theory`, `book-type-theory`, `book-lambda-calculus` | Current roots are advanced-logic subject partitions. |
 | VIII | Applied and Computational Mathematics | Applied and Computational Mathematics | `book-applied-methods`, `book-numerical-foundations` | Applied methods and numerical foundations. |
 
+## Frontmatter Mathematician Assignment
+
+Volume roots use the volume frontispiece from the target-volume table. Book
+roots use book-specific frontmatter figures. The image path is the canonical
+target filename for generated portrait assets.
+
+| Scope | Volume/book | Frontmatter mathematician | Lifespan | Image path | Status |
+|---|---|---|---|---|---|
+| Volume | I, `Logic, Sets, and Proof` | Georg Cantor | 1845-1918 | `images/cantor.png` | confirmed |
+| Book | I, `Mathematical Logic and Proof` | Gottlob Frege | 1848-1925 | `images/frege.png` | confirmed |
+| Book | I, `Set Theory` | Ernst Zermelo | 1871-1953 | `images/zermelo.png` | confirmed |
+| Book | I, `Foundational Geometry` | Euclid | fl. c. 300 BCE | `images/euclid.png` | proposed |
+| Volume | II, `Origins of Numbers` | Richard Dedekind | 1831-1916 | `images/dedekind.png` | confirmed |
+| Book | II, `Discrete Number Systems` | Giuseppe Peano | 1858-1932 | `images/peano.png` | confirmed |
+| Book | II, `The Continuum` | Karl Weierstrass | 1815-1897 | `images/weierstrass.png` | proposed |
+| Volume | III, `Classical Analysis` | Augustin-Louis Cauchy | 1789-1857 | `images/cauchy.png` | confirmed |
+| Book | III, `Bounds, Sequences, and Series` | Bernard Bolzano | 1781-1848 | `images/bolzano.png` | confirmed |
+| Book | III, `Continuity` | Rudolf Lipschitz | 1832-1903 | `images/lipschitz.png` | confirmed |
+| Book | III, `Differentiation` | Gottfried Wilhelm Leibniz | 1646-1716 | `images/leibniz.png` | confirmed |
+| Book | III, `Integration` | Bernhard Riemann | 1826-1866 | `images/riemann.png` | confirmed |
+| Volume | IV, `Mathematical Spaces` | Constantin Caratheodory | 1873-1950 | `images/caratheodory.png` | confirmed |
+| Subject | IV, `Metric Spaces` | Maurice Frechet | 1878-1973 | `images/frechet.png` | confirmed |
+| Subject | IV, `Measure Spaces` | Emile Borel | 1871-1956 | `images/borel.png` | confirmed |
+| Subject | IV, `Topological Spaces` | Felix Hausdorff | 1868-1942 | `images/hausdorff.png` | confirmed |
+| Volume | V, `Modern Analysis` | Stefan Banach | 1892-1945 | `images/banach.png` | confirmed |
+| Volume | VI, `Algebra` | Emmy Noether | 1882-1935 | `images/noether.png` | confirmed |
+| Book | VI, `Linear Algebra` | Hermann Grassmann | 1809-1877 | `images/grassmann.png` | confirmed |
+| Book | VI, `Algebra` | Emil Artin | 1898-1962 | `images/artin.png` | confirmed |
+| Book | VI, `Lattice and Order Theory` | Garrett Birkhoff | 1911-1996 | `images/birkhoff.png` | proposed |
+| Volume | VII, `Advanced Logic` | David Hilbert | 1862-1943 | `images/hilbert.png` | confirmed |
+
 ## Book Root Naming
 
 Every book must eventually build from a readable root named:
 
 ```text
-volume-{roman}-{book-slug}-main.tex
+volume-{roman}-{book-slug}.tex
 ```
 
 The produced PDF uses the same stem:
 
 ```text
-volume-{roman}-{book-slug}-main.pdf
+volume-{roman}-{book-slug}.pdf
 ```
 
 Examples:
 
-- `volume-i-mathematical-logic-and-proof-main.tex`;
-- `volume-ii-the-continuum-main.tex`;
-- `volume-iii-differentiation-main.tex`.
+- `volume-i-mathematical-logic-and-proof.tex`;
+- `volume-ii-the-continuum.tex`;
+- `volume-iii-differentiation.tex`.
 
-Legacy `main-book-*.tex` roots and transitional `main.tex` roots are accepted
-only while repositories are being migrated to book-level frontmatter and build
-roots.
+The full-volume root is `volume-{roman}.tex`; it carries the volume
+frontmatter, an independent volume table of contents, and then routes every book
+through `volume-{roman}/index.tex`. Legacy `volume-{roman}-{book-slug}-main.tex`,
+`main-book-*.tex`, and transitional `main.tex` roots are accepted only while
+old branches are being migrated.
 
 Open naming decisions:
 
@@ -85,12 +118,12 @@ Open naming decisions:
    filename rules, validators, Docker build discovery, and output naming must
    all agree before content roots are renamed.
 2. Rename or create book roots using
-   `volume-{roman}-{book-slug}-main.tex`.
+   `volume-{roman}-{book-slug}.tex`.
 3. Duplicate and specialize book frontmatter so each book has its own title
    page, copyright/frontmatter policy, table of contents, and introduction
    hook.
 4. Build each book independently and publish PDFs using the matching
-   `volume-{roman}-{book-slug}-main.pdf` names.
+   `volume-{roman}-{book-slug}.pdf` names.
 5. Update Knowledge Explorer navigation from volume-only selection to
    volume/book/chapter selection.
 6. Update knowledge extraction so records carry volume metadata and book

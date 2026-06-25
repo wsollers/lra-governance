@@ -12,10 +12,10 @@ from core.volume import chapter_roots, is_ignored, latex_input_path
 
 DEFAULT_SCHEMA = {
     "required_volume_files": ["index.tex"],
-    "required_volume_entry_files": ["main.tex"],
-    "required_volume_entry_patterns": ["volume-*-*-main.tex", "main-book-*.tex", "main.tex"],
-    "canonical_volume_entry_pattern": r"^volume-(i|ii|iii|iv|v|vi|vii|viii)-[a-z0-9]+(?:-[a-z0-9]+)*-main\.tex$",
-    "legacy_volume_entry_patterns": ["main-book-*.tex", "main.tex"],
+    "required_volume_entry_files": [],
+    "required_volume_entry_patterns": ["volume-*.tex", "volume-*-*-main.tex", "main-book-*.tex", "main.tex"],
+    "canonical_volume_entry_pattern": r"^volume-(i|ii|iii|iv|v|vi|vii|viii)(?:-[a-z0-9]+(?:-[a-z0-9]+)*)?\.tex$",
+    "legacy_volume_entry_patterns": ["volume-*-*-main.tex", "main-book-*.tex", "main.tex"],
     "required_chapter_files": ["index.tex", "chapter.yaml", "notes/index.tex", "proofs/index.tex", "proofs/exercises/index.tex"],
     "required_chapter_dirs": ["notes", "proofs", "proofs/exercises"],
     "note_only_topics": ["notation"],
@@ -92,7 +92,7 @@ def _validate_entry_roots(volume_root: Path, findings: list[Finding], schema: di
             _add(
                 findings,
                 volume_root,
-                volume_root / "volume-{roman}-{book-slug}-main.tex",
+                volume_root / "volume-{roman}.tex",
                 "missing_volume_shape_file",
                 f"Missing volume entry root. Expected one or more of: {expected}.",
             )

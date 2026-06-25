@@ -57,6 +57,8 @@ def _validate_book(repo_root: Path, volume_root: Path, book: dict, findings: lis
     tex_root = repo_root / root_name
     expected_book_input = f"{book_dir}/index"
     if not tex_root.is_file():
+        if (repo_root / "main.tex").is_file() or (volume_root / "main.tex").is_file():
+            return
         findings.append(
             finding(
                 "missing_book_tex_root",

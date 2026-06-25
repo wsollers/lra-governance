@@ -17,7 +17,7 @@ except ImportError as exc:  # pragma: no cover
 
 
 SCHEMA = "lra.proof_vault_index"
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 GITHUB_BLOB_BASE = "https://github.com/wsollers/lra-proof-vault/blob/master"
 GITHUB_TREE_BASE = "https://github.com/wsollers/lra-proof-vault/tree/master"
 
@@ -137,6 +137,21 @@ def attempt_record(
         "path": path,
         "vault_record": rel_posix(folder, vault_root),
         "vault_url": vault_tree_url(folder, vault_root),
+        "theorem_id": str(metadata.get("theorem_id") or metadata.get("theorem_label") or ""),
+        "source_repo": str(metadata.get("source_repo") or ""),
+        "volume": str(metadata.get("volume") or ""),
+        "book": str(metadata.get("book") or ""),
+        "book_slug": str(metadata.get("book_slug") or ""),
+        "book_title": str(metadata.get("book_title") or ""),
+        "book_dir": str(metadata.get("book_dir") or ""),
+        "chapter": str(metadata.get("chapter") or ""),
+        "section": str(metadata.get("section") or ""),
+        "subsection": str(metadata.get("subsection") or ""),
+        "theorem_tex": str(metadata.get("theorem_tex") or ""),
+        "proof_tex": str(metadata.get("proof_tex") or ""),
+        "proof_label": str(metadata.get("proof_label") or ""),
+        "vault_path": str(metadata.get("vault_path") or ""),
+        "route_confidence": str(metadata.get("route_confidence") or ""),
         "attempt_id": attempt_id,
         "review_status": str(attempt.get("review_status") or ""),
         "images": image_links,

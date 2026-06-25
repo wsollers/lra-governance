@@ -11,6 +11,11 @@ explorer extraction:
 - `lra-volume-i`
 - `lra-volume-ii`
 - `lra-volume-iii`
+- `lra-volume-iv`
+- `lra-volume-v`
+- `lra-volume-vi`
+- `lra-volume-vii`
+- `lra-volume-viii`
 
 There is no integrated `Learning-Real-Analysis` monorepo; it is retired. Extract
 only from the split volume repos. Missing expected volume repositories, missing
@@ -71,6 +76,8 @@ python tools\governance\extraction_pipeline\preflight.py --allow-ahead
 Stage 2 generates data:
 
 - regenerate `chapter.yaml` from volume source;
+- regenerate book-aware proof-vault theorem routes into each volume's
+  `build/knowledge/theorem-routes.json` and `theorem-routes.yaml`;
 - validate dependency block shape and source compliance;
 - extract formal nodes, authored proof files, and dependency edges from the
   split volume repos with the same live TeX file inventory provider used by the
@@ -84,6 +91,12 @@ the graph, and writes ignored run artifacts:
 
 ```powershell
 python tools\governance\extraction_pipeline\generate_data.py
+```
+
+To refresh proof-vault theorem routes after a volume/book/chapter refactor:
+
+```powershell
+python tools\governance\extraction_pipeline\generate_theorem_routes.py --repos-root F:\repos
 ```
 
 Generated run artifacts live under `runs/extraction-*`. Raw logs and human
@@ -101,9 +114,9 @@ Stage 4 deploys data:
 - confirm proof tabs in the explorer are populated from live volume proof files
   before falling back to proof-vault handwritten attempt records;
 - build `proof-vault-index.json` from route-style metadata in
-  `lra-proof-vault`, including reviewed proof attempt OCR text, Markdown, and
-  TeX display artifacts when `ocr_text_path`, `markdown_path`, and `tex_path`
-  are present;
+  `lra-proof-vault`, including volume, book, chapter, route, reviewed proof
+  attempt OCR text, Markdown, and TeX display artifacts when `ocr_text_path`,
+  `markdown_path`, and `tex_path` are present;
 - commit and push generated data from that repo;
 - invoke the Pages/deploy workflow only when commit/push does not already do it.
 

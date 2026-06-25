@@ -13,8 +13,11 @@ volume-root/
   index.tex
 
 repo-root-or-volume-root/
-  volume-{roman}-{book-slug}-main.tex
+  volume-{roman}.tex           (full volume root)
+  volume-{roman}-{book-slug}.tex
                                (one root per book)
+  volume-{roman}-{book-slug}-main.tex
+                               (legacy migration alias)
   main-book-{book}.tex         (legacy migration alias)
   main.tex                     (transitional single-root alias)
 

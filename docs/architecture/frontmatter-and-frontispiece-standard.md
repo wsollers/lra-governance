@@ -95,13 +95,17 @@ extra commentary.
 | Volume | Display title | Mathematician | Lifespan | Image path |
 |---|---|---|---|---|
 | Volume I | `Logic, Sets, and Proof` | Georg Cantor | 1845-1918 | `images/cantor.png` |
-| Volume II | `Origins of Numbers` | Giuseppe Peano | 1858-1932 | `images/peano.png` |
+| Volume II | `Origins of Numbers` | Richard Dedekind | 1831-1916 | `images/dedekind.png` |
 | Volume III | `Classical Analysis` | Augustin-Louis Cauchy | 1789-1857 | `images/cauchy.png` |
-| Volume IV | `Mathematical Spaces` | Emmy Noether | 1882-1935 | `images/noether.png` |
-| Volume V | `Modern Analysis` | Henri Poincare | 1854-1912 | `images/poincare.png` |
-| Volume VI | `Algebra` | Leonhard Euler | 1707-1783 | `images/euler.png` |
+| Volume IV | `Mathematical Spaces` | Constantin Caratheodory | 1873-1950 | `images/caratheodory.png` |
+| Volume V | `Modern Analysis` | Stefan Banach | 1892-1945 | `images/banach.png` |
+| Volume VI | `Algebra` | Emmy Noether | 1882-1935 | `images/noether.png` |
 | Volume VII | `Advanced Logic` | David Hilbert | 1862-1943 | `images/hilbert.png` |
 | Volume VIII | `Applied and Computational Mathematics` | Isaac Newton | 1643-1727 | `images/newton.png` |
+
+Book-level frontmatter mathematicians are recorded in
+`docs/architecture/volume-architecture.md` and machine-readable form in
+`docs/architecture/book-registry.json`.
 
 ## Generation Boundary
 

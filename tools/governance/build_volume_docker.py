@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -116,7 +117,14 @@ def discover_tex_roots(volume_root: Path, requested: list[str] | None) -> list[P
     if requested:
         roots = [volume_root / item for item in requested]
     else:
-        roots = sorted(volume_root.glob("volume-*-*-main.tex"))
+        volume_entry_re = re.compile(r"^volume-(i|ii|iii|iv|v|vi|vii|viii)\.tex$")
+        book_entry_re = re.compile(r"^volume-(i|ii|iii|iv|v|vi|vii|viii)-[a-z0-9]+(?:-[a-z0-9]+)*\.tex$")
+        roots = sorted(
+            root for root in volume_root.glob("volume-*.tex")
+            if volume_entry_re.fullmatch(root.name) or book_entry_re.fullmatch(root.name)
+        )
+        if not roots:
+            roots = sorted(volume_root.glob("volume-*-*-main.tex"))
         if not roots:
             roots = sorted(volume_root.glob("main-book-*.tex"))
         if not roots and (volume_root / "main.tex").exists():
@@ -128,7 +136,8 @@ def discover_tex_roots(volume_root: Path, requested: list[str] | None) -> list[P
     if not roots:
         raise SystemExit(
             "no TeX build roots found. Expected one or more "
-            "volume-{roman}-{book-slug}-main.tex files, legacy main-book-*.tex files, "
+            "volume-{roman}.tex / volume-{roman}-{book-slug}.tex files, "
+            "legacy volume-{roman}-{book-slug}-main.tex or main-book-*.tex files, "
             "or transitional main.tex."
         )
     return roots
@@ -181,7 +190,8 @@ def main(argv: list[str] | None = None) -> int:
         action="append",
         help=(
             "specific TeX root to build, relative to --root; repeatable. Defaults to "
-            "all volume-{roman}-{book-slug}-main.tex roots, legacy main-book-*.tex roots, "
+            "all canonical volume-{roman}.tex and volume-{roman}-{book-slug}.tex roots, "
+            "legacy volume-{roman}-{book-slug}-main.tex or main-book-*.tex roots, "
             "or transitional main.tex."
         ),
     )
