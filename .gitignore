@@ -77,6 +77,7 @@ cmake-build-*/
 lean/.lake/
 
 # Generated explorer and reports
+.generated/
 **/.explorer/
 baselines/
 migration-reports/
