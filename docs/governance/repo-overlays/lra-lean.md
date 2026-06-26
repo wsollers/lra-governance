@@ -17,6 +17,20 @@ It must not be injected into volume content instructions.
 Use the Docker build path for reproducible validation. Do not use LaTeX render
 checks as substitutes for Lean validation.
 
+## Implementation Standards
+
+Lean code should be readable formal mathematics, not compressed tactic output.
+Follow the existing module style: package declarations under clear namespaces,
+use descriptive theorem, definition, hypothesis, and witness names, and keep
+proof structure legible enough for a maintainer to match it back to the source
+mathematics. Prefer small named lemmas and explicit local structure over dense
+anonymous tactic blocks when the proof has reusable mathematical content.
+
+File and module organization should mirror the formal subject matter. New
+modules belong under the appropriate `LRA/Volume*/...` tree, imported through
+the relevant volume root, and exposed through stable names that make downstream
+verification and explorer extraction straightforward.
+
 ## Build And Validation
 
 CI builds the repo through `Dockerfile`, then runs Lake inside the container:
