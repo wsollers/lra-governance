@@ -276,7 +276,7 @@ this plan may still mention the pre-migration five-volume state.
 - `DESIGN.md`;
 - `REPOSITORY_STRUCTURE.md`;
 - `docs/architecture/repository-layout.md`;
-- `docs/architecture/volume-layout.md`;
+- `docs/governance/volume-structure.md`;
 - `docs/architecture/multi-repo-sync.md`;
 - `docs/architecture/latex-build-and-rendering.md`;
 - `docs/governance/repo-overlays/lra-volume.md`;

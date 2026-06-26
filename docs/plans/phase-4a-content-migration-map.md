@@ -254,7 +254,7 @@ You are working in the Learning-Real-Analysis monorepo.
 Use:
 docs/plans/phase-4a-content-migration-map.md
 docs/architecture/volume-architecture.md
-docs/architecture/volume-layout.md
+docs/governance/volume-structure.md
 docs/architecture/frontmatter-and-frontispiece-standard.md
 
 Goal:

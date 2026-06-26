@@ -47,7 +47,7 @@ appropriate modular document instead.
 | Agent instruction generation and provider wrappers | `docs/governance/agent-instruction-policy.md` |
 | Task limits, stop conditions, and protected local paths | `docs/governance/task-scope-limits.md` |
 | Repository ownership and source-of-truth map | `docs/architecture/repository-layout.md` |
-| Volume repository layout and Overleaf shape | `docs/architecture/volume-layout.md` |
+| Volume repository layout and Overleaf shape | `docs/governance/volume-structure.md` |
 | Shared LaTeX infrastructure ownership | `docs/architecture/repository-layout.md` and `docs/governance/repo-overlays/lra-common.md` |
 | Canonical YAML ownership | `docs/architecture/canonical-yaml.md` |
 | Knowledge graph and theorem explorer pipeline | `docs/architecture/knowledge-pipeline.md` and `docs/architecture/theorem-explorer-pipeline.md` |

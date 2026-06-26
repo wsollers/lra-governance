@@ -30,14 +30,14 @@ For `author-definition`:
 For `author-stub-chapter`:
 
 - Volume architecture: `docs/architecture/volume-architecture.md`
-- Volume layout: `docs/architecture/volume-layout.md`
+- Volume structure: `docs/governance/volume-structure.md`
 - Repository layout: `docs/architecture/repository-layout.md`
 - Chapter stub standard: `docs/governance/stub-chapter-standards.md`
 - Layout audit workflow: `docs/workflows/volume-layout-audit.md`
 
 For `author-stub-section`:
 
-- Volume layout: `docs/architecture/volume-layout.md`
+- Volume structure: `docs/governance/volume-structure.md`
 - Section stub standard: `docs/governance/stub-section-standards.md`
 - File splitting and routing: `docs/governance/file-splitting-standards.md`
 - Layout audit workflow: `docs/workflows/volume-layout-audit.md`

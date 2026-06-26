@@ -33,7 +33,7 @@ python tools\governance\audit_volume_layout.py --root F:\repos\lra-volume-ii --f
 
 The audited rule set is the volume/chapter/topic layout portion of
 `constitution/schema/file-schema.yaml`, with human-facing context in
-`docs/architecture/volume-layout.md`.
+`docs/governance/volume-structure.md`.
 
 The audit does not move files or modify source.
 

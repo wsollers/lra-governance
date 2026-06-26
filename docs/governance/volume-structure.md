@@ -6,6 +6,28 @@ run.
 
 The machine-readable contract lives in `docs/governance/volume-structure.schema.json`.
 
+## Repository Ownership And Build Boundary
+
+Volume repos are self-contained source repos for their own volume content and
+are Overleaf/build-ready when the shared LaTeX infrastructure is supplied by
+the environment.
+
+Volume repos own volume roots, book roots, chapter source, chapter-local
+bibliography shards, and images or asset PDFs needed to render their content.
+They do not own Lean formalization, C++/Vulkan simulation, numerical
+benchmarking, PDF extraction, source-profile governance, or global governance
+rules.
+
+`common/` is supplied by the Docker build image, local build wrapper, or an
+explicit `lra-common` checkout. It is not committed, copied, or synced into
+volume repos.
+
+`tools/governance/validate_volume.py` is the deterministic acceptance gate for
+current volume structure. Use `tools/governance/audit_volume_layout.py` only
+when a task needs a focused migration or layout report.
+
+## Canonical Shape
+
 Canonical shape:
 
 ```text
