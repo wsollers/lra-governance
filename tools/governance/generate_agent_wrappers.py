@@ -72,6 +72,8 @@ def global_rules() -> str:
 - Do not include secrets, credentials, tokens, or machine-local private values.
 - Do not modify mathematical content during governance or wrapper-generation tasks.
 - Do not touch the retired `Learning-Real-Analysis` monorepo.
+- Keep context small: use governance docs as targeted references, not preload material.
+- Open only the workflow, standard, schema, or overlay needed for the current task.
 - Port emergency downstream instruction repairs back to `lra-governance`."""
 
 
