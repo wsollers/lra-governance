@@ -388,8 +388,9 @@ def structural_roadmap_purge(text: str, info: FileInfo, ctx: Context):
 #                         plain_remark_or_example, unclosed_environment
 #   label_quality      -> weak_label_slug, ocr_like_label (prefix/presence stay
 #                         with the engine's existing label rule -- no duplication)
-#   capstone_structure -> missing_capstone_{newpage,phantomsection,label,box,
-#                         problem,dependency_ceiling}, invalid_capstone_box_count
+#   capstone_structure -> missing_capstone_{phantomsection,label,box,theorem,
+#                         dependencies_to_state,dependencies_to_prove,
+#                         dependency_ceiling,dependencies}, invalid_capstone_box_count
 # Cross-file capstone routing (unrouted_capstone, capstone_not_last) is deferred to
 # the routing fold-in; it needs chapter context this per-file engine lacks.
 # ============================================================
@@ -496,17 +497,21 @@ def capstone_structure(text: str, info: FileInfo, ctx: Context):
     chapter_name = name[len("capstone-"):-len(".tex")]
     body=_uncommented(text)
     for token, code in [
-        ("\\newpage","missing_capstone_newpage"),
         ("\\phantomsection","missing_capstone_phantomsection"),
         (f"\\label{{cap:{chapter_name}}}","missing_capstone_label"),
         ("\\begin{tcolorbox}","missing_capstone_box"),
-        ("Problem","missing_capstone_problem"),
+        ("Theorem","missing_capstone_theorem"),
+        ("\\begin{remark*}[Dependencies to state]","missing_capstone_dependencies_to_state"),
+        ("\\begin{remark*}[Dependencies to prove]","missing_capstone_dependencies_to_prove"),
         ("\\begin{remark*}[Dependency ceiling]","missing_capstone_dependency_ceiling"),
+        ("\\begin{dependencies}","missing_capstone_dependencies"),
     ]:
         if token not in body:
             yield Issue(code, f"Capstone missing {token}.","error",0)
     if len(_TCOLORBOX_RE.findall(body)) != 1:
-        yield Issue("invalid_capstone_box_count","Capstone must contain exactly one problem tcolorbox.","error",0)
+        yield Issue("invalid_capstone_box_count","Capstone must contain exactly one theorem tcolorbox.","error",0)
+    if "\\textbf{Problem.}" in body:
+        yield Issue("capstone_problem_label","Capstone theorem box must be posed as a theorem, not as a problem prompt.","error",0)
 
 # ============================================================
 # Integrated structural identity coverage for chapter/section/subsection
@@ -528,6 +533,7 @@ _STARRED_CHAPTER_RE      = re.compile(r"\\chapter\*(?:\[[^\]]*\])?\{[^{}]+\}")
 _SECTION_HEADING_RE      = re.compile(r"\\section(?!\*)(?:\[[^\]]*\])?\{")
 _STARRED_SECTION_RE      = re.compile(r"\\section\*(?:\[[^\]]*\])?\{[^{}]+\}")
 _UNSTARRED_SUBSECTION_RE = re.compile(r"\\sub(?:sub)?section(?:\[[^\]]*\])?\{[^{}]+\}")
+_STARRED_SUBSECTION_RE   = re.compile(r"\\subsection\*(?:\[[^\]]*\])?\{[^{}]+\}")
 
 def _posix(info: "FileInfo") -> str:
     return info.path.replace("\\", "/")
@@ -577,24 +583,19 @@ def section_router_heading(text: str, info: FileInfo, ctx: Context):
     starred = _STARRED_SECTION_RE.search(t)
     if starred:
         yield Issue("starred_section_router_heading",
-            "Section routers must use non-starred \\section{...} so sections appear in the table of contents.",
+            "Topic routers must use non-starred \\section{...} so sections appear in the table of contents.",
             "error", _line_at(t, starred.start()))
     if not section:
         yield Issue("missing_section_router_heading",
             f"notes/{topic}/index.tex must begin routed content with \\section{{...}}.", "error", 0)
     elif t[: section.start()].strip():
         yield Issue("section_router_heading_not_first",
-            "Section routers must begin with the non-starred \\section{...} heading.",
+            "Topic routers must begin with the non-starred \\section{...} heading.",
             "error", _line_at(t, section.start()))
     elif first_input >= 0 and section.start() > first_input:
         yield Issue("section_heading_after_input",
-            "Section router heading must appear before routed body inputs.",
+            "Topic router section heading must appear before routed body inputs.",
             "error", _line_at(t, section.start()))
-    sub = _UNSTARRED_SUBSECTION_RE.search(t)
-    if sub:
-        yield Issue("unstarred_subsection_router_heading",
-            "Section routers must not introduce unstarred subsection headings.",
-            "error", _line_at(t, sub.start()))
 
 @file_rule("note_body_heading")
 def note_body_heading(text: str, info: FileInfo, ctx: Context):

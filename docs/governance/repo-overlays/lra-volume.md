@@ -41,14 +41,14 @@ The Docker build helper discovers and builds every canonical root:
 full volume and individual book PDF checks:
 
 ```powershell
-python ..\lra-governance\tools\governance\build_volume_docker.py --root . --common-root ..\lra-common --output-dir build\digital
-python ..\lra-governance\tools\governance\build_volume_docker.py --root . --common-root ..\lra-common --print-edition --output-dir build\print
+python ..\lra-governance\tools\governance\build_volume_docker.py --root . --common-root ..\lra-common --edition digital --paper letter --output-dir build\digital-letter
+python ..\lra-governance\tools\governance\build_volume_docker.py --root . --common-root ..\lra-common --edition print --paper sixbynine --output-dir build\print-sixbynine
 ```
 
 To build one book root, pass it explicitly:
 
 ```powershell
-python ..\lra-governance\tools\governance\build_volume_docker.py --root . --common-root ..\lra-common --tex-root volume-i-set-theory.tex --output-dir build\digital
+python ..\lra-governance\tools\governance\build_volume_docker.py --root . --common-root ..\lra-common --edition digital --paper letter --tex-root volume-i-set-theory.tex --output-dir build\digital-letter
 ```
 
 ## Stub Chapters
@@ -57,6 +57,28 @@ Volume chapter stubs follow the global `stub-chapter-standards.md` standard.
 After stub generation, run the local volume build command when available; for
 standard LRA volume roots, use the Docker build helper above unless local
 instructions say otherwise.
+
+## Digital / Print Editions
+
+Volume repos follow `digital-print-edition-standards.md`. Digital and print are
+behavior modes, not paper sizes. Workflows and local checks should build both
+editions for the main volume root and each individual book root.
+
+Chapter routers own the print-edition exclusion block around proof, exercise,
+and capstone routes. Files below `proofs/` use ordinary `\input{...}` routing.
+
+## Breadcrumbs And Footers
+
+Volume repos follow `breadcrumb-footer-standards.md`. Breadcrumb and footer
+chrome should be generated from one metadata source and should preserve the
+global hierarchy:
+
+```text
+Series -> Volume -> Book -> Chapter -> Topic
+```
+
+Shared implementation belongs in `lra-common`; volume repos must not carry
+local copies of breadcrumb or footer packages.
 
 ## Stub Sections
 

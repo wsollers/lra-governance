@@ -1,7 +1,7 @@
 # Capstone Exercise Standards
 
-These standards govern chapter-level capstone exercises in LRA volume content.
-They define how to choose, author, and lay out a capstone exercise once a
+These standards govern chapter-level capstone theorem exercises in LRA volume content.
+They define how to choose, author, and lay out a capstone once a
 chapter has enough mathematical content to support one.
 
 ## Purpose
@@ -35,8 +35,10 @@ The router lives at:
 <chapter>/proofs/exercises/index.tex
 ```
 
-The chapter router inputs the exercises router inside the print-edition
-exclusion block, as described in `stub-chapter-standards.md` and
+Capstones are optional. A chapter should have one only when the chapter has
+enough mathematical content to support a strong theorem-shaped target. When a
+capstone is present, the chapter router inputs the exercises router inside the
+print-edition exclusion block, as described in `stub-chapter-standards.md` and
 `volume-structure.md`.
 
 Do not create root-level `exercises/` for capstones. Do not use legacy
@@ -117,22 +119,27 @@ to the next chapter.
 
 ## Authoring Layout
 
-A capstone should read as a short mathematical exercise-essay, not as a boxed
-theorem database. The default authored layout is:
+A capstone should read as a short mathematical exercise-paper, not as a review
+worksheet. The default authored layout is:
 
-1. main theorem or problem statement;
-2. what it says;
-3. architecture of the proof;
-4. components to prove;
-5. scope and honest limits;
-6. instantiation toward the larger program;
-7. optional formal appendix.
+1. theorem-shaped target statement;
+2. abstract or motivation;
+3. notation;
+4. lemmas/propositions needed for the proof;
+5. proof of the capstone theorem;
+6. application or instantiation toward the larger program;
+7. limits of the theorem;
+8. dependencies to state, dependencies to prove, dependency ceiling, and
+   machine-readable dependencies.
 
-### Main theorem or problem statement
+### Theorem-shaped target statement
 
-Open with the rigorous target statement. Include all quantifiers, hypotheses,
-existence conditions, and dependency-ceiling assumptions needed to make the
-problem well-posed.
+Open with a single `tcolorbox` whose title identifies a capstone theorem and
+whose body begins with `\textbf{Theorem.}`. Do not write `Problem.` and do not
+say "prove that" inside the box. State the theorem as a mathematical
+implication: hypotheses first, conclusion second. Include all quantifiers,
+hypotheses, existence conditions, and dependency-ceiling assumptions needed to
+make the target well-posed.
 
 ### What it says
 
@@ -145,10 +152,11 @@ object, not merely what the formal syntax says.
 Decompose the target top-down. Each prerequisite should be introduced only when
 the reader can see the role it plays in the main argument.
 
-### Components to prove
+### Lemmas and propositions to prove
 
-State each component rigorously. Give a strategic pointer or trailhead, not a
-full proof, unless the task explicitly asks for a solution key.
+State each component rigorously as a lemma or proposition-style remark. Give a
+strategic pointer or proof task, not a full proof, unless the task explicitly
+asks for a solution key.
 
 ### Scope and honest limits
 
@@ -194,6 +202,23 @@ A capstone must not reference:
 If the desired capstone needs later machinery, either weaken the statement or
 record it as a future-facing limit.
 
+## Knowledge Extraction And Proof Vault
+
+A capstone must be extractable as a theorem-like challenge node keyed by
+`cap:<chapter-slug>` and, when useful for proof-vault routing,
+`prf:capstone-<chapter-slug>`. Include:
+
+- `Dependencies to state`: labels needed to parse and state the capstone;
+- `Dependencies to prove`: labels needed to prove it;
+- `Dependency ceiling`: the allowed chapter horizon;
+- a standard `dependencies` environment for existing graph tooling.
+
+Do not memorialize proof attempts inline in the capstone source. Attempts,
+partial solutions, failed strategies, and successful proofs belong in the
+proof vault and should point back to the capstone label. The capstone source is
+the stable theorem target and proof architecture; the proof vault is the
+historical record of attempts and successes.
+
 ## TeX Skeleton
 
 Use the canonical path and router shape from `volume-structure.md`. A full
@@ -201,40 +226,53 @@ capstone file should follow this source shape unless a repo-local validator
 requires a stricter template:
 
 ```latex
-\newpage
 \phantomsection
 \label{prf:capstone-<chapter-slug>}
+\label{cap:<chapter-slug>}
 
-\begin{remark*}[Return]
-\hyperref[ch:<chapter-slug>]{Return to Chapter: <Chapter Display Title>}
+\begin{tcolorbox}[
+  colback=gray!6,
+  colframe=gray!40,
+  arc=2pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt,
+  title={\small\textbf{Capstone Theorem: <Name>}},
+  fonttitle=\small\bfseries
+]
+\textbf{Theorem.}
+<If ... then ... theorem statement.>
+\end{tcolorbox}
+
+\begin{remark*}[Abstract]
+<Why this theorem is the chapter capstone.>
 \end{remark*}
 
-\subsection*{Capstone --- <Chapter Display Title>}
-
-\begin{remark*}[Theorem]
-<Full rigorous statement.>
+\begin{remark*}[Notation]
+<Notation needed for the theorem.>
 \end{remark*}
 
-\begin{remark*}[What it says]
-<Physical or conceptual reading.>
+\begin{remark*}[Lemma 1: <name>]
+<Lemma statement.>
+\emph{Proof task.} <Trailhead only.>
 \end{remark*}
 
-\begin{remark*}[Architecture of the proof]
-<Top-down necessity decomposition.>
-\end{remark*}
-
-\begin{remark*}[Components]
-\begin{enumerate}
-  \item <Component statement> \emph{Strategy:} <trailhead only>.
-\end{enumerate}
-\end{remark*}
-
-\begin{remark*}[Scope and honest limits]
-<Converse failures, load-bearing hypotheses, deferred generalizations.>
+\begin{remark*}[Proof of the theorem]
+<Proof architecture and student-facing proof task.>
 \end{remark*}
 
 \begin{remark*}[Instantiation toward the program]
 <Concrete bridge into the larger program.>
+\end{remark*}
+
+\begin{remark*}[Dependencies to state]
+<Labels needed to state the theorem.>
+\end{remark*}
+
+\begin{remark*}[Dependencies to prove]
+<Labels needed to prove the theorem.>
+\end{remark*}
+
+\begin{remark*}[Dependency ceiling]
+<Allowed dependency horizon.>
 \end{remark*}
 
 \begin{dependencies}
@@ -246,7 +284,7 @@ requires a stricter template:
 
 The capstone should not use theorem-environment boxes unless the owning chapter
 has already promoted the capstone result into settled notes. The capstone is
-an exercise artifact first.
+a theorem-shaped exercise artifact first.
 
 ## Acceptance Checklist
 

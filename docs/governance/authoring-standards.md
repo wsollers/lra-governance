@@ -44,24 +44,21 @@ Chapter entries use the required breadcrumb and roadmap structure. The chapter
 `index.tex` router must use a non-starred `\chapter{...}` heading and contain
 exactly one breadcrumb box before routed content inputs.
 
-Each active notes section router, `notes/<section>/index.tex`, begins with a
-non-starred `\section{...}` so the chapter table of contents exposes the
-section spine. Sections must not use `\section*`.
+Each active chapter notes router, `notes/index.tex`, routes topic indexes in
+dependency order. It does not introduce a numbered `\section{...}` for the
+chapter title; the chapter router already owns the `\chapter{...}` heading.
 
-Immediately after the section heading, the section router contains exactly one
-gray Toolkit box. The Toolkit orients the section's vocabulary and formal
-payload; it is not repeated in subsection/topic body files.
+Each active topic router, `notes/<topic>/index.tex`, begins rendered content
+with exactly one non-starred `\section{<Topic Display Title>}`. Topic routers
+must not use `\section*{...}` for the topic title.
 
-Immediately after the Toolkit, the section router contains one short
-`remark*` block titled `Exposition`. This section-level exposition introduces
-the mathematical role of the section in a precise reference voice. It should
-be brief, normally one paragraph and no more than about 100 words. The first
-routed `\input` follows this exposition.
+Immediately after the topic section heading, the topic router may contain
+exactly one gray Toolkit box. The Toolkit orients the topic's vocabulary and
+formal payload; it is not repeated in topic body files.
 
-Subsection/topic body files should use starred subsection headings by default,
-such as `\subsection*{...}`, so the table of contents remains a chapter-section
-spine rather than a full topic inventory. Subsection body files should not open
-with generic orienting exposition; the section router owns that orientation.
+Topic body files may use `\subsection{...}` for nested local topics. The topic
+router owns the rendered `\section{...}` heading and the footer's section
+metadata.
 
 ## Figures
 

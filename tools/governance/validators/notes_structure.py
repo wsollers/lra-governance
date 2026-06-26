@@ -49,7 +49,7 @@ def validate(volume_root: Path) -> list[Finding]:
                     continue
                 if body.resolve() not in included:
                     continue
-                if body.name.startswith("figure-"):
+                if body.name.startswith("figure-") or body.stem.startswith("figure"):
                     continue
                 if topic_index_included and not is_routed(topic_index, body, chapter):
                     findings.append(
@@ -79,13 +79,8 @@ def _check_router_content(volume_root: Path, index: Path, findings: list[Finding
 
 
 def _check_topic_router_only(volume_root: Path, index: Path, included: set[Path], findings: list[Finding]) -> None:
-    topic_body_count = sum(
-        1
-        for body in index.parent.glob("*.tex")
-        if body.name != "index.tex" and not body.name.startswith("figure-")
-        and body.resolve() in included
-    )
     in_toolkit = False
+    seen_section = False
     for line_no, raw in enumerate(read_text(index).splitlines(), 1):
         line = strip_latex_comment(raw).strip()
         if in_toolkit:
@@ -94,39 +89,90 @@ def _check_topic_router_only(volume_root: Path, index: Path, included: set[Path]
             continue
         if not line:
             continue
-        if INPUT_RE.fullmatch(line) or _is_topic_section_line(line):
+        if _is_topic_section_line(line):
+            if seen_section:
+                findings.append(
+                    finding(
+                        "notes_topic_index_duplicate_section",
+                        "notes/{topic}/index.tex must contain exactly one non-starred \\section{...} heading.",
+                        index,
+                        volume_root,
+                        line_no,
+                    )
+                )
+            seen_section = True
+            continue
+        if _is_topic_subsection_line(line):
+            if not seen_section:
+                findings.append(
+                    finding(
+                        "notes_topic_index_missing_section",
+                        "notes/{topic}/index.tex must begin rendered content with one non-starred \\section{...} before nested subsection headings.",
+                        index,
+                        volume_root,
+                        line_no,
+                    )
+                )
+            continue
+        if INPUT_RE.fullmatch(line):
+            if not seen_section:
+                findings.append(
+                    finding(
+                        "notes_topic_index_missing_section",
+                        "notes/{topic}/index.tex must begin rendered content with one non-starred \\section{...} before body inputs.",
+                        index,
+                        volume_root,
+                        line_no,
+                    )
+                )
             continue
         if TOOLKIT_BEGIN_RE.fullmatch(line):
+            if not seen_section:
+                findings.append(
+                    finding(
+                        "notes_topic_index_missing_section",
+                        "notes/{topic}/index.tex must begin rendered content with one non-starred \\section{...} before toolkit or body content.",
+                        index,
+                        volume_root,
+                        line_no,
+                    )
+                )
             in_toolkit = True
-            continue
-        if _is_topic_subsection_line(line) and topic_body_count > 1:
             continue
         else:
             findings.append(
                 finding(
                     "notes_topic_index_contains_rendered_content",
-                    "notes/{topic}/index.tex must be a router containing only \\section lines, eligible \\subsection* lines, and input lines.",
+                    "notes/{topic}/index.tex may contain comments, exactly one non-starred \\section{...}, nested non-starred \\subsection{...} headings, an optional toolkit box, and input lines only.",
                     index,
                     volume_root,
                     line_no,
                 )
             )
+    if not seen_section:
+        findings.append(
+            finding(
+                "notes_topic_index_missing_section",
+                "notes/{topic}/index.tex must contain exactly one non-starred \\section{...} heading.",
+                index,
+                volume_root,
+            )
+        )
 
 
 def _check_body_heading(volume_root: Path, body: Path, findings: list[Finding]) -> None:
-    text = read_text(body)
-    match = UNSTARRED_SUBSECTION_RE.search(text)
-    if match:
-        line = text.count("\n", 0, match.start()) + 1
-        findings.append(
-            finding(
-                "unstarred_subsection_body_heading",
-                "Topic body files must use starred subsection headings so the table of contents remains a chapter-section spine.",
-                body,
-                volume_root,
-                line,
+    for line_no, raw in enumerate(read_text(body).splitlines(), 1):
+        line = strip_latex_comment(raw).strip()
+        if _starts_section_command(line):
+            findings.append(
+                finding(
+                    "notes_topic_body_section_heading",
+                    "Note body files must not introduce top-level \\section headings; the topic router owns \\section{...}. Use \\subsection{...} for nested note headings.",
+                    body,
+                    volume_root,
+                    line_no,
+                )
             )
-        )
 
 
 def _is_topic_section_line(line: str) -> bool:
@@ -134,7 +180,7 @@ def _is_topic_section_line(line: str) -> bool:
 
 
 def _is_topic_subsection_line(line: str) -> bool:
-    return _is_heading_line(line, command="subsection", starred=True)
+    return _is_heading_line(line, command="subsection", starred=False)
 
 
 def _is_heading_line(line: str, *, command: str, starred: bool) -> bool:
@@ -155,6 +201,16 @@ def _is_heading_line(line: str, *, command: str, starred: bool) -> bool:
         return False
     pos = _consume_balanced_group(line, pos, "{", "}")
     return pos == len(line)
+
+
+def _starts_section_command(line: str) -> bool:
+    prefix = r"\section"
+    if not line.startswith(prefix):
+        return False
+    if line.startswith(r"\sectionmark"):
+        return False
+    pos = len(prefix)
+    return pos < len(line) and line[pos] in "*[{"
 
 
 def _consume_balanced_group(line: str, start: int, opener: str, closer: str) -> int | None:

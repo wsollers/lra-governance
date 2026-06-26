@@ -4,8 +4,9 @@ r"""Ensure every chapter has a canonical capstone in the proper place + routed.
 Canonical location: proofs/exercises/capstone-{subject}.tex, routed LAST in
 proofs/exercises/index.tex, which is routed from proofs/index.tex
 (constitution/schema/file-schema.yaml). The stub matches the engine's
-capstone_structure rule: \newpage, \phantomsection, \label{cap:{subject}},
-exactly one problem tcolorbox, the word "Problem", and a Dependency ceiling remark.
+capstone_structure rule: \phantomsection, \label{cap:{subject}}, exactly one
+theorem tcolorbox, Dependencies to state/prove remarks, a Dependency ceiling
+remark, and a dependencies environment.
 
 Per chapter it: scaffolds proofs/exercises/ if absent; renames a mis-named
 capstone into the canonical name; creates a compliant STUB if none exists (never
@@ -58,20 +59,26 @@ def stub(subject: str, title: str) -> str:
     return (
         f"\\ifcsname {guard}\\endcsname\n\\else\n"
         f"\\expandafter\\gdef\\csname {guard}\\endcsname{{}}\n\n"
-        "\\newpage\n\\phantomsection\n"
+        "\\phantomsection\n"
         f"\\label{{cap:{subject}}}\n\n"
         "\\begin{tcolorbox}[\n"
         "  colback=gray!6,\n  colframe=gray!40,\n  arc=2pt,\n"
         "  left=8pt, right=8pt, top=6pt, bottom=6pt,\n"
-        "  title={\\small\\textbf{Capstone Problem}},\n"
+        "  title={\\small\\textbf{Capstone Theorem}},\n"
         "  fonttitle=\\small\\bfseries\n]\n"
-        "\\textbf{Problem.}\n"
-        f"TODO: state one synthesizing problem for {title}, using only concepts at or\n"
-        "before this chapter in the registry.\n"
+        "\\textbf{Theorem.}\n"
+        f"TODO: state the theorem-shaped capstone target for {title}.\n"
         "\\end{tcolorbox}\n\n"
+        "\\begin{remark*}[Dependencies to state]\n"
+        "List only the prior labels needed to parse the capstone statement.\n"
+        "\\end{remark*}\n\n"
+        "\\begin{remark*}[Dependencies to prove]\n"
+        "List the prior labels needed to prove the capstone theorem.\n"
+        "\\end{remark*}\n\n"
         "\\begin{remark*}[Dependency ceiling]\n"
         "The capstone may use only results routed at or before this chapter.\n"
         "\\end{remark*}\n\n"
+        "\\begin{dependencies}\n\\begin{itemize}\n  \\item TODO\n\\end{itemize}\n\\end{dependencies}\n\n"
         "\\clearpage\n\\fi\n"
     )
 

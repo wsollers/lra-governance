@@ -9,12 +9,12 @@ from core.file_inventory import files_to_validate
 
 
 MACHINERY_RE = re.compile(
-    r"\\(input|include|LRAExcludeFromPrintEditionBegin|LRAExcludeFromPrintEditionEnd|label|index|phantomsection|addcontentsline|clearpage|newpage|FloatBarrier)\b"
+    r"\\(input|include|LRAExcludeFromPrintEditionBegin|LRAExcludeFromPrintEditionEnd|label|index|phantomsection|addcontentsline|clearpage|newpage|FloatBarrier|lrameta)\b"
 )
 HEADING_RE = re.compile(r"\\(chapter|section|subsection|subsubsection)\b")
 ENV_BEGIN_RE = re.compile(r"\\begin\{(exposition|toolkitbox)\}")
 ENV_END_RE = re.compile(r"\\end\{(exposition|toolkitbox)\}")
-BREADCRUMB_RE = re.compile(r"\\breadcrumb\{")
+BREADCRUMB_RE = re.compile(r"\\(?:breadcrumb\{|LraBreadcrumb\b)")
 TOOLKITBOX_RE = re.compile(r"\\begin\{toolkitbox\}.*?\\end\{toolkitbox\}", re.DOTALL)
 FORMAL_OR_PROOF_RE = re.compile(r"\\begin\{(?:definition|theorem|lemma|proposition|corollary|axiom|proof)\}")
 RAW_TOOLKIT_RE = re.compile(r"\\begin\{tcolorbox\}\[(.*?)\]", re.DOTALL)
@@ -42,7 +42,7 @@ def _validate_file(volume_root: Path, path: Path, findings: list[Finding]) -> No
 
 def _check_breadcrumb_format(volume_root: Path, path: Path, text: str, findings: list[Finding]) -> None:
     match = RAW_BREADCRUMB_RE.search(text)
-    if match and "\\breadcrumb{" not in text:
+    if match and "\\breadcrumb{" not in text and "\\LraBreadcrumb" not in text:
         findings.append(
             finding(
                 "breadcrumb_hand_rolled",

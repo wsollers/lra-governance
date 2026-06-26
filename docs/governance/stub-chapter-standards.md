@@ -36,7 +36,7 @@ chapter-slug/
     index.tex
   proofs/
     index.tex
-    exercises/
+    exercises/                  (optional)
       index.tex
       capstone-{chapter-slug}.tex
 ```
@@ -77,8 +77,9 @@ real, validator-passing shape; do not improvise a different structure.
 \section*{Proofs}
 \input{volume-<n>/<chapter-slug>/proofs/index}
 
-\section*{Capstone}
-\input{volume-<n>/<chapter-slug>/proofs/exercises/index}
+% Include the capstone route only when a strong capstone exists:
+% \section*{Capstone}
+% \input{volume-<n>/<chapter-slug>/proofs/exercises/index}
 \LRAExcludeFromPrintEditionEnd
 ```
 
@@ -94,7 +95,7 @@ real, validator-passing shape; do not improvise a different structure.
 \input{volume-<n>/<chapter-slug>/proofs/<topic>/index}
 ```
 
-`<chapter-slug>/proofs/exercises/index.tex` (router only):
+When a capstone exists, `<chapter-slug>/proofs/exercises/index.tex` is router only:
 
 ```latex
 \input{volume-<n>/<chapter-slug>/proofs/exercises/capstone-<chapter-slug>}
@@ -106,7 +107,7 @@ Chapter-index points that are easy to get wrong:
 - `\breadcrumb` takes four arguments: current slug, prior neighbor, current
   display title, next neighbor. Neighbors come from the chapter registry (see
   the breadcrumb rules in `constitution/schema/file-schema.yaml`).
-- The `Proofs` and `Capstone` headings and their `\input`s sit inside the
+- The `Proofs` heading, and the optional `Capstone` heading and input, sit inside the
   `\LRAExcludeFromPrintEditionBegin ... \LRAExcludeFromPrintEditionEnd` block so
   print builds omit them.
 
@@ -137,12 +138,13 @@ canonical shape:
 - `\LRAExcludeFromPrintEditionBegin`;
 - `\section*{Proofs}`;
 - `\input{volume-x/chapter-slug/proofs/index}`;
-- `\section*{Capstone}`;
-- `\input{volume-x/chapter-slug/proofs/exercises/index}`;
+- optional `\section*{Capstone}`;
+- optional `\input{volume-x/chapter-slug/proofs/exercises/index}`;
 - `\LRAExcludeFromPrintEditionEnd`.
 
-The proof and capstone headings belong inside the print-edition exclusion
-block, so print builds do not render empty `Proofs` or `Capstone` sections.
+The proof heading, and optional capstone heading, belong inside the
+print-edition exclusion block, so print builds do not render empty `Proofs` or
+`Capstone` sections.
 Within that block and everywhere below `proofs/`, routing uses ordinary
 `\input{...}`.
 
@@ -176,16 +178,17 @@ already supplied by a canonical registry or by the task.
 ## Proofs Index
 
 The `proofs/index.tex` file is router-only. It contains comments and `\input`
-lines for `proofs/{topic}/index`, followed by
-`proofs/exercises/index` as the final route.
+lines for `proofs/{topic}/index`. Do not route `proofs/exercises/index` from
+`proofs/index`; the chapter router owns the optional capstone route.
 
 Do not create proof files for nonexistent statements. Proof file creation must
 also satisfy `proof-standards.md`.
 
 ## Exercises Index
 
-The exercises router lives at `proofs/exercises/index.tex`. It is router-only
-and routes `proofs/exercises/capstone-{chapter-slug}.tex`.
+The exercises router lives at `proofs/exercises/index.tex` only when a strong
+capstone exists. It is router-only and routes
+`proofs/exercises/capstone-{chapter-slug}.tex`.
 
 Do not create root-level `exercises/`. Do not invent exercises, capstone
 prompts, solutions, or exercise labels unless the task explicitly provides that

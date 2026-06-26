@@ -50,7 +50,11 @@ def make_volume() -> Path:
         ),
     )
     write(chapter / "notes" / "index.tex", r"\input{volume-ii/integers/notes/order/index}" + "\n")
-    write(chapter / "notes" / "order" / "index.tex", r"\input{volume-ii/integers/notes/order/notes-order}" + "\n")
+    write(
+        chapter / "notes" / "order" / "index.tex",
+        r"\section{Order Notes}" "\n"
+        r"\input{volume-ii/integers/notes/order/notes-order}" "\n",
+    )
     write(
         chapter / "notes" / "order" / "notes-order.tex",
         "\n".join(
@@ -126,13 +130,31 @@ def make_volume() -> Path:
                 r"\label{cap:integers}",
                 "",
                 r"\begin{tcolorbox}",
-                r"\textbf{Problem.}",
-                "TODO.",
+                r"\textbf{Theorem.}",
+                "If integers are ordered, then integers are ordered.",
                 r"\end{tcolorbox}",
+                "",
+                r"\begin{remark*}[Dependencies to state]",
+                r"\begin{itemize}",
+                r"  \item \hyperref[prop:order]{Order}",
+                r"\end{itemize}",
+                r"\end{remark*}",
+                "",
+                r"\begin{remark*}[Dependencies to prove]",
+                r"\begin{itemize}",
+                r"  \item \hyperref[prop:order]{Order}",
+                r"\end{itemize}",
+                r"\end{remark*}",
                 "",
                 r"\begin{remark*}[Dependency ceiling]",
                 "Earlier material only.",
                 r"\end{remark*}",
+                "",
+                r"\begin{dependencies}",
+                r"\begin{itemize}",
+                r"  \item \hyperref[prop:order]{Order}",
+                r"\end{itemize}",
+                r"\end{dependencies}",
                 "",
                 r"\clearpage",
                 "",
@@ -174,7 +196,7 @@ def make_registered_book_volume() -> tuple[Path, dict]:
     write(chapter / "index.tex", r"\input{volume-ii/book-new/chapter-one/notes/index}" + "\n")
     write(chapter / "chapter.yaml", "subject: chapter one\n")
     write(chapter / "notes" / "index.tex", r"\input{volume-ii/book-new/chapter-one/notes/topic-one/index}" + "\n")
-    write(chapter / "notes" / "topic-one" / "index.tex", "% topic\n")
+    write(chapter / "notes" / "topic-one" / "index.tex", r"\section{Topic One}" + "\n")
     write(chapter / "proofs" / "index.tex", "% proofs\n")
     return volume, registry
 
@@ -236,7 +258,11 @@ class ValidateVolumeTests(unittest.TestCase):
 
     def test_volume_shape_allows_note_topic_without_proof_obligations(self):
         volume = make_volume()
-        write(volume / "integers" / "notes" / "reference" / "index.tex", r"\input{volume-ii/integers/notes/reference/notes-reference}" + "\n")
+        write(
+            volume / "integers" / "notes" / "reference" / "index.tex",
+            r"\section{Reference}" "\n"
+            r"\input{volume-ii/integers/notes/reference/notes-reference}" "\n",
+        )
         write(
             volume / "integers" / "notes" / "reference" / "notes-reference.tex",
             "\n".join(
@@ -255,7 +281,11 @@ class ValidateVolumeTests(unittest.TestCase):
 
     def test_volume_shape_requires_proof_topic_for_theorem_like_note_topic(self):
         volume = make_volume()
-        write(volume / "integers" / "notes" / "theorems" / "index.tex", r"\input{volume-ii/integers/notes/theorems/notes-theorem}" + "\n")
+        write(
+            volume / "integers" / "notes" / "theorems" / "index.tex",
+            r"\section{Theorems}" "\n"
+            r"\input{volume-ii/integers/notes/theorems/notes-theorem}" "\n",
+        )
         write(
             volume / "integers" / "notes" / "theorems" / "notes-theorem.tex",
             "\n".join(
@@ -276,6 +306,8 @@ class ValidateVolumeTests(unittest.TestCase):
     def test_volume_shape_schema_declares_exercises_allowlist(self):
         schema = json.loads((HERE.parents[1] / "docs" / "governance" / "volume-structure.schema.json").read_text(encoding="utf-8"))
 
+        self.assertEqual(schema["required_chapter_files"], ["index.tex", "chapter.yaml", "notes/index.tex", "proofs/index.tex"])
+        self.assertEqual(schema["required_chapter_dirs"], ["notes", "proofs"])
         self.assertEqual(schema["exercises_allowed_files"], ["index.tex", "capstone-{chapter}.tex"])
         self.assertEqual(schema["proof_topic_required_envs"], ["theorem", "lemma", "proposition", "corollary"])
 
@@ -649,17 +681,18 @@ class ValidateVolumeTests(unittest.TestCase):
 
         self.assertNotIn("unrouted_notes_topic_body", codes)
 
-    def test_notes_structure_flags_rendered_content_in_topic_index(self):
+    def test_notes_structure_rejects_starred_section_in_topic_index(self):
         volume = make_volume()
         write(
             volume / "integers" / "notes" / "order" / "index.tex",
-            r"\subsection*{Order Notes}" "\n"
+            r"\section*{Order Notes}" "\n"
             r"\input{volume-ii/integers/notes/order/notes-order}" "\n",
         )
 
         codes = {finding.code for finding in notes_structure.validate(volume)}
 
         self.assertIn("notes_topic_index_contains_rendered_content", codes)
+        self.assertIn("notes_topic_index_missing_section", codes)
 
     def test_notes_structure_allows_section_in_topic_index(self):
         volume = make_volume()
@@ -672,6 +705,7 @@ class ValidateVolumeTests(unittest.TestCase):
         codes = {finding.code for finding in notes_structure.validate(volume)}
 
         self.assertNotIn("notes_topic_index_contains_rendered_content", codes)
+        self.assertNotIn("notes_topic_index_missing_section", codes)
 
     def test_notes_structure_allows_texorpdfstring_section_in_topic_index(self):
         volume = make_volume()
@@ -684,37 +718,51 @@ class ValidateVolumeTests(unittest.TestCase):
         codes = {finding.code for finding in notes_structure.validate(volume)}
 
         self.assertNotIn("notes_topic_index_contains_rendered_content", codes)
+        self.assertNotIn("notes_topic_index_missing_section", codes)
 
-    def test_notes_structure_allows_subsection_in_multi_file_topic_index(self):
+    def test_notes_structure_rejects_section_in_topic_body(self):
+        volume = make_volume()
+        note = volume / "integers" / "notes" / "order" / "notes-order.tex"
+        note.write_text(
+            r"\section{Body-Level Heading}" "\n"
+            + note.read_text(encoding="utf-8"),
+            encoding="utf-8",
+        )
+
+        codes = {finding.code for finding in notes_structure.validate(volume)}
+
+        self.assertIn("notes_topic_body_section_heading", codes)
+
+    def test_notes_structure_flags_duplicate_section_in_multi_file_topic_index(self):
         volume = make_volume()
         write(volume / "integers" / "notes" / "order" / "notes-extra.tex", "% extra body\n")
         write(
             volume / "integers" / "notes" / "order" / "index.tex",
-            r"\subsection*{Order Foundations}" "\n"
+            r"\section{Order Foundations}" "\n"
             r"\input{volume-ii/integers/notes/order/notes-order}" "\n"
-            r"\subsection*{Extra Order Notes}" "\n"
+            r"\section{Extra Order Notes}" "\n"
             r"\input{volume-ii/integers/notes/order/notes-extra}" "\n",
         )
 
         codes = {finding.code for finding in notes_structure.validate(volume)}
 
-        self.assertNotIn("notes_topic_index_contains_rendered_content", codes)
+        self.assertIn("notes_topic_index_duplicate_section", codes)
         self.assertNotIn("unrouted_notes_topic_body", codes)
 
-    def test_notes_structure_allows_texorpdfstring_subsection_in_multi_file_topic_index(self):
+    def test_notes_structure_flags_duplicate_texorpdfstring_section_in_multi_file_topic_index(self):
         volume = make_volume()
         write(volume / "integers" / "notes" / "order" / "notes-extra.tex", "% extra body\n")
         write(
             volume / "integers" / "notes" / "order" / "index.tex",
-            r"\subsection*{\texorpdfstring{Order on $\mathbb{Q}$}{Order on Q}}" "\n"
+            r"\section{\texorpdfstring{Order on $\mathbb{Q}$}{Order on Q}}" "\n"
             r"\input{volume-ii/integers/notes/order/notes-order}" "\n"
-            r"\subsection*{\texorpdfstring{Order on $\mathbb{R}$}{Order on R}}" "\n"
+            r"\section{\texorpdfstring{Order on $\mathbb{R}$}{Order on R}}" "\n"
             r"\input{volume-ii/integers/notes/order/notes-extra}" "\n",
         )
 
         codes = {finding.code for finding in notes_structure.validate(volume)}
 
-        self.assertNotIn("notes_topic_index_contains_rendered_content", codes)
+        self.assertIn("notes_topic_index_duplicate_section", codes)
         self.assertNotIn("unrouted_notes_topic_body", codes)
 
     def test_notes_structure_allows_toolkit_boxes_in_topic_index(self):
@@ -1234,10 +1282,10 @@ class ValidateVolumeTests(unittest.TestCase):
 
         self.assertEqual(capstones.validate(volume), [])
 
-    def test_capstones_flags_missing_problem_and_not_last(self):
+    def test_capstones_flags_missing_theorem_and_not_last(self):
         volume = make_volume()
         capstone = volume / "integers" / "proofs" / "exercises" / "capstone-integers.tex"
-        capstone.write_text(capstone.read_text(encoding="utf-8").replace("Problem", ""), encoding="utf-8")
+        capstone.write_text(capstone.read_text(encoding="utf-8").replace("Theorem", ""), encoding="utf-8")
         index = volume / "integers" / "proofs" / "exercises" / "index.tex"
         index.write_text(
             r"\input{volume-ii/integers/proofs/exercises/capstone-integers}" "\n"
@@ -1247,7 +1295,7 @@ class ValidateVolumeTests(unittest.TestCase):
 
         codes = {finding.code for finding in capstones.validate(volume)}
 
-        self.assertIn("missing_capstone_problem", codes)
+        self.assertIn("missing_capstone_theorem", codes)
         self.assertIn("capstone_not_last", codes)
 
     def test_capstones_flags_rendered_content_in_exercises_index(self):
@@ -1390,7 +1438,6 @@ class ValidateVolumeTests(unittest.TestCase):
 
         self.assertEqual(result.returncode, 2)
         self.assertNotIn("fail-fast", result.stdout)
-        self.assertIn("missing_volume_shape_file", result.stdout)
         self.assertIn("proofs_index_routes_exercises", result.stdout)
 
     def test_chapter_generator_emits_shape_and_routing_clean_output(self):
@@ -1428,7 +1475,7 @@ class ValidateVolumeTests(unittest.TestCase):
                 ]
             ),
         )
-        write(chapter / "notes" / "index.tex", "")
+        write(chapter / "notes" / "index.tex", r"\section{Orphaned}" + "\n")
         write(chapter / "proofs" / "index.tex", "")
         write(chapter / "proofs" / "exercises" / "index.tex", "")
         write(chapter / "proofs" / "exercises" / "capstone-orphaned.tex", "")
@@ -1456,6 +1503,7 @@ class ValidateVolumeTests(unittest.TestCase):
             r"\input{volume-ii/ordered-fields/notes/completion-fields/index}",
             parent_notes_index,
         )
+        self.assertNotIn(r"\section{Ordered Fields}", parent_notes_index)
         self.assertNotIn(r"\section{Completion Fields}", parent_notes_index)
         self.assertIn(r"\section{Completion Fields}", topic_notes_index)
         self.assertIn(
@@ -1493,6 +1541,30 @@ class ValidateVolumeTests(unittest.TestCase):
 
         self.assertIn("chapter_router_shape", router_codes)
         self.assertIn("legacy_print_edition_input_macro", routing_codes)
+
+    def test_chapter_router_accepts_metadata_breadcrumb(self):
+        volume = make_volume()
+        index = volume / "integers" / "index.tex"
+        index.write_text(
+            index.read_text(encoding="utf-8").replace(
+                r"\breadcrumb{integers}{}{Integers}{}",
+                "\n".join(
+                    [
+                        r"\lrameta{",
+                        r"  series = {From Cantor to Ito},",
+                        r"  volume = {Volume II: Ordered Worlds},",
+                        r"  book = {Book I: Number Systems},",
+                        r"  chapter = {Chapter 1: Integers},",
+                        r"  current = chapter,",
+                        r"}",
+                        r"\LraBreadcrumb",
+                    ]
+                ),
+            ),
+            encoding="utf-8",
+        )
+
+        self.assertEqual(chapter_router.validate(volume), [])
 
     def test_chapter_router_flags_extra_rendered_content(self):
         volume = make_volume()

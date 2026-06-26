@@ -16,8 +16,8 @@ DEFAULT_SCHEMA = {
     "required_volume_entry_patterns": ["volume-*.tex", "volume-*-*-main.tex", "main-book-*.tex", "main.tex"],
     "canonical_volume_entry_pattern": r"^volume-(i|ii|iii|iv|v|vi|vii|viii)(?:-[a-z0-9]+(?:-[a-z0-9]+)*)?\.tex$",
     "legacy_volume_entry_patterns": ["volume-*-*-main.tex", "main-book-*.tex", "main.tex"],
-    "required_chapter_files": ["index.tex", "chapter.yaml", "notes/index.tex", "proofs/index.tex", "proofs/exercises/index.tex"],
-    "required_chapter_dirs": ["notes", "proofs", "proofs/exercises"],
+    "required_chapter_files": ["index.tex", "chapter.yaml", "notes/index.tex", "proofs/index.tex"],
+    "required_chapter_dirs": ["notes", "proofs"],
     "note_only_topics": ["notation"],
     "topic_name_pattern": r"^[a-z0-9]+(?:-[a-z0-9]+)*$",
     "proof_file_pattern": r"^prf-[a-z0-9]+(?:-[a-z0-9]+)*\.tex$",
@@ -207,8 +207,6 @@ def _validate_proofs_shape(volume_root: Path, chapter: Path, findings: list[Find
     exercises_root = proofs_root / "exercises"
     exercises_index = exercises_root / "index.tex"
     if exercises_root.is_dir() and exercises_index.resolve() in included:
-        capstone = chapter / schema["capstone_pattern"].format(chapter=chapter.name)
-        _required_file(findings, volume_root, capstone, schema["capstone_pattern"].format(chapter=chapter.name))
         allowed = {
             item.format(chapter=chapter.name)
             for item in schema.get("exercises_allowed_files", DEFAULT_SCHEMA["exercises_allowed_files"])

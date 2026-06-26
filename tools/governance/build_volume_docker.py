@@ -88,7 +88,8 @@ def docker_run(
     common_root: Path,
     gov_root: Path,
     image_name: str,
-    print_edition: bool,
+    edition: str,
+    paper: str,
     latex_args: list[str],
 ) -> None:
     cmd = [
@@ -97,6 +98,10 @@ def docker_run(
         "--rm",
         "-e",
         "LRA_GOVERNANCE_ROOT=/lra-governance",
+        "-e",
+        f"LRA_EDITION={edition}",
+        "-e",
+        f"LRA_PAPER={paper}",
         "-v",
         f"{docker_path(volume_root)}:/workspace",
         "-v",
@@ -106,7 +111,7 @@ def docker_run(
         "-w",
         "/workspace",
     ]
-    if print_edition:
+    if edition == "print":
         cmd.extend(["-e", "LRA_PRINT_EDITION=1"])
     cmd.append(image_name)
     cmd.extend(latex_args)
@@ -183,7 +188,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--validate-only", action="store_true")
     parser.add_argument("--skip-validate", action="store_true")
     parser.add_argument("--skip-image-build", action="store_true")
-    parser.add_argument("--print-edition", action="store_true")
+    parser.add_argument("--edition", choices=("digital", "print"), default="digital")
+    parser.add_argument("--paper", choices=("letter", "a4", "sixbynine"), default="letter")
+    parser.add_argument("--print-edition", action="store_true", help="compatibility alias for --edition print")
     parser.add_argument("--clean", action="store_true", help="run latexmk -C in Docker before building")
     parser.add_argument(
         "--tex-root",
@@ -204,6 +211,7 @@ def main(argv: list[str] | None = None) -> int:
     gov_root = governance_root()
     common_root = resolve_common_root(volume_root, args.common_root, args.checkout_common)
     tex_roots = discover_tex_roots(volume_root, args.tex_root)
+    edition = "print" if args.print_edition else args.edition
 
     if not args.skip_validate:
         run([sys.executable, str(gov_root / "scripts" / "build_volume.py"), "--root", str(volume_root), "--validate-only"], volume_root)
@@ -215,8 +223,8 @@ def main(argv: list[str] | None = None) -> int:
 
     for tex_root in tex_roots:
         if args.clean:
-            docker_run(volume_root, common_root, gov_root, args.image, args.print_edition, clean_args_for(tex_root))
-        docker_run(volume_root, common_root, gov_root, args.image, args.print_edition, latex_args_for(args.latex_command, tex_root))
+            docker_run(volume_root, common_root, gov_root, args.image, edition, args.paper, clean_args_for(tex_root))
+        docker_run(volume_root, common_root, gov_root, args.image, edition, args.paper, latex_args_for(args.latex_command, tex_root))
     copy_outputs(volume_root, tex_roots, args.output_dir)
     return 0
 

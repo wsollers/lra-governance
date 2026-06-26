@@ -17,6 +17,9 @@ Specialist rule placement:
   project attachment staging rules belong only in `lra-source-profiles.md`.
 - Volume repos receive only volume-content guidance, except where a named
   volume overlay records cross-repository metadata contracts.
+- Digital/print edition behavior and breadcrumb/footer chrome are global volume
+  standards. Volume overlays should reference those standards instead of
+  restating them.
 
 Specialist overlays now include:
 

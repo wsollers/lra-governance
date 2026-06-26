@@ -51,8 +51,8 @@ chapter/
   chapter.yaml
   notes/index.tex
   proofs/index.tex
-  proofs/exercises/index.tex
-  proofs/exercises/capstone-{chapter}.tex
+  proofs/exercises/index.tex                 (optional)
+  proofs/exercises/capstone-{chapter}.tex    (optional)
 
 notes/
   {topic}/index.tex
@@ -74,19 +74,28 @@ no book tier is present; both are accepted because reachability follows the
 canonical shape but is not reachable from the volume root router is an orphaned
 chapter and must fail validation.
 
-Topic index files under `notes/{topic}/` and `proofs/{topic}/` are router-only:
-comments and input lines only. Rendered sectioning belongs in chapter-level
-notes routing or body files, not topic routers.
+`notes/index.tex` is the chapter notes router. It contains comments and topic
+`\input` lines only; it does not render a numbered chapter-title section.
+
+Topic index files under `notes/{topic}/` are rendered topic routers. They
+contain comments, exactly one non-starred `\section{<Topic Display Title>}`, an
+optional Toolkit box, and body `\input` lines only. The topic router owns the
+topic section heading; body files may use `\subsection{...}` for nested local
+topics.
+
+Topic index files under `proofs/{topic}/` are router-only: comments and input
+lines only. Proof topic routers do not render sectioning headings.
 
 A matching `proofs/{topic}/` directory is required only when the corresponding
 `notes/{topic}/` contains proof-bearing theorem-like environments listed in
 `proof_topic_required_envs` in the schema. Pure reference, exposition, notation,
 or other note-only topics do not need empty proof-topic mirrors.
 
-`proofs/index.tex` routes proof topics in the same order as `notes/index.tex`;
-`proofs/exercises/index.tex` is the final route in that file.
-`proofs/exercises/index.tex` is router-only, and `proofs/exercises/` contains
-only `index.tex` and `capstone-{chapter}.tex`.
+`proofs/index.tex` routes proof topics in the same order as `notes/index.tex`.
+Capstones are optional. When a chapter has a capstone, the chapter index routes
+`proofs/exercises/index.tex` under `\section*{Capstone}` inside the
+print-edition exclusion block. `proofs/exercises/index.tex` is router-only, and
+`proofs/exercises/` contains only `index.tex` and `capstone-{chapter}.tex`.
 
 Legacy `chapter/capstone.tex`, legacy `chapter/exercises/`, flat note bodies
 under `notes/`, and flat proof files under `proofs/` are shape failures.

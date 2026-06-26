@@ -87,7 +87,7 @@ real, validator-passing shape; do not invent a different structure. A new topic
 `<topic>` in chapter `<chapter-slug>` of `volume-<n>` is exactly two files plus
 two parent-router edits.
 
-`notes/<topic>/index.tex` (topic router — rendered heading plus body input):
+`notes/<topic>/index.tex` (topic router — rendered section plus body input):
 
 ```latex
 \section{<Topic Display Title>}

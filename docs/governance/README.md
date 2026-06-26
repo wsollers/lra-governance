@@ -28,6 +28,8 @@ owned work, but they do not fork or weaken the global rules.
 - `handwritten-proof-vault-standards.md`
 - `exercise-vault-standards.md`
 - `capstone-exercise-standards.md`
+- `digital-print-edition-standards.md`
+- `breadcrumb-footer-standards.md`
 - `extraction-standards.md`
 - `notation-standards.md`
 - `atomic-artifact-standards.md`

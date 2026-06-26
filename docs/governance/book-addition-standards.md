@@ -89,10 +89,10 @@ Before committing a new book, run from the volume repo:
 
 ```powershell
 python ..\lra-governance\scripts\build_volume.py --root . --validate-only
-python ..\lra-governance\tools\governance\build_volume_docker.py --root . --common-root ..\lra-common --tex-root volume-{roman}-{slug}.tex --output-dir build\digital
-python ..\lra-governance\tools\governance\build_volume_docker.py --root . --common-root ..\lra-common --print-edition --tex-root volume-{roman}-{slug}.tex --output-dir build\print
-python ..\lra-governance\tools\governance\build_volume_docker.py --root . --common-root ..\lra-common --output-dir build\digital
-python ..\lra-governance\tools\governance\build_volume_docker.py --root . --common-root ..\lra-common --print-edition --output-dir build\print
+python ..\lra-governance\tools\governance\build_volume_docker.py --root . --common-root ..\lra-common --edition digital --paper letter --tex-root volume-{roman}-{slug}.tex --output-dir build\digital-letter
+python ..\lra-governance\tools\governance\build_volume_docker.py --root . --common-root ..\lra-common --edition print --paper sixbynine --tex-root volume-{roman}-{slug}.tex --output-dir build\print-sixbynine
+python ..\lra-governance\tools\governance\build_volume_docker.py --root . --common-root ..\lra-common --edition digital --paper letter --output-dir build\digital-letter
+python ..\lra-governance\tools\governance\build_volume_docker.py --root . --common-root ..\lra-common --edition print --paper sixbynine --output-dir build\print-sixbynine
 ```
 
 The first pair checks the new book directly. The second pair confirms that the

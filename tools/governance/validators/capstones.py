@@ -29,27 +29,35 @@ def validate(volume_root: Path) -> list[Finding]:
 def _validate_capstone_file(volume_root: Path, chapter: Path, capstone: Path, findings: list[Finding]) -> None:
     text = read_text(capstone)
     for token, code in [
-        ("\\newpage", "missing_capstone_newpage"),
         ("\\phantomsection", "missing_capstone_phantomsection"),
         (f"\\label{{cap:{chapter.name}}}", "missing_capstone_label"),
         ("\\begin{tcolorbox}", "missing_capstone_box"),
-        ("Problem", "missing_capstone_problem"),
+        ("Theorem", "missing_capstone_theorem"),
+        ("\\begin{remark*}[Dependencies to state]", "missing_capstone_dependencies_to_state"),
+        ("\\begin{remark*}[Dependencies to prove]", "missing_capstone_dependencies_to_prove"),
         ("\\begin{remark*}[Dependency ceiling]", "missing_capstone_dependency_ceiling"),
+        ("\\begin{dependencies}", "missing_capstone_dependencies"),
     ]:
         if token not in text:
             findings.append(finding(code, f"Capstone missing {token}.", capstone, volume_root))
 
     if len(TCOLORBOX_RE.findall(text)) != 1:
         findings.append(
-            finding("invalid_capstone_box_count", "Capstone must contain exactly one problem tcolorbox.", capstone, volume_root)
+            finding("invalid_capstone_box_count", "Capstone must contain exactly one theorem tcolorbox.", capstone, volume_root)
+        )
+    if "\\textbf{Problem.}" in text:
+        findings.append(
+            finding("capstone_problem_label", "Capstone theorem box must be posed as a theorem, not as a problem prompt.", capstone, volume_root)
         )
 
     order = [
-        ("newpage", text.find("\\newpage")),
         ("phantomsection", text.find("\\phantomsection")),
         ("capstone_label", text.find(f"\\label{{cap:{chapter.name}}}")),
         ("capstone_box", text.find("\\begin{tcolorbox}")),
+        ("dependencies_to_state", text.find("\\begin{remark*}[Dependencies to state]")),
+        ("dependencies_to_prove", text.find("\\begin{remark*}[Dependencies to prove]")),
         ("dependency_ceiling", text.find("\\begin{remark*}[Dependency ceiling]")),
+        ("dependencies", text.find("\\begin{dependencies}")),
     ]
     present = [(name, pos) for name, pos in order if pos >= 0]
     for (left_name, left_pos), (right_name, right_pos) in zip(present, present[1:]):
