@@ -14,8 +14,24 @@ Owned concerns:
 Lean guidance applies only to `lra-lean`.
 It must not be injected into volume content instructions.
 
-Use the local Lean build and CI expectations for validation. Do not use
-LaTeX render checks as substitutes for Lean validation.
+Use the Docker build path for reproducible validation. Do not use LaTeX render
+checks as substitutes for Lean validation.
+
+## Build And Validation
+
+CI builds the repo through `Dockerfile`, then runs Lake inside the container:
+
+```bash
+docker build -t lra-lean .
+docker run --rm -v "$PWD:/workspace" -w /workspace lra-lean lake build \
+  LRAVolumeI LRAVolumeII
+```
+
+Local Windows validation should prefer `.\build.ps1 docker-build` followed by
+`.\build.ps1 build-all`, which builds the active libraries declared in
+`lakefile.lean`. Native `lake build` is acceptable only when the pinned
+`lean-toolchain` is installed locally. When adding a Lean volume, add its
+`lean_lib` to `lakefile.lean` before extending CI to build it.
 
 ## Volume II Verification Map
 
