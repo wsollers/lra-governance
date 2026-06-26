@@ -154,7 +154,7 @@ prompted generation or audit mode.
 | Generate a theorem statement | `constitution/prompts/generate-statement.md` | `constitution/schema/block-registry.yaml`, `constitution/schema/artifact-matrix.yaml`, `docs/governance/dependency-standards.md` | statement/block audit when available |
 | Generate a stub chapter | `constitution/prompts/generate-stub-chapter.md` | `constitution/schema/file-schema.yaml` | volume layout audit |
 | Generate a stub volume | `constitution/prompts/generate-stub-volume.md` | `constitution/schema/file-schema.yaml` | volume layout audit |
-| Generate a capstone | `constitution/prompts/generate-capstone.md` | `constitution/schema/file-schema.yaml`, `constitution/schema/artifact-matrix.yaml` | volume build or chapter audit |
+| Generate a capstone | `constitution/prompts/generate-capstone.md`, `docs/governance/capstone-exercise-standards.md` | `constitution/schema/file-schema.yaml`, `constitution/schema/artifact-matrix.yaml` | volume build or chapter audit |
 | Generate breadcrumbs | `constitution/prompts/generate-breadcrumb.md` | `constitution/schema/file-schema.yaml` | path/layout sanity check |
 | Audit a proof | `constitution/prompts/audit-proof.md` | `constitution/schema/file-schema.yaml`, `constitution/schemas/audit-report.json` | proof layout audit |
 | Audit a statement | `constitution/prompts/audit-statement.md` | `constitution/schema/block-registry.yaml`, `constitution/schema/artifact-matrix.yaml`, `constitution/schemas/audit-report.json` | statement/block audit when available |

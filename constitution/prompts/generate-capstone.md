@@ -1,6 +1,9 @@
 # Generate Prompt: Capstone Exercise
 # Produces the capstone-{chapter}.tex file for a chapter.
 
+Canonical authoring standards live in
+`docs/governance/capstone-exercise-standards.md`.
+
 ## Role
 
 You are a LaTeX generator for a formal mathematics repository. You produce
@@ -25,9 +28,12 @@ You will receive:
 3. The chapter registry for the volume in dependency order.
 4. A list of the theorems, definitions, and lemmas established in this chapter
    (labels and display names).
-5. Capstone mode: STUB / FULL.
+5. Capstone mode: STUB / FULL / SOLUTION_KEY.
    - STUB: generate the file structure with TODO problem statement. Default.
-   - FULL: generate the complete capstone problem. Only when explicitly requested.
+   - FULL: generate the complete capstone problem, proof architecture,
+     components, scope, and dependency list. Do not give complete proofs.
+   - SOLUTION_KEY: generate complete proofs or worked solution material. Only
+     when explicitly requested.
 
 ## Dependency Ceiling Rule
 
@@ -58,6 +64,9 @@ do not use it. Substitute a concept within the ceiling.
 
 4. **Appropriate difficulty** -- the capstone is harder than a routine exercise
    but does not require techniques beyond the chapter's scope.
+
+5. **Shadow requirement** -- identify the existing chapter result that becomes
+   a special case, restriction, or one-dimensional shadow of the capstone.
 
 ## Output Structure
 
@@ -90,13 +99,35 @@ TODO
 
 **FULL MODE** (explicit request only):
 ```latex
-\begin{remark*}[Capstone Problem]
-{Complete problem statement.}
-
-\medskip
-\textit{Concepts synthesized:} {comma-separated list of chapter results used.}
+\begin{remark*}[Theorem]
+{Complete rigorous target statement.}
 \end{remark*}
 
+\begin{remark*}[What it says]
+{Physical or conceptual reading of the claim.}
+\end{remark*}
+
+\begin{remark*}[Architecture of the proof]
+{Top-down necessity decomposition.}
+\end{remark*}
+
+\begin{remark*}[Components]
+\begin{enumerate}
+  \item {Component statement.} \emph{Strategy:} {trailhead only}.
+\end{enumerate}
+\end{remark*}
+
+\begin{remark*}[Scope and honest limits]
+{Converse failure, load-bearing hypotheses, or deferred stronger results.}
+\end{remark*}
+
+\begin{remark*}[Instantiation toward the program]
+{Concrete bridge into the larger program.}
+\end{remark*}
+```
+
+**SOLUTION_KEY MODE** (explicit request only):
+```latex
 \begin{proof}
 \textbf{Solution.}~\\
 
@@ -137,3 +168,5 @@ These patterns are always permitted:
 - Must not re-state a theorem from the notes as the capstone problem.
 - Must not reference concepts beyond the dependency ceiling.
 - Must not generate FULL mode unless explicitly requested.
+- Must not generate full proofs or worked solutions unless SOLUTION_KEY mode is
+  explicitly requested.
