@@ -4,13 +4,14 @@ import sys
 import unittest
 import json
 from pathlib import Path
+from unittest.mock import patch
 
 from generators.chapter_stub import stub_chapter
 from generators.section_stub import stub_section
 import dependency_graph
 from core import volume as volume_core
 from validate_volume import VALIDATORS
-from validators import block_discipline, capstones, chapter_router, dependency_blocks, dependency_graphs, formal_decoration, formal_reading_required, input_resolution, interpretation_blocks, labels, latex_integrity, math_boxes, notes_structure, print_edition_routing, proof_coverage, proof_file_contract, proof_layout, proof_order, proof_routing, proof_stub_state, reference_voice, structural_chrome, structural_positions, volume_shape
+from validators import block_discipline, book_toc, capstones, chapter_router, dependency_blocks, dependency_graphs, formal_decoration, formal_reading_required, input_resolution, interpretation_blocks, labels, latex_integrity, math_boxes, notes_structure, print_edition_routing, proof_coverage, proof_file_contract, proof_layout, proof_order, proof_routing, proof_stub_state, reference_voice, structural_chrome, structural_positions, volume_shape
 
 
 HERE = Path(__file__).resolve().parent
@@ -141,6 +142,43 @@ def make_volume() -> Path:
     return volume
 
 
+def make_registered_book_volume() -> tuple[Path, dict]:
+    if TMP.exists():
+        shutil.rmtree(TMP)
+    repo = TMP / "lra-volume-test"
+    volume = repo / "volume-ii"
+    book = volume / "book-new"
+    chapter = book / "chapter-one"
+    registry = {
+        "roman": "ii",
+        "books": [
+            {
+                "order": 1,
+                "slug": "new-book",
+                "title": "New Book",
+                "tex_root": "volume-ii-new-book.tex",
+                "book_dir": "volume-ii/book-new",
+                "expected_toc": [
+                    {
+                        "chapter": "chapter-one",
+                        "notes": ["topic-one"],
+                    }
+                ],
+            }
+        ],
+    }
+    write(volume / "index.tex", r"\input{volume-ii/book-new/index}" + "\n")
+    write(repo / "volume-ii-new-book.tex", r"\input{volume-ii/book-new/index}" + "\n")
+    write(repo / "bibliography" / "volume-ii-new-book.bib", "% bibliography shard\n")
+    write(book / "index.tex", r"\input{volume-ii/book-new/chapter-one/index}" + "\n")
+    write(chapter / "index.tex", r"\input{volume-ii/book-new/chapter-one/notes/index}" + "\n")
+    write(chapter / "chapter.yaml", "subject: chapter one\n")
+    write(chapter / "notes" / "index.tex", r"\input{volume-ii/book-new/chapter-one/notes/topic-one/index}" + "\n")
+    write(chapter / "notes" / "topic-one" / "index.tex", "% topic\n")
+    write(chapter / "proofs" / "index.tex", "% proofs\n")
+    return volume, registry
+
+
 class ValidateVolumeTests(unittest.TestCase):
     def tearDown(self):
         if TMP.exists():
@@ -240,6 +278,57 @@ class ValidateVolumeTests(unittest.TestCase):
 
         self.assertEqual(schema["exercises_allowed_files"], ["index.tex", "capstone-{chapter}.tex"])
         self.assertEqual(schema["proof_topic_required_envs"], ["theorem", "lemma", "proposition", "corollary"])
+
+    def test_book_toc_accepts_registered_book_fixture(self):
+        volume, registry = make_registered_book_volume()
+
+        with patch.object(book_toc, "_registry_for", return_value=registry):
+            self.assertEqual(book_toc.validate(volume), [])
+
+    def test_book_toc_requires_volume_index_route_for_registered_book(self):
+        volume, registry = make_registered_book_volume()
+        (volume / "index.tex").write_text("% missing book route\n", encoding="utf-8")
+
+        with patch.object(book_toc, "_registry_for", return_value=registry):
+            codes = {finding.code for finding in book_toc.validate(volume)}
+
+        self.assertIn("book_not_routed_from_volume_index", codes)
+
+    def test_book_toc_requires_book_bibliography_shard(self):
+        volume, registry = make_registered_book_volume()
+        (volume.parent / "bibliography" / "volume-ii-new-book.bib").unlink()
+
+        with patch.object(book_toc, "_registry_for", return_value=registry):
+            codes = {finding.code for finding in book_toc.validate(volume)}
+
+        self.assertIn("missing_book_bibliography_shard", codes)
+
+    def test_book_toc_flags_unregistered_book_directory(self):
+        volume, registry = make_registered_book_volume()
+        write(volume / "book-unregistered" / "index.tex", "% unregistered\n")
+
+        with patch.object(book_toc, "_registry_for", return_value=registry):
+            codes = {finding.code for finding in book_toc.validate(volume)}
+
+        self.assertIn("unregistered_book_dir", codes)
+
+    def test_book_toc_flags_duplicate_registry_order(self):
+        volume, registry = make_registered_book_volume()
+        registry["books"].append(
+            {
+                "order": 1,
+                "slug": "other-book",
+                "title": "Other Book",
+                "tex_root": "volume-ii-other-book.tex",
+                "book_dir": "volume-ii/book-other",
+                "expected_toc": [],
+            }
+        )
+
+        with patch.object(book_toc, "_registry_for", return_value=registry):
+            codes = {finding.code for finding in book_toc.validate(volume)}
+
+        self.assertIn("book_registry_duplicate_order", codes)
 
     def test_print_edition_routing_flags_macro_below_proofs(self):
         volume = make_volume()
