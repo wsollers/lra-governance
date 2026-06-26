@@ -54,7 +54,7 @@ def _frontispiece_context(mathematician: str | None) -> str:
     return (
         f"Requested mathematician: {mathematician}\n"
         f"Expected shared image path: {image}\n"
-        f"Image status under monorepo root: {status}\n"
+        f"Image status under governance root: {status}\n"
         "If missing, generate the image according to the Frontispiece Rule "
         "before finalizing the stub."
     )

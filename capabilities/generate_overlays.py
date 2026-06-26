@@ -25,14 +25,16 @@ Local conventions:
 - {box}
 - Decoration blocks are unboxed `remark*`; dependencies use `\\begin{{dependencies}}` or `\\NoLocalDependencies`.
 - Chapters route through `{vol}/index.tex` and the owning book root.
-- Canonical YAML registries live at the monorepo root; cross-volume `\\hyperref` targets resolve
-  only in the assembled monorepo build.
-- Volume success requires governance validation and a successful governance book build.
+- Canonical YAML registries live in sibling `lra-governance`; do not duplicate
+  them into volume repos.
+- Cross-volume references must not rely on an assembled monorepo build.
+- Volume success requires governance validation and a successful independent
+  volume/book build.
 
 Applicable capabilities: author-statement, author-stub-chapter, author-stub-section.
 
 Overlay-specific verifier args:{plainnote or ' none beyond the capability default.'}
-Pass `--canonical-dir <monorepo-root>` to `validate_decoration.py` to enable formal-reading triggers.
+Pass `--canonical-dir <path-to-lra-governance>` to `validate_decoration.py` to enable formal-reading triggers.
 """
 
 def _bullets(items):

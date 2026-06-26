@@ -6,22 +6,20 @@ Nothing else in the codebase hardcodes paths.
 
 Multi-repo layout (as of 2026)
 -------------------------------
-The project is split across several repos:
+The project is split across independent repos:
 
-  Learning-Real-Analysis  — monorepo: constitution, canonical YAMLs, auditor,
-                            docker build, full omnibus LaTeX build
+  lra-governance          — constitution, canonical YAMLs, auditor, governance tools
   lra-common              — shared LaTeX infrastructure (common/)
-                            synced to all volume repos via GitHub Actions
-  lra-volume-i .. viii    — per-volume Overleaf targets; each is self-contained
+  lra-volume-i .. viii    — per-volume Overleaf targets; independently built
   lra-lean                — Lean 4 formalization
   lra-nurbs               — NURBS/DDE C++ engine
   lra-knowledge-explorer  — theorem extraction pipeline + HTML graph
 
-The auditor always loads constitution files and canonical YAMLs from the monorepo.
-When working in a volume repo, set REPO_ROOT (or pass --repoDir) to point at the
-Learning-Real-Analysis clone.
+The auditor always loads constitution files and canonical YAMLs from
+lra-governance. When working in a volume repo, set REPO_ROOT (or pass
+--repoDir) to point at the lra-governance checkout.
 
-The LaTeX content to audit may live in a different directory from the monorepo.
+The LaTeX content to audit may live in a different repository from governance.
 Use set_latex_root() to set that path separately.
 """
 
@@ -31,7 +29,7 @@ from pathlib import Path
 from auditor.ai_provider import get_ai_provider_settings, normalize_provider
 
 # ---------------------------------------------------------------------------
-# Repository root (monorepo — constitution, canonical YAMLs, auditor)
+# Repository root (lra-governance — constitution, canonical YAMLs, auditor)
 # Can be set via --repoDir, environment variable REPO_ROOT, or auto-discovery.
 # ---------------------------------------------------------------------------
 
@@ -50,11 +48,11 @@ def _discover_repo_root() -> Path:
 
 def set_repo_root(repo_dir: str | Path | None = None) -> Path:
     """
-    Sets the monorepo root (Learning-Real-Analysis) and recomputes all derived
+    Sets the governance root (lra-governance) and recomputes all derived
     path globals for constitution files, prompts, and canonical YAMLs.
 
-    This must always point at the Learning-Real-Analysis monorepo, regardless
-    of which volume repo you are currently editing.
+    This must always point at lra-governance, regardless of which volume repo
+    you are currently editing.
     """
     global REPO_ROOT, CONSTITUTION_DIR, SCHEMA_DIR, PROMPTS_DIR, RESPONSE_SCHEMA_DIR
     global BLOCK_REGISTRY_PATH, ARTIFACT_MATRIX_PATH, FILE_SCHEMA_PATH, AUDIT_REPORT_SCHEMA_PATH
@@ -87,7 +85,7 @@ def set_repo_root(repo_dir: str | Path | None = None) -> Path:
         "generate_capstone": PROMPTS_DIR / "generate-capstone.md",
     }
 
-    # Canonical YAML sources always live in the monorepo root.
+    # Canonical YAML sources always live in lra-governance.
     # They are never duplicated in volume repos.
     PREDICATES_PATH = REPO_ROOT / "predicates.yaml"
     NOTATION_PATH = REPO_ROOT / "notation.yaml"
@@ -110,7 +108,7 @@ def set_repo_root(repo_dir: str | Path | None = None) -> Path:
 # repo path as the LaTeX root. The auditor scans LaTeX from there but loads
 # constitution + canonical YAMLs from REPO_ROOT.
 #
-# Default: same as REPO_ROOT (monorepo layout, all volumes present).
+# Default: same as REPO_ROOT for governance-local scans.
 # ---------------------------------------------------------------------------
 
 LATEX_ROOT: Path = Path()
@@ -119,7 +117,7 @@ LATEX_ROOT: Path = Path()
 def set_latex_root(latex_dir: str | Path | None = None) -> Path:
     """
     Sets the LaTeX content root. Use this when auditing a volume repo checkout
-    that is separate from the monorepo.
+    that is separate from governance.
 
     Example (CLI):
         --latexDir /path/to/lra-volume-i
@@ -214,7 +212,7 @@ def validate_config(ai_provider: str | None = None, require_ai: bool = True) -> 
             errors.append(
                 f"WARNING: Canonical source file missing: {path} "
                 f"({name} audits will be skipped). "
-                f"Set REPO_ROOT to the Learning-Real-Analysis monorepo path."
+                f"Set REPO_ROOT to the lra-governance checkout."
             )
 
     if require_ai and provider_settings and not provider_settings.has_api_key:

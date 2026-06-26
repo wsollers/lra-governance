@@ -28,12 +28,34 @@ checkout.
 Volume tasks should preserve Overleaf readiness and the independent volume build
 shape. There is no monorepo to sync into.
 
+## Build Commands
+
+From a volume repository, validation is:
+
+```powershell
+python ..\lra-governance\scripts\build_volume.py --root . --validate-only
+```
+
+The Docker build helper discovers and builds every canonical root:
+`volume-{roman}.tex` plus each `volume-{roman}-{book-slug}.tex`. Use it for
+full volume and individual book PDF checks:
+
+```powershell
+python ..\lra-governance\tools\governance\build_volume_docker.py --root . --common-root ..\lra-common --output-dir build\digital
+python ..\lra-governance\tools\governance\build_volume_docker.py --root . --common-root ..\lra-common --print-edition --output-dir build\print
+```
+
+To build one book root, pass it explicitly:
+
+```powershell
+python ..\lra-governance\tools\governance\build_volume_docker.py --root . --common-root ..\lra-common --tex-root volume-i-set-theory.tex --output-dir build\digital
+```
+
 ## Stub Chapters
 
 Volume chapter stubs follow the global `stub-chapter-standards.md` standard.
 After stub generation, run the local volume build command when available; for
-standard LRA volume roots, use
-`python ..\lra-governance\scripts\build_volume.py --root .` unless local
+standard LRA volume roots, use the Docker build helper above unless local
 instructions say otherwise.
 
 ## Stub Sections

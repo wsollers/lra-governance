@@ -28,7 +28,7 @@ capabilities:
     verify:
       - "python tools/governance/validate_decoration.py --root {root} --chapter {chapter} --canonical-dir {canonical}"
       - "python tools/governance/audit_proof_layout.py --root {root} --chapter {chapter} --strict"
-      - "cd {root} && latexmk -lualatex main.tex"
+      - "cd {root} && python ../lra-governance/scripts/build_volume.py --root ."
   - id: author-definition
     applies_to: [volume]
     triggers: ["author definition", "generate the definition", "the definition",
@@ -40,7 +40,7 @@ capabilities:
     verify:
       - "python tools/governance/validate_decoration.py --root {root} --chapter {chapter} --canonical-dir {canonical}"
       - "python capabilities/author-definition/verify.py --target {target} --kind definition --predicates {canonical}/predicates.yaml"
-      - "cd {root} && latexmk -lualatex main.tex"
+      - "cd {root} && python ../lra-governance/scripts/build_volume.py --root ."
   - id: author-stub-chapter
     applies_to: [volume]
     triggers: ["stub a chapter", "stub chapter", "scaffold a chapter", "scaffold chapter", "new chapter"]
@@ -50,7 +50,7 @@ capabilities:
       - capabilities/author-stub-chapter/stub_chapter.py
     verify:
       - "python tools/governance/validate_volume.py {root} --fail-on-errors"
-      - "cd {root} && latexmk -lualatex main.tex"
+      - "cd {root} && python ../lra-governance/scripts/build_volume.py --root ."
   - id: author-stub-section
     applies_to: [volume]
     triggers: ["stub a section", "stub section", "scaffold a section", "new section"]
@@ -60,7 +60,7 @@ capabilities:
       - capabilities/author-stub-section/stub_section.py
     verify:
       - "python tools/governance/validate_volume.py {root} --fail-on-errors"
-      - "cd {root} && latexmk -lualatex main.tex"
+      - "cd {root} && python ../lra-governance/scripts/build_volume.py --root ."
   - id: author-lean-theorem
     applies_to: [lean]
     triggers: ["formalize", "lean theorem", "add lean", "formalise"]

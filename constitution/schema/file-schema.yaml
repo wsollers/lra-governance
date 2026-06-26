@@ -8,63 +8,48 @@
 # Multi-Repo Layout (as of 2026)
 # ---------------------------------------------------------------------------
 #
-# The project uses separate repositories to stay within Overleaf's 2000-file limit.
+# The project uses separate repositories to keep volume builds independent and
+# Overleaf-ready.
 #
 # Repository roles:
-#   Learning-Real-Analysis  — monorepo: full build, constitution, canonical YAMLs
+#   lra-governance          — constitution, canonical YAMLs, schemas, validators
 #   lra-common              — shared LaTeX infrastructure (common/)
-#   lra-volume-i .. viii    — per-volume Overleaf targets
+#   lra-volume-i .. viii    — independent per-volume Overleaf targets
 #   lra-lean                — Lean 4 formalization
 #   lra-nurbs               — NURBS/DDE C++ engine
 #   lra-knowledge-explorer  — theorem extraction pipeline + HTML explorer
 #
-# The auditor always runs against the monorepo. Set REPO_ROOT or --repoDir
-# to the Learning-Real-Analysis clone when working from a volume repo.
+# The auditor loads governance files from lra-governance. Set REPO_ROOT or
+# --repoDir to the lra-governance checkout when working from a volume repo.
 
 # ---------------------------------------------------------------------------
-# Monorepo Root (Learning-Real-Analysis)
+# Governance Root (lra-governance)
 # ---------------------------------------------------------------------------
 
-monorepo_root:
-  - main.tex                     # full omnibus build
-  - volume-i-main.tex            # per-volume standalone roots (reference only)
-  - volume-ii-main.tex
-  - volume-iii-main.tex
-  - volume-iv-main.tex
-  - volume-v-main.tex
-  - volume-vi-main.tex
-  - volume-vii-main.tex
-  - volume-viii-main.tex
-  - bibliography/
-  - common/
+governance_root:
+  - AGENTS.md
+  - DESIGN.md
+  - REPOSITORY_STRUCTURE.md
   - predicates.yaml              # canonical source — never duplicated
   - notation.yaml                # canonical source — never duplicated
   - relations.yaml               # canonical source — never duplicated
-  - proofs-to-do.md
-  - volume-i/
-  - volume-ii/
-  - volume-iii/
-  - volume-iv/
-  - volume-v/
-  - volume-vi/
-  - volume-vii/
-  - volume-viii/
   - constitution/
-  - docker/
-  - theorem-explorer/
-  - lean/
-  - nurbs_dde/
+  - docs/
+  - tools/
+  - templates/
+  - scripts/
 
 # ---------------------------------------------------------------------------
 # Volume Repo Root (lra-volume-N)
 # ---------------------------------------------------------------------------
 # Each volume repo is self-contained and Overleaf-ready.
-# common/ is a synced copy from lra-common — do not edit in volume repos.
+# common/ may exist only as local build/Overleaf staging from lra-common and
+# must not be committed or edited in volume repos.
 
 volume_repo_root:
   - main.tex                     # volume root — Overleaf main document
   - .latexmkrc
-  - common/                      # synced copy from lra-common
+  - common/                      # local staging only; ignored by git
   - bibliography/                # volume-owned shard for standalone builds
   - volume-N/                    # replace N with actual volume number
 
@@ -427,15 +412,15 @@ breadcrumb:
 # ---------------------------------------------------------------------------
 
 auditor_paths:
-  monorepo_root_discovery:
+  governance_root_discovery:
     - check REPO_ROOT environment variable
     - walk up from cwd looking for constitution/master.md
 
   volume_repo_usage: >
     When working in a volume repo (e.g., lra-volume-i), set REPO_ROOT or pass
-    --repoDir pointing at the Learning-Real-Analysis monorepo clone. The auditor
-    will scan LaTeX files from the path you specify but load constitution files
-    and canonical YAMLs from REPO_ROOT.
+    --repoDir pointing at the lra-governance checkout. The auditor will scan
+    LaTeX files from the path you specify but load constitution files and
+    canonical YAMLs from REPO_ROOT.
 
   canonical_yaml_locations:
     predicates: REPO_ROOT/predicates.yaml
@@ -445,6 +430,6 @@ auditor_paths:
   constitution_location: REPO_ROOT/constitution/
 
   common_location:
-    monorepo: REPO_ROOT/common/
-    volume_repos: lra-volume-N/common/   # synced copy; do not edit here
+    governance: not owned here
+    volume_repos: lra-volume-N/common/   # local staging only; do not commit
     source_of_truth: lra-common/common/

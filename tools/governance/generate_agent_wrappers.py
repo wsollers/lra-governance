@@ -60,7 +60,7 @@ Generated from:
 - docs/governance/repo-overlays/{overlay_name}
 
 Regenerate from lra-governance.
-Emergency downstream edits must be ported upstream before the next sync.
+Emergency downstream edits must be ported upstream before regeneration.
 -->"""
 
 
@@ -71,7 +71,7 @@ def global_rules() -> str:
 - Follow the owning repository boundary for every task.
 - Do not include secrets, credentials, tokens, or machine-local private values.
 - Do not modify mathematical content during governance or wrapper-generation tasks.
-- Do not touch `Learning-Real-Analysis/scripts/`.
+- Do not touch the retired `Learning-Real-Analysis` monorepo.
 - Port emergency downstream instruction repairs back to `lra-governance`."""
 
 

@@ -1,7 +1,7 @@
 # Governance Tools
 
 This directory contains the canonical implementations of governance generation,
-sync, validation, drift-check, and task-scope audit tools.
+wrapper preview, validation, drift-check, and task-scope audit tools.
 
 Leaf repositories may carry wrapper scripts with matching paths, but those
 wrappers must delegate back here. They must not copy or fork the implementation.
@@ -34,8 +34,8 @@ Available and planned tools:
 ## Requirements
 
 Future tools must support dry-run operation before writing downstream files.
-They must refuse to touch `Learning-Real-Analysis/scripts/` and must not print
-secret values.
+They must refuse to touch the retired `Learning-Real-Analysis` monorepo and
+must not print secret values.
 
 ## Proof Layout Audit
 

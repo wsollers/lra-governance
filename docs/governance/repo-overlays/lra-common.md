@@ -11,10 +11,10 @@ Owned concerns:
 
 ## Agent Scope
 
-Edit shared LaTeX infrastructure here, not in volume repo copies. Do not expect
-`common/` to be synced into volume repos or the monorepo. Build workflows should
-obtain `lra-common` directly, normally through the Docker image or an explicit
-checkout.
+Edit shared LaTeX infrastructure here, not in volume repo staging directories.
+Do not expect `common/` to be copied or committed into volume repos. Build
+workflows should obtain `lra-common` directly through an explicit checkout and
+mount `common/` into the Docker build container.
 
 Add bibliography entries in the owning `lra-volume-*` repository shard.
 `lra-common/bibliography/` is a retired mirror, not a sync source. Mobile photo,

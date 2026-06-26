@@ -28,6 +28,12 @@ jobs:
           repository: wsollers/lra-governance
           path: lra-governance
 
+      - name: Checkout common
+        uses: actions/checkout@v4
+        with:
+          repository: wsollers/lra-common
+          path: lra-common
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -46,7 +52,7 @@ jobs:
         run: |
           python lra-governance/tools/governance/build_volume_docker.py \
             --root volume \
-            --checkout-common lra-common \
+            --common-root lra-common \
             --skip-validate \
             --output-dir pdf-output/digital
 
