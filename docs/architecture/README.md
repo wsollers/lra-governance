@@ -11,6 +11,8 @@ Modules:
 - `theorem-explorer-pipeline.md`
 - `knowledge-pipeline.md`
 - `latex-build-and-rendering.md`
+- `lra-lean-architecture.md`
+- `lra-nurbs-architecture.md`
 - `canonical-yaml.md`
 - `generated-file-policy.md`
 - `volume-architecture.md`
