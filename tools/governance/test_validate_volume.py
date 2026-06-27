@@ -11,7 +11,7 @@ from generators.section_stub import stub_section
 import dependency_graph
 from core import volume as volume_core
 from validate_volume import VALIDATORS
-from validators import block_discipline, book_toc, capstones, chapter_router, dependency_blocks, dependency_graphs, formal_decoration, formal_reading_required, input_resolution, interpretation_blocks, labels, latex_integrity, math_boxes, notes_structure, print_edition_routing, proof_coverage, proof_file_contract, proof_layout, proof_order, proof_routing, proof_stub_state, reference_voice, structural_chrome, structural_positions, volume_shape
+from validators import block_discipline, book_toc, capstones, chapter_router, dedication_page, dependency_blocks, dependency_graphs, formal_decoration, formal_reading_required, frontmatter_standard, input_resolution, interpretation_blocks, labels, latex_integrity, math_boxes, notes_structure, print_edition_routing, proof_coverage, proof_file_contract, proof_layout, proof_order, proof_routing, proof_stub_state, reference_voice, structural_chrome, structural_positions, volume_shape
 
 
 HERE = Path(__file__).resolve().parent
@@ -316,6 +316,137 @@ class ValidateVolumeTests(unittest.TestCase):
 
         with patch.object(book_toc, "_registry_for", return_value=registry):
             self.assertEqual(book_toc.validate(volume), [])
+
+    def test_frontmatter_standard_accepts_canonical_volume_frontmatter(self):
+        volume, registry = make_registered_book_volume()
+        registry.update(
+            {
+                "display_title": "Origins of Numbers",
+                "series_title": "From Cantor to Ito",
+                "frontmatter_mathematician": "Richard Dedekind",
+                "mathematician_lifespan": "1831-1916",
+                "image_path": "images/dedekind.png",
+            }
+        )
+        repo = volume.parent
+        book = registry["books"][0]
+        book["frontmatter_mathematician"] = "Book Mathematician"
+        book["mathematician_lifespan"] = "1900-2000"
+        book["image_path"] = "images/book.png"
+        write(volume / "frontmatter.tex", r"\newcommand{\LRAFrontMatterPage}[6]{\includegraphics{#6}}" + "\n")
+        write(repo / "images" / "dedekind.png", "png\n")
+        write(repo / "images" / "book.png", "png\n")
+        write(
+            repo / "volume-ii.tex",
+            "\n".join(
+                [
+                    r"\input{volume-ii/frontmatter}",
+                    r"\LRAFrontMatterPage{From Cantor to Ito}{Origins of Numbers}{}{Richard Dedekind}{1831-1916}{images/dedekind.png}",
+                    "",
+                ]
+            ),
+        )
+        write(
+            repo / book["tex_root"],
+            "\n".join(
+                [
+                    r"\input{volume-ii/frontmatter}",
+                    r"\LRAFrontMatterPage{From Cantor to Ito}{Origins of Numbers}{New Book}{Book Mathematician}{1900-2000}{images/book.png}",
+                    "",
+                ]
+            ),
+        )
+        write(volume / "index.tex", r"\part{Origins of Numbers}" + "\n" + r"\input{volume-ii/book-new/index}" + "\n")
+
+        with patch.object(frontmatter_standard, "_registry_for", return_value=registry):
+            self.assertEqual(frontmatter_standard.validate(volume), [])
+
+    def test_frontmatter_standard_reports_migration_drift(self):
+        volume, registry = make_registered_book_volume()
+        registry.update(
+            {
+                "display_title": "Origins of Numbers",
+                "series_title": "From Cantor to Ito",
+                "frontmatter_mathematician": "Richard Dedekind",
+                "mathematician_lifespan": "1831-1916",
+                "image_path": "images/dedekind.png",
+            }
+        )
+        write(volume / "frontmatter.tex", "% missing renderer contract\n")
+        write(volume.parent / "volume-ii.tex", r"\begin{titlepage}Legacy\end{titlepage}" + "\n")
+        write(volume / "index.tex", r"\part{Numbers}" + "\n")
+
+        with patch.object(frontmatter_standard, "_registry_for", return_value=registry):
+            codes = {finding.code for finding in frontmatter_standard.validate(volume)}
+
+        self.assertIn("frontmatter_renderer_missing_macro", codes)
+        self.assertIn("frontmatter_renderer_missing_image", codes)
+        self.assertIn("root_missing_frontmatter_input", codes)
+        self.assertIn("root_inline_frontmatter", codes)
+        self.assertIn("root_missing_frontmatter_call", codes)
+        self.assertIn("part_title_mismatch", codes)
+
+    def test_dedication_page_accepts_exactly_once_after_frontmatter(self):
+        volume, registry = make_registered_book_volume()
+        repo = volume.parent
+        write(
+            repo / "volume-ii.tex",
+            "\n".join(
+                [
+                    r"\LRAFrontMatterPage{From Cantor to Ito}{Origins of Numbers}{}{Richard Dedekind}{1831-1916}{images/dedekind.png}",
+                    r"\input{common/dedication}",
+                    r"\tableofcontents",
+                    "",
+                ]
+            ),
+        )
+        write(
+            repo / registry["books"][0]["tex_root"],
+            "\n".join(
+                [
+                    r"\LRAFrontMatterPage{From Cantor to Ito}{Origins of Numbers}{New Book}{Book Mathematician}{1900-2000}{images/book.png}",
+                    r"\input{common/dedication}",
+                    r"\tableofcontents",
+                    "",
+                ]
+            ),
+        )
+
+        with patch.object(dedication_page, "_registry_for", return_value=registry):
+            self.assertEqual(dedication_page.validate(volume), [])
+
+    def test_dedication_page_flags_count_and_order(self):
+        volume, registry = make_registered_book_volume()
+        repo = volume.parent
+        write(
+            repo / "volume-ii.tex",
+            "\n".join(
+                [
+                    r"\input{common/dedication}",
+                    r"\LRAFrontMatterPage{From Cantor to Ito}{Origins of Numbers}{}{Richard Dedekind}{1831-1916}{images/dedekind.png}",
+                    r"\tableofcontents",
+                    "",
+                ]
+            ),
+        )
+        write(
+            repo / registry["books"][0]["tex_root"],
+            "\n".join(
+                [
+                    r"\LRAFrontMatterPage{From Cantor to Ito}{Origins of Numbers}{New Book}{Book Mathematician}{1900-2000}{images/book.png}",
+                    r"\tableofcontents",
+                    r"\input{common/dedication}",
+                    r"\input{common/dedication}",
+                    "",
+                ]
+            ),
+        )
+
+        with patch.object(dedication_page, "_registry_for", return_value=registry):
+            codes = {finding.code for finding in dedication_page.validate(volume)}
+
+        self.assertIn("dedication_before_frontmatter", codes)
+        self.assertIn("dedication_input_count", codes)
 
     def test_book_toc_requires_volume_index_route_for_registered_book(self):
         volume, registry = make_registered_book_volume()

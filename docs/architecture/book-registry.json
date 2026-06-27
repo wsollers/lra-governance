@@ -378,6 +378,24 @@
               ]
             },
             {
+              "chapter": "structure-of-real-line",
+              "notes": [
+                "real-line-one-dimensional",
+                "order-distance-length",
+                "absolute-value-as-distance",
+                "intervals-as-subsets",
+                "neighborhoods-and-balls",
+                "open-sets",
+                "closed-sets",
+                "interior-exterior-boundary",
+                "limit-and-isolated-points",
+                "unions-and-intersections",
+                "covers-and-subcovers",
+                "compactness-on-r",
+                "heine-borel"
+              ]
+            },
+            {
               "chapter": "bounding",
               "notes": [
                 "completeness",
@@ -420,24 +438,6 @@
             {
               "chapter": "function-sequences",
               "notes": []
-            },
-            {
-              "chapter": "structure-of-real-line",
-              "notes": [
-                "real-line-one-dimensional",
-                "order-distance-length",
-                "absolute-value-as-distance",
-                "intervals-as-subsets",
-                "neighborhoods-and-balls",
-                "open-sets",
-                "closed-sets",
-                "interior-exterior-boundary",
-                "limit-and-isolated-points",
-                "unions-and-intersections",
-                "covers-and-subcovers",
-                "compactness-on-r",
-                "heine-borel"
-              ]
             }
           ],
           "frontmatter_mathematician": "Bernard Bolzano",
@@ -618,7 +618,11 @@
               "chapter": "measure-theory",
               "notes": []
             }
-          ]
+          ],
+          "frontmatter_mathematician": "Emile Borel",
+          "mathematician_lifespan": "1871-1956",
+          "image_path": "images/borel.png",
+          "frontmatter_status": "confirmed"
         },
         {
           "order": 2,
@@ -635,7 +639,11 @@
               "chapter": "probability-theory",
               "notes": []
             }
-          ]
+          ],
+          "frontmatter_mathematician": "Andrey Kolmogorov",
+          "mathematician_lifespan": "1903-1987",
+          "image_path": "images/kolmogorov.png",
+          "frontmatter_status": "confirmed"
         },
         {
           "order": 3,
@@ -673,7 +681,11 @@
               "chapter": "complex-analysis",
               "notes": []
             }
-          ]
+          ],
+          "frontmatter_mathematician": "Walter Rudin",
+          "mathematician_lifespan": "1921-2010",
+          "image_path": "images/rudin.png",
+          "frontmatter_status": "confirmed"
         }
       ],
       "frontmatter_mathematician": "Stefan Banach",

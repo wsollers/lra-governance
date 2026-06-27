@@ -143,16 +143,16 @@ fields:
 - `display_title`: canonical displayed volume title.
 - `series_title`: frontmatter series title; normally `From Cantor to Ito`, or
   `From Turing to Carmack` for applied and computational books.
-- `frontispiece_mathematician`: full mathematician name.
+- `frontmatter_mathematician`: full mathematician name.
 - `mathematician_lifespan`: birth-death years, formatted as `YYYY-YYYY`.
 - `image_path`: volume-relative image path, formatted as
   `images/<filename>.png`.
-- `frontispiece_file`: preferred frontispiece source file, normally
-  `volume-*/frontispiece.tex`.
+- `frontmatter_file`: standard frontmatter renderer, normally
+  `volume-*/frontmatter.tex`.
 - `status`: one of `active`, `planned`, `stub`, `migrated`, or `archived`.
 
-The metadata record is the authority for title and frontispiece consistency.
-Generated title pages, frontispiece pages, volume indexes, and repository
+The metadata record is the authority for title and frontmatter consistency.
+Generated frontmatter pages, volume indexes, PDF entry roots, and repository
 documentation should agree with this record once the relevant migration phase
 has run.
 
@@ -173,17 +173,15 @@ archive-only maintenance change.
 
 ## Title Consistency Rule
 
-For each volume, these places must eventually use the same displayed volume
-title:
+For each volume, these places must use the same displayed volume title:
 
-- title page;
-- frontispiece page;
+- every volume and book frontmatter page;
 - volume index;
 - `\part` title;
 - volume metadata.
 
-Existing mismatches are migration targets, not permission to make opportunistic
-edits. Title changes must occur in the title-standardization phase.
+Book frontmatter pages additionally display the canonical book title recorded
+in `book-registry.json`.
 
 ## Migration Rule
 
@@ -221,4 +219,5 @@ governance phase.
 ## Related Documents
 
 - `docs/architecture/frontmatter-and-frontispiece-standard.md`
+- `docs/architecture/dedication-page-standard.md`
 - `docs/plans/volume-renumbering-and-frontmatter-migration-plan.md`

@@ -6,17 +6,35 @@ frontmatter, generating images, moving content, or modifying archives.
 
 ## Required Frontmatter Consistency
 
-Each volume must eventually keep these elements in sync with the canonical
-volume metadata record:
+Every standalone PDF entry root must render a standardized frontmatter page
+before the shared dedication page and table of contents.
 
-- title page;
-- frontispiece page;
-- volume index;
-- `\part` title;
-- volume metadata.
+The full-volume root `volume-{roman}.tex` renders volume frontmatter with:
 
-The displayed volume title must be identical in all five places once the title
-standardization phase has run.
+- series title;
+- volume display title;
+- volume frontmatter mathematician;
+- volume mathematician lifespan;
+- volume frontmatter image.
+
+Each standalone book root `volume-{roman}-{book-slug}.tex` renders book
+frontmatter with the same fields plus the book title:
+
+- series title;
+- volume display title;
+- book display title;
+- book frontmatter mathematician;
+- book mathematician lifespan;
+- book frontmatter image.
+
+When a book record has not yet been assigned book-specific frontmatter
+metadata, the book root may temporarily inherit the volume frontmatter
+mathematician, lifespan, and image. Once book-specific metadata is present in
+`book-registry.json`, the book root must use it.
+
+The displayed volume title must be identical in the frontmatter page, volume
+index, `\part` title, and volume metadata. The book title must be identical in
+the book frontmatter page and canonical book metadata.
 
 ## Series Title Rule
 
@@ -37,21 +55,34 @@ The series title is metadata, not part of the volume title or book title. It
 must be visually subordinate to the book title and volume title, and must not
 replace the frontispiece plaque text.
 
-## Standard Frontispiece File Name
+## Standard Frontmatter File Name
 
-The preferred frontispiece file name is:
+Each active volume repository must define the reusable frontmatter renderer at:
 
 ```text
-volume-*/frontispiece.tex
+volume-*/frontmatter.tex
 ```
 
-Existing files such as `cantor-quote.tex`, `peano-quote.tex`,
-`hilbert-quote.tex`, `euler-quote.tex`, and `gauss-quote.tex` may remain
-temporarily as router files until later migration phases replace or retire
-them.
+Active PDF roots must input this file and call `\LRAFrontMatterPage` with six
+arguments:
 
-Do not rename current frontispiece or quote files during governance-only
-phases.
+```latex
+\input{volume-iii/frontmatter}
+\LRAFrontMatterPage{From Cantor to Ito}{Classical Analysis}{Integration}
+  {Bernhard Riemann}{1826-1866}{images/riemann.png}
+```
+
+For full-volume roots, the third argument is empty:
+
+```latex
+\LRAFrontMatterPage{From Cantor to Ito}{Classical Analysis}{}
+  {Augustin-Louis Cauchy}{1789-1857}{images/cauchy.png}
+```
+
+Existing files such as `frontispiece.tex`, `cantor-quote.tex`,
+`peano-quote.tex`, `hilbert-quote.tex`, `euler-quote.tex`, and
+`gauss-quote.tex` may remain temporarily as inactive transition files until a
+later cleanup phase removes them. Active roots must not route them.
 
 ## Image Path Rule
 
@@ -76,8 +107,7 @@ The path rule applies in each volume repository: the LaTeX source must reference
 
 ## House Image Style
 
-Each volume frontispiece should eventually use the standard mathematician
-portrait style:
+Each frontmatter page should use the standard mathematician portrait style:
 
 - monochrome black-and-white engraved line art;
 - centered circular medallion portrait;
@@ -90,7 +120,7 @@ portrait style:
 The plaque must not include titles, volume numbers, quotes, nicknames, or
 extra commentary.
 
-## Target Frontispieces
+## Target Volume Frontmatter
 
 | Volume | Display title | Mathematician | Lifespan | Image path |
 |---|---|---|---|---|
@@ -109,8 +139,8 @@ Book-level frontmatter mathematicians are recorded in
 
 ## Generation Boundary
 
-If a required image does not exist, a later image-generation phase may create
-it. That phase must:
+If a required image does not exist, an image-generation phase may create it.
+That phase must:
 
 - use the house image style above;
 - save the file as `images/<lastname>.png`;
@@ -118,7 +148,8 @@ it. That phase must:
 - avoid volume-local image directories.
 
 Governance-only phases must not generate, replace, delete, resize, or
-re-encode images.
+re-encode images unless the task explicitly requests frontmatter production
+standardization using generated images.
 
 ## Migration Discipline
 
@@ -126,18 +157,43 @@ Frontmatter changes must be small and auditable:
 
 - first standardize metadata conventions;
 - then standardize displayed titles;
-- then introduce `frontispiece.tex` routers or files;
+- then introduce `frontmatter.tex` renderers and route all PDF roots through
+  them;
 - then attach or update image assets;
-- then remove obsolete router files only when no inputs reference them.
+- then remove obsolete title, quote, or frontispiece transition files only when
+  no inputs reference them.
 
 Archive material must remain untouched. Existing historical frontmatter inside
 archives should not be normalized unless a later archive-specific task
 explicitly requires it.
 
+## Validation
+
+`tools/governance/validate_volume.py` includes a focused
+`frontmatter_standard` validator. It compares every active PDF entry root
+against `docs/architecture/book-registry.json` and enforces:
+
+- `volume-*/frontmatter.tex` exists and defines `\LRAFrontMatterPage`;
+- each `volume-{roman}.tex` root inputs `volume-*/frontmatter` and calls
+  `\LRAFrontMatterPage` with volume metadata;
+- each `volume-{roman}-{book-slug}.tex` root inputs `volume-*/frontmatter` and
+  calls `\LRAFrontMatterPage` with book metadata;
+- all frontmatter image paths use `images/<filename>.png`;
+- each referenced frontmatter image file exists in the volume repository;
+- the shared dedication page follows the frontmatter page exactly once;
+- `\part` titles match the canonical volume display title;
+- `\lrameta` series values match the registry series title.
+
+The validator treats frontmatter drift as an error because every active PDF
+entry root is expected to be independently renderable and self-identifying.
+
 ## Deferred Phase 0 Findings
 
-The following known issues are deferred and must not be fixed in this
-governance phase:
+The following known issues were part of the original Phase 0 inventory and are
+retained for historical traceability. Items that have since been migrated are
+now mechanically checked by the validator above; remaining warning/review
+findings should be resolved in the title-page/frontispiece migration phase, not
+by opportunistic rewrites:
 
 - Volume I title rename from the current working title to
   `Logic, Sets, and Proof`;
