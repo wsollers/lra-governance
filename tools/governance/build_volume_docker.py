@@ -108,6 +108,8 @@ def docker_run(
         f"{docker_path(common_root / 'common')}:/workspace/common:ro",
         "-v",
         f"{docker_path(gov_root)}:/lra-governance:ro",
+        "-v",
+        f"{docker_path(volume_root.parent)}:/lra-repos:ro",
         "-w",
         "/workspace",
     ]

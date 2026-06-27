@@ -412,6 +412,21 @@
               ]
             },
             {
+              "chapter": "discrete-calculus",
+              "notes": [
+                "motivation",
+                "foundations",
+                "summation-algebra",
+                "difference-operators",
+                "telescoping-sums",
+                "discrete-antiderivative",
+                "polynomial-basis",
+                "calculus-rules",
+                "expansions",
+                "special-functions"
+              ]
+            },
+            {
               "chapter": "sequences",
               "notes": [
                 "definition",

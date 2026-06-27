@@ -45,6 +45,28 @@ Changes to shared LaTeX infrastructure must be made in `lra-common`. Builds
 consume it directly through the Docker image or an explicit checkout; it is not
 fanned out into other repos.
 
+## Cross-Book And Cross-Volume References
+
+Book roots may reference labels defined in sibling book PDFs or in other volume
+PDFs. Source references remain canonical unprefixed labels, for example
+`\hyperref[def:real-ordered-field]{Real Ordered Field}`.
+
+Build-time resolution is handled by `lra-common/common/volume-preamble.tex` with
+`xr-hyper`. When an external `.aux` file exists, the preamble imports its labels;
+when it does not exist, the import is skipped. This keeps local, Docker, and
+Overleaf builds portable while allowing complete workspaces to resolve cross-book
+and cross-volume links.
+
+The shared preamble must skip the active root's own aux file. Volume-level roots
+import other volume-level aux files; book-level roots import same-volume sibling
+book aux files and other volume-level aux files. Do not rewrite source labels
+with volume prefixes merely to satisfy a split-PDF build.
+
+The Docker build helper mounts the parent repositories directory read-only at
+`/lra-repos` so a complete local checkout can resolve sibling volume aux files
+inside the container. Local non-Docker builds may resolve the same aux files
+through sibling paths such as `../lra-volume-ii/build/volume-ii.aux`.
+
 ## Figures
 
 Dependency figures live in dedicated `figure-<n>.tex` files and are input by
