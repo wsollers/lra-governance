@@ -57,6 +57,29 @@
               ]
             },
             {
+              "chapter": "many-sorted-first-order-logic",
+              "notes": [
+                "introduction",
+                "structures",
+                "formal-many-sorted-language",
+                "semantics",
+                "substitution-of-a-term-for-a-variable",
+                "semantic-theorems",
+                "completeness-of-many-sorted-logic",
+                "reduction-to-one-sorted-logic"
+              ]
+            },
+            {
+              "chapter": "second-order-logic",
+              "notes": [
+                "introduction",
+                "second-order-grammar",
+                "standard-structures",
+                "standard-semantics",
+                "semantic-theorems"
+              ]
+            },
+            {
               "chapter": "axiom-systems",
               "notes": [
                 "signatures",

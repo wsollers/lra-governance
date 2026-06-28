@@ -68,18 +68,24 @@ real, validator-passing shape; do not improvise a different structure.
 % =========================================================
 \chapter{<Chapter Display Title>}
 \label{ch:<chapter-slug>}
+\lrameta{
+  series = {<Series Display Title>},
+  volume = {Volume <N>: <Volume Display Title>},
+  book = {Book <N>: <Book Display Title>},
+  chapter = {Chapter <N>: <Chapter Display Title>},
+  current = chapter,
+}
+\LraBreadcrumb
 
-\breadcrumb{<chapter-slug>}{<prior-neighbor>}{<Chapter Display Title>}{<next-neighbor>}
-
-\input{volume-<n>/<chapter-slug>/notes/index}
+\input{volume-<roman>/<book-slug>/<chapter-slug>/notes/index}
 
 \LRAExcludeFromPrintEditionBegin
 \section*{Proofs}
-\input{volume-<n>/<chapter-slug>/proofs/index}
+\input{volume-<roman>/<book-slug>/<chapter-slug>/proofs/index}
 
 % Include the capstone route only when a strong capstone exists:
 % \section*{Capstone}
-% \input{volume-<n>/<chapter-slug>/proofs/exercises/index}
+% \input{volume-<roman>/<book-slug>/<chapter-slug>/proofs/exercises/index}
 \LRAExcludeFromPrintEditionEnd
 ```
 
@@ -104,25 +110,33 @@ When a capstone exists, `<chapter-slug>/proofs/exercises/index.tex` is router on
 Chapter-index points that are easy to get wrong:
 
 - The chapter label is `\label{ch:<chapter-slug>}` — prefix `ch:`, not `chap:`.
-- `\breadcrumb` takes four arguments: current slug, prior neighbor, current
-  display title, next neighbor. Neighbors come from the chapter registry (see
-  the breadcrumb rules in `constitution/schema/file-schema.yaml`).
+- Current volume repos use `\lrameta{...}` followed immediately by
+  `\LraBreadcrumb`. The metadata values are the rendered breadcrumb source of
+  truth.
+- Legacy routers may still use `\breadcrumb{...}{...}{...}{...}`. Do not
+  introduce the legacy form in new stubs unless the repo-local convention
+  requires it.
 - The `Proofs` heading, and the optional `Capstone` heading and input, sit inside the
   `\LRAExcludeFromPrintEditionBegin ... \LRAExcludeFromPrintEditionEnd` block so
   print builds omit them.
 
-Real example (`volume-ii/peano-systems/index.tex`):
+Real example (`volume-i/book-logic/many-sorted-first-order-logic/index.tex`):
 
 ```latex
-\chapter{Peano Systems}
-\label{ch:peano-systems}
-\breadcrumb{peano-systems}{proof-techniques}{Peano Systems}{Identity, Equality, and Equivalence}
-\input{volume-ii/peano-systems/notes/index}
+\chapter{Many-Sorted Logic}
+\label{ch:many-sorted-first-order-logic}
+\lrameta{
+  series = {From Cantor to Ito},
+  volume = {Volume I: Logic, Sets, and Proof},
+  book = {Book I: Mathematical Logic and Proof},
+  chapter = {Chapter 3: Many-Sorted Logic},
+  current = chapter,
+}
+\LraBreadcrumb
+\input{volume-i/book-logic/many-sorted-first-order-logic/notes/index}
 \LRAExcludeFromPrintEditionBegin
 \section*{Proofs}
-\input{volume-ii/peano-systems/proofs/index}
-\section*{Capstone}
-\input{volume-ii/peano-systems/proofs/exercises/index}
+\input{volume-i/book-logic/many-sorted-first-order-logic/proofs/index}
 \LRAExcludeFromPrintEditionEnd
 ```
 
@@ -133,7 +147,8 @@ canonical shape:
 
 - `\chapter{...}`;
 - `\label{ch:...}`;
-- `\breadcrumb{...}{...}{...}{...}`;
+- `\lrameta{...}`;
+- `\LraBreadcrumb`;
 - `\input{volume-x/chapter-slug/notes/index}`;
 - `\LRAExcludeFromPrintEditionBegin`;
 - `\section*{Proofs}`;
