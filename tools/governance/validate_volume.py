@@ -2,13 +2,12 @@
 from __future__ import annotations
 
 import argparse
-import inspect
 import sys
 from collections import Counter
 from pathlib import Path
 
 from core.reporting import print_report, write_json_report
-from core.file_inventory import files_to_validate
+from core.validator_runner import default_file_inventory, run_validator
 from core.volume import chapter_roots, resolve_volume
 from validators import block_discipline, book_toc, caption_hygiene, capstones, chapter_router, dedication_page, dependency_blocks, dependency_graphs, formal_decoration, formal_reading_required, frontmatter_standard, input_resolution, interpretation_blocks, labels, latex_integrity, math_boxes, notes_structure, pdf_string_headings, print_edition_routing, proof_coverage, proof_file_contract, proof_layout, proof_order, proof_routing, proof_stub_state, reference_voice, structural_chrome, structural_positions, unicode_tex, volume_shape
 
@@ -77,12 +76,6 @@ def _filter_findings_for_chapter(findings, chapter_rel: str | None):
     return [finding for finding in findings if finding.path == chapter_rel or finding.path.startswith(prefix)]
 
 
-def _run_validator(validator, volume_root: Path, files: list[Path]):
-    if "files" in inspect.signature(validator.validate).parameters:
-        return validator.validate(volume_root, files=files)
-    return validator.validate(volume_root)
-
-
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description="Run all LRA governance validators over one volume.")
     parser.add_argument("volume", help="Volume repo root or volume-* source directory.")
@@ -106,10 +99,10 @@ def main(argv=None) -> int:
         print(f"fatal: {exc}", file=sys.stderr)
         return 1
 
-    inventory = files_to_validate([volume.root], only_reachable=False)
+    inventory = default_file_inventory(volume.root)
     all_findings = []
     for _name, validator in VALIDATORS:
-        all_findings.extend(_run_validator(validator, volume.root, inventory))
+        all_findings.extend(run_validator(validator, volume.root, inventory))
 
     report_findings = _filter_findings_for_chapter(all_findings, chapter_filter)
     report_title = f"validate volume: {volume.root}"

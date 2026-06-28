@@ -11,6 +11,7 @@ from generators.section_stub import stub_section
 import dependency_graph
 from core import volume as volume_core
 from validate_volume import VALIDATORS
+from core.validator_runner import run_validator
 from validators import block_discipline, book_toc, capstones, chapter_router, dedication_page, dependency_blocks, dependency_graphs, formal_decoration, formal_reading_required, frontmatter_standard, input_resolution, interpretation_blocks, labels, latex_integrity, math_boxes, notes_structure, print_edition_routing, proof_coverage, proof_file_contract, proof_layout, proof_order, proof_routing, proof_stub_state, reference_voice, structural_chrome, structural_positions, volume_shape
 
 
@@ -21,6 +22,9 @@ TMP = HERE.parent.parent / ".test-tmp" / "validate-volume"
 def write(path: Path, text: str = ""):
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(text, encoding="utf-8")
+
+def validate_with_inventory(validator, volume: Path):
+    return run_validator(validator, volume)
 
 
 def make_volume() -> Path:
@@ -234,7 +238,7 @@ class ValidateVolumeTests(unittest.TestCase):
     def test_volume_shape_accepts_canonical_fixture(self):
         volume = make_volume()
 
-        self.assertEqual(volume_shape.validate(volume), [])
+        self.assertEqual(validate_with_inventory(volume_shape, volume), [])
 
     def test_volume_shape_flags_legacy_capstone_and_flat_proof(self):
         volume = make_volume()
@@ -242,7 +246,7 @@ class ValidateVolumeTests(unittest.TestCase):
         write(chapter / "capstone.tex", "% legacy\n")
         write(chapter / "proofs" / "prf-flat.tex", "% flat\n")
 
-        codes = {finding.code for finding in volume_shape.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(volume_shape, volume)}
 
         self.assertIn("legacy_chapter_path", codes)
         self.assertIn("flat_proof_file", codes)
@@ -252,7 +256,7 @@ class ValidateVolumeTests(unittest.TestCase):
         write(volume / "integers" / "proofs" / "exercises" / "ex-extra.tex", "% old exercise proof\n")
         write(volume / "integers" / "proofs" / "exercises" / "legacy-topic" / "index.tex", "% old topic\n")
 
-        codes = [finding.code for finding in volume_shape.validate(volume)]
+        codes = [finding.code for finding in validate_with_inventory(volume_shape, volume)]
 
         self.assertEqual(codes.count("noncanonical_exercises_path"), 2)
 
@@ -275,7 +279,7 @@ class ValidateVolumeTests(unittest.TestCase):
             ),
         )
 
-        codes = {finding.code for finding in volume_shape.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(volume_shape, volume)}
 
         self.assertNotIn("missing_matching_proofs_topic", codes)
 
@@ -299,7 +303,7 @@ class ValidateVolumeTests(unittest.TestCase):
             ),
         )
 
-        codes = {finding.code for finding in volume_shape.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(volume_shape, volume)}
 
         self.assertIn("missing_matching_proofs_topic", codes)
 
@@ -315,7 +319,7 @@ class ValidateVolumeTests(unittest.TestCase):
         volume, registry = make_registered_book_volume()
 
         with patch.object(book_toc, "_registry_for", return_value=registry):
-            self.assertEqual(book_toc.validate(volume), [])
+            self.assertEqual(validate_with_inventory(book_toc, volume), [])
 
     def test_frontmatter_standard_accepts_canonical_volume_frontmatter(self):
         volume, registry = make_registered_book_volume()
@@ -359,7 +363,7 @@ class ValidateVolumeTests(unittest.TestCase):
         write(volume / "index.tex", r"\part{Origins of Numbers}" + "\n" + r"\input{volume-ii/book-new/index}" + "\n")
 
         with patch.object(frontmatter_standard, "_registry_for", return_value=registry):
-            self.assertEqual(frontmatter_standard.validate(volume), [])
+            self.assertEqual(validate_with_inventory(frontmatter_standard, volume), [])
 
     def test_frontmatter_standard_reports_migration_drift(self):
         volume, registry = make_registered_book_volume()
@@ -377,7 +381,7 @@ class ValidateVolumeTests(unittest.TestCase):
         write(volume / "index.tex", r"\part{Numbers}" + "\n")
 
         with patch.object(frontmatter_standard, "_registry_for", return_value=registry):
-            codes = {finding.code for finding in frontmatter_standard.validate(volume)}
+            codes = {finding.code for finding in validate_with_inventory(frontmatter_standard, volume)}
 
         self.assertIn("frontmatter_renderer_missing_macro", codes)
         self.assertIn("frontmatter_renderer_missing_image", codes)
@@ -413,7 +417,7 @@ class ValidateVolumeTests(unittest.TestCase):
         )
 
         with patch.object(dedication_page, "_registry_for", return_value=registry):
-            self.assertEqual(dedication_page.validate(volume), [])
+            self.assertEqual(validate_with_inventory(dedication_page, volume), [])
 
     def test_dedication_page_flags_count_and_order(self):
         volume, registry = make_registered_book_volume()
@@ -443,7 +447,7 @@ class ValidateVolumeTests(unittest.TestCase):
         )
 
         with patch.object(dedication_page, "_registry_for", return_value=registry):
-            codes = {finding.code for finding in dedication_page.validate(volume)}
+            codes = {finding.code for finding in validate_with_inventory(dedication_page, volume)}
 
         self.assertIn("dedication_before_frontmatter", codes)
         self.assertIn("dedication_input_count", codes)
@@ -453,7 +457,7 @@ class ValidateVolumeTests(unittest.TestCase):
         (volume / "index.tex").write_text("% missing book route\n", encoding="utf-8")
 
         with patch.object(book_toc, "_registry_for", return_value=registry):
-            codes = {finding.code for finding in book_toc.validate(volume)}
+            codes = {finding.code for finding in validate_with_inventory(book_toc, volume)}
 
         self.assertIn("book_not_routed_from_volume_index", codes)
 
@@ -462,7 +466,7 @@ class ValidateVolumeTests(unittest.TestCase):
         (volume.parent / "bibliography" / "volume-ii-new-book.bib").unlink()
 
         with patch.object(book_toc, "_registry_for", return_value=registry):
-            codes = {finding.code for finding in book_toc.validate(volume)}
+            codes = {finding.code for finding in validate_with_inventory(book_toc, volume)}
 
         self.assertIn("missing_book_bibliography_shard", codes)
 
@@ -471,7 +475,7 @@ class ValidateVolumeTests(unittest.TestCase):
         write(volume / "book-unregistered" / "index.tex", "% unregistered\n")
 
         with patch.object(book_toc, "_registry_for", return_value=registry):
-            codes = {finding.code for finding in book_toc.validate(volume)}
+            codes = {finding.code for finding in validate_with_inventory(book_toc, volume)}
 
         self.assertIn("unregistered_book_dir", codes)
 
@@ -489,7 +493,7 @@ class ValidateVolumeTests(unittest.TestCase):
         )
 
         with patch.object(book_toc, "_registry_for", return_value=registry):
-            codes = {finding.code for finding in book_toc.validate(volume)}
+            codes = {finding.code for finding in validate_with_inventory(book_toc, volume)}
 
         self.assertIn("book_registry_duplicate_order", codes)
 
@@ -500,20 +504,20 @@ class ValidateVolumeTests(unittest.TestCase):
             r"\LRAProofsInput{volume-ii/integers/proofs/order/prf-order}" + "\n",
         )
 
-        codes = {finding.code for finding in print_edition_routing.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(print_edition_routing, volume)}
 
         self.assertIn("legacy_print_edition_input_macro", codes)
 
     def test_proof_routing_accepts_canonical_fixture(self):
         volume = make_volume()
 
-        self.assertEqual(proof_routing.validate(volume), [])
+        self.assertEqual(validate_with_inventory(proof_routing, volume), [])
 
     def test_proof_routing_flags_unrouted_proof_file(self):
         volume = make_volume()
         write(volume / "integers" / "proofs" / "order" / "prf-extra.tex", "% proof\n")
 
-        codes = {finding.code for finding in proof_routing.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(proof_routing, volume)}
 
         self.assertIn("unrouted_proof_topic_file", codes)
 
@@ -530,7 +534,7 @@ class ValidateVolumeTests(unittest.TestCase):
             r"\input{volume-ii/integers/proofs/order/prf-order}" "\n",
         )
 
-        codes = {finding.code for finding in proof_routing.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(proof_routing, volume)}
 
         self.assertIn("proofs_index_contains_rendered_content", codes)
         self.assertIn("proofs_topic_index_contains_rendered_content", codes)
@@ -543,19 +547,19 @@ class ValidateVolumeTests(unittest.TestCase):
             r"\input{volume-ii/integers/proofs/exercises/index}" "\n",
         )
 
-        codes = {finding.code for finding in proof_routing.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(proof_routing, volume)}
 
         self.assertIn("proofs_index_routes_exercises", codes)
 
     def test_proof_layout_accepts_canonical_fixture(self):
         volume = make_volume()
 
-        self.assertEqual(proof_layout.validate(volume), [])
+        self.assertEqual(validate_with_inventory(proof_layout, volume), [])
 
     def test_proof_file_contract_accepts_canonical_fixture(self):
         volume = make_volume()
 
-        self.assertEqual(proof_file_contract.validate(volume), [])
+        self.assertEqual(validate_with_inventory(proof_file_contract, volume), [])
 
     def test_proof_file_contract_flags_label_order_and_body_labels(self):
         volume = make_volume()
@@ -580,7 +584,7 @@ class ValidateVolumeTests(unittest.TestCase):
             encoding="utf-8",
         )
 
-        codes = {finding.code for finding in proof_file_contract.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(proof_file_contract, volume)}
 
         self.assertIn("proof_label_after_environment", codes)
         self.assertIn("label_inside_restatement", codes)
@@ -615,7 +619,7 @@ class ValidateVolumeTests(unittest.TestCase):
             encoding="utf-8",
         )
 
-        codes = {finding.code for finding in proof_file_contract.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(proof_file_contract, volume)}
 
         self.assertIn("return_navigation_mismatch", codes)
         self.assertIn("invalid_proof_dependency_target", codes)
@@ -652,7 +656,7 @@ class ValidateVolumeTests(unittest.TestCase):
             encoding="utf-8",
         )
 
-        codes = {finding.code for finding in proof_file_contract.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(proof_file_contract, volume)}
 
         self.assertIn("invalid_restatement_count", codes)
         self.assertIn("proof_layer_order", codes)
@@ -661,7 +665,7 @@ class ValidateVolumeTests(unittest.TestCase):
     def test_proof_coverage_accepts_canonical_fixture(self):
         volume = make_volume()
 
-        self.assertEqual(proof_coverage.validate(volume), [])
+        self.assertEqual(validate_with_inventory(proof_coverage, volume), [])
 
     def test_proof_coverage_flags_missing_proof_label_and_association(self):
         volume = make_volume()
@@ -678,7 +682,7 @@ class ValidateVolumeTests(unittest.TestCase):
             encoding="utf-8",
         )
 
-        codes = {finding.code for finding in proof_coverage.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(proof_coverage, volume)}
 
         self.assertIn("missing_proof_file", codes)
         self.assertIn("missing_proof_association", codes)
@@ -686,7 +690,7 @@ class ValidateVolumeTests(unittest.TestCase):
     def test_proof_order_accepts_canonical_fixture(self):
         volume = make_volume()
 
-        self.assertEqual(proof_order.validate(volume), [])
+        self.assertEqual(validate_with_inventory(proof_order, volume), [])
 
     def test_proof_order_flags_topic_and_file_order(self):
         volume = make_volume()
@@ -726,7 +730,7 @@ class ValidateVolumeTests(unittest.TestCase):
             "",
         ]))
 
-        codes = {finding.code for finding in proof_order.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(proof_order, volume)}
 
         self.assertIn("proof_topic_order_mismatch", codes)
         self.assertIn("proof_file_order_mismatch", codes)
@@ -746,14 +750,14 @@ class ValidateVolumeTests(unittest.TestCase):
             "",
         ]))
 
-        codes = {finding.code for finding in proof_order.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(proof_order, volume)}
 
         self.assertIn("proof_topic_order_mismatch", codes)
 
     def test_proof_stub_state_accepts_canonical_fixture(self):
         volume = make_volume()
 
-        self.assertEqual(proof_stub_state.validate(volume), [])
+        self.assertEqual(validate_with_inventory(proof_stub_state, volume), [])
 
     def test_proof_stub_state_flags_authored_professional_with_stub_detailed(self):
         volume = make_volume()
@@ -772,7 +776,7 @@ class ValidateVolumeTests(unittest.TestCase):
             ),
         )
 
-        codes = {finding.code for finding in proof_stub_state.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(proof_stub_state, volume)}
 
         self.assertIn("mixed_authored_professional_detailed_stub", codes)
 
@@ -787,20 +791,20 @@ class ValidateVolumeTests(unittest.TestCase):
             encoding="utf-8",
         )
 
-        codes = {finding.code for finding in proof_layout.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(proof_layout, volume)}
 
         self.assertNotIn("partial_stub", codes)
 
     def test_notes_structure_accepts_canonical_fixture(self):
         volume = make_volume()
 
-        self.assertEqual(notes_structure.validate(volume), [])
+        self.assertEqual(validate_with_inventory(notes_structure, volume), [])
 
     def test_notes_structure_flags_unrouted_body(self):
         volume = make_volume()
         write(volume / "integers" / "notes" / "order" / "notes-extra.tex", "% body\n")
 
-        codes = {finding.code for finding in notes_structure.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(notes_structure, volume)}
 
         self.assertIn("unrouted_notes_topic_body", codes)
 
@@ -808,7 +812,7 @@ class ValidateVolumeTests(unittest.TestCase):
         volume = make_volume()
         write(volume / "integers" / "notes" / "order" / "figure-order.tex", "% figure asset\n")
 
-        codes = {finding.code for finding in notes_structure.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(notes_structure, volume)}
 
         self.assertNotIn("unrouted_notes_topic_body", codes)
 
@@ -820,7 +824,7 @@ class ValidateVolumeTests(unittest.TestCase):
             r"\input{volume-ii/integers/notes/order/notes-order}" "\n",
         )
 
-        codes = {finding.code for finding in notes_structure.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(notes_structure, volume)}
 
         self.assertIn("notes_topic_index_contains_rendered_content", codes)
         self.assertIn("notes_topic_index_missing_section", codes)
@@ -833,7 +837,7 @@ class ValidateVolumeTests(unittest.TestCase):
             r"\input{volume-ii/integers/notes/order/notes-order}" "\n",
         )
 
-        codes = {finding.code for finding in notes_structure.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(notes_structure, volume)}
 
         self.assertNotIn("notes_topic_index_contains_rendered_content", codes)
         self.assertNotIn("notes_topic_index_missing_section", codes)
@@ -846,7 +850,7 @@ class ValidateVolumeTests(unittest.TestCase):
             r"\input{volume-ii/integers/notes/order/notes-order}" "\n",
         )
 
-        codes = {finding.code for finding in notes_structure.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(notes_structure, volume)}
 
         self.assertNotIn("notes_topic_index_contains_rendered_content", codes)
         self.assertNotIn("notes_topic_index_missing_section", codes)
@@ -860,7 +864,7 @@ class ValidateVolumeTests(unittest.TestCase):
             encoding="utf-8",
         )
 
-        codes = {finding.code for finding in notes_structure.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(notes_structure, volume)}
 
         self.assertIn("notes_topic_body_section_heading", codes)
 
@@ -875,7 +879,7 @@ class ValidateVolumeTests(unittest.TestCase):
             r"\input{volume-ii/integers/notes/order/notes-extra}" "\n",
         )
 
-        codes = {finding.code for finding in notes_structure.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(notes_structure, volume)}
 
         self.assertIn("notes_topic_index_duplicate_section", codes)
         self.assertNotIn("unrouted_notes_topic_body", codes)
@@ -891,7 +895,7 @@ class ValidateVolumeTests(unittest.TestCase):
             r"\input{volume-ii/integers/notes/order/notes-extra}" "\n",
         )
 
-        codes = {finding.code for finding in notes_structure.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(notes_structure, volume)}
 
         self.assertIn("notes_topic_index_duplicate_section", codes)
         self.assertNotIn("unrouted_notes_topic_body", codes)
@@ -920,14 +924,14 @@ class ValidateVolumeTests(unittest.TestCase):
             ),
         )
 
-        codes = {finding.code for finding in notes_structure.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(notes_structure, volume)}
 
         self.assertNotIn("notes_topic_index_contains_rendered_content", codes)
 
     def test_block_discipline_accepts_canonical_fixture(self):
         volume = make_volume()
 
-        self.assertEqual(block_discipline.validate(volume), [])
+        self.assertEqual(validate_with_inventory(block_discipline, volume), [])
 
     def test_block_discipline_flags_top_level_prose_and_plain_remark(self):
         volume = make_volume()
@@ -944,7 +948,7 @@ class ValidateVolumeTests(unittest.TestCase):
             ),
         )
 
-        codes = {finding.code for finding in block_discipline.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(block_discipline, volume)}
 
         self.assertIn("top_level_prose", codes)
         self.assertIn("plain_remark_or_example", codes)
@@ -963,7 +967,7 @@ class ValidateVolumeTests(unittest.TestCase):
             ),
         )
 
-        codes = {finding.code for finding in block_discipline.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(block_discipline, volume)}
 
         self.assertIn("proof_inside_note", codes)
 
@@ -984,14 +988,14 @@ class ValidateVolumeTests(unittest.TestCase):
             ),
         )
 
-        codes = {finding.code for finding in block_discipline.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(block_discipline, volume)}
 
         self.assertIn("topicbox_or_exposition_in_proof", codes)
 
     def test_formal_reading_accepts_canonical_fixture(self):
         volume = make_volume()
 
-        self.assertEqual(formal_reading_required.validate(volume), [])
+        self.assertEqual(validate_with_inventory(formal_reading_required, volume), [])
 
     def test_formal_reading_flags_trigger_without_reading(self):
         volume = make_volume()
@@ -1009,7 +1013,7 @@ class ValidateVolumeTests(unittest.TestCase):
             ),
         )
 
-        codes = {finding.code for finding in formal_reading_required.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(formal_reading_required, volume)}
 
         self.assertIn("formal_reading_missing", codes)
 
@@ -1029,14 +1033,14 @@ class ValidateVolumeTests(unittest.TestCase):
             ),
         )
 
-        codes = {finding.code for finding in formal_reading_required.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(formal_reading_required, volume)}
 
         self.assertIn("simple_but_triggers", codes)
 
     def test_structural_chrome_accepts_canonical_fixture(self):
         volume = make_volume()
 
-        self.assertEqual(structural_chrome.validate(volume), [])
+        self.assertEqual(validate_with_inventory(structural_chrome, volume), [])
 
     def test_structural_chrome_flags_toolkit_body_and_raw_toolkit(self):
         volume = make_volume()
@@ -1056,7 +1060,7 @@ class ValidateVolumeTests(unittest.TestCase):
             ),
         )
 
-        codes = {finding.code for finding in structural_chrome.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(structural_chrome, volume)}
 
         self.assertIn("toolkit_not_in_notes_router", codes)
         self.assertIn("toolkit_hand_rolled", codes)
@@ -1081,7 +1085,7 @@ class ValidateVolumeTests(unittest.TestCase):
             ),
         )
 
-        codes = {finding.code for finding in structural_chrome.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(structural_chrome, volume)}
 
         self.assertIn("toolkit_misplaced", codes)
         self.assertIn("toolkit_contains_formal", codes)
@@ -1100,7 +1104,7 @@ class ValidateVolumeTests(unittest.TestCase):
             ),
         )
 
-        codes = {finding.code for finding in structural_chrome.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(structural_chrome, volume)}
 
         self.assertIn("inline_tikzpicture", codes)
 
@@ -1120,7 +1124,7 @@ class ValidateVolumeTests(unittest.TestCase):
             ),
         )
 
-        codes = {finding.code for finding in structural_chrome.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(structural_chrome, volume)}
 
         self.assertIn("breadcrumb_hand_rolled", codes)
         self.assertIn("structural_roadmap_present", codes)
@@ -1129,7 +1133,7 @@ class ValidateVolumeTests(unittest.TestCase):
     def test_reference_voice_accepts_canonical_fixture(self):
         volume = make_volume()
 
-        self.assertEqual(reference_voice.validate(volume), [])
+        self.assertEqual(validate_with_inventory(reference_voice, volume), [])
 
     def test_reference_voice_flags_classroom_voice(self):
         volume = make_volume()
@@ -1145,14 +1149,14 @@ class ValidateVolumeTests(unittest.TestCase):
             ),
         )
 
-        codes = {finding.code for finding in reference_voice.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(reference_voice, volume)}
 
         self.assertIn("non_reference_voice", codes)
 
     def test_formal_decoration_accepts_canonical_fixture(self):
         volume = make_volume()
 
-        self.assertEqual(formal_decoration.validate(volume), [])
+        self.assertEqual(validate_with_inventory(formal_decoration, volume), [])
 
     def test_formal_decoration_flags_source_and_expository_claims(self):
         volume = make_volume()
@@ -1177,7 +1181,7 @@ class ValidateVolumeTests(unittest.TestCase):
             ),
         )
 
-        codes = {finding.code for finding in formal_decoration.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(formal_decoration, volume)}
 
         self.assertIn("source_crosswalk_without_citation", codes)
         self.assertIn("formal_claim_inside_expository_block", codes)
@@ -1213,7 +1217,7 @@ class ValidateVolumeTests(unittest.TestCase):
             ),
         )
 
-        codes = {finding.code for finding in formal_decoration.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(formal_decoration, volume)}
 
         self.assertIn("decoration_order", codes)
         self.assertIn("forbidden_decoration_block", codes)
@@ -1257,7 +1261,7 @@ class ValidateVolumeTests(unittest.TestCase):
             ),
         )
 
-        codes = {finding.code for finding in math_boxes.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(math_boxes, volume)}
 
         self.assertIn("raw_tcolorbox_wrapper", codes)
         self.assertIn("wrong_box_macro", codes)
@@ -1288,7 +1292,7 @@ class ValidateVolumeTests(unittest.TestCase):
             ),
         )
 
-        findings = math_boxes.validate(volume)
+        findings = validate_with_inventory(math_boxes, volume)
         by_code = {finding.code: finding for finding in findings}
 
         self.assertEqual(by_code["multiple_formal_labels_in_box"].severity, "warning")
@@ -1326,7 +1330,7 @@ class ValidateVolumeTests(unittest.TestCase):
             ),
         )
 
-        findings = math_boxes.validate(volume)
+        findings = validate_with_inventory(math_boxes, volume)
         by_code = {finding.code: finding for finding in findings}
 
         self.assertNotIn("unwrapped_math_env", by_code)
@@ -1356,12 +1360,12 @@ class ValidateVolumeTests(unittest.TestCase):
             )
         write(note, "\n".join(canonical + [""]))
 
-        self.assertEqual(math_boxes.validate(volume), [])
+        self.assertEqual(validate_with_inventory(math_boxes, volume), [])
 
     def test_interpretation_blocks_flags_missing_interpretation(self):
         volume = make_volume()
 
-        codes = {finding.code for finding in interpretation_blocks.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(interpretation_blocks, volume)}
 
         self.assertIn("missing_interpretation", codes)
 
@@ -1385,7 +1389,7 @@ class ValidateVolumeTests(unittest.TestCase):
             encoding="utf-8",
         )
 
-        self.assertEqual(interpretation_blocks.validate(volume), [])
+        self.assertEqual(validate_with_inventory(interpretation_blocks, volume), [])
 
     def test_labels_flags_duplicate_and_wrong_prefix(self):
         volume = make_volume()
@@ -1403,7 +1407,7 @@ class ValidateVolumeTests(unittest.TestCase):
             ),
         )
 
-        codes = {finding.code for finding in labels.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(labels, volume)}
 
         self.assertIn("duplicate_label", codes)
         self.assertIn("wrong_label_prefix", codes)
@@ -1411,7 +1415,7 @@ class ValidateVolumeTests(unittest.TestCase):
     def test_capstones_accepts_canonical_fixture(self):
         volume = make_volume()
 
-        self.assertEqual(capstones.validate(volume), [])
+        self.assertEqual(validate_with_inventory(capstones, volume), [])
 
     def test_capstones_flags_missing_theorem_and_not_last(self):
         volume = make_volume()
@@ -1424,7 +1428,7 @@ class ValidateVolumeTests(unittest.TestCase):
             encoding="utf-8",
         )
 
-        codes = {finding.code for finding in capstones.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(capstones, volume)}
 
         self.assertIn("missing_capstone_theorem", codes)
         self.assertIn("capstone_not_last", codes)
@@ -1438,7 +1442,7 @@ class ValidateVolumeTests(unittest.TestCase):
             encoding="utf-8",
         )
 
-        codes = {finding.code for finding in capstones.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(capstones, volume)}
 
         self.assertIn("exercises_index_contains_rendered_content", codes)
 
@@ -1447,7 +1451,7 @@ class ValidateVolumeTests(unittest.TestCase):
         path = volume / "integers" / "notes" / "order" / "notes-bad-env.tex"
         write(path, r"\begin{remark*}" "\n" r"\end{proof}" "\n")
 
-        codes = {finding.code for finding in latex_integrity.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(latex_integrity, volume)}
 
         self.assertIn("mismatched_environment", codes)
 
@@ -1459,7 +1463,7 @@ class ValidateVolumeTests(unittest.TestCase):
             encoding="utf-8",
         )
 
-        codes = {finding.code for finding in input_resolution.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(input_resolution, volume)}
 
         self.assertIn("missing_input_target", codes)
 
@@ -1475,14 +1479,14 @@ class ValidateVolumeTests(unittest.TestCase):
             encoding="utf-8",
         )
 
-        codes = {finding.code for finding in structural_positions.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(structural_positions, volume)}
 
         self.assertIn("illegal_clearpage_position", codes)
 
     def test_dependency_blocks_accepts_canonical_fixture(self):
         volume = make_volume()
 
-        self.assertEqual(dependency_blocks.validate(volume), [])
+        self.assertEqual(validate_with_inventory(dependency_blocks, volume), [])
 
     def test_dependency_blocks_flags_missing_and_bad_targets(self):
         volume = make_volume()
@@ -1511,7 +1515,7 @@ class ValidateVolumeTests(unittest.TestCase):
             encoding="utf-8",
         )
 
-        codes = {finding.code for finding in dependency_blocks.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(dependency_blocks, volume)}
 
         self.assertIn("dependency_targets_proof", codes)
         self.assertIn("invalid_dependency_target_prefix", codes)
@@ -1520,7 +1524,7 @@ class ValidateVolumeTests(unittest.TestCase):
     def test_dependency_graphs_accepts_canonical_fixture(self):
         volume = make_volume()
 
-        self.assertEqual(dependency_graphs.validate(volume), [])
+        self.assertEqual(validate_with_inventory(dependency_graphs, volume), [])
 
     def test_dependency_graph_uses_live_reachable_files(self):
         volume = make_volume()
@@ -1580,9 +1584,9 @@ class ValidateVolumeTests(unittest.TestCase):
 
         stub_chapter(volume, "ordered-fields", "Ordered Fields", [], ["Order"])
 
-        self.assertEqual(volume_shape.validate(volume), [])
+        self.assertEqual(validate_with_inventory(volume_shape, volume), [])
         for name, validator in VALIDATORS:
-            self.assertEqual(validator.validate(volume), [], name)
+            self.assertEqual(validate_with_inventory(validator, volume), [], name)
 
     def test_volume_shape_flags_canonical_chapter_not_routed_from_volume_index(self):
         volume = make_volume()
@@ -1611,7 +1615,7 @@ class ValidateVolumeTests(unittest.TestCase):
         write(chapter / "proofs" / "exercises" / "index.tex", "")
         write(chapter / "proofs" / "exercises" / "capstone-orphaned.tex", "")
 
-        codes = {finding.code for finding in volume_shape.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(volume_shape, volume)}
 
         self.assertIn("chapter_not_in_volume_index", codes)
 
@@ -1652,9 +1656,9 @@ class ValidateVolumeTests(unittest.TestCase):
                 r"\input{volume-ii/ordered-fields/proofs/completion-fields/index}",
             ],
         )
-        self.assertEqual(volume_shape.validate(volume), [])
+        self.assertEqual(validate_with_inventory(volume_shape, volume), [])
         for name, validator in VALIDATORS:
-            self.assertEqual(validator.validate(volume), [], name)
+            self.assertEqual(validate_with_inventory(validator, volume), [], name)
 
     def test_validators_reject_legacy_chapter_capstone_gate(self):
         volume = make_volume()
@@ -1667,8 +1671,8 @@ class ValidateVolumeTests(unittest.TestCase):
             encoding="utf-8",
         )
 
-        router_codes = {finding.code for finding in chapter_router.validate(volume)}
-        routing_codes = {finding.code for finding in print_edition_routing.validate(volume)}
+        router_codes = {finding.code for finding in validate_with_inventory(chapter_router, volume)}
+        routing_codes = {finding.code for finding in validate_with_inventory(print_edition_routing, volume)}
 
         self.assertIn("chapter_router_shape", router_codes)
         self.assertIn("legacy_print_edition_input_macro", routing_codes)
@@ -1695,14 +1699,14 @@ class ValidateVolumeTests(unittest.TestCase):
             encoding="utf-8",
         )
 
-        self.assertEqual(chapter_router.validate(volume), [])
+        self.assertEqual(validate_with_inventory(chapter_router, volume), [])
 
     def test_chapter_router_flags_extra_rendered_content(self):
         volume = make_volume()
         index = volume / "integers" / "index.tex"
         index.write_text(index.read_text(encoding="utf-8") + "extra prose\n", encoding="utf-8")
 
-        codes = {finding.code for finding in chapter_router.validate(volume)}
+        codes = {finding.code for finding in validate_with_inventory(chapter_router, volume)}
 
         self.assertIn("chapter_router_shape", codes)
 

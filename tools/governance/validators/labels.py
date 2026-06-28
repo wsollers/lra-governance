@@ -38,7 +38,7 @@ BAD_LABEL_PARTS = {
 }
 
 
-def validate(volume_root: Path, files=None) -> list[Finding]:
+def validate(volume_root: Path, files) -> list[Finding]:
     findings: list[Finding] = []
     _check_duplicate_and_slug_labels(volume_root, findings, files)
     for chapter in chapter_roots(volume_root):

@@ -39,20 +39,12 @@ def files_to_validate(
 
 def validator_files(
     root: Path | str,
-    files: Iterable[Path | str] | None = None,
+    files: Iterable[Path | str],
     *,
     suffixes: tuple[str, ...] = DEFAULT_SUFFIXES,
 ) -> list[Path]:
-    """Return files a validator should inspect under ``root``.
-
-    Production orchestration may pass a precomputed inventory. Direct validator
-    unit tests default to all files under the fixture root so tests do not
-    accidentally depend on router reachability unless they pass a file list
-    explicitly.
-    """
+    """Return the caller-provided files that belong under ``root``."""
     root_path = Path(root).resolve()
-    if files is None:
-        return all_files(root_path, suffixes=suffixes)
     selected: list[Path] = []
     for item in files:
         path = Path(item).resolve()
@@ -68,7 +60,7 @@ def validator_files(
 
 def validator_file_set(
     root: Path | str,
-    files: Iterable[Path | str] | None = None,
+    files: Iterable[Path | str],
     *,
     suffixes: tuple[str, ...] = DEFAULT_SUFFIXES,
 ) -> set[Path]:

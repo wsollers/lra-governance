@@ -15,7 +15,7 @@ class FileInfo:
         self.kind = kind
 
 
-def validate(volume_root: Path, files=None) -> list[Finding]:
+def validate(volume_root: Path, files) -> list[Finding]:
     findings: list[Finding] = []
     for chapter in chapter_roots(volume_root):
         for tex in validator_files(chapter, files):

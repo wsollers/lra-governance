@@ -65,7 +65,7 @@ TOP_LEVEL_COMMANDS = (
 )
 
 
-def validate(volume_root: Path, files=None) -> list[Finding]:
+def validate(volume_root: Path, files) -> list[Finding]:
     findings: list[Finding] = []
     for tex in validator_files(volume_root, files):
         _validate_file(volume_root, tex, findings)

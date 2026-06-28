@@ -61,7 +61,7 @@ FORBIDDEN_DECORATION_BY_ENV = {
 }
 
 
-def validate(volume_root: Path, files=None) -> list[Finding]:
+def validate(volume_root: Path, files) -> list[Finding]:
     findings: list[Finding] = []
     for tex in validator_files(volume_root, files):
         rel = tex.resolve().relative_to(volume_root.resolve()).as_posix()

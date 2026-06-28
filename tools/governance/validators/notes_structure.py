@@ -17,7 +17,7 @@ TOOLKIT_BEGIN_RE = re.compile(r"\\begin\{toolkitbox\}(?:\{.*\})?")
 TOOLKIT_END_RE = re.compile(r"\\end\{toolkitbox\}")
 
 
-def validate(volume_root: Path, files=None) -> list[Finding]:
+def validate(volume_root: Path, files) -> list[Finding]:
     findings: list[Finding] = []
     for chapter in chapter_roots(volume_root):
         included = validator_file_set(chapter, files)

@@ -62,7 +62,7 @@ def _required_dir(findings: list[Finding], root: Path, path: Path, label: str) -
         _add(findings, root, path, "volume_shape_not_directory", f"{label} must be a directory.")
 
 
-def validate(volume_root: Path, files=None) -> list[Finding]:
+def validate(volume_root: Path, files) -> list[Finding]:
     findings: list[Finding] = []
     schema = _schema()
     for relative in schema["required_volume_files"]:

@@ -24,7 +24,7 @@ ROLE_RE = re.compile(r"[Ss]tructural\s+[Rr]ole")
 ENV_NAME = {"exposition": "exposition", "toolkitbox": "toolkit"}
 
 
-def validate(volume_root: Path, files=None) -> list[Finding]:
+def validate(volume_root: Path, files) -> list[Finding]:
     findings: list[Finding] = []
     for tex in validator_files(volume_root, files):
         _validate_file(volume_root, tex, findings)

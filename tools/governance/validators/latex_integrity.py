@@ -11,7 +11,7 @@ from core.file_inventory import validator_files
 BEGIN_END_RE = re.compile(r"\\(begin|end)\{([^{}]+)\}")
 
 
-def validate(volume_root: Path, files=None) -> list[Finding]:
+def validate(volume_root: Path, files) -> list[Finding]:
     findings: list[Finding] = []
     for tex in validator_files(volume_root, files):
         _validate_file(volume_root, tex, findings)

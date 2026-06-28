@@ -16,7 +16,7 @@ FORMAL_RE = re.compile(
 )
 
 
-def validate(volume_root: Path, files=None) -> list[Finding]:
+def validate(volume_root: Path, files) -> list[Finding]:
     findings: list[Finding] = []
     surface_forms = _surface_forms(volume_root)
     for tex in validator_files(volume_root, files):

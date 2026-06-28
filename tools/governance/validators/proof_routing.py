@@ -8,7 +8,7 @@ from core.tex import INPUT_RE, is_routed, read_text, strip_latex_comment, strip_
 from core.volume import chapter_roots, is_ignored
 
 
-def validate(volume_root: Path, files=None) -> list[Finding]:
+def validate(volume_root: Path, files) -> list[Finding]:
     findings: list[Finding] = []
     for chapter in chapter_roots(volume_root):
         included = validator_file_set(chapter, files)

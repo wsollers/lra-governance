@@ -13,7 +13,7 @@ TCOLORBOX_RE = re.compile(r"\\begin\{tcolorbox\}")
 INPUT_ORDER_RE = re.compile(r"\\(?:input|include)\{([^}]+)\}")
 
 
-def validate(volume_root: Path, files=None) -> list[Finding]:
+def validate(volume_root: Path, files) -> list[Finding]:
     findings: list[Finding] = []
     for chapter in chapter_roots(volume_root):
         included = validator_file_set(chapter, files)
