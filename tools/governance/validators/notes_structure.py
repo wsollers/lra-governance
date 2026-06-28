@@ -4,7 +4,7 @@ import re
 from pathlib import Path
 
 from core.finding import Finding, finding
-from core.file_inventory import reachable_files
+from core.file_inventory import validator_file_set
 from core.tex import INPUT_RE, is_routed, read_text, strip_latex_comment
 from core.volume import chapter_roots, is_ignored
 
@@ -17,10 +17,10 @@ TOOLKIT_BEGIN_RE = re.compile(r"\\begin\{toolkitbox\}(?:\{.*\})?")
 TOOLKIT_END_RE = re.compile(r"\\end\{toolkitbox\}")
 
 
-def validate(volume_root: Path) -> list[Finding]:
+def validate(volume_root: Path, files=None) -> list[Finding]:
     findings: list[Finding] = []
     for chapter in chapter_roots(volume_root):
-        included = reachable_files(chapter)
+        included = validator_file_set(chapter, files)
         notes_root = chapter / "notes"
         notes_index = notes_root / "index.tex"
         if notes_index.exists() and notes_index.resolve() in included:

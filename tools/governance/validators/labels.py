@@ -4,7 +4,7 @@ import re
 from pathlib import Path
 
 from core.finding import Finding, finding
-from core.file_inventory import files_to_validate
+from core.file_inventory import validator_files
 from core.tex import read_text
 from core.volume import chapter_roots
 
@@ -38,18 +38,18 @@ BAD_LABEL_PARTS = {
 }
 
 
-def validate(volume_root: Path) -> list[Finding]:
+def validate(volume_root: Path, files=None) -> list[Finding]:
     findings: list[Finding] = []
-    _check_duplicate_and_slug_labels(volume_root, findings)
+    _check_duplicate_and_slug_labels(volume_root, findings, files)
     for chapter in chapter_roots(volume_root):
-        for tex in files_to_validate([chapter]):
+        for tex in validator_files(chapter, files):
             _check_formal_block_labels(volume_root, tex, findings)
     return findings
 
 
-def _check_duplicate_and_slug_labels(volume_root: Path, findings: list[Finding]) -> None:
+def _check_duplicate_and_slug_labels(volume_root: Path, findings: list[Finding], files=None) -> None:
     seen: dict[str, Path] = {}
-    for tex in files_to_validate([volume_root]):
+    for tex in validator_files(volume_root, files):
         text = read_text(tex)
         for match in LABEL_RE.finditer(text):
             label = match.group(1)

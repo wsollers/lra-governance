@@ -5,7 +5,7 @@ import re
 from pathlib import Path
 
 from core.finding import Finding, finding
-from core.file_inventory import reachable_files
+from core.file_inventory import reachable_files, validator_file_set
 from core.tex import read_text, strip_latex_comments
 from core.volume import chapter_roots, is_ignored, latex_input_path
 
@@ -62,7 +62,7 @@ def _required_dir(findings: list[Finding], root: Path, path: Path, label: str) -
         _add(findings, root, path, "volume_shape_not_directory", f"{label} must be a directory.")
 
 
-def validate(volume_root: Path) -> list[Finding]:
+def validate(volume_root: Path, files=None) -> list[Finding]:
     findings: list[Finding] = []
     schema = _schema()
     for relative in schema["required_volume_files"]:
@@ -75,8 +75,8 @@ def validate(volume_root: Path) -> list[Finding]:
         return findings
 
     for chapter in chapters:
-        _validate_chapter(volume_root, chapter, findings, schema)
-    _validate_chapter_reachability(volume_root, chapters, findings)
+        _validate_chapter(volume_root, chapter, findings, schema, files)
+    _validate_chapter_reachability(volume_root, chapters, findings, files)
     return findings
 
 
@@ -115,7 +115,7 @@ def _volume_index_inputs(volume_root: Path) -> set[str]:
     }
 
 
-def _validate_chapter_reachability(volume_root: Path, chapters: list[Path], findings: list[Finding]) -> None:
+def _validate_chapter_reachability(volume_root: Path, chapters: list[Path], findings: list[Finding], files=None) -> None:
     # Book-aware: a chapter is correctly routed if its index.tex is reachable from
     # the volume index through the router chain (volume -> book -> chapter). This
     # follows \input chains, so it accepts both single-tier (volume -> chapter)
@@ -133,8 +133,8 @@ def _validate_chapter_reachability(volume_root: Path, chapters: list[Path], find
             )
 
 
-def _validate_chapter(volume_root: Path, chapter: Path, findings: list[Finding], schema: dict) -> None:
-    included = reachable_files(chapter)
+def _validate_chapter(volume_root: Path, chapter: Path, findings: list[Finding], schema: dict, files=None) -> None:
+    included = validator_file_set(chapter, files)
     for relative in schema["required_chapter_dirs"]:
         _required_dir(findings, volume_root, chapter / relative, relative)
     for relative in schema["required_chapter_files"]:

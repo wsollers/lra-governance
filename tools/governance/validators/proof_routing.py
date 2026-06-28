@@ -3,15 +3,15 @@ from __future__ import annotations
 from pathlib import Path
 
 from core.finding import Finding, finding
-from core.file_inventory import reachable_files
+from core.file_inventory import validator_file_set
 from core.tex import INPUT_RE, is_routed, read_text, strip_latex_comment, strip_latex_comments
 from core.volume import chapter_roots, is_ignored
 
 
-def validate(volume_root: Path) -> list[Finding]:
+def validate(volume_root: Path, files=None) -> list[Finding]:
     findings: list[Finding] = []
     for chapter in chapter_roots(volume_root):
-        included = reachable_files(chapter)
+        included = validator_file_set(chapter, files)
         proofs_root = chapter / "proofs"
         proofs_index = proofs_root / "index.tex"
         exercises_index = proofs_root / "exercises" / "index.tex"

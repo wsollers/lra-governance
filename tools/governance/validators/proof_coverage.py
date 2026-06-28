@@ -4,7 +4,7 @@ import re
 from pathlib import Path
 
 from core.finding import Finding, finding
-from core.file_inventory import files_to_validate
+from core.file_inventory import validator_files
 from core.tex import read_text, strip_latex_comments
 from core.volume import chapter_roots
 
@@ -19,19 +19,19 @@ PROOF_LABEL_RE = re.compile(r"\\label\{(?P<label>prf:[a-z0-9-]+)\}")
 PROOF_FOR_RE = re.compile(r"\\LRAProofFor\{(?P<label>(?:thm|lem|prop|cor):[a-z0-9-]+)\}")
 
 
-def validate(volume_root: Path) -> list[Finding]:
+def validate(volume_root: Path, files=None) -> list[Finding]:
     findings: list[Finding] = []
     for chapter in chapter_roots(volume_root):
-        _validate_chapter(volume_root, chapter, findings)
+        _validate_chapter(volume_root, chapter, findings, files)
     return findings
 
 
-def _validate_chapter(volume_root: Path, chapter: Path, findings: list[Finding]) -> None:
+def _validate_chapter(volume_root: Path, chapter: Path, findings: list[Finding], files=None) -> None:
     proof_labels: set[str] = set()
     proof_for_targets: set[str] = set()
     proofs_root = chapter / "proofs"
     if proofs_root.exists():
-        for tex in files_to_validate([proofs_root]):
+        for tex in validator_files(proofs_root, files):
             if "/proofs/exercises/" in f"/{tex.resolve().relative_to(chapter.resolve()).as_posix()}":
                 continue
             text = strip_latex_comments(read_text(tex))
@@ -41,7 +41,7 @@ def _validate_chapter(volume_root: Path, chapter: Path, findings: list[Finding])
     notes_root = chapter / "notes"
     if not notes_root.exists():
         return
-    for tex in files_to_validate([notes_root]):
+    for tex in validator_files(notes_root, files):
         text = strip_latex_comments(read_text(tex))
         for begin in NOTE_FORMAL_RE.finditer(text):
             env = begin.group("env")

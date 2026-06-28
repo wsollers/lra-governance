@@ -4,7 +4,7 @@ import re
 from pathlib import Path
 
 from core.finding import Finding, finding
-from core.file_inventory import files_to_validate
+from core.file_inventory import validator_files
 from core.tex import INPUT_RE, read_text, strip_latex_comments
 from core.volume import chapter_roots, is_ignored
 
@@ -16,14 +16,14 @@ NOTE_FORMAL_RE = re.compile(
 LABEL_RE = re.compile(r"\\label\{(?P<label>(?:thm|lem|prop|cor):[A-Za-z0-9-]+)\}")
 
 
-def validate(volume_root: Path) -> list[Finding]:
+def validate(volume_root: Path, files=None) -> list[Finding]:
     findings: list[Finding] = []
     for chapter in chapter_roots(volume_root):
-        _validate_chapter(volume_root, chapter, findings)
+        _validate_chapter(volume_root, chapter, findings, files)
     return findings
 
 
-def _validate_chapter(volume_root: Path, chapter: Path, findings: list[Finding]) -> None:
+def _validate_chapter(volume_root: Path, chapter: Path, findings: list[Finding], files=None) -> None:
     notes_index = chapter / "notes" / "index.tex"
     proofs_index = chapter / "proofs" / "index.tex"
     notes_inputs = [_routed_topic_name(target) for target in _ordered_inputs(notes_index)]
@@ -38,7 +38,7 @@ def _validate_chapter(volume_root: Path, chapter: Path, findings: list[Finding])
             )
         )
 
-    proof_label_order = _proof_label_order(chapter)
+    proof_label_order = _proof_label_order(chapter, files)
     proofs_root = chapter / "proofs"
     if not proofs_root.exists():
         return
@@ -59,12 +59,12 @@ def _validate_chapter(volume_root: Path, chapter: Path, findings: list[Finding])
             )
 
 
-def _proof_label_order(chapter: Path) -> list[str]:
+def _proof_label_order(chapter: Path, files=None) -> list[str]:
     labels: list[tuple[str, Path, int]] = []
     notes_root = chapter / "notes"
     if not notes_root.exists():
         return []
-    for tex in files_to_validate([notes_root]):
+    for tex in validator_files(notes_root, files):
         if is_ignored(tex, chapter):
             continue
         text = strip_latex_comments(read_text(tex))

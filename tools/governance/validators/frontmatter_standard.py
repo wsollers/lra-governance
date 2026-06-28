@@ -28,6 +28,8 @@ def validate(volume_root: Path) -> list[Finding]:
     registry = _registry_for(volume_root)
     if registry is None:
         return findings
+    if not _has_frontmatter_root(volume_root, registry):
+        return findings
 
     _validate_registry_record(volume_root, registry, findings)
     _validate_frontmatter_renderer(volume_root, findings)
@@ -37,6 +39,16 @@ def validate(volume_root: Path) -> list[Finding]:
     _validate_volume_index(volume_root, registry, findings)
     _validate_lrameta_series(volume_root, registry, findings)
     return findings
+
+
+def _has_frontmatter_root(volume_root: Path, registry: dict) -> bool:
+    roots = [volume_root.parent / f"{volume_root.name}.tex"]
+    roots.extend(
+        volume_root.parent / book["tex_root"]
+        for book in registry.get("books", [])
+        if isinstance(book.get("tex_root"), str)
+    )
+    return any(root.is_file() for root in roots)
 
 
 def _registry_for(volume_root: Path) -> dict | None:

@@ -56,7 +56,14 @@ def is_routed(index_path: Path, target: Path, chapter_root: Path) -> bool:
         rel,
         rel.removesuffix("/index"),
         target.name,
-        target.stem,
         target.parent.name,
     }
-    return bool(targets & variants)
+    if target.stem != "index":
+        variants.add(target.stem)
+    if targets & variants:
+        return True
+    rel_base = rel.removesuffix("/index")
+    return any(
+        routed.endswith(f"/{rel}") or routed.endswith(f"/{rel_base}")
+        for routed in targets
+    )

@@ -3,7 +3,7 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-from core.file_inventory import files_to_validate
+from core.file_inventory import validator_files
 from core.finding import Finding, finding
 from core.tex import read_text, strip_latex_comments
 
@@ -15,9 +15,9 @@ TEXORPDFSTRING_RE = re.compile(r"\\texorpdfstring\{.*\}\{(?P<pdf>[^{}]*)\}")
 UNSAFE_PDF_TOKENS = ("$", "^", "_", "\\")
 
 
-def validate(volume_root: Path) -> list[Finding]:
+def validate(volume_root: Path, files=None) -> list[Finding]:
     findings: list[Finding] = []
-    for tex in files_to_validate([volume_root]):
+    for tex in validator_files(volume_root, files):
         _validate_file(volume_root, tex, findings)
     return findings
 

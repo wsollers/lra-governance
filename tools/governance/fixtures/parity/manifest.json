@@ -26,7 +26,6 @@
           "label_inside_restatement",
           "topicbox_or_exposition_in_proof",
           "proof_dependency_target",
-          "topic_index_not_in_proofs_index",
           "invalid_proof_dependency_target",
           "proof_not_in_topic_index",
           "unknown_note_topic",
@@ -46,12 +45,9 @@
         "proof_layout": [
           "partial_stub",
           "proof_dependency_target",
-          "proof_not_in_topic_index",
-          "topic_index_not_in_proofs_index"
+          "proof_not_in_topic_index"
         ],
-        "volume_layout": [
-          "unrouted_proofs_topic"
-        ]
+        "volume_layout": []
       }
     }
   ]

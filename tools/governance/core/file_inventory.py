@@ -37,6 +37,44 @@ def files_to_validate(
     return sorted(files)
 
 
+def validator_files(
+    root: Path | str,
+    files: Iterable[Path | str] | None = None,
+    *,
+    suffixes: tuple[str, ...] = DEFAULT_SUFFIXES,
+) -> list[Path]:
+    """Return files a validator should inspect under ``root``.
+
+    Production orchestration may pass a precomputed inventory. Direct validator
+    unit tests default to all files under the fixture root so tests do not
+    accidentally depend on router reachability unless they pass a file list
+    explicitly.
+    """
+    root_path = Path(root).resolve()
+    if files is None:
+        return all_files(root_path, suffixes=suffixes)
+    selected: list[Path] = []
+    for item in files:
+        path = Path(item).resolve()
+        if not _has_suffix(path, suffixes):
+            continue
+        try:
+            path.relative_to(root_path)
+        except ValueError:
+            continue
+        selected.append(path)
+    return sorted(set(selected))
+
+
+def validator_file_set(
+    root: Path | str,
+    files: Iterable[Path | str] | None = None,
+    *,
+    suffixes: tuple[str, ...] = DEFAULT_SUFFIXES,
+) -> set[Path]:
+    return set(validator_files(root, files, suffixes=suffixes))
+
+
 def reachable_files(
     root: Path | str,
     *,
