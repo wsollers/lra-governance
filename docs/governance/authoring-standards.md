@@ -56,6 +56,18 @@ Immediately after the topic section heading, the topic router may contain
 exactly one gray Toolkit box. The Toolkit orients the topic's vocabulary and
 formal payload; it is not repeated in topic body files.
 
+Quick-reference tables inside a Toolkit put navigation links on the leading
+concept or row-label cell. Do not use a separate trailing `Detail` or
+`Reference` column whose only purpose is a `\hyperref` link.
+
+Toolkit links are resolved against the assembled artifact graph, not merely the
+current topic, chapter, book, or volume. If a referenced concept has a stable
+label anywhere that may be available in a higher-level build, link to that
+label. A concept is unhookable only when no target label exists in the
+governance-visible corpus; in that case, either add the missing atomic
+definition/label in the owning location or explicitly record that no target
+exists.
+
 Topic body files may use `\subsection{...}` for nested local topics. The topic
 router owns the rendered `\section{...}` heading and the footer's section
 metadata.
