@@ -89,8 +89,11 @@ Before writing any LaTeX, perform these checks silently and apply results:
    satisfy atomicity with a single umbrella definition such as "let `\circ`
    range over the operations."
 2. Predicate check: if a canonical predicate exists in `predicates.yaml`, use
-   it in predicate-reading blocks. If not, emit a `MISSING_PREDICATE` comment
-   and do not invent a predicate name.
+   it in predicate-reading blocks with the signature required by
+   `docs/governance/predicate-standards.md`. Prefer canonical polymorphic
+   predicates with explicit ambient-structure arguments over specialized
+   predicate names. If no canonical predicate can express the reading, emit a
+   `MISSING_PREDICATE` comment and do not invent a predicate name.
 3. Proof-usage check: generate negation/failure-mode/contrapositive blocks
    only when the form is mathematically useful or required by the artifact
    matrix. For definitions, the negation and failure modes are normally useful.
@@ -220,6 +223,13 @@ Use this option shape:
 - For definitions, use `\begin{remark*}[Definition predicate reading]`.
 - For theorem-like results, use `\begin{remark*}[Predicate reading]`.
 - Verify predicate names against `predicates.yaml`.
+- Follow `docs/governance/predicate-standards.md` for predicate signatures.
+  If the predicate depends on a surrounding structure, pass the whole ambient
+  object as an argument and recover its carrier or operations inside the
+  reading formula. For example, in a metric space `M=(X,d)`, use
+  `\operatorname{Sequence}(x_n,M)`,
+  `\operatorname{ConvergentSequence}(x_n,x_0,M)`, and
+  `\operatorname{CauchySequence}(x_n,M)`.
 - For definitions, prefer `\coloneqq`:
   `\operatorname{UpperBound}(u,A) \coloneqq ...`.
 - Do not use undefined bare predicate macros such as `\UpperBound`,

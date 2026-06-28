@@ -101,8 +101,11 @@ blocks:
     notes: >
       Predicate names typeset with \operatorname{...}. Header reflects role:
       "Definition predicate reading" for definitions, "Predicate reading" for
-      theorem-like environments. Underbrace decomposition permitted when it
-      clarifies conjunctive or disjunctive structure.
+      theorem-like environments. Predicate signatures and ambient-structure
+      arguments are governed by docs/governance/predicate-standards.md; use the
+      canonical ambient object argument rather than inventing specialized names.
+      Underbrace decomposition permitted when it clarifies conjunctive or
+      disjunctive structure.
 
   - id: negated_quantified_stmt
     display: Negated Quantified Statement
@@ -203,6 +206,22 @@ blocks:
       Prose only. No formal predicate language unless explicitly discussed as
       notation. Explains the mathematical fact, why it is true, why it matters,
       its standard failure mode, and its structural or geometric picture.
+
+  - id: notation
+    display: Notation
+    environment: remark* titled "Notation"
+    requirement: C
+    parent: null
+    trigger: >
+      Generated when the artifact introduces, fixes, or records a notation,
+      reading convention, or ambient convention that is not fully captured by
+      the formal statement alone.
+    proof_usage: null
+    notes: >
+      Explanatory metadata only. Use for symbol-reading conventions such as
+      E^\circ read as the interior of E, or ambient complement conventions such
+      as E^c = X \setminus E when X is fixed. Appears after Interpretation and
+      before Historical note / Comparison with Feferman.
 
   - id: source_crosswalk
     display: Source Crosswalk Remark

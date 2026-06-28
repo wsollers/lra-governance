@@ -8,6 +8,9 @@ The source-of-truth YAML files live in `lra-governance`:
 - `notation.yaml`
 - `relations.yaml`
 
+They live at the repository root, not under a volume repo and not under a
+chapter-local `docs/` directory.
+
 They moved here when the assembled monorepo (`Learning-Real-Analysis`) was
 retired. They are not duplicated into volume repos. Automated authoring,
 auditing, and extraction tools read them from `lra-governance`, resolved the same
@@ -24,4 +27,5 @@ monorepo.
 
 No agent may invent predicate, relation, or notation names locally in content
 files. Missing canonical vocabulary must be reported as a governance or YAML
-update need.
+update need. Predicate names and signatures, including ambient-structure
+polymorphism, are governed by `docs/governance/predicate-standards.md`.

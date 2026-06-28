@@ -51,6 +51,12 @@ blocks appear in this exact order. Omit only when the trigger is not met.
 
 ### Notation discipline (DESIGN.md Rule A)
 
+Predicate signatures follow `docs/governance/predicate-standards.md`. Use
+canonical ambient-structure arguments, such as
+`\operatorname{Sequence}(x_n,A)` and
+`\operatorname{CauchySequence}(x_n,A)`, instead of inventing specialized
+predicate names for each mathematical setting.
+
 Predicate names (`\operatorname{...}`) appear **only** in:
 - Definition predicate reading
 - Negation predicate reading

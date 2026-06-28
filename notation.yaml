@@ -1,0 +1,32 @@
+# Canonical LRA notation registry.
+# Governed by docs/governance/notation-standards.md.
+
+notation:
+  - id: not:natural-numbers
+    symbol: '\mathbb{N}'
+    category: number_system
+    description: Natural numbers.
+  - id: not:real-numbers
+    symbol: '\mathbb{R}'
+    category: number_system
+    description: Real numbers.
+  - id: not:carrier
+    symbol: '\operatorname{Carrier}'
+    category: structural_operator
+    description: Carrier set of an ambient mathematical object.
+  - id: not:for-all
+    symbol: '\forall'
+    category: quantifier
+    description: Universal quantifier.
+  - id: not:there-exists
+    symbol: '\exists'
+    category: quantifier
+    description: Existential quantifier.
+  - id: not:if-and-only-if
+    symbol: '\Longleftrightarrow'
+    category: connective
+    description: Biconditional connective.
+  - id: not:implies
+    symbol: '\Rightarrow'
+    category: connective
+    description: Implication connective.

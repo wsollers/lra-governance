@@ -55,6 +55,7 @@ The standardized decoration blocks are:
 - Contrapositive quantified statement;
 - Contrapositive predicate reading;
 - Interpretation;
+- Notation;
 - Historical note;
 - Comparison with Feferman;
 - Exposition;
@@ -81,11 +82,12 @@ When a block is present, use this order:
 9. Contrapositive quantified statement
 10. Contrapositive predicate reading
 11. Interpretation
-12. Historical note or Comparison with Feferman
-13. Exposition
-14. Examples
-15. Non-Examples
-16. Dependencies or `\NoLocalDependencies`
+12. Notation
+13. Historical note or Comparison with Feferman
+14. Exposition
+15. Examples
+16. Non-Examples
+17. Dependencies or `\NoLocalDependencies`
 
 Do not reorder blocks for aesthetics. Omit only blocks that the governing
 artifact standard does not require.
@@ -147,6 +149,10 @@ variant drops only the box wrapper, never the label or the required blocks.
 
 \begin{remark*}[Interpretation]                        % C, but treat as R unless nearby exposition already covers it
 <prose meaning, why it matters, geometric picture>
+\end{remark*}
+
+\begin{remark*}[Notation]                              % C: notation, reading convention, or ambient convention
+<notation convention introduced or fixed by the statement>
 \end{remark*}
 
 \begin{remark*}[Historical note]                       % C: known source correspondence (or "Comparison with Feferman")
@@ -227,6 +233,10 @@ blocks become available. Use the matching box (`theorembox`, `lemmabox`,
 <prose meaning>
 \end{remark*}
 
+\begin{remark*}[Notation]                              % C: notation, reading convention, or ambient convention
+<notation convention introduced or fixed by the statement>
+\end{remark*}
+
 \begin{remark*}[Historical note]                       % C: known source correspondence
 <provenance prose>
 \end{remark*}
@@ -296,6 +306,12 @@ canonical predicate exists, do not invent one merely to fill the block.
 Use `\operatorname{...}` predicate notation unless a shared macro is explicitly
 defined.
 
+Predicate signatures and ambient-structure arguments are governed by
+`predicate-standards.md`. When a concept depends on a surrounding structure,
+pass the whole ambient object as a predicate argument, for example
+`\operatorname{CauchySequence}(x_n,M)` for a metric space `M=(X,d)`, and unpack
+the carrier or metric only inside the reading formula.
+
 Vocabulary definitions and structural definitions normally omit predicate
 readings unless the predicate is canonical and useful.
 
@@ -340,6 +356,20 @@ role, standard failure picture, and local significance.
 
 Interpretation blocks remain encouraged across artifact types, including
 vocabulary and structural definitions.
+
+## Notation
+
+Use a `remark*` block titled `Notation`.
+
+Notation blocks record symbols, reading conventions, and ambient conventions
+introduced or fixed by the owning artifact. Use `Notation` for information such
+as ``\(E^\circ\) is read as the interior of \(E\)'' or ``\(E^c\) denotes the
+complement in the fixed ambient space \(X\).''
+
+Notation is explanatory metadata, not a second formal definition. It appears
+after `Interpretation` and before source crosswalk blocks. If a symbol is the
+formal object being defined, keep the formal definition in the statement and
+use `Notation` only for reading or ambient-use conventions.
 
 ## Exposition
 

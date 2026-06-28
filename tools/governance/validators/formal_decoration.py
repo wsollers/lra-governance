@@ -38,6 +38,7 @@ DECORATION_ORDER = {
     "contrapositive quantified statement": 80,
     "contrapositive predicate reading": 90,
     "interpretation": 100,
+    "notation": 102,
     "historical note": 105,
     "comparison with feferman": 105,
     "exposition": 110,

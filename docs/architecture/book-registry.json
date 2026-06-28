@@ -573,12 +573,28 @@
           "book_dir": "volume-iv/book-spaces",
           "expected_toc": [
             {
+              "chapter": "mathematical-spaces",
+              "notes": [
+                "spaces-as-structured-arenas"
+              ]
+            },
+            {
               "chapter": "metric-spaces",
-              "notes": []
+              "notes": [
+                "definitions",
+                "metrics",
+                "examples-of-metric-spaces",
+                "balls-and-bounded-sets",
+                "open-and-closed-sets",
+                "limit-points-and-isolated-points",
+                "sequential-convergence"
+              ]
             },
             {
               "chapter": "topological-spaces",
-              "notes": []
+              "notes": [
+                "definitions"
+              ]
             },
             {
               "chapter": "set-algebra",

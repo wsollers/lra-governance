@@ -32,6 +32,7 @@ owned work, but they do not fork or weaken the global rules.
 - `breadcrumb-footer-standards.md`
 - `extraction-standards.md`
 - `notation-standards.md`
+- `predicate-standards.md`
 - `atomic-artifact-standards.md`
 - `file-splitting-standards.md`
 - `refactoring-standards.md`

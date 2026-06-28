@@ -1,0 +1,146 @@
+# Canonical LRA predicate registry.
+# Governed by docs/governance/predicate-standards.md.
+
+predicates:
+  - id: pred:sequence
+    name: Sequence
+    kind: predicate
+    category: sequence
+    arguments:
+      - name: x_n
+        role: sequence
+      - name: A
+        role: ambient
+    returns: truth_value
+    ambient_argument: A
+    polymorphic: true
+    surface_forms:
+      - sequence
+      - sequence in an ambient space
+      - sequence in a space
+    description: >
+      The object x_n is a sequence with values in the carrier of the ambient
+      object A.
+
+  - id: pred:convergent-sequence
+    name: ConvergentSequence
+    kind: predicate
+    category: sequence
+    arguments:
+      - name: x_n
+        role: sequence
+      - name: x_0
+        role: limit
+      - name: A
+        role: ambient
+    returns: truth_value
+    ambient_argument: A
+    polymorphic: true
+    surface_forms:
+      - convergent sequence
+      - sequence convergence
+      - convergence in a space
+    description: >
+      The sequence x_n converges to x_0 according to the convergence structure
+      supplied by the ambient object A.
+
+  - id: pred:not-convergent-to
+    name: NotConvergentTo
+    kind: predicate
+    category: sequence
+    arguments:
+      - name: x_n
+        role: sequence
+      - name: x_0
+        role: candidate_limit
+      - name: A
+        role: ambient
+    returns: truth_value
+    ambient_argument: A
+    polymorphic: true
+    logical_negation_of: pred:convergent-sequence
+    surface_forms:
+      - not convergent to
+      - fails to converge
+    description: >
+      The sequence x_n does not converge to the candidate limit x_0 in the
+      ambient object A.
+
+  - id: pred:cauchy-sequence
+    name: CauchySequence
+    kind: predicate
+    category: sequence
+    arguments:
+      - name: x_n
+        role: sequence
+      - name: A
+        role: ambient
+    returns: truth_value
+    ambient_argument: A
+    polymorphic: true
+    surface_forms:
+      - cauchy sequence
+      - cauchy
+    description: >
+      The sequence x_n is Cauchy according to the Cauchy structure supplied by
+      the ambient object A.
+
+  - id: pred:subsequential-limit
+    name: SubsequentialLimit
+    kind: predicate
+    category: sequence
+    arguments:
+      - name: x_n
+        role: sequence
+      - name: x_0
+        role: limit
+      - name: A
+        role: ambient
+    returns: truth_value
+    ambient_argument: A
+    polymorphic: true
+    surface_forms:
+      - subsequential limit
+      - convergent subsequence
+    description: >
+      Some subsequence of x_n converges to x_0 in the ambient object A.
+
+  - id: pred:neighborhood
+    name: Neighborhood
+    kind: predicate
+    category: topology
+    arguments:
+      - name: U
+        role: subset
+      - name: x
+        role: point
+      - name: A
+        role: ambient
+    returns: truth_value
+    ambient_argument: A
+    polymorphic: true
+    surface_forms:
+      - neighborhood
+      - neighbourhood
+    description: >
+      The set U is a neighborhood of the point x in the ambient object A.
+
+legacy_predicate_aliases:
+  RealSequence:
+    target: pred:sequence
+    replacement: '\operatorname{Sequence}(x_n,\mathbb{R})'
+    note: >
+      Legacy real-analysis shorthand. New content should use the canonical
+      ambient-explicit predicate.
+  ConvergentSequenceImplicitReal:
+    target: pred:convergent-sequence
+    replacement: '\operatorname{ConvergentSequence}(x_n,L,\mathbb{R})'
+    note: >
+      Legacy two-argument real-analysis reading. New content should include
+      the ambient argument.
+  CauchySequenceImplicitReal:
+    target: pred:cauchy-sequence
+    replacement: '\operatorname{CauchySequence}(x_n,\mathbb{R})'
+    note: >
+      Legacy one-argument real-analysis reading. New content should include
+      the ambient argument.

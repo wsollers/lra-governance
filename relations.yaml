@@ -1,0 +1,10 @@
+# Canonical LRA relation registry.
+# Governed by docs/architecture/canonical-yaml.md and predicate standards.
+
+edge_kinds:
+  - specializes
+  - derives_from
+  - uses_ambient
+  - legacy_alias_of
+
+relations: []

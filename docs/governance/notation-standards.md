@@ -7,6 +7,10 @@ theorem, lemma, proposition, corollary, axiom bodies, and ordinary quantified
 statements use standard mathematical notation. Predicate names are reserved for
 approved predicate-reading layers and related analysis layers.
 
+Predicate names, signatures, and ambient-structure conventions are governed by
+`predicate-standards.md`. This notation standard governs mathematical symbols
+and house normalization rules.
+
 ## No Predicate Leakage
 
 Canonical predicate names must not appear in definition bodies, theorem-like
@@ -80,6 +84,7 @@ style.
 
 ## Missing Predicate Protocol
 
-Do not invent predicates inline. If a needed logical structure cannot be
-expressed with current canonical predicates, report the missing predicate need
-instead of creating an ad hoc name.
+Do not invent predicates inline. Apply `predicate-standards.md`: first check
+whether an existing ambient-structure predicate can express the reading by
+changing the ambient argument. If not, report the missing predicate need instead
+of creating an ad hoc name.

@@ -32,6 +32,9 @@ You will receive:
 2. The full contents of predicates.yaml.
 3. The full contents of notation.yaml.
 4. The full contents of relations.yaml.
+5. The applicable predicate standards from
+   `docs/governance/predicate-standards.md`, especially ambient-structure
+   argument rules.
 
 ## Task
 
@@ -50,6 +53,11 @@ For each predicate name found:
 **INCONSISTENT** -- registered in predicates.yaml but used differently in the
   chapter (different arity, different argument names, different canonical form).
 **CORRECT** -- present in predicates.yaml and used correctly.
+
+Use the canonical ambient-structure signature when checking arity and
+arguments. For example, a metric-space Cauchy predicate should read as
+`\operatorname{CauchySequence}(x_n,M)` for an ambient metric space `M`, not as a
+new specialized predicate name and not as an implicit carrier-only predicate.
 
 Also scan for predicate names that appear outside their permitted block types
 (i.e., predicate names appearing in environment bodies, standard quantified

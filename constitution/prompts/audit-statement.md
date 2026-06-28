@@ -97,6 +97,11 @@ exposition may satisfy the interpretation requirement.
 - remark* header reflects role ("Definition predicate reading" for definitions)?
 - Predicate names use \operatorname{...}?
 - Predicate names present in predicates.yaml? (flag as MISSING_PREDICATE if not)
+- Predicate signatures follow `docs/governance/predicate-standards.md`,
+  including explicit ambient-structure arguments for predicates such as
+  `\operatorname{Sequence}(x_n,A)`,
+  `\operatorname{ConvergentSequence}(x_n,x_0,A)`, and
+  `\operatorname{CauchySequence}(x_n,A)`?
 - No predicate names appear in standard_quantified_stmt?
 
 ### negated_quantified_stmt
@@ -196,6 +201,8 @@ exposition may satisfy the interpretation requirement.
 
 - No predicate names from predicates.yaml appear in environment body,
   standard_quantified_stmt, negated_quantified_stmt, or contrapositive_quantified_stmt.
+- Predicate readings use canonical ambient-structure arguments before treating
+  a missing specialized name as a MISSING_PREDICATE finding.
 - All notation matches notation.yaml.
 - No locally invented predicate, relation, or notation names.
 - If an unregistered name is found: flag as MISSING_PREDICATE / MISSING_NOTATION
