@@ -12,7 +12,7 @@ import dependency_graph
 from core import volume as volume_core
 from validate_volume import VALIDATORS
 from core.validator_runner import run_validator
-from validators import block_discipline, book_toc, capstones, chapter_router, dedication_page, dependency_blocks, dependency_graphs, formal_decoration, formal_reading_required, frontmatter_standard, input_resolution, interpretation_blocks, labels, latex_integrity, math_boxes, notes_structure, print_edition_routing, proof_coverage, proof_file_contract, proof_layout, proof_order, proof_routing, proof_stub_state, reference_voice, structural_chrome, structural_positions, volume_shape
+from validators import block_discipline, book_toc, capstones, chapter_router, dedication_page, dependency_blocks, dependency_graphs, figure_fragments, formal_decoration, formal_reading_required, frontmatter_standard, input_resolution, interpretation_blocks, labels, latex_integrity, math_boxes, notes_structure, print_edition_routing, proof_coverage, proof_file_contract, proof_layout, proof_order, proof_routing, proof_stub_state, reference_voice, structural_chrome, structural_positions, volume_shape
 
 
 HERE = Path(__file__).resolve().parent
@@ -1709,6 +1709,44 @@ class ValidateVolumeTests(unittest.TestCase):
         codes = {finding.code for finding in validate_with_inventory(chapter_router, volume)}
 
         self.assertIn("chapter_router_shape", codes)
+
+    def test_figure_fragments_enforce_nonfloating_book_fragments(self):
+        volume = make_volume()
+        figure_dir = volume.parent / "tex" / "figures"
+        write(
+            figure_dir / "good.tex",
+            "\n".join(
+                [
+                    r"\begin{figure}[H]",
+                    r"\centering",
+                    r"\caption{Good figure}",
+                    r"\label{fig:good}",
+                    r"\end{figure}",
+                    "",
+                ]
+            ),
+        )
+        write(
+            figure_dir / "bad.tex",
+            "\n".join(
+                [
+                    r"\documentclass{standalone}",
+                    r"\begin{figure}[t]",
+                    r"\centering",
+                    r"\end{figure}",
+                    "",
+                ]
+            ),
+        )
+        write(figure_dir / "_src" / "standalone.tex", r"\documentclass{standalone}")
+
+        codes = {finding.code for finding in validate_with_inventory(figure_fragments, volume)}
+
+        self.assertIn("figure_fragment_document_tag", codes)
+        self.assertIn("figure_fragment_missing_caption", codes)
+        self.assertIn("figure_fragment_missing_label", codes)
+        self.assertIn("figure_fragment_must_be_nonfloating", codes)
+        self.assertNotIn("figure_fragment_missing_figure_environment", codes)
 
 
 if __name__ == "__main__":
