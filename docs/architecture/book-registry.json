@@ -581,7 +581,16 @@
           "expected_toc": [
             {
               "chapter": "riemann-integration",
-              "notes": []
+              "notes": [
+                "partitions",
+                "cauchy-integral",
+                "riemann-integral",
+                "darboux-integral",
+                "riemann-stieltjes",
+                "henstock-kurzweil",
+                "mcshane-integral",
+                "measure-zero"
+              ]
             }
           ],
           "frontmatter_mathematician": "Bernhard Riemann",
