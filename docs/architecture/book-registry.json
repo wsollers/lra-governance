@@ -214,18 +214,33 @@
               "chapter": "formalizing-number-systems",
               "notes": []
             },
-            {
-              "chapter": "identity-equality-equivalence",
-              "notes": [
-                "identity-equality-equivalence"
-              ]
-            },
-            {
-              "chapter": "arithmetic-operations-relations",
-              "notes": [
-                "arithmetic-operations-relations"
-              ]
-            },
+              {
+                "chapter": "identity-equality-equivalence",
+                "notes": [
+                  "identity-equality-equivalence",
+                  "equality",
+                  "properties-of-equality",
+                  "substitution",
+                  "equivalence"
+                ]
+              },
+              {
+                "chapter": "arithmetic-operations-relations",
+                "notes": [
+                  "arithmetic-operations-relations",
+                  "closure",
+                  "identity-elements",
+                  "inverse-operations",
+                  "algebraic-laws",
+                  "derived-laws",
+                  "order-relations",
+                  "order-compatibility",
+                  "composed-relations",
+                  "structure-preserving-maps",
+                  "algebraic-structures",
+                  "field-and-ordered-field-laws"
+                ]
+              },
             {
               "chapter": "constructing-number-systems",
               "notes": [
@@ -300,18 +315,6 @@
           "book_dir": "volume-ii/book-continuum",
           "expected_toc": [
             {
-              "chapter": "embedding-number-systems",
-              "notes": [
-                "embeddings-as-structure-preserving-maps",
-                "embedding-n-into-w",
-                "embedding-w-into-z",
-                "embedding-z-into-q",
-                "embedding-q-into-r",
-                "compatibility-of-arithmetic-and-order",
-                "one-chain-many-structures"
-              ]
-            },
-            {
               "chapter": "rationals",
               "notes": [
                 "construction-of-q",
@@ -355,6 +358,18 @@
               "notes": [
                 "number-lines",
                 "intervals-on-a-number-line"
+              ]
+            },
+            {
+              "chapter": "embedding-number-systems",
+              "notes": [
+                "embeddings-as-structure-preserving-maps",
+                "embedding-n-into-w",
+                "embedding-w-into-z",
+                "embedding-z-into-q",
+                "embedding-q-into-r",
+                "compatibility-of-arithmetic-and-order",
+                "one-chain-many-structures"
               ]
             },
             {
@@ -536,13 +551,14 @@
             {
               "chapter": "differentiation",
               "notes": [
-                "derivative-definition",
                 "secant-tangent",
+                "derivative-definition",
                 "one-sided-derivatives",
-                "algebra-of-derivatives",
                 "chain-rule",
                 "derivative-geometry",
                 "mean-value-theorem",
+                "graph-reading",
+                "algebra-of-derivatives",
                 "taylor-expansion"
               ]
             }

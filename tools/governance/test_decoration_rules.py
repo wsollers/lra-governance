@@ -161,6 +161,22 @@ def test_toolkit_contains_formal():
          "\\end{definition}\n\\end{toolkitbox}")
     assert "toolkit_contains_formal" in _codes(dr.run_file_rules(t, SN2, dr.Context()))
 
+def test_toolkit_detail_column_flagged():
+    t = ("\\subsection{X}\n\\begin{toolkitbox}{T}\n\\begin{tabular}{l l l}\n"
+         "\\textbf{Concept} & \\textbf{Meaning} & \\textbf{Detail} \\\\\n"
+         "X & meaning & \\hyperref[def:x]{$\\downarrow$ Def} \\\\\n"
+         "\\end{tabular}\n\\end{toolkitbox}")
+    assert "toolkit_detail_column" in _codes(dr.run_file_rules(t, SN2, dr.Context()))
+
+def test_toolkit_concept_link_without_detail_ok():
+    t = ("\\subsection{X}\n\\begin{toolkitbox}{T}\n\\begin{tabular}{l l}\n"
+         "\\textbf{Concept} & \\textbf{Meaning} \\\\\n"
+         "\\hyperref[def:x]{X} & meaning \\\\\n"
+         "\\end{tabular}\n\\end{toolkitbox}")
+    codes = _codes(dr.run_file_rules(t, SN2, dr.Context()))
+    assert "toolkit_detail_column" not in codes
+    assert "toolkit_detail_link_cell" not in codes
+
 def test_toolkit_hand_rolled():
     t = "\\subsection{X}\n\\begin{tcolorbox}[colback=gray!6, title={Toolkit: X}]\nx\n\\end{tcolorbox}"
     assert "toolkit_hand_rolled" in _codes(dr.run_file_rules(t, SN2, dr.Context()))

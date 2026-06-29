@@ -356,10 +356,23 @@ def toolkit_placement(text: str, info: FileInfo, ctx: Context):
 @file_rule("toolkit_content")
 def toolkit_content(text: str, info: FileInfo, ctx: Context):
     for m in re.finditer(r"\\begin\{toolkitbox\}.*?\\end\{toolkitbox\}", text, re.DOTALL):
-        if re.search(r"\\begin\{(definition|theorem|lemma|proposition|corollary|axiom|proof)\}", m.group(0)):
+        body = m.group(0)
+        line = text.count("\n",0,m.start())+1
+        if re.search(r"\\begin\{(definition|theorem|lemma|proposition|corollary|axiom|proof)\}", body):
             yield Issue("toolkit_contains_formal",
                 "Toolkit box contains a formal environment; a toolkit orients (lists labels) and "
-                "must not state definitions, theorems, or proofs.","error", text.count("\n",0,m.start())+1)
+                "must not state definitions, theorems, or proofs.","error", line)
+        if re.search(r"\\textbf\{Detail\}", body):
+            yield Issue("toolkit_detail_column",
+                "Toolkit quick-reference tables must put the hyperref on the leading concept/row label "
+                "and omit the Detail column.","error", line)
+        elif re.search(
+            r"&\s*\\hyperref\[[^\]]+\]\{[^{}]*(?:Def|Thm|Prop|Lem|Cor|Ax|Rem|Ex|downarrow|Down)[^{}]*\}\s*\\\\",
+            body,
+        ):
+            yield Issue("toolkit_detail_link_cell",
+                "Toolkit quick-reference links belong on the leading concept/row label, not in a trailing detail cell.",
+                "error", line)
 
 @file_rule("toolkit_format")
 def toolkit_format(text: str, info: FileInfo, ctx: Context):

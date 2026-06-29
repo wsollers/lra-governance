@@ -16,6 +16,8 @@ ENV_BEGIN_RE = re.compile(r"\\begin\{(exposition|toolkitbox)\}")
 ENV_END_RE = re.compile(r"\\end\{(exposition|toolkitbox)\}")
 BREADCRUMB_RE = re.compile(r"\\(?:breadcrumb\{|LraBreadcrumb\b)")
 TOOLKITBOX_RE = re.compile(r"\\begin\{toolkitbox\}.*?\\end\{toolkitbox\}", re.DOTALL)
+TOOLKIT_DETAIL_HEADER_RE = re.compile(r"\\textbf\{Detail\}")
+TOOLKIT_DETAIL_LINK_RE = re.compile(r"&\s*\\hyperref\[[^\]]+\]\{[^{}]*(?:Def|Thm|Prop|Lem|Cor|Ax|Rem|Ex|downarrow|Down)[^{}]*\}\s*\\\\")
 FORMAL_OR_PROOF_RE = re.compile(r"\\begin\{(?:definition|theorem|lemma|proposition|corollary|axiom|proof)\}")
 RAW_TOOLKIT_RE = re.compile(r"\\begin\{tcolorbox\}\[(.*?)\]", re.DOTALL)
 RAW_BREADCRUMB_RE = re.compile(r"\\begin\{tcolorbox\}[\s\S]*?colback=breadcrumb", re.IGNORECASE)
@@ -102,14 +104,36 @@ def _check_toolkit(volume_root: Path, path: Path, rel: str, text: str, findings:
             )
 
     for match in TOOLKITBOX_RE.finditer(text):
-        if FORMAL_OR_PROOF_RE.search(match.group(0)):
+        body = match.group(0)
+        line = text.count("\n", 0, match.start()) + 1
+        if FORMAL_OR_PROOF_RE.search(body):
             findings.append(
                 finding(
                     "toolkit_contains_formal",
                     "Toolkit box contains a formal environment or proof.",
                     path,
                     volume_root,
-                    text.count("\n", 0, match.start()) + 1,
+                    line,
+                )
+            )
+        if TOOLKIT_DETAIL_HEADER_RE.search(body):
+            findings.append(
+                finding(
+                    "toolkit_detail_column",
+                    "Toolkit quick-reference tables must put the hyperref on the leading concept/row label and omit the Detail column.",
+                    path,
+                    volume_root,
+                    line,
+                )
+            )
+        elif TOOLKIT_DETAIL_LINK_RE.search(body):
+            findings.append(
+                finding(
+                    "toolkit_detail_link_cell",
+                    "Toolkit quick-reference links belong on the leading concept/row label, not in a trailing detail cell.",
+                    path,
+                    volume_root,
+                    line,
                 )
             )
     for match in RAW_TOOLKIT_RE.finditer(text):
