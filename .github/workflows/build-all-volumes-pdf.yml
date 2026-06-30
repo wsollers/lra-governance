@@ -1,0 +1,90 @@
+name: Build All Volumes PDF
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-all-volumes-pdf
+  cancel-in-progress: true
+
+jobs:
+  build-all-volumes-pdf:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout governance
+        uses: actions/checkout@v4
+        with:
+          path: lra-governance
+
+      - name: Checkout common
+        uses: actions/checkout@v4
+        with:
+          repository: wsollers/lra-common
+          path: lra-common
+
+      - name: Checkout Volume I
+        uses: actions/checkout@v4
+        with:
+          repository: wsollers/lra-volume-i
+          path: lra-volume-i
+
+      - name: Checkout Volume II
+        uses: actions/checkout@v4
+        with:
+          repository: wsollers/lra-volume-ii
+          path: lra-volume-ii
+
+      - name: Checkout Volume III
+        uses: actions/checkout@v4
+        with:
+          repository: wsollers/lra-volume-iii
+          path: lra-volume-iii
+
+      - name: Checkout Volume IV
+        uses: actions/checkout@v4
+        with:
+          repository: wsollers/lra-volume-iv
+          path: lra-volume-iv
+
+      - name: Checkout Volume V
+        uses: actions/checkout@v4
+        with:
+          repository: wsollers/lra-volume-v
+          path: lra-volume-v
+
+      - name: Checkout Volume VI
+        uses: actions/checkout@v4
+        with:
+          repository: wsollers/lra-volume-vi
+          path: lra-volume-vi
+
+      - name: Checkout Volume VII
+        uses: actions/checkout@v4
+        with:
+          repository: wsollers/lra-volume-vii
+          path: lra-volume-vii
+
+      - name: Checkout Volume VIII
+        uses: actions/checkout@v4
+        with:
+          repository: wsollers/lra-volume-viii
+          path: lra-volume-viii
+
+      - name: Build combined all-volumes PDF
+        run: |
+          python lra-governance/tools/governance/build_all_volumes_docker.py \
+            --repos-root "$GITHUB_WORKSPACE" \
+            --common-root lra-common \
+            --work-dir build/all-volumes \
+            --output-dir pdf-output/all-volumes
+
+      - name: Upload combined PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: lra-all-volumes-pdf
+          path: pdf-output/all-volumes/lra-all-volumes.pdf
+          if-no-files-found: error

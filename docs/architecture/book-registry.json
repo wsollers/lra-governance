@@ -623,7 +623,9 @@
             {
               "chapter": "topological-spaces",
               "notes": [
-                "definitions"
+                "definitions",
+                "topological-space-subsets",
+                "basis"
               ]
             },
             {
@@ -789,7 +791,11 @@
             },
             {
               "chapter": "abstract-algebra",
-              "notes": []
+              "notes": [
+                "induction",
+                "integers",
+                "modular-arithmetic"
+              ]
             },
             {
               "chapter": "algebraic-geometry",
