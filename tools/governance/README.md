@@ -17,6 +17,8 @@ Available and planned tools:
   proof-stub status, topic-mirrored proof folders, and proof index reachability.
 - `audit_volume_layout.py` - deterministic scanner for volume, chapter, topic,
   and router layout.
+- `generate_stub.py` - deterministic scaffold for canonical stub chapters and
+  topic-paired stub sections.
 - `generate_agent_wrappers.py`
 - `merge_repo_overlays.py`
 - `report_wrapper_drift.py` - read-only comparison tool for generated wrapper
@@ -86,6 +88,19 @@ continues to use full-volume errors as the failure gate.
 
 Use scoped audit tools such as `audit_proof_layout.py` and
 `audit_volume_layout.py` only when a task needs a focused report.
+
+## Stub Generation
+
+Run from `lra-governance` against the target leaf volume repository. Generate
+stubs with the deterministic scaffold first, then validate the target volume.
+
+```powershell
+python tools\governance\generate_stub.py chapter --volume-root F:\repos\lra-volume-ii\volume-ii --subject ordered-fields --title "Ordered Fields" --section "Order"
+python tools\governance\generate_stub.py section --chapter-root F:\repos\lra-volume-ii\volume-ii\ordered-fields --section "Completion Fields"
+```
+
+Use `--section` repeatedly or pass a semicolon-separated `--sections` list when
+creating multiple section stubs in one command.
 
 ## Schema Coverage Rule
 

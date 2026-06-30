@@ -2,10 +2,18 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
+
+if __package__ in {None, ""}:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from core.volume import latex_input_path
 from generators.section_stub import append_once, slugify, stub_section, write_new
+
+
+GOVERNANCE_ROOT = Path(__file__).resolve().parents[3]
+BOOK_REGISTRY = GOVERNANCE_ROOT / "docs" / "architecture" / "book-registry.json"
 
 
 def _tex(value: str) -> str:
@@ -26,11 +34,72 @@ def _neighbors(subject: str, registry: list[dict]):
     return ("", "", "", "")
 
 
-def render_breadcrumb(subject: str, display_title: str, registry: list[dict]) -> str:
-    prior_title, _, next_title, _ = _neighbors(subject, registry)
+def _book_registry() -> dict:
+    if not BOOK_REGISTRY.exists():
+        return {}
+    return json.loads(BOOK_REGISTRY.read_text(encoding="utf-8"))
+
+
+def _roman_to_number(roman: str) -> int | None:
+    values = {"i": 1, "ii": 2, "iii": 3, "iv": 4, "v": 5, "vi": 6, "vii": 7, "viii": 8}
+    return values.get(roman)
+
+
+def _number_to_roman(value: int | None) -> str:
+    values = {1: "I", 2: "II", 3: "III", 4: "IV", 5: "V", 6: "VI", 7: "VII", 8: "VIII"}
+    return values.get(value or 0, str(value or ""))
+
+
+def _metadata_from_registry(volume_root: Path, subject: str, display_title: str, registry: list[dict]) -> dict[str, str]:
+    data = _book_registry()
+    parts = volume_root.resolve().parts
+    volume_part = next((part for part in parts if part.startswith("volume-")), volume_root.name)
+    roman = volume_part.removeprefix("volume-")
+    volume_number = _roman_to_number(roman)
+    metadata = {
+        "series": data.get("naming", {}).get("default_series_title", "From Cantor to Ito"),
+        "volume": f"Volume {roman.upper()}" if roman else "",
+        "book": "",
+        "chapter": f"Chapter: {display_title}",
+    }
+
+    for volume in data.get("volumes", []):
+        if volume.get("roman") != roman:
+            continue
+        metadata["series"] = volume.get("series_title") or metadata["series"]
+        if volume_number:
+            metadata["volume"] = f"Volume {roman.upper()}: {volume.get('display_title', '').strip()}".rstrip(": ")
+        for book in volume.get("books", []):
+            book_dir = Path(book.get("book_dir", "")).parts
+            if book_dir and tuple(parts[-len(book_dir):]) == book_dir:
+                metadata["book"] = f"Book {_number_to_roman(book.get('order'))}: {book.get('title')}"
+                for index, entry in enumerate(book.get("expected_toc", []), 1):
+                    if entry.get("chapter") == subject:
+                        metadata["chapter"] = f"Chapter {index}: {display_title}"
+                        return metadata
+                break
+
+    if registry:
+        subjects = [entry["subject"] for entry in registry]
+        if subject in subjects:
+            metadata["chapter"] = f"Chapter {subjects.index(subject) + 1}: {display_title}"
+    return metadata
+
+
+def render_lrameta(volume_root: Path, subject: str, display_title: str, registry: list[dict], overrides: dict[str, str] | None = None) -> str:
+    metadata = _metadata_from_registry(volume_root, subject, display_title, registry)
+    for key, value in (overrides or {}).items():
+        if value:
+            metadata[key] = value
     return (
-        f"\\breadcrumb{{{_tex(subject)}}}{{{_tex(prior_title)}}}"
-        f"{{{_tex(display_title)}}}{{{_tex(next_title)}}}"
+        "\\lrameta{\n"
+        f"  series = {{{_tex(metadata['series'])}}},\n"
+        f"  volume = {{{_tex(metadata['volume'])}}},\n"
+        f"  book = {{{_tex(metadata['book'])}}},\n"
+        f"  chapter = {{{_tex(metadata['chapter'])}}},\n"
+        "  current = chapter,\n"
+        "}\n"
+        "\\LraBreadcrumb"
     )
 
 
@@ -67,7 +136,7 @@ def _capstone_stub(subject: str, display_title: str) -> str:
     )
 
 
-def stub_chapter(volume_root, subject, display_title, registry, section_titles):
+def stub_chapter(volume_root, subject, display_title, registry, section_titles, metadata: dict[str, str] | None = None):
     volume_root = Path(volume_root)
     chapter = volume_root / subject
     if chapter.exists() and any(chapter.iterdir()):
@@ -78,7 +147,7 @@ def stub_chapter(volume_root, subject, display_title, registry, section_titles):
     (chapter / "proofs" / "exercises").mkdir(parents=True, exist_ok=True)
 
     _prior_title, prior_subject, _next_title, next_subject = _neighbors(subject, registry)
-    breadcrumb = render_breadcrumb(subject, display_title, registry)
+    breadcrumb = render_lrameta(volume_root, subject, display_title, registry, metadata)
     chapter_route = latex_input_path(chapter / "index.tex").removesuffix("/index")
     write_new(
         chapter / "index.tex",
@@ -86,7 +155,7 @@ def stub_chapter(volume_root, subject, display_title, registry, section_titles):
         f"% Chapter: {display_title}\n"
         "% =========================================================\n"
         f"\\chapter{{{display_title}}}\n"
-        f"\\label{{chap:{subject}}}\n\n"
+        f"\\label{{ch:{subject}}}\n\n"
         f"{breadcrumb}\n\n"
         f"\\input{{{chapter_route}/notes/index}}\n\n"
         "\\LRAExcludeFromPrintEditionBegin\n"
@@ -144,10 +213,20 @@ def main(argv=None):
     parser.add_argument("--title", required=True)
     parser.add_argument("--sections", default="", help="section titles in order, ';'-separated")
     parser.add_argument("--registry", help="JSON list of {subject, display_title} in dependency order")
+    parser.add_argument("--series-title", help="override breadcrumb series metadata")
+    parser.add_argument("--volume-title", help="override breadcrumb volume metadata")
+    parser.add_argument("--book-title", help="override breadcrumb book metadata")
+    parser.add_argument("--chapter-title", help="override breadcrumb chapter metadata")
     args = parser.parse_args(argv)
     registry = json.loads(Path(args.registry).read_text()) if args.registry else []
     section_titles = [title.strip() for title in args.sections.split(";") if title.strip()]
-    result = stub_chapter(args.volume_root, args.subject, args.title, registry, section_titles)
+    metadata = {
+        "series": args.series_title,
+        "volume": args.volume_title,
+        "book": args.book_title,
+        "chapter": args.chapter_title,
+    }
+    result = stub_chapter(args.volume_root, args.subject, args.title, registry, section_titles, metadata)
     print("created chapter:", result["chapter"])
     for section in result["sections"]:
         print("  section:", section["slug"])

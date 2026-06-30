@@ -35,6 +35,23 @@ When such an instruction is encountered, create the required directory
 structure and router wiring automatically, subject to local repo conventions
 and idempotency rules.
 
+Use the deterministic generator before hand-authoring section stubs:
+
+```powershell
+python tools\governance\generate_stub.py section --chapter-root .\volume-ii\<chapter-slug> --section "<Section Title>"
+```
+
+From a checkout without the volume-local wrapper, call the canonical tool
+through the sibling governance repo:
+
+```powershell
+python ..\lra-governance\tools\governance\generate_stub.py section --chapter-root .\volume-ii\<chapter-slug> --section "<Section Title>"
+```
+
+Use repeated `--section` arguments or a semicolon-separated `--sections` list
+for multiple sections. Hand-copy the skeleton below only when the generator is
+unavailable, and report that fallback explicitly.
+
 ## Required Notes Structure
 
 Generating a notes section such as:
@@ -60,8 +77,8 @@ labels unless they are already supplied by a canonical registry or by the task.
 
 The machine-readable authority for matched `notes/{topic}/` and
 `proofs/{topic}/` section architecture is
-`docs/governance/volume-structure.schema.json`. Use
-`tools/governance/validate_volume.py` to audit topic-pair routing.
+`constitution/schema/file-schema.yaml`. Use `tools/governance/validate_volume.py`
+and `tools/governance/audit_volume_layout.py` to audit topic-pair routing.
 
 ## Required Proof Structure
 
@@ -82,10 +99,9 @@ also satisfy `proof-standards.md`.
 
 ## Canonical Topic-Pair Skeleton
 
-Copy these verbatim and substitute only the angle-bracketed parts. This is the
-real, validator-passing shape; do not invent a different structure. A new topic
-`<topic>` in chapter `<chapter-slug>` of `volume-<n>` is exactly two files plus
-two parent-router edits.
+This is the expected generator output shape and the fallback hand-copy contract.
+A new topic `<topic>` in chapter `<chapter-slug>` of `volume-<n>` is exactly
+two files plus two parent-router edits.
 
 `notes/<topic>/index.tex` (topic router — rendered section plus body input):
 
@@ -133,47 +149,10 @@ Non-negotiable points:
 - `proofs/index.tex` lists topic indexes only. The `proofs/exercises/index`
   (capstone) router is input from the chapter `index.tex`, not here.
 
-## Router Updates
-
-After generating a section stub, update the chapter's notes router:
-
-```text
-notes/index.tex
-```
-
-to include the new topic router in the correct order, using the repository's
-canonical routing style:
-
-```latex
-\input{volume-x/chapter-slug/notes/axioms/index}
-```
-
-The rendered topic heading belongs inside the topic router:
-
-```latex
-\section{Axioms}
-\input{volume-x/chapter-slug/notes/axioms/notes-axioms}
-```
-
-For a fresh stub with no authored content yet, the topic router may contain the
-section heading without body inputs.
-
-Then update the chapter's proofs router:
-
-```text
-proofs/index.tex
-```
-
-to include the matching proof topic index, in the same order as the notes
-router:
-
-```latex
-\input{volume-x/chapter-slug/proofs/axioms/index}
-```
-
-`proofs/index.tex` routes topic indexes only. Do not route
-`proofs/exercises/index` here: the exercises/capstone router is input from the
-chapter `index.tex` under `\section*{Capstone}` (see `stub-chapter-standards.md`).
+The generator creates the topic routers and updates `notes/index.tex` and
+`proofs/index.tex`. If hand-editing as a fallback, keep the two parent routers
+in matching order. `proofs/index.tex` routes topic indexes only; never route
+`proofs/exercises/index` there.
 
 ## Ordering Rule
 
@@ -211,7 +190,7 @@ If the notes section exists but the matching proof section or router entry is
 missing, inspect the existing chapter structure before adding only the missing
 architecture needed to restore consistency.
 
-## Mathematical Content Rule
+## Common Stub Guard Rails
 
 A section stub must not invent:
 
@@ -226,8 +205,6 @@ A section stub must not invent:
 This restriction applies unless the task explicitly provides the content and
 authorizes active content generation. Missing mathematical needs should be
 reported instead of filled.
-
-## Build Rule
 
 After generating section stubs:
 

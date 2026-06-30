@@ -48,10 +48,13 @@ The prompt must specify:
 
 1. The target repo and exact task scope.
 2. The rule files Codex must read before editing.
-3. The exact file structure to create, matching the canonical skeletons in
-   `docs/governance/stub-section-standards.md` (topic pair) and
-   `docs/governance/stub-chapter-standards.md` (chapter). Copy those skeletons;
-   do not improvise the directory, router, or index shape.
+3. The exact file structure to create. For stub chapter or section scaffolding,
+   instruct Codex to run `tools/governance/generate_stub.py` from the target
+   repo when the wrapper exists, or the sibling
+   `..\lra-governance\tools\governance\generate_stub.py` fallback otherwise.
+   The skeletons in `docs/governance/stub-section-standards.md` and
+   `docs/governance/stub-chapter-standards.md` are fallback/output contracts,
+   not the primary generation method.
 4. The exact index files to update.
 5. The exact topic files to populate.
 6. The file-splitting rule: for a new content section, create one section

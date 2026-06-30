@@ -53,12 +53,34 @@ capstone/
 Do not create extra directories unless local conventions require them.
 
 The machine-readable authority for volume, chapter, and topic layout is
-`docs/governance/volume-structure.schema.json`.
+`constitution/schema/file-schema.yaml`, enforced by
+`tools/governance/validate_volume.py` and the focused layout audits.
+
+## Generator Rule
+
+Use the deterministic generator before hand-authoring a stub chapter:
+
+```powershell
+python tools\governance\generate_stub.py chapter --volume-root .\volume-ii --subject <chapter-slug> --title "<Chapter Display Title>" --section "<Section Title>"
+```
+
+From a checkout without the volume-local wrapper, call the canonical tool
+through the sibling governance repo:
+
+```powershell
+python ..\lra-governance\tools\governance\generate_stub.py chapter --volume-root .\volume-ii --subject <chapter-slug> --title "<Chapter Display Title>"
+```
+
+Use repeated `--section` arguments or a semicolon-separated `--sections` list
+when creating initial section stubs with the chapter. Hand-copy the skeleton
+below only when the generator is unavailable, and report that fallback
+explicitly.
 
 ## Canonical Stub-Chapter Skeleton
 
-Copy these verbatim and substitute only the angle-bracketed parts. This is the
-real, validator-passing shape; do not improvise a different structure.
+This is the expected generator output shape and the fallback hand-copy contract.
+Substitute only the angle-bracketed parts; do not improvise a different
+structure.
 
 `<chapter-slug>/index.tex` (chapter router):
 
@@ -120,94 +142,11 @@ Chapter-index points that are easy to get wrong:
   `\LRAExcludeFromPrintEditionBegin ... \LRAExcludeFromPrintEditionEnd` block so
   print builds omit them.
 
-Real example (`volume-i/book-logic/many-sorted-first-order-logic/index.tex`):
-
-```latex
-\chapter{Many-Sorted Logic}
-\label{ch:many-sorted-first-order-logic}
-\lrameta{
-  series = {From Cantor to Ito},
-  volume = {Volume I: Logic, Sets, and Proof},
-  book = {Book I: Mathematical Logic and Proof},
-  chapter = {Chapter 3: Many-Sorted Logic},
-  current = chapter,
-}
-\LraBreadcrumb
-\input{volume-i/book-logic/many-sorted-first-order-logic/notes/index}
-\LRAExcludeFromPrintEditionBegin
-\section*{Proofs}
-\input{volume-i/book-logic/many-sorted-first-order-logic/proofs/index}
-\LRAExcludeFromPrintEditionEnd
-```
-
-## Chapter Index
-
-The chapter `index.tex` is the chapter-level router. It should contain, in the
-canonical shape:
-
-- `\chapter{...}`;
-- `\label{ch:...}`;
-- `\lrameta{...}`;
-- `\LraBreadcrumb`;
-- `\input{volume-x/chapter-slug/notes/index}`;
-- `\LRAExcludeFromPrintEditionBegin`;
-- `\section*{Proofs}`;
-- `\input{volume-x/chapter-slug/proofs/index}`;
-- optional `\section*{Capstone}`;
-- optional `\input{volume-x/chapter-slug/proofs/exercises/index}`;
-- `\LRAExcludeFromPrintEditionEnd`.
-
-The proof heading, and optional capstone heading, belong inside the
-print-edition exclusion block, so print builds do not render empty `Proofs` or
-`Capstone` sections.
-Within that block and everywhere below `proofs/`, routing uses ordinary
-`\input{...}`.
-
-The chapter `index.tex` should not contain long exposition. It should not
-contain definitions, theorems, examples, exercises, or proof material unless
-the task explicitly provides that content and authorizes active content
+For router semantics, topic matching, capstone routing, and reachability, use
+`volume-structure.md` and the validator. The chapter router must not contain
+definitions, theorems, examples, exercises, proof material, or long exposition
+unless the task explicitly provides that content and authorizes active content
 generation.
-
-## Notes Index
-
-The `notes/index.tex` file is the chapter notes router. For each topic, it
-routes the topic index only:
-
-```latex
-\input{volume-x/chapter-slug/notes/topic-title/index}
-```
-
-The rendered topic heading belongs inside `notes/topic-title/index.tex`:
-
-```latex
-\section{Topic Title}
-\input{volume-x/chapter-slug/notes/topic-title/notes-topic-title}
-```
-
-For a fresh stub with no authored content yet, the topic router may contain the
-section heading without body inputs.
-
-Do not add section names, dependencies, labels, or topic lists unless they are
-already supplied by a canonical registry or by the task.
-
-## Proofs Index
-
-The `proofs/index.tex` file is router-only. It contains comments and `\input`
-lines for `proofs/{topic}/index`. Do not route `proofs/exercises/index` from
-`proofs/index`; the chapter router owns the optional capstone route.
-
-Do not create proof files for nonexistent statements. Proof file creation must
-also satisfy `proof-standards.md`.
-
-## Exercises Index
-
-The exercises router lives at `proofs/exercises/index.tex` only when a strong
-capstone exists. It is router-only and routes
-`proofs/exercises/capstone-{chapter-slug}.tex`.
-
-Do not create root-level `exercises/`. Do not invent exercises, capstone
-prompts, solutions, or exercise labels unless the task explicitly provides that
-content.
 
 ## Chapter Metadata
 
@@ -255,7 +194,7 @@ We study...
 We will...
 ```
 
-## Mathematical Content Rule
+## Common Stub Guard Rails
 
 A stub must not invent:
 
@@ -281,15 +220,11 @@ topic labels for planned but nonexistent content.
 Chapter and section labels may be created only when consistent with local
 conventions and only for actual chapter or section structure.
 
-## Build Rule
-
-After generating stub chapters, run the repo-local build command or the
-documented build command.
-
-For LRA volume repos, try:
+After generating stub chapters, run the repo-local build or validation command.
+For LRA volume repos, the validation command is:
 
 ```powershell
-python ..\lra-governance\scripts\build_volume.py --root .
+python ..\lra-governance\scripts\build_volume.py --root . --validate-only
 ```
 
 unless local instructions say otherwise.
