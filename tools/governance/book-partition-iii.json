@@ -1,6 +1,6 @@
 {
   "volume": "volume-iii",
-  "_note": "Mechanical whole-chapter partition of the Vol III analysis cluster into books. Topic-level moves (functions/limits -> ii, elementary-functions dissolve, structure-of-real-line incoming) are deferred to the later ref-renaming steps. Chapter order within each book is minimal-reorder (current relative order preserved); adjust freely before --apply.",
+  "_note": "Mechanical whole-chapter partition of the Vol III analysis cluster into books. Book II now combines functions, continuity, and differentiation. Topic-level moves (functions/limits -> ii, elementary-functions dissolve, structure-of-real-line incoming) are deferred to later ref-renaming steps.",
   "books": [
     {
       "name": "book-analysis-i",
@@ -8,11 +8,7 @@
     },
     {
       "name": "book-analysis-ii",
-      "chapters": ["elementary-functions", "continuity"]
-    },
-    {
-      "name": "book-analysis-iii",
-      "chapters": ["differentiation"]
+      "chapters": ["elementary-functions", "continuity", "differentiation"]
     },
     {
       "name": "book-integration",

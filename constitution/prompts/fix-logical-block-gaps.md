@@ -1,4 +1,4 @@
-# Fix Prompt: Missing Logical Blocks — Continuity & Differentiation
+# Fix Prompt: Missing Logical Blocks — Functions, Continuity, and Differentiation
 # Covers: def / thm / lem / prop — gap-filling only, no regeneration
 
 ---

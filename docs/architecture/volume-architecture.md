@@ -38,8 +38,7 @@ missing or misplaced chapters and sections are caught before rendering.
 | II | Origins of Numbers | Discrete Number Systems | `book-discrete-algebraic` | Formalizing number systems through natural, whole, and integer systems. |
 | II | Origins of Numbers | The Continuum | `book-continuum` | Embeddings, rationals, reals, complex numbers, and number-line constructions. |
 | III | Classical Analysis | Bounds, Sequences, and Series | `book-analysis-i` | Foundational real-analysis toolkit, bounds, functions without limits, sequences, series, and function sequences. |
-| III | Classical Analysis | Continuity | `book-analysis-ii` | Elementary functions, limits, and continuity. |
-| III | Classical Analysis | Differentiation | `book-analysis-iii` | Differentiation. |
+| III | Classical Analysis | Functions, Continuity, and Differentiation | `book-analysis-ii` | Elementary functions, limits, continuity, and differentiation. |
 | III | Classical Analysis | Integration | `book-integration` | Riemann integration and related classical integration material. |
 | IV | Mathematical Spaces | Mathematical Spaces | `book-spaces` | Metric spaces, topological spaces, measure spaces, set algebra, and algebras of sets. |
 | V | Modern Analysis | Modern Analysis | `book-measure`, `book-probability`, `book-functional-analysis`, `book-complex-analysis` | Current roots are subject partitions under the Modern Analysis volume. |
@@ -64,8 +63,7 @@ target filename for generated portrait assets.
 | Book | II, `The Continuum` | Karl Weierstrass | 1815-1897 | `images/weierstrass.png` | proposed |
 | Volume | III, `Classical Analysis` | Augustin-Louis Cauchy | 1789-1857 | `images/cauchy.png` | confirmed |
 | Book | III, `Bounds, Sequences, and Series` | Bernard Bolzano | 1781-1848 | `images/bolzano.png` | confirmed |
-| Book | III, `Continuity` | Rudolf Lipschitz | 1832-1903 | `images/lipschitz.png` | confirmed |
-| Book | III, `Differentiation` | Gottfried Wilhelm Leibniz | 1646-1716 | `images/leibniz.png` | confirmed |
+| Book | III, `Functions, Continuity, and Differentiation` | Rudolf Lipschitz | 1832-1903 | `images/lipschitz.png` | confirmed |
 | Book | III, `Integration` | Bernhard Riemann | 1826-1866 | `images/riemann.png` | confirmed |
 | Volume | IV, `Mathematical Spaces` | Constantin Caratheodory | 1873-1950 | `images/caratheodory.png` | confirmed |
 | Subject | IV, `Metric Spaces` | Maurice Frechet | 1878-1973 | `images/frechet.png` | confirmed |
@@ -96,7 +94,7 @@ Examples:
 
 - `volume-i-mathematical-logic-and-proof.tex`;
 - `volume-ii-the-continuum.tex`;
-- `volume-iii-differentiation.tex`.
+- `volume-iii-functions-continuity-and-differentiation.tex`.
 
 The full-volume root is `volume-{roman}.tex`; it carries the volume
 frontmatter, an independent volume table of contents, and then routes every book
@@ -106,8 +104,6 @@ old branches are being migrated.
 
 Open naming decisions:
 
-- whether Volume III `Continuity` later merges into `Differentiation` or
-  remains a separate bridge book before differentiation;
 - whether Modern Analysis, Algebra, Advanced Logic, and Applied and
   Computational Mathematics should keep subject-level roots as book titles or
   collapse under one book title per volume.

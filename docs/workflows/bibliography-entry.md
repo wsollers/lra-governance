@@ -5,8 +5,8 @@ entries to `lra-common`.
 
 Each book root has a matching bibliography shard:
 
-- Book root: `lra-volume-iii/volume-iii-continuity.tex`
-- Book bibliography: `lra-volume-iii/bibliography/volume-iii-continuity.bib`
+- Book root: `lra-volume-iii/volume-iii-functions-continuity-and-differentiation.tex`
+- Book bibliography: `lra-volume-iii/bibliography/volume-iii-functions-continuity-and-differentiation.bib`
 
 The volume-level root, such as `volume-iii.tex`, cites every per-book `.bib`
 file in that volume. It must not point at a retired aggregate volume `.bib`.
@@ -19,7 +19,7 @@ file in that volume. It must not point at a retired aggregate volume `.bib`.
 4. Use the entry from the volume content with natbib-compatible commands such
    as `\citep{...}` or `\citet{...}`.
 5. Build the owning book root through governance, for example
-   `python tools/governance/build_volume_docker.py --root ../lra-volume-iii --tex-root volume-iii-continuity.tex`.
+   `python tools/governance/build_volume_docker.py --root ../lra-volume-iii --tex-root volume-iii-functions-continuity-and-differentiation.tex`.
 
 ## Independent Volume Builds
 

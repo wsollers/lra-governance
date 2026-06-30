@@ -73,8 +73,7 @@ later renumber is a bounded sweep of *those four places*, not a rewrite.
 
 **Vol III — Classical Analysis**
 - `book-analysis-i`: real-analysis, bounding, functions*, sequences, series, function-sequences, (incoming) structure-of-real-line
-- `book-analysis-ii`: functions/limits (moved), behavior-of-elementary-functions (new), continuity
-- `book-analysis-iii`: differentiation
+- `book-analysis-ii`: functions/limits (moved), behavior-of-elementary-functions (new), continuity, differentiation
 - `book-integration`: riemann-integration (+ future cauchy/darboux/stieltjes/FTC/approximation; rigorous ODE existence-uniqueness + classical PDE later)
 - *evict:* modern stubs -> V; number-theory/quantum/discrete-calculus -> `lra-hold`
 

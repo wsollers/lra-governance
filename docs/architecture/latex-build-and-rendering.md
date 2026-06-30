@@ -69,14 +69,14 @@ through sibling paths such as `../lra-volume-ii/build/volume-ii.aux`.
 
 ## Figures
 
-Dependency figures live in dedicated `figure-<n>.tex` files and are input by
-notes files. Every nontrivial TikZ figure shall live in a dedicated figure
-source file. Figure source files shall contain TikZ code only: no document
-preamble, no figure environment, no caption, no label, no surrounding prose,
-and no inline color-system redefinition.
+Figure artifact rules are governed by
+`docs/governance/atomic-artifact-standards.md`. Every nontrivial TikZ figure
+lives in a dedicated figure source file and is input by the owning note, proof,
+or exercise file.
 
-Figure colors, boxes, and legend macros come from shared infrastructure rather
-than local ad hoc definitions.
+Figure visual style is governed by `docs/governance/tikz-style-guide.md`.
+Figure colors, boxes, TikZ keys, and legend macros come from shared
+infrastructure in `lra-common` rather than local ad hoc definitions.
 
 ## Specialist Validation
 

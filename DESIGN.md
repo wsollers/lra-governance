@@ -38,6 +38,7 @@ appropriate modular document instead.
 | Formal notation, predicate readings, and no predicate leakage | `docs/governance/notation-standards.md` |
 | Proof file architecture, proof labels, and theorem/proof navigation | `docs/governance/proof-standards.md` |
 | Atomic definition and atomic figure invariants | `docs/governance/atomic-artifact-standards.md` |
+| TikZ figure visual style and Structural Atlas conventions | `docs/governance/tikz-style-guide.md` |
 | Extraction implementation for dependency labels, proof-vault URLs, and theorem explorer records | `docs/governance/extraction-standards.md` |
 | File splitting, one-artifact-per-file rules, and structural stability | `docs/governance/file-splitting-standards.md` |
 | Refactoring safety and high-fidelity cleanup | `docs/governance/refactoring-standards.md` |

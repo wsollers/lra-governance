@@ -27,6 +27,8 @@ combined extraction record for multiple concepts is prohibited.
 Every nontrivial TikZ figure shall be represented by a dedicated figure source
 file. Figure source files contain only the `tikzpicture`; captions, labels,
 and figure environments are extracted from the inclusion point.
+Figure visual style is not extracted as mathematical content; it is governed by
+`tikz-style-guide.md` and implemented through shared `lra-common` macros.
 
 ## Dependency Blocks
 

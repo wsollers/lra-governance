@@ -12,12 +12,11 @@ environment and shall possess its own unique label. Grouping multiple
 independent mathematical concepts into a single definition environment is
 prohibited.
 
-Every nontrivial TikZ figure shall exist as an independent figure source file.
-Embedded nontrivial `tikzpicture` environments in note, proof, exercise, or
-exposition files are prohibited.
-
-The canonical atomic artifact rules are governed by
-`atomic-artifact-standards.md`.
+Figure splitting is governed by `atomic-artifact-standards.md`: every
+nontrivial TikZ figure exists as an independent figure source file, and
+embedded nontrivial `tikzpicture` environments in note, proof, exercise, or
+exposition files are prohibited. Figure visual style is governed by
+`tikz-style-guide.md`.
 
 ## Chapter Layout
 

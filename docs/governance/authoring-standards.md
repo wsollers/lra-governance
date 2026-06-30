@@ -74,12 +74,13 @@ metadata.
 
 ## Figures
 
-Every nontrivial TikZ figure shall exist as an independent figure source file.
-Embedded nontrivial `tikzpicture` environments in note bodies, proof bodies,
-exercise bodies, exposition blocks, and statement files are prohibited.
+Figure artifact rules are governed by `atomic-artifact-standards.md`: every
+nontrivial TikZ figure lives in a dedicated figure source file, and captions,
+labels, placement, and explanatory prose live at the inclusion point.
 
-Figure source files contain only the `tikzpicture` environment. Captions,
-labels, placement, and explanatory prose belong at the inclusion point.
+Figure visual style is governed by `tikz-style-guide.md`. Use shared TikZ
+colors, keys, and helper macros from `lra-common`; do not introduce
+volume-local palettes, style systems, or local style-guide copies.
 
 ## LaTeX Structural Integrity
 

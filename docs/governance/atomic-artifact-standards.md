@@ -126,6 +126,10 @@ Figure source files shall not contain:
 Captions, labels, placement options, and explanatory prose belong at the
 inclusion point.
 
+Visual style, palette, and reusable TikZ keys are governed by
+`tikz-style-guide.md`. Shared implementations belong in `lra-common`, not in
+volume-local figure files.
+
 Correct inclusion pattern:
 
 ```latex
@@ -170,6 +174,8 @@ invariants before emitting source:
   satisfy a pattern;
 - if requested figure content contains a nontrivial TikZ diagram, generation
   shall emit a dedicated figure source file and an inclusion block;
+- generated TikZ shall use the shared house style from `tikz-style-guide.md`
+  and shall not emit local color systems or local style-guide copies;
 - generators shall not create shared labels for bundled concepts;
 - generators shall not embed nontrivial TikZ diagrams in note bodies.
 

@@ -109,8 +109,9 @@ precedes the applied volume; Advanced Logic sits right after Algebraic Structure
 - **Elementary functions dissolve**: *construction* -> Geometry; *behavior*
   (fundamental limits, continuity, derivatives, growth) -> Classical Analysis, in
   the chain limits -> function-limits -> behavior-of-elementary-functions ->
-  continuity (so it lands in the Limits & Continuity book, after limits). exp/log
-  behavior carries a forward-dependency on series/integration.
+  continuity (so it lands in the Functions, Continuity, and Differentiation
+  book, after limits). exp/log behavior carries a forward-dependency on
+  series/integration.
 - **R-topology, two altitudes**: concrete (open/closed/compact, Heine-Borel on R)
   stays in Classical Analysis (`book-analysis-i`, after the toolkit); the general
   topological/metric framework is in Spaces.

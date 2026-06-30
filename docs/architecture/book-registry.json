@@ -500,11 +500,10 @@
         },
         {
           "order": 2,
-          "slug": "continuity",
-          "title": "Continuity",
-          "tex_root": "volume-iii-continuity.tex",
+          "slug": "functions-continuity-and-differentiation",
+          "title": "Functions, Continuity, and Differentiation",
+          "tex_root": "volume-iii-functions-continuity-and-differentiation.tex",
           "legacy_roots": [
-            "volume-iii-continuity-main.tex",
             "main-book-analysis-ii.tex"
           ],
           "book_dir": "volume-iii/book-analysis-ii",
@@ -530,24 +529,7 @@
                 "approximation",
                 "gauge"
               ]
-            }
-          ],
-          "frontmatter_mathematician": "Rudolf Lipschitz",
-          "mathematician_lifespan": "1832-1903",
-          "image_path": "images/lipschitz.png",
-          "frontmatter_status": "confirmed"
-        },
-        {
-          "order": 3,
-          "slug": "differentiation",
-          "title": "Differentiation",
-          "tex_root": "volume-iii-differentiation.tex",
-          "legacy_roots": [
-            "volume-iii-differentiation-main.tex",
-            "main-book-analysis-iii.tex"
-          ],
-          "book_dir": "volume-iii/book-analysis-iii",
-          "expected_toc": [
+            },
             {
               "chapter": "differentiation",
               "notes": [
@@ -563,13 +545,13 @@
               ]
             }
           ],
-          "frontmatter_mathematician": "Gottfried Wilhelm Leibniz",
-          "mathematician_lifespan": "1646-1716",
-          "image_path": "images/leibniz.png",
+          "frontmatter_mathematician": "Rudolf Lipschitz",
+          "mathematician_lifespan": "1832-1903",
+          "image_path": "images/lipschitz.png",
           "frontmatter_status": "confirmed"
         },
         {
-          "order": 4,
+          "order": 3,
           "slug": "integration",
           "title": "Integration",
           "tex_root": "volume-iii-integration.tex",
