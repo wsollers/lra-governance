@@ -1,7 +1,11 @@
 name: Build All Volumes PDF
 
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
 
 permissions:
   contents: read
@@ -74,17 +78,100 @@ jobs:
           repository: wsollers/lra-volume-viii
           path: lra-volume-viii
 
-      - name: Build combined all-volumes PDF
+      - name: Build combined digital PDF
         run: |
           python lra-governance/tools/governance/build_all_volumes_docker.py \
             --repos-root "$GITHUB_WORKSPACE" \
             --common-root lra-common \
-            --work-dir build/all-volumes \
-            --output-dir pdf-output/all-volumes
+            --work-dir build/all-volumes/digital \
+            --output-dir pdf-output/digital \
+            --edition digital \
+            --stem from-cantor-to-ito \
+            --title "From Cantor to Ito"
 
-      - name: Upload combined PDF artifact
+      - name: Build combined print PDF
+        run: |
+          python lra-governance/tools/governance/build_all_volumes_docker.py \
+            --repos-root "$GITHUB_WORKSPACE" \
+            --common-root lra-common \
+            --work-dir build/all-volumes/print \
+            --output-dir pdf-output/print \
+            --edition print \
+            --stem from-cantor-to-ito \
+            --title "From Cantor to Ito" \
+            --skip-image-build
+
+      - name: Build combined reference PDF
+        run: |
+          python lra-governance/tools/governance/build_all_volumes_docker.py \
+            --repos-root "$GITHUB_WORKSPACE" \
+            --common-root lra-common \
+            --work-dir build/all-volumes/reference \
+            --output-dir pdf-output/reference \
+            --edition reference \
+            --stem from-cantor-to-ito \
+            --title "From Cantor to Ito" \
+            --skip-image-build
+
+      - name: Verify combined PDFs
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          for edition in ("digital", "print", "reference"):
+              pdf = Path("pdf-output") / edition / "from-cantor-to-ito.pdf"
+              if not pdf.exists():
+                  raise SystemExit(f"missing {pdf}")
+              data = pdf.read_bytes()
+              if not data.startswith(b"%PDF-"):
+                  raise SystemExit(f"{pdf} does not start with a PDF header")
+              if b"%%EOF" not in data[-2048:]:
+                  raise SystemExit(f"{pdf} is missing a PDF EOF trailer")
+          PY
+
+      # SYNC_PAT here authorizes publishing built PDFs to lra-volumes-output.
+      # It is NOT the retired governance/volume sync; it is the combined PDF
+      # build's publish step.
+      - name: Checkout output repository
+        uses: actions/checkout@v4
+        with:
+          repository: wsollers/lra-volumes-output
+          token: ${{ secrets.SYNC_PAT }}
+          ref: main
+          path: output
+          fetch-depth: 0
+
+      - name: Publish combined PDFs to output repository
+        run: |
+          mkdir -p output/digital output/print output/reference
+          cp pdf-output/digital/from-cantor-to-ito.pdf output/digital/from-cantor-to-ito.pdf
+          cp pdf-output/print/from-cantor-to-ito.pdf output/print/from-cantor-to-ito.pdf
+          cp pdf-output/reference/from-cantor-to-ito.pdf output/reference/from-cantor-to-ito.pdf
+          cd output
+          git config core.autocrlf false
+          git config user.name "lra-pdf-bot"
+          git config user.email "lra-pdf-bot@noreply.github.com"
+          git add -f digital/from-cantor-to-ito.pdf print/from-cantor-to-ito.pdf reference/from-cantor-to-ito.pdf
+          if git diff --cached --quiet; then
+            echo "No combined PDF changes to publish"
+            exit 0
+          fi
+          git commit -m "Update from-cantor-to-ito combined PDFs"
+          for attempt in 1 2 3; do
+            git pull --rebase origin main
+            if git push origin main; then
+              exit 0
+            fi
+            sleep 5
+          done
+          exit 1
+
+      - name: Upload combined PDF artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: lra-all-volumes-pdf
-          path: pdf-output/all-volumes/lra-all-volumes.pdf
+          name: from-cantor-to-ito-pdfs
+          path: |
+            pdf-output/digital/from-cantor-to-ito.pdf
+            pdf-output/print/from-cantor-to-ito.pdf
+            pdf-output/reference/from-cantor-to-ito.pdf
           if-no-files-found: error

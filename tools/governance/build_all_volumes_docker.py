@@ -19,7 +19,6 @@ DEFAULT_LATEX_ARGS = [
     "-synctex=1",
     "-shell-escape",
     "-output-directory=build",
-    "lra-all-volumes.tex",
 ]
 
 
@@ -91,6 +90,12 @@ def verify_pdf(pdf: Path) -> None:
         raise SystemExit(f"{pdf} is missing a PDF EOF trailer")
 
 
+def latex_args_for(base_args: list[str] | None, tex_name: str) -> list[str]:
+    if base_args:
+        return [*base_args, tex_name]
+    return [*DEFAULT_LATEX_ARGS, tex_name]
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Build one PDF containing all LRA volumes.")
     parser.add_argument("--repos-root", type=Path, default=Path(".").resolve().parent)
@@ -100,7 +105,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--image", default=IMAGE_NAME)
     parser.add_argument("--skip-image-build", action="store_true")
     parser.add_argument("--clean", action="store_true")
-    parser.add_argument("--title", default="Learning Real Analysis")
+    parser.add_argument("--title", default="From Cantor to Ito")
+    parser.add_argument("--stem", default="from-cantor-to-ito")
+    parser.add_argument("--edition", choices=("digital", "print", "reference"), default="digital")
     parser.add_argument(
         "--volume",
         action="append",
@@ -117,6 +124,8 @@ def main(argv: list[str] | None = None) -> int:
     volumes = args.volume or ["i", "ii", "iii", "iv", "v", "vi", "vii", "viii"]
     work_dir = args.work_dir.expanduser().resolve()
     output_dir = args.output_dir.expanduser().resolve()
+    tex_name = f"{args.stem}.tex"
+    pdf_name = f"{args.stem}.pdf"
     work_dir.mkdir(parents=True, exist_ok=True)
     output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -129,9 +138,11 @@ def main(argv: list[str] | None = None) -> int:
         "--repos-root",
         "/lra-repos",
         "--out",
-        "/workspace/lra-all-volumes.tex",
+        f"/workspace/{tex_name}",
         "--title",
         args.title,
+        "--edition",
+        args.edition,
     ]
     for volume in volumes:
         assemble_cmd.extend(["--volume", volume])
@@ -143,7 +154,7 @@ def main(argv: list[str] | None = None) -> int:
         "-e",
         "LRA_GOVERNANCE_ROOT=/lra-governance",
         "-e",
-        "LRA_EDITION=digital",
+        f"LRA_EDITION={args.edition}",
         "-e",
         "LRA_PAPER=letter",
         "-e",
@@ -160,18 +171,20 @@ def main(argv: list[str] | None = None) -> int:
         f"{docker_path(repos_root)}:/lra-repos:ro",
         "-w",
         "/workspace",
-        args.image,
     ]
+    if args.edition == "print":
+        docker_prefix.extend(["-e", "LRA_PRINT_EDITION=1"])
+    docker_prefix.append(args.image)
 
     run([*docker_prefix, *assemble_cmd])
     if args.clean:
-        run([*docker_prefix, "latexmk", "-C", "lra-all-volumes.tex"])
-    run([*docker_prefix, *(args.latex_command or DEFAULT_LATEX_ARGS)])
+        run([*docker_prefix, "latexmk", "-C", tex_name])
+    run([*docker_prefix, *latex_args_for(args.latex_command, tex_name)])
 
-    pdf = work_dir / "build" / "lra-all-volumes.pdf"
+    pdf = work_dir / "build" / pdf_name
     verify_pdf(pdf)
-    shutil.copy2(pdf, output_dir / pdf.name)
-    print(f"wrote {output_dir / pdf.name}")
+    shutil.copy2(pdf, output_dir / pdf_name)
+    print(f"wrote {output_dir / pdf_name}")
     return 0
 
 
