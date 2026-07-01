@@ -180,6 +180,7 @@ jobs:
       - name: Publish combined PDFs to output repository
         run: |
           mkdir -p output/digital output/print output/reference
+          find output/digital output/print output/reference -maxdepth 1 -type f -name '*.pdf' -delete
           cp pdf-output/digital/from-cantor-to-ito.pdf output/digital/from-cantor-to-ito.pdf
           cp pdf-output/print/from-cantor-to-ito.pdf output/print/from-cantor-to-ito.pdf
           cp pdf-output/reference/from-cantor-to-ito.pdf output/reference/from-cantor-to-ito.pdf
