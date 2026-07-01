@@ -18,6 +18,8 @@ if str(GOVERNANCE_TOOL_ROOT) not in sys.path:
     sys.path.insert(0, str(GOVERNANCE_TOOL_ROOT))
 
 import dependency_graph  # noqa: E402
+from core.file_inventory import files_to_validate  # noqa: E402
+from core.volume import resolve_volume  # noqa: E402
 from extraction_pipeline.build_proof_vault_index import build_index as build_proof_vault_index  # noqa: E402
 
 
@@ -45,6 +47,8 @@ WORKED_EXAMPLE_METADATA_RE = re.compile(
 INPUT_RE = re.compile(r"\\input\{(?P<path>[^{}]+)\}")
 CHAPTER_RE = re.compile(r"\\chapter\*?\{(?P<title>(?:[^{}]|\{[^{}]*\})*)\}", re.DOTALL)
 SECTION_RE = re.compile(r"\\section\*?\{(?P<title>(?:[^{}]|\{[^{}]*\})*)\}", re.DOTALL)
+PROOF_FOR_RE = re.compile(r"\\LRAProofFor\{(?P<label>(?:thm|lem|prop|cor):[^{}]+)\}", re.IGNORECASE)
+ROMAN_TO_NUMBER = {"i": 1, "ii": 2, "iii": 3, "iv": 4, "v": 5, "vi": 6, "vii": 7, "viii": 8}
 
 
 def load_json(path: Path) -> Any:
@@ -138,71 +142,141 @@ def title_from_slug(slug: str) -> str:
     return " ".join(words)
 
 
-def toc_for_repo(repo_root: Path) -> dict[str, Any]:
-    repo_name = repo_root.name
-    volume = volume_from_repo(repo_name)
-    volume_dir = repo_root / f"volume-{volume}"
-    volume_index = volume_dir / "index.tex"
-    chapters: list[dict[str, Any]] = []
+def registry_toc(registry: dict[str, Any]) -> list[dict[str, Any]]:
+    toc: list[dict[str, Any]] = []
+    for volume in registry.get("volumes", []):
+        books: list[dict[str, Any]] = []
+        for book in volume.get("books", []):
+            chapters = [
+                {
+                    "id": str(chapter.get("chapter", "")),
+                    "title": title_from_slug(str(chapter.get("chapter", ""))),
+                    "sections": [
+                        {"id": str(note), "title": title_from_slug(str(note))}
+                        for note in chapter.get("notes", [])
+                    ],
+                }
+                for chapter in book.get("expected_toc", [])
+            ]
+            books.append(
+                {
+                    "id": str(book.get("slug", "")),
+                    "title": str(book.get("title", "")),
+                    "order": int(book.get("order", 0)),
+                    "book_dir": str(book.get("book_dir", "")),
+                    "chapters": chapters,
+                }
+            )
+        toc.append(
+            {
+                "id": int(volume.get("volume_number", 0)),
+                "roman": str(volume.get("roman", "")),
+                "title": str(volume.get("display_title", "")),
+                "series_title": str(volume.get("series_title", "")),
+                "books": books,
+            }
+        )
+    return toc
 
-    def chapter_inputs(path: Path, depth: int = 0) -> list[str]:
-        if depth > 4:
-            return []
-        text = read_tex(path)
-        if CHAPTER_RE.search(text):
-            rel_path = path.resolve().relative_to(repo_root.resolve()).with_suffix("").as_posix()
-            return [rel_path]
-        out: list[str] = []
-        for input_match in INPUT_RE.finditer(text):
-            child = input_path(repo_root, input_match.group("path").replace("\\", "/"))
-            out.extend(chapter_inputs(child, depth + 1))
-        return out
 
-    for raw in chapter_inputs(volume_index):
-        parts = Path(raw).parts
-        if len(parts) < 2 or parts[0] != f"volume-{volume}":
+def registry_routes(registry: dict[str, Any]) -> list[dict[str, Any]]:
+    routes: list[dict[str, Any]] = []
+    for volume in registry.get("volumes", []):
+        volume_number = int(volume.get("volume_number", 0))
+        roman = str(volume.get("roman", ""))
+        for book in volume.get("books", []):
+            book_dir = str(book.get("book_dir", "")).replace("\\", "/").strip("/")
+            for chapter in book.get("expected_toc", []):
+                chapter_id = str(chapter.get("chapter", ""))
+                prefix = f"{book_dir}/{chapter_id}".strip("/")
+                routes.append(
+                    {
+                        "prefix": prefix,
+                        "volume": volume_number,
+                        "volume_roman": roman,
+                        "volume_title": str(volume.get("display_title", "")),
+                        "series_title": str(volume.get("series_title", "")),
+                        "book": str(book.get("slug", "")),
+                        "book_title": str(book.get("title", "")),
+                        "book_order": int(book.get("order", 0)),
+                        "book_dir": book_dir,
+                        "chapter": chapter_id,
+                        "chapter_title": title_from_slug(chapter_id),
+                        "sections": {str(note): title_from_slug(str(note)) for note in chapter.get("notes", [])},
+                    }
+                )
+    return sorted(routes, key=lambda item: len(item["prefix"]), reverse=True)
+
+
+def section_from_route(file: str, route: dict[str, Any] | None) -> tuple[str, str]:
+    if not route:
+        section = section_from_file(file)
+        return section, title_from_slug(section)
+    rel = file.replace("\\", "/")
+    prefix = str(route.get("prefix", "")).strip("/")
+    remainder = rel[len(prefix) :].lstrip("/") if rel.startswith(prefix) else ""
+    parts = Path(remainder).parts
+    section = ""
+    if "notes" in parts:
+        idx = parts.index("notes")
+        if idx + 1 < len(parts):
+            section = parts[idx + 1]
+    elif "proofs" in parts:
+        idx = parts.index("proofs")
+        if idx + 1 < len(parts):
+            section = parts[idx + 1]
+    title = (route.get("sections") or {}).get(section) or title_from_slug(section)
+    return section, title
+
+
+def source_from_route(file: str, route: dict[str, Any] | None) -> str:
+    if not route:
+        return source_from_file(file)
+    rel = file.replace("\\", "/")
+    prefix = str(route.get("prefix", "")).strip("/")
+    if rel == prefix:
+        return ""
+    if rel.startswith(prefix + "/"):
+        return rel[len(prefix) + 1 :]
+    return source_from_file(file)
+
+
+def resolve_route(file: str, routes: list[dict[str, Any]]) -> dict[str, Any] | None:
+    rel = file.replace("\\", "/")
+    for route in routes:
+        prefix = str(route.get("prefix", "")).strip("/")
+        if rel == prefix or rel.startswith(prefix + "/"):
+            return route
+    return None
+
+
+def proof_status_source(text: str) -> str:
+    return "todo_stub_skipped" if re.search(r"\bTODO:", text) else "completed"
+
+
+def collect_proof_files(repos_root: Path, routes: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    proofs: dict[str, dict[str, Any]] = {}
+    for repo_root in sorted(repos_root.glob("lra-volume-*")):
+        if not (repo_root / ".git").exists():
             continue
-        chapter_key = parts[2] if len(parts) >= 3 and parts[1] in CHAPTER_WRAPPERS else parts[1]
-        if chapter_key in {chapter["id"] for chapter in chapters}:
-            continue
-        chapter_index = input_path(repo_root, raw)
-        chapter_title = first_tex_title(chapter_index, CHAPTER_RE)
-        if not chapter_title:
-            continue
-        notes_index = chapter_index.parent / "notes" / "index.tex"
-        sections: list[dict[str, str]] = []
-        for section_match in INPUT_RE.finditer(read_tex(notes_index)):
-            section_raw = section_match.group("path").replace("\\", "/")
-            section_parts = Path(section_raw).parts
-            if len(section_parts) < 4 or section_parts[0] != f"volume-{volume}":
+        volume_root = resolve_volume(repo_root).root
+        for path in files_to_validate(volume_root, only_reachable=True):
+            rel = path.relative_to(repo_root).as_posix()
+            if "/proofs/" not in rel:
                 continue
-            try:
-                notes_index_part = section_parts.index("notes")
-            except ValueError:
+            text = path.read_text(encoding="utf-8", errors="replace")
+            match = PROOF_FOR_RE.search(text)
+            if not match:
                 continue
-            if notes_index_part + 1 >= len(section_parts):
-                continue
-            section_key = section_parts[notes_index_part + 1]
-            if section_key in {section["id"] for section in sections}:
-                continue
-            section_index = input_path(repo_root, section_raw)
-            section_title = first_tex_title(section_index, SECTION_RE, section_key)
-            sections.append({"id": section_key, "title": section_title})
-        chapters.append({"id": chapter_key, "title": chapter_title, "sections": sections})
-    return {"id": volume, "repo": repo_name, "chapters": chapters}
-
-
-def build_toc(repos_root: Path) -> list[dict[str, Any]]:
-    def key(path: Path) -> int:
-        value = volume_from_repo(path.name)
-        roman = {"i": 1, "ii": 2, "iii": 3, "iv": 4, "v": 5, "vi": 6, "vii": 7, "viii": 8}
-        return roman.get(value, 999)
-
-    volumes = []
-    for repo_root in sorted(repos_root.glob("lra-volume-*"), key=key):
-        if (repo_root / ".git").exists():
-            volumes.append(toc_for_repo(repo_root))
-    return volumes
+            label = match.group("label").strip()
+            route = resolve_route(rel, routes)
+            proof_source = source_from_route(rel, route)
+            proofs[label] = {
+                "has_proof_file": True,
+                "proof_source": proof_source,
+                "proof_sketch_source": proof_status_source(text),
+            }
+    return proofs
 
 
 def section_from_file(file: str) -> str:
@@ -313,7 +387,7 @@ def title_for(node: dict[str, Any]) -> str:
     return title
 
 
-def build_export(run_dir: Path, repos_root: Path, version: dict[str, Any]) -> tuple[dict[str, Any], list[dict[str, str]]]:
+def build_export(run_dir: Path, repos_root: Path, version: dict[str, Any], registry: dict[str, Any]) -> tuple[dict[str, Any], list[dict[str, str]]]:
     universe = load_json(run_dir / "universe.json")
     combined = load_json(run_dir / "combined-edges.json")
     nodes = universe["nodes"]
@@ -343,24 +417,20 @@ def build_export(run_dir: Path, repos_root: Path, version: dict[str, Any]) -> tu
     chapter_order: list[str] = []
     seen_chapters: set[str] = set()
     examples_by_label = collect_worked_examples(repos_root, nodes)
-    toc = build_toc(repos_root)
-    chapter_titles = {
-        (volume["id"], chapter["id"]): chapter["title"]
-        for volume in toc
-        for chapter in volume.get("chapters", [])
-    }
-    section_titles = {
-        (volume["id"], chapter["id"], section["id"]): section["title"]
-        for volume in toc
-        for chapter in volume.get("chapters", [])
-        for section in chapter.get("sections", [])
-    }
+    toc = registry_toc(registry)
+    routes = registry_routes(registry)
+    proof_files = collect_proof_files(repos_root, routes)
 
     for node in sorted(nodes, key=lambda item: item["source_order"]):
         label = node["label"]
-        chapter = chapter_from_file(node["file"])
-        volume = volume_from_repo(node.get("repo", ""))
-        section = section_from_file(node["file"])
+        route = resolve_route(node["file"], routes)
+        fallback_chapter = chapter_from_file(node["file"])
+        fallback_volume = volume_from_repo(node.get("repo", ""))
+        chapter = str((route or {}).get("chapter") or fallback_chapter)
+        volume = (route or {}).get("volume") or ROMAN_TO_NUMBER.get(str(fallback_volume), fallback_volume)
+        section, section_title = section_from_route(node["file"], route)
+        source = source_from_route(node["file"], route)
+        proof_info = proof_files.get(label, {})
         if chapter not in seen_chapters:
             seen_chapters.add(chapter)
             chapter_order.append(chapter)
@@ -378,14 +448,24 @@ def build_export(run_dir: Path, repos_root: Path, version: dict[str, Any]) -> tu
             "name": name,
             "deck": "",
             "chapter": chapter,
-            "chapter_title": chapter_titles.get((volume, chapter), title_from_slug(chapter)),
+            "chapter_title": str((route or {}).get("chapter_title") or title_from_slug(chapter)),
             "volume": volume,
-            "source": source_from_file(node["file"]),
+            "volume_roman": str((route or {}).get("volume_roman") or fallback_volume),
+            "volume_title": str((route or {}).get("volume_title") or ""),
+            "series_title": str((route or {}).get("series_title") or ""),
+            "book": str((route or {}).get("book") or ""),
+            "book_title": str((route or {}).get("book_title") or ""),
+            "book_order": (route or {}).get("book_order") or 0,
+            "book_dir": str((route or {}).get("book_dir") or ""),
+            "source": source,
             "statement_display": statement,
             "statement_tex": statement,
             "source_text": statement,
             "section": section,
-            "section_title": section_titles.get((volume, chapter, section), title_from_slug(section)),
+            "section_title": section_title,
+            "has_proof_file": bool(proof_info.get("has_proof_file")),
+            "proof_source": str(proof_info.get("proof_source") or ""),
+            "proof_sketch_source": str(proof_info.get("proof_sketch_source") or ""),
             "depends_on_ids": deps,
             "used_by_ids": users,
             "proof_depends_on_ids": proof_deps,
@@ -451,6 +531,12 @@ def parse_args() -> argparse.Namespace:
         default=Path(__file__).resolve().parents[4] / "lra-proof-vault",
         help="lra-proof-vault repo used to build proof-vault-index.json.",
     )
+    parser.add_argument(
+        "--book-registry",
+        type=Path,
+        default=Path(__file__).resolve().parents[3] / "docs" / "architecture" / "book-registry.json",
+        help="Canonical book registry used for volume/book/chapter/section metadata.",
+    )
     return parser.parse_args()
 
 
@@ -460,16 +546,20 @@ def main() -> int:
     repos_root = args.repos_root.resolve()
     explorer = args.knowledge_explorer.resolve()
     proof_vault = args.proof_vault.resolve()
+    book_registry = args.book_registry.resolve()
     if not (run_dir / "universe.json").exists() or not (run_dir / "combined-edges.json").exists():
         raise SystemExit(f"Missing extraction artifacts in {run_dir}")
     if not (explorer / ".git").exists():
         raise SystemExit(f"Missing lra-knowledge-explorer repo: {explorer}")
     if not (proof_vault / ".git").exists():
         raise SystemExit(f"Missing lra-proof-vault repo: {proof_vault}")
+    if not book_registry.exists():
+        raise SystemExit(f"Missing book registry: {book_registry}")
 
     generated_at = datetime.now(timezone.utc).isoformat()
     version = next_version(explorer, generated_at)
-    knowledge, graph_edges = build_export(run_dir, repos_root, version)
+    registry = load_json(book_registry)
+    knowledge, graph_edges = build_export(run_dir, repos_root, version, registry)
     proof_vault_index = build_proof_vault_index(proof_vault, generated_at=generated_at)
     write_json(explorer / "knowledge.json", knowledge)
     write_json(explorer / "graph-edges.json", graph_edges)
