@@ -13,6 +13,7 @@ from pathlib import Path
 IMAGE_NAME = "learning-real-analysis-latex"
 DEFAULT_LATEX_ARGS = [
     "latexmk",
+    "-f",
     "-lualatex",
     "-interaction=nonstopmode",
     "-file-line-error",
