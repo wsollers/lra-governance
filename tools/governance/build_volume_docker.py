@@ -150,14 +150,22 @@ def discover_tex_roots(volume_root: Path, requested: list[str] | None) -> list[P
     return roots
 
 
-def clean_args_for(tex_root: Path) -> list[str]:
-    return ["latexmk", "-C", tex_root.name]
+def tex_argument(volume_root: Path, tex_root: Path) -> str:
+    try:
+        return tex_root.resolve().relative_to(volume_root.resolve()).as_posix()
+    except ValueError:
+        return tex_root.name
 
 
-def latex_args_for(base_args: list[str] | None, tex_root: Path) -> list[str]:
+def clean_args_for(volume_root: Path, tex_root: Path) -> list[str]:
+    return ["latexmk", "-C", tex_argument(volume_root, tex_root)]
+
+
+def latex_args_for(volume_root: Path, base_args: list[str] | None, tex_root: Path) -> list[str]:
+    target = tex_argument(volume_root, tex_root)
     if base_args:
-        return [*base_args, tex_root.name]
-    return [*DEFAULT_LATEX_ARGS, tex_root.name]
+        return [*base_args, target]
+    return [*DEFAULT_LATEX_ARGS, target]
 
 
 def built_pdf_for(volume_root: Path, tex_root: Path) -> Path:
@@ -175,6 +183,22 @@ def copy_outputs(volume_root: Path, tex_roots: list[Path], output_dir: Path | No
         shutil.copy2(pdf, output_dir / pdf.name)
 
 
+def reference_roots_for(volume_root: Path, gov_root: Path, tex_roots: list[Path]) -> list[Path]:
+    out_dir = volume_root / "build" / "reference"
+    cmd = [
+        sys.executable,
+        str(gov_root / "tools" / "governance" / "assemble_reference_tex.py"),
+        "--root",
+        str(volume_root),
+        "--out-dir",
+        str(out_dir),
+    ]
+    for tex_root in tex_roots:
+        cmd.extend(["--tex-root", tex_root.name])
+    run(cmd, volume_root)
+    return [out_dir / f"{tex_root.stem}-reference.tex" for tex_root in tex_roots]
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Build an LRA volume PDF through Docker.")
     parser.add_argument("--root", type=Path, default=Path("."), help="volume repo root")
@@ -190,7 +214,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--validate-only", action="store_true")
     parser.add_argument("--skip-validate", action="store_true")
     parser.add_argument("--skip-image-build", action="store_true")
-    parser.add_argument("--edition", choices=("digital", "print"), default="digital")
+    parser.add_argument("--edition", choices=("digital", "print", "reference"), default="digital")
     parser.add_argument("--paper", choices=("letter", "a4", "sixbynine"), default="letter")
     parser.add_argument("--print-edition", action="store_true", help="compatibility alias for --edition print")
     parser.add_argument("--clean", action="store_true", help="run latexmk -C in Docker before building")
@@ -223,11 +247,12 @@ def main(argv: list[str] | None = None) -> int:
     if not args.skip_image_build:
         run(["docker", "build", "-t", args.image, "-f", str(common_root / "docker" / "Dockerfile"), str(common_root / "docker")])
 
-    for tex_root in tex_roots:
+    build_roots = reference_roots_for(volume_root, gov_root, tex_roots) if edition == "reference" else tex_roots
+    for tex_root in build_roots:
         if args.clean:
-            docker_run(volume_root, common_root, gov_root, args.image, edition, args.paper, clean_args_for(tex_root))
-        docker_run(volume_root, common_root, gov_root, args.image, edition, args.paper, latex_args_for(args.latex_command, tex_root))
-    copy_outputs(volume_root, tex_roots, args.output_dir)
+            docker_run(volume_root, common_root, gov_root, args.image, edition, args.paper, clean_args_for(volume_root, tex_root))
+        docker_run(volume_root, common_root, gov_root, args.image, edition, args.paper, latex_args_for(volume_root, args.latex_command, tex_root))
+    copy_outputs(volume_root, build_roots, args.output_dir)
     return 0
 
 

@@ -49,6 +49,30 @@ def discover_tex_roots(root: Path) -> list[Path]:
     return roots
 
 
+def reference_roots_for(root: Path, tex_roots: list[Path]) -> list[Path]:
+    gov_root = governance_root()
+    out_dir = root / "build" / "reference"
+    cmd = [
+        sys.executable,
+        str(gov_root / "tools" / "governance" / "assemble_reference_tex.py"),
+        "--root",
+        str(root),
+        "--out-dir",
+        str(out_dir),
+    ]
+    for tex_root in tex_roots:
+        cmd.extend(["--tex-root", tex_root.name])
+    run(cmd, root)
+    return [out_dir / f"{tex_root.stem}-reference.tex" for tex_root in tex_roots]
+
+
+def tex_argument(root: Path, tex_root: Path) -> str:
+    try:
+        return tex_root.resolve().relative_to(root.resolve()).as_posix()
+    except ValueError:
+        return tex_root.name
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Validate and build a leaf LRA volume.")
     parser.add_argument("--root", type=Path, default=Path("."))
@@ -62,6 +86,12 @@ def main() -> int:
         "--print-edition",
         action="store_true",
         help="omit proof vaults, exercise vaults, and capstones from the rendered PDF",
+    )
+    parser.add_argument(
+        "--edition",
+        choices=("digital", "print", "reference"),
+        default="digital",
+        help="build behavior mode; reference renders only definitions and theorem-like statements",
     )
     parser.add_argument("--latex-command", nargs=argparse.REMAINDER, default=None)
     args = parser.parse_args()
@@ -83,10 +113,15 @@ def main() -> int:
                 "install latexmk or use --validate-only."
             )
         env = os.environ.copy()
-        if args.print_edition:
+        edition = "print" if args.print_edition else args.edition
+        env["LRA_EDITION"] = edition
+        if edition == "print":
             env["LRA_PRINT_EDITION"] = "1"
-        for tex_root in discover_tex_roots(root):
-            run([*latex_cmd_base, tex_root.name], root, env=env)
+        tex_roots = discover_tex_roots(root)
+        if edition == "reference":
+            tex_roots = reference_roots_for(root, tex_roots)
+        for tex_root in tex_roots:
+            run([*latex_cmd_base, tex_argument(root, tex_root)], root, env=env)
 
     return 0
 

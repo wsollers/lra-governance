@@ -107,6 +107,41 @@ jobs:
                   raise SystemExit(f"{pdf} is missing a PDF EOF trailer")
           PY
 
+      - name: Clean LaTeX build output
+        run: |
+          python lra-governance/tools/governance/build_volume_docker.py \
+            --root volume \
+            --common-root lra-common \
+            --skip-validate \
+            --skip-image-build \
+            --latex-command latexmk -C
+
+      - name: Compile reference PDF
+        run: |
+          python lra-governance/tools/governance/build_volume_docker.py \
+            --root volume \
+            --common-root lra-common \
+            --skip-validate \
+            --skip-image-build \
+            --edition reference \
+            --output-dir pdf-output/reference
+
+      - name: Verify reference PDF
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          pdfs = sorted(Path("pdf-output/reference").glob("*.pdf"))
+          if not pdfs:
+              raise SystemExit("no reference PDFs were produced")
+          for pdf in pdfs:
+              data = pdf.read_bytes()
+              if not data.startswith(b"%PDF-"):
+                  raise SystemExit(f"{pdf} does not start with a PDF header")
+              if b"%%EOF" not in data[-2048:]:
+                  raise SystemExit(f"{pdf} is missing a PDF EOF trailer")
+          PY
+
       # SYNC_PAT here authorizes publishing built PDFs to lra-volumes-output.
       # It is NOT the retired governance/volume sync; it is the independent
       # build's publish step.
@@ -122,7 +157,8 @@ jobs:
       - name: Publish PDFs to output repository
         run: |
           repo="${GITHUB_REPOSITORY##*/}"
-          mkdir -p output/digital output/print
+          mkdir -p output/digital output/print output/reference
+          touch output/reference/.gitkeep
           python3 - <<'PY'
           from pathlib import Path
 
@@ -144,13 +180,14 @@ jobs:
 
           publish("digital")
           publish("print")
+          publish("reference")
           PY
           cd output
           git config core.autocrlf false
           git config user.name "lra-pdf-bot"
           git config user.email "lra-pdf-bot@noreply.github.com"
-          git add digital/.gitkeep print/.gitkeep
-          git add -f digital/*.pdf print/*.pdf
+          git add digital/.gitkeep print/.gitkeep reference/.gitkeep
+          git add -f digital/*.pdf print/*.pdf reference/*.pdf
           if git diff --cached --quiet; then
             echo "No PDF changes to publish"
             exit 0
