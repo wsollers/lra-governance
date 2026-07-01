@@ -113,6 +113,13 @@ jobs:
             --title "From Cantor to Ito" \
             --skip-image-build
 
+      - name: Build volume and book PDFs
+        run: |
+          python lra-governance/tools/governance/build_series_volume_book_outputs.py \
+            --repos-root "$GITHUB_WORKSPACE" \
+            --common-root lra-common \
+            --output-dir pdf-output
+
       - name: Verify combined PDFs
         run: |
           python3 - <<'PY'
@@ -127,6 +134,35 @@ jobs:
                   raise SystemExit(f"{pdf} does not start with a PDF header")
               if b"%%EOF" not in data[-2048:]:
                   raise SystemExit(f"{pdf} is missing a PDF EOF trailer")
+          PY
+
+      - name: Verify volume and book PDFs
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          registry = json.loads(Path("lra-governance/docs/architecture/book-registry.json").read_text())
+          volume_count = len(registry["volumes"])
+          book_count = sum(len(volume.get("books", [])) for volume in registry["volumes"])
+          expected = {
+              ("digital", "volumes"): volume_count,
+              ("print", "volumes"): volume_count,
+              ("reference", "volumes"): volume_count,
+              ("digital", "books"): book_count,
+              ("print", "books"): book_count,
+              ("reference", "books"): book_count,
+          }
+          for (edition, level), count in expected.items():
+              pdfs = sorted((Path("pdf-output") / edition / level).glob("*.pdf"))
+              if len(pdfs) != count:
+                  raise SystemExit(f"expected {count} {edition}/{level} PDFs, found {len(pdfs)}")
+              for pdf in pdfs:
+                  data = pdf.read_bytes()
+                  if not data.startswith(b"%PDF-"):
+                      raise SystemExit(f"{pdf} does not start with a PDF header")
+                  if b"%%EOF" not in data[-2048:]:
+                      raise SystemExit(f"{pdf} is missing a PDF EOF trailer")
           PY
 
       # SYNC_PAT here authorizes publishing built PDFs to lra-volumes-output.
@@ -147,16 +183,22 @@ jobs:
           cp pdf-output/digital/from-cantor-to-ito.pdf output/digital/from-cantor-to-ito.pdf
           cp pdf-output/print/from-cantor-to-ito.pdf output/print/from-cantor-to-ito.pdf
           cp pdf-output/reference/from-cantor-to-ito.pdf output/reference/from-cantor-to-ito.pdf
+          cp pdf-output/digital/volumes/*.pdf output/digital/
+          cp pdf-output/print/volumes/*.pdf output/print/
+          cp pdf-output/reference/volumes/*.pdf output/reference/
+          cp pdf-output/digital/books/*.pdf output/digital/
+          cp pdf-output/print/books/*.pdf output/print/
+          cp pdf-output/reference/books/*.pdf output/reference/
           cd output
           git config core.autocrlf false
           git config user.name "lra-pdf-bot"
           git config user.email "lra-pdf-bot@noreply.github.com"
-          git add -f digital/from-cantor-to-ito.pdf print/from-cantor-to-ito.pdf reference/from-cantor-to-ito.pdf
+          git add -f digital/*.pdf print/*.pdf reference/*.pdf
           if git diff --cached --quiet; then
-            echo "No combined PDF changes to publish"
+            echo "No PDF changes to publish"
             exit 0
           fi
-          git commit -m "Update from-cantor-to-ito combined PDFs"
+          git commit -m "Update from-cantor-to-ito series PDFs"
           for attempt in 1 2 3; do
             git pull --rebase origin main
             if git push origin main; then
@@ -166,12 +208,32 @@ jobs:
           done
           exit 1
 
-      - name: Upload combined PDF artifacts
+      - name: Upload series PDF artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: from-cantor-to-ito-pdfs
+          name: from-cantor-to-ito-series-pdfs
           path: |
             pdf-output/digital/from-cantor-to-ito.pdf
             pdf-output/print/from-cantor-to-ito.pdf
             pdf-output/reference/from-cantor-to-ito.pdf
+          if-no-files-found: error
+
+      - name: Upload volume PDF artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: from-cantor-to-ito-volume-pdfs
+          path: |
+            pdf-output/digital/volumes/*.pdf
+            pdf-output/print/volumes/*.pdf
+            pdf-output/reference/volumes/*.pdf
+          if-no-files-found: error
+
+      - name: Upload book PDF artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: from-cantor-to-ito-book-pdfs
+          path: |
+            pdf-output/digital/books/*.pdf
+            pdf-output/print/books/*.pdf
+            pdf-output/reference/books/*.pdf
           if-no-files-found: error
