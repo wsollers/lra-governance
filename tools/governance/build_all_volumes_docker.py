@@ -23,12 +23,11 @@ DEFAULT_LATEX_ARGS = [
 ]
 
 
-def run(cmd: list[str], cwd: Path | None = None) -> None:
+def run(cmd: list[str], cwd: Path | None = None, check: bool = True) -> None:
     print("+ " + " ".join(str(part) for part in cmd))
-    try:
-        subprocess.run(cmd, cwd=cwd, check=True)
-    except subprocess.CalledProcessError as exc:
-        raise SystemExit(exc.returncode) from None
+    completed = subprocess.run(cmd, cwd=cwd, check=False)
+    if check and completed.returncode != 0:
+        raise SystemExit(completed.returncode)
 
 
 def require_tool(name: str) -> None:
@@ -180,7 +179,7 @@ def main(argv: list[str] | None = None) -> int:
     run([*docker_prefix, *assemble_cmd])
     if args.clean:
         run([*docker_prefix, "latexmk", "-C", tex_name])
-    run([*docker_prefix, *latex_args_for(args.latex_command, tex_name)])
+    run([*docker_prefix, *latex_args_for(args.latex_command, tex_name)], check=False)
 
     pdf = work_dir / "build" / pdf_name
     verify_pdf(pdf)
