@@ -54,7 +54,7 @@ Retired print-aware input macros must not be reintroduced. Use ordinary
 Reference builds do not use chapter-router exclusion blocks. The governance
 build helper generates a temporary reference TeX root by following routed source
 order and extracting only `definition`, `theorem`, `lemma`, `proposition`, and
-`corollary` environments. The generated root belongs under `build/reference/`
+`corollary` environments. The generated root belongs under `.lra-reference-build/`
 and must not be edited by hand.
 
 ## Build Requirements

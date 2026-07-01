@@ -184,7 +184,7 @@ def copy_outputs(volume_root: Path, tex_roots: list[Path], output_dir: Path | No
 
 
 def reference_roots_for(volume_root: Path, gov_root: Path, tex_roots: list[Path]) -> list[Path]:
-    out_dir = volume_root / "build" / "reference"
+    out_dir = volume_root / ".lra-reference-build"
     cmd = [
         sys.executable,
         str(gov_root / "tools" / "governance" / "assemble_reference_tex.py"),

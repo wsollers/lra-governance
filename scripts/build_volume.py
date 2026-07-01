@@ -51,7 +51,7 @@ def discover_tex_roots(root: Path) -> list[Path]:
 
 def reference_roots_for(root: Path, tex_roots: list[Path]) -> list[Path]:
     gov_root = governance_root()
-    out_dir = root / "build" / "reference"
+    out_dir = root / ".lra-reference-build"
     cmd = [
         sys.executable,
         str(gov_root / "tools" / "governance" / "assemble_reference_tex.py"),
