@@ -25,6 +25,26 @@ EXPOSITORY_BLOCK_RE = re.compile(
 )
 FORMAL_INNER_RE = re.compile(r"\\begin\{(?:definition|axiom|theorem|lemma|proposition|corollary)\}", re.IGNORECASE)
 CITATION_RE = re.compile(r"\\cite[t|p]?\{")
+FORMAL_BOX_RE = re.compile(
+    r"\\begin\{(?P<env>definitionbox|definitionalbox|axiombox|theorembox|lemmabox|propositionbox|corollarybox)\}"
+    r"(?:\{[^{}]*\})?"
+    r"(?P<body>[\s\S]*?)"
+    r"\\end\{(?P=env)\}",
+    re.IGNORECASE,
+)
+DECORATION_INSIDE_FORMAL_RE = re.compile(
+    r"\\begin\{(?:remark\*|example\*|dependencies)\}"
+    r"|\\textbf\{(?:"
+    r"Standard quantified statement|Quantified form|"
+    r"Definition predicate reading|Predicate reading|Predicate form|"
+    r"Negated quantified statement|Negated quantified form|Negated form|"
+    r"Negation predicate reading|Negated predicate form|"
+    r"Failure modes|Failure mode decomposition|"
+    r"Contrapositive quantified statement|Contrapositive predicate reading|"
+    r"Interpretation|Exposition|Examples|Non-Examples|Dependencies"
+    r")\.?\}",
+    re.IGNORECASE,
+)
 
 DECORATION_ORDER = {
     "proof_link": 10,
@@ -73,6 +93,7 @@ def validate(volume_root: Path, files) -> list[Finding]:
 
 def _validate_file(volume_root: Path, path: Path, findings: list[Finding]) -> None:
     text = strip_latex_comments(read_text(path))
+    _check_decoration_inside_formal_blocks(volume_root, path, text, findings)
     for begin, end_pos in _formal_blocks(text):
         block_text = text[begin.start():end_pos]
         labels = LABEL_RE.findall(block_text)
@@ -85,6 +106,58 @@ def _validate_file(volume_root: Path, path: Path, findings: list[Finding]) -> No
         _check_source_citations(volume_root, path, decoration, label, line, findings)
         _check_expository_formal_claims(volume_root, path, decoration, label, line, findings)
         _check_decoration_blocks(volume_root, path, decoration, label, env, line, findings)
+
+
+def _check_decoration_inside_formal_blocks(
+    volume_root: Path,
+    path: Path,
+    text: str,
+    findings: list[Finding],
+) -> None:
+    for begin, end_pos in _formal_blocks(text):
+        _check_decoration_inside_span(
+            volume_root,
+            path,
+            text,
+            begin.start(),
+            end_pos,
+            begin.group("env").lower(),
+            findings,
+        )
+    for match in FORMAL_BOX_RE.finditer(text):
+        _check_decoration_inside_span(
+            volume_root,
+            path,
+            text,
+            match.start(),
+            match.end(),
+            match.group("env").lower(),
+            findings,
+        )
+
+
+def _check_decoration_inside_span(
+    volume_root: Path,
+    path: Path,
+    text: str,
+    start: int,
+    end: int,
+    env: str,
+    findings: list[Finding],
+) -> None:
+    body = text[start:end]
+    match = DECORATION_INSIDE_FORMAL_RE.search(body)
+    if not match:
+        return
+    findings.append(
+        finding(
+            "decoration_block_inside_formal_block",
+            f"{env} contains a decoration/support block; close the formal block before quantified, predicate, negation, failure-mode, interpretation, example, or dependency blocks.",
+            path,
+            volume_root,
+            _line_at(text, start + match.start()),
+        )
+    )
 
 
 def _check_source_citations(

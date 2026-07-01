@@ -1224,6 +1224,38 @@ class ValidateVolumeTests(unittest.TestCase):
         self.assertIn("missing_dependent_parent_block", codes)
         self.assertIn("unknown_decoration_block", codes)
 
+    def test_formal_decoration_errors_on_blocks_inside_formal_blocks(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{theorembox}{Bad Box}",
+                    r"\begin{theorem}[Bad Box]",
+                    r"\label{thm:bad-box-decoration}",
+                    "Statement.",
+                    r"\end{theorem}",
+                    r"\begin{remark*}[Standard quantified statement]",
+                    "This support block belongs after the box.",
+                    r"\end{remark*}",
+                    r"\end{theorembox}",
+                    r"\begin{proposition}[Bad Inline]",
+                    r"\label{prop:bad-inline-decoration}",
+                    "Statement.",
+                    r"\textbf{Failure modes.}",
+                    "This support heading belongs after the proposition.",
+                    r"\end{proposition}",
+                    "",
+                ]
+            ),
+        )
+
+        findings = validate_with_inventory(formal_decoration, volume)
+        matches = [finding for finding in findings if finding.code == "decoration_block_inside_formal_block"]
+
+        self.assertGreaterEqual(len(matches), 2)
+        self.assertTrue(all(finding.severity == "error" for finding in matches))
+
     def test_math_boxes_flags_raw_and_wrong_but_allows_unwrapped_formal_blocks(self):
         volume = make_volume()
         write(
