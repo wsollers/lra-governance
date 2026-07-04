@@ -28,6 +28,7 @@ Specialist overlays now include:
 - `lra-knowledge-explorer.md`
 - `lra-numerical-analysis.md`
 - `lra-pdf-extractor.md`
+- `lra-proof-vault.md`
 - `lra-source-profiles.md`
 
 Volume-class overlays now include:
