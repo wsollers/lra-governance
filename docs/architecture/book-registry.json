@@ -345,6 +345,14 @@
               ]
             },
             {
+              "chapter": "extended-real-numbers",
+              "notes": [
+                "the-extended-real-number-system",
+                "arithmetic-and-order",
+                "extended-real-intervals"
+              ]
+            },
+            {
               "chapter": "complex-numbers",
               "notes": [
                 "construction-of-c",
@@ -605,7 +613,8 @@
             {
               "chapter": "mathematical-spaces",
               "notes": [
-                "spaces-as-structured-arenas"
+                "spaces-as-structured-arenas",
+                "ordered-fields"
               ]
             },
             {

@@ -8,7 +8,7 @@
     },
     {
       "name": "book-continuum",
-      "chapters": ["rationals", "reals", "complex-numbers", "number-lines", "embedding-number-systems", "numbers-summary"]
+      "chapters": ["rationals", "reals", "extended-real-numbers", "complex-numbers", "number-lines", "embedding-number-systems", "numbers-summary"]
     }
   ]
 }
