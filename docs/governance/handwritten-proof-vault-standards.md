@@ -122,6 +122,12 @@ attempts:
   tex_path:
   text_source:
   text_review_status:
+  ocr_quality_status:
+  ocr_selected_engine:
+  ocr_selected_profile:
+  ocr_selected_psm:
+  ocr_attempt_count:
+  ocr_attempts: []
   origin:
   review_status:
   notes:
@@ -242,25 +248,32 @@ should perform the following steps:
 3. Sanitize the image by removing embedded metadata with Pillow, ExifTool, and
    ImageMagick stripping.
 4. Create or update route-style proof-vault metadata.
-5. OCR the sanitized image into a plain-text artifact, preserving OCR mistakes
-   rather than silently correcting them.
-6. Translate the OCR text into a reviewed Markdown proof artifact and a
-   reviewed TeX proof artifact. The TeX artifact is the display source consumed
-   by Knowledge Explorer.
-7. Record `ocr_text_path`, `markdown_path`, `tex_path`, `text_source`, and
-   `text_review_status` on the attempt metadata.
-8. Commit the proof vault repository.
-9. Push the proof vault repository.
-10. Add a `\ProofVaultURL{...}` backlink to the canonical theorem proof file
+5. OCR the sanitized image into a plain-text artifact with the configured OCR
+   provider. The default provider may be local Ollama/Qwen vision with
+   Tesseract preprocessing retries as fallback. Preserve OCR mistakes in the
+   OCR artifact rather than silently correcting them.
+6. Verify the mathematics against the image and theorem route before accepting
+   the attempt. OCR text is provisional evidence; it is not authoritative proof
+   content.
+7. Produce Markdown and TeX display artifacts. When a reviewed canonical proof
+   already exists, reconstruct accepted display text from that canonical proof
+   and keep the OCR text as evidence. Otherwise, only mark display text accepted
+   after mathematical verification and review.
+8. Record `ocr_text_path`, `markdown_path`, `tex_path`, `text_source`,
+   `text_review_status`, OCR engine/profile, OCR quality, and OCR attempt
+   summaries on the attempt metadata.
+9. Commit the proof vault repository.
+10. Push the proof vault repository.
+11. Add a `\ProofVaultURL{...}` backlink to the canonical theorem proof file
     with `lra-proof-vault/scripts/apply_leaf_backlinks.py`, or an equivalent
     deterministic step that validates the exact leaf proof file.
-11. If the proof was accepted as correct and memorialized, update the owning
+12. If the proof was accepted as correct and memorialized, update the owning
    volume repo's tracked `proofs-to-do.md` artifact: change the proof label
    marker from `()` to `(✅)` and update the open/completed counts. The standard
    backlink applicator performs this tracker update by default only after the
    canonical proof file has both proof bodies and dependencies populated.
-12. Commit the canonical repository.
-13. Push the canonical repository.
+13. Commit the canonical repository.
+14. Push the canonical repository.
 
 No raw image may be committed at any stage of this workflow.
 
@@ -276,8 +289,15 @@ docker run --rm `
   --file /repos/path/to/photo.jpg `
   --theorem-id <stable-theorem-label> `
   --review-status <review-status> `
+  --ocr-provider auto `
   --from-canonical-proof
 ```
+
+In `auto` mode, the proof-vault tooling may try a configured local Ollama/Qwen
+vision model first and use Tesseract retries when the vision pass is
+unavailable or judged garbled. Docker Desktop users who want containerized
+runs to reach host Ollama should pass an `--ollama-url` reachable from the
+container, such as `http://host.docker.internal:11434`.
 
 For existing vault records, the standard audit/backfill command is:
 
@@ -368,7 +388,8 @@ A direct transcription alone is not a complete canonical proof file.
 
 Each reviewed proof attempt should carry three text artifacts:
 
-- `*.ocr.txt`: source-faithful OCR output from the sanitized image;
+- `*.ocr.txt`: source-faithful OCR output from the sanitized image, including
+  any OCR mistakes;
 - `*.proof.md`: reviewed Markdown presentation of the proof;
 - `*.proof.tex`: reviewed TeX presentation suitable for KaTeX rendering.
 
@@ -386,3 +407,9 @@ usable text, the OCR artifact must say so explicitly, and the metadata should
 use `text_source: canonical-proof-with-empty-ocr`. When OCR is unavailable
 entirely, the OCR artifact must say so explicitly, and the metadata should use
 `text_source: canonical-proof-reconstruction` rather than claiming OCR.
+
+OCR quality metadata should record the selected OCR engine, selected profile or
+model, selected Tesseract page-segmentation mode when applicable, attempt
+count, and quality summary. A `garbled` OCR quality status is a validation
+warning, not by itself a proof rejection. The proof is accepted or rejected by
+mathematical verification, not by OCR confidence alone.

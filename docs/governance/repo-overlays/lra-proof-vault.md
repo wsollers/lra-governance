@@ -37,8 +37,10 @@ memorialization is for already-sanitized non-photo artifacts or exceptional
 manual recovery.
 
 The Docker pipeline is the standard toolchain because it provides Pillow,
-ExifTool, ImageMagick, Tesseract OCR, text artifact generation, and vault
-validation. Raw mobile images must never be committed.
+ExifTool, ImageMagick, OCR integration, text artifact generation, and vault
+validation. It may use a configured local vision/OCR provider such as
+Ollama/Qwen, falling back to Tesseract when configured or needed. Raw mobile
+images must never be committed.
 
 ## Validation Commands
 
