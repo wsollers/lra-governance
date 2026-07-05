@@ -75,6 +75,7 @@ def make_volume() -> Path:
                 r"\begin{proposition}[Order]",
                 r"\label{prop:order}",
                 "Every ordered integer is ordered.",
+                r"\hyperref[prf:order]{\textit{Go to proof.}}",
                 r"\end{proposition}",
                 r"\end{propositionbox}",
                 r"\begin{dependencies}",
@@ -626,6 +627,51 @@ class ValidateVolumeTests(unittest.TestCase):
         self.assertIn("content_after_clearpage", codes)
         self.assertIn("restatement_type_mismatch", codes)
 
+    def test_proof_file_contract_requires_exactly_one_return_navigation(self):
+        volume = make_volume()
+        proof = volume / "integers" / "proofs" / "order" / "prf-order.tex"
+        proof.write_text(
+            "\n".join(
+                [
+                    r"\label{prf:order}",
+                    r"\LRAProofFor{prop:order}",
+                    r"\begin{proposition*}[Order]",
+                    "Restated.",
+                    r"\end{proposition*}",
+                    "",
+                ]
+            ),
+            encoding="utf-8",
+        )
+
+        codes = {finding.code for finding in validate_with_inventory(proof_file_contract, volume)}
+
+        self.assertIn("missing_return_navigation", codes)
+
+        proof.write_text(
+            "\n".join(
+                [
+                    r"\label{prf:order}",
+                    r"\LRAProofFor{prop:order}",
+                    r"\begin{remark*}[Return]",
+                    r"\hyperref[prop:order]{Return}",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Return]",
+                    r"\hyperref[prop:order]{Return again}",
+                    r"\end{remark*}",
+                    r"\begin{proposition*}[Order]",
+                    "Restated.",
+                    r"\end{proposition*}",
+                    "",
+                ]
+            ),
+            encoding="utf-8",
+        )
+
+        codes = {finding.code for finding in validate_with_inventory(proof_file_contract, volume)}
+
+        self.assertIn("multiple_return_navigation", codes)
+
     def test_proof_file_contract_flags_restatement_count_layer_order_and_todo_placement(self):
         volume = make_volume()
         proof = volume / "integers" / "proofs" / "order" / "prf-order.tex"
@@ -1090,6 +1136,64 @@ class ValidateVolumeTests(unittest.TestCase):
         self.assertIn("toolkit_misplaced", codes)
         self.assertIn("toolkit_contains_formal", codes)
 
+    def test_structural_chrome_validates_toolkit_link_targets(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "index.tex",
+            "\n".join(
+                [
+                    r"\section{Order Notes}",
+                    r"\begin{toolkitbox}{Order Toolkit}",
+                    r"\begin{tabular}{l l}",
+                    r"\hyperref[prop:order]{Order} & valid target \\",
+                    r"\hyperref[def:missing-order]{Missing} & invalid target \\",
+                    r"\end{tabular}",
+                    r"\end{toolkitbox}",
+                    r"\input{volume-ii/integers/notes/order/notes-order}",
+                    "",
+                ]
+            ),
+        )
+
+        findings = validate_with_inventory(structural_chrome, volume)
+        codes = {finding.code for finding in findings}
+        self.assertIn("toolkit_link_unknown_target", codes)
+        self.assertTrue(
+            any(
+                finding.code == "toolkit_link_unknown_target"
+                and "def:missing-order" in finding.message
+                and finding.severity == "error"
+                for finding in findings
+            )
+        )
+
+    def test_structural_chrome_warns_for_nonleading_toolkit_links(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "index.tex",
+            "\n".join(
+                [
+                    r"\section{Order Notes}",
+                    r"\begin{toolkitbox}{Order Toolkit}",
+                    r"\begin{tabular}{l l}",
+                    r"Order & \hyperref[prop:order]{valid target} \\",
+                    r"\end{tabular}",
+                    r"\end{toolkitbox}",
+                    r"\input{volume-ii/integers/notes/order/notes-order}",
+                    "",
+                ]
+            ),
+        )
+
+        findings = validate_with_inventory(structural_chrome, volume)
+        self.assertTrue(
+            any(
+                finding.code == "toolkit_link_not_leading_cell"
+                and finding.severity == "warning"
+                for finding in findings
+            )
+        )
+
     def test_structural_chrome_flags_inline_tikzpicture(self):
         volume = make_volume()
         write(
@@ -1223,6 +1327,47 @@ class ValidateVolumeTests(unittest.TestCase):
         self.assertIn("forbidden_decoration_block", codes)
         self.assertIn("missing_dependent_parent_block", codes)
         self.assertIn("unknown_decoration_block", codes)
+
+    def test_formal_decoration_requires_matching_go_to_proof_link(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{theorem}[Missing Link]",
+                    r"\label{thm:missing-link}",
+                    "Missing proof navigation.",
+                    r"\end{theorem}",
+                    r"\NoLocalDependencies",
+                    "",
+                    r"\begin{lemma}[Wrong Link]",
+                    r"\label{lem:wrong-link}",
+                    "Wrong proof navigation.",
+                    r"\hyperref[prf:not-wrong-link]{\textit{Go to proof.}}",
+                    r"\end{lemma}",
+                    r"\NoLocalDependencies",
+                    "",
+                    r"\begin{definition}[No Proof Link Needed]",
+                    r"\label{def:no-proof-link-needed}",
+                    "Definitions do not need proof navigation.",
+                    r"\end{definition}",
+                    r"\NoLocalDependencies",
+                    "",
+                ]
+            ),
+        )
+
+        findings = validate_with_inventory(formal_decoration, volume)
+        by_code = {finding.code: finding for finding in findings}
+
+        self.assertIn("missing_go_to_proof_link", by_code)
+        self.assertIn("wrong_go_to_proof_target", by_code)
+        self.assertTrue(all(
+            finding.severity == "error"
+            for finding in findings
+            if finding.code in {"missing_go_to_proof_link", "wrong_go_to_proof_target"}
+        ))
+        self.assertNotIn("def:no-proof-link-needed", "\n".join(f.message for f in findings))
 
     def test_formal_decoration_errors_on_blocks_inside_formal_blocks(self):
         volume = make_volume()
@@ -1552,6 +1697,10 @@ class ValidateVolumeTests(unittest.TestCase):
         self.assertIn("dependency_targets_proof", codes)
         self.assertIn("invalid_dependency_target_prefix", codes)
         self.assertIn("missing_dependencies", codes)
+        self.assertTrue(any(
+            finding.code == "missing_dependencies" and finding.severity == "error"
+            for finding in validate_with_inventory(dependency_blocks, volume)
+        ))
 
     def test_dependency_graphs_accepts_canonical_fixture(self):
         volume = make_volume()

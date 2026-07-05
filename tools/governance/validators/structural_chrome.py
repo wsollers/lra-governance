@@ -16,6 +16,8 @@ ENV_BEGIN_RE = re.compile(r"\\begin\{(exposition|toolkitbox)\}")
 ENV_END_RE = re.compile(r"\\end\{(exposition|toolkitbox)\}")
 BREADCRUMB_RE = re.compile(r"\\(?:breadcrumb\{|LraBreadcrumb\b)")
 TOOLKITBOX_RE = re.compile(r"\\begin\{toolkitbox\}.*?\\end\{toolkitbox\}", re.DOTALL)
+LABEL_RE = re.compile(r"\\label\{([^}]+)\}")
+HYPERREF_RE = re.compile(r"\\hyperref\[([^\]]+)\]")
 TOOLKIT_DETAIL_HEADER_RE = re.compile(r"\\textbf\{Detail\}")
 TOOLKIT_DETAIL_LINK_RE = re.compile(r"&\s*\\hyperref\[[^\]]+\]\{[^{}]*(?:Def|Thm|Prop|Lem|Cor|Ax|Rem|Ex|downarrow|Down)[^{}]*\}\s*\\\\")
 FORMAL_OR_PROOF_RE = re.compile(r"\\begin\{(?:definition|theorem|lemma|proposition|corollary|axiom|proof)\}")
@@ -28,16 +30,17 @@ ENV_NAME = {"exposition": "exposition", "toolkitbox": "toolkit"}
 
 def validate(volume_root: Path, files) -> list[Finding]:
     findings: list[Finding] = []
+    visible_labels = _collect_visible_labels(volume_root, files)
     for tex in validator_files(volume_root, files):
-        _validate_file(volume_root, tex, findings)
+        _validate_file(volume_root, tex, findings, visible_labels)
     return findings
 
 
-def _validate_file(volume_root: Path, path: Path, findings: list[Finding]) -> None:
+def _validate_file(volume_root: Path, path: Path, findings: list[Finding], visible_labels: set[str]) -> None:
     text = read_text(path)
     rel = path.resolve().relative_to(volume_root.resolve()).as_posix()
     _check_breadcrumb_format(volume_root, path, text, findings)
-    _check_toolkit(volume_root, path, rel, text, findings)
+    _check_toolkit(volume_root, path, rel, text, findings, visible_labels)
     _check_retired_structural_text(volume_root, path, text, findings)
     _check_inline_tikz(volume_root, path, rel, text, findings)
 
@@ -57,7 +60,14 @@ def _check_breadcrumb_format(volume_root: Path, path: Path, text: str, findings:
         )
 
 
-def _check_toolkit(volume_root: Path, path: Path, rel: str, text: str, findings: list[Finding]) -> None:
+def _check_toolkit(
+    volume_root: Path,
+    path: Path,
+    rel: str,
+    text: str,
+    findings: list[Finding],
+    visible_labels: set[str],
+) -> None:
     role = _notes_role(rel)
     events = _events(text)
     for index, (kind, line, level) in enumerate(events):
@@ -136,6 +146,7 @@ def _check_toolkit(volume_root: Path, path: Path, rel: str, text: str, findings:
                     line,
                 )
             )
+        _check_toolkit_links(volume_root, path, text, match.start(), body, visible_labels, findings)
     for match in RAW_TOOLKIT_RE.finditer(text):
         if "oolkit" in match.group(1):
             findings.append(
@@ -147,6 +158,73 @@ def _check_toolkit(volume_root: Path, path: Path, rel: str, text: str, findings:
                     text.count("\n", 0, match.start()) + 1,
                 )
             )
+
+
+def _collect_visible_labels(volume_root: Path, files) -> set[str]:
+    labels: set[str] = set()
+    for tex in validator_files(volume_root, files):
+        labels.update(LABEL_RE.findall(read_text(tex)))
+    return labels
+
+
+def _check_toolkit_links(
+    volume_root: Path,
+    path: Path,
+    full_text: str,
+    toolkit_start: int,
+    body: str,
+    visible_labels: set[str],
+    findings: list[Finding],
+) -> None:
+    for match in HYPERREF_RE.finditer(body):
+        target = match.group(1)
+        line = full_text.count("\n", 0, toolkit_start + match.start()) + 1
+        if target not in visible_labels:
+            findings.append(
+                finding(
+                    "toolkit_link_unknown_target",
+                    f"Toolkit link targets unknown label {target}.",
+                    path,
+                    volume_root,
+                    line,
+                )
+            )
+
+    for row_start, row in _toolkit_table_rows(body):
+        first_amp = _first_unescaped_ampersand(row)
+        first_link = HYPERREF_RE.search(row)
+        if first_amp is None or first_link is None or first_link.start() < first_amp:
+            continue
+        line = full_text.count("\n", 0, toolkit_start + row_start + first_link.start()) + 1
+        findings.append(
+            finding(
+                "toolkit_link_not_leading_cell",
+                "Toolkit quick-reference links should be on the leading concept/row label cell.",
+                path,
+                volume_root,
+                line,
+                "warning",
+            )
+        )
+
+
+def _toolkit_table_rows(body: str):
+    for match in re.finditer(r"(?P<row>.*?)(?:\\\\|\\cr)(?:\s*(?:\n|$))", body, re.DOTALL):
+        row = match.group("row")
+        if "\\hyperref[" not in row:
+            continue
+        if "\\textbf{" in row:
+            continue
+        yield match.start("row"), row
+
+
+def _first_unescaped_ampersand(text: str) -> int | None:
+    for match in re.finditer("&", text):
+        prefix = text[: match.start()]
+        backslash_count = len(prefix) - len(prefix.rstrip("\\"))
+        if backslash_count % 2 == 0:
+            return match.start()
+    return None
 
 
 def _check_retired_structural_text(volume_root: Path, path: Path, text: str, findings: list[Finding]) -> None:

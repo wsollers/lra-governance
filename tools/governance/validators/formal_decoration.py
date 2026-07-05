@@ -15,6 +15,7 @@ FORMAL_RE = re.compile(
 )
 SECTION_RE = re.compile(r"\\(?:chapter|section|subsection|subsubsection)\*?\{")
 LABEL_RE = re.compile(r"\\label\{([^}]+)\}")
+PROOF_HYPERREF_RE = re.compile(r"\\hyperref\[(?P<label>prf:[^\]]+)\]", re.IGNORECASE)
 DECORATION_BLOCK_RE = re.compile(
     r"\\begin\{(?P<env>remark\*|example\*|dependencies)\}(?:\[(?P<title>[^\]]+)\])?",
     re.IGNORECASE,
@@ -103,6 +104,7 @@ def _validate_file(volume_root: Path, path: Path, findings: list[Finding]) -> No
         env = begin.group("env").lower()
         line = text.count("\n", 0, begin.start()) + 1
         decoration = text[end_pos:_next_boundary(text, end_pos)]
+        _check_proof_navigation(volume_root, path, block_text, label, env, line, findings)
         _check_source_citations(volume_root, path, decoration, label, line, findings)
         _check_expository_formal_claims(volume_root, path, decoration, label, line, findings)
         _check_decoration_blocks(volume_root, path, decoration, label, env, line, findings)
@@ -156,6 +158,50 @@ def _check_decoration_inside_span(
             path,
             volume_root,
             _line_at(text, start + match.start()),
+        )
+    )
+
+
+def _check_proof_navigation(
+    volume_root: Path,
+    path: Path,
+    block_text: str,
+    label: str,
+    env: str,
+    line: int,
+    findings: list[Finding],
+) -> None:
+    if env not in {"theorem", "lemma", "proposition", "corollary"}:
+        return
+    if ":" not in label:
+        return
+    expected = f"prf:{label.split(':', 1)[1]}"
+    links = [
+        link
+        for link in PROOF_HYPERREF_RE.finditer(block_text)
+        if "go to proof" in block_text[link.end():link.end() + 160].lower()
+    ]
+    if not links:
+        findings.append(
+            finding(
+                "missing_go_to_proof_link",
+                f"{label} must contain \\hyperref[{expected}]{{\\textit{{Go to proof.}}}} inside the {env} body.",
+                path,
+                volume_root,
+                line,
+            )
+        )
+        return
+    if any(link.group("label") == expected for link in links):
+        return
+    actual = ", ".join(link.group("label") for link in links)
+    findings.append(
+        finding(
+            "wrong_go_to_proof_target",
+            f"{label} proof navigation must target {expected}; found {actual}.",
+            path,
+            volume_root,
+            line,
         )
     )
 

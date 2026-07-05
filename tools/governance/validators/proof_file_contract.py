@@ -18,6 +18,7 @@ RESTATEMENT_RE = re.compile(
 )
 PROOF_BODY_RE = re.compile(r"\\begin\{proof\}(?:\[[^\]]*\])?(?P<body>[\s\S]*?)\\end\{proof\}", re.IGNORECASE)
 DEPENDENCIES_RE = re.compile(r"\\begin\{dependencies\}(?P<body>[\s\S]*?)\\end\{dependencies\}", re.IGNORECASE)
+RETURN_RE = re.compile(r"\\begin\{remark\*\}\[Return\](?P<body>[\s\S]*?)\\end\{remark\*\}", re.IGNORECASE)
 PROOF_STRUCTURE_RE = re.compile(r"\\begin\{remark\*\}\[Proof structure\][\s\S]*?\\end\{remark\*\}", re.IGNORECASE)
 PROFESSIONAL_RE = re.compile(r"Professional Standard Proof", re.IGNORECASE)
 DETAILED_RE = re.compile(r"Detailed (?:Learning|Instructional) Proof", re.IGNORECASE)
@@ -164,11 +165,29 @@ def _check_todo_placement(volume_root: Path, path: Path, text: str, findings: li
 def _check_return_navigation(volume_root: Path, path: Path, text: str, proof_for, findings: list[Finding]) -> None:
     if not proof_for:
         return
-    return_start = text.find(r"\begin{remark*}[Return]")
-    if return_start < 0:
+    return_blocks = list(RETURN_RE.finditer(text))
+    if not return_blocks:
+        findings.append(
+            finding(
+                "missing_return_navigation",
+                "Proof file must contain exactly one Return remark linking to the associated source label.",
+                path,
+                volume_root,
+                _line_at(text, proof_for.start()),
+            )
+        )
         return
-    return_end = text.find(r"\end{remark*}", return_start)
-    return_block = text[return_start:return_end] if return_end >= 0 else text[return_start:]
+    if len(return_blocks) > 1:
+        findings.append(
+            finding(
+                "multiple_return_navigation",
+                "Proof file must contain exactly one Return remark.",
+                path,
+                volume_root,
+                _line_at(text, return_blocks[1].start()),
+            )
+        )
+    return_block = return_blocks[0].group("body")
     expected = proof_for.group("label")
     if expected not in [match.group("label") for match in HYPERREF_RE.finditer(return_block)]:
         findings.append(
@@ -177,7 +196,7 @@ def _check_return_navigation(volume_root: Path, path: Path, text: str, proof_for
                 "Return navigation must hyperref to the associated source label.",
                 path,
                 volume_root,
-                _line_at(text, return_start),
+                _line_at(text, return_blocks[0].start()),
             )
         )
 
