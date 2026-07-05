@@ -214,33 +214,33 @@
               "chapter": "formalizing-number-systems",
               "notes": []
             },
-              {
-                "chapter": "identity-equality-equivalence",
-                "notes": [
-                  "identity-equality-equivalence",
-                  "equality",
-                  "properties-of-equality",
-                  "substitution",
-                  "equivalence"
-                ]
-              },
-              {
-                "chapter": "arithmetic-operations-relations",
-                "notes": [
-                  "arithmetic-operations-relations",
-                  "closure",
-                  "identity-elements",
-                  "inverse-operations",
-                  "algebraic-laws",
-                  "derived-laws",
-                  "order-relations",
-                  "order-compatibility",
-                  "composed-relations",
-                  "structure-preserving-maps",
-                  "algebraic-structures",
-                  "field-and-ordered-field-laws"
-                ]
-              },
+            {
+              "chapter": "identity-equality-equivalence",
+              "notes": [
+                "identity-equality-equivalence",
+                "equality",
+                "properties-of-equality",
+                "substitution",
+                "equivalence"
+              ]
+            },
+            {
+              "chapter": "arithmetic-operations-relations",
+              "notes": [
+                "arithmetic-operations-relations",
+                "closure",
+                "identity-elements",
+                "inverse-operations",
+                "algebraic-laws",
+                "derived-laws",
+                "order-relations",
+                "order-compatibility",
+                "composed-relations",
+                "structure-preserving-maps",
+                "algebraic-structures",
+                "field-and-ordered-field-laws"
+              ]
+            },
             {
               "chapter": "constructing-number-systems",
               "notes": [
@@ -252,10 +252,10 @@
             {
               "chapter": "peano-systems",
               "notes": [
-                "presburger-arithmetic",
                 "defining-peano-systems",
                 "examples-of-peano-systems",
-                "recursion-on-peano-systems"
+                "recursion-on-peano-systems",
+                "presburger-arithmetic"
               ]
             },
             {
@@ -330,6 +330,13 @@
               ]
             },
             {
+              "chapter": "number-lines",
+              "notes": [
+                "number-lines",
+                "intervals-on-a-number-line"
+              ]
+            },
+            {
               "chapter": "reals",
               "notes": [
                 "construction-of-r",
@@ -359,13 +366,6 @@
                 "operations-on-c-classes",
                 "field-structure-of-c",
                 "embedding-r-into-c"
-              ]
-            },
-            {
-              "chapter": "number-lines",
-              "notes": [
-                "number-lines",
-                "intervals-on-a-number-line"
               ]
             },
             {
@@ -424,12 +424,21 @@
               ]
             },
             {
+              "chapter": "bounding",
+              "notes": [
+                "bounds-extremals",
+                "bounds-algebra",
+                "completeness"
+              ]
+            },
+            {
               "chapter": "structure-of-real-line",
               "notes": [
                 "real-line-one-dimensional",
                 "order-distance-length",
                 "absolute-value-as-distance",
                 "intervals-as-subsets",
+                "set-operations-on-real-line",
                 "neighborhoods-and-balls",
                 "open-sets",
                 "closed-sets",
@@ -439,14 +448,6 @@
                 "covers-and-subcovers",
                 "compactness-on-r",
                 "heine-borel"
-              ]
-            },
-            {
-              "chapter": "bounding",
-              "notes": [
-                "bounds-extremals",
-                "bounds-algebra",
-                "completeness"
               ]
             },
             {
@@ -476,16 +477,16 @@
               "chapter": "sequences",
               "notes": [
                 "definition",
-                "examples-counterexamples",
                 "convergence",
                 "tails",
+                "examples-counterexamples",
                 "monotonicity",
                 "subsequences",
                 "divergence",
                 "liminf-limsup",
-                "order-limits",
                 "cluster-values",
                 "cauchy",
+                "order-limits",
                 "applications"
               ]
             },
@@ -519,10 +520,10 @@
             {
               "chapter": "elementary-functions",
               "notes": [
-                "hyperbolic",
-                "logarithmic",
                 "power-exponential",
-                "trigonometric"
+                "logarithmic",
+                "trigonometric",
+                "hyperbolic"
               ]
             },
             {
@@ -576,10 +577,11 @@
                 "cauchy-integral",
                 "riemann-integral",
                 "darboux-integral",
+                "measure-zero",
                 "riemann-stieltjes",
                 "henstock-kurzweil",
                 "mcshane-integral",
-                "measure-zero"
+                "comparative-summary"
               ]
             }
           ],
@@ -878,27 +880,6 @@
       "books": [
         {
           "order": 1,
-          "slug": "category-theory",
-          "title": "Category Theory",
-          "tex_root": "volume-vii-category-theory.tex",
-          "legacy_roots": [
-            "volume-vii-category-theory-main.tex",
-            "main-book-category-theory.tex"
-          ],
-          "book_dir": "volume-vii/book-category-theory",
-          "expected_toc": [
-            {
-              "chapter": "category-theory",
-              "notes": []
-            }
-          ],
-          "frontmatter_mathematician": "Saunders Mac Lane",
-          "mathematician_lifespan": "1909-2005",
-          "image_path": "images/mac-lane.png",
-          "frontmatter_status": "proposed"
-        },
-        {
-          "order": 2,
           "slug": "model-theory",
           "title": "Model Theory",
           "tex_root": "volume-vii-model-theory.tex",
@@ -921,7 +902,7 @@
           "frontmatter_status": "proposed"
         },
         {
-          "order": 3,
+          "order": 2,
           "slug": "proof-theory",
           "title": "Proof Theory",
           "tex_root": "volume-vii-proof-theory.tex",
@@ -939,6 +920,29 @@
           "frontmatter_mathematician": "Gerhard Gentzen",
           "mathematician_lifespan": "1909-1945",
           "image_path": "images/gentzen.png",
+          "frontmatter_status": "proposed"
+        },
+        {
+          "order": 3,
+          "slug": "lambda-calculus",
+          "title": "Lambda Calculus",
+          "tex_root": "volume-vii-lambda-calculus.tex",
+          "legacy_roots": [
+            "volume-vii-lambda-calculus-main.tex",
+            "main-book-lambda-calculus.tex"
+          ],
+          "book_dir": "volume-vii/book-lambda-calculus",
+          "expected_toc": [
+            {
+              "chapter": "lambda-calculus",
+              "notes": [
+                "introduction"
+              ]
+            }
+          ],
+          "frontmatter_mathematician": "Alonzo Church",
+          "mathematician_lifespan": "1903-1995",
+          "image_path": "images/church.png",
           "frontmatter_status": "proposed"
         },
         {
@@ -964,25 +968,23 @@
         },
         {
           "order": 5,
-          "slug": "lambda-calculus",
-          "title": "Lambda Calculus",
-          "tex_root": "volume-vii-lambda-calculus.tex",
+          "slug": "category-theory",
+          "title": "Category Theory",
+          "tex_root": "volume-vii-category-theory.tex",
           "legacy_roots": [
-            "volume-vii-lambda-calculus-main.tex",
-            "main-book-lambda-calculus.tex"
+            "volume-vii-category-theory-main.tex",
+            "main-book-category-theory.tex"
           ],
-          "book_dir": "volume-vii/book-lambda-calculus",
+          "book_dir": "volume-vii/book-category-theory",
           "expected_toc": [
             {
-              "chapter": "lambda-calculus",
-              "notes": [
-                "introduction"
-              ]
+              "chapter": "category-theory",
+              "notes": []
             }
           ],
-          "frontmatter_mathematician": "Alonzo Church",
-          "mathematician_lifespan": "1903-1995",
-          "image_path": "images/church.png",
+          "frontmatter_mathematician": "Saunders Mac Lane",
+          "mathematician_lifespan": "1909-2005",
+          "image_path": "images/mac-lane.png",
           "frontmatter_status": "proposed"
         }
       ],
@@ -998,6 +1000,31 @@
       "books": [
         {
           "order": 1,
+          "slug": "numerical-foundations",
+          "title": "Numerical Foundations",
+          "tex_root": "volume-viii-numerical-foundations.tex",
+          "legacy_roots": [
+            "volume-viii-numerical-foundations-main.tex",
+            "main-book-numerical-foundations.tex"
+          ],
+          "book_dir": "volume-viii/book-numerical-foundations",
+          "expected_toc": [
+            {
+              "chapter": "numerical-analysis",
+              "notes": [
+                "ieee-floating-point",
+                "interval-arithmetic",
+                "numerical-geometry"
+              ]
+            },
+            {
+              "chapter": "numerical-pde",
+              "notes": []
+            }
+          ]
+        },
+        {
+          "order": 2,
           "slug": "applied-methods",
           "title": "Applied Methods",
           "tex_root": "volume-viii-applied-methods.tex",
@@ -1019,19 +1046,6 @@
               ]
             },
             {
-              "chapter": "geometric-modeling",
-              "notes": [
-                "curves-and-surfaces",
-                "bezier-curves"
-              ]
-            },
-            {
-              "chapter": "computational-geometry",
-              "notes": [
-                "convex-hulls"
-              ]
-            },
-            {
               "chapter": "computational-linear-algebra",
               "notes": [
                 "vectors",
@@ -1046,6 +1060,19 @@
                 "applications",
                 "numerical-linear-algebra",
                 "probability-statistics"
+              ]
+            },
+            {
+              "chapter": "geometric-modeling",
+              "notes": [
+                "curves-and-surfaces",
+                "bezier-curves"
+              ]
+            },
+            {
+              "chapter": "computational-geometry",
+              "notes": [
+                "convex-hulls"
               ]
             },
             {
@@ -1065,31 +1092,6 @@
             },
             {
               "chapter": "computational-probability",
-              "notes": []
-            }
-          ]
-        },
-        {
-          "order": 2,
-          "slug": "numerical-foundations",
-          "title": "Numerical Foundations",
-          "tex_root": "volume-viii-numerical-foundations.tex",
-          "legacy_roots": [
-            "volume-viii-numerical-foundations-main.tex",
-            "main-book-numerical-foundations.tex"
-          ],
-          "book_dir": "volume-viii/book-numerical-foundations",
-          "expected_toc": [
-            {
-              "chapter": "numerical-analysis",
-              "notes": [
-                "ieee-floating-point",
-                "interval-arithmetic",
-                "numerical-geometry"
-              ]
-            },
-            {
-              "chapter": "numerical-pde",
               "notes": []
             }
           ]
