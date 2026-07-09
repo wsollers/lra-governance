@@ -418,6 +418,7 @@
               "chapter": "real-analysis",
               "notes": [
                 "proof-techniques",
+                "error-propagation",
                 "asymptotic-notation",
                 "inequality",
                 "modulus"
@@ -544,6 +545,7 @@
               "notes": [
                 "secant-tangent",
                 "derivative-definition",
+                "linear-approximation",
                 "one-sided-derivatives",
                 "chain-rule",
                 "derivative-geometry",
