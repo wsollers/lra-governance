@@ -387,6 +387,28 @@ def title_for(node: dict[str, Any]) -> str:
     return title
 
 
+def logical_blocks_for(node: dict[str, Any]) -> dict[str, str]:
+    blocks: dict[str, str] = {}
+    for block in node.get("support_blocks") or []:
+        title = str(block.get("canonical_title") or "").strip().lower()
+        if not title:
+            continue
+        key = re.sub(r"[^a-z0-9]+", "_", title).strip("_")
+        if key and block.get("body_tex"):
+            blocks.setdefault(key, str(block.get("body_tex") or ""))
+    return blocks
+
+
+def failure_modes_for(node: dict[str, Any]) -> list[dict[str, Any]]:
+    modes: list[dict[str, Any]] = []
+    for block in node.get("support_blocks") or []:
+        if str(block.get("canonical_title") or "").strip().lower() != "failure modes":
+            continue
+        for mode in block.get("modes") or []:
+            modes.append(mode)
+    return modes
+
+
 def build_export(run_dir: Path, repos_root: Path, version: dict[str, Any], registry: dict[str, Any]) -> tuple[dict[str, Any], list[dict[str, str]]]:
     universe = load_json(run_dir / "universe.json")
     combined = load_json(run_dir / "combined-edges.json")
@@ -442,6 +464,9 @@ def build_export(run_dir: Path, repos_root: Path, version: dict[str, Any], regis
         statement = statement_for_node(repos_root, node)
         kind = KIND_DISPLAY.get(node["kind"], node["kind"])
         name = title_for(node)
+        support_blocks = node.get("support_blocks") or []
+        logical_blocks = logical_blocks_for(node)
+        failure_modes = failure_modes_for(node)
         exported = {
             "id": label,
             "kind": kind,
@@ -486,6 +511,9 @@ def build_export(run_dir: Path, repos_root: Path, version: dict[str, Any], regis
             "root_kind": node.get("root_kind") or ("axiom" if kind == "Axiom" else ""),
             "env_name": node.get("env", ""),
             "text_preview": re.sub(r"\s+", " ", statement)[:240],
+            "support_blocks": support_blocks,
+            "logical_blocks": logical_blocks,
+            "failure_modes": failure_modes,
         }
         if examples_by_label.get(label):
             exported["examples"] = examples_by_label[label]

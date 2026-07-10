@@ -89,5 +89,40 @@ def find_triggers(text: str, surface_forms) -> list:
 def has_formal_reading(decoration: str) -> bool:
     return bool(re.search(r"\\begin\{remark\*?\}\[Standard quantified statement\]", decoration, re.I))
 
+def has_predicate_reading(decoration: str) -> bool:
+    return bool(re.search(r"\\begin\{remark\*?\}\[Predicate reading\]", decoration, re.I))
+
+def standard_quantified_statement_bodies(decoration: str) -> list[str]:
+    return [
+        match.group("body")
+        for match in re.finditer(
+            r"\\begin\{remark\*?\}\[Standard quantified statement\](?P<body>[\s\S]*?)\\end\{remark\*?\}",
+            decoration,
+            re.I,
+        )
+    ]
+
+def count_quantified_binders(text: str) -> int:
+    r"""Count variables bound by \forall and \exists in a quantified display."""
+    text = re.sub(r"\\(?:,|;|:|quad|qquad|enspace|thinspace|medspace|!)", " ", text)
+    text = re.sub(r"\\text\{[^{}]*\}", " ", text)
+    spans = list(re.finditer(r"\\(?:forall|exists)\b", text))
+    count = 0
+    for index, match in enumerate(spans):
+        start = match.end()
+        end = spans[index + 1].start() if index + 1 < len(spans) else len(text)
+        segment = text[start:end]
+        segment = re.split(
+            r"\\(?:Rightarrow|Longrightarrow|Leftrightarrow|Longleftrightarrow|implies|iff|land|lor)\b|[.;:]",
+            segment,
+            maxsplit=1,
+        )[0]
+        segment = re.split(r"\\in\b|\\notin\b|\\subseteq\b|\\leq\b|\\geq\b|=|<|>|\\mid\b|\|", segment, maxsplit=1)[0]
+        segment = re.sub(r"\\[A-Za-z]+", " ", segment)
+        segment = segment.replace("{", " ").replace("}", " ")
+        names = re.findall(r"[A-Za-z](?:_\{[^{}]+\}|_[A-Za-z0-9]+)?(?:\^\{[^{}]+\}|\^[A-Za-z0-9]+)?", segment)
+        count += len(names)
+    return count
+
 def is_marked_simple(text: str) -> bool:
     return "lra:simple" in text.lower()

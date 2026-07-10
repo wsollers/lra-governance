@@ -69,6 +69,14 @@ def make_volume() -> Path:
                 "Order has a foundation.",
                 r"\end{axiom}",
                 r"\end{axiombox}",
+                r"\begin{remark*}[Standard quantified statement]",
+                r"\[",
+                r"\exists \preceq.",
+                r"\]",
+                r"\end{remark*}",
+                r"\begin{remark*}[Interpretation]",
+                "The axiom fixes the order relation used in the chapter.",
+                r"\end{remark*}",
                 r"\NoLocalDependencies",
                 "",
                 r"\begin{propositionbox}{Proposition (Order)}",
@@ -78,6 +86,14 @@ def make_volume() -> Path:
                 r"\hyperref[prf:order]{\textit{Go to proof.}}",
                 r"\end{proposition}",
                 r"\end{propositionbox}",
+                r"\begin{remark*}[Standard quantified statement]",
+                r"\[",
+                r"\forall n\in \mathbb{Z},\quad n \preceq n.",
+                r"\]",
+                r"\end{remark*}",
+                r"\begin{remark*}[Interpretation]",
+                "The proposition records a reflexive order comparison.",
+                r"\end{remark*}",
                 r"\begin{dependencies}",
                 r"\begin{itemize}",
                 r"  \item \hyperref[ax:order-foundation]{Order foundation}.",
@@ -1325,8 +1341,80 @@ class ValidateVolumeTests(unittest.TestCase):
 
         self.assertIn("decoration_order", codes)
         self.assertIn("forbidden_decoration_block", codes)
-        self.assertIn("missing_dependent_parent_block", codes)
+        self.assertIn("legacy_failure_mode_decomposition", codes)
         self.assertIn("unknown_decoration_block", codes)
+
+    def test_formal_decoration_requires_predicate_reading_for_multiple_binders(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{definition}[Binary Relation]",
+                    r"\label{def:binary-relation-extra}",
+                    "A relation is binary when it compares two inputs.",
+                    r"\end{definition}",
+                    r"\begin{remark*}[Standard quantified statement]",
+                    r"\[",
+                    r"\forall x,y\in A,\quad R(x,y).",
+                    r"\]",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Interpretation]",
+                    "The statement reads the relation as a two-input predicate.",
+                    r"\end{remark*}",
+                    r"\NoLocalDependencies",
+                    "",
+                ]
+            ),
+        )
+
+        codes = {finding.code for finding in validate_with_inventory(formal_decoration, volume)}
+
+        self.assertIn("predicate_reading_missing", codes)
+
+    def test_formal_decoration_flags_unstructured_failure_modes(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{proposition}[Conditional Order]",
+                    r"\label{prop:conditional-order-extra}",
+                    r"If $x \leq y$, then $x$ is below $y$.",
+                    r"\hyperref[prf:conditional-order-extra]{\textit{Go to proof.}}",
+                    r"\end{proposition}",
+                    r"\begin{remark*}[Standard quantified statement]",
+                    r"\[",
+                    r"\forall x,y\in A,\quad x \leq y \Rightarrow x \preceq y.",
+                    r"\]",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Predicate reading]",
+                    r"\[",
+                    r"P(x,y) \Rightarrow Q(x,y).",
+                    r"\]",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Failure modes]",
+                    r"\begin{description}",
+                    r"\item[Missing antecedent.]",
+                    "The antecedent may fail.",
+                    r"\[",
+                    r"\exists x,y\in A,\quad x \nleq y.",
+                    r"\]",
+                    r"\end{description}",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Interpretation]",
+                    "The statement transfers an order comparison into another relation.",
+                    r"\end{remark*}",
+                    r"\NoLocalDependencies",
+                    "",
+                ]
+            ),
+        )
+
+        codes = {finding.code for finding in validate_with_inventory(formal_decoration, volume)}
+
+        self.assertIn("failure_modes_missing_exposition_item", codes)
+        self.assertIn("failure_mode_missing_predicate_display", codes)
 
     def test_formal_decoration_requires_matching_go_to_proof_link(self):
         volume = make_volume()
@@ -1541,6 +1629,20 @@ class ValidateVolumeTests(unittest.TestCase):
 
     def test_interpretation_blocks_flags_missing_interpretation(self):
         volume = make_volume()
+        note = volume / "integers" / "notes" / "order" / "notes-order.tex"
+        note.write_text(
+            "\n".join(
+                [
+                    r"\begin{axiom}[Order Foundation]",
+                    r"\label{ax:order-foundation}",
+                    "Order has a foundation.",
+                    r"\end{axiom}",
+                    r"\NoLocalDependencies",
+                    "",
+                ]
+            ),
+            encoding="utf-8",
+        )
 
         codes = {finding.code for finding in validate_with_inventory(interpretation_blocks, volume)}
 

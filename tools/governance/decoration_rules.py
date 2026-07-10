@@ -141,14 +141,19 @@ def missing_dependencies(b: Block, ctx: Context):
 
 # (remaining analyze_block checks port the same way: one function each.)
 
-from formal_reading import find_triggers, has_formal_reading, is_marked_simple
+from formal_reading import (
+    count_quantified_binders,
+    find_triggers,
+    has_formal_reading,
+    has_predicate_reading,
+    is_marked_simple,
+    standard_quantified_statement_bodies,
+)
 
 @rule("formal_reading_required", AUDITED_ENVS)
 def formal_reading_required(b: Block, ctx: Context):
-    """A statement that invokes a registered concept or a logic operator needs a
-    Standard quantified statement (formal reading). Trigger = logic floor OR a
-    canonical predicate/object/structure surface form. Trigger-without-reading is an
-    error; "simple" (no trigger) is exempt; marked-simple-but-triggers is an error."""
+    """Every formal statement needs a Standard quantified statement.
+    Trigger hits still catch invalid lra:simple markers."""
     if not ctx.formal_reading:
         return
     triggers = find_triggers(b.text, ctx.concept_surface_forms)
@@ -159,11 +164,10 @@ def formal_reading_required(b: Block, ctx: Context):
         yield Issue("simple_but_triggers",
             f"Marked simple but invokes {uniq[:4]}; naming a registered concept or logic "
             f"operator means it is not simple.", "error", b.line_start)
-    elif triggers and not reading:
+    if not reading:
         yield Issue("formal_reading_missing",
-            f"Statement invokes {uniq[:4]} but has no Standard quantified statement "
-            f"(formal reading). Generate the quantified/predicate reading, or mark it "
-            f"lra:simple if it makes no formal claim.", "error", b.line_start)
+            "Formal statement has no Standard quantified statement formal reading.",
+            "error", b.line_start)
 
 # ================= FILE-LEVEL RULES =================
 # Whole-file invariants: breadcrumb/toolkit placement, structural-roadmap purge.
@@ -644,15 +648,18 @@ _HYPERREF_RE = re.compile(r"\\hyperref\[([^\]]+)\]")
 _DEPENDENCY_PREFIXES = {"def","ax","thm","lem","prop","cor"}
 _PROOF_ENVS = {"theorem","lemma","proposition","corollary"}
 _DECORATION_ORDER = {
-    "proof_link":10,"standard quantified statement":20,"definition predicate reading":30,
+    "proof_link":10,"standard quantified statement":20,
     "predicate reading":30,"negated quantified statement":40,"negation predicate reading":50,
-    "failure modes":60,"failure mode decomposition":70,"contrapositive quantified statement":80,
-    "contrapositive predicate reading":90,"interpretation":100,"notation":102,"historical note":105,
+    "failure modes":60,"contrapositive quantified statement":70,
+    "contrapositive predicate reading":80,"interpretation":100,"notation":102,"historical note":105,
     "comparison with feferman":105,"exposition":110,"examples":120,"non-examples":130,"dependencies":140,
+}
+_LEGACY_DECORATION_ORDER = {
+    "definition predicate reading": _DECORATION_ORDER["predicate reading"],
+    "failure mode decomposition": _DECORATION_ORDER["failure modes"],
 }
 _DEPENDENT_DECORATION_PARENTS = {
     "negation predicate reading":"negated quantified statement",
-    "failure mode decomposition":"failure modes",
     "contrapositive predicate reading":"contrapositive quantified statement",
 }
 _FORBIDDEN_DECORATION_BY_ENV = {
@@ -743,6 +750,12 @@ def formal_block_decoration(text: str, info: FileInfo, ctx: Context):
         if not re.search(r"\\begin\{remark\*\}\[Standard quantified statement\]", dec):
             yield Issue("missing_standard_quantified_statement",
                 f"{label} lacks Standard quantified statement block.", "error", ln)
+        else:
+            binder_count=sum(count_quantified_binders(body) for body in standard_quantified_statement_bodies(dec))
+            if binder_count >= 2 and not has_predicate_reading(dec):
+                yield Issue("predicate_reading_missing",
+                    f"{label} has {binder_count} quantified binders but lacks a Predicate reading block.",
+                    "error", ln)
         for body in _dependency_bodies(dec):
             for item in re.finditer(r"\\item(.*)", body):
                 refs=_HYPERREF_RE.findall(item.group(1))
@@ -779,7 +792,13 @@ def formal_block_decoration(text: str, info: FileInfo, ctx: Context):
         seen=[]
         for m in _DECORATION_BLOCK_RE.finditer(dec):
             key=_decoration_key(m)
-            if key not in _DECORATION_ORDER:
+            rank=_DECORATION_ORDER.get(key)
+            if rank is None and key in _LEGACY_DECORATION_ORDER:
+                rank=_LEGACY_DECORATION_ORDER[key]
+                yield Issue(f"legacy_{key.replace(' ', '_')}",
+                    f"{label} uses legacy decoration block '{key}'; migrate to the canonical block title.",
+                    "error", ln + _line_at(dec, m.start()) - 1)
+            if rank is None:
                 yield Issue("unknown_decoration_block",
                     f"{label} has nonstandard decoration block '{key}'.",
                     "error", ln + _line_at(dec, m.start()) - 1)
@@ -788,7 +807,9 @@ def formal_block_decoration(text: str, info: FileInfo, ctx: Context):
                 yield Issue("forbidden_decoration_block",
                     f"{b.environment} must not use decoration block '{key}' by artifact-matrix rules.",
                     "error", ln + _line_at(dec, m.start()) - 1)
-            seen.append((key, _DECORATION_ORDER[key], m.start()))
+            if key == "failure modes":
+                yield from _check_failure_modes_block(dec, m, label, ln)
+            seen.append((key, rank, m.start()))
         seen_keys={k for k,_,_ in seen}
         for child,parent in _DEPENDENT_DECORATION_PARENTS.items():
             if child in seen_keys and parent not in seen_keys:
@@ -799,3 +820,31 @@ def formal_block_decoration(text: str, info: FileInfo, ctx: Context):
                 yield Issue("decoration_order",
                     f"{rk} appears before {lk} for {label}; use the canonical decoration order.",
                     "error", ln + _line_at(dec, rp) - 1)
+
+def _check_failure_modes_block(dec, match, label, line):
+    body_match=re.search(r"\\begin\{remark\*\}\[Failure modes\](?P<body>[\s\S]*?)\\end\{remark\*\}", dec[match.start():], re.IGNORECASE)
+    if not body_match:
+        return
+    body=body_match.group("body")
+    block_line=line + _line_at(dec, match.start()) - 1
+    if not re.search(r"\\begin\{description\}", body):
+        yield Issue("failure_modes_missing_description",
+            f"{label} Failure modes block must use a description list.", "error", block_line)
+        return
+    items=list(re.finditer(r"\\item\[(?P<title>[^\]]+)\](?P<body>[\s\S]*?)(?=\\item\[|\\end\{description\})", body))
+    if not items or items[0].group("title").strip().lower().rstrip(".") != "exposition":
+        yield Issue("failure_modes_missing_exposition_item",
+            f"{label} Failure modes block must start with \\item[Exposition.].", "error", block_line)
+    for item in items:
+        if item.group("title").strip().lower().rstrip(".") == "exposition":
+            continue
+        displays=re.findall(r"\\\[[\s\S]*?\\\]", item.group("body"))
+        item_line=block_line + _line_at(body, item.start()) - 1
+        if not displays:
+            yield Issue("failure_mode_missing_quantified_display",
+                f"{label} failure mode '{item.group('title').strip()}' lacks a quantified display.",
+                "error", item_line)
+        if has_predicate_reading(dec) and len(displays) < 2:
+            yield Issue("failure_mode_missing_predicate_display",
+                f"{label} failure mode '{item.group('title').strip()}' lacks a predicate-reading display.",
+                "error", item_line)

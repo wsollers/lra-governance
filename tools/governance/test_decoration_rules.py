@@ -263,7 +263,7 @@ def test_fr_logic_word_trigger():
 
 def test_fr_genuinely_simple_ok():
     t = "\\begin{definition}[N]\n\\label{def:n}\nWe call this object a widget.\n\\end{definition}"
-    assert "formal_reading_missing" not in _fr_codes(t)
+    assert "formal_reading_missing" in _fr_codes(t)
 
 def test_fr_simple_but_concept_errors():
     t = "\\begin{definition}[D]\n\\label{def:d}\n% lra:simple\nA metric space is the setting.\n\\end{definition}"
@@ -271,7 +271,7 @@ def test_fr_simple_but_concept_errors():
 
 def test_fr_wholeword_no_substring_match():
     t = "\\begin{definition}[U]\n\\label{def:u}\nThe staircase is unbounded near the boundary.\n\\end{definition}"
-    assert "formal_reading_missing" not in _fr_codes(t)
+    assert "formal_reading_missing" in _fr_codes(t)
 
 # ---------- proof_stub_structure_blank ----------
 _PI = dr.FileInfo("vol/c/proofs/sec/prf-x.tex", "other")

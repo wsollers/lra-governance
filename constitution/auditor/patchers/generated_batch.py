@@ -273,10 +273,10 @@ def _regenerate_after_validation_failure(
         f"{subject}\n\n"
         "The previous generated block failed deterministic validation. "
         "Regenerate the entire block from scratch and fix every issue below. "
-        "Use plain ASCII punctuation in prose. Use canonical predicate readings "
-        "with \\operatorname{...}; do not use undefined predicate macros such as "
-        "\\UpperBound, \\LowerBound, \\Supremum, or \\Infimum. Include all required "
-        "definition support blocks, especially Failure modes and Failure mode decomposition.\n\n"
+        "Use plain ASCII punctuation in prose. Use canonical Predicate reading "
+        "blocks with \\operatorname{...}; do not use undefined predicate macros "
+        "such as \\UpperBound, \\LowerBound, \\Supremum, or \\Infimum. Include all "
+        "required support blocks, especially structured Failure modes blocks.\n\n"
         f"Validation issues: {issues}"
     )
     return generate_statement(

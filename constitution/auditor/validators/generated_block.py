@@ -52,13 +52,12 @@ _BOX_REQUIRED_TYPES = {"ax"}
 
 _DEFINITION_REQUIRED_REMARKS = {
     "standard quantified statement",
-    "definition predicate reading",
-    "negated quantified statement",
-    "negation predicate reading",
-    "failure modes",
-    "failure mode decomposition",
     "interpretation",
     "dependencies",
+}
+_LEGACY_REMARK_TITLES = {
+    "definition predicate reading": "predicate reading",
+    "failure mode decomposition": "failure modes",
 }
 
 
@@ -152,6 +151,7 @@ def validate_generated_block(
     if effective_type == "def":
         findings.extend(_validate_definition(cleaned, env_body))
 
+    findings.extend(_validate_required_logical_blocks(cleaned))
     findings.extend(_validate_common_latex(cleaned))
     findings.extend(_validate_dependencies(cleaned))
 
@@ -279,11 +279,8 @@ def _validate_box(tex: str, artifact_type: str) -> list[Finding]:
 
 def _validate_definition(tex: str, env_body: str) -> list[Finding]:
     findings: list[Finding] = []
-    titles = {_normalize_title(title) for title, _ in _REMARK.findall(tex)}
+    titles = _support_titles(tex)
     required = set(_DEFINITION_REQUIRED_REMARKS)
-    if "% MISSING_PREDICATE:" in tex:
-        required.discard("definition predicate reading")
-        required.discard("negation predicate reading")
     if _NO_LOCAL_DEPENDENCIES.search(tex):
         required.discard("dependencies")
 
@@ -306,6 +303,99 @@ def _validate_definition(tex: str, env_body: str) -> list[Finding]:
                 _excerpt(env_body, r"\bif\b"),
             )
         )
+    return findings
+
+
+def _validate_required_logical_blocks(tex: str) -> list[Finding]:
+    findings: list[Finding] = []
+    remarks = [(_normalize_title(title), body) for title, body in _REMARK.findall(tex)]
+    titles = _support_titles(tex)
+    for legacy, canonical in _LEGACY_REMARK_TITLES.items():
+        if legacy in titles:
+            findings.append(
+                Finding(
+                    "FAIL",
+                    "legacy_logical_block_title",
+                    f"Generated block uses legacy remark title `{legacy}`; use `{canonical}`.",
+                )
+            )
+    if "standard quantified statement" not in titles:
+        findings.append(
+            Finding(
+                "FAIL",
+                "missing_standard_quantified_statement",
+                "Generated block must include a Standard quantified statement remark.",
+            )
+        )
+    if "interpretation" not in titles:
+        findings.append(
+            Finding(
+                "FAIL",
+                "missing_interpretation",
+                "Generated block must include an Interpretation remark.",
+            )
+        )
+    binder_count = sum(
+        _count_quantified_binders(body)
+        for title, body in remarks
+        if title == "standard quantified statement"
+    )
+    if binder_count >= 2 and "predicate reading" not in titles:
+        findings.append(
+            Finding(
+                "FAIL",
+                "missing_predicate_reading",
+                "Generated block has at least two quantified binders but no Predicate reading remark.",
+                f"binders={binder_count}",
+            )
+        )
+    findings.extend(_validate_failure_modes(remarks, has_predicate_reading="predicate reading" in titles))
+    return findings
+
+
+def _validate_failure_modes(remarks: list[tuple[str, str]], *, has_predicate_reading: bool) -> list[Finding]:
+    findings: list[Finding] = []
+    for title, body in remarks:
+        if title != "failure modes":
+            continue
+        if not re.search(r"\\begin\{description\}", body):
+            findings.append(
+                Finding(
+                    "FAIL",
+                    "failure_modes_missing_description",
+                    "Failure modes remark must use a description environment.",
+                )
+            )
+            continue
+        items = list(re.finditer(r"\\item\[(?P<title>[^\]]+)\](?P<body>[\s\S]*?)(?=\\item\[|\\end\{description\})", body))
+        if not items or items[0].group("title").strip().lower().rstrip(".") != "exposition":
+            findings.append(
+                Finding(
+                    "FAIL",
+                    "failure_modes_missing_exposition_item",
+                    "Failure modes remark must start with \\item[Exposition.].",
+                )
+            )
+        for item in items:
+            if item.group("title").strip().lower().rstrip(".") == "exposition":
+                continue
+            displays = re.findall(r"\\\[[\s\S]*?\\\]", item.group("body"))
+            if not displays:
+                findings.append(
+                    Finding(
+                        "FAIL",
+                        "failure_mode_missing_quantified_display",
+                        f"Failure mode `{item.group('title').strip()}` lacks a quantified display.",
+                    )
+                )
+            if has_predicate_reading and len(displays) < 2:
+                findings.append(
+                    Finding(
+                        "FAIL",
+                        "failure_mode_missing_predicate_display",
+                        f"Failure mode `{item.group('title').strip()}` lacks a predicate-reading display.",
+                    )
+                )
     return findings
 
 
@@ -430,8 +520,41 @@ def _latex_to_plain(text: str) -> str:
     return re.sub(r"\s+", " ", text)
 
 
+def _count_quantified_binders(text: str) -> int:
+    text = re.sub(r"\\(?:,|;|:|quad|qquad|enspace|thinspace|medspace|!)", " ", text)
+    text = re.sub(r"\\text\{[^{}]*\}", " ", text)
+    spans = list(re.finditer(r"\\(?:forall|exists)\b", text))
+    count = 0
+    for index, match in enumerate(spans):
+        start = match.end()
+        end = spans[index + 1].start() if index + 1 < len(spans) else len(text)
+        segment = text[start:end]
+        segment = re.split(
+            r"\\(?:Rightarrow|Longrightarrow|Leftrightarrow|Longleftrightarrow|implies|iff|land|lor)\b|[.;:]",
+            segment,
+            maxsplit=1,
+        )[0]
+        segment = re.split(r"\\in\b|\\notin\b|\\subseteq\b|\\leq\b|\\geq\b|=|<|>|\\mid\b|\|", segment, maxsplit=1)[0]
+        segment = re.sub(r"\\[A-Za-z]+", " ", segment)
+        segment = segment.replace("{", " ").replace("}", " ")
+        count += len(
+            re.findall(
+                r"[A-Za-z](?:_\{[^{}]+\}|_[A-Za-z0-9]+)?(?:\^\{[^{}]+\}|\^[A-Za-z0-9]+)?",
+                segment,
+            )
+        )
+    return count
+
+
 def _normalize_title(title: str | None) -> str:
     return re.sub(r"\s+", " ", (title or "").strip().lower())
+
+
+def _support_titles(tex: str) -> set[str]:
+    titles = {_normalize_title(title) for title, _ in _REMARK.findall(tex)}
+    if re.search(r"\\begin\{dependencies\}", tex):
+        titles.add("dependencies")
+    return titles
 
 
 def _strip_comments(text: str) -> str:
