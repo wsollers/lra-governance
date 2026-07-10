@@ -51,10 +51,23 @@ DEPENDENCIES_REMARK_RE = re.compile(
     r"\\begin\{remark\*\}\[Dependencies\](?P<body>[\s\S]*?)\\end\{remark\*\}",
     re.IGNORECASE,
 )
+SUPPORT_REMARK_RE = re.compile(
+    r"\\begin\{remark\*\}\[(?P<title>[^\]]+)\](?P<body>[\s\S]*?)\\end\{remark\*\}",
+    re.IGNORECASE,
+)
+DISPLAY_MATH_RE = re.compile(r"\\\[(?P<body>[\s\S]*?)\\\]")
+DESCRIPTION_ITEM_RE = re.compile(
+    r"\\item\[(?P<title>[^\]]+)\](?P<body>[\s\S]*?)(?=\\item\[|\\end\{description\})",
+    re.IGNORECASE,
+)
 NO_LOCAL_RE = re.compile(r"\\NoLocalDependencies\b")
 DEFINITIONAL_ROOT_RE = re.compile(r"\\DefinitionalRoot\b")
 SECTION_RE = re.compile(r"\\(?:chapter|section|subsection|subsubsection)\*?\{")
 COMMENT_RE = re.compile(r"(?<!\\)%.*$")
+SUPPORT_TITLE_ALIASES = {
+    "definition predicate reading": "predicate reading",
+    "failure mode decomposition": "failure modes",
+}
 
 
 @dataclass
@@ -70,6 +83,7 @@ class Node:
     source_order: int
     body_hash: str
     root_kind: str = ""
+    support_blocks: list[dict[str, Any]] = field(default_factory=list)
 
 
 @dataclass
@@ -154,6 +168,74 @@ def formal_blocks(text: str) -> list[tuple[re.Match[str], int]]:
     return blocks
 
 
+def next_formal_or_section(text: str, start: int) -> int:
+    formal = BEGIN_FORMAL_RE.search(text, start)
+    section = SECTION_RE.search(text, start)
+    candidates = [match.start() for match in (formal, section) if match]
+    return min(candidates) if candidates else len(text)
+
+
+def normalize_support_title(title: str) -> str:
+    key = re.sub(r"\s+", " ", title.strip().lower())
+    return SUPPORT_TITLE_ALIASES.get(key, key)
+
+
+def support_blocks_after(text: str, start: int) -> list[dict[str, Any]]:
+    end = next_formal_or_section(text, start)
+    decoration = text[start:end]
+    blocks: list[dict[str, Any]] = []
+    for match in SUPPORT_REMARK_RE.finditer(decoration):
+        title = re.sub(r"\s+", " ", match.group("title").strip())
+        canonical_title = normalize_support_title(title)
+        body = match.group("body").strip()
+        record: dict[str, Any] = {
+            "kind": "remark",
+            "title": title,
+            "canonical_title": canonical_title,
+            "body_tex": body,
+            "line": line_at(text, start + match.start()),
+        }
+        if canonical_title == "failure modes":
+            record["modes"] = failure_modes_from_body(body)
+        blocks.append(record)
+    for match in DEPENDENCIES_ENV_RE.finditer(decoration):
+        blocks.append(
+            {
+                "kind": "dependencies",
+                "title": "Dependencies",
+                "canonical_title": "dependencies",
+                "body_tex": match.group("body").strip(),
+                "line": line_at(text, start + match.start()),
+            }
+        )
+    if NO_LOCAL_RE.search(decoration):
+        blocks.append(
+            {
+                "kind": "no_local_dependencies",
+                "title": "NoLocalDependencies",
+                "canonical_title": "no local dependencies",
+                "body_tex": "",
+                "line": line_at(text, start + NO_LOCAL_RE.search(decoration).start()),
+            }
+        )
+    blocks.sort(key=lambda item: int(item.get("line", 0)))
+    return blocks
+
+
+def failure_modes_from_body(body: str) -> list[dict[str, Any]]:
+    modes: list[dict[str, Any]] = []
+    for item in DESCRIPTION_ITEM_RE.finditer(body):
+        mode_body = item.group("body").strip()
+        modes.append(
+            {
+                "title": re.sub(r"\s+", " ", item.group("title").strip()),
+                "body_tex": mode_body,
+                "displays": [match.group("body").strip() for match in DISPLAY_MATH_RE.finditer(mode_body)],
+            }
+        )
+    return modes
+
+
 def extract_nodes(repo_root: Path, repo: str, start_order: int = 0) -> tuple[list[Node], list[Issue]]:
     nodes: list[Node] = []
     issues: list[Issue] = []
@@ -211,6 +293,7 @@ def extract_nodes(repo_root: Path, repo: str, start_order: int = 0) -> tuple[lis
                     source_order=order,
                     body_hash=stable_hash(block_text),
                     root_kind=root_kind_after_block(text, end_pos),
+                    support_blocks=support_blocks_after(text, end_pos),
                 )
             )
     return nodes, issues

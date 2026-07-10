@@ -46,12 +46,10 @@ meaning, and order of blocks once they are required or intentionally included.
 The standardized decoration blocks are:
 
 - Standard quantified statement;
-- Definition predicate reading;
 - Predicate reading;
 - Negated quantified statement;
 - Negation predicate reading;
 - Failure modes;
-- Failure mode decomposition;
 - Contrapositive quantified statement;
 - Contrapositive predicate reading;
 - Interpretation;
@@ -74,20 +72,19 @@ When a block is present, use this order:
 1. Formal environment and label
 2. Proof navigation link, when required inside the formal environment
 3. Standard quantified statement
-4. Definition predicate reading or Predicate reading
+4. Predicate reading
 5. Negated quantified statement
 6. Negation predicate reading
 7. Failure modes
-8. Failure mode decomposition
-9. Contrapositive quantified statement
-10. Contrapositive predicate reading
-11. Interpretation
-12. Notation
-13. Historical note or Comparison with Feferman
-14. Exposition
-15. Examples
-16. Non-Examples
-17. Dependencies or `\NoLocalDependencies`
+8. Contrapositive quantified statement
+9. Contrapositive predicate reading
+10. Interpretation
+11. Notation
+12. Historical note or Comparison with Feferman
+13. Exposition
+14. Examples
+15. Non-Examples
+16. Dependencies or `\NoLocalDependencies`
 
 Do not reorder blocks for aesthetics. Omit only blocks that the governing
 artifact standard does not require.
@@ -127,7 +124,7 @@ variant drops only the box wrapper, never the label or the required blocks.
 <formal statement>
 \end{remark*}
 
-\begin{remark*}[Definition predicate reading]          % C: a canonical predicate exists in predicates.yaml
+\begin{remark*}[Predicate reading]                     % C: binder count >= 2 or useful canonical predicate
 \[ \operatorname{<Name>}(<args>) \coloneqq <formula>. \]
 \end{remark*}
 
@@ -139,12 +136,20 @@ variant drops only the box wrapper, never the label or the required blocks.
 <predicate-form negation>
 \end{remark*}
 
-\begin{remark*}[Failure modes]                         % C: multiple distinct failure branches worth naming
-<prose failure branches>
-\end{remark*}
+\begin{remark*}[Failure modes]                         % C: named branches or witness behavior
+\begin{description}
+\item[Exposition.]
+<general failure picture>
 
-\begin{remark*}[Failure mode decomposition]            % D: only if Failure modes is present
-<underbrace decomposition>
+\item[<Mode name>.]
+<mode-specific exposition>
+\[
+<quantified failure statement>
+\]
+\[
+<predicate reading of failure, when predicate language exists>
+\]
+\end{description}
 \end{remark*}
 
 \begin{remark*}[Interpretation]                        % C, but treat as R unless nearby exposition already covers it
@@ -201,7 +206,7 @@ blocks become available. Use the matching box (`theorembox`, `lemmabox`,
 <formal statement>
 \end{remark*}
 
-\begin{remark*}[Predicate reading]                     % C  (title is "Predicate reading", NOT "Definition predicate reading")
+\begin{remark*}[Predicate reading]                     % C: binder count >= 2 or useful canonical predicate
 <predicate form>
 \end{remark*}
 
@@ -214,11 +219,19 @@ blocks become available. Use the matching box (`theorembox`, `lemmabox`,
 \end{remark*}
 
 \begin{remark*}[Failure modes]                         % C
-<prose failure branches>
-\end{remark*}
+\begin{description}
+\item[Exposition.]
+<general failure picture>
 
-\begin{remark*}[Failure mode decomposition]            % D: only if Failure modes is present
-<underbrace decomposition>
+\item[<Mode name>.]
+<mode-specific exposition>
+\[
+<quantified failure statement>
+\]
+\[
+<predicate reading of failure, when predicate language exists>
+\]
+\end{description}
 \end{remark*}
 
 \begin{remark*}[Contrapositive quantified statement]   % C: contrapositive is a standard proof tool (thm-like only)
@@ -259,8 +272,8 @@ Real, validator-passing references: the definition skeleton matches
 
 Easy-to-get-wrong points:
 
-- The predicate-reading title differs by type: `Definition predicate reading`
-  for definitions, `Predicate reading` for theorem-like environments.
+- The predicate-reading title is always `Predicate reading`. `Definition
+  predicate reading` is a legacy title accepted only during migration.
 - The proof link is `\hyperref[prf:<root>]{\textit{Go to proof.}}`, placed inside
   the environment body before `\end{...}`, and only for thm/lem/prop/cor — never
   definitions or axioms.
@@ -297,8 +310,13 @@ the ambient setting explicitly rather than using malformed quantified syntax.
 
 ## Predicate Readings
 
-Use `Definition predicate reading` for definitions and `Predicate reading` for
-theorem-like environments.
+Use `Predicate reading` for definitions and theorem-like environments.
+
+Predicate reading is required when the Standard quantified statement contains
+at least two quantified variable binders. Count comma-separated binders
+separately: `\forall x,y` counts as two; `\forall x,y,z` counts as three;
+`\forall x,y,z\in A` counts as three; and
+`\forall y\in B\,\exists x\in A` counts as two.
 
 Predicate readings must use canonical predicate names when they exist. If no
 canonical predicate exists, do not invent one merely to fill the block.
@@ -331,8 +349,11 @@ Do not include negation blocks merely because a formal negation can be written.
 Use failure-mode blocks when a definition or result has meaningful ways to
 fail and the distinction helps later reasoning.
 
-Failure modes are prose. Failure mode decomposition is the formal or displayed
-decomposition of those branches.
+Failure modes use one structured block with a `description` environment. The
+first item is `\item[Exposition.]` and gives the general failure picture. Each
+following item names one failure mode and contains mode-specific exposition, a
+quantified failure display, and a predicate reading of the failure when
+predicate language exists.
 
 Do not use failure-mode blocks as informal interpretation. If the goal is to
 explain meaning, use `Interpretation`.

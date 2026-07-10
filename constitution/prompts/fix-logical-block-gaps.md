@@ -34,19 +34,17 @@ blocks appear in this exact order. Omit only when the trigger is not met.
 
 ```
 1.  remark*[Standard quantified statement]          — always
-2.  remark*[Definition predicate reading]           — if predicate exists (defs only)
-    remark*[Predicate reading]                      — theorem-like
-3.  remark*[Negated quantified statement]           — when negation illuminates
-4.  remark*[Negation predicate reading]             — if step 3 generated
-5.  remark*[Failure modes]                          — when applicable
-6.  remark*[Failure mode decomposition]             — if step 5 generated
-7.  remark*[Contrapositive quantified statement]    — thm/lem/prop/cor, when illuminating
-8.  remark*[Contrapositive predicate reading]       — if step 7 generated
-9.  remark*[Interpretation]                         — always
-10. remark*[Exposition]                            — when broader conceptual framing materially helps
-11. remark*[Examples]                              — defs only, when concept-boundary value is high
-12. remark*[Non-Examples]                          — defs only, when concept-boundary value is high
-13. dependencies environment or \NoLocalDependencies  — always
+2.  remark*[Predicate reading]                      — binder count >= 2
+3.  remark*[Negated quantified statement]           — binder count >= 2 or useful failure behavior
+4.  remark*[Negation predicate reading]             — if steps 2 and 3 generated
+5.  remark*[Failure modes]                          — named branches or witness behavior
+6.  remark*[Contrapositive quantified statement]    — useful multi-binder implication, thm-like only
+7.  remark*[Contrapositive predicate reading]       — if steps 2 and 6 generated
+8.  remark*[Interpretation]                         — always
+9.  remark*[Exposition]                             — when broader conceptual framing materially helps
+10. remark*[Examples]                               — defs only, when concept-boundary value is high
+11. remark*[Non-Examples]                           — defs only, when concept-boundary value is high
+12. dependencies environment or \NoLocalDependencies — always
 ```
 
 ### Notation discipline (DESIGN.md Rule A)
@@ -58,11 +56,11 @@ canonical ambient-structure arguments, such as
 predicate names for each mathematical setting.
 
 Predicate names (`\operatorname{...}`) appear **only** in:
-- Definition predicate reading
+- Predicate reading
 - Negation predicate reading
 - Contrapositive predicate reading
 - Exposition
-- Failure mode decomposition
+- Failure modes
 
 They must **never** appear in:
 - Definition / theorem bodies
@@ -87,11 +85,15 @@ not merely because a contrapositive can be formally written.
 For implication theorems where the contrapositive is a standard proof tool,
 include it. For biconditionals, include the negation of the iff instead.
 
-### Failure mode decomposition (DESIGN.md §10.6)
+### Failure modes (DESIGN.md §10.6)
 
 When failure modes are generated, also generate a decomposition block.
 This block may use underbraces or equivalent visual grouping.
-Canonical predicates are permitted here.
+The Failure modes block is structured with a `description` environment. Its
+first item is `\item[Exposition.]`; each following item names one mode and
+contains mode-specific exposition, a quantified failure display, and a
+predicate reading of the failure when predicate language exists. Do not generate
+`remark*[Failure modes]`; that title is legacy migration input.
 
 ---
 
@@ -110,26 +112,23 @@ block that already exists (unless a different insertion point is noted).
 
 #### GAP 1 — `def:continuous-at-point-seq`
 **File:** `notes/point-continuity/notes-continuity.tex`
-**Missing:** `remark*[Failure modes]` and `remark*[Failure mode decomposition]`
+**Missing:** `remark*[Failure modes]`
 **Insert before:** the existing `\begin{remark*}[Interpretation]` block for this definition
 **Context:** The negated quantified statement and negation predicate reading
 already exist. The definition states:
 > $f$ is continuous at $c$ iff for every $(x_n)\subseteq A$,
 > $x_n\to c$ implies $f(x_n)\to f(c)$.
 
-Generate:
-- `remark*[Failure modes]` — prose: continuity fails when some sequence
-  $(x_n)\subseteq A$ with $x_n\to c$ has $f(x_n)\not\to f(c)$; describe
-  the two sub-branches (wrong limit vs no limit).
-- `remark*[Failure mode decomposition]` — formal underbrace display showing
-  the existential witness decomposed into its two conjuncts.
+Generate one structured `remark*[Failure modes]` block whose exposition says
+continuity fails when some sequence $(x_n)\subseteq A$ with $x_n\to c$ has
+$f(x_n)\not\to f(c)$, and whose mode entries include formal displays for the
+wrong-limit and no-limit branches.
 
 ---
 
 #### GAP 2 — `def:sequential-discontinuity-at-a-point`
 **File:** `notes/point-continuity/notes-discontinuity.tex`
-**Missing:** `remark*[Negation predicate reading]`, `remark*[Failure modes]`,
-`remark*[Failure mode decomposition]`
+**Missing:** `remark*[Negation predicate reading]`, `remark*[Failure modes]`
 **Insert before:** the existing `\begin{remark*}[Interpretation]` block
 **Context:** Negated quantified statement already exists and reads:
 > $f$ is continuous at $c \Longleftrightarrow \forall (x_n)\subseteq A:\;
@@ -138,17 +137,16 @@ The definition is of $\operatorname{DiscontinuousAt}(f,c)$.
 
 Generate the three missing blocks. The negation predicate reading should name
 $\neg\operatorname{DiscontinuousAt}(f,c) \Longleftrightarrow \operatorname{ContinuousAt}(f,c)$
-and give its full quantified form. Failure modes: the sequential witness fails
-to exist. Failure mode decomposition: formal display of the negation with
-underbrace annotations.
+and give its full quantified form. The structured Failure modes block should
+explain that the sequential witness fails to exist, then include a mode entry
+with a formal display of the negation and underbrace annotations.
 
 ---
 
 #### GAP 3 — `def:neighborhood-discontinuity-at-a-point`
 **File:** `notes/point-continuity/notes-discontinuity.tex`
-**Missing:** `remark*[Definition predicate reading]`, `remark*[Negated quantified statement]`,
-`remark*[Negation predicate reading]`, `remark*[Failure modes]`,
-`remark*[Failure mode decomposition]`
+**Missing:** `remark*[Predicate reading]`, `remark*[Negated quantified statement]`,
+`remark*[Negation predicate reading]`, `remark*[Failure modes]`
 **Insert before:** the existing `\begin{remark*}[Interpretation]` block
 **Context:** Only the standard quantified statement and interpretation exist.
 The standard quantified statement reads:
@@ -158,7 +156,7 @@ The standard quantified statement reads:
 
 Generate all five missing blocks. The negation (continuity) is the swap of
 all three quantifiers: $\forall V\;\exists U\;\forall x\in U\cap A:\; f(x)\in V$.
-The failure mode decomposition should display this quantifier reversal
+The failure modes should display this quantifier reversal
 with underbrace labelling of each quantifier's role.
 
 ---
@@ -179,22 +177,21 @@ if $c$ is not a limit point (vacuous cases).
 
 #### GAP 5 — `def:types-of-discontinuity-at-a-point`
 **File:** `notes/point-continuity/notes-discontinuity.tex`
-**Missing:** `remark*[Definition predicate reading]`,
-`remark*[Negation predicate reading]`, `remark*[Failure modes]`,
-`remark*[Failure mode decomposition]`
+**Missing:** `remark*[Predicate reading]`,
+`remark*[Negation predicate reading]`, `remark*[Failure modes]`
 **Insert before:** the existing `\begin{remark*}[Interpretation]` block
 **Context:** The standard quantified statement and negated quantified statement
 already exist. The three types are: removable ($\exists L:\;\lim f = L \ne f(x_0)$),
 jump ($\exists L_-,L_+$ with $L_-\ne L_+$), essential (not removable).
 
 Generate:
-- `remark*[Definition predicate reading]` — define
+- `remark*[Predicate reading]` — define
   $\operatorname{RemovableDiscontinuity}(f,x_0)$,
   $\operatorname{JumpDiscontinuity}(f,x_0)$,
   $\operatorname{EssentialDiscontinuity}(f,x_0)$ using $\coloneqq$.
 - `remark*[Negation predicate reading]` — negate each of the three predicates.
-- `remark*[Failure modes]` — prose: what must fail for each type not to hold.
-- `remark*[Failure mode decomposition]` — formal display of
+- `remark*[Failure modes]` — structured exposition and mode entries showing
+  what must fail for each type not to hold, including formal displays of
   $\neg\operatorname{RemovableDiscontinuity}$ and
   $\neg\operatorname{JumpDiscontinuity}$ with underbrace labels.
 
@@ -254,8 +251,7 @@ neighbourhood of $L$.
 #### GAP 8 — `def:sequential-definition-of-derivative-at-a-point`
 **File:** `notes/derivative-definition/notes-derivative-definition.tex`
 **Missing:** `remark*[Negated quantified statement]`,
-`remark*[Negation predicate reading]`, `remark*[Failure modes]`,
-`remark*[Failure mode decomposition]`
+`remark*[Negation predicate reading]`, `remark*[Failure modes]`
 **Insert before:** the existing `\begin{remark*}[Interpretation]` block
 **Context:** Standard quantified statement and predicate reading exist.
 The definition reads:
@@ -266,7 +262,7 @@ The negation is the primary tool for disproving differentiability:
 > $\exists (x_n)\subseteq A\setminus\{c\}:\; x_n\to c \land
 > \frac{f(x_n)-f(c)}{x_n-c}\not\to L$.
 
-Generate all four blocks. The failure mode decomposition should show the
+Generate all three blocks. The failure modes should show the
 existential witness split into its two conjuncts with underbrace labels.
 Include the standard witnesses: two subsequences with different quotient
 limits (e.g., $|x|$ at $0$), or quotients growing without bound.
@@ -316,7 +312,7 @@ Generate:
 **File:** `notes/derivative-definition/notes-derivative-definition.tex`
 **Missing:** `remark*[Predicate reading]`, `remark*[Contrapositive quantified statement]`,
 `remark*[Contrapositive predicate reading]`
-**Insert before:** the existing `remark*[Failure mode decomposition]` block
+**Insert before:** the existing `remark*[Failure modes]` block
 (which already contains the $|x|$ counterexample note)
 **Context:** The standard quantified statement reads:
 $\operatorname{DerivableAt}(f,c) \Rightarrow \operatorname{ContinuousAt}(f,c)$.
@@ -437,7 +433,7 @@ Before outputting each block, verify:
    (dual: $\forall\leftrightarrow\exists$, $\land\leftrightarrow\lor$,
    $\Rightarrow$ negated as $P\land\neg Q$).
 6. Contrapositives are hypothesis-conclusion swap with both negated.
-7. The failure mode decomposition is a formal display (underbrace preferred),
+7. The failure modes is a formal display (underbrace preferred),
    not a prose restatement of the failure modes block.
 
 ---
@@ -467,3 +463,4 @@ belongs in the notes layer, not only in the proof file.
 **GAPS 13 and 14 (Rolle and MVT):** The hypothesis-failure analysis with
 explicit counterexamples is the content that makes these theorems useful
 for building intuition. Do not omit the counterexamples.
+

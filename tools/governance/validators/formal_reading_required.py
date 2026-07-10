@@ -32,25 +32,24 @@ def _validate_file(volume_root: Path, path: Path, surface_forms: list[str], find
         block_text = text[begin.start():end_pos]
         decoration = text[end_pos:next_pos]
         triggers = find_triggers(block_text, surface_forms)
-        if not triggers:
-            continue
         line = text.count("\n", 0, begin.start()) + 1
         unique = sorted(set(triggers))
         if is_marked_simple(block_text + decoration):
-            findings.append(
-                finding(
-                    "simple_but_triggers",
-                    f"Marked simple but invokes {unique[:4]}; logic or registered concepts mean it is not simple.",
-                    path,
-                    volume_root,
-                    line,
+            if triggers:
+                findings.append(
+                    finding(
+                        "simple_but_triggers",
+                        f"Marked simple but invokes {unique[:4]}; logic or registered concepts mean it is not simple.",
+                        path,
+                        volume_root,
+                        line,
+                    )
                 )
-            )
-        elif not has_formal_reading(decoration):
+        if not has_formal_reading(decoration):
             findings.append(
                 finding(
                     "formal_reading_missing",
-                    f"Statement invokes {unique[:4]} but has no Standard quantified statement formal reading.",
+                    "Formal statement has no Standard quantified statement formal reading.",
                     path,
                     volume_root,
                     line,

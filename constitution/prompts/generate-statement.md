@@ -120,20 +120,19 @@ level is `N` or when a conditional trigger is not met. Never reorder.
 4.    [If proof link required] \hyperref[prf:name]{Go to proof.}
 5.  Environment closing
 6.  [If boxed] Wrap steps 1-5 in tcolorbox using house colors
-7.  remark*[Standard quantified statement]
-8.  remark*[Definition predicate reading] (if predicate exists)
-9.  remark*[Negated quantified statement] (if proof_usage = true)
-10. remark*[Negation predicate reading] (if step 9 generated)
-11. remark*[Failure modes] (if applicable)
-12. remark*[Failure mode decomposition] (if step 11 generated)
-13. remark*[Contrapositive quantified statement] (thm/lem/prop/cor only, if proof_usage = true)
-14. remark*[Contrapositive predicate reading] (if step 13 generated)
-15. remark*[Interpretation]
-16. remark*[Historical note] or remark*[Comparison with Feferman] (if a source crosswalk is supplied)
-17. remark*[Exposition] (if broader conceptual framing materially helps)
-18. remark*[Examples] (definitions only, if concept-boundary value is high)
-19. remark*[Non-Examples] (definitions only, if concept-boundary value is high)
-20. dependencies environment or \NoLocalDependencies
+7.  remark*[Standard quantified statement] (always)
+8.  remark*[Predicate reading] (required when quantified binder count >= 2)
+9.  remark*[Negated quantified statement] (binder count >= 2 or useful failure behavior)
+10. remark*[Negation predicate reading] (if step 9 and step 8 generated)
+11. remark*[Failure modes] (when named branches or witness behavior matter)
+12. remark*[Contrapositive quantified statement] (thm/lem/prop/cor only, useful multi-binder implications)
+13. remark*[Contrapositive predicate reading] (if step 12 and step 8 generated)
+14. remark*[Interpretation] (always)
+15. remark*[Historical note] or remark*[Comparison with Feferman] (if a source crosswalk is supplied)
+16. remark*[Exposition] (if broader conceptual framing materially helps)
+17. remark*[Examples] (definitions only, if concept-boundary value is high)
+18. remark*[Non-Examples] (definitions only, if concept-boundary value is high)
+19. dependencies environment or \NoLocalDependencies
 ```
 
 ## Environment Body
@@ -195,6 +194,8 @@ Use this option shape:
 
 - Use `\begin{remark*}[Standard quantified statement]`.
 - Restate the definition/theorem as a quantified formula.
+- This block is required for every formal item. Do not omit it for "simple"
+  statements.
 - Use canonical quantifier forms from `notation.yaml`.
 - Use `aligned` for multi-line formulas.
 - Do not use predicate names in this block.
@@ -220,8 +221,14 @@ Use this option shape:
 
 ## Predicate Reading
 
-- For definitions, use `\begin{remark*}[Definition predicate reading]`.
-- For theorem-like results, use `\begin{remark*}[Predicate reading]`.
+- Use `\begin{remark*}[Predicate reading]` for definitions and theorem-like
+  results. Do not use `Definition predicate reading` in newly generated
+  content; that title is legacy migration input only.
+- Generate this block whenever the Standard quantified statement contains at
+  least two quantified variable binders. Count comma-separated binders
+  separately: `\forall x,y` counts as two, `\forall x,y,z` counts as three,
+  `\forall x,y,z\in A` counts as three, and
+  `\forall y\in B\,\exists x\in A` counts as two.
 - Verify predicate names against `predicates.yaml`.
 - Follow `docs/governance/predicate-standards.md` for predicate signatures.
   If the predicate depends on a surrounding structure, pass the whole ambient
@@ -243,25 +250,34 @@ Use this option shape:
 ## Negation And Failure Modes
 
 - Use `\begin{remark*}[Negated quantified statement]`.
+- Generate this block when the Standard quantified statement has at least two
+  quantified variable binders, or when the negation has standard witness
+  behavior, named failure behavior, or common proof use.
 - Push negations inward using quantifier duals and inequality flips.
 - Preserve the same ambient hypotheses and free variables as the standard
   quantified statement. Do not emit a context-free fragment such as
   `\exists x\in A\;(u<x)` when the definition depends on an ambient ordered
   set and candidate bound. Include the context line and the equivalence with
   the failed property.
-- Use `\begin{remark*}[Negation predicate reading]` when a predicate reading
+- Use `\begin{remark*}[Negation predicate reading]` when both the negated block
+  and Predicate reading block exist.
+- Include `\begin{remark*}[Failure modes]` whenever the negated statement has
+  named branches, witness behavior, or multiple independent ways to fail.
+- Use one structured Failure modes block. Do not generate
+  `Failure mode decomposition`; that title is legacy migration input only.
+- The Failure modes block uses a `description` environment. The first item is
+  `\item[Exposition.]` and gives the general failure picture. Each following
+  `\item[<Mode name>.]` contains mode-specific exposition, a quantified failure
+  display, and a predicate reading of the failure when predicate language
   exists.
-- For definitions, include `\begin{remark*}[Failure modes]` whenever the
-  negated statement has a meaningful witness or branch.
-- If there is only one failure branch, state that single branch explicitly.
-- When Failure modes is generated, also generate
-  `\begin{remark*}[Failure mode decomposition]`.
 
 ## Contrapositive
 
 - Definitions and axioms skip contrapositive blocks.
 - Theorems, lemmas, propositions, and corollaries generate contrapositive
-  blocks only when the contrapositive is a standard proof tool.
+  blocks only when the statement is an implication, the Standard quantified
+  statement has at least two quantified variable binders, and the contrapositive
+  is a standard useful proof tool.
 
 ## Interpretation
 

@@ -94,14 +94,6 @@ matrix:
     cor:  C
     ax:   C
 
-  failure_mode_decomposition:
-    def:  D
-    thm:  D
-    lem:  D
-    prop: D
-    cor:  D
-    ax:   D
-
   contrapositive_quantified_stmt:
     def:  N   # definitions have no hypothesis-conclusion structure
     thm:  C
@@ -119,12 +111,12 @@ matrix:
     ax:   N
 
   interpretation:
-    def:  C   # conditional on omission exception; default is R
-    thm:  C
-    lem:  C
-    prop: C
-    cor:  C
-    ax:   C
+    def:  R
+    thm:  R
+    lem:  R
+    prop: R
+    cor:  R
+    ax:   R
 
   notation:
     def:  C

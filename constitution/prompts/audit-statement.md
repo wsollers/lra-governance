@@ -87,6 +87,7 @@ exposition may satisfy the interpretation requirement.
 
 ### standard_quantified_stmt
 - remark* titled exactly "Standard quantified statement"?
+- Present for every formal item?
 - Contains standard mathematical notation only?
 - No \operatorname{...} predicate names from predicates.yaml?
 - Quantifier forms match notation.yaml conventions?
@@ -94,7 +95,9 @@ exposition may satisfy the interpretation requirement.
 - All variables explicitly quantified or fixed by preceding statement?
 
 ### predicate_reading
-- remark* header reflects role ("Definition predicate reading" for definitions)?
+- remark* titled exactly "Predicate reading"?
+- Present when the Standard quantified statement has at least two quantified
+  variable binders, counting comma-separated binders separately?
 - Predicate names use \operatorname{...}?
 - Predicate names present in predicates.yaml? (flag as MISSING_PREDICATE if not)
 - Predicate signatures follow `docs/governance/predicate-standards.md`,
@@ -108,24 +111,23 @@ exposition may satisfy the interpretation requirement.
 - remark* titled "Negated quantified statement"?
 - Contains formal negation only -- no explanatory prose?
 - Negation is correctly formed (quantifier duals, inequality flips)?
-- proof_usage justification: is the negated form standardly used in proofs
-  for this concept? State your reasoning.
+- Present when the Standard quantified statement has at least two quantified
+  variable binders or when the negation has standard witness behavior, named
+  failure behavior, or common proof use?
 
 ### negation_predicate_reading
-- Present if and only if negated_quantified_stmt is present?
+- Present if and only if negated_quantified_stmt and Predicate reading are present?
 - Header: "Negation predicate reading"?
 - Predicate names use \operatorname{...}?
 
 ### failure_modes
 - remark* titled "Failure modes"?
-- Describes structurally distinct failure branches in prose?
-- Does not duplicate negated_quantified_stmt content verbatim?
-
-### failure_mode_decomposition
-- Present if and only if failure_modes is present?
-- remark* titled "Failure mode decomposition"?
-- Uses underbrace or equivalent visual grouping?
-- Canonical predicates permitted here?
+- Uses a description environment?
+- First item is exactly `\item[Exposition.]`?
+- Each following item names one mode using `\item[<Mode name>.]`?
+- Each mode contains mode-specific exposition, a quantified failure display,
+  and a predicate reading when predicate language exists?
+- Does not use the legacy "Failure mode decomposition" block?
 
 ### contrapositive_quantified_stmt
 - Absent for def and ax?

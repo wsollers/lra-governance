@@ -6,6 +6,7 @@ from pathlib import Path
 from core.finding import Finding, finding
 from core.tex import read_text, strip_latex_comments
 from core.file_inventory import validator_files
+from formal_reading import count_quantified_binders, has_formal_reading, has_predicate_reading, standard_quantified_statement_bodies
 
 
 FORMAL_RE = re.compile(
@@ -50,14 +51,12 @@ DECORATION_INSIDE_FORMAL_RE = re.compile(
 DECORATION_ORDER = {
     "proof_link": 10,
     "standard quantified statement": 20,
-    "definition predicate reading": 30,
     "predicate reading": 30,
     "negated quantified statement": 40,
     "negation predicate reading": 50,
     "failure modes": 60,
-    "failure mode decomposition": 70,
-    "contrapositive quantified statement": 80,
-    "contrapositive predicate reading": 90,
+    "contrapositive quantified statement": 70,
+    "contrapositive predicate reading": 80,
     "interpretation": 100,
     "notation": 102,
     "historical note": 105,
@@ -67,9 +66,12 @@ DECORATION_ORDER = {
     "non-examples": 130,
     "dependencies": 140,
 }
+LEGACY_DECORATION_ORDER = {
+    "definition predicate reading": DECORATION_ORDER["predicate reading"],
+    "failure mode decomposition": DECORATION_ORDER["failure modes"],
+}
 DEPENDENT_DECORATION_PARENTS = {
     "negation predicate reading": "negated quantified statement",
-    "failure mode decomposition": "failure modes",
     "contrapositive predicate reading": "contrapositive quantified statement",
 }
 FORBIDDEN_DECORATION_BY_ENV = {
@@ -258,10 +260,34 @@ def _check_decoration_blocks(
     findings: list[Finding],
 ) -> None:
     seen: list[tuple[str, int, int]] = []
+    if has_formal_reading(decoration):
+        binder_count = sum(count_quantified_binders(body) for body in standard_quantified_statement_bodies(decoration))
+        if binder_count >= 2 and not has_predicate_reading(decoration):
+            findings.append(
+                finding(
+                    "predicate_reading_missing",
+                    f"{label} has {binder_count} quantified binders but lacks a Predicate reading block.",
+                    path,
+                    volume_root,
+                    line,
+                )
+            )
     for match in DECORATION_BLOCK_RE.finditer(decoration):
         key = _decoration_key(match)
         block_line = line + _line_at(decoration, match.start()) - 1
-        if key not in DECORATION_ORDER:
+        rank = DECORATION_ORDER.get(key)
+        if rank is None and key in LEGACY_DECORATION_ORDER:
+            rank = LEGACY_DECORATION_ORDER[key]
+            findings.append(
+                finding(
+                    f"legacy_{key.replace(' ', '_')}",
+                    f"{label} uses legacy decoration block '{key}'; migrate to the canonical block title.",
+                    path,
+                    volume_root,
+                    block_line,
+                )
+            )
+        if rank is None:
             findings.append(
                 finding(
                     "unknown_decoration_block",
@@ -282,7 +308,9 @@ def _check_decoration_blocks(
                     block_line,
                 )
             )
-        seen.append((key, DECORATION_ORDER[key], match.start()))
+        if key == "failure modes":
+            _check_failure_modes_block(volume_root, path, decoration, match, label, line, findings)
+        seen.append((key, rank, match.start()))
 
     seen_keys = {key for key, _rank, _pos in seen}
     for child, parent in DEPENDENT_DECORATION_PARENTS.items():
@@ -305,6 +333,70 @@ def _check_decoration_blocks(
                     path,
                     volume_root,
                     line + _line_at(decoration, right_pos) - 1,
+                )
+            )
+
+
+def _check_failure_modes_block(
+    volume_root: Path,
+    path: Path,
+    decoration: str,
+    match,
+    label: str,
+    line: int,
+    findings: list[Finding],
+) -> None:
+    body_match = re.search(r"\\begin\{remark\*\}\[Failure modes\](?P<body>[\s\S]*?)\\end\{remark\*\}", decoration[match.start():], re.IGNORECASE)
+    if not body_match:
+        return
+    body = body_match.group("body")
+    block_line = line + _line_at(decoration, match.start()) - 1
+    if not re.search(r"\\begin\{description\}", body):
+        findings.append(
+            finding(
+                "failure_modes_missing_description",
+                f"{label} Failure modes block must use a description list.",
+                path,
+                volume_root,
+                block_line,
+            )
+        )
+        return
+    items = list(re.finditer(r"\\item\[(?P<title>[^\]]+)\](?P<body>[\s\S]*?)(?=\\item\[|\\end\{description\})", body))
+    if not items or items[0].group("title").strip().lower().rstrip(".") != "exposition":
+        findings.append(
+            finding(
+                "failure_modes_missing_exposition_item",
+                f"{label} Failure modes block must start with \\item[Exposition.].",
+                path,
+                volume_root,
+                block_line,
+            )
+        )
+    for item in items:
+        if item.group("title").strip().lower().rstrip(".") == "exposition":
+            continue
+        item_body = item.group("body")
+        item_line = block_line + _line_at(body, item.start()) - 1
+        displays = re.findall(r"\\\[[\s\S]*?\\\]", item_body)
+        if not displays:
+            findings.append(
+                finding(
+                    "failure_mode_missing_quantified_display",
+                    f"{label} failure mode '{item.group('title').strip()}' lacks a quantified display.",
+                    path,
+                    volume_root,
+                    item_line,
+                )
+            )
+        if has_predicate_reading(decoration) and len(displays) < 2:
+            findings.append(
+                finding(
+                    "failure_mode_missing_predicate_display",
+                    f"{label} failure mode '{item.group('title').strip()}' lacks a predicate-reading display.",
+                    path,
+                    volume_root,
+                    item_line,
                 )
             )
 
