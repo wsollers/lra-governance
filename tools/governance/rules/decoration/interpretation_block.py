@@ -10,6 +10,6 @@ def check(block, ctx) -> Iterable[Finding]:
         yield Finding(
             "missing_interpretation",
             "Interpretation remark is missing.",
-            "warning",
+            "error",
             block.line_start,
         )

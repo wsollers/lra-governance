@@ -163,7 +163,7 @@ def formal_reading_required(b: Block, ctx: Context):
         yield Issue("formal_reading_missing",
             f"Statement invokes {uniq[:4]} but has no Standard quantified statement "
             f"(formal reading). Generate the quantified/predicate reading, or mark it "
-            f"lra:simple if it makes no formal claim.", "warning", b.line_start)
+            f"lra:simple if it makes no formal claim.", "error", b.line_start)
 
 # ================= FILE-LEVEL RULES =================
 # Whole-file invariants: breadcrumb/toolkit placement, structural-roadmap purge.
@@ -782,7 +782,7 @@ def formal_block_decoration(text: str, info: FileInfo, ctx: Context):
             if key not in _DECORATION_ORDER:
                 yield Issue("unknown_decoration_block",
                     f"{label} has nonstandard decoration block '{key}'.",
-                    "warning", ln + _line_at(dec, m.start()) - 1)
+                    "error", ln + _line_at(dec, m.start()) - 1)
                 continue
             if key in _FORBIDDEN_DECORATION_BY_ENV.get(b.environment, set()):
                 yield Issue("forbidden_decoration_block",

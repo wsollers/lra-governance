@@ -269,7 +269,6 @@ def _check_decoration_blocks(
                     path,
                     volume_root,
                     block_line,
-                    "warning",
                 )
             )
             continue

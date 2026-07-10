@@ -27,6 +27,6 @@ def check(block, ctx) -> Iterable[Finding]:
         yield Finding(
             "missing_dependencies",
             "Dependencies are missing (use \\begin{dependencies}, \\NoLocalDependencies, or \\DefinitionalRoot).",
-            "warning",
+            "error",
             block.line_start,
         )
