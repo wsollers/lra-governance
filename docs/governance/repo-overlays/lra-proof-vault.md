@@ -11,8 +11,9 @@ Owned concerns:
 - leaf backlinks only when a reviewed attempt is accepted for canonical use.
 
 The proof vault is archival support only. Canonical theorem statements,
-canonical proof bodies, theorem dependencies, and volume trackers remain owned
-by the relevant `lra-volume-*` repository.
+canonical proof bodies, theorem dependencies, and To Prove publication state
+remain owned by the relevant `lra-volume-*` repositories and
+`lra-knowledge-explorer`.
 
 ## Agent Scope
 

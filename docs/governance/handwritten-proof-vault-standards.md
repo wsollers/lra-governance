@@ -267,11 +267,11 @@ should perform the following steps:
 11. Add a `\ProofVaultURL{...}` backlink to the canonical theorem proof file
     with `lra-proof-vault/scripts/apply_leaf_backlinks.py`, or an equivalent
     deterministic step that validates the exact leaf proof file.
-12. If the proof was accepted as correct and memorialized, update the owning
-   volume repo's tracked `proofs-to-do.md` artifact: change the proof label
-   marker from `()` to `(✅)` and update the open/completed counts. The standard
-   backlink applicator performs this tracker update by default only after the
-   canonical proof file has both proof bodies and dependencies populated.
+12. If the proof was accepted as correct and memorialized, ensure the owning
+   canonical proof file has both proof bodies populated, dependencies populated,
+   and the proof-vault backlink in place. Knowledge Explorer derives To Prove
+   status from canonical proof files, accepted proof-vault metadata, and
+   `to-prove.json`.
 13. Commit the canonical repository.
 14. Push the canonical repository.
 
@@ -321,9 +321,10 @@ Backlinks from canonical proof files to proof-vault records are required for
 proofs created from memorialized handwritten proof images.
 
 The photo pipeline must either write the backlink or fail a strict validation
-step. It must also mark the owning volume `proofs-to-do.md` tracker for
-route-confirmed, reviewed-correct attempts. A successful vault-only validation
-is not sufficient to close a memorialization task.
+step. It must also ensure route-confirmed, reviewed-correct attempts are
+represented by canonical proof content and accepted proof-vault metadata. A
+successful vault-only validation is not sufficient to close a memorialization
+task.
 
 When a memorialized proof is used as canonical content, the canonical proof
 file must populate both the Professional Standard Proof body and the Detailed
@@ -364,8 +365,9 @@ Backlinks must satisfy the following rules:
 - it must preserve existing labels, dependency blocks, and extraction-visible
   structure.
 - if the memorialized proof is reviewed correct and used to populate the
-  canonical proof file, the owning volume's tracked `proofs-to-do.md` must mark
-  the proof with `(✅)`.
+  canonical proof file, Knowledge Explorer's generated To Prove data must be
+  able to derive completion from the canonical proof file or accepted vault
+  metadata.
 
 If a canonical theorem or proof file does not exist, report the missing target
 instead of inventing one.

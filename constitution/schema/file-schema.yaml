@@ -356,7 +356,6 @@ proof_layout_audit:
 capstone:
   location: proofs/exercises/capstone-{chapter}.tex
   position: last in proofs/exercises/index.tex
-  tracking: proofs-to-do.md      # updated path (was proofs-to-do-analysis.md)
 
   scope_rule: >
     A capstone must synthesize the chapter's material using only concepts that
