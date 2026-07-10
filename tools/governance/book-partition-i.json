@@ -8,7 +8,7 @@
     },
     {
       "name": "book-sets",
-      "chapters": ["set-theory", "relations", "functions", "orderings", "cardinality"]
+      "chapters": ["set-theory", "relations", "functions", "orderings", "functions-and-order", "cardinality"]
     }
   ]
 }

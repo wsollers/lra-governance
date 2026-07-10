@@ -143,6 +143,17 @@
               ]
             },
             {
+              "chapter": "functions-and-order",
+              "notes": [
+                "changing-domains-and-codomains",
+                "restrictions-and-inverses",
+                "monotone-and-antitone-maps",
+                "order-embeddings-and-isomorphisms",
+                "images-preimages-and-bounds",
+                "composition-and-failure-modes"
+              ]
+            },
+            {
               "chapter": "cardinality",
               "notes": [
                 "cardinality"
@@ -615,6 +626,24 @@
           "book_dir": "volume-iv/book-spaces",
           "expected_toc": [
             {
+              "chapter": "algebras-of-sets",
+              "notes": [
+                "from-sets-to-systems-of-sets",
+                "operations-on-families-of-sets",
+                "closure-under-operations",
+                "generated-systems-of-sets",
+                "semirings-and-rings-of-sets",
+                "algebras-of-sets",
+                "sigma-algebras",
+                "boolean-viewpoint",
+                "borel-generation",
+                "transport-of-set-systems",
+                "working-with-set-systems",
+                "hierarchy-of-set-systems",
+                "summary-and-forward-use"
+              ]
+            },
+            {
               "chapter": "mathematical-spaces",
               "notes": [
                 "spaces-as-structured-arenas",
@@ -639,23 +668,6 @@
                 "definitions",
                 "topological-space-subsets",
                 "basis"
-              ]
-            },
-            {
-              "chapter": "set-algebra",
-              "notes": [
-                "set-algebra",
-                "power-set-and-characteristic-functions"
-              ]
-            },
-            {
-              "chapter": "algebras-of-sets",
-              "notes": [
-                "set-operations-and-hierarchy",
-                "boolean-algebra-of-sets",
-                "rings-of-sets",
-                "sigma-algebras",
-                "borel-sets"
               ]
             },
             {
