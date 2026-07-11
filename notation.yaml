@@ -14,6 +14,178 @@ notation:
     symbol: '\operatorname{Carrier}'
     category: structural_operator
     description: Carrier set of an ambient mathematical object.
+  - id: not:domain
+    symbol: '\operatorname{dom}'
+    category: function_operator
+    description: Domain of a function or relation.
+  - id: not:identity-function
+    symbol: '\operatorname{id}'
+    category: function_operator
+    description: Identity function.
+  - id: not:interior-operator
+    symbol: '\operatorname{int}'
+    category: topology_operator
+    description: Interior operator on subsets of a topological space.
+  - id: not:real-part
+    symbol: '\operatorname{Re}'
+    category: complex_operator
+    description: Real part of a complex number.
+  - id: not:imaginary-part
+    symbol: '\operatorname{Im}'
+    category: complex_operator
+    description: Imaginary part of a complex number.
+  - id: not:sign-function
+    symbol: '\operatorname{sgn}'
+    category: function_operator
+    description: Sign function.
+  - id: not:hyperbolic-secant
+    symbol: '\operatorname{sech}'
+    category: elementary_function
+    description: Hyperbolic secant function.
+  - id: not:hyperbolic-cosecant
+    symbol: '\operatorname{csch}'
+    category: elementary_function
+    description: Hyperbolic cosecant function.
+  - id: not:hyperbolic-cotangent
+    symbol: '\operatorname{coth}'
+    category: elementary_function
+    description: Hyperbolic cotangent function.
+  - id: not:inverse-secant
+    symbol: '\operatorname{arcsec}'
+    category: elementary_function
+    description: Principal inverse secant function.
+  - id: not:inverse-cosecant
+    symbol: '\operatorname{arccsc}'
+    category: elementary_function
+    description: Principal inverse cosecant function.
+  - id: not:inverse-cotangent
+    symbol: '\operatorname{arccot}'
+    category: elementary_function
+    description: Principal inverse cotangent function.
+  - id: not:inverse-hyperbolic-sine
+    symbol: '\operatorname{arcsinh}'
+    category: elementary_function
+    description: Inverse hyperbolic sine function.
+  - id: not:inverse-hyperbolic-cosine
+    symbol: '\operatorname{arccosh}'
+    category: elementary_function
+    description: Inverse hyperbolic cosine function.
+  - id: not:inverse-hyperbolic-tangent
+    symbol: '\operatorname{arctanh}'
+    category: elementary_function
+    description: Inverse hyperbolic tangent function.
+  - id: not:inverse-hyperbolic-secant
+    symbol: '\operatorname{arcsech}'
+    category: elementary_function
+    description: Inverse hyperbolic secant function.
+  - id: not:inverse-hyperbolic-cosecant
+    symbol: '\operatorname{arccsch}'
+    category: elementary_function
+    description: Inverse hyperbolic cosecant function.
+  - id: not:inverse-hyperbolic-cotangent
+    symbol: '\operatorname{arccoth}'
+    category: elementary_function
+    description: Inverse hyperbolic cotangent function.
+  - id: not:opposite-side-length
+    symbol: '\operatorname{opp}'
+    category: geometry_operator
+    description: Opposite side length relative to an angle in a right triangle.
+  - id: not:adjacent-side-length
+    symbol: '\operatorname{adj}'
+    category: geometry_operator
+    description: Adjacent side length relative to an angle in a right triangle.
+  - id: not:hypotenuse-length
+    symbol: '\operatorname{hyp}'
+    category: geometry_operator
+    description: Hypotenuse length in a right triangle.
+  - id: not:hyperbolic-area
+    symbol: '\operatorname{HArea}'
+    category: geometry_operator
+    description: Signed hyperbolic sector area determined by geometric input data.
+  - id: not:image-operator
+    symbol: '\operatorname{im}'
+    category: function_operator
+    description: Image of a function, or the image-codomain tag in a restricted map.
+  - id: not:range-operator
+    symbol: '\operatorname{ran}'
+    category: relation_operator
+    description: Range of a relation.
+  - id: not:arity-map
+    symbol: '\operatorname{ar}'
+    category: logic_operator
+    description: Arity map for symbols in a formal signature.
+  - id: not:arity-function
+    symbol: '\operatorname{arity}'
+    category: logic_operator
+    description: Arity function for formal-language symbols.
+  - id: not:variable-set-operator
+    symbol: '\operatorname{Var}'
+    category: logic_operator
+    description: Variables occurring in a formula or term.
+  - id: not:sentence-set-operator
+    symbol: '\operatorname{Sent}'
+    category: logic_operator
+    description: Set of sentences of a formal language.
+  - id: not:sentences-set-operator
+    symbol: '\operatorname{Sentences}'
+    category: logic_operator
+    description: Set of sentences of a formal language.
+  - id: not:subformula-set-operator
+    symbol: '\operatorname{Sub}'
+    category: logic_operator
+    description: Set of subformulas of a formula.
+  - id: not:formula-depth-operator
+    symbol: '\operatorname{depth}'
+    category: logic_operator
+    description: Depth of a formula.
+  - id: not:connective-count-operator
+    symbol: '\operatorname{conn}'
+    category: logic_operator
+    description: Connective count of a formula.
+  - id: not:consequence-closure-operator
+    symbol: '\operatorname{Cn}'
+    category: logic_operator
+    description: Deductive consequence closure of a set of sentences.
+  - id: not:theory-of-structure-operator
+    symbol: '\operatorname{Th}'
+    category: logic_operator
+    description: Theory of a structure.
+  - id: not:consistency-operator
+    symbol: '\operatorname{Con}'
+    category: logic_operator
+    description: Consistency assertion or operator for a theory.
+  - id: not:relative-consistency-operator
+    symbol: '\operatorname{RelCon}'
+    category: logic_operator
+    description: Relative consistency assertion or operator for two theories.
+  - id: not:homomorphism-operator
+    symbol: '\operatorname{Hom}'
+    category: logic_operator
+    description: Homomorphism notation between formal or algebraic structures.
+  - id: not:evaluation-operator
+    symbol: '\operatorname{eval}'
+    category: logic_operator
+    description: Evaluation map for terms, formulas, or assignments.
+  - id: not:successor-operator
+    symbol: '\operatorname{succ}'
+    category: logic_operator
+    description: Successor operation in a formal model or example structure.
+  - id: not:term-set-operator
+    symbol: '\operatorname{Terms}'
+    category: logic_operator
+    description: Set of terms of a formal language or signature.
+  - id: not:well-formed-formula-set-operator
+    symbol: '\operatorname{WFF}'
+    category: logic_operator
+    description: Set of well-formed formulas of a formal language or signature.
+  - id: not:canonical-disjunctive-normal-form
+    symbol: '\operatorname{CDNF}'
+    category: logic_operator
+    description: Canonical disjunctive normal form operator.
+  - id: not:canonical-conjunctive-normal-form
+    symbol: '\operatorname{CCNF}'
+    category: logic_operator
+    description: Canonical conjunctive normal form operator.
   - id: not:for-all
     symbol: '\forall'
     category: quantifier

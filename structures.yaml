@@ -580,6 +580,289 @@ structures:
       whether finite endpoints are included or excluded and whether an
       endpoint is unbounded.
 
+  - id: struct:partition
+    name: Partition
+    kind: structure
+    category: integration
+    constructor: '\mathsf{Partition}'
+    arguments:
+      - name: P
+        role: partition
+      - name: I
+        role: interval
+    carrier_argument: I
+    structural_arguments:
+      - P
+    surface_forms:
+      - partition
+      - partition of an interval
+    description: >
+      Integration structure recording that P is a partition object associated
+      with the interval I.
+
+  - id: struct:tagged-partition
+    name: TaggedPartition
+    kind: structure
+    category: integration
+    constructor: '\mathsf{TaggedPartition}'
+    arguments:
+      - name: T
+        role: tagged_partition
+      - name: P
+        role: partition
+      - name: I
+        role: interval
+    carrier_argument: I
+    structural_arguments:
+      - T
+      - P
+    surface_forms:
+      - tagged partition
+      - tagged partition of an interval
+    description: >
+      Integration structure recording a tagged partition T built from a
+      partition P of the interval I.
+
+  - id: struct:gauge
+    name: Gauge
+    kind: structure
+    category: integration
+    constructor: '\mathsf{Gauge}'
+    arguments:
+      - name: delta
+        role: gauge
+        surface: '\delta'
+      - name: I
+        role: interval
+    carrier_argument: I
+    structural_arguments:
+      - delta
+    surface_forms:
+      - gauge
+      - gauge on an interval
+    description: >
+      Integration structure recording a positive radius assignment delta on
+      the interval I.
+
+  - id: struct:riemann-criterion
+    name: RiemannCriterion
+    kind: structure
+    category: integration
+    constructor: '\mathsf{RiemannCriterion}'
+    arguments: []
+    carrier_argument: null
+    structural_arguments: []
+    surface_forms:
+      - Riemann criterion
+      - Riemann integration criterion
+    description: >
+      Integration criterion for Riemann definite integrability.
+
+  - id: struct:darboux-criterion
+    name: DarbouxCriterion
+    kind: structure
+    category: integration
+    constructor: '\mathsf{DarbouxCriterion}'
+    arguments: []
+    carrier_argument: null
+    structural_arguments: []
+    surface_forms:
+      - Darboux criterion
+      - Darboux integration criterion
+    description: >
+      Integration criterion for Darboux definite integrability.
+
+  - id: struct:cauchy-criterion
+    name: CauchyCriterion
+    kind: structure
+    category: integration
+    constructor: '\mathsf{CauchyCriterion}'
+    arguments: []
+    carrier_argument: null
+    structural_arguments: []
+    surface_forms:
+      - Cauchy criterion
+      - Cauchy integration criterion
+    description: >
+      Integration criterion for Cauchy-style definite integrability.
+
+  - id: struct:henstock-kurzweil-criterion
+    name: HenstockKurzweilCriterion
+    kind: structure
+    category: integration
+    constructor: '\mathsf{HenstockKurzweilCriterion}'
+    arguments: []
+    carrier_argument: null
+    structural_arguments: []
+    surface_forms:
+      - Henstock-Kurzweil criterion
+      - Henstock-Kurzweil integration criterion
+    description: >
+      Integration criterion for Henstock-Kurzweil definite integrability.
+
+  - id: struct:mcshane-criterion
+    name: McShaneCriterion
+    kind: structure
+    category: integration
+    constructor: '\mathsf{McShaneCriterion}'
+    arguments: []
+    carrier_argument: null
+    structural_arguments: []
+    surface_forms:
+      - McShane criterion
+      - McShane integration criterion
+    description: >
+      Integration criterion for McShane definite integrability.
+
+  - id: struct:riemann-stieltjes-criterion
+    name: RiemannStieltjesCriterion
+    kind: structure
+    category: integration
+    constructor: '\mathsf{RiemannStieltjesCriterion}'
+    arguments:
+      - name: alpha
+        role: integrator
+        surface: '\alpha'
+    carrier_argument: null
+    structural_arguments:
+      - alpha
+    surface_forms:
+      - Riemann-Stieltjes criterion
+      - Riemann-Stieltjes integration criterion
+    description: >
+      Integration criterion for Riemann-Stieltjes definite integrability with
+      integrator alpha.
+
+  - id: struct:difference-operator
+    name: DifferenceOperator
+    kind: structure
+    category: discrete_calculus
+    constructor: '\mathsf{DifferenceOperator}'
+    arguments:
+      - name: Delta
+        role: difference_operator
+        surface: '\Delta'
+      - name: I
+        role: discrete_domain
+    carrier_argument: I
+    structural_arguments:
+      - Delta
+    surface_forms:
+      - difference operator
+      - finite difference operator
+    description: >
+      Operator structure for taking finite differences of functions or
+      sequences on a discrete domain I.
+
+  - id: struct:forward-difference-operator
+    name: ForwardDifferenceOperator
+    kind: structure
+    category: discrete_calculus
+    constructor: '\mathsf{ForwardDifferenceOperator}'
+    arguments:
+      - name: Delta
+        role: forward_difference_operator
+        surface: '\Delta'
+      - name: I
+        role: discrete_domain
+    carrier_argument: I
+    structural_arguments:
+      - Delta
+    surface_forms:
+      - forward difference operator
+      - one-step difference operator
+    description: >
+      Difference operator Delta that sends a discrete function f to the
+      one-step forward difference Delta f.
+
+  - id: struct:higher-difference-operator
+    name: HigherDifferenceOperator
+    kind: structure
+    category: discrete_calculus
+    constructor: '\mathsf{HigherDifferenceOperator}'
+    arguments:
+      - name: Delta
+        role: difference_operator
+        surface: '\Delta'
+      - name: k
+        role: order
+      - name: I
+        role: discrete_domain
+    carrier_argument: I
+    structural_arguments:
+      - Delta
+      - k
+    surface_forms:
+      - higher difference operator
+      - iterated difference operator
+    description: >
+      Iterated finite-difference operator Delta raised to order k on the
+      discrete domain I.
+
+  - id: struct:shift-operator
+    name: ShiftOperator
+    kind: structure
+    category: discrete_calculus
+    constructor: '\mathsf{ShiftOperator}'
+    arguments:
+      - name: E
+        role: shift_operator
+      - name: I
+        role: discrete_domain
+    carrier_argument: I
+    structural_arguments:
+      - E
+    surface_forms:
+      - shift operator
+      - successor shift
+    description: >
+      Operator structure that shifts a discrete function or sequence forward
+      along the discrete domain I.
+
+  - id: struct:summation-operator
+    name: SummationOperator
+    kind: structure
+    category: discrete_calculus
+    constructor: '\mathsf{SummationOperator}'
+    arguments:
+      - name: Sigma
+        role: summation_operator
+        surface: '\Sigma'
+      - name: I
+        role: discrete_domain
+    carrier_argument: I
+    structural_arguments:
+      - Sigma
+    surface_forms:
+      - summation operator
+      - finite summation operator
+    description: >
+      Operator structure for summing a function or sequence over a discrete
+      domain or finite index interval.
+
+  - id: struct:difference-table
+    name: DifferenceTable
+    kind: structure
+    category: discrete_calculus
+    constructor: '\mathsf{DifferenceTable}'
+    arguments:
+      - name: T
+        role: difference_table
+      - name: f
+        role: discrete_function
+      - name: I
+        role: discrete_domain
+    carrier_argument: I
+    structural_arguments:
+      - T
+      - f
+    surface_forms:
+      - difference table
+      - finite difference table
+    description: >
+      Tabular structure collecting values of a discrete function together
+      with successive finite differences on the domain I.
+
   - id: struct:topological-space
     name: TopologicalSpace
     kind: structure
@@ -864,3 +1147,1425 @@ structures:
     description: >
       Algebraic and order structure built from an ordered field intended to
       satisfy the least-upper-bound completeness property.
+
+  - id: struct:truth-assignment
+    name: TruthAssignment
+    kind: structure
+    category: logic
+    constructor: '\mathsf{TruthAssignment}'
+    arguments:
+      - name: v
+        role: assignment
+      - name: C
+        role: logic_context
+    carrier_argument: C
+    structural_arguments:
+      - v
+    surface_forms:
+      - truth assignment
+    description: >
+      Assignment data giving truth values to the variables or atoms in a
+      propositional or logical context.
+
+  - id: struct:truth-valuation
+    name: TruthValuation
+    kind: structure
+    category: logic
+    constructor: '\mathsf{TruthValuation}'
+    arguments:
+      - name: v_hat
+        role: valuation
+        surface: '\widehat v'
+      - name: v
+        role: truth_assignment
+      - name: C
+        role: logic_context
+    carrier_argument: C
+    structural_arguments:
+      - v_hat
+      - v
+    surface_forms:
+      - truth valuation
+      - valuation
+      - extended truth assignment
+    description: >
+      Valuation data extending a truth assignment from variables or atoms to
+      the formulas in a propositional or logical context.
+
+  - id: struct:binary-connective
+    name: BinaryConnective
+    kind: structure
+    category: logic
+    constructor: '\mathsf{BinaryConnective}'
+    arguments:
+      - name: connective
+        role: connective
+      - name: C
+        role: logic_context
+    carrier_argument: C
+    structural_arguments:
+      - connective
+    surface_forms:
+      - binary connective
+      - two-place connective
+      - binary logical connective
+    description: >
+      Logical connective object that forms a compound formula from two input
+      formulas in the given logical context.
+
+  - id: struct:atomic-formula
+    name: AtomicFormula
+    kind: structure
+    category: logic
+    constructor: '\mathsf{AtomicFormula}'
+    arguments:
+      - name: phi
+        role: formula
+        surface: '\varphi'
+      - name: C
+        role: logic_context
+    carrier_argument: C
+    structural_arguments:
+      - phi
+    surface_forms:
+      - atomic formula
+      - atom
+    description: >
+      Formula object with no logical connective or quantifier decomposition in
+      the given logical context.
+
+  - id: struct:formula
+    name: Formula
+    kind: structure
+    category: logic
+    constructor: '\mathsf{Formula}'
+    arguments:
+      - name: phi
+        role: formula
+        surface: '\varphi'
+      - name: C
+        role: logic_context
+    carrier_argument: C
+    structural_arguments:
+      - phi
+    surface_forms:
+      - formula
+      - well-formed expression
+    description: >
+      Formula object in a propositional or first-order logical context.
+
+  - id: struct:tautology
+    name: Tautology
+    kind: structure
+    category: logic
+    constructor: '\mathsf{Tautology}'
+    arguments:
+      - name: phi
+        role: formula
+        surface: '\varphi'
+      - name: C
+        role: logic_context
+    carrier_argument: C
+    structural_arguments:
+      - phi
+    surface_forms:
+      - tautology
+      - tautological formula
+      - valid propositional formula
+    description: >
+      Formula object belonging to the tautology class in the given logical
+      context.
+
+  - id: struct:term
+    name: Term
+    kind: structure
+    category: logic
+    constructor: '\mathsf{Term}'
+    arguments:
+      - name: t
+        role: term
+      - name: C
+        role: logic_context
+    carrier_argument: C
+    structural_arguments:
+      - t
+    surface_forms:
+      - term
+      - formal term
+    description: >
+      Term object built from the variables, constants, and function symbols of
+      a formal language or signature.
+
+  - id: struct:well-formed-formula
+    name: WellFormedFormula
+    kind: structure
+    category: logic
+    constructor: '\mathsf{WellFormedFormula}'
+    arguments:
+      - name: phi
+        role: formula
+        surface: '\varphi'
+      - name: C
+        role: logic_context
+    carrier_argument: C
+    structural_arguments:
+      - phi
+    surface_forms:
+      - well-formed formula
+      - wff
+    description: >
+      Formula object satisfying the formation rules of the given logical
+      context.
+
+  - id: struct:open-formula
+    name: OpenFormula
+    kind: structure
+    category: logic
+    constructor: '\mathsf{OpenFormula}'
+    arguments:
+      - name: phi
+        role: formula
+        surface: '\varphi'
+      - name: C
+        role: logic_context
+    carrier_argument: C
+    structural_arguments:
+      - phi
+    surface_forms:
+      - open formula
+      - formula with free variables
+    description: >
+      Formula object with at least one free variable in the given logical
+      context.
+
+  - id: struct:sentence
+    name: Sentence
+    kind: structure
+    category: logic
+    constructor: '\mathsf{Sentence}'
+    arguments:
+      - name: phi
+        role: formula
+        surface: '\varphi'
+      - name: C
+        role: logic_context
+    carrier_argument: C
+    structural_arguments:
+      - phi
+    surface_forms:
+      - sentence
+      - closed formula
+    description: >
+      Formula object with no free variables in the given logical context.
+
+  - id: struct:theory
+    name: Theory
+    kind: structure
+    category: logic
+    constructor: '\mathsf{Theory}'
+    arguments:
+      - name: T
+        role: theory
+      - name: C
+        role: logic_context
+    carrier_argument: C
+    structural_arguments:
+      - T
+    surface_forms:
+      - theory
+      - set of sentences
+    description: >
+      Collection of sentences or formulas treated as a theory in a logical
+      context.
+
+  - id: struct:argument
+    name: Argument
+    kind: structure
+    category: logic
+    constructor: '\mathsf{Argument}'
+    arguments:
+      - name: A
+        role: argument
+      - name: C
+        role: logic_context
+    carrier_argument: C
+    structural_arguments:
+      - A
+    surface_forms:
+      - argument
+      - formal argument
+      - premises and conclusion
+    description: >
+      Concrete argument object consisting of premises and a conclusion in a
+      logical context.
+
+  - id: struct:argument-form
+    name: ArgumentForm
+    kind: structure
+    category: logic
+    constructor: '\mathsf{ArgumentForm}'
+    arguments:
+      - name: A
+        role: argument_form
+      - name: C
+        role: logic_context
+    carrier_argument: C
+    structural_arguments:
+      - A
+    surface_forms:
+      - argument form
+      - inference pattern
+    description: >
+      Pattern consisting of premises and a conclusion in a logical context.
+
+  - id: struct:valid-argument-form
+    name: ValidArgumentForm
+    kind: structure
+    category: logic
+    constructor: '\mathsf{ValidArgumentForm}'
+    arguments:
+      - name: A
+        role: argument_form
+      - name: C
+        role: logic_context
+    carrier_argument: C
+    structural_arguments:
+      - A
+    surface_forms:
+      - valid argument form
+      - valid inference pattern
+    description: >
+      Class or object of argument forms treated as valid in the logical
+      context.
+
+  - id: struct:connective-basis
+    name: ConnectiveBasis
+    kind: structure
+    category: logic
+    constructor: '\mathsf{ConnectiveBasis}'
+    arguments:
+      - name: B
+        role: connective_basis
+      - name: C
+        role: logic_context
+    carrier_argument: C
+    structural_arguments:
+      - B
+    surface_forms:
+      - connective basis
+      - set of connectives
+    description: >
+      Collection of connectives used as a basis for building formulas or
+      representing Boolean functions.
+
+  - id: struct:indexed-family
+    name: IndexedFamily
+    kind: structure
+    category: set
+    constructor: '\mathsf{IndexedFamily}'
+    arguments:
+      - name: F
+        role: family
+        surface: '\mathcal{F}'
+      - name: I
+        role: index_set
+      - name: U
+        role: ambient_set
+    carrier_argument: U
+    structural_arguments:
+      - F
+      - I
+    surface_forms:
+      - indexed family
+      - indexed family of sets
+    description: >
+      Family of objects indexed by I, typically a function from I into a
+      powerset or ambient collection over U.
+
+  - id: struct:graph
+    name: Graph
+    kind: structure
+    category: function
+    constructor: '\mathsf{Graph}'
+    arguments:
+      - name: f
+        role: function
+      - name: A
+        role: domain
+      - name: B
+        role: codomain
+    carrier_argument: null
+    structural_arguments:
+      - f
+      - A
+      - B
+    surface_forms:
+      - graph of a function
+      - function graph
+    description: >
+      Graph object associated with a function and its domain and codomain.
+
+  - id: struct:image-operator
+    name: ImageOperator
+    kind: structure
+    category: function
+    constructor: '\mathsf{ImageOperator}'
+    arguments:
+      - name: f
+        role: function
+      - name: A
+        role: domain
+      - name: B
+        role: codomain
+    carrier_argument: null
+    structural_arguments:
+      - f
+      - A
+      - B
+    surface_forms:
+      - image operator
+      - direct image operator
+    description: >
+      Operator that sends a subset of the domain of f to its image under f.
+
+  - id: struct:preimage-operator
+    name: PreimageOperator
+    kind: structure
+    category: function
+    constructor: '\mathsf{PreimageOperator}'
+    arguments:
+      - name: f
+        role: function
+      - name: A
+        role: domain
+      - name: B
+        role: codomain
+    carrier_argument: null
+    structural_arguments:
+      - f
+      - A
+      - B
+    surface_forms:
+      - preimage operator
+      - inverse image operator
+    description: >
+      Operator that sends a subset of the codomain of f to its preimage under
+      f.
+
+  - id: struct:propositional-variable
+    name: PropositionalVariable
+    kind: structure
+    category: logic
+    constructor: '\mathsf{PropositionalVariable}'
+    arguments:
+      - name: P
+        role: symbol
+    carrier_argument: null
+    structural_arguments:
+      - P
+    surface_forms:
+      - propositional variable
+    description: >
+      Propositional variable symbol in a propositional language.
+
+  - id: struct:unary-connective
+    name: UnaryConnective
+    kind: structure
+    category: logic
+    constructor: '\mathsf{UnaryConnective}'
+    arguments:
+      - name: c
+        role: connective
+    carrier_argument: null
+    structural_arguments:
+      - c
+    surface_forms:
+      - unary connective
+    description: >
+      Logical connective object that forms a formula from one input formula.
+
+  - id: struct:molecular-formula
+    name: MolecularFormula
+    kind: structure
+    category: logic
+    constructor: '\mathsf{MolecularFormula}'
+    arguments:
+      - name: phi
+        role: formula
+        surface: '\varphi'
+    carrier_argument: null
+    structural_arguments:
+      - phi
+    surface_forms:
+      - molecular formula
+    description: >
+      Formula object with nontrivial connective or quantifier structure.
+
+  - id: struct:formula-context
+    name: FormulaContext
+    kind: structure
+    category: logic
+    constructor: '\mathsf{FormulaContext}'
+    arguments:
+      - name: C
+        role: context
+    carrier_argument: null
+    structural_arguments:
+      - C
+    surface_forms:
+      - formula context
+      - context with a hole
+    description: >
+      Formula context or expression with a distinguished hole.
+
+  - id: struct:counterexample-assignment
+    name: CounterexampleAssignment
+    kind: structure
+    category: logic
+    constructor: '\mathsf{CounterexampleAssignment}'
+    arguments:
+      - name: v
+        role: assignment
+      - name: X
+        role: target
+    carrier_argument: null
+    structural_arguments:
+      - v
+      - X
+    surface_forms:
+      - counterexample assignment
+    description: >
+      Assignment data witnessing failure of a proposed validity claim.
+
+  - id: struct:syntax-tree
+    name: Tree
+    kind: structure
+    category: logic
+    constructor: '\mathsf{Tree}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - tree
+      - syntax tree
+      - parse tree
+    description: >
+      Tree-shaped data object associated with syntactic construction.
+
+  - id: struct:truth-table
+    name: TruthTable
+    kind: structure
+    category: logic
+    constructor: '\mathsf{TruthTable}'
+    arguments:
+      - name: phi
+        role: formula
+        surface: '\varphi'
+    carrier_argument: null
+    structural_arguments:
+      - phi
+    surface_forms:
+      - truth table
+    description: >
+      Tabular data recording truth values of a formula under assignments.
+
+  - id: struct:extended-truth-assignment
+    name: ExtendedTruthAssignment
+    kind: structure
+    category: logic
+    constructor: '\mathsf{ExtendedTruthAssignment}'
+    arguments:
+      - name: v_hat
+        role: extended_assignment
+        surface: '\widehat v'
+      - name: v
+        role: truth_assignment
+    carrier_argument: null
+    structural_arguments:
+      - v_hat
+      - v
+    surface_forms:
+      - extended truth assignment
+    description: >
+      Extension of a truth assignment from variables to formulas.
+
+  - id: struct:first-order-language
+    name: FirstOrderLanguage
+    kind: structure
+    category: logic
+    constructor: '\mathsf{FirstOrderLanguage}'
+    arguments:
+      - name: L
+        role: language
+    carrier_argument: null
+    structural_arguments:
+      - L
+    surface_forms:
+      - first-order language
+    description: >
+      First-order language data, including variables and nonlogical symbols.
+
+  - id: struct:structure
+    name: Structure
+    kind: structure
+    category: logic
+    constructor: '\mathsf{Structure}'
+    arguments:
+      - name: M
+        role: structure
+      - name: L
+        role: language
+    carrier_argument: L
+    structural_arguments:
+      - M
+    surface_forms:
+      - structure
+      - first-order structure
+    description: >
+      First-order structure interpreting a language.
+
+  - id: struct:variable-assignment
+    name: VariableAssignment
+    kind: structure
+    category: logic
+    constructor: '\mathsf{VariableAssignment}'
+    arguments:
+      - name: s
+        role: assignment
+      - name: M
+        role: structure
+    carrier_argument: M
+    structural_arguments:
+      - s
+    surface_forms:
+      - variable assignment
+    description: >
+      Assignment of variables to elements of a structure.
+
+  - id: struct:modified-assignment
+    name: ModifiedAssignment
+    kind: structure
+    category: logic
+    constructor: '\mathsf{ModifiedAssignment}'
+    arguments:
+      - name: s_prime
+        role: modified_assignment
+        surface: "s'"
+      - name: s
+        role: base_assignment
+    carrier_argument: null
+    structural_arguments:
+      - s_prime
+      - s
+    surface_forms:
+      - modified assignment
+    description: >
+      Assignment obtained from another assignment by changing specified
+      variable values.
+
+  - id: struct:term-evaluation
+    name: TermEvaluation
+    kind: structure
+    category: logic
+    constructor: '\mathsf{TermEvaluation}'
+    arguments:
+      - name: a
+        role: value
+      - name: t
+        role: term
+    carrier_argument: null
+    structural_arguments:
+      - a
+      - t
+    surface_forms:
+      - term evaluation
+    description: >
+      Evaluation data assigning a value to a term in a structure under an
+      assignment.
+
+  - id: struct:variable
+    name: Variable
+    kind: structure
+    category: logic
+    constructor: '\mathsf{Variable}'
+    arguments:
+      - name: x
+        role: variable
+    carrier_argument: null
+    structural_arguments:
+      - x
+    surface_forms:
+      - variable
+    description: >
+      Variable symbol in a formal language.
+
+  - id: struct:constant-symbol
+    name: ConstantSymbol
+    kind: structure
+    category: logic
+    constructor: '\mathsf{ConstantSymbol}'
+    arguments:
+      - name: c
+        role: symbol
+    carrier_argument: null
+    structural_arguments:
+      - c
+    surface_forms:
+      - constant symbol
+    description: >
+      Nullary function symbol in a formal language.
+
+  - id: struct:function-symbol
+    name: FunctionSymbol
+    kind: structure
+    category: logic
+    constructor: '\mathsf{FunctionSymbol}'
+    arguments:
+      - name: f
+        role: symbol
+    carrier_argument: null
+    structural_arguments:
+      - f
+    surface_forms:
+      - function symbol
+    description: >
+      Positive-arity function symbol in a formal language.
+
+  - id: struct:predicate-symbol
+    name: PredicateSymbol
+    kind: structure
+    category: logic
+    constructor: '\mathsf{PredicateSymbol}'
+    arguments:
+      - name: P
+        role: symbol
+    carrier_argument: null
+    structural_arguments:
+      - P
+    surface_forms:
+      - predicate symbol
+      - relation symbol
+    description: >
+      Positive-arity predicate or relation symbol in a formal language.
+
+  - id: struct:universal-formula
+    name: UniversalFormula
+    kind: structure
+    category: logic
+    constructor: '\mathsf{UniversalFormula}'
+    arguments:
+      - name: Phi
+        role: formula
+        surface: '\Phi'
+    carrier_argument: null
+    structural_arguments:
+      - Phi
+    surface_forms:
+      - universal formula
+    description: >
+      Formula whose leading quantifier form is universal.
+
+  - id: struct:existential-formula
+    name: ExistentialFormula
+    kind: structure
+    category: logic
+    constructor: '\mathsf{ExistentialFormula}'
+    arguments:
+      - name: Phi
+        role: formula
+        surface: '\Phi'
+    carrier_argument: null
+    structural_arguments:
+      - Phi
+    surface_forms:
+      - existential formula
+    description: >
+      Formula whose leading quantifier form is existential.
+
+  - id: struct:bounded-quantifier
+    name: BoundedQuantifier
+    kind: structure
+    category: logic
+    constructor: '\mathsf{BoundedQuantifier}'
+    arguments:
+      - name: Phi
+        role: formula
+        surface: '\Phi'
+    carrier_argument: null
+    structural_arguments:
+      - Phi
+    surface_forms:
+      - bounded quantifier
+    description: >
+      Bounded-quantifier expression or bounded quantifier occurrence.
+
+  - id: struct:scope
+    name: Scope
+    kind: structure
+    category: logic
+    constructor: '\mathsf{Scope}'
+    arguments:
+      - name: x
+        role: variable
+      - name: phi
+        role: formula
+        surface: '\varphi'
+    carrier_argument: null
+    structural_arguments:
+      - x
+      - phi
+    surface_forms:
+      - scope
+      - quantifier scope
+    description: >
+      Formula region governed by a quantifier or binding occurrence.
+
+  - id: struct:quantifier-prefix
+    name: QuantifierPrefix
+    kind: structure
+    category: logic
+    constructor: '\mathsf{QuantifierPrefix}'
+    arguments:
+      - name: Pi
+        role: prefix
+        surface: '\Pi'
+    carrier_argument: null
+    structural_arguments:
+      - Pi
+    surface_forms:
+      - quantifier prefix
+    description: >
+      Finite string or sequence of leading quantifiers.
+
+  - id: struct:matrix
+    name: Matrix
+    kind: structure
+    category: logic
+    constructor: '\mathsf{Matrix}'
+    arguments:
+      - name: psi
+        role: matrix
+        surface: '\psi'
+      - name: Phi
+        role: formula
+        surface: '\Phi'
+    carrier_argument: null
+    structural_arguments:
+      - psi
+      - Phi
+    surface_forms:
+      - matrix
+      - quantifier-free matrix
+    description: >
+      Quantifier-free formula body associated with a prenex formula.
+
+  - id: struct:prenex-formula
+    name: PrenexFormula
+    kind: structure
+    category: logic
+    constructor: '\mathsf{PrenexFormula}'
+    arguments:
+      - name: Phi
+        role: formula
+        surface: '\Phi'
+    carrier_argument: null
+    structural_arguments:
+      - Phi
+    surface_forms:
+      - prenex formula
+    description: >
+      Formula with all quantifiers collected in a leading prefix.
+
+  - id: struct:prenex-normal-form
+    name: PrenexNormalForm
+    kind: structure
+    category: logic
+    constructor: '\mathsf{PrenexNormalForm}'
+    arguments:
+      - name: psi
+        role: prenex_formula
+        surface: '\psi'
+      - name: phi
+        role: original_formula
+        surface: '\varphi'
+    carrier_argument: null
+    structural_arguments:
+      - psi
+      - phi
+    surface_forms:
+      - prenex normal form
+    description: >
+      Prenex formula equivalent to a given formula.
+
+  - id: struct:translation-key
+    name: TranslationKey
+    kind: structure
+    category: logic
+    constructor: '\mathsf{TranslationKey}'
+    arguments:
+      - name: K
+        role: key
+    carrier_argument: null
+    structural_arguments:
+      - K
+    surface_forms:
+      - translation key
+    description: >
+      Data assigning a domain and symbol readings for translation into logic.
+
+  - id: struct:domain-of-discourse
+    name: DomainOfDiscourse
+    kind: structure
+    category: logic
+    constructor: '\mathsf{DomainOfDiscourse}'
+    arguments:
+      - name: D
+        role: domain
+      - name: K
+        role: translation_key
+    carrier_argument: K
+    structural_arguments:
+      - D
+    surface_forms:
+      - domain of discourse
+    description: >
+      Domain fixed by a translation key.
+
+  - id: struct:translation-predicate-symbol
+    name: TranslationPredicateSymbol
+    kind: structure
+    category: logic
+    constructor: '\mathsf{TranslationPredicateSymbol}'
+    arguments:
+      - name: P
+        role: predicate_symbol
+      - name: K
+        role: translation_key
+    carrier_argument: K
+    structural_arguments:
+      - P
+    surface_forms:
+      - translation predicate symbol
+    description: >
+      Predicate symbol together with its fixed reading in a translation key.
+
+  - id: struct:translation-relation-symbol
+    name: TranslationRelationSymbol
+    kind: structure
+    category: logic
+    constructor: '\mathsf{TranslationRelationSymbol}'
+    arguments:
+      - name: R
+        role: relation_symbol
+      - name: K
+        role: translation_key
+    carrier_argument: K
+    structural_arguments:
+      - R
+    surface_forms:
+      - translation relation symbol
+    description: >
+      Relation symbol together with its arity and reading in a translation key.
+
+  - id: struct:translation-constant
+    name: TranslationConstant
+    kind: structure
+    category: logic
+    constructor: '\mathsf{TranslationConstant}'
+    arguments:
+      - name: c
+        role: constant
+      - name: K
+        role: translation_key
+    carrier_argument: K
+    structural_arguments:
+      - c
+    surface_forms:
+      - translation constant
+    description: >
+      Constant symbol naming a fixed object in a translation key.
+
+  - id: struct:translation-variable
+    name: TranslationVariable
+    kind: structure
+    category: logic
+    constructor: '\mathsf{TranslationVariable}'
+    arguments:
+      - name: x
+        role: variable
+      - name: K
+        role: translation_key
+    carrier_argument: K
+    structural_arguments:
+      - x
+    surface_forms:
+      - translation variable
+    description: >
+      Variable used in a translation key.
+
+  - id: struct:categorical-a-form
+    name: CategoricalAForm
+    kind: structure
+    category: logic
+    constructor: '\mathsf{CategoricalAForm}'
+    arguments:
+      - name: phi
+        role: formula
+        surface: '\varphi'
+    carrier_argument: null
+    structural_arguments:
+      - phi
+    surface_forms:
+      - categorical A form
+    description: >
+      Universal affirmative categorical form.
+
+  - id: struct:categorical-e-form
+    name: CategoricalEForm
+    kind: structure
+    category: logic
+    constructor: '\mathsf{CategoricalEForm}'
+    arguments:
+      - name: phi
+        role: formula
+        surface: '\varphi'
+    carrier_argument: null
+    structural_arguments:
+      - phi
+    surface_forms:
+      - categorical E form
+    description: >
+      Universal negative categorical form.
+
+  - id: struct:categorical-i-form
+    name: CategoricalIForm
+    kind: structure
+    category: logic
+    constructor: '\mathsf{CategoricalIForm}'
+    arguments:
+      - name: phi
+        role: formula
+        surface: '\varphi'
+    carrier_argument: null
+    structural_arguments:
+      - phi
+    surface_forms:
+      - categorical I form
+    description: >
+      Particular affirmative categorical form.
+
+  - id: struct:categorical-o-form
+    name: CategoricalOForm
+    kind: structure
+    category: logic
+    constructor: '\mathsf{CategoricalOForm}'
+    arguments:
+      - name: phi
+        role: formula
+        surface: '\varphi'
+    carrier_argument: null
+    structural_arguments:
+      - phi
+    surface_forms:
+      - categorical O form
+    description: >
+      Particular negative categorical form.
+
+  - id: struct:universal-translation-pattern
+    name: UniversalTranslationPattern
+    kind: structure
+    category: logic
+    constructor: '\mathsf{UniversalTranslationPattern}'
+    arguments:
+      - name: A
+        role: subject
+      - name: B
+        role: predicate
+    carrier_argument: null
+    structural_arguments:
+      - A
+      - B
+    surface_forms:
+      - universal translation pattern
+    description: >
+      Translation pattern for universal English statements.
+
+  - id: struct:existential-translation-pattern
+    name: ExistentialTranslationPattern
+    kind: structure
+    category: logic
+    constructor: '\mathsf{ExistentialTranslationPattern}'
+    arguments:
+      - name: A
+        role: subject
+      - name: B
+        role: predicate
+    carrier_argument: null
+    structural_arguments:
+      - A
+      - B
+    surface_forms:
+      - existential translation pattern
+    description: >
+      Translation pattern for existential English statements.
+
+  - id: struct:conditional-translation-pattern
+    name: ConditionalTranslationPattern
+    kind: structure
+    category: logic
+    constructor: '\mathsf{ConditionalTranslationPattern}'
+    arguments:
+      - name: A
+        role: antecedent
+      - name: B
+        role: consequent
+    carrier_argument: null
+    structural_arguments:
+      - A
+      - B
+    surface_forms:
+      - conditional translation pattern
+    description: >
+      Translation pattern for conditional English statements.
+
+  - id: struct:negation-translation-pattern
+    name: NegationTranslationPattern
+    kind: structure
+    category: logic
+    constructor: '\mathsf{NegationTranslationPattern}'
+    arguments:
+      - name: phi
+        role: source_formula
+        surface: '\varphi'
+      - name: psi
+        role: negated_formula
+        surface: '\psi'
+    carrier_argument: null
+    structural_arguments:
+      - phi
+      - psi
+    surface_forms:
+      - negation translation pattern
+    description: >
+      Translation pattern recording negation of a formula.
+
+  - id: struct:literal
+    name: Literal
+    kind: structure
+    category: logic
+    constructor: '\mathsf{Literal}'
+    arguments:
+      - name: ell
+        role: literal
+        surface: '\ell'
+    carrier_argument: null
+    structural_arguments:
+      - ell
+    surface_forms:
+      - literal
+    description: >
+      Atomic formula or negated atomic formula in propositional normal forms.
+
+  - id: struct:positive-literal
+    name: PositiveLiteral
+    kind: structure
+    category: logic
+    constructor: '\mathsf{PositiveLiteral}'
+    arguments:
+      - name: ell
+        role: literal
+        surface: '\ell'
+    carrier_argument: null
+    structural_arguments:
+      - ell
+    surface_forms:
+      - positive literal
+    description: >
+      Literal occurring without negation.
+
+  - id: struct:negative-literal
+    name: NegativeLiteral
+    kind: structure
+    category: logic
+    constructor: '\mathsf{NegativeLiteral}'
+    arguments:
+      - name: ell
+        role: literal
+        surface: '\ell'
+    carrier_argument: null
+    structural_arguments:
+      - ell
+    surface_forms:
+      - negative literal
+    description: >
+      Literal occurring as a negated atom.
+
+  - id: struct:clause
+    name: Clause
+    kind: structure
+    category: logic
+    constructor: '\mathsf{Clause}'
+    arguments:
+      - name: C
+        role: clause
+    carrier_argument: null
+    structural_arguments:
+      - C
+    surface_forms:
+      - clause
+    description: >
+      Disjunction or finite set of literals.
+
+  - id: struct:empty-clause
+    name: EmptyClause
+    kind: structure
+    category: logic
+    constructor: '\mathsf{EmptyClause}'
+    arguments:
+      - name: C
+        role: clause
+    carrier_argument: null
+    structural_arguments:
+      - C
+    surface_forms:
+      - empty clause
+    description: >
+      Clause with no literals.
+
+  - id: struct:empty-conjunction
+    name: EmptyConjunction
+    kind: structure
+    category: logic
+    constructor: '\mathsf{EmptyConjunction}'
+    arguments:
+      - name: T
+        role: conjunction
+    carrier_argument: null
+    structural_arguments:
+      - T
+    surface_forms:
+      - empty conjunction
+    description: >
+      Conjunction with no conjuncts.
+
+  - id: struct:negation-normal-form
+    name: NegationNormalForm
+    kind: structure
+    category: logic
+    constructor: '\mathsf{NegationNormalForm}'
+    arguments:
+      - name: phi
+        role: formula
+        surface: '\varphi'
+    carrier_argument: null
+    structural_arguments:
+      - phi
+    surface_forms:
+      - negation normal form
+    description: >
+      Formula form in which negation occurs only directly on atoms.
+
+  - id: struct:nnf-conversion-procedure
+    name: NNFConversionProcedure
+    kind: structure
+    category: logic
+    constructor: '\mathsf{NNFConversionProcedure}'
+    arguments:
+      - name: phi
+        role: source_formula
+        surface: '\varphi'
+      - name: psi
+        role: target_formula
+        surface: '\psi'
+    carrier_argument: null
+    structural_arguments:
+      - phi
+      - psi
+    surface_forms:
+      - NNF conversion procedure
+    description: >
+      Procedure or conversion data turning a formula into negation normal form.
+
+  - id: struct:nand
+    name: NAND
+    kind: structure
+    category: logic
+    constructor: '\mathsf{NAND}'
+    arguments:
+      - name: phi
+        role: left_formula
+        surface: '\varphi'
+      - name: psi
+        role: right_formula
+        surface: '\psi'
+    carrier_argument: null
+    structural_arguments:
+      - phi
+      - psi
+    surface_forms:
+      - NAND
+      - Sheffer stroke
+    description: >
+      NAND connective expression.
+
+  - id: struct:nor
+    name: NOR
+    kind: structure
+    category: logic
+    constructor: '\mathsf{NOR}'
+    arguments:
+      - name: phi
+        role: left_formula
+        surface: '\varphi'
+      - name: psi
+        role: right_formula
+        surface: '\psi'
+    carrier_argument: null
+    structural_arguments:
+      - phi
+      - psi
+    surface_forms:
+      - NOR
+      - Peirce arrow
+    description: >
+      NOR connective expression.
+
+  - id: struct:informal-proof-pattern
+    name: InformalProofPattern
+    kind: structure
+    category: logic
+    constructor: '\mathsf{InformalProofPattern}'
+    arguments:
+      - name: Pi
+        role: pattern
+        surface: '\Pi'
+    carrier_argument: null
+    structural_arguments:
+      - Pi
+    surface_forms:
+      - informal proof pattern
+    description: >
+      Recognized informal pattern for organizing a proof.
+
+  - id: struct:replacement-sequence
+    name: ReplacementSequence
+    kind: structure
+    category: logic
+    constructor: '\mathsf{ReplacementSequence}'
+    arguments:
+      - name: phi
+        role: source_formula
+        surface: '\varphi'
+      - name: psi
+        role: target_formula
+        surface: '\psi'
+    carrier_argument: null
+    structural_arguments:
+      - phi
+      - psi
+    surface_forms:
+      - replacement sequence
+    description: >
+      Sequence of formula replacements connecting two formulas.
+
+  - id: struct:propositional-equivalence-law
+    name: PropositionalEquivalenceLaw
+    kind: structure
+    category: logic
+    constructor: '\mathsf{PropositionalEquivalenceLaw}'
+    arguments:
+      - name: phi
+        role: left_formula
+        surface: '\varphi'
+      - name: psi
+        role: right_formula
+        surface: '\psi'
+    carrier_argument: null
+    structural_arguments:
+      - phi
+      - psi
+    surface_forms:
+      - propositional equivalence law
+    description: >
+      Named or schematic propositional equivalence law.
+
+  - id: struct:theorem
+    name: Theorem
+    kind: structure
+    category: logic
+    constructor: '\mathsf{Theorem}'
+    arguments:
+      - name: T
+        role: theory
+      - name: phi
+        role: sentence
+        surface: '\varphi'
+    carrier_argument: T
+    structural_arguments:
+      - phi
+    surface_forms:
+      - theorem
+    description: >
+      Sentence or formula regarded as a theorem of a theory.
+
+  - id: struct:countermodel
+    name: CounterModel
+    kind: structure
+    category: logic
+    constructor: '\mathsf{CounterModel}'
+    arguments:
+      - name: M
+        role: model
+      - name: X
+        role: target
+    carrier_argument: null
+    structural_arguments:
+      - M
+      - X
+    surface_forms:
+      - countermodel
+    description: >
+      Model data witnessing failure of a semantic consequence or validity
+      claim.
+
+  - id: struct:constant
+    name: Constant
+    kind: structure
+    category: logic
+    constructor: '\mathsf{Constant}'
+    arguments:
+      - name: c
+        role: constant
+    carrier_argument: null
+    structural_arguments:
+      - c
+    surface_forms:
+      - constant
+    description: >
+      Constant object or constant symbol in the relevant formal context.
+
+  - id: struct:reduction
+    name: Reduction
+    kind: structure
+    category: logic
+    constructor: '\mathsf{Reduction}'
+    arguments:
+      - name: phi
+        role: source_formula
+        surface: '\varphi'
+      - name: psi
+        role: target_formula
+        surface: '\psi'
+    carrier_argument: null
+    structural_arguments:
+      - phi
+      - psi
+    surface_forms:
+      - reduction
+      - connective reduction
+    description: >
+      Reduction data translating an expression over one basis into an
+      expression over another basis.

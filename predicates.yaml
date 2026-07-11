@@ -1453,57 +1453,6 @@ predicates:
     description: >
       The family F is a nested family of closed bounded intervals in P.
 
-  - id: pred:is-partition-of-interval
-    name: IsPartitionOfInterval
-    kind: predicate
-    category: integration
-    arguments:
-      - name: P
-        role: partition
-      - name: I
-        role: interval
-    returns: truth_value
-    surface_forms:
-      - is partition of interval
-      - interval partition
-    description: >
-      The object P is a partition of the interval I.
-
-  - id: pred:is-tagged-partition
-    name: IsTaggedPartition
-    kind: predicate
-    category: integration
-    arguments:
-      - name: T
-        role: tagged_partition
-      - name: P
-        role: partition
-      - name: I
-        role: interval
-    returns: truth_value
-    surface_forms:
-      - is tagged partition
-      - tagged partition
-    description: >
-      The object T is a tagged partition based on the partition P of interval I.
-
-  - id: pred:is-gauge
-    name: IsGauge
-    kind: predicate
-    category: integration
-    arguments:
-      - name: delta
-        role: gauge
-        surface: '\delta'
-      - name: I
-        role: interval
-    returns: truth_value
-    surface_forms:
-      - is gauge
-      - gauge
-    description: >
-      The object delta is a gauge on interval I.
-
   - id: pred:is-delta-fine
     name: IsDeltaFine
     kind: predicate
@@ -1522,6 +1471,281 @@ predicates:
       - delta-fine
     description: >
       The tagged partition T is delta-fine on interval I.
+
+  - id: pred:is-integrable
+    name: IsIntegrable
+    kind: predicate
+    category: integration
+    arguments:
+      - name: f
+        role: function
+      - name: I
+        role: interval
+      - name: C
+        role: integration_criterion
+    returns: truth_value
+    surface_forms:
+      - is integrable
+      - integrable by criterion
+    description: >
+      The function f is integrable over interval I by the integration
+      criterion C.
+
+  - id: pred:has-definite-integral
+    name: HasDefiniteIntegral
+    kind: predicate
+    category: integration
+    arguments:
+      - name: f
+        role: function
+      - name: I
+        role: interval
+      - name: C
+        role: integration_criterion
+      - name: A
+        role: integral_value
+    returns: truth_value
+    surface_forms:
+      - has definite integral
+      - definite integral equals
+    description: >
+      The function f has definite integral value A over interval I by the
+      integration criterion C.
+
+  - id: pred:is-primitive-of
+    name: IsPrimitiveOf
+    kind: predicate
+    category: integration
+    arguments:
+      - name: F
+        role: primitive
+      - name: f
+        role: derivative_function
+      - name: I
+        role: interval
+    returns: truth_value
+    surface_forms:
+      - is primitive of
+      - is antiderivative of
+      - primitive
+      - antiderivative
+    description: >
+      The function F is a primitive, or antiderivative, of f on interval I.
+
+  - id: pred:has-forward-difference
+    name: HasForwardDifference
+    kind: predicate
+    category: discrete_calculus
+    arguments:
+      - name: f
+        role: discrete_function
+      - name: I
+        role: discrete_domain
+      - name: g
+        role: forward_difference
+    returns: truth_value
+    surface_forms:
+      - has forward difference
+      - forward difference
+      - discrete derivative
+    description: >
+      The discrete function f has forward difference g on the discrete domain
+      I, meaning g records the one-step change of f.
+
+  - id: pred:has-higher-difference
+    name: HasHigherDifference
+    kind: predicate
+    category: discrete_calculus
+    arguments:
+      - name: f
+        role: discrete_function
+      - name: I
+        role: discrete_domain
+      - name: k
+        role: order
+      - name: g
+        role: higher_difference
+    returns: truth_value
+    surface_forms:
+      - has higher difference
+      - has iterated difference
+      - higher difference
+    description: >
+      The k-th iterated finite difference of f on the discrete domain I is g.
+
+  - id: pred:is-antidifference-of
+    name: IsAntidifferenceOf
+    kind: predicate
+    category: discrete_calculus
+    arguments:
+      - name: F
+        role: antidifference
+      - name: f
+        role: summand_or_difference
+      - name: I
+        role: discrete_domain
+    returns: truth_value
+    surface_forms:
+      - is antidifference of
+      - is discrete antiderivative of
+      - is indefinite sum of
+    description: >
+      The discrete function F is an antidifference, or discrete
+      antiderivative, of f on the discrete domain I.
+
+  - id: pred:has-finite-sum
+    name: HasFiniteSum
+    kind: predicate
+    category: discrete_calculus
+    arguments:
+      - name: f
+        role: summand
+      - name: I
+        role: finite_index_region
+      - name: S
+        role: sum_value
+    returns: truth_value
+    surface_forms:
+      - has finite sum
+      - finite summation
+      - discrete definite integral
+    description: >
+      The summand f has finite sum S over the finite index region I.
+
+  - id: pred:linear-operator
+    name: LinearOperator
+    kind: predicate
+    category: operator
+    arguments:
+      - name: T
+        role: operator
+    returns: truth_value
+    surface_forms:
+      - linear operator
+      - operator is linear
+    description: >
+      The operator T preserves the relevant linear combinations in its
+      ambient function or vector space context.
+
+  - id: pred:constant-rule
+    name: ConstantRule
+    kind: predicate
+    category: discrete_calculus
+    arguments:
+      - name: Delta
+        role: difference_operator
+        surface: '\Delta'
+    returns: truth_value
+    surface_forms:
+      - constant rule
+      - constants have zero difference
+    description: >
+      The difference operator Delta sends constant discrete functions to zero.
+
+  - id: pred:operator-identity
+    name: OperatorIdentity
+    kind: predicate
+    category: operator
+    arguments:
+      - name: T
+        role: left_operator
+      - name: U
+        role: right_operator
+    returns: truth_value
+    surface_forms:
+      - operator identity
+      - operators are identical
+    description: >
+      The operators T and U agree on their intended common domain.
+
+  - id: pred:polynomial-degree
+    name: PolynomialDegree
+    kind: predicate
+    category: polynomial
+    arguments:
+      - name: f
+        role: polynomial_or_polynomial_sequence
+      - name: d
+        role: degree
+    returns: truth_value
+    surface_forms:
+      - polynomial degree
+      - has polynomial degree
+    description: >
+      The object f is polynomial of degree d in the relevant polynomial
+      context.
+
+  - id: pred:polynomial-detection
+    name: PolynomialDetection
+    kind: predicate
+    category: discrete_calculus
+    arguments:
+      - name: f
+        role: discrete_function
+      - name: d
+        role: degree
+    returns: truth_value
+    surface_forms:
+      - polynomial detection
+      - detects polynomial degree by differences
+    description: >
+      Repeated finite differences of f exhibit the constant and vanishing
+      pattern associated with polynomial degree d.
+
+  - id: pred:is-measure-zero
+    name: IsMeasureZero
+    kind: predicate
+    category: integration
+    arguments:
+      - name: A
+        role: subset
+      - name: X
+        role: ambient_space
+    returns: truth_value
+    ambient_argument: X
+    surface_forms:
+      - is measure zero
+      - has measure zero
+      - null set
+    description: >
+      The subset A has measure zero in the ambient space X.
+
+  - id: pred:sector-parameter
+    name: SectorParameter
+    kind: predicate
+    category: geometry
+    arguments:
+      - name: P
+        role: point
+      - name: t
+        role: parameter
+      - name: C
+        role: geometry_context
+    returns: truth_value
+    ambient_argument: C
+    surface_forms:
+      - sector parameter
+      - has sector parameter
+      - hyperbolic sector parameter
+    description: >
+      The point P has sector parameter t in the relevant hyperbolic geometry
+      context.
+
+  - id: pred:has-bounded-variation
+    name: HasBoundedVariation
+    kind: predicate
+    category: integration
+    arguments:
+      - name: f
+        role: function
+      - name: I
+        role: interval
+    returns: truth_value
+    surface_forms:
+      - has bounded variation
+      - bounded variation
+    description: >
+      The function f has bounded variation on interval I.
 
   - id: pred:is-refinement
     name: IsRefinement
@@ -2659,23 +2883,6 @@ predicates:
       - set of equivalence classes
     description: >
       The set Q consists of the equivalence classes of A under R.
-
-  - id: pred:partition
-    name: Partition
-    kind: predicate
-    category: set
-    arguments:
-      - name: P
-        role: family
-      - name: A
-        role: carrier
-    returns: truth_value
-    surface_forms:
-      - partition
-      - partition of a set
-    description: >
-      The family P is a collection of nonempty, pairwise disjoint subsets whose
-      union is A.
 
   - id: pred:canonical-quotient-map
     name: CanonicalQuotientMap
@@ -4731,3 +4938,907 @@ predicates:
       The carrier A, base element e, and successor function S satisfy the
       successor-side Peano properties: e lies in A, S maps A to A, e is not a
       successor value, and S is injective on A.
+
+  - id: pred:satisfiable
+    name: Satisfiable
+    kind: predicate
+    category: logic
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: logic_context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - satisfiable
+      - has a satisfying assignment
+      - has a model
+    description: >
+      The object X, such as a formula, sentence, set of formulas, or theory, is
+      satisfiable in the logical context C.
+
+  - id: pred:is-tautology
+    name: IsTautology
+    kind: predicate
+    category: logic
+    arguments:
+      - name: phi
+        role: formula
+        surface: '\varphi'
+      - name: C
+        role: logic_context
+    returns: truth_value
+    ambient_argument: C
+    surface_forms:
+      - is a tautology
+      - tautological
+      - true under every truth assignment
+    description: >
+      The formula phi is true under every admissible interpretation or truth
+      assignment in the logical context C.
+
+  - id: pred:unsatisfiable
+    name: Unsatisfiable
+    kind: predicate
+    category: logic
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: logic_context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - unsatisfiable
+      - has no satisfying assignment
+      - has no model
+    description: >
+      The object X, such as a formula, sentence, set of formulas, or theory, is
+      not satisfiable in the logical context C.
+
+  - id: pred:finitely-satisfiable
+    name: FinitelySatisfiable
+    kind: predicate
+    category: logic
+    arguments:
+      - name: Gamma
+        role: formula_family
+        surface: '\Gamma'
+      - name: C
+        role: logic_context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - finitely satisfiable
+      - every finite subset is satisfiable
+    description: >
+      Every finite subfamily of Gamma is satisfiable in the logical context C.
+
+  - id: pred:witness
+    name: Witness
+    kind: predicate
+    category: logic
+    arguments:
+      - name: W
+        role: witness
+      - name: X
+        role: witnessed_object
+      - name: C
+        role: context
+    returns: truth_value
+    semantics: assertion
+    polymorphic: true
+    surface_forms:
+      - witness
+      - is a witness for
+      - witnesses
+    description: >
+      The object W witnesses the relevant property or obstruction of X in the
+      ambient context C.
+
+  - id: pred:logical-equivalence
+    name: LogicalEquivalence
+    kind: predicate
+    category: logic
+    arguments:
+      - name: phi
+        role: left_formula
+        surface: '\varphi'
+      - name: psi
+        role: right_formula
+        surface: '\psi'
+      - name: C
+        role: logic_context
+    returns: truth_value
+    ambient_argument: C
+    surface_forms:
+      - logically equivalent
+      - logical equivalence
+    description: >
+      The formulas phi and psi have the same truth behavior in the logical
+      context C.
+
+  - id: pred:logical-consequence
+    name: LogicalConsequence
+    kind: predicate
+    category: logic
+    arguments:
+      - name: Gamma
+        role: premises
+        surface: '\Gamma'
+      - name: phi
+        role: conclusion
+        surface: '\varphi'
+      - name: C
+        role: logic_context
+    returns: truth_value
+    ambient_argument: C
+    surface_forms:
+      - logical consequence
+      - semantically entails
+    description: >
+      The conclusion phi follows semantically from the premises Gamma in the
+      logical context C.
+
+  - id: pred:functionally-complete
+    name: FunctionallyComplete
+    kind: predicate
+    category: logic
+    arguments:
+      - name: B
+        role: connective_basis
+      - name: C
+        role: logic_context
+    returns: truth_value
+    ambient_argument: C
+    surface_forms:
+      - functionally complete
+      - complete connective basis
+    description: >
+      The connective basis B can represent every Boolean truth function in the
+      logical context C.
+
+  - id: pred:valid
+    name: Valid
+    kind: predicate
+    category: logic
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: logic_context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - valid
+      - validity
+      - semantically valid
+    description: >
+      The object X, such as a formula, argument, or argument form, satisfies
+      the appropriate validity condition in the logical context C.
+
+  - id: pred:comparable
+    name: Comparable
+    kind: predicate
+    category: order
+    arguments:
+      - name: a
+        role: left_element
+      - name: b
+        role: right_element
+      - name: P
+        role: ambient_ordered_structure
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - comparable
+      - comparable elements
+    description: >
+      The elements a and b are related in at least one direction by the order
+      of the ambient ordered structure P.
+
+  - id: pred:incomparable
+    name: Incomparable
+    kind: predicate
+    category: order
+    arguments:
+      - name: a
+        role: left_element
+      - name: b
+        role: right_element
+      - name: P
+        role: ambient_ordered_structure
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - incomparable
+      - incomparable elements
+    description: >
+      Neither element is related to the other by the order of the ambient
+      ordered structure P.
+
+  - id: pred:preserves-union
+    name: PreservesUnion
+    kind: predicate
+    category: function
+    arguments:
+      - name: F
+        role: operator
+      - name: C
+        role: ambient_context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - preserves unions
+      - union preserving
+    description: >
+      The operator F sends unions in its source context to the corresponding
+      unions in its target context.
+
+  - id: pred:preserves-intersection
+    name: PreservesIntersection
+    kind: predicate
+    category: function
+    arguments:
+      - name: F
+        role: operator
+      - name: C
+        role: ambient_context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - preserves intersections
+      - intersection preserving
+    description: >
+      The operator F sends intersections in its source context to the
+      corresponding intersections in its target context.
+
+  - id: pred:preserves-difference
+    name: PreservesDifference
+    kind: predicate
+    category: function
+    arguments:
+      - name: F
+        role: operator
+      - name: C
+        role: ambient_context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - preserves differences
+      - difference preserving
+    description: >
+      The operator F sends set differences in its source context to the
+      corresponding differences in its target context.
+
+  - id: pred:preserves-complement
+    name: PreservesComplement
+    kind: predicate
+    category: function
+    arguments:
+      - name: F
+        role: operator
+      - name: C
+        role: ambient_context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - preserves complements
+      - complement preserving
+    description: >
+      The operator F sends complements in its source context to the
+      corresponding complements in its target context.
+
+  - id: pred:preserves-indexed-union
+    name: PreservesIndexedUnion
+    kind: predicate
+    category: function
+    arguments:
+      - name: F
+        role: operator
+      - name: C
+        role: ambient_context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - preserves indexed unions
+      - indexed-union preserving
+    description: >
+      The operator F sends indexed unions in its source context to the
+      corresponding indexed unions in its target context.
+
+  - id: pred:preserves-indexed-intersection
+    name: PreservesIndexedIntersection
+    kind: predicate
+    category: function
+    arguments:
+      - name: F
+        role: operator
+      - name: C
+        role: ambient_context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - preserves indexed intersections
+      - indexed-intersection preserving
+    description: >
+      The operator F sends indexed intersections in its source context to the
+      corresponding indexed intersections in its target context.
+
+  - id: pred:maps-into
+    name: MapsInto
+    kind: predicate
+    category: function
+    arguments:
+      - name: F
+        role: operator
+      - name: S
+        role: source_object
+      - name: T
+        role: target_object
+      - name: C
+        role: ambient_context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - maps into
+      - sends into
+      - one-sided inclusion
+    description: >
+      The operator F sends the source object S into the target object T in the
+      ambient context C.
+
+  - id: pred:image-preimage-adjunction
+    name: ImagePreimageAdjunction
+    kind: predicate
+    category: function
+    arguments:
+      - name: f
+        role: function
+      - name: C
+        role: ambient_context
+    returns: truth_value
+    ambient_argument: C
+    surface_forms:
+      - image-preimage adjunction
+      - direct and inverse image adjunction
+    description: >
+      The direct image and inverse image operations associated with f satisfy
+      the local adjunction relation in context C.
+
+  - id: pred:associative-composition
+    name: AssociativeComposition
+    kind: predicate
+    category: function
+    arguments:
+      - name: f
+        role: inner_function
+      - name: g
+        role: middle_function
+      - name: h
+        role: outer_function
+    returns: truth_value
+    surface_forms:
+      - associativity of composition
+      - composition is associative
+    description: >
+      The two parenthesizations of the composable triple h, g, f agree as
+      functions.
+
+  - id: pred:identity-neutral-for-composition
+    name: IdentityNeutralForComposition
+    kind: predicate
+    category: function
+    arguments:
+      - name: f
+        role: function
+      - name: id_A
+        role: domain_identity
+        surface: '\id_A'
+      - name: id_B
+        role: codomain_identity
+        surface: '\id_B'
+    returns: truth_value
+    surface_forms:
+      - identity neutral for composition
+      - identity functions are neutral
+    description: >
+      The identity on the domain and the identity on the codomain are neutral
+      for composing with f.
+
+  - id: pred:contradiction
+    name: Contradiction
+    kind: predicate
+    category: logic
+    arguments:
+      - name: phi
+        role: formula
+        surface: '\varphi'
+      - name: C
+        role: logic_context
+    returns: truth_value
+    ambient_argument: C
+    surface_forms:
+      - contradiction
+      - contradictory formula
+    description: >
+      The formula phi is false under every admissible interpretation in the
+      logical context C.
+
+  - id: pred:contingency
+    name: Contingency
+    kind: predicate
+    category: logic
+    arguments:
+      - name: phi
+        role: formula
+        surface: '\varphi'
+      - name: C
+        role: logic_context
+    returns: truth_value
+    ambient_argument: C
+    surface_forms:
+      - contingency
+      - contingent formula
+    description: >
+      The formula phi is true under some admissible interpretations and false
+      under others in the logical context C.
+
+  - id: pred:represents
+    name: Represents
+    kind: predicate
+    category: logic
+    arguments:
+      - name: X
+        role: representative
+      - name: Y
+        role: represented_object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - represents
+      - representation
+    description: >
+      The object X represents the object Y in the relevant context C.
+
+  - id: pred:definable-from
+    name: DefinableFrom
+    kind: predicate
+    category: logic
+    arguments:
+      - name: X
+        role: definable_object
+      - name: B
+        role: basis
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    surface_forms:
+      - definable from
+      - expressible from
+    description: >
+      The object X is definable using the basis B in context C.
+
+  - id: pred:minimal-complete
+    name: MinimalComplete
+    kind: predicate
+    category: logic
+    arguments:
+      - name: B
+        role: basis
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    surface_forms:
+      - minimally complete
+      - minimal complete basis
+    description: >
+      The basis B is complete, and no proper subbasis of B is complete, in
+      context C.
+
+  - id: pred:incomplete
+    name: Incomplete
+    kind: predicate
+    category: logic
+    arguments:
+      - name: B
+        role: basis
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    surface_forms:
+      - incomplete
+      - not complete
+    description: >
+      The basis B fails to be complete in context C.
+
+  - id: pred:monotone
+    name: Monotone
+    kind: predicate
+    category: order
+    arguments:
+      - name: f
+        role: function
+      - name: P
+        role: ambient_order
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - monotone
+      - order preserving
+    description: >
+      The function f preserves the relevant order in the ambient ordered
+      context P.
+
+  - id: pred:satisfaction
+    name: Satisfaction
+    kind: predicate
+    category: logic
+    arguments:
+      - name: M
+        role: structure
+      - name: s
+        role: assignment
+      - name: phi
+        role: formula
+        surface: '\varphi'
+    returns: truth_value
+    surface_forms:
+      - satisfaction
+      - satisfies formula under assignment
+    description: >
+      The structure M with assignment s satisfies the formula phi.
+
+  - id: pred:truth-in-structure
+    name: TruthInStructure
+    kind: predicate
+    category: logic
+    arguments:
+      - name: M
+        role: structure
+      - name: phi
+        role: sentence
+        surface: '\varphi'
+    returns: truth_value
+    surface_forms:
+      - truth in structure
+      - true in a structure
+    description: >
+      The sentence phi is true in the structure M.
+
+  - id: pred:model-of-sentence
+    name: ModelOfSentence
+    kind: predicate
+    category: logic
+    arguments:
+      - name: M
+        role: structure
+      - name: phi
+        role: sentence
+        surface: '\varphi'
+    returns: truth_value
+    surface_forms:
+      - model of sentence
+    description: >
+      The structure M is a model of the sentence phi.
+
+  - id: pred:model-of-theory
+    name: ModelOfTheory
+    kind: predicate
+    category: logic
+    arguments:
+      - name: M
+        role: structure
+      - name: T
+        role: theory
+    returns: truth_value
+    surface_forms:
+      - model of theory
+    description: >
+      The structure M is a model of every sentence in the theory T.
+
+  - id: pred:definable-relation
+    name: DefinableRelation
+    kind: predicate
+    category: logic
+    arguments:
+      - name: R
+        role: relation
+      - name: phi
+        role: formula
+        surface: '\varphi'
+      - name: M
+        role: structure
+    returns: truth_value
+    surface_forms:
+      - definable relation
+    description: >
+      The relation R is defined by the formula phi in the structure M.
+
+  - id: pred:satisfies-formula
+    name: SatisfiesFormula
+    kind: predicate
+    category: logic
+    arguments:
+      - name: v
+        role: assignment
+      - name: phi
+        role: formula
+        surface: '\varphi'
+    returns: truth_value
+    surface_forms:
+      - satisfies formula
+    description: >
+      The assignment v satisfies the formula phi.
+
+  - id: pred:satisfies-set
+    name: SatisfiesSet
+    kind: predicate
+    category: logic
+    arguments:
+      - name: v
+        role: assignment
+      - name: Gamma
+        role: formula_set
+        surface: '\Gamma'
+    returns: truth_value
+    surface_forms:
+      - satisfies set
+    description: >
+      The assignment v satisfies every formula in Gamma.
+
+  - id: pred:proper-subformula
+    name: ProperSubformula
+    kind: predicate
+    category: logic
+    arguments:
+      - name: psi
+        role: subformula
+        surface: '\psi'
+      - name: phi
+        role: formula
+        surface: '\varphi'
+    returns: truth_value
+    surface_forms:
+      - proper subformula
+    description: >
+      The formula psi is a proper subformula of phi.
+
+  - id: pred:main-connective
+    name: MainConnective
+    kind: predicate
+    category: logic
+    arguments:
+      - name: phi
+        role: formula
+        surface: '\varphi'
+      - name: c
+        role: connective
+    returns: truth_value
+    surface_forms:
+      - main connective
+      - outermost connective
+    description: >
+      The connective c is the main or outermost connective of phi.
+
+  - id: pred:quantifier-order
+    name: QuantifierOrder
+    kind: predicate
+    category: logic
+    arguments:
+      - name: Phi
+        role: formula
+        surface: '\Phi'
+      - name: Q
+        role: quantifier_order
+    returns: truth_value
+    surface_forms:
+      - quantifier order
+    description: >
+      The formula Phi has the listed quantifier order.
+
+  - id: pred:stronger-formula
+    name: StrongerFormula
+    kind: predicate
+    category: logic
+    arguments:
+      - name: A
+        role: stronger_formula
+      - name: B
+        role: weaker_formula
+    returns: truth_value
+    surface_forms:
+      - stronger formula
+    description: >
+      Formula A entails formula B and is logically stronger in context.
+
+  - id: pred:weaker-formula
+    name: WeakerFormula
+    kind: predicate
+    category: logic
+    arguments:
+      - name: B
+        role: weaker_formula
+      - name: A
+        role: stronger_formula
+    returns: truth_value
+    surface_forms:
+      - weaker formula
+    description: >
+      Formula B is entailed by formula A and is logically weaker in context.
+
+  - id: pred:scope-ambiguity
+    name: ScopeAmbiguity
+    kind: predicate
+    category: logic
+    arguments:
+      - name: E
+        role: expression
+      - name: phi
+        role: first_reading
+        surface: '\varphi'
+      - name: psi
+        role: second_reading
+        surface: '\psi'
+    returns: truth_value
+    surface_forms:
+      - scope ambiguity
+    description: >
+      The expression E admits distinct readings phi and psi due to scope.
+
+  - id: pred:contradictory-pair
+    name: ContradictoryPair
+    kind: predicate
+    category: logic
+    arguments:
+      - name: phi
+        role: left_formula
+        surface: '\varphi'
+      - name: psi
+        role: right_formula
+        surface: '\psi'
+    returns: truth_value
+    surface_forms:
+      - contradictory pair
+    description: >
+      The formulas phi and psi are contradictories.
+
+  - id: pred:contrary-with-existential-import
+    name: ContraryWithExistentialImport
+    kind: predicate
+    category: logic
+    arguments:
+      - name: phi
+        role: left_formula
+        surface: '\varphi'
+      - name: psi
+        role: right_formula
+        surface: '\psi'
+    returns: truth_value
+    surface_forms:
+      - contrary with existential import
+    description: >
+      The formulas phi and psi are contraries under an existential-import
+      assumption.
+
+  - id: pred:complementary-literals
+    name: ComplementaryLiterals
+    kind: predicate
+    category: logic
+    arguments:
+      - name: ell_1
+        role: first_literal
+        surface: '\ell_1'
+      - name: ell_2
+        role: second_literal
+        surface: '\ell_2'
+    returns: truth_value
+    surface_forms:
+      - complementary literals
+    description: >
+      The literals ell_1 and ell_2 are complementary.
+
+  - id: pred:negation-normal-form-exists
+    name: NegationNormalFormExists
+    kind: predicate
+    category: logic
+    arguments:
+      - name: phi
+        role: formula
+        surface: '\varphi'
+    returns: truth_value
+    surface_forms:
+      - negation normal form exists
+    description: >
+      The formula phi has an equivalent formula in negation normal form.
+
+  - id: pred:nand-only
+    name: NANDOnly
+    kind: predicate
+    category: logic
+    arguments:
+      - name: phi
+        role: formula
+        surface: '\varphi'
+    returns: truth_value
+    surface_forms:
+      - NAND only
+    description: >
+      Every connective occurrence in phi is a NAND connective occurrence.
+
+  - id: pred:nor-only
+    name: NOROnly
+    kind: predicate
+    category: logic
+    arguments:
+      - name: phi
+        role: formula
+        surface: '\varphi'
+    returns: truth_value
+    surface_forms:
+      - NOR only
+    description: >
+      Every connective occurrence in phi is a NOR connective occurrence.
+
+  - id: pred:extension
+    name: Extension
+    kind: predicate
+    category: function
+    arguments:
+      - name: g
+        role: extending_function
+      - name: f
+        role: extended_function
+    returns: truth_value
+    surface_forms:
+      - extension
+      - extends
+    description: >
+      The function g extends the function f.
+
+  - id: pred:invertible
+    name: Invertible
+    kind: predicate
+    category: function
+    arguments:
+      - name: f
+        role: function
+    returns: truth_value
+    surface_forms:
+      - invertible
+    description: >
+      The function f has an inverse in the relevant function context.
+
+  - id: pred:truth-function-of-formula
+    name: TruthFunctionOfFormula
+    kind: predicate
+    category: logic
+    arguments:
+      - name: f
+        role: truth_function
+      - name: phi
+        role: formula
+        surface: '\varphi'
+    returns: truth_value
+    surface_forms:
+      - truth function of formula
+    description: >
+      The truth function f is represented by the formula phi.
