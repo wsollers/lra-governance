@@ -31,11 +31,6 @@ notation:
     symbol: '\operatorname{Closure}'
     category: topology_operator
     description: Closure operator on subsets of a metric or topological space.
-  - id: not:closure-operator-abbreviated
-    name: Closure
-    symbol: '\operatorname{cl}'
-    category: topology_operator
-    description: Abbreviated closure operator on subsets of a metric or topological space.
   - id: not:diameter
     name: Diameter
     symbol: '\operatorname{diam}'
