@@ -2,145 +2,4732 @@
 # Governed by docs/governance/predicate-standards.md.
 
 predicates:
-  - id: pred:sequence
-    name: Sequence
+  - id: pred:within
+    name: Within
     kind: predicate
-    category: sequence
+    category: topology
     arguments:
-      - name: x_n
-        role: sequence
-      - name: A
+      - name: x
+        role: point
+      - name: W
+        role: local_region
+      - name: X
         role: ambient
     returns: truth_value
-    ambient_argument: A
+    ambient_argument: X
     polymorphic: true
     surface_forms:
-      - sequence
-      - sequence in an ambient space
-      - sequence in a space
+      - within
+      - lies within
+      - belongs to a local region
     description: >
-      The object x_n is a sequence with values in the carrier of the ambient
-      object A.
+      The point x lies within the local region W in the ambient object X.
+      The local region may be a tolerance ball, punctured ball, neighborhood,
+      punctured neighborhood, or another named localizing object.
 
-  - id: pred:convergent-sequence
-    name: ConvergentSequence
+  - id: pred:is-ball
+    name: IsBall
+    kind: predicate
+    category: topology
+    arguments:
+      - name: B
+        role: ball
+      - name: c
+        role: center
+      - name: r
+        role: radius
+      - name: X
+        role: ambient
+    returns: truth_value
+    ambient_argument: X
+    polymorphic: true
+    surface_forms:
+      - is a ball
+      - metric ball
+      - open ball
+    description: >
+      The object B is the ball centered at c with radius r in the ambient
+      space X.
+
+  - id: pred:is-punctured-ball
+    name: IsPuncturedBall
+    kind: predicate
+    category: topology
+    arguments:
+      - name: B_dot
+        role: punctured_ball
+        surface: 'B^\times'
+      - name: B
+        role: underlying_ball
+      - name: c
+        role: center
+      - name: r
+        role: radius
+      - name: X
+        role: ambient
+    returns: truth_value
+    ambient_argument: X
+    polymorphic: true
+    surface_forms:
+      - is a punctured ball
+      - is a deleted ball
+    description: >
+      The object B_dot is the ball B centered at c with radius r in X after
+      removing the center c.
+
+  - id: pred:is-neighborhood
+    name: IsNeighborhood
+    kind: predicate
+    category: topology
+    arguments:
+      - name: U
+        role: neighborhood
+      - name: c
+        role: center
+      - name: X
+        role: ambient
+    returns: truth_value
+    ambient_argument: X
+    polymorphic: true
+    surface_forms:
+      - is a neighborhood
+      - is a neighbourhood
+    description: >
+      The object U is a neighborhood of c in the ambient topological space X.
+
+  - id: pred:is-punctured-neighborhood
+    name: IsPuncturedNeighborhood
+    kind: predicate
+    category: topology
+    arguments:
+      - name: U_dot
+        role: punctured_neighborhood
+        surface: 'U^\times'
+      - name: U
+        role: underlying_neighborhood
+      - name: c
+        role: center
+      - name: X
+        role: ambient
+    returns: truth_value
+    ambient_argument: X
+    polymorphic: true
+    surface_forms:
+      - is a punctured neighborhood
+      - is a punctured neighbourhood
+      - is a deleted neighborhood
+      - is a deleted neighbourhood
+    description: >
+      The object U_dot is the neighborhood U of c in X after removing the
+      center c.
+
+  - id: pred:is-interval
+    name: IsInterval
+    kind: predicate
+    category: topology
+    arguments:
+      - name: I
+        role: interval
+      - name: X
+        role: ambient
+    returns: truth_value
+    ambient_argument: X
+    polymorphic: true
+    surface_forms:
+      - is an interval
+      - interval
+    description: >
+      The object I is an interval in the ambient ordered or topological space
+      X.
+
+  - id: pred:is-open-interval
+    name: IsOpenInterval
+    kind: predicate
+    category: topology
+    arguments:
+      - name: I
+        role: interval
+      - name: X
+        role: ambient
+    returns: truth_value
+    ambient_argument: X
+    polymorphic: true
+    surface_forms:
+      - is an open interval
+      - open interval
+    description: >
+      The object I is an interval in X whose finite endpoints are excluded.
+
+  - id: pred:is-closed-interval
+    name: IsClosedInterval
+    kind: predicate
+    category: topology
+    arguments:
+      - name: I
+        role: interval
+      - name: X
+        role: ambient
+    returns: truth_value
+    ambient_argument: X
+    polymorphic: true
+    surface_forms:
+      - is a closed interval
+      - closed interval
+    description: >
+      The object I is an interval in X whose finite endpoints are included.
+
+  - id: pred:is-bounded-interval
+    name: IsBoundedInterval
+    kind: predicate
+    category: topology
+    arguments:
+      - name: I
+        role: interval
+      - name: X
+        role: ambient
+    returns: truth_value
+    ambient_argument: X
+    polymorphic: true
+    surface_forms:
+      - is a bounded interval
+      - bounded interval
+    description: >
+      The object I is an interval in X with finite left and right endpoints.
+
+  - id: pred:converges-to
+    name: ConvergesTo
     kind: predicate
     category: sequence
     arguments:
-      - name: x_n
+      - name: x
         role: sequence
-      - name: x_0
+      - name: L
         role: limit
-      - name: A
+      - name: X
         role: ambient
     returns: truth_value
-    ambient_argument: A
+    ambient_argument: X
     polymorphic: true
     surface_forms:
-      - convergent sequence
-      - sequence convergence
-      - convergence in a space
+      - converges to
+      - tends to a limit
     description: >
-      The sequence x_n converges to x_0 according to the convergence structure
-      supplied by the ambient object A.
+      The sequence or indexed object x converges to L in the ambient object X.
 
-  - id: pred:not-convergent-to
-    name: NotConvergentTo
+  - id: pred:is-cauchy
+    name: IsCauchy
     kind: predicate
     category: sequence
     arguments:
-      - name: x_n
+      - name: x
         role: sequence
-      - name: x_0
-        role: candidate_limit
-      - name: A
+      - name: X
         role: ambient
     returns: truth_value
-    ambient_argument: A
+    ambient_argument: X
     polymorphic: true
-    logical_negation_of: pred:convergent-sequence
     surface_forms:
-      - not convergent to
-      - fails to converge
+      - is cauchy
+      - cauchy condition
     description: >
-      The sequence x_n does not converge to the candidate limit x_0 in the
-      ambient object A.
+      The sequence or indexed object x satisfies the Cauchy condition in X.
 
-  - id: pred:cauchy-sequence
-    name: CauchySequence
+  - id: pred:is-null
+    name: IsNull
     kind: predicate
     category: sequence
     arguments:
-      - name: x_n
-        role: sequence
-      - name: A
+      - name: x
+        role: sequence_or_object
+      - name: X
         role: ambient
     returns: truth_value
-    ambient_argument: A
+    ambient_argument: X
     polymorphic: true
     surface_forms:
-      - cauchy sequence
-      - cauchy
+      - is null
+      - null sequence
+      - converges to zero
     description: >
-      The sequence x_n is Cauchy according to the Cauchy structure supplied by
-      the ambient object A.
+      The object x is null in X, typically meaning it converges to the zero
+      object of X.
 
-  - id: pred:subsequential-limit
-    name: SubsequentialLimit
+  - id: pred:is-constant
+    name: IsConstant
+    kind: predicate
+    category: function
+    arguments:
+      - name: x
+        role: object
+      - name: c
+        role: constant_value
+      - name: X
+        role: ambient
+    returns: truth_value
+    ambient_argument: X
+    polymorphic: true
+    surface_forms:
+      - is constant
+      - constant object
+      - constant sequence
+      - constant function
+    description: >
+      The object x has constant value c in the ambient object X.
+
+  - id: pred:is-ultimately-constant
+    name: IsUltimatelyConstant
     kind: predicate
     category: sequence
     arguments:
-      - name: x_n
+      - name: x
         role: sequence
-      - name: x_0
-        role: limit
+      - name: c
+        role: eventual_value
+      - name: X
+        role: ambient
+    returns: truth_value
+    ambient_argument: X
+    polymorphic: true
+    surface_forms:
+      - is ultimately constant
+      - eventually constant
+    description: >
+      The sequence x is eventually equal to the value c in X.
+
+  - id: pred:is-subsequence
+    name: IsSubsequence
+    kind: predicate
+    category: sequence
+    arguments:
+      - name: y
+        role: subsequence
+      - name: x
+        role: sequence
+    returns: truth_value
+    surface_forms:
+      - is a subsequence
+      - subsequence
+    description: >
+      The sequence y is obtained from x by a strictly increasing index map.
+
+  - id: pred:has-convergent-subsequence
+    name: HasConvergentSubsequence
+    kind: predicate
+    category: sequence
+    arguments:
+      - name: x
+        role: sequence
+      - name: X
+        role: ambient
+    returns: truth_value
+    ambient_argument: X
+    polymorphic: true
+    surface_forms:
+      - has a convergent subsequence
+    description: >
+      Some subsequence of x converges in the ambient object X.
+
+  - id: pred:is-divergent
+    name: IsDivergent
+    kind: predicate
+    category: sequence
+    arguments:
+      - name: x
+        role: sequence_or_object
+      - name: X
+        role: ambient
+    returns: truth_value
+    ambient_argument: X
+    polymorphic: true
+    surface_forms:
+      - is divergent
+      - diverges
+    description: >
+      The object x fails to converge in the ambient object X.
+
+  - id: pred:diverges-to-positive-infinity
+    name: DivergesToPositiveInfinity
+    kind: predicate
+    category: sequence
+    arguments:
+      - name: x
+        role: sequence_or_function
+      - name: P
+        role: ambient_ordered_structure
+    returns: truth_value
+    ambient_argument: P
+    polymorphic: true
+    surface_forms:
+      - diverges to positive infinity
+      - tends to positive infinity
+    description: >
+      The object x eventually exceeds every bound in the ambient ordered
+      structure P.
+
+  - id: pred:diverges-to-negative-infinity
+    name: DivergesToNegativeInfinity
+    kind: predicate
+    category: sequence
+    arguments:
+      - name: x
+        role: sequence_or_function
+      - name: P
+        role: ambient_ordered_structure
+    returns: truth_value
+    ambient_argument: P
+    polymorphic: true
+    surface_forms:
+      - diverges to negative infinity
+      - tends to negative infinity
+    description: >
+      The object x eventually lies below every bound in the ambient ordered
+      structure P.
+
+  - id: pred:is-oscillatory
+    name: IsOscillatory
+    kind: predicate
+    category: sequence
+    arguments:
+      - name: x
+        role: sequence_or_function
+      - name: X
+        role: ambient
+    returns: truth_value
+    ambient_argument: X
+    polymorphic: true
+    surface_forms:
+      - is oscillatory
+      - oscillatory behavior
+    description: >
+      The object x exhibits oscillatory behavior in the ambient object X.
+
+  - id: pred:limsup
+    name: Limsup
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: L
+        role: limit_superior
+      - name: x
+        role: object
       - name: A
         role: ambient
     returns: truth_value
     ambient_argument: A
     polymorphic: true
     surface_forms:
-      - subsequential limit
-      - convergent subsequence
+      - limsup
+      - limit superior
     description: >
-      Some subsequence of x_n converges to x_0 in the ambient object A.
+      The object L is the limit superior of x in the ambient object A.
 
-  - id: pred:neighborhood
-    name: Neighborhood
+  - id: pred:liminf
+    name: Liminf
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: L
+        role: limit_inferior
+      - name: x
+        role: object
+      - name: A
+        role: ambient
+    returns: truth_value
+    ambient_argument: A
+    polymorphic: true
+    surface_forms:
+      - liminf
+      - limit inferior
+    description: >
+      The object L is the limit inferior of x in the ambient object A.
+
+  - id: pred:is-cluster-value
+    name: IsClusterValue
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: L
+        role: cluster_value
+      - name: x
+        role: object
+      - name: X
+        role: ambient
+    returns: truth_value
+    ambient_argument: X
+    polymorphic: true
+    surface_forms:
+      - is a cluster value
+      - cluster value
+    description: >
+      The value L occurs as a cluster value of x in X.
+
+  - id: pred:eventually
+    name: Eventually
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: phi
+        role: property
+        surface: '\varphi'
+      - name: I
+        role: index_or_filter
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - eventually
+      - eventually true
+    description: >
+      The property phi holds eventually along the index or filter I.
+
+  - id: pred:frequently
+    name: Frequently
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: phi
+        role: property
+        surface: '\varphi'
+      - name: I
+        role: index_or_filter
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - frequently
+      - infinitely often
+    description: >
+      The property phi holds frequently along the index or filter I.
+
+  - id: pred:eventually-equal
+    name: EventuallyEqual
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: x
+        role: left_object
+      - name: y
+        role: right_object
+      - name: I
+        role: index_or_filter
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - eventually equal
+      - equal eventually
+    description: >
+      The objects x and y agree eventually along the index or filter I.
+
+  - id: pred:is-open
+    name: IsOpen
     kind: predicate
     category: topology
     arguments:
       - name: U
         role: subset
+      - name: X
+        role: ambient
+    returns: truth_value
+    ambient_argument: X
+    polymorphic: true
+    surface_forms:
+      - is open
+      - open set
+    description: >
+      The subset U is open in the ambient topological object X.
+
+  - id: pred:is-closed
+    name: IsClosed
+    kind: predicate
+    category: topology
+    arguments:
+      - name: C
+        role: subset
+      - name: X
+        role: ambient
+    returns: truth_value
+    ambient_argument: X
+    polymorphic: true
+    surface_forms:
+      - is closed
+      - closed set
+    description: >
+      The subset C is closed in the ambient topological object X.
+
+  - id: pred:is-compact
+    name: IsCompact
+    kind: predicate
+    category: topology
+    arguments:
+      - name: K
+        role: subset
+      - name: X
+        role: ambient
+    returns: truth_value
+    ambient_argument: X
+    polymorphic: true
+    surface_forms:
+      - is compact
+      - compact set
+    description: >
+      The subset K is compact in the ambient topological object X.
+
+  - id: pred:is-interior
+    name: IsInterior
+    kind: predicate
+    category: topology
+    arguments:
       - name: x
         role: point
       - name: A
+        role: subset
+      - name: X
         role: ambient
     returns: truth_value
-    ambient_argument: A
+    ambient_argument: X
     polymorphic: true
     surface_forms:
-      - neighborhood
-      - neighbourhood
+      - is interior
+      - interior point
     description: >
-      The set U is a neighborhood of the point x in the ambient object A.
+      The point x lies in the interior of A relative to X.
 
-legacy_predicate_aliases:
-  RealSequence:
-    target: pred:sequence
-    replacement: '\operatorname{Sequence}(x_n,\mathbb{R})'
-    note: >
-      Legacy real-analysis shorthand. New content should use the canonical
-      ambient-explicit predicate.
-  ConvergentSequenceImplicitReal:
-    target: pred:convergent-sequence
-    replacement: '\operatorname{ConvergentSequence}(x_n,L,\mathbb{R})'
-    note: >
-      Legacy two-argument real-analysis reading. New content should include
-      the ambient argument.
-  CauchySequenceImplicitReal:
-    target: pred:cauchy-sequence
-    replacement: '\operatorname{CauchySequence}(x_n,\mathbb{R})'
-    note: >
-      Legacy one-argument real-analysis reading. New content should include
-      the ambient argument.
+  - id: pred:is-on-boundary
+    name: IsOnBoundary
+    kind: predicate
+    category: topology
+    arguments:
+      - name: x
+        role: point
+      - name: A
+        role: subset
+      - name: X
+        role: ambient
+    returns: truth_value
+    ambient_argument: X
+    polymorphic: true
+    surface_forms:
+      - is on boundary
+      - boundary point
+    description: >
+      The point x lies on the boundary of A relative to X.
+
+  - id: pred:is-cluster
+    name: IsCluster
+    kind: predicate
+    category: topology
+    arguments:
+      - name: x
+        role: point
+      - name: A
+        role: subset
+      - name: X
+        role: ambient
+    returns: truth_value
+    ambient_argument: X
+    polymorphic: true
+    surface_forms:
+      - is cluster
+      - cluster point
+      - accumulation point
+    description: >
+      The point x is a cluster point of A relative to X.
+
+  - id: pred:is-adherent
+    name: IsAdherent
+    kind: predicate
+    category: topology
+    arguments:
+      - name: x
+        role: point
+      - name: A
+        role: subset
+      - name: X
+        role: ambient
+    returns: truth_value
+    ambient_argument: X
+    polymorphic: true
+    surface_forms:
+      - is adherent
+      - adherent point
+      - closure point
+    description: >
+      The point x is adherent to A relative to X.
+
+  - id: pred:is-isolated
+    name: IsIsolated
+    kind: predicate
+    category: topology
+    arguments:
+      - name: x
+        role: point
+      - name: A
+        role: subset
+      - name: X
+        role: ambient
+    returns: truth_value
+    ambient_argument: X
+    polymorphic: true
+    surface_forms:
+      - is isolated
+      - isolated point
+    description: >
+      The point x is isolated in A relative to X.
+
+  - id: pred:is-dense
+    name: IsDense
+    kind: predicate
+    category: topology
+    arguments:
+      - name: A
+        role: subset
+      - name: X
+        role: ambient
+    returns: truth_value
+    ambient_argument: X
+    polymorphic: true
+    surface_forms:
+      - is dense
+      - dense subset
+    description: >
+      The subset A is dense in the ambient topological object X.
+
+  - id: pred:is-sequentially-compact
+    name: IsSequentiallyCompact
+    kind: predicate
+    category: topology
+    arguments:
+      - name: K
+        role: subset
+      - name: X
+        role: ambient
+    returns: truth_value
+    ambient_argument: X
+    polymorphic: true
+    surface_forms:
+      - is sequentially compact
+      - sequentially compact
+    description: >
+      The subset K is sequentially compact in the ambient topological object X.
+
+  - id: pred:tends-to
+    name: TendsTo
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: f
+        role: function_or_object
+      - name: a
+        role: source_point
+      - name: L
+        role: target_limit
+      - name: X
+        role: source_ambient
+      - name: Y
+        role: target_ambient
+    returns: truth_value
+    ambient_argument: Y
+    polymorphic: true
+    surface_forms:
+      - tends to
+      - function limit
+    description: >
+      The object f tends to L as its input tends to a from the source ambient
+      object X, with values in Y.
+
+  - id: pred:left-limit
+    name: LeftLimit
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: L
+        role: limit
+      - name: f
+        role: function
+      - name: a
+        role: source_point
+      - name: X
+        role: source_ambient
+      - name: Y
+        role: target_ambient
+    returns: truth_value
+    ambient_argument: Y
+    polymorphic: true
+    surface_forms:
+      - left limit
+      - left-hand limit
+    description: >
+      The left-hand limit of f at a is L, with source ambient X and target
+      ambient Y.
+
+  - id: pred:right-limit
+    name: RightLimit
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: L
+        role: limit
+      - name: f
+        role: function
+      - name: a
+        role: source_point
+      - name: X
+        role: source_ambient
+      - name: Y
+        role: target_ambient
+    returns: truth_value
+    ambient_argument: Y
+    polymorphic: true
+    surface_forms:
+      - right limit
+      - right-hand limit
+    description: >
+      The right-hand limit of f at a is L, with source ambient X and target
+      ambient Y.
+
+  - id: pred:limit-at-infinity
+    name: LimitAtInfinity
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: L
+        role: limit
+      - name: f
+        role: function
+      - name: Y
+        role: target_ambient
+    returns: truth_value
+    ambient_argument: Y
+    polymorphic: true
+    surface_forms:
+      - limit at infinity
+      - tends at infinity
+    description: >
+      The function f tends to L along an unbounded direction, with values in
+      the target ambient object Y.
+
+  - id: pred:is-continuous
+    name: IsContinuous
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: f
+        role: function
+      - name: Locus
+        role: locus
+      - name: X
+        role: source_ambient
+      - name: Y
+        role: target_ambient
+    returns: truth_value
+    ambient_argument: Y
+    polymorphic: true
+    surface_forms:
+      - is continuous
+      - continuous
+    description: >
+      The function f is continuous on the indicated locus, with source ambient
+      X and target ambient Y. The locus may be a point, set, interval, local
+      region, or the whole source ambient object.
+
+  - id: pred:is-uniformly-continuous
+    name: IsUniformlyContinuous
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: f
+        role: function
+      - name: Locus
+        role: locus
+      - name: X
+        role: source_ambient
+      - name: Y
+        role: target_ambient
+    returns: truth_value
+    ambient_argument: Y
+    polymorphic: true
+    surface_forms:
+      - is uniformly continuous
+      - uniformly continuous
+    description: >
+      The function f is uniformly continuous on the indicated locus, with
+      source ambient X and target ambient Y.
+
+  - id: pred:is-lipschitz
+    name: IsLipschitz
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: f
+        role: function
+      - name: Locus
+        role: locus
+      - name: X
+        role: source_ambient
+      - name: Y
+        role: target_ambient
+      - name: C
+        role: lipschitz_constant
+    returns: truth_value
+    ambient_argument: Y
+    polymorphic: true
+    surface_forms:
+      - is lipschitz
+      - lipschitz
+    description: >
+      The function f satisfies a Lipschitz condition with constant C on the
+      indicated locus.
+
+  - id: pred:is-bi-lipschitz
+    name: IsBiLipschitz
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: f
+        role: function
+      - name: Locus
+        role: locus
+      - name: X
+        role: source_ambient
+      - name: Y
+        role: target_ambient
+      - name: c
+        role: lower_lipschitz_constant
+      - name: C
+        role: upper_lipschitz_constant
+    returns: truth_value
+    ambient_argument: Y
+    polymorphic: true
+    surface_forms:
+      - is bi-lipschitz
+      - bi-lipschitz
+    description: >
+      The function f satisfies two-sided Lipschitz bounds with constants c and
+      C on the indicated locus.
+
+  - id: pred:is-discontinuous
+    name: IsDiscontinuous
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: f
+        role: function
+      - name: Locus
+        role: locus
+      - name: X
+        role: source_ambient
+      - name: Y
+        role: target_ambient
+    returns: truth_value
+    ambient_argument: Y
+    polymorphic: true
+    surface_forms:
+      - is discontinuous
+      - discontinuous
+    description: >
+      The function f is discontinuous on the indicated locus.
+
+  - id: pred:is-removable-discontinuity
+    name: IsRemovableDiscontinuity
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: f
+        role: function
+      - name: Locus
+        role: locus
+      - name: X
+        role: source_ambient
+      - name: Y
+        role: target_ambient
+    returns: truth_value
+    ambient_argument: Y
+    polymorphic: true
+    surface_forms:
+      - removable discontinuity
+      - is a removable discontinuity
+    description: >
+      The function f has a removable discontinuity at or on the indicated
+      locus.
+
+  - id: pred:is-jump-discontinuity
+    name: IsJumpDiscontinuity
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: f
+        role: function
+      - name: Locus
+        role: locus
+      - name: X
+        role: source_ambient
+      - name: Y
+        role: target_ambient
+    returns: truth_value
+    ambient_argument: Y
+    polymorphic: true
+    surface_forms:
+      - jump discontinuity
+      - is a jump discontinuity
+    description: >
+      The function f has a jump discontinuity at or on the indicated locus.
+
+  - id: pred:is-essential-discontinuity
+    name: IsEssentialDiscontinuity
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: f
+        role: function
+      - name: Locus
+        role: locus
+      - name: X
+        role: source_ambient
+      - name: Y
+        role: target_ambient
+    returns: truth_value
+    ambient_argument: Y
+    polymorphic: true
+    surface_forms:
+      - essential discontinuity
+      - is an essential discontinuity
+    description: >
+      The function f has an essential discontinuity at or on the indicated
+      locus.
+
+  - id: pred:oscillation
+    name: Oscillation
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: omega
+        role: oscillation_value
+        surface: '\omega'
+      - name: f
+        role: function
+      - name: Locus
+        role: locus
+      - name: X
+        role: source_ambient
+    returns: truth_value
+    ambient_argument: X
+    polymorphic: true
+    surface_forms:
+      - oscillation
+      - oscillation on a locus
+    description: >
+      The value omega is the oscillation of f on the indicated locus in X.
+
+  - id: pred:is-convex
+    name: IsConvex
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: f
+        role: function_or_set
+      - name: Locus
+        role: locus
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - is convex
+      - convex
+    description: >
+      The object f is convex on the indicated locus.
+
+  - id: pred:is-concave
+    name: IsConcave
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: f
+        role: function_or_set
+      - name: Locus
+        role: locus
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - is concave
+      - concave
+    description: >
+      The object f is concave on the indicated locus.
+
+  - id: pred:derivative
+    name: Derivative
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: D
+        role: derivative
+      - name: f
+        role: function
+      - name: Locus
+        role: locus
+      - name: X
+        role: source_ambient
+      - name: Y
+        role: target_ambient
+    returns: truth_value
+    ambient_argument: Y
+    polymorphic: true
+    surface_forms:
+      - derivative
+      - has derivative
+    description: >
+      The object D is the derivative of f at or on the indicated locus.
+
+  - id: pred:left-derivative
+    name: LeftDerivative
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: D
+        role: derivative
+      - name: f
+        role: function
+      - name: Locus
+        role: locus
+      - name: X
+        role: source_ambient
+      - name: Y
+        role: target_ambient
+    returns: truth_value
+    ambient_argument: Y
+    polymorphic: true
+    surface_forms:
+      - left derivative
+      - left-hand derivative
+    description: >
+      The object D is the left derivative of f at or on the indicated locus.
+
+  - id: pred:right-derivative
+    name: RightDerivative
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: D
+        role: derivative
+      - name: f
+        role: function
+      - name: Locus
+        role: locus
+      - name: X
+        role: source_ambient
+      - name: Y
+        role: target_ambient
+    returns: truth_value
+    ambient_argument: Y
+    polymorphic: true
+    surface_forms:
+      - right derivative
+      - right-hand derivative
+    description: >
+      The object D is the right derivative of f at or on the indicated locus.
+
+  - id: pred:is-differentiable
+    name: IsDifferentiable
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: f
+        role: function
+      - name: Locus
+        role: locus
+      - name: X
+        role: source_ambient
+      - name: Y
+        role: target_ambient
+    returns: truth_value
+    ambient_argument: Y
+    polymorphic: true
+    surface_forms:
+      - is differentiable
+      - differentiable
+    description: >
+      The function f is differentiable at or on the indicated locus.
+
+  - id: pred:has-linear-approximation
+    name: HasLinearApproximation
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: f
+        role: function
+      - name: D
+        role: linear_approximation
+      - name: Locus
+        role: locus
+      - name: X
+        role: source_ambient
+      - name: Y
+        role: target_ambient
+    returns: truth_value
+    ambient_argument: Y
+    polymorphic: true
+    surface_forms:
+      - has linear approximation
+      - linear approximation
+    description: >
+      The object D is a linear approximation to f at or on the indicated locus.
+
+  - id: pred:secant-line
+    name: SecantLine
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: ell
+        role: line
+        surface: '\ell'
+      - name: f
+        role: function
+      - name: a
+        role: first_point
+      - name: b
+        role: second_point
+    returns: truth_value
+    surface_forms:
+      - secant line
+    description: >
+      The line ell is the secant line for f through the points indexed by a
+      and b.
+
+  - id: pred:is-local-maximum
+    name: IsLocalMaximum
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: f
+        role: function
+      - name: Locus
+        role: locus
+      - name: A
+        role: domain_locus
+    returns: truth_value
+    surface_forms:
+      - is local maximum
+      - local maximum
+    description: >
+      The function f has a local maximum at or on the indicated locus relative
+      to A.
+
+  - id: pred:is-local-minimum
+    name: IsLocalMinimum
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: f
+        role: function
+      - name: Locus
+        role: locus
+      - name: A
+        role: domain_locus
+    returns: truth_value
+    surface_forms:
+      - is local minimum
+      - local minimum
+    description: >
+      The function f has a local minimum at or on the indicated locus relative
+      to A.
+
+  - id: pred:is-local-extremum
+    name: IsLocalExtremum
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: f
+        role: function
+      - name: Locus
+        role: locus
+      - name: A
+        role: domain_locus
+    returns: truth_value
+    surface_forms:
+      - is local extremum
+      - local extremum
+    description: >
+      The function f has a local maximum or local minimum at or on the
+      indicated locus relative to A.
+
+  - id: pred:is-strict-relative-maximum
+    name: IsStrictRelativeMaximum
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: f
+        role: function
+      - name: Locus
+        role: locus
+      - name: A
+        role: domain_locus
+    returns: truth_value
+    surface_forms:
+      - is strict relative maximum
+      - strict relative maximum
+    description: >
+      The function f has a strict relative maximum at or on the indicated
+      locus relative to A.
+
+  - id: pred:is-strict-relative-minimum
+    name: IsStrictRelativeMinimum
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: f
+        role: function
+      - name: Locus
+        role: locus
+      - name: A
+        role: domain_locus
+    returns: truth_value
+    surface_forms:
+      - is strict relative minimum
+      - strict relative minimum
+    description: >
+      The function f has a strict relative minimum at or on the indicated
+      locus relative to A.
+
+  - id: pred:is-inflection
+    name: IsInflection
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: f
+        role: function
+      - name: Locus
+        role: locus
+      - name: A
+        role: domain_locus
+    returns: truth_value
+    surface_forms:
+      - is inflection
+      - inflection point
+    description: >
+      The function f has an inflection at or on the indicated locus relative
+      to A.
+
+  - id: pred:is-bounded-derivative
+    name: IsBoundedDerivative
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: f
+        role: function
+      - name: Locus
+        role: locus
+    returns: truth_value
+    surface_forms:
+      - is bounded derivative
+      - bounded derivative
+    description: >
+      The derivative of f is bounded on the indicated locus.
+
+  - id: pred:is-class-c
+    name: IsClassC
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: f
+        role: function
+      - name: k
+        role: differentiability_order
+      - name: Locus
+        role: locus
+    returns: truth_value
+    surface_forms:
+      - is class c
+      - continuously differentiable
+    description: >
+      The function f is of class C^k on the indicated locus.
+
+  - id: pred:has-archimedean-property
+    name: HasArchimedeanProperty
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: P
+        role: ambient_ordered_structure
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - has archimedean property
+      - archimedean
+    description: >
+      The ordered structure P satisfies the Archimedean property.
+
+  - id: pred:is-order-complete
+    name: IsOrderComplete
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: P
+        role: ambient_ordered_structure
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - is order complete
+      - order complete
+    description: >
+      The ordered structure P is complete with respect to its order.
+
+  - id: pred:has-least-upper-bound-property
+    name: HasLeastUpperBoundProperty
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: P
+        role: ambient_ordered_structure
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - has least upper bound property
+      - lub property
+      - supremum property
+    description: >
+      Every nonempty bounded-above subset of P has a least upper bound in P.
+
+  - id: pred:is-dedekind-separation
+    name: IsDedekindSeparation
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: A
+        role: lower_part
+      - name: B
+        role: upper_part
+      - name: P
+        role: ambient_ordered_structure
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - is dedekind separation
+      - dedekind separation
+    description: >
+      The pair A and B forms a Dedekind separation in the ordered structure P.
+
+  - id: pred:is-dedekind-gap
+    name: IsDedekindGap
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: A
+        role: lower_part
+      - name: B
+        role: upper_part
+      - name: P
+        role: ambient_ordered_structure
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - is dedekind gap
+      - dedekind gap
+    description: >
+      The pair A and B forms a Dedekind gap in the ordered structure P.
+
+  - id: pred:nested-closed-intervals
+    name: NestedClosedIntervals
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: F
+        role: interval_family
+      - name: P
+        role: ambient_ordered_structure
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - nested closed intervals
+    description: >
+      The family F is a nested family of closed intervals in P.
+
+  - id: pred:nested-closed-bounded-intervals
+    name: NestedClosedBoundedIntervals
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: F
+        role: interval_family
+      - name: P
+        role: ambient_ordered_structure
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - nested closed bounded intervals
+    description: >
+      The family F is a nested family of closed bounded intervals in P.
+
+  - id: pred:is-partition-of-interval
+    name: IsPartitionOfInterval
+    kind: predicate
+    category: integration
+    arguments:
+      - name: P
+        role: partition
+      - name: I
+        role: interval
+    returns: truth_value
+    surface_forms:
+      - is partition of interval
+      - interval partition
+    description: >
+      The object P is a partition of the interval I.
+
+  - id: pred:is-tagged-partition
+    name: IsTaggedPartition
+    kind: predicate
+    category: integration
+    arguments:
+      - name: T
+        role: tagged_partition
+      - name: P
+        role: partition
+      - name: I
+        role: interval
+    returns: truth_value
+    surface_forms:
+      - is tagged partition
+      - tagged partition
+    description: >
+      The object T is a tagged partition based on the partition P of interval I.
+
+  - id: pred:is-gauge
+    name: IsGauge
+    kind: predicate
+    category: integration
+    arguments:
+      - name: delta
+        role: gauge
+        surface: '\delta'
+      - name: I
+        role: interval
+    returns: truth_value
+    surface_forms:
+      - is gauge
+      - gauge
+    description: >
+      The object delta is a gauge on interval I.
+
+  - id: pred:is-delta-fine
+    name: IsDeltaFine
+    kind: predicate
+    category: integration
+    arguments:
+      - name: T
+        role: tagged_partition
+      - name: delta
+        role: gauge
+        surface: '\delta'
+      - name: I
+        role: interval
+    returns: truth_value
+    surface_forms:
+      - is delta fine
+      - delta-fine
+    description: >
+      The tagged partition T is delta-fine on interval I.
+
+  - id: pred:is-refinement
+    name: IsRefinement
+    kind: predicate
+    category: integration
+    arguments:
+      - name: Q
+        role: refined_partition
+      - name: P
+        role: original_partition
+    returns: truth_value
+    surface_forms:
+      - is refinement
+      - refinement
+    description: >
+      The partition Q refines the partition P.
+
+  - id: pred:is-common-refinement
+    name: IsCommonRefinement
+    kind: predicate
+    category: integration
+    arguments:
+      - name: R
+        role: common_refinement
+      - name: P
+        role: first_partition
+      - name: Q
+        role: second_partition
+    returns: truth_value
+    surface_forms:
+      - is common refinement
+      - common refinement
+    description: >
+      The partition R is a common refinement of P and Q.
+
+  - id: pred:is-step-function
+    name: IsStepFunction
+    kind: predicate
+    category: integration
+    arguments:
+      - name: f
+        role: function
+      - name: P
+        role: partition
+    returns: truth_value
+    surface_forms:
+      - is step function
+      - step function
+    description: >
+      The function f is a step function relative to partition P.
+
+  - id: pred:is-piecewise-linear
+    name: IsPiecewiseLinear
+    kind: predicate
+    category: integration
+    arguments:
+      - name: f
+        role: function
+      - name: P
+        role: partition
+    returns: truth_value
+    surface_forms:
+      - is piecewise linear
+      - piecewise linear
+    description: >
+      The function f is piecewise linear relative to partition P.
+
+  - id: pred:subset
+    name: Subset
+    kind: predicate
+    category: set
+    arguments:
+      - name: A
+        role: subset
+      - name: B
+        role: ambient_set
+    returns: truth_value
+    surface_forms:
+      - subset
+      - contained in
+      - inclusion
+    description: >
+      The set A is contained in the set B.
+
+  - id: pred:empty-set
+    name: EmptySet
+    kind: predicate
+    category: set
+    arguments:
+      - name: E
+        role: set
+    returns: truth_value
+    surface_forms:
+      - empty set
+      - null set
+    description: >
+      The set E has no elements.
+
+  - id: pred:pairing-set
+    name: PairingSet
+    kind: predicate
+    category: set
+    arguments:
+      - name: C
+        role: pair_set
+      - name: A
+        role: left_object
+      - name: B
+        role: right_object
+    returns: truth_value
+    surface_forms:
+      - pairing set
+      - unordered pair set
+    description: >
+      The set C contains exactly the objects A and B.
+
+  - id: pred:proper-subset
+    name: ProperSubset
+    kind: predicate
+    category: set
+    arguments:
+      - name: A
+        role: subset
+      - name: B
+        role: ambient_set
+    returns: truth_value
+    surface_forms:
+      - proper subset
+      - strict subset
+    description: >
+      The set A is contained in B and is not equal to B.
+
+  - id: pred:set-equal
+    name: SetEqual
+    kind: predicate
+    category: set
+    arguments:
+      - name: A
+        role: left_set
+      - name: B
+        role: right_set
+    returns: truth_value
+    surface_forms:
+      - set equality
+      - equal sets
+      - extensional equality
+    description: >
+      The sets A and B have exactly the same elements.
+
+  - id: pred:union-set
+    name: UnionSet
+    kind: predicate
+    category: set
+    arguments:
+      - name: C
+        role: result_set
+      - name: A
+        role: left_set
+      - name: B
+        role: right_set
+    returns: truth_value
+    surface_forms:
+      - union
+      - union set
+    description: >
+      The set C is the union of A and B.
+
+  - id: pred:union-family-set
+    name: UnionFamilySet
+    kind: predicate
+    category: set
+    arguments:
+      - name: U
+        role: result_set
+      - name: A
+        role: family_set
+    returns: truth_value
+    surface_forms:
+      - union of a family
+      - family union
+    description: >
+      The set U contains exactly the elements of members of the family set A.
+
+  - id: pred:indexed-union-set
+    name: IndexedUnionSet
+    kind: predicate
+    category: set
+    arguments:
+      - name: U
+        role: result_set
+      - name: F
+        role: indexed_family
+      - name: I
+        role: index_set
+    returns: truth_value
+    surface_forms:
+      - indexed union
+    description: >
+      The set U contains exactly the elements belonging to at least one member
+      of the indexed family F over I.
+
+  - id: pred:intersection-set
+    name: IntersectionSet
+    kind: predicate
+    category: set
+    arguments:
+      - name: C
+        role: result_set
+      - name: A
+        role: left_set
+      - name: B
+        role: right_set
+    returns: truth_value
+    surface_forms:
+      - intersection
+      - intersection set
+    description: >
+      The set C is the intersection of A and B.
+
+  - id: pred:indexed-intersection-set
+    name: IndexedIntersectionSet
+    kind: predicate
+    category: set
+    arguments:
+      - name: J
+        role: result_set
+      - name: F
+        role: indexed_family
+      - name: I
+        role: index_set
+    returns: truth_value
+    surface_forms:
+      - indexed intersection
+    description: >
+      The set J contains exactly the elements belonging to every member of the
+      indexed family F over I.
+
+  - id: pred:set-difference
+    name: SetDifference
+    kind: predicate
+    category: set
+    arguments:
+      - name: C
+        role: result_set
+      - name: A
+        role: minuend
+      - name: B
+        role: subtrahend
+    returns: truth_value
+    surface_forms:
+      - set difference
+      - relative complement
+    description: >
+      The set C contains exactly the elements of A that are not elements of B.
+
+  - id: pred:symmetric-difference
+    name: SymmetricDifference
+    kind: predicate
+    category: set
+    arguments:
+      - name: C
+        role: result_set
+      - name: A
+        role: left_set
+      - name: B
+        role: right_set
+    returns: truth_value
+    surface_forms:
+      - symmetric difference
+    description: >
+      The set C contains exactly the elements that belong to exactly one of A
+      and B.
+
+  - id: pred:complement-set
+    name: ComplementSet
+    kind: predicate
+    category: set
+    arguments:
+      - name: C
+        role: complement
+      - name: A
+        role: set
+      - name: U
+        role: ambient_set
+    returns: truth_value
+    surface_forms:
+      - complement
+      - set complement
+    description: >
+      The set C is the complement of A relative to the ambient set U.
+
+  - id: pred:power-set
+    name: PowerSet
+    kind: predicate
+    category: set
+    arguments:
+      - name: P
+        role: power_set
+      - name: A
+        role: set
+    returns: truth_value
+    surface_forms:
+      - power set
+    description: >
+      The set P contains exactly the subsets of A.
+
+  - id: pred:inductive-set
+    name: InductiveSet
+    kind: predicate
+    category: set
+    arguments:
+      - name: A
+        role: set
+    returns: truth_value
+    surface_forms:
+      - inductive set
+    description: >
+      The set A contains the empty set and is closed under the successor
+      operation x maps to x union {x}.
+
+  - id: pred:separation-subset
+    name: SeparationSubset
+    kind: predicate
+    category: set
+    arguments:
+      - name: B
+        role: subset
+      - name: A
+        role: ambient_set
+      - name: phi
+        role: defining_property
+    returns: truth_value
+    surface_forms:
+      - separation subset
+      - definable subset
+    description: >
+      The set B consists exactly of the elements of A satisfying the defining
+      property phi.
+
+  - id: pred:replacement-image
+    name: ReplacementImage
+    kind: predicate
+    category: set
+    arguments:
+      - name: B
+        role: image_set
+      - name: A
+        role: domain_set
+      - name: phi
+        role: functional_formula
+    returns: truth_value
+    surface_forms:
+      - replacement image
+      - definable image
+    description: >
+      The set B is the image of A under the definable functional relation phi.
+
+  - id: pred:foundation-minimal-element
+    name: FoundationMinimalElement
+    kind: predicate
+    category: set
+    arguments:
+      - name: x
+        role: minimal_element
+      - name: A
+        role: set
+    returns: truth_value
+    surface_forms:
+      - foundation minimal element
+      - membership minimal element
+    description: >
+      The element x belongs to A and is disjoint from A.
+
+  - id: pred:choice-function
+    name: ChoiceFunction
+    kind: predicate
+    category: function
+    arguments:
+      - name: f
+        role: function
+      - name: A
+        role: family_set
+    returns: truth_value
+    surface_forms:
+      - choice function
+      - selection function
+    description: >
+      The function f selects an element from each member of the family set A.
+
+  - id: pred:pairwise-disjoint-family
+    name: PairwiseDisjointFamily
+    kind: predicate
+    category: set
+    arguments:
+      - name: F
+        role: indexed_family
+      - name: I
+        role: index_set
+    returns: truth_value
+    surface_forms:
+      - pairwise disjoint family
+      - pairwise disjoint
+    description: >
+      Distinct indices in I identify sets in F with empty pairwise intersections.
+
+  - id: pred:inclusion-monotone-operation
+    name: InclusionMonotoneOperation
+    kind: predicate
+    category: set
+    arguments:
+      - name: F
+        role: operation
+    returns: truth_value
+    surface_forms:
+      - inclusion-monotone
+      - monotone set operation
+    description: >
+      The operation F preserves set inclusion in the indicated argument.
+
+  - id: pred:inclusion-antitone-operation
+    name: InclusionAntitoneOperation
+    kind: predicate
+    category: set
+    arguments:
+      - name: F
+        role: operation
+    returns: truth_value
+    surface_forms:
+      - inclusion-antitone
+      - antitone set operation
+    description: >
+      The operation F reverses set inclusion in the indicated argument.
+
+  - id: pred:set-dual
+    name: SetDual
+    kind: predicate
+    category: set
+    arguments:
+      - name: E
+        role: expression
+      - name: E_prime
+        role: dual_expression
+        surface: "E'"
+      - name: U
+        role: ambient_set
+    returns: truth_value
+    surface_forms:
+      - set duality
+      - dual expression
+    description: >
+      The expression E_prime is obtained from E by interchanging the set
+      operations and constants specified by set duality over U.
+
+  - id: pred:covers
+    name: Covers
+    kind: predicate
+    category: set
+    arguments:
+      - name: C
+        role: cover_family
+      - name: A
+        role: covered_set
+    returns: truth_value
+    surface_forms:
+      - cover
+      - covers
+      - set cover
+    description: >
+      The family C covers A, meaning every point of A belongs to at least one
+      member of C.
+
+  - id: pred:open-cover
+    name: OpenCover
+    kind: predicate
+    category: topology
+    arguments:
+      - name: C
+        role: cover_family
+      - name: A
+        role: covered_set
+      - name: T
+        role: ambient
+    returns: truth_value
+    ambient_argument: T
+    surface_forms:
+      - open cover
+      - topological cover
+    description: >
+      The family C covers A and each member of C is open in the ambient
+      topological structure T.
+
+  - id: pred:finite-set
+    name: FiniteSet
+    kind: predicate
+    category: set
+    arguments:
+      - name: A
+        role: set
+    returns: truth_value
+    surface_forms:
+      - finite set
+      - finite
+    description: >
+      The set A has finitely many elements.
+
+  - id: pred:infinite-set
+    name: InfiniteSet
+    kind: predicate
+    category: set
+    arguments:
+      - name: A
+        role: set
+    returns: truth_value
+    logical_negation_of: pred:finite-set
+    surface_forms:
+      - infinite set
+      - infinite
+    description: >
+      The set A is not finite.
+
+  - id: pred:same-cardinality
+    name: SameCardinality
+    kind: predicate
+    category: set
+    arguments:
+      - name: A
+        role: left_set
+      - name: B
+        role: right_set
+    returns: truth_value
+    surface_forms:
+      - same cardinality
+      - equinumerous
+      - bijective correspondence
+    description: >
+      The sets A and B admit a bijection between them.
+
+  - id: pred:cardinality-leq
+    name: CardinalityLeq
+    kind: predicate
+    category: set
+    arguments:
+      - name: A
+        role: left_set
+      - name: B
+        role: right_set
+    returns: truth_value
+    surface_forms:
+      - cardinality at most
+      - cardinality less than or equal
+      - injection exists
+    description: >
+      The cardinality of A is at most the cardinality of B, usually witnessed
+      by an injection from A into B.
+
+  - id: pred:cardinality-lt
+    name: CardinalityLt
+    kind: predicate
+    category: set
+    arguments:
+      - name: A
+        role: left_set
+      - name: B
+        role: right_set
+    returns: truth_value
+    surface_forms:
+      - cardinality less than
+      - strictly smaller cardinality
+    description: >
+      The cardinality of A is at most the cardinality of B, but A and B do not
+      have the same cardinality.
+
+  - id: pred:countably-infinite-set
+    name: CountablyInfiniteSet
+    kind: predicate
+    category: set
+    arguments:
+      - name: A
+        role: set
+    returns: truth_value
+    surface_forms:
+      - countably infinite set
+      - countably infinite
+    description: >
+      The set A has the same cardinality as the natural numbers.
+
+  - id: pred:countable-set
+    name: CountableSet
+    kind: predicate
+    category: set
+    arguments:
+      - name: A
+        role: set
+    returns: truth_value
+    surface_forms:
+      - countable set
+      - countable
+    description: >
+      The set A is finite or countably infinite.
+
+  - id: pred:uncountable-set
+    name: UncountableSet
+    kind: predicate
+    category: set
+    arguments:
+      - name: A
+        role: set
+    returns: truth_value
+    logical_negation_of: pred:countable-set
+    surface_forms:
+      - uncountable set
+      - uncountable
+    description: >
+      The set A is infinite and not countable.
+
+  - id: pred:finite-intersection-property
+    name: FiniteIntersectionProperty
+    kind: predicate
+    category: set
+    arguments:
+      - name: F
+        role: family
+    returns: truth_value
+    surface_forms:
+      - finite intersection property
+      - fip
+    description: >
+      Every finite subfamily of F has nonempty intersection.
+
+  - id: pred:relation-on
+    name: RelationOn
+    kind: predicate
+    category: relation
+    arguments:
+      - name: R
+        role: relation
+      - name: A
+        role: carrier
+    returns: truth_value
+    surface_forms:
+      - relation on
+      - binary relation
+    description: >
+      The object R is a binary relation on A.
+
+  - id: pred:ordered-pair
+    name: OrderedPair
+    kind: predicate
+    category: relation
+    arguments:
+      - name: p
+        role: ordered_pair
+      - name: a
+        role: first_component
+      - name: b
+        role: second_component
+    returns: truth_value
+    surface_forms:
+      - ordered pair
+      - ordered pair encoding
+    description: >
+      The object p is the ordered pair with first component a and second
+      component b.
+
+  - id: pred:cartesian-product
+    name: CartesianProduct
+    kind: predicate
+    category: set
+    arguments:
+      - name: P
+        role: product_set
+      - name: A
+        role: left_set
+      - name: B
+        role: right_set
+    returns: truth_value
+    surface_forms:
+      - cartesian product
+      - product set
+    description: >
+      The set P is the Cartesian product of A and B.
+
+  - id: pred:relation-from
+    name: RelationFrom
+    kind: predicate
+    category: relation
+    arguments:
+      - name: R
+        role: relation
+      - name: A
+        role: domain_carrier
+      - name: B
+        role: codomain_carrier
+    returns: truth_value
+    surface_forms:
+      - relation from
+      - relation between
+    description: >
+      The object R is a binary relation from A to B.
+
+  - id: pred:relation-domain-element
+    name: RelationDomainElement
+    kind: predicate
+    category: relation
+    arguments:
+      - name: a
+        role: element
+      - name: R
+        role: relation
+      - name: A
+        role: domain_carrier
+      - name: B
+        role: codomain_carrier
+    returns: truth_value
+    surface_forms:
+      - relation domain element
+      - domain of a relation
+    description: >
+      The element a belongs to the domain of the relation R from A to B.
+
+  - id: pred:relation-range-element
+    name: RelationRangeElement
+    kind: predicate
+    category: relation
+    arguments:
+      - name: b
+        role: element
+      - name: R
+        role: relation
+      - name: A
+        role: domain_carrier
+      - name: B
+        role: codomain_carrier
+    returns: truth_value
+    surface_forms:
+      - relation range element
+      - range of a relation
+    description: >
+      The element b belongs to the range of the relation R from A to B.
+
+  - id: pred:converse-relation-element
+    name: ConverseRelationElement
+    kind: predicate
+    category: relation
+    arguments:
+      - name: b
+        role: first_component
+      - name: a
+        role: second_component
+      - name: R
+        role: relation
+    returns: truth_value
+    surface_forms:
+      - converse relation
+      - inverse relation
+    description: >
+      The ordered pair (b,a) belongs to the converse of R.
+
+  - id: pred:identity-relation
+    name: IdentityRelation
+    kind: predicate
+    category: relation
+    arguments:
+      - name: Delta
+        role: relation
+        surface: '\Delta'
+      - name: A
+        role: carrier
+    returns: truth_value
+    surface_forms:
+      - identity relation
+      - diagonal relation
+    description: >
+      The relation Delta is the identity relation on A.
+
+  - id: pred:relation-composition-element
+    name: RelationCompositionElement
+    kind: predicate
+    category: relation
+    arguments:
+      - name: a
+        role: first_component
+      - name: c
+        role: second_component
+      - name: S
+        role: outer_relation
+      - name: R
+        role: inner_relation
+    returns: truth_value
+    surface_forms:
+      - relation composition
+      - composed relation
+    description: >
+      The ordered pair (a,c) belongs to the composition S composed with R.
+
+  - id: pred:null-relation
+    name: NullRelation
+    kind: predicate
+    category: relation
+    arguments:
+      - name: R
+        role: relation
+      - name: A
+        role: domain_carrier
+      - name: B
+        role: codomain_carrier
+    returns: truth_value
+    surface_forms:
+      - null relation
+      - empty relation
+    description: >
+      The relation R from A to B has no related pairs.
+
+  - id: pred:universal-relation
+    name: UniversalRelation
+    kind: predicate
+    category: relation
+    arguments:
+      - name: R
+        role: relation
+      - name: A
+        role: domain_carrier
+      - name: B
+        role: codomain_carrier
+    returns: truth_value
+    surface_forms:
+      - universal relation
+      - full relation
+    description: >
+      The relation R from A to B is all of A times B.
+
+  - id: pred:relation-inclusion
+    name: RelationInclusion
+    kind: predicate
+    category: relation
+    arguments:
+      - name: R
+        role: subrelation
+      - name: S
+        role: superrelation
+      - name: A
+        role: domain_carrier
+      - name: B
+        role: codomain_carrier
+    returns: truth_value
+    surface_forms:
+      - relation inclusion
+      - subrelation
+    description: >
+      Every ordered pair in R is also an ordered pair in S.
+
+  - id: pred:relation-equality
+    name: RelationEquality
+    kind: predicate
+    category: relation
+    arguments:
+      - name: R
+        role: left_relation
+      - name: S
+        role: right_relation
+      - name: A
+        role: domain_carrier
+      - name: B
+        role: codomain_carrier
+    returns: truth_value
+    surface_forms:
+      - relation equality
+      - equal relations
+    description: >
+      The relations R and S have exactly the same ordered pairs.
+
+  - id: pred:relation-extension
+    name: RelationExtension
+    kind: predicate
+    category: relation
+    arguments:
+      - name: R_B
+        role: extended_relation
+        surface: 'R_B'
+      - name: R_A
+        role: original_relation
+        surface: 'R_A'
+      - name: A
+        role: original_carrier
+      - name: B
+        role: extended_carrier
+    returns: truth_value
+    ambient_argument: B
+    surface_forms:
+      - relation extension
+      - extends relation
+      - relation agrees on a subcarrier
+    description: >
+      The relation R_B on B extends the relation R_A on A by agreeing with
+      R_A whenever all compared elements lie in A.
+
+  - id: pred:one-to-many-relation
+    name: OneToManyRelation
+    kind: predicate
+    category: relation
+    arguments:
+      - name: R
+        role: relation
+      - name: A
+        role: domain_carrier
+      - name: B
+        role: codomain_carrier
+    returns: truth_value
+    surface_forms:
+      - one-to-many relation
+      - one to many
+    description: >
+      Some element of A is related by R to two distinct elements of B.
+
+  - id: pred:many-to-one-relation
+    name: ManyToOneRelation
+    kind: predicate
+    category: relation
+    arguments:
+      - name: R
+        role: relation
+      - name: A
+        role: domain_carrier
+      - name: B
+        role: codomain_carrier
+    returns: truth_value
+    surface_forms:
+      - many-to-one relation
+      - many to one
+    description: >
+      Two distinct elements of A are related by R to the same element of B.
+
+  - id: pred:many-to-many-relation
+    name: ManyToManyRelation
+    kind: predicate
+    category: relation
+    arguments:
+      - name: R
+        role: relation
+      - name: A
+        role: domain_carrier
+      - name: B
+        role: codomain_carrier
+    returns: truth_value
+    surface_forms:
+      - many-to-many relation
+      - many to many
+    description: >
+      The relation R is both one-to-many and many-to-one.
+
+  - id: pred:many-place-relation
+    name: ManyPlaceRelation
+    kind: predicate
+    category: relation
+    arguments:
+      - name: R
+        role: relation
+      - name: n
+        role: arity
+      - name: A_i
+        role: carriers
+    returns: truth_value
+    surface_forms:
+      - many-place relation
+      - n-place relation
+      - ternary relation
+    description: >
+      The relation R is a subset of a finite Cartesian product of n carrier
+      sets.
+
+  - id: pred:reflexive
+    name: Reflexive
+    kind: predicate
+    category: relation
+    arguments:
+      - name: R
+        role: relation
+      - name: A
+        role: carrier
+    returns: truth_value
+    surface_forms:
+      - reflexive
+      - reflexive relation
+    description: >
+      Every element of A is related to itself by R.
+
+  - id: pred:irreflexive
+    name: Irreflexive
+    kind: predicate
+    category: relation
+    arguments:
+      - name: R
+        role: relation
+      - name: A
+        role: carrier
+    returns: truth_value
+    surface_forms:
+      - irreflexive
+      - irreflexive relation
+    description: >
+      No element of A is related to itself by R.
+
+  - id: pred:symmetric
+    name: Symmetric
+    kind: predicate
+    category: relation
+    arguments:
+      - name: R
+        role: relation
+      - name: A
+        role: carrier
+    returns: truth_value
+    surface_forms:
+      - symmetric
+      - symmetric relation
+    description: >
+      Whenever one element of A is related to another by R, the reverse
+      relation also holds.
+
+  - id: pred:antisymmetric
+    name: Antisymmetric
+    kind: predicate
+    category: relation
+    arguments:
+      - name: R
+        role: relation
+      - name: A
+        role: carrier
+    returns: truth_value
+    surface_forms:
+      - antisymmetric
+      - antisymmetric relation
+    description: >
+      Two elements of A that are related in both directions by R must be equal.
+
+  - id: pred:asymmetric
+    name: Asymmetric
+    kind: predicate
+    category: relation
+    arguments:
+      - name: R
+        role: relation
+      - name: A
+        role: carrier
+    returns: truth_value
+    surface_forms:
+      - asymmetric
+      - asymmetric relation
+    description: >
+      Whenever one element of A is related to another by R, the reverse
+      relation does not hold.
+
+  - id: pred:transitive
+    name: Transitive
+    kind: predicate
+    category: relation
+    arguments:
+      - name: R
+        role: relation
+      - name: A
+        role: carrier
+    returns: truth_value
+    surface_forms:
+      - transitive
+      - transitive relation
+    description: >
+      The relation R can be chained across three elements of A.
+
+  - id: pred:total-relation
+    name: TotalRelation
+    kind: predicate
+    category: relation
+    arguments:
+      - name: R
+        role: relation
+      - name: A
+        role: carrier
+    returns: truth_value
+    surface_forms:
+      - total relation
+      - connex relation
+      - comparable relation
+    description: >
+      Any two elements of A are comparable by the relation R.
+
+  - id: pred:equivalence-relation
+    name: EquivalenceRelation
+    kind: predicate
+    category: relation
+    arguments:
+      - name: R
+        role: relation
+      - name: A
+        role: carrier
+    returns: truth_value
+    surface_forms:
+      - equivalence relation
+    description: >
+      The relation R is reflexive, symmetric, and transitive on A.
+
+  - id: pred:equivalence-class
+    name: EquivalenceClass
+    kind: predicate
+    category: relation
+    arguments:
+      - name: C
+        role: class
+      - name: a
+        role: representative
+      - name: R
+        role: relation
+      - name: A
+        role: carrier
+    returns: truth_value
+    surface_forms:
+      - equivalence class
+      - class of a representative
+    description: >
+      The set C is the equivalence class of a under R on A.
+
+  - id: pred:quotient-set
+    name: QuotientSet
+    kind: predicate
+    category: relation
+    arguments:
+      - name: Q
+        role: quotient_set
+      - name: A
+        role: carrier
+      - name: R
+        role: relation
+    returns: truth_value
+    surface_forms:
+      - quotient set
+      - set of equivalence classes
+    description: >
+      The set Q consists of the equivalence classes of A under R.
+
+  - id: pred:partition
+    name: Partition
+    kind: predicate
+    category: set
+    arguments:
+      - name: P
+        role: family
+      - name: A
+        role: carrier
+    returns: truth_value
+    surface_forms:
+      - partition
+      - partition of a set
+    description: >
+      The family P is a collection of nonempty, pairwise disjoint subsets whose
+      union is A.
+
+  - id: pred:canonical-quotient-map
+    name: CanonicalQuotientMap
+    kind: predicate
+    category: function
+    arguments:
+      - name: pi
+        role: function
+        surface: '\pi'
+      - name: A
+        role: domain
+      - name: R
+        role: relation
+      - name: Q
+        role: quotient_set
+    returns: truth_value
+    surface_forms:
+      - canonical surjection
+      - quotient map
+      - canonical quotient map
+    description: >
+      The function pi maps each element of A to its equivalence class in Q.
+
+  - id: pred:constant-on-equivalence-classes
+    name: ConstantOnEquivalenceClasses
+    kind: predicate
+    category: function
+    arguments:
+      - name: f
+        role: function
+      - name: R
+        role: relation
+      - name: A
+        role: carrier
+    returns: truth_value
+    surface_forms:
+      - constant on equivalence classes
+      - respects equivalence
+    description: >
+      The function f takes equal values on elements of A that are related by R.
+
+  - id: pred:preorder
+    name: Preorder
+    kind: predicate
+    category: relation
+    arguments:
+      - name: R
+        role: relation
+      - name: A
+        role: carrier
+    returns: truth_value
+    surface_forms:
+      - preorder
+      - preordered relation
+    description: >
+      The relation R is reflexive and transitive on A.
+
+  - id: pred:partial-order
+    name: PartialOrder
+    kind: predicate
+    category: relation
+    arguments:
+      - name: R
+        role: relation
+      - name: A
+        role: carrier
+    returns: truth_value
+    surface_forms:
+      - partial order
+      - poset order
+    description: >
+      The relation R is reflexive, antisymmetric, and transitive on A.
+
+  - id: pred:strict-partial-order
+    name: StrictPartialOrder
+    kind: predicate
+    category: relation
+    arguments:
+      - name: R
+        role: relation
+      - name: A
+        role: carrier
+    returns: truth_value
+    surface_forms:
+      - strict partial order
+      - strict order
+    description: >
+      The relation R is irreflexive and transitive on A.
+
+  - id: pred:total-order
+    name: TotalOrder
+    kind: predicate
+    category: relation
+    arguments:
+      - name: R
+        role: relation
+      - name: A
+        role: carrier
+    returns: truth_value
+    surface_forms:
+      - total order
+      - linear order
+    description: >
+      The relation R is a partial order on A and any two elements of A are
+      comparable by R.
+
+  - id: pred:is-well-ordered-set
+    name: IsWellOrderedSet
+    kind: predicate
+    category: order
+    arguments:
+      - name: W
+        role: well_ordered_set_structure
+    returns: truth_value
+    ambient_argument: W
+    surface_forms:
+      - is a well-ordered set
+      - well-ordering principle
+      - well-order laws
+    description: >
+      The packaged well-ordered-set data satisfies the well-order condition:
+      every nonempty subset of the carrier has a least element.
+
+  - id: pred:function
+    name: Function
+    kind: predicate
+    category: function
+    arguments:
+      - name: f
+        role: function
+      - name: A
+        role: domain
+      - name: B
+        role: codomain
+    returns: truth_value
+    surface_forms:
+      - function
+      - map
+      - mapping
+    description: >
+      The object f is a function with domain A and codomain B.
+
+  - id: pred:function-space
+    name: FunctionSpace
+    kind: predicate
+    category: function
+    arguments:
+      - name: F
+        role: function_space
+      - name: A
+        role: domain
+      - name: B
+        role: codomain
+    returns: truth_value
+    surface_forms:
+      - function space
+      - set of functions
+    description: >
+      The set F consists exactly of the functions with domain A and codomain B.
+
+  - id: pred:functional-relation
+    name: FunctionalRelation
+    kind: predicate
+    category: function
+    arguments:
+      - name: R
+        role: relation
+      - name: A
+        role: domain
+      - name: B
+        role: codomain
+    returns: truth_value
+    surface_forms:
+      - functional relation
+      - right-unique relation
+    description: >
+      The relation R assigns at most one output in B to each input in A.
+
+  - id: pred:total-on-domain
+    name: TotalOnDomain
+    kind: predicate
+    category: function
+    arguments:
+      - name: R
+        role: relation
+      - name: A
+        role: domain
+      - name: B
+        role: codomain
+    returns: truth_value
+    surface_forms:
+      - total on domain
+      - left-total relation
+    description: >
+      The relation R assigns at least one output in B to each input in A.
+
+  - id: pred:partial-function
+    name: PartialFunction
+    kind: predicate
+    category: function
+    arguments:
+      - name: R
+        role: relation
+      - name: A
+        role: domain
+      - name: B
+        role: codomain
+    returns: truth_value
+    surface_forms:
+      - partial function
+      - partial map
+    description: >
+      The relation R is single-valued from A to B but need not be defined on
+      every input in A.
+
+  - id: pred:function-equal
+    name: FunctionEqual
+    kind: predicate
+    category: function
+    arguments:
+      - name: f
+        role: left_function
+      - name: g
+        role: right_function
+    returns: truth_value
+    surface_forms:
+      - function equality
+      - equal functions
+    description: >
+      The functions f and g have the same domain, codomain, and pointwise
+      values.
+
+  - id: pred:domain-of-function
+    name: DomainOfFunction
+    kind: predicate
+    category: function
+    arguments:
+      - name: f
+        role: function
+      - name: A
+        role: domain
+    returns: truth_value
+    surface_forms:
+      - domain of a function
+      - function domain
+    description: >
+      The set A is the declared domain of the function f.
+
+  - id: pred:codomain-of-function
+    name: CodomainOfFunction
+    kind: predicate
+    category: function
+    arguments:
+      - name: f
+        role: function
+      - name: B
+        role: codomain
+    returns: truth_value
+    surface_forms:
+      - codomain of a function
+      - function codomain
+    description: >
+      The set B is the declared codomain of the function f.
+
+  - id: pred:empty-function
+    name: EmptyFunction
+    kind: predicate
+    category: function
+    arguments:
+      - name: E
+        role: function
+      - name: B
+        role: codomain
+    returns: truth_value
+    surface_forms:
+      - empty function
+    description: >
+      The empty relation is viewed as the unique function from the empty set to
+      B.
+
+  - id: pred:many-place-functional-relation
+    name: ManyPlaceFunctionalRelation
+    kind: predicate
+    category: function
+    arguments:
+      - name: R
+        role: relation
+      - name: A
+        role: input_domains
+      - name: B
+        role: output_codomain
+    returns: truth_value
+    surface_forms:
+      - many-place functional relation
+      - functional in the last coordinate
+    description: >
+      The relation R is single-valued in its output coordinate for each tuple
+      of input coordinates.
+
+  - id: pred:injective
+    name: Injective
+    kind: predicate
+    category: function
+    arguments:
+      - name: f
+        role: function
+      - name: A
+        role: domain
+      - name: B
+        role: codomain
+    returns: truth_value
+    surface_forms:
+      - injective
+      - one-to-one
+    description: >
+      The function f maps distinct elements of A to distinct elements of B.
+
+  - id: pred:surjective
+    name: Surjective
+    kind: predicate
+    category: function
+    arguments:
+      - name: f
+        role: function
+      - name: A
+        role: domain
+      - name: B
+        role: codomain
+    returns: truth_value
+    surface_forms:
+      - surjective
+      - onto
+    description: >
+      Every element of B is attained as f(a) for some a in A.
+
+  - id: pred:bijective
+    name: Bijective
+    kind: predicate
+    category: function
+    arguments:
+      - name: f
+        role: function
+      - name: A
+        role: domain
+      - name: B
+        role: codomain
+    returns: truth_value
+    surface_forms:
+      - bijective
+      - bijection
+    description: >
+      The function f is both injective and surjective from A to B.
+
+  - id: pred:inverse-function
+    name: InverseFunction
+    kind: predicate
+    category: function
+    arguments:
+      - name: g
+        role: inverse_candidate
+      - name: f
+        role: function
+      - name: A
+        role: domain
+      - name: B
+        role: codomain
+    returns: truth_value
+    surface_forms:
+      - inverse function
+      - two-sided inverse
+    description: >
+      The function g from B to A is a two-sided inverse of f from A to B.
+
+  - id: pred:left-inverse
+    name: LeftInverse
+    kind: predicate
+    category: function
+    arguments:
+      - name: g
+        role: inverse_candidate
+      - name: f
+        role: function
+      - name: A
+        role: domain
+      - name: B
+        role: codomain
+    returns: truth_value
+    surface_forms:
+      - left inverse
+    description: >
+      The function g is a left inverse of f, so g composed with f is the
+      identity on A.
+
+  - id: pred:right-inverse
+    name: RightInverse
+    kind: predicate
+    category: function
+    arguments:
+      - name: h
+        role: inverse_candidate
+      - name: f
+        role: function
+      - name: A
+        role: domain
+      - name: B
+        role: codomain
+    returns: truth_value
+    surface_forms:
+      - right inverse
+    description: >
+      The function h is a right inverse of f, so f composed with h is the
+      identity on B.
+
+  - id: pred:constant-function
+    name: ConstantFunction
+    kind: predicate
+    category: function
+    arguments:
+      - name: f
+        role: function
+      - name: A
+        role: domain
+      - name: B
+        role: codomain
+    returns: truth_value
+    surface_forms:
+      - constant function
+      - constant map
+    description: >
+      The function f takes the same value in B on every input from A.
+
+  - id: pred:composition-compatible
+    name: CompositionCompatible
+    kind: predicate
+    category: function
+    arguments:
+      - name: f
+        role: inner_function
+      - name: g
+        role: outer_function
+    returns: truth_value
+    surface_forms:
+      - composable functions
+      - composition compatible
+    description: >
+      The codomain of f and domain of g are compatible so that g composed with
+      f is defined.
+
+  - id: pred:image-element
+    name: ImageElement
+    kind: predicate
+    category: function
+    arguments:
+      - name: b
+        role: element
+      - name: f
+        role: function
+      - name: S
+        role: subset
+    returns: truth_value
+    surface_forms:
+      - image element
+      - belongs to image
+    description: >
+      The element b lies in the image of S under f.
+
+  - id: pred:preimage-element
+    name: PreimageElement
+    kind: predicate
+    category: function
+    arguments:
+      - name: a
+        role: element
+      - name: f
+        role: function
+      - name: T
+        role: subset
+    returns: truth_value
+    surface_forms:
+      - preimage element
+      - belongs to preimage
+    description: >
+      The element a lies in the preimage of T under f.
+
+  - id: pred:cover-relation
+    name: CoverRelation
+    kind: predicate
+    category: order
+    arguments:
+      - name: a
+        role: lower_element
+      - name: b
+        role: upper_element
+      - name: P
+        role: ambient
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - cover relation
+      - covers
+    description: >
+      The element b covers a in the ambient ordered structure P, with no
+      element strictly between them.
+
+  - id: pred:hasse-diagram
+    name: HasseDiagram
+    kind: predicate
+    category: order
+    arguments:
+      - name: G
+        role: graph
+      - name: P
+        role: ambient
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - Hasse diagram
+      - order diagram
+    description: >
+      The graph G records the cover relations of the finite ambient ordered
+      structure P.
+
+  - id: pred:order-duality
+    name: OrderDuality
+    kind: predicate
+    category: order
+    arguments:
+      - name: phi
+        role: original_statement
+        surface: '\Phi'
+      - name: phi_star
+        role: dual_statement
+        surface: '\Phi^*'
+      - name: P
+        role: ambient
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - order duality
+      - duality principle
+    description: >
+      The statement phi over an ordered structure corresponds to the dual
+      statement phi_star over the dual order.
+
+  - id: pred:induced-order
+    name: InducedOrder
+    kind: predicate
+    category: order
+    arguments:
+      - name: R
+        role: induced_relation
+      - name: f
+        role: inducing_function
+      - name: Q
+        role: codomain_ambient
+    returns: truth_value
+    ambient_argument: Q
+    surface_forms:
+      - induced order
+      - pullback order
+    description: >
+      The relation R compares domain elements by applying f and then comparing
+      their images in the ambient ordered structure Q.
+
+  - id: pred:function-indistinguishable
+    name: FunctionIndistinguishable
+    kind: predicate
+    category: order
+    arguments:
+      - name: x
+        role: first_element
+      - name: y
+        role: second_element
+      - name: f
+        role: function
+      - name: Q
+        role: codomain_ambient
+    returns: truth_value
+    ambient_argument: Q
+    surface_forms:
+      - f-indistinguishable
+      - indistinguishable through f
+    description: >
+      The elements x and y cannot be separated by the order of Q after applying
+      f.
+
+  - id: pred:suborder
+    name: Suborder
+    kind: predicate
+    category: order
+    arguments:
+      - name: R
+        role: restricted_relation
+      - name: S
+        role: subset
+      - name: P
+        role: ambient
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - suborder
+      - inherited order
+      - restricted order
+    description: >
+      The relation R is the order inherited by the subset S from the ambient
+      ordered structure P.
+
+  - id: pred:symmetric-part
+    name: SymmetricPart
+    kind: predicate
+    category: relation
+    arguments:
+      - name: I
+        role: symmetric_part
+      - name: R
+        role: relation
+      - name: X
+        role: carrier
+    returns: truth_value
+    surface_forms:
+      - symmetric part
+      - indifference part
+    description: >
+      The relation I contains exactly the pairs of R whose reverse pair also
+      belongs to R.
+
+  - id: pred:asymmetric-part
+    name: AsymmetricPart
+    kind: predicate
+    category: relation
+    arguments:
+      - name: P
+        role: asymmetric_part
+      - name: R
+        role: relation
+      - name: X
+        role: carrier
+    returns: truth_value
+    surface_forms:
+      - asymmetric part
+      - strict part
+    description: >
+      The relation P contains exactly the pairs of R whose reverse pair does
+      not belong to R.
+
+  - id: pred:preorder-extension
+    name: PreorderExtension
+    kind: predicate
+    category: order
+    arguments:
+      - name: R_prime
+        role: extension_relation
+        surface: "R'"
+      - name: R
+        role: original_relation
+      - name: X
+        role: carrier
+    returns: truth_value
+    surface_forms:
+      - preorder extension
+      - extension of a preorder
+    description: >
+      The preorder R_prime extends R by preserving weak comparisons and strict
+      comparisons on X.
+
+  - id: pred:complete-preorder-extension
+    name: CompletePreorderExtension
+    kind: predicate
+    category: order
+    arguments:
+      - name: R_prime
+        role: complete_extension_relation
+        surface: "R'"
+      - name: R
+        role: original_relation
+      - name: X
+        role: carrier
+    returns: truth_value
+    surface_forms:
+      - complete preorder extension
+      - complete extension
+    description: >
+      The relation R_prime is a complete preorder on X and extends the original
+      preorder R.
+
+  - id: pred:only-weak-cycles
+    name: OnlyWeakCycles
+    kind: predicate
+    category: order
+    arguments:
+      - name: R
+        role: relation
+      - name: X
+        role: carrier
+    returns: truth_value
+    surface_forms:
+      - only weak cycles
+      - OWC
+    description: >
+      No finite chain in the transitive closure of R is reversed by a strict
+      comparison from the asymmetric part of R.
+
+  - id: pred:upper-bound
+    name: UpperBound
+    kind: predicate
+    category: order
+    arguments:
+      - name: u
+        role: upper_bound_candidate
+      - name: S
+        role: subset
+      - name: P
+        role: ambient
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - upper bound
+      - bounded above
+    description: >
+      The element u is an upper bound of S in the ambient ordered structure P.
+
+  - id: pred:lower-bound
+    name: LowerBound
+    kind: predicate
+    category: order
+    arguments:
+      - name: ell
+        role: lower_bound_candidate
+        surface: '\ell'
+      - name: S
+        role: subset
+      - name: P
+        role: ambient
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - lower bound
+      - bounded below
+    description: >
+      The element ell is a lower bound of S in the ambient ordered structure P.
+
+  - id: pred:bounded-above
+    name: BoundedAbove
+    kind: predicate
+    category: order
+    arguments:
+      - name: S
+        role: subset
+      - name: P
+        role: ambient
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - bounded above
+      - has an upper bound
+    description: >
+      The subset S has at least one upper bound in the ambient ordered
+      structure P.
+
+  - id: pred:bounded-below
+    name: BoundedBelow
+    kind: predicate
+    category: order
+    arguments:
+      - name: S
+        role: subset
+      - name: P
+        role: ambient
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - bounded below
+      - has a lower bound
+    description: >
+      The subset S has at least one lower bound in the ambient ordered
+      structure P.
+
+  - id: pred:bounded
+    name: Bounded
+    kind: predicate
+    category: order
+    arguments:
+      - name: S
+        role: subset
+      - name: P
+        role: ambient
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - bounded
+      - bounded set
+      - bounded subset
+    description: >
+      The subset S is both bounded above and bounded below in the ambient
+      ordered structure P.
+
+  - id: pred:minimal-element
+    name: MinimalElement
+    kind: predicate
+    category: order
+    arguments:
+      - name: m
+        role: minimal_element_candidate
+      - name: S
+        role: subset
+      - name: P
+        role: ambient
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - minimal element
+    description: >
+      The element m belongs to S and no element of S is strictly below m in the
+      ambient ordered structure P.
+
+  - id: pred:maximal-element
+    name: MaximalElement
+    kind: predicate
+    category: order
+    arguments:
+      - name: M
+        role: maximal_element_candidate
+      - name: S
+        role: subset
+      - name: P
+        role: ambient
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - maximal element
+    description: >
+      The element M belongs to S and no element of S is strictly above M in the
+      ambient ordered structure P.
+
+  - id: pred:least-element
+    name: LeastElement
+    kind: predicate
+    category: order
+    arguments:
+      - name: ell
+        role: least_element_candidate
+        surface: '\ell'
+      - name: S
+        role: subset
+      - name: P
+        role: ambient
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - least element
+      - minimum element
+    description: >
+      The element ell belongs to S and lies below every element of S in the
+      ambient ordered structure P.
+
+  - id: pred:greatest-element
+    name: GreatestElement
+    kind: predicate
+    category: order
+    arguments:
+      - name: g
+        role: greatest_element_candidate
+      - name: S
+        role: subset
+      - name: P
+        role: ambient
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - greatest element
+      - maximum element
+    description: >
+      The element g belongs to S and lies above every element of S in the
+      ambient ordered structure P.
+
+  - id: pred:least-upper-bound
+    name: LeastUpperBound
+    kind: predicate
+    category: order
+    arguments:
+      - name: u_star
+        role: supremum_candidate
+        surface: 'u^*'
+      - name: S
+        role: subset
+      - name: P
+        role: ambient
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - least upper bound
+      - supremum
+      - sup
+    description: >
+      The element u_star is the least upper bound of S in the ambient ordered
+      structure P.
+
+  - id: pred:greatest-lower-bound
+    name: GreatestLowerBound
+    kind: predicate
+    category: order
+    arguments:
+      - name: ell_star
+        role: infimum_candidate
+        surface: '\ell^*'
+      - name: S
+        role: subset
+      - name: P
+        role: ambient
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - greatest lower bound
+      - infimum
+      - inf
+    description: >
+      The element ell_star is the greatest lower bound of S in the ambient
+      ordered structure P.
+
+  - id: pred:chain
+    name: Chain
+    kind: predicate
+    category: order
+    arguments:
+      - name: C
+        role: subset
+      - name: P
+        role: ambient
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - chain
+      - totally ordered subset
+    description: >
+      The subset C is pairwise comparable in the ambient ordered structure P.
+
+  - id: pred:antichain
+    name: Antichain
+    kind: predicate
+    category: order
+    arguments:
+      - name: C
+        role: subset
+      - name: P
+        role: ambient
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - antichain
+    description: >
+      No two distinct elements of C are comparable in the ambient ordered
+      structure P.
+
+  - id: pred:initial-segment
+    name: InitialSegment
+    kind: predicate
+    category: order
+    arguments:
+      - name: I
+        role: subset
+      - name: P
+        role: ambient
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - initial segment
+      - down-set
+      - downward closed
+    description: >
+      The subset I is downward closed in the ambient ordered structure P.
+
+  - id: pred:trichotomy
+    name: Trichotomy
+    kind: predicate
+    category: order
+    arguments:
+      - name: lt
+        role: strict_order_relation
+        surface: '<'
+      - name: A
+        role: carrier
+    returns: truth_value
+    surface_forms:
+      - trichotomy
+      - trichotomy law
+    description: >
+      Every pair of elements of A satisfies exactly one of the two strict
+      comparisons or equality.
+
+  - id: pred:directed-set
+    name: DirectedSet
+    kind: predicate
+    category: order
+    arguments:
+      - name: I
+        role: index_set
+      - name: le
+        role: preorder_relation
+        surface: '\leq'
+    returns: truth_value
+    surface_forms:
+      - directed set
+      - directed preorder
+    description: >
+      The preorder on I gives every pair of elements a common upper bound in I.
+
+  - id: pred:net
+    name: Net
+    kind: predicate
+    category: order
+    arguments:
+      - name: x
+        role: net
+      - name: I
+        role: directed_index_set
+      - name: X
+        role: codomain
+    returns: truth_value
+    surface_forms:
+      - net
+      - generalized sequence
+    description: >
+      The object x is a function from the directed index set I into X.
+
+  - id: pred:knaster-tarski-fixed-point
+    name: KnasterTarskiFixedPoint
+    kind: predicate
+    category: order
+    arguments:
+      - name: f
+        role: monotone_self_map
+      - name: L
+        role: complete_lattice
+    returns: truth_value
+    surface_forms:
+      - Knaster-Tarski fixed point
+      - least and greatest fixed points
+    description: >
+      The monotone self-map f of the complete lattice L has least and greatest
+      fixed points.
+
+  - id: pred:upper-set
+    name: UpperSet
+    kind: predicate
+    category: order
+    arguments:
+      - name: U
+        role: subset
+      - name: P
+        role: ambient
+      - name: le
+        role: order_relation
+        surface: '\leq'
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - upper set
+      - upward closed
+    description: >
+      The subset U contains every element of P above each of its members.
+
+  - id: pred:lower-set
+    name: LowerSet
+    kind: predicate
+    category: order
+    arguments:
+      - name: L
+        role: subset
+      - name: P
+        role: ambient
+      - name: le
+        role: order_relation
+        surface: '\leq'
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - lower set
+      - downward closed set
+    description: >
+      The subset L contains every element of P below each of its members.
+
+  - id: pred:order-embedding
+    name: OrderEmbedding
+    kind: predicate
+    category: order
+    arguments:
+      - name: f
+        role: function
+      - name: P
+        role: domain_ambient
+      - name: Q
+        role: codomain_ambient
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - order embedding
+      - embeds order
+    description: >
+      The function f preserves and reflects the order between the ambient
+      ordered structures P and Q.
+
+  - id: pred:order-isomorphism
+    name: OrderIsomorphism
+    kind: predicate
+    category: order
+    arguments:
+      - name: f
+        role: function
+      - name: P
+        role: domain_ambient
+      - name: Q
+        role: codomain_ambient
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - order isomorphism
+      - isomorphic ordered sets
+    description: >
+      The function f is a bijective order embedding between the ambient ordered
+      structures P and Q.
+
+  - id: pred:order-preserving
+    name: OrderPreserving
+    kind: predicate
+    category: order
+    arguments:
+      - name: f
+        role: function
+      - name: P
+        role: domain_ambient
+      - name: Q
+        role: codomain_ambient
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - order preserving
+      - monotone map
+      - monotone function
+    description: >
+      The function f preserves order from the ambient ordered structure P to Q.
+
+  - id: pred:order-reversing
+    name: OrderReversing
+    kind: predicate
+    category: order
+    arguments:
+      - name: f
+        role: function
+      - name: P
+        role: domain_ambient
+      - name: Q
+        role: codomain_ambient
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - order reversing
+      - antitone map
+      - antitone function
+    description: >
+      The function f reverses order from the ambient ordered structure P to Q.
+
+  - id: pred:strict-order-preserving
+    name: StrictOrderPreserving
+    kind: predicate
+    category: order
+    arguments:
+      - name: f
+        role: function
+      - name: P
+        role: domain_ambient
+      - name: Q
+        role: codomain_ambient
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - strictly order preserving
+      - strictly increasing
+    description: >
+      The function f sends strict order comparisons in P to strict order
+      comparisons in Q with the same direction.
+
+  - id: pred:strict-order-reversing
+    name: StrictOrderReversing
+    kind: predicate
+    category: order
+    arguments:
+      - name: f
+        role: function
+      - name: P
+        role: domain_ambient
+      - name: Q
+        role: codomain_ambient
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - strictly order reversing
+      - strictly decreasing
+    description: >
+      The function f sends strict order comparisons in P to strict order
+      comparisons in Q with the opposite direction.
+
+  - id: pred:order-reflecting
+    name: OrderReflecting
+    kind: predicate
+    category: order
+    arguments:
+      - name: f
+        role: function
+      - name: P
+        role: domain_ambient
+      - name: Q
+        role: codomain_ambient
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - order reflecting
+      - reflects order
+    description: >
+      The function f reflects order from the ambient ordered structure Q back
+      to P.
+
+  - id: pred:satisfies
+    name: Satisfies
+    kind: predicate
+    category: logic
+    arguments:
+      - name: M
+        role: structure
+      - name: phi
+        role: formula
+        surface: '\varphi'
+    returns: truth_value
+    ambient_argument: M
+    surface_forms:
+      - satisfies
+      - models
+      - satisfaction
+    description: >
+      The structure M satisfies the formula phi.
+
+  - id: pred:theory-entails
+    name: TheoryEntails
+    kind: predicate
+    category: logic
+    arguments:
+      - name: T
+        role: theory
+      - name: phi
+        role: formula
+        surface: '\varphi'
+    returns: truth_value
+    surface_forms:
+      - entails
+      - semantic consequence
+      - logical consequence
+    description: >
+      Every model of the theory T satisfies the formula phi.
+
+  - id: pred:derives
+    name: Derives
+    kind: predicate
+    category: logic
+    arguments:
+      - name: T
+        role: theory
+      - name: phi
+        role: formula
+        surface: '\varphi'
+    returns: truth_value
+    surface_forms:
+      - derives
+      - proves
+      - syntactic consequence
+    description: >
+      The formula phi is derivable from the theory T in the proof system under
+      discussion.
+
+  - id: pred:consistent
+    name: Consistent
+    kind: predicate
+    category: logic
+    arguments:
+      - name: T
+        role: theory
+    returns: truth_value
+    surface_forms:
+      - consistent
+      - consistency
+    description: >
+      The theory T does not prove a contradiction, or equivalently satisfies
+      the local notion of consistency being used.
+
+  - id: pred:relatively-consistent
+    name: RelativelyConsistent
+    kind: predicate
+    category: logic
+    arguments:
+      - name: T
+        role: target_theory
+      - name: U
+        role: base_theory
+    returns: truth_value
+    surface_forms:
+      - relatively consistent
+      - relative consistency
+    description: >
+      The consistency of U implies the consistency of T in the intended
+      relative-consistency sense.
+
+  - id: pred:free-for
+    name: FreeFor
+    kind: predicate
+    category: logic
+    arguments:
+      - name: t
+        role: term
+      - name: x
+        role: variable
+      - name: phi
+        role: formula
+        surface: '\varphi'
+    returns: truth_value
+    surface_forms:
+      - free for
+      - substitutable
+      - capture avoiding
+    description: >
+      The term t is free for the variable x in phi, so substitution does not
+      cause variable capture.
+
+  - id: pred:is-magma
+    name: IsMagma
+    kind: predicate
+    category: algebra
+    arguments:
+      - name: M
+        role: magma_structure
+    returns: truth_value
+    ambient_argument: M
+    surface_forms:
+      - is a magma
+      - magma laws
+    description: >
+      The packaged magma data has a binary operation closed on its carrier.
+
+  - id: pred:is-semigroup
+    name: IsSemigroup
+    kind: predicate
+    category: algebra
+    arguments:
+      - name: S
+        role: semigroup_structure
+    returns: truth_value
+    ambient_argument: S
+    surface_forms:
+      - is a semigroup
+      - semigroup laws
+    description: >
+      The packaged semigroup data satisfies the semigroup laws.
+
+  - id: pred:is-monoid
+    name: IsMonoid
+    kind: predicate
+    category: algebra
+    arguments:
+      - name: M
+        role: monoid_structure
+    returns: truth_value
+    ambient_argument: M
+    surface_forms:
+      - is a monoid
+      - monoid laws
+    description: >
+      The packaged monoid data satisfies the monoid laws.
+
+  - id: pred:is-commutative-monoid
+    name: IsCommutativeMonoid
+    kind: predicate
+    category: algebra
+    arguments:
+      - name: M
+        role: commutative_monoid_structure
+    returns: truth_value
+    ambient_argument: M
+    surface_forms:
+      - is a commutative monoid
+      - commutative monoid laws
+    description: >
+      The packaged commutative monoid data satisfies the commutative monoid
+      laws.
+
+  - id: pred:is-group
+    name: IsGroup
+    kind: predicate
+    category: algebra
+    arguments:
+      - name: G
+        role: group_structure
+    returns: truth_value
+    ambient_argument: G
+    surface_forms:
+      - is a group
+      - group laws
+    description: >
+      The packaged group data satisfies the group laws.
+
+  - id: pred:is-abelian-group
+    name: IsAbelianGroup
+    kind: predicate
+    category: algebra
+    arguments:
+      - name: G
+        role: abelian_group_structure
+    returns: truth_value
+    ambient_argument: G
+    surface_forms:
+      - is an abelian group
+      - is a commutative group
+    description: >
+      The packaged abelian group data satisfies the abelian group laws.
+
+  - id: pred:is-semiring
+    name: IsSemiring
+    kind: predicate
+    category: algebra
+    arguments:
+      - name: S
+        role: semiring_structure
+    returns: truth_value
+    ambient_argument: S
+    surface_forms:
+      - is a semiring
+      - semiring laws
+    description: >
+      The packaged semiring data satisfies the semiring laws.
+
+  - id: pred:is-commutative-semiring
+    name: IsCommutativeSemiring
+    kind: predicate
+    category: algebra
+    arguments:
+      - name: S
+        role: commutative_semiring_structure
+    returns: truth_value
+    ambient_argument: S
+    surface_forms:
+      - is a commutative semiring
+      - commutative semiring laws
+    description: >
+      The packaged commutative semiring data satisfies the commutative
+      semiring laws.
+
+  - id: pred:is-ring
+    name: IsRing
+    kind: predicate
+    category: algebra
+    arguments:
+      - name: R
+        role: ring_structure
+    returns: truth_value
+    ambient_argument: R
+    surface_forms:
+      - is a ring
+      - ring laws
+    description: >
+      The packaged ring data satisfies the ring laws.
+
+  - id: pred:is-commutative-ring
+    name: IsCommutativeRing
+    kind: predicate
+    category: algebra
+    arguments:
+      - name: R
+        role: commutative_ring_structure
+    returns: truth_value
+    ambient_argument: R
+    surface_forms:
+      - is a commutative ring
+      - commutative ring laws
+    description: >
+      The packaged commutative ring data satisfies the commutative ring laws.
+
+  - id: pred:is-field
+    name: IsField
+    kind: predicate
+    category: algebra
+    arguments:
+      - name: F
+        role: field_structure
+    returns: truth_value
+    ambient_argument: F
+    surface_forms:
+      - is a field
+      - field laws
+    description: >
+      The packaged field data satisfies the field laws.
+
+  - id: pred:is-ordered-field
+    name: IsOrderedField
+    kind: predicate
+    category: algebra
+    arguments:
+      - name: F
+        role: ordered_field_structure
+    returns: truth_value
+    ambient_argument: F
+    surface_forms:
+      - is an ordered field
+      - ordered field laws
+    description: >
+      The packaged ordered field data satisfies the ordered field laws.
+
+  - id: pred:is-complete-ordered-field
+    name: IsCompleteOrderedField
+    kind: predicate
+    category: algebra
+    arguments:
+      - name: F
+        role: complete_ordered_field_structure
+    returns: truth_value
+    ambient_argument: F
+    surface_forms:
+      - is a complete ordered field
+      - complete ordered field laws
+    description: >
+      The packaged complete ordered field data satisfies the complete ordered
+      field laws.
+
+  - id: pred:associative
+    name: Associative
+    kind: predicate
+    category: algebra
+    arguments:
+      - name: A
+        role: carrier
+      - name: star
+        role: binary_operation
+        surface: '\star'
+    returns: truth_value
+    ambient_argument: A
+    surface_forms:
+      - associative
+      - associativity
+    description: >
+      The binary operation star is associative on the carrier A.
+
+  - id: pred:commutative
+    name: Commutative
+    kind: predicate
+    category: algebra
+    arguments:
+      - name: A
+        role: carrier
+      - name: star
+        role: binary_operation
+        surface: '\star'
+    returns: truth_value
+    ambient_argument: A
+    surface_forms:
+      - commutative
+      - commutativity
+    description: >
+      The binary operation star is commutative on the carrier A.
+
+  - id: pred:left-identity
+    name: LeftIdentity
+    kind: predicate
+    category: algebra
+    arguments:
+      - name: e
+        role: candidate_identity
+      - name: A
+        role: carrier
+      - name: star
+        role: binary_operation
+        surface: '\star'
+    returns: truth_value
+    ambient_argument: A
+    surface_forms:
+      - left identity
+      - left identity element
+    description: >
+      The element e is a left identity for the operation star on A.
+
+  - id: pred:right-identity
+    name: RightIdentity
+    kind: predicate
+    category: algebra
+    arguments:
+      - name: e
+        role: candidate_identity
+      - name: A
+        role: carrier
+      - name: star
+        role: binary_operation
+        surface: '\star'
+    returns: truth_value
+    ambient_argument: A
+    surface_forms:
+      - right identity
+      - right identity element
+    description: >
+      The element e is a right identity for the operation star on A.
+
+  - id: pred:identity
+    name: Identity
+    kind: predicate
+    category: algebra
+    arguments:
+      - name: e
+        role: candidate_identity
+      - name: A
+        role: carrier
+      - name: star
+        role: binary_operation
+        surface: '\star'
+    returns: truth_value
+    ambient_argument: A
+    surface_forms:
+      - identity
+      - identity element
+      - two-sided identity
+    description: >
+      The element e is both a left and right identity for the operation star
+      on A.
+
+  - id: pred:left-inverse-element
+    name: LeftInverse
+    kind: predicate
+    category: algebra
+    arguments:
+      - name: y
+        role: candidate_inverse
+      - name: x
+        role: element
+      - name: e
+        role: identity_element
+      - name: A
+        role: carrier
+      - name: star
+        role: binary_operation
+        surface: '\star'
+    returns: truth_value
+    ambient_argument: A
+    surface_forms:
+      - left inverse
+      - left inverse element
+    description: >
+      The element y is a left inverse of x with respect to identity e and
+      operation star on A.
+
+  - id: pred:right-inverse-element
+    name: RightInverse
+    kind: predicate
+    category: algebra
+    arguments:
+      - name: y
+        role: candidate_inverse
+      - name: x
+        role: element
+      - name: e
+        role: identity_element
+      - name: A
+        role: carrier
+      - name: star
+        role: binary_operation
+        surface: '\star'
+    returns: truth_value
+    ambient_argument: A
+    surface_forms:
+      - right inverse
+      - right inverse element
+    description: >
+      The element y is a right inverse of x with respect to identity e and
+      operation star on A.
+
+  - id: pred:inverse-element
+    name: Inverse
+    kind: predicate
+    category: algebra
+    arguments:
+      - name: y
+        role: candidate_inverse
+      - name: x
+        role: element
+      - name: e
+        role: identity_element
+      - name: A
+        role: carrier
+      - name: star
+        role: binary_operation
+        surface: '\star'
+    returns: truth_value
+    ambient_argument: A
+    surface_forms:
+      - inverse
+      - two-sided inverse
+      - inverse element
+    description: >
+      The element y is both a left and right inverse of x with respect to
+      identity e and operation star on A.
+
+  - id: pred:left-distributive
+    name: LeftDistributive
+    kind: predicate
+    category: algebra
+    arguments:
+      - name: A
+        role: carrier
+      - name: plus
+        role: additive_operation
+        surface: '+'
+      - name: dot
+        role: multiplicative_operation
+        surface: '\cdot'
+    returns: truth_value
+    ambient_argument: A
+    surface_forms:
+      - left distributive
+      - left distributivity
+    description: >
+      The operation dot is left-distributive over plus on A.
+
+  - id: pred:right-distributive
+    name: RightDistributive
+    kind: predicate
+    category: algebra
+    arguments:
+      - name: A
+        role: carrier
+      - name: plus
+        role: additive_operation
+        surface: '+'
+      - name: dot
+        role: multiplicative_operation
+        surface: '\cdot'
+    returns: truth_value
+    ambient_argument: A
+    surface_forms:
+      - right distributive
+      - right distributivity
+    description: >
+      The operation dot is right-distributive over plus on A.
+
+  - id: pred:distributive
+    name: Distributive
+    kind: predicate
+    category: algebra
+    arguments:
+      - name: A
+        role: carrier
+      - name: plus
+        role: additive_operation
+        surface: '+'
+      - name: dot
+        role: multiplicative_operation
+        surface: '\cdot'
+    returns: truth_value
+    ambient_argument: A
+    surface_forms:
+      - distributive
+      - distributivity
+    description: >
+      The operation dot is both left- and right-distributive over plus on A.
+
+  - id: pred:zero-absorbing
+    name: ZeroAbsorbing
+    kind: predicate
+    category: algebra
+    arguments:
+      - name: z
+        role: absorbing_element
+        surface: '0'
+      - name: A
+        role: carrier
+      - name: star
+        role: binary_operation
+        surface: '\star'
+    returns: truth_value
+    ambient_argument: A
+    surface_forms:
+      - zero absorbing
+      - absorbing element
+    description: >
+      The element z absorbs the operation star on both sides over A.
+
+  - id: pred:left-cancellation
+    name: LeftCancellation
+    kind: predicate
+    category: algebra
+    arguments:
+      - name: A
+        role: carrier
+      - name: star
+        role: binary_operation
+        surface: '\star'
+    returns: truth_value
+    ambient_argument: A
+    surface_forms:
+      - left cancellation
+      - left cancellative
+    description: >
+      The operation star satisfies left cancellation on A.
+
+  - id: pred:right-cancellation
+    name: RightCancellation
+    kind: predicate
+    category: algebra
+    arguments:
+      - name: A
+        role: carrier
+      - name: star
+        role: binary_operation
+        surface: '\star'
+    returns: truth_value
+    ambient_argument: A
+    surface_forms:
+      - right cancellation
+      - right cancellative
+    description: >
+      The operation star satisfies right cancellation on A.
+
+  - id: pred:operation-extension
+    name: OperationExtension
+    kind: predicate
+    category: algebra
+    arguments:
+      - name: star_B
+        role: extended_operation
+        surface: '\star_B'
+      - name: star_A
+        role: original_operation
+        surface: '\star_A'
+      - name: A
+        role: original_carrier
+      - name: B
+        role: extended_carrier
+    returns: truth_value
+    ambient_argument: B
+    surface_forms:
+      - operation extension
+      - extends operation
+      - operation agrees on a subcarrier
+    description: >
+      The operation star_B on B extends the operation star_A on A by agreeing
+      with star_A whenever all inputs lie in A.
+
+  - id: pred:unique-value-relation
+    name: UniqueValueRelation
+    kind: predicate
+    category: well_definedness
+    arguments:
+      - name: R
+        role: relation
+      - name: A
+        role: domain
+      - name: B
+        role: codomain
+    returns: truth_value
+    ambient_argument: R
+    surface_forms:
+      - unique value relation
+      - single-valued relation
+    description: >
+      For every input in A, the relation R has at most one output in B.
+
+  - id: pred:exists-unique-value-relation
+    name: ExistsUniqueValueRelation
+    kind: predicate
+    category: well_definedness
+    arguments:
+      - name: R
+        role: relation
+      - name: A
+        role: domain
+      - name: B
+        role: codomain
+    returns: truth_value
+    ambient_argument: R
+    surface_forms:
+      - exists unique value relation
+      - total single-valued relation
+    description: >
+      For every input in A, there exists a unique output in B related by R.
+
+  - id: pred:representative-independent
+    name: RepresentativeIndependent
+    kind: predicate
+    category: well_definedness
+    arguments:
+      - name: F
+        role: rule_or_operation
+      - name: Q_A
+        role: domain_quotient
+      - name: Q_B
+        role: codomain_quotient
+    returns: truth_value
+    ambient_argument: F
+    surface_forms:
+      - representative independent
+      - independent of representatives
+    description: >
+      Equivalent representatives in the domain quotient determine equivalent
+      outputs in the codomain quotient under F.
+
+  - id: pred:closed-under-unary-operation
+    name: ClosedUnderUnaryOperation
+    kind: predicate
+    category: algebra
+    arguments:
+      - name: u
+        role: unary_operation
+      - name: A
+        role: carrier
+    returns: truth_value
+    ambient_argument: A
+    surface_forms:
+      - closed under unary operation
+      - unary closure
+    description: >
+      The unary operation u sends elements of A to elements of A.
+
+  - id: pred:closed-under-binary-operation
+    name: ClosedUnderBinaryOperation
+    kind: predicate
+    category: algebra
+    arguments:
+      - name: star
+        role: binary_operation
+        surface: '\star'
+      - name: A
+        role: carrier
+    returns: truth_value
+    ambient_argument: A
+    surface_forms:
+      - closed under binary operation
+      - binary closure
+    description: >
+      The binary operation star sends pairs of elements of A to elements of A.
+
+  - id: pred:well-defined-function
+    name: WellDefinedFunction
+    kind: predicate
+    category: well_definedness
+    arguments:
+      - name: f
+        role: function
+      - name: A
+        role: domain
+      - name: B
+        role: codomain
+    returns: truth_value
+    ambient_argument: f
+    surface_forms:
+      - well-defined function
+      - function is well defined
+    description: >
+      The function f assigns a unique element of B to each intended input in A.
+
+  - id: pred:well-defined-unary-operation
+    name: WellDefinedUnaryOperation
+    kind: predicate
+    category: well_definedness
+    arguments:
+      - name: u
+        role: unary_operation
+      - name: A
+        role: carrier
+    returns: truth_value
+    ambient_argument: u
+    surface_forms:
+      - well-defined unary operation
+    description: >
+      The unary operation u produces a unique value in A for each input in A.
+
+  - id: pred:well-defined-binary-operation
+    name: WellDefinedBinaryOperation
+    kind: predicate
+    category: well_definedness
+    arguments:
+      - name: star
+        role: binary_operation
+        surface: '\star'
+      - name: A
+        role: carrier
+    returns: truth_value
+    ambient_argument: star
+    surface_forms:
+      - well-defined binary operation
+    description: >
+      The binary operation star produces a unique value in A for each pair of
+      inputs in A.
+
+  - id: pred:well-defined-quotient-operation
+    name: WellDefinedQuotientOperation
+    kind: predicate
+    category: well_definedness
+    arguments:
+      - name: star_bar
+        role: quotient_operation
+        surface: '\overline{\star}'
+      - name: star
+        role: representative_operation
+        surface: '\star'
+      - name: Q
+        role: quotient_structure
+    returns: truth_value
+    ambient_argument: Q
+    surface_forms:
+      - well-defined quotient operation
+      - operation descends to the quotient
+    description: >
+      The quotient operation star_bar is induced by star on the quotient
+      structure Q and is independent of representative choices.
+
+  - id: pred:successor-covers-nonbase
+    name: SuccessorCoversNonbase
+    kind: predicate
+    category: peano
+    arguments:
+      - name: S
+        role: successor_function
+      - name: e
+        role: base_element
+      - name: A
+        role: carrier
+    returns: truth_value
+    ambient_argument: A
+    surface_forms:
+      - every non-base element is a successor
+      - successor covers nonbase elements
+    description: >
+      Every element of A other than the base element e is in the image of the
+      successor function S.
+
+  - id: pred:successor-system-properties
+    name: SuccessorSystemProperties
+    kind: predicate
+    category: peano
+    arguments:
+      - name: A
+        role: carrier
+      - name: e
+        role: base_element
+      - name: S
+        role: successor_function
+    returns: truth_value
+    ambient_argument: A
+    surface_forms:
+      - successor-side properties
+      - successor system properties
+    description: >
+      The carrier A, base element e, and successor function S satisfy the
+      successor-side Peano properties: e lies in A, S maps A to A, e is not a
+      successor value, and S is injective on A.

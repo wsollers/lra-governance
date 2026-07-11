@@ -1,0 +1,866 @@
+# Canonical LRA structure registry.
+# Governed by docs/governance/predicate-standards.md and
+# docs/architecture/canonical-yaml.md.
+
+structures:
+  - id: struct:ordered-set
+    name: OrderedSet
+    kind: structure
+    category: order
+    constructor: '\mathsf{OrderedSet}'
+    arguments:
+      - name: A
+        role: carrier
+      - name: le
+        role: order_relation
+        surface: '\leq'
+    carrier_argument: A
+    structural_arguments:
+      - le
+    surface_forms:
+      - ordered set
+      - ordered structure
+      - order-bearing set
+    description: >
+      Ambient structure built from a carrier set A and a binary relation le
+      used as the order relation. This constructor supplies the structure
+      passed to order predicates; separate predicates state the order axioms
+      when needed.
+
+  - id: struct:preordered-set
+    name: PreorderedSet
+    kind: structure
+    category: order
+    constructor: '\mathsf{PreorderedSet}'
+    arguments:
+      - name: A
+        role: carrier
+      - name: le
+        role: preorder_relation
+        surface: '\leq'
+    carrier_argument: A
+    structural_arguments:
+      - le
+    surface_forms:
+      - preordered set
+      - preorder
+      - preorder structure
+    description: >
+      Ambient ordered structure whose relation is intended to satisfy the
+      preorder axioms on A.
+
+  - id: struct:partially-ordered-set
+    name: PartiallyOrderedSet
+    kind: structure
+    category: order
+    constructor: '\mathsf{PartiallyOrderedSet}'
+    arguments:
+      - name: A
+        role: carrier
+      - name: le
+        role: partial_order_relation
+        surface: '\leq'
+    carrier_argument: A
+    structural_arguments:
+      - le
+    surface_forms:
+      - partially ordered set
+      - poset
+      - partial order structure
+    description: >
+      Ambient ordered structure whose relation is intended to satisfy the
+      partial order axioms on A.
+
+  - id: struct:totally-ordered-set
+    name: TotallyOrderedSet
+    kind: structure
+    category: order
+    constructor: '\mathsf{TotallyOrderedSet}'
+    arguments:
+      - name: A
+        role: carrier
+      - name: le
+        role: total_order_relation
+        surface: '\leq'
+    carrier_argument: A
+    structural_arguments:
+      - le
+    surface_forms:
+      - totally ordered set
+      - total order
+      - linear order
+    description: >
+      Ambient ordered structure whose relation is intended to satisfy the total
+      order axioms on A.
+
+  - id: struct:well-ordered-set
+    name: WellOrderedSet
+    kind: structure
+    category: order
+    constructor: '\mathsf{WellOrderedSet}'
+    arguments:
+      - name: A
+        role: carrier
+      - name: le
+        role: well_order_relation
+        surface: '\leq'
+    carrier_argument: A
+    structural_arguments:
+      - le
+    surface_forms:
+      - well-ordered set
+      - well-order
+      - well-order structure
+    description: >
+      Ambient ordered structure whose relation is intended to satisfy the
+      well-order condition on A.
+
+  - id: struct:dual-poset
+    name: DualPoset
+    kind: structure
+    category: order
+    constructor: '\mathsf{DualPoset}'
+    arguments:
+      - name: A
+        role: carrier
+      - name: ge
+        role: dual_order_relation
+        surface: '\geq'
+    carrier_argument: A
+    structural_arguments:
+      - ge
+    surface_forms:
+      - dual poset
+      - dual ordered set
+      - opposite order
+    description: >
+      Ambient ordered structure obtained by reversing the order relation on a
+      poset with carrier A.
+
+  - id: struct:lattice
+    name: Lattice
+    kind: structure
+    category: order
+    constructor: '\mathsf{Lattice}'
+    arguments:
+      - name: L
+        role: carrier
+      - name: le
+        role: order_relation
+        surface: '\leq'
+      - name: join
+        role: join_operation
+        surface: '\vee'
+      - name: meet
+        role: meet_operation
+        surface: '\wedge'
+    carrier_argument: L
+    structural_arguments:
+      - le
+      - join
+      - meet
+    surface_forms:
+      - lattice
+      - lattice structure
+    description: >
+      Ambient lattice structure on carrier L with order, join, and meet data.
+
+  - id: struct:complete-lattice
+    name: CompleteLattice
+    kind: structure
+    category: order
+    constructor: '\mathsf{CompleteLattice}'
+    arguments:
+      - name: L
+        role: carrier
+      - name: le
+        role: order_relation
+        surface: '\leq'
+      - name: join
+        role: join_operation
+        surface: '\vee'
+      - name: meet
+        role: meet_operation
+        surface: '\wedge'
+    carrier_argument: L
+    structural_arguments:
+      - le
+      - join
+      - meet
+    surface_forms:
+      - complete lattice
+      - complete lattice structure
+    description: >
+      Ambient lattice structure in which arbitrary subsets are intended to
+      have suprema and infima.
+
+  - id: struct:distributive-lattice
+    name: DistributiveLattice
+    kind: structure
+    category: order
+    constructor: '\mathsf{DistributiveLattice}'
+    arguments:
+      - name: L
+        role: carrier
+      - name: le
+        role: order_relation
+        surface: '\leq'
+      - name: join
+        role: join_operation
+        surface: '\vee'
+      - name: meet
+        role: meet_operation
+        surface: '\wedge'
+    carrier_argument: L
+    structural_arguments:
+      - le
+      - join
+      - meet
+    surface_forms:
+      - distributive lattice
+    description: >
+      Ambient lattice structure whose join and meet operations satisfy the
+      distributive laws.
+
+  - id: struct:boolean-lattice
+    name: BooleanLattice
+    kind: structure
+    category: order
+    constructor: '\mathsf{BooleanLattice}'
+    arguments:
+      - name: L
+        role: carrier
+      - name: le
+        role: order_relation
+        surface: '\leq'
+      - name: join
+        role: join_operation
+        surface: '\vee'
+      - name: meet
+        role: meet_operation
+        surface: '\wedge'
+      - name: complement
+        role: complement_operation
+      - name: bottom
+        role: least_element
+        surface: '0'
+      - name: top
+        role: greatest_element
+        surface: '1'
+    carrier_argument: L
+    structural_arguments:
+      - le
+      - join
+      - meet
+      - complement
+      - bottom
+      - top
+    surface_forms:
+      - boolean lattice
+      - complemented distributive lattice
+    description: >
+      Ambient Boolean lattice structure with order, lattice operations,
+      complement, bottom, and top.
+
+  - id: struct:function-space
+    name: FunctionSpace
+    kind: structure
+    category: function
+    constructor: '\mathsf{FunctionSpace}'
+    arguments:
+      - name: A
+        role: domain
+      - name: B
+        role: codomain
+    carrier_argument: null
+    structural_arguments:
+      - A
+      - B
+    surface_forms:
+      - function space
+      - functions from A to B
+    description: >
+      Ambient structure for functions with domain A and codomain B.
+
+  - id: struct:set-family
+    name: SetFamily
+    kind: structure
+    category: set
+    constructor: '\mathsf{SetFamily}'
+    arguments:
+      - name: F
+        role: family
+        surface: '\mathcal{F}'
+      - name: U
+        role: ambient_set
+    carrier_argument: U
+    structural_arguments:
+      - F
+    surface_forms:
+      - set family
+      - family of sets
+      - collection of sets
+    description: >
+      Ambient structure for a family of subsets of a fixed ambient set U.
+
+  - id: struct:sequence
+    name: Sequence
+    kind: structure
+    category: sequence
+    constructor: '\mathsf{Sequence}'
+    arguments:
+      - name: x
+        role: sequence
+      - name: I
+        role: index_set
+      - name: X
+        role: ambient
+    carrier_argument: X
+    structural_arguments:
+      - x
+      - I
+    surface_forms:
+      - sequence
+      - indexed sequence
+      - sequence in an ambient space
+    description: >
+      Indexed object x with index set I and values in the ambient object X.
+      Ordinary real sequences use the natural numbers as the index set.
+
+  - id: struct:point
+    name: Point
+    kind: structure
+    category: set
+    constructor: '\mathsf{Point}'
+    arguments:
+      - name: x
+        role: element
+      - name: X
+        role: ambient_set
+    carrier_argument: X
+    structural_arguments:
+      - x
+    surface_forms:
+      - point
+      - point of a set
+      - element of an ambient set
+    description: >
+      Ambient typing structure recording that x is a particular point of the
+      set or space X. This structure covers ordinary elements, ordered pairs,
+      tuples, vectors, and other objects by treating them as points of their
+      ambient carrier.
+
+  - id: struct:metric-space
+    name: MetricSpace
+    kind: structure
+    category: topology
+    constructor: '\mathsf{MetricSpace}'
+    arguments:
+      - name: X
+        role: carrier
+      - name: d
+        role: metric
+    carrier_argument: X
+    structural_arguments:
+      - d
+    surface_forms:
+      - metric space
+      - metric structure
+    description: >
+      Ambient metric structure with carrier X and distance function d.
+
+  - id: struct:ball
+    name: Ball
+    kind: structure
+    category: topology
+    constructor: '\mathsf{Ball}'
+    arguments:
+      - name: B
+        role: ball
+      - name: c
+        role: center
+      - name: r
+        role: radius
+      - name: X
+        role: ambient
+    carrier_argument: X
+    structural_arguments:
+      - B
+      - c
+      - r
+    surface_forms:
+      - ball
+      - metric ball
+      - open ball
+    description: >
+      Local region B determined by center c and radius r in the ambient space
+      X. This structure names the region so membership can be stated by
+      predicates such as Within.
+
+  - id: struct:punctured-ball
+    name: PuncturedBall
+    kind: structure
+    category: topology
+    constructor: '\mathsf{PuncturedBall}'
+    arguments:
+      - name: B_dot
+        role: punctured_ball
+        surface: 'B^\times'
+      - name: B
+        role: underlying_ball
+      - name: c
+        role: center
+      - name: r
+        role: radius
+      - name: X
+        role: ambient
+    carrier_argument: X
+    structural_arguments:
+      - B_dot
+      - B
+      - c
+      - r
+    surface_forms:
+      - punctured ball
+      - deleted ball
+    description: >
+      Local region B_dot obtained from the ball B centered at c with radius r
+      in X by removing the center c.
+
+  - id: struct:neighborhood
+    name: Neighborhood
+    kind: structure
+    category: topology
+    constructor: '\mathsf{Neighborhood}'
+    arguments:
+      - name: U
+        role: neighborhood
+      - name: c
+        role: center
+      - name: X
+        role: ambient
+    carrier_argument: X
+    structural_arguments:
+      - U
+      - c
+    surface_forms:
+      - neighborhood
+      - neighbourhood
+    description: >
+      Local region U around center c in the ambient topological space X.
+      This structure names the region independently of any particular point
+      later tested for membership.
+
+  - id: struct:punctured-neighborhood
+    name: PuncturedNeighborhood
+    kind: structure
+    category: topology
+    constructor: '\mathsf{PuncturedNeighborhood}'
+    arguments:
+      - name: U_dot
+        role: punctured_neighborhood
+        surface: 'U^\times'
+      - name: U
+        role: underlying_neighborhood
+      - name: c
+        role: center
+      - name: X
+        role: ambient
+    carrier_argument: X
+    structural_arguments:
+      - U_dot
+      - U
+      - c
+    surface_forms:
+      - punctured neighborhood
+      - punctured neighbourhood
+      - deleted neighborhood
+      - deleted neighbourhood
+    description: >
+      Local region U_dot obtained from the neighborhood U of c in X by
+      removing the center c.
+
+  - id: struct:open-endpoint
+    name: OpenEndpoint
+    kind: structure
+    category: topology
+    constructor: '\mathsf{OpenEndpoint}'
+    arguments:
+      - name: E
+        role: endpoint
+      - name: x
+        role: point
+      - name: X
+        role: ambient
+    carrier_argument: X
+    structural_arguments:
+      - E
+      - x
+    surface_forms:
+      - open endpoint
+      - excluded endpoint
+    description: >
+      Endpoint object E located at x in the ambient ordered or topological
+      space X, with x excluded from the interval determined by E.
+
+  - id: struct:closed-endpoint
+    name: ClosedEndpoint
+    kind: structure
+    category: topology
+    constructor: '\mathsf{ClosedEndpoint}'
+    arguments:
+      - name: E
+        role: endpoint
+      - name: x
+        role: point
+      - name: X
+        role: ambient
+    carrier_argument: X
+    structural_arguments:
+      - E
+      - x
+    surface_forms:
+      - closed endpoint
+      - included endpoint
+    description: >
+      Endpoint object E located at x in the ambient ordered or topological
+      space X, with x included in the interval determined by E.
+
+  - id: struct:unbounded-endpoint
+    name: UnboundedEndpoint
+    kind: structure
+    category: topology
+    constructor: '\mathsf{UnboundedEndpoint}'
+    arguments:
+      - name: E
+        role: endpoint
+      - name: direction
+        role: direction
+        surface: '\pm\infty'
+      - name: X
+        role: ambient
+    carrier_argument: X
+    structural_arguments:
+      - E
+      - direction
+    surface_forms:
+      - unbounded endpoint
+      - infinite endpoint
+      - endpoint at infinity
+    description: >
+      Endpoint object E representing an unbounded left or right endpoint in
+      the ambient ordered or topological space X. The direction records
+      whether the endpoint is toward negative infinity or positive infinity.
+
+  - id: struct:interval
+    name: Interval
+    kind: structure
+    category: topology
+    constructor: '\mathsf{Interval}'
+    arguments:
+      - name: I
+        role: interval
+      - name: E_left
+        role: left_endpoint
+      - name: E_right
+        role: right_endpoint
+      - name: X
+        role: ambient
+    carrier_argument: X
+    structural_arguments:
+      - I
+      - E_left
+      - E_right
+    surface_forms:
+      - interval
+      - interval determined by endpoints
+    description: >
+      Interval object I in the ambient ordered or topological space X,
+      determined by left and right endpoint objects. Endpoint objects record
+      whether finite endpoints are included or excluded and whether an
+      endpoint is unbounded.
+
+  - id: struct:topological-space
+    name: TopologicalSpace
+    kind: structure
+    category: topology
+    constructor: '\mathsf{TopologicalSpace}'
+    arguments:
+      - name: X
+        role: carrier
+      - name: tau
+        role: topology
+        surface: '\tau'
+    carrier_argument: X
+    structural_arguments:
+      - tau
+    surface_forms:
+      - topological space
+      - topology
+      - open set structure
+    description: >
+      Ambient topological structure with carrier X and topology tau.
+
+  - id: struct:quotient
+    name: Quotient
+    kind: structure
+    category: quotient
+    constructor: '\mathsf{Quotient}'
+    arguments:
+      - name: A
+        role: carrier
+      - name: sim
+        role: equivalence_relation
+        surface: '\sim'
+    carrier_argument: A
+    structural_arguments:
+      - sim
+    surface_forms:
+      - quotient
+      - quotient structure
+      - quotient by an equivalence relation
+    description: >
+      Ambient quotient structure built from a carrier set A and an equivalence
+      relation sim on A. This constructor packages quotient data before
+      predicates assert quotient-set, quotient-operation, or
+      representative-independence properties.
+
+  - id: struct:magma
+    name: Magma
+    kind: structure
+    category: algebra
+    constructor: '\mathsf{Magma}'
+    arguments:
+      - name: A
+        role: carrier
+      - name: star
+        role: binary_operation
+        surface: '\star'
+    carrier_argument: A
+    structural_arguments:
+      - star
+    surface_forms:
+      - magma
+      - set with a binary operation
+    description: >
+      Algebraic structure consisting of a carrier A and a binary operation
+      star on A.
+
+  - id: struct:semigroup
+    name: Semigroup
+    kind: structure
+    category: algebra
+    constructor: '\mathsf{Semigroup}'
+    arguments:
+      - name: M
+        role: magma
+    carrier_argument: null
+    structural_arguments:
+      - M
+    surface_forms:
+      - semigroup
+    description: >
+      Algebraic structure built from a magma whose operation is intended to be
+      associative.
+
+  - id: struct:monoid
+    name: Monoid
+    kind: structure
+    category: algebra
+    constructor: '\mathsf{Monoid}'
+    arguments:
+      - name: S
+        role: semigroup
+      - name: e
+        role: identity_element
+    carrier_argument: null
+    structural_arguments:
+      - S
+      - e
+    surface_forms:
+      - monoid
+    description: >
+      Algebraic structure built from a semigroup together with a designated
+      identity element.
+
+  - id: struct:commutative-monoid
+    name: CommutativeMonoid
+    kind: structure
+    category: algebra
+    constructor: '\mathsf{CommutativeMonoid}'
+    arguments:
+      - name: M
+        role: monoid
+    carrier_argument: null
+    structural_arguments:
+      - M
+    surface_forms:
+      - commutative monoid
+      - abelian monoid
+    description: >
+      Algebraic structure built from a monoid whose operation is intended to
+      be commutative.
+
+  - id: struct:group
+    name: Group
+    kind: structure
+    category: algebra
+    constructor: '\mathsf{Group}'
+    arguments:
+      - name: M
+        role: monoid
+    carrier_argument: null
+    structural_arguments:
+      - M
+    surface_forms:
+      - group
+    description: >
+      Algebraic structure built from a monoid in which every element is
+      intended to have an inverse.
+
+  - id: struct:abelian-group
+    name: AbelianGroup
+    kind: structure
+    category: algebra
+    constructor: '\mathsf{AbelianGroup}'
+    arguments:
+      - name: G
+        role: group
+    carrier_argument: null
+    structural_arguments:
+      - G
+    surface_forms:
+      - abelian group
+      - commutative group
+    description: >
+      Algebraic structure built from a group whose operation is intended to be
+      commutative.
+
+  - id: struct:semiring
+    name: Semiring
+    kind: structure
+    category: algebra
+    constructor: '\mathsf{Semiring}'
+    arguments:
+      - name: A
+        role: additive_commutative_monoid
+      - name: M
+        role: multiplicative_monoid
+    carrier_argument: null
+    structural_arguments:
+      - A
+      - M
+    surface_forms:
+      - semiring
+    description: >
+      Algebraic structure built from additive commutative monoid data and
+      multiplicative monoid data on the same intended carrier.
+
+  - id: struct:commutative-semiring
+    name: CommutativeSemiring
+    kind: structure
+    category: algebra
+    constructor: '\mathsf{CommutativeSemiring}'
+    arguments:
+      - name: S
+        role: semiring
+    carrier_argument: null
+    structural_arguments:
+      - S
+    surface_forms:
+      - commutative semiring
+    description: >
+      Algebraic structure built from a semiring whose multiplication is
+      intended to be commutative.
+
+  - id: struct:ring
+    name: Ring
+    kind: structure
+    category: algebra
+    constructor: '\mathsf{Ring}'
+    arguments:
+      - name: A
+        role: additive_abelian_group
+      - name: M
+        role: multiplicative_monoid
+    carrier_argument: null
+    structural_arguments:
+      - A
+      - M
+    surface_forms:
+      - ring
+    description: >
+      Algebraic structure built from additive abelian group data and
+      multiplicative monoid data on the same intended carrier.
+
+  - id: struct:commutative-ring
+    name: CommutativeRing
+    kind: structure
+    category: algebra
+    constructor: '\mathsf{CommutativeRing}'
+    arguments:
+      - name: R
+        role: ring
+    carrier_argument: null
+    structural_arguments:
+      - R
+    surface_forms:
+      - commutative ring
+    description: >
+      Algebraic structure built from a ring whose multiplication is intended
+      to be commutative.
+
+  - id: struct:field
+    name: Field
+    kind: structure
+    category: algebra
+    constructor: '\mathsf{Field}'
+    arguments:
+      - name: R
+        role: commutative_ring
+    carrier_argument: null
+    structural_arguments:
+      - R
+    surface_forms:
+      - field
+    description: >
+      Algebraic structure built from a commutative ring whose nonzero elements
+      are intended to form a multiplicative group.
+
+  - id: struct:ordered-field
+    name: OrderedField
+    kind: structure
+    category: algebra
+    constructor: '\mathsf{OrderedField}'
+    arguments:
+      - name: F
+        role: field
+      - name: le
+        role: order_relation
+        surface: '\leq'
+    carrier_argument: null
+    structural_arguments:
+      - F
+      - le
+    surface_forms:
+      - ordered field
+    description: >
+      Algebraic and order structure built from a field and an order relation
+      intended to be compatible with the field operations.
+
+  - id: struct:complete-ordered-field
+    name: CompleteOrderedField
+    kind: structure
+    category: algebra
+    constructor: '\mathsf{CompleteOrderedField}'
+    arguments:
+      - name: F
+        role: ordered_field
+    carrier_argument: null
+    structural_arguments:
+      - F
+    surface_forms:
+      - complete ordered field
+    description: >
+      Algebraic and order structure built from an ordered field intended to
+      satisfy the least-upper-bound completeness property.
