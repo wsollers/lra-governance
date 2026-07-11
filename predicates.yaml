@@ -227,6 +227,7 @@ predicates:
     ambient_argument: X
     polymorphic: true
     surface_forms:
+      - CauchySequence
       - is cauchy
       - cauchy condition
     description: >
@@ -1362,6 +1363,7 @@ predicates:
     returns: truth_value
     ambient_argument: P
     surface_forms:
+      - OrderComplete
       - is order complete
       - order complete
     description: >
@@ -5842,3 +5844,2146 @@ predicates:
       - truth function of formula
     description: >
       The truth function f is represented by the formula phi.
+
+  - id: pred:associates
+    name: Associates
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - Associates
+    description: >
+      Volume II predicate or assertion named Associates.
+
+  - id: pred:between
+    name: Between
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - Between
+    description: >
+      Volume II predicate or assertion named Between.
+
+  - id: pred:bounds-by-absolute-value
+    name: BoundsByAbsoluteValue
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - BoundsByAbsoluteValue
+    description: >
+      Volume II predicate or assertion named BoundsByAbsoluteValue.
+
+  - id: pred:bracket-independent
+    name: BracketIndependent
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - BracketIndependent
+    description: >
+      Volume II predicate or assertion named BracketIndependent.
+
+  - id: pred:cancellative
+    name: Cancellative
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - Cancellative
+    description: >
+      Volume II predicate or assertion named Cancellative.
+
+  - id: pred:characterizes-real-numbers
+    name: CharacterizesRealNumbers
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - CharacterizesRealNumbers
+    description: >
+      Volume II predicate or assertion named CharacterizesRealNumbers.
+
+  - id: pred:closed
+    name: Closed
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - Closed
+    description: >
+      Volume II predicate or assertion named Closed.
+
+  - id: pred:closed-segment-convex
+    name: ClosedSegmentConvex
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - ClosedSegmentConvex
+    description: >
+      Volume II predicate or assertion named ClosedSegmentConvex.
+
+  - id: pred:distinct
+    name: Distinct
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - Distinct
+    description: >
+      Volume II predicate or assertion named Distinct.
+
+  - id: pred:divides
+    name: Divides
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - Divides
+    description: >
+      Volume II predicate or assertion named Divides.
+
+  - id: pred:divides-zero
+    name: DividesZero
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - DividesZero
+    description: >
+      Volume II predicate or assertion named DividesZero.
+
+  - id: pred:divisibility-closed-under-addition
+    name: DivisibilityClosedUnderAddition
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - DivisibilityClosedUnderAddition
+    description: >
+      Volume II predicate or assertion named DivisibilityClosedUnderAddition.
+
+  - id: pred:divisibility-closed-under-linear-combinations
+    name: DivisibilityClosedUnderLinearCombinations
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - DivisibilityClosedUnderLinearCombinations
+    description: >
+      Volume II predicate or assertion named DivisibilityClosedUnderLinearCombinations.
+
+  - id: pred:divisibility-invariant-under-negated-dividend
+    name: DivisibilityInvariantUnderNegatedDividend
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - DivisibilityInvariantUnderNegatedDividend
+    description: >
+      Volume II predicate or assertion named DivisibilityInvariantUnderNegatedDividend.
+
+  - id: pred:divisibility-invariant-under-negated-divisor
+    name: DivisibilityInvariantUnderNegatedDivisor
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - DivisibilityInvariantUnderNegatedDivisor
+    description: >
+      Volume II predicate or assertion named DivisibilityInvariantUnderNegatedDivisor.
+
+  - id: pred:divisibility-invariant-under-negation
+    name: DivisibilityInvariantUnderNegation
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - DivisibilityInvariantUnderNegation
+    description: >
+      Volume II predicate or assertion named DivisibilityInvariantUnderNegation.
+
+  - id: pred:element-of
+    name: ElementOf
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - ElementOf
+    description: >
+      Volume II predicate or assertion named ElementOf.
+
+  - id: pred:equality
+    name: Equality
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - Equality
+    description: >
+      Volume II predicate or assertion named Equality.
+
+  - id: pred:equivalent
+    name: Equivalent
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - Equivalent
+    description: >
+      Volume II predicate or assertion named Equivalent.
+
+  - id: pred:even-under-negation
+    name: EvenUnderNegation
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - EvenUnderNegation
+    description: >
+      Volume II predicate or assertion named EvenUnderNegation.
+
+  - id: pred:exactly-one
+    name: ExactlyOne
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - ExactlyOne
+    description: >
+      Volume II predicate or assertion named ExactlyOne.
+
+  - id: pred:extended-leq
+    name: ExtendedLeq
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - ExtendedLeq
+    description: >
+      Volume II predicate or assertion named ExtendedLeq.
+
+  - id: pred:extends
+    name: Extends
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - Extends
+    description: >
+      Volume II predicate or assertion named Extends.
+
+  - id: pred:finite
+    name: Finite
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - Finite
+    description: >
+      Volume II predicate or assertion named Finite.
+
+  - id: pred:finite-leq
+    name: FiniteLeq
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - FiniteLeq
+    description: >
+      Volume II predicate or assertion named FiniteLeq.
+
+  - id: pred:formal-difference-equivalent
+    name: FormalDifferenceEquivalent
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - FormalDifferenceEquivalent
+    description: >
+      Volume II predicate or assertion named FormalDifferenceEquivalent.
+
+  - id: pred:fraction-comparison
+    name: FractionComparison
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - FractionComparison
+    description: >
+      Volume II predicate or assertion named FractionComparison.
+
+  - id: pred:fraction-equivalent
+    name: FractionEquivalent
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - FractionEquivalent
+    description: >
+      Volume II predicate or assertion named FractionEquivalent.
+
+  - id: pred:has-inverses
+    name: HasInverses
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - HasInverses
+    description: >
+      Volume II predicate or assertion named HasInverses.
+
+  - id: pred:has-nonnegative-square-root
+    name: HasNonnegativeSquareRoot
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - HasNonnegativeSquareRoot
+    description: >
+      Volume II predicate or assertion named HasNonnegativeSquareRoot.
+
+  - id: pred:indiscernible
+    name: Indiscernible
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - Indiscernible
+    description: >
+      Volume II predicate or assertion named Indiscernible.
+
+  - id: pred:induction-from-base
+    name: InductionFromBase
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - InductionFromBase
+    description: >
+      Volume II predicate or assertion named InductionFromBase.
+
+  - id: pred:integer-canonical-trichotomy
+    name: IntegerCanonicalTrichotomy
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - IntegerCanonicalTrichotomy
+    description: >
+      Volume II predicate or assertion named IntegerCanonicalTrichotomy.
+
+  - id: pred:irrational
+    name: Irrational
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - Irrational
+    description: >
+      Volume II predicate or assertion named Irrational.
+
+  - id: pred:left-cancellative
+    name: LeftCancellative
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - LeftCancellative
+    description: >
+      Volume II predicate or assertion named LeftCancellative.
+
+  - id: pred:left-cancellative-on-nonzero
+    name: LeftCancellativeOnNonzero
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - LeftCancellativeOnNonzero
+    description: >
+      Volume II predicate or assertion named LeftCancellativeOnNonzero.
+
+  - id: pred:left-monotone
+    name: LeftMonotone
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - LeftMonotone
+    description: >
+      Volume II predicate or assertion named LeftMonotone.
+
+  - id: pred:left-negation-distributes-over-product
+    name: LeftNegationDistributesOverProduct
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - LeftNegationDistributesOverProduct
+    description: >
+      Volume II predicate or assertion named LeftNegationDistributesOverProduct.
+
+  - id: pred:left-order-reflecting
+    name: LeftOrderReflecting
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - LeftOrderReflecting
+    description: >
+      Volume II predicate or assertion named LeftOrderReflecting.
+
+  - id: pred:left-representative-independent
+    name: LeftRepresentativeIndependent
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - LeftRepresentativeIndependent
+    description: >
+      Volume II predicate or assertion named LeftRepresentativeIndependent.
+
+  - id: pred:left-solvable
+    name: LeftSolvable
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - LeftSolvable
+    description: >
+      Volume II predicate or assertion named LeftSolvable.
+
+  - id: pred:multiplicative
+    name: Multiplicative
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - Multiplicative
+    description: >
+      Volume II predicate or assertion named Multiplicative.
+
+  - id: pred:negation-distributes-over-product
+    name: NegationDistributesOverProduct
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - NegationDistributesOverProduct
+    description: >
+      Volume II predicate or assertion named NegationDistributesOverProduct.
+
+  - id: pred:negative-one-acts-by-negation
+    name: NegativeOneActsByNegation
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - NegativeOneActsByNegation
+    description: >
+      Volume II predicate or assertion named NegativeOneActsByNegation.
+
+  - id: pred:nonnegative
+    name: Nonnegative
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - Nonnegative
+    description: >
+      Volume II predicate or assertion named Nonnegative.
+
+  - id: pred:nonnegative-square-root
+    name: NonnegativeSquareRoot
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - NonnegativeSquareRoot
+    description: >
+      Volume II predicate or assertion named NonnegativeSquareRoot.
+
+  - id: pred:nonnegative-value
+    name: NonnegativeValue
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - NonnegativeValue
+    description: >
+      Volume II predicate or assertion named NonnegativeValue.
+
+  - id: pred:no-nonzero-zero-divisors
+    name: NoNonzeroZeroDivisors
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - NoNonzeroZeroDivisors
+    description: >
+      Volume II predicate or assertion named NoNonzeroZeroDivisors.
+
+  - id: pred:nonzero-carrier
+    name: NonzeroCarrier
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - NonzeroCarrier
+    description: >
+      Volume II predicate or assertion named NonzeroCarrier.
+
+  - id: pred:not-well-ordered
+    name: NotWellOrdered
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - NotWellOrdered
+    description: >
+      Volume II predicate or assertion named NotWellOrdered.
+
+  - id: pred:no-zero-divisors
+    name: NoZeroDivisors
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - NoZeroDivisors
+    description: >
+      Volume II predicate or assertion named NoZeroDivisors.
+
+  - id: pred:one-sided-rational-approximation
+    name: OneSidedRationalApproximation
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - OneSidedRationalApproximation
+    description: >
+      Volume II predicate or assertion named OneSidedRationalApproximation.
+
+  - id: pred:order-compatible
+    name: OrderCompatible
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - OrderCompatible
+    description: >
+      Volume II predicate or assertion named OrderCompatible.
+
+  - id: pred:order-preserving-left-addition
+    name: OrderPreservingLeftAddition
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - OrderPreservingLeftAddition
+    description: >
+      Volume II predicate or assertion named OrderPreservingLeftAddition.
+
+  - id: pred:order-preserving-right-addition
+    name: OrderPreservingRightAddition
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - OrderPreservingRightAddition
+    description: >
+      Volume II predicate or assertion named OrderPreservingRightAddition.
+
+  - id: pred:permutation-independent
+    name: PermutationIndependent
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - PermutationIndependent
+    description: >
+      Volume II predicate or assertion named PermutationIndependent.
+
+  - id: pred:positive
+    name: Positive
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - Positive
+    description: >
+      Volume II predicate or assertion named Positive.
+
+  - id: pred:positive-cone-multiplicatively-closed
+    name: PositiveConeMultiplicativelyClosed
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - PositiveConeMultiplicativelyClosed
+    description: >
+      Volume II predicate or assertion named PositiveConeMultiplicativelyClosed.
+
+  - id: pred:preserves-one
+    name: PreservesOne
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - PreservesOne
+    description: >
+      Volume II predicate or assertion named PreservesOne.
+
+  - id: pred:preserves-zero
+    name: PreservesZero
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - PreservesZero
+    description: >
+      Volume II predicate or assertion named PreservesZero.
+
+  - id: pred:product-of-negatives-law
+    name: ProductOfNegativesLaw
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - ProductOfNegativesLaw
+    description: >
+      Volume II predicate or assertion named ProductOfNegativesLaw.
+
+  - id: pred:quotient-equality-criterion
+    name: QuotientEqualityCriterion
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - QuotientEqualityCriterion
+    description: >
+      Volume II predicate or assertion named QuotientEqualityCriterion.
+
+  - id: pred:refines
+    name: Refines
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - Refines
+    description: >
+      Volume II predicate or assertion named Refines.
+
+  - id: pred:right-cancellative
+    name: RightCancellative
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - RightCancellative
+    description: >
+      Volume II predicate or assertion named RightCancellative.
+
+  - id: pred:right-monotone
+    name: RightMonotone
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - RightMonotone
+    description: >
+      Volume II predicate or assertion named RightMonotone.
+
+  - id: pred:right-negation-distributes-over-product
+    name: RightNegationDistributesOverProduct
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - RightNegationDistributesOverProduct
+    description: >
+      Volume II predicate or assertion named RightNegationDistributesOverProduct.
+
+  - id: pred:right-order-reflecting
+    name: RightOrderReflecting
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - RightOrderReflecting
+    description: >
+      Volume II predicate or assertion named RightOrderReflecting.
+
+  - id: pred:right-representative-independent
+    name: RightRepresentativeIndependent
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - RightRepresentativeIndependent
+    description: >
+      Volume II predicate or assertion named RightRepresentativeIndependent.
+
+  - id: pred:right-solvable
+    name: RightSolvable
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - RightSolvable
+    description: >
+      Volume II predicate or assertion named RightSolvable.
+
+  - id: pred:same-square
+    name: SameSquare
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - SameSquare
+    description: >
+      Volume II predicate or assertion named SameSquare.
+
+  - id: pred:sign-decomposition
+    name: SignDecomposition
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - SignDecomposition
+    description: >
+      Volume II predicate or assertion named SignDecomposition.
+
+  - id: pred:sign-trichotomy
+    name: SignTrichotomy
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - SignTrichotomy
+    description: >
+      Volume II predicate or assertion named SignTrichotomy.
+
+  - id: pred:solvable
+    name: Solvable
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - Solvable
+    description: >
+      Volume II predicate or assertion named Solvable.
+
+  - id: pred:strictly-monotone
+    name: StrictlyMonotone
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - StrictlyMonotone
+    description: >
+      Volume II predicate or assertion named StrictlyMonotone.
+
+  - id: pred:strict-total-order
+    name: StrictTotalOrder
+    kind: predicate
+    category: order
+    arguments:
+      - name: R
+        role: relation
+      - name: A
+        role: carrier
+    returns: truth_value
+    surface_forms:
+      - StrictTotalOrder
+      - strict total order
+    description: >
+      The relation R is a strict total order on A; exact-name predicate form
+      used by Volume II.
+
+  - id: pred:total
+    name: Total
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - Total
+    description: >
+      Volume II predicate or assertion named Total.
+
+  - id: pred:triangle-inequality
+    name: TriangleInequality
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - TriangleInequality
+    description: >
+      Volume II predicate or assertion named TriangleInequality.
+
+  - id: pred:trichotomous
+    name: Trichotomous
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - Trichotomous
+    description: >
+      Volume II predicate or assertion named Trichotomous.
+
+  - id: pred:unique
+    name: Unique
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - Unique
+    description: >
+      Volume II predicate or assertion named Unique.
+
+  - id: pred:unique-inverse
+    name: UniqueInverse
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - UniqueInverse
+    description: >
+      Volume II predicate or assertion named UniqueInverse.
+
+  - id: pred:unique-limit
+    name: UniqueLimit
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - UniqueLimit
+    description: >
+      Volume II predicate or assertion named UniqueLimit.
+
+  - id: pred:unique-nonnegative-square-root
+    name: UniqueNonnegativeSquareRoot
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - UniqueNonnegativeSquareRoot
+    description: >
+      Volume II predicate or assertion named UniqueNonnegativeSquareRoot.
+
+  - id: pred:unit
+    name: Unit
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - Unit
+    description: >
+      Volume II predicate or assertion named Unit.
+
+  - id: pred:units-divide-all
+    name: UnitsDivideAll
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - UnitsDivideAll
+    description: >
+      Volume II predicate or assertion named UnitsDivideAll.
+
+  - id: pred:units-exactly
+    name: UnitsExactly
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - UnitsExactly
+    description: >
+      Volume II predicate or assertion named UnitsExactly.
+
+  - id: pred:well-defined
+    name: WellDefined
+    kind: predicate
+    category: well_definedness
+    arguments:
+      - name: X
+        role: construction_or_map
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - WellDefined
+    description: >
+      The construction, map, operation, or induced object X is well-defined in
+      context C; exact-name generic form used when a more specific
+      well-definedness predicate is not intended.
+
+  - id: pred:well-defined-predicate
+    name: WellDefinedPredicate
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - WellDefinedPredicate
+    description: >
+      Volume II predicate or assertion named WellDefinedPredicate.
+
+  - id: pred:well-order
+    name: WellOrder
+    kind: predicate
+    category: order
+    arguments:
+      - name: R
+        role: relation
+      - name: A
+        role: carrier
+    returns: truth_value
+    surface_forms:
+      - WellOrder
+      - well-order
+    description: >
+      The relation R well-orders A; exact-name predicate form used by Volume II.
+
+  - id: pred:zero-criterion
+    name: ZeroCriterion
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - ZeroCriterion
+    description: >
+      Volume II predicate or assertion named ZeroCriterion.
+
+  - id: pred:zero-divisor
+    name: ZeroDivisor
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - ZeroDivisor
+    description: >
+      Volume II predicate or assertion named ZeroDivisor.
+
+  - id: pred:zero-kernel
+    name: ZeroKernel
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - ZeroKernel
+    description: >
+      Volume II predicate or assertion named ZeroKernel.
+
+  - id: pred:absorbing-element
+    name: AbsorbingElement
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - AbsorbingElement
+    description: >
+      Volume II predicate or assertion named AbsorbingElement.
+
+  - id: pred:bezout-identity
+    name: BezoutIdentity
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - BezoutIdentity
+    description: >
+      Volume II predicate or assertion named BezoutIdentity.
+
+  - id: pred:bottom
+    name: Bottom
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - Bottom
+    description: >
+      Volume II predicate or assertion named Bottom.
+
+  - id: pred:canonical-embedding
+    name: CanonicalEmbedding
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - CanonicalEmbedding
+    description: >
+      Volume II predicate or assertion named CanonicalEmbedding.
+
+  - id: pred:compatible-embedding-chain
+    name: CompatibleEmbeddingChain
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - CompatibleEmbeddingChain
+    description: >
+      Volume II predicate or assertion named CompatibleEmbeddingChain.
+
+  - id: pred:division-algorithm
+    name: DivisionAlgorithm
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - DivisionAlgorithm
+    description: >
+      Volume II predicate or assertion named DivisionAlgorithm.
+
+  - id: pred:ext-interval
+    name: ExtInterval
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - ExtInterval
+    description: >
+      Volume II predicate or assertion named ExtInterval.
+
+  - id: pred:general-recursive-function
+    name: GeneralRecursiveFunction
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - GeneralRecursiveFunction
+    description: >
+      Volume II predicate or assertion named GeneralRecursiveFunction.
+
+  - id: pred:greatest-common-divisor
+    name: GreatestCommonDivisor
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - GreatestCommonDivisor
+    description: >
+      Volume II predicate or assertion named GreatestCommonDivisor.
+
+  - id: pred:homomorphism
+    name: Homomorphism
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - Homomorphism
+    description: >
+      Volume II predicate or assertion named Homomorphism.
+
+  - id: pred:identity-homomorphism
+    name: IdentityHomomorphism
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - IdentityHomomorphism
+    description: >
+      Volume II predicate or assertion named IdentityHomomorphism.
+
+  - id: pred:image-equals-nonnegative-cone
+    name: ImageEqualsNonnegativeCone
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - ImageEqualsNonnegativeCone
+    description: >
+      Volume II predicate or assertion named ImageEqualsNonnegativeCone.
+
+  - id: pred:injective-homomorphism
+    name: InjectiveHomomorphism
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - InjectiveHomomorphism
+    description: >
+      Volume II predicate or assertion named InjectiveHomomorphism.
+
+  - id: pred:is-integral-domain
+    name: IsIntegralDomain
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - IsIntegralDomain
+    description: >
+      Volume II predicate or assertion named IsIntegralDomain.
+
+  - id: pred:isomorphism
+    name: Isomorphism
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - Isomorphism
+    description: >
+      Volume II predicate or assertion named Isomorphism.
+
+  - id: pred:iterator-function
+    name: IteratorFunction
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - IteratorFunction
+    description: >
+      Volume II predicate or assertion named IteratorFunction.
+
+  - id: pred:iterator-generated-function
+    name: IteratorGeneratedFunction
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - IteratorGeneratedFunction
+    description: >
+      Volume II predicate or assertion named IteratorGeneratedFunction.
+
+  - id: pred:left-absorbing-element
+    name: LeftAbsorbingElement
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - LeftAbsorbingElement
+    description: >
+      Volume II predicate or assertion named LeftAbsorbingElement.
+
+  - id: pred:monotone-operation
+    name: MonotoneOperation
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - MonotoneOperation
+    description: >
+      Volume II predicate or assertion named MonotoneOperation.
+
+  - id: pred:negative-factor-reverses-order
+    name: NegativeFactorReversesOrder
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - NegativeFactorReversesOrder
+    description: >
+      Volume II predicate or assertion named NegativeFactorReversesOrder.
+
+  - id: pred:one-element
+    name: OneElement
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - OneElement
+    description: >
+      Volume II predicate or assertion named OneElement.
+
+  - id: pred:order-reflecting-operation
+    name: OrderReflectingOperation
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - OrderReflectingOperation
+    description: >
+      Volume II predicate or assertion named OrderReflectingOperation.
+
+  - id: pred:positive-factor-preserves-order
+    name: PositiveFactorPreservesOrder
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - PositiveFactorPreservesOrder
+    description: >
+      Volume II predicate or assertion named PositiveFactorPreservesOrder.
+
+  - id: pred:positive-left-factor-preserves-order
+    name: PositiveLeftFactorPreservesOrder
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - PositiveLeftFactorPreservesOrder
+    description: >
+      Volume II predicate or assertion named PositiveLeftFactorPreservesOrder.
+
+  - id: pred:positive-right-factor-preserves-order
+    name: PositiveRightFactorPreservesOrder
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - PositiveRightFactorPreservesOrder
+    description: >
+      Volume II predicate or assertion named PositiveRightFactorPreservesOrder.
+
+  - id: pred:right-absorbing-element
+    name: RightAbsorbingElement
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - RightAbsorbingElement
+    description: >
+      Volume II predicate or assertion named RightAbsorbingElement.
+
+  - id: pred:strong-induction
+    name: StrongInduction
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - StrongInduction
+    description: >
+      Volume II predicate or assertion named StrongInduction.
+
+  - id: pred:strong-induction-principle
+    name: StrongInductionPrinciple
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - StrongInductionPrinciple
+    description: >
+      Volume II predicate or assertion named StrongInductionPrinciple.
+
+  - id: pred:structure-embedding
+    name: StructureEmbedding
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - StructureEmbedding
+    description: >
+      Volume II predicate or assertion named StructureEmbedding.
+
+  - id: pred:structure-preserving-map
+    name: StructurePreservingMap
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - StructurePreservingMap
+    description: >
+      Volume II predicate or assertion named StructurePreservingMap.
+
+  - id: pred:top
+    name: Top
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - Top
+    description: >
+      Volume II predicate or assertion named Top.
+
+  - id: pred:unique-order-isomorphism
+    name: UniqueOrderIsomorphism
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - UniqueOrderIsomorphism
+    description: >
+      Volume II predicate or assertion named UniqueOrderIsomorphism.
+
+  - id: pred:well-ordering-principle
+    name: WellOrderingPrinciple
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - WellOrderingPrinciple
+    description: >
+      Volume II predicate or assertion named WellOrderingPrinciple.
+
+  - id: pred:zero-element
+    name: ZeroElement
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - ZeroElement
+    description: >
+      Volume II predicate or assertion named ZeroElement.
+
+  - id: pred:zero-multiplication-collapses-order
+    name: ZeroMultiplicationCollapsesOrder
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - ZeroMultiplicationCollapsesOrder
+    description: >
+      Volume II predicate or assertion named ZeroMultiplicationCollapsesOrder.

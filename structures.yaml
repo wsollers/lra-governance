@@ -2569,3 +2569,547 @@ structures:
     description: >
       Reduction data translating an expression over one basis into an
       expression over another basis.
+
+  - id: struct:absolute-value
+    name: AbsoluteValue
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{AbsoluteValue}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - AbsoluteValue
+    description: >
+      Volume II structure or data object named AbsoluteValue.
+
+  - id: struct:binary-operation
+    name: BinaryOperation
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{BinaryOperation}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - BinaryOperation
+    description: >
+      Volume II structure or data object named BinaryOperation.
+
+  - id: struct:dedekind-cut
+    name: DedekindCut
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{DedekindCut}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - DedekindCut
+    description: >
+      Volume II structure or data object named DedekindCut.
+
+  - id: struct:derived-operation
+    name: DerivedOperation
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{DerivedOperation}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - DerivedOperation
+    description: >
+      Volume II structure or data object named DerivedOperation.
+
+  - id: struct:equivalence-class-notation
+    name: EquivalenceClassNotation
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{EquivalenceClassNotation}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - EquivalenceClassNotation
+    description: >
+      Volume II structure or data object named EquivalenceClassNotation.
+
+  - id: struct:extended-real
+    name: ExtendedReal
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{ExtendedReal}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - ExtendedReal
+    description: >
+      Volume II structure or data object named ExtendedReal.
+
+  - id: struct:extended-real-interval
+    name: ExtendedRealInterval
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{ExtendedRealInterval}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - ExtendedRealInterval
+    description: >
+      Volume II structure or data object named ExtendedRealInterval.
+
+  - id: struct:field-laws
+    name: FieldLaws
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{FieldLaws}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - FieldLaws
+    description: >
+      Volume II structure or data object named FieldLaws.
+
+  - id: struct:induced-binary-operation
+    name: InducedBinaryOperation
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{InducedBinaryOperation}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - InducedBinaryOperation
+    description: >
+      Volume II structure or data object named InducedBinaryOperation.
+
+  - id: struct:induced-unary-operation
+    name: InducedUnaryOperation
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{InducedUnaryOperation}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - InducedUnaryOperation
+    description: >
+      Volume II structure or data object named InducedUnaryOperation.
+
+  - id: struct:induction-principle
+    name: InductionPrinciple
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{InductionPrinciple}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - InductionPrinciple
+    description: >
+      Volume II structure or data object named InductionPrinciple.
+
+  - id: struct:integer-prepair
+    name: IntegerPrepair
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{IntegerPrepair}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - IntegerPrepair
+    description: >
+      Volume II structure or data object named IntegerPrepair.
+
+  - id: struct:integral-domain
+    name: IntegralDomain
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{IntegralDomain}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - IntegralDomain
+    description: >
+      Volume II structure or data object named IntegralDomain.
+
+  - id: struct:iterator-data
+    name: IteratorData
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{IteratorData}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - IteratorData
+    description: >
+      Volume II structure or data object named IteratorData.
+
+  - id: struct:iterator-relation
+    name: IteratorRelation
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{IteratorRelation}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - IteratorRelation
+    description: >
+      Volume II structure or data object named IteratorRelation.
+
+  - id: struct:minimal-relation
+    name: MinimalRelation
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{MinimalRelation}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - MinimalRelation
+    description: >
+      Volume II structure or data object named MinimalRelation.
+
+  - id: struct:non-strict-order-from-strict-order
+    name: NonStrictOrderFromStrictOrder
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{NonStrictOrderFromStrictOrder}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - NonStrictOrderFromStrictOrder
+    description: >
+      Volume II structure or data object named NonStrictOrderFromStrictOrder.
+
+  - id: struct:null-sequence
+    name: NullSequence
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{NullSequence}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - NullSequence
+    description: >
+      Volume II structure or data object named NullSequence.
+
+  - id: struct:number-line
+    name: NumberLine
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{NumberLine}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - NumberLine
+    description: >
+      Volume II structure or data object named NumberLine.
+
+  - id: struct:number-system-embedding
+    name: NumberSystemEmbedding
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{NumberSystemEmbedding}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - NumberSystemEmbedding
+    description: >
+      Volume II structure or data object named NumberSystemEmbedding.
+
+  - id: struct:ordered-field-laws
+    name: OrderedFieldLaws
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{OrderedFieldLaws}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - OrderedFieldLaws
+    description: >
+      Volume II structure or data object named OrderedFieldLaws.
+
+  - id: struct:peano-system
+    name: PeanoSystem
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{PeanoSystem}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - PeanoSystem
+    description: >
+      Volume II structure or data object named PeanoSystem.
+
+  - id: struct:positive-cone
+    name: PositiveCone
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{PositiveCone}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - PositiveCone
+    description: >
+      Volume II structure or data object named PositiveCone.
+
+  - id: struct:prefraction
+    name: Prefraction
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{Prefraction}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - Prefraction
+    description: >
+      Volume II structure or data object named Prefraction.
+
+  - id: struct:prefraction-set
+    name: PrefractionSet
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{PrefractionSet}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - PrefractionSet
+    description: >
+      Volume II structure or data object named PrefractionSet.
+
+  - id: struct:pre-integer-set
+    name: PreIntegerSet
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{PreIntegerSet}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - PreIntegerSet
+    description: >
+      Volume II structure or data object named PreIntegerSet.
+
+  - id: struct:presburger-arithmetic
+    name: PresburgerArithmetic
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{PresburgerArithmetic}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - PresburgerArithmetic
+    description: >
+      Volume II structure or data object named PresburgerArithmetic.
+
+  - id: struct:presburger-signature
+    name: PresburgerSignature
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{PresburgerSignature}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - PresburgerSignature
+    description: >
+      Volume II structure or data object named PresburgerSignature.
+
+  - id: struct:real
+    name: Real
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{Real}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - Real
+    description: >
+      Volume II structure or data object named Real.
+
+  - id: struct:relation
+    name: Relation
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{Relation}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - Relation
+    description: >
+      Volume II structure or data object named Relation.
+
+  - id: struct:stage-dependent-step-rule
+    name: StageDependentStepRule
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{StageDependentStepRule}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - StageDependentStepRule
+    description: >
+      Volume II structure or data object named StageDependentStepRule.
+
+  - id: struct:standard-real-interval
+    name: StandardRealInterval
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{StandardRealInterval}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - StandardRealInterval
+    description: >
+      Volume II structure or data object named StandardRealInterval.
+
+  - id: struct:strict-order-from-positive-cone
+    name: StrictOrderFromPositiveCone
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{StrictOrderFromPositiveCone}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - StrictOrderFromPositiveCone
+    description: >
+      Volume II structure or data object named StrictOrderFromPositiveCone.
+
+  - id: struct:unary-operation
+    name: UnaryOperation
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{UnaryOperation}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - UnaryOperation
+    description: >
+      Volume II structure or data object named UnaryOperation.

@@ -202,3 +202,23 @@ notation:
     symbol: '\Rightarrow'
     category: connective
     description: Implication connective.
+  - id: not:domain-operator-uppercase
+    symbol: '\operatorname{Dom}'
+    category: operator_notation
+    description: Domain notation for a partial operation or relation.
+  - id: not:image-operator
+    symbol: '\operatorname{Image}'
+    category: operator_notation
+    description: Operator notation for Image.
+  - id: not:pow-operator
+    symbol: '\operatorname{pow}'
+    category: operator_notation
+    description: Operator notation for pow.
+  - id: not:pre-operator
+    symbol: '\operatorname{Pre}'
+    category: operator_notation
+    description: Operator notation for Pre.
+  - id: not:preq-operator
+    symbol: '\operatorname{PreQ}'
+    category: operator_notation
+    description: Operator notation for PreQ.

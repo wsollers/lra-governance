@@ -9,7 +9,7 @@ from pathlib import Path
 from core.reporting import print_report, write_json_report
 from core.validator_runner import default_file_inventory, run_validator
 from core.volume import chapter_roots, resolve_volume
-from validators import block_discipline, book_toc, caption_hygiene, capstones, chapter_router, dedication_page, dependency_blocks, dependency_graphs, figure_fragments, formal_decoration, formal_reading_required, frontmatter_standard, input_resolution, interpretation_blocks, labels, latex_integrity, math_boxes, notes_structure, pdf_string_headings, print_edition_routing, proof_coverage, proof_file_contract, proof_layout, proof_order, proof_routing, proof_stub_state, reference_voice, structural_chrome, structural_positions, unicode_tex, volume_shape
+from validators import block_discipline, book_toc, caption_hygiene, capstones, chapter_router, dedication_page, dependency_blocks, dependency_graphs, figure_fragments, formal_decoration, formal_reading_required, frontmatter_standard, input_resolution, interpretation_blocks, labels, latex_integrity, math_boxes, notes_structure, operator_metadata, pdf_string_headings, print_edition_routing, proof_coverage, proof_file_contract, proof_layout, proof_order, proof_routing, proof_stub_state, reference_voice, structural_chrome, structural_positions, unicode_tex, volume_shape
 
 
 VALIDATORS = [
@@ -36,6 +36,7 @@ VALIDATORS = [
     ("formal_reading_required", formal_reading_required),
     ("reference_voice", reference_voice),
     ("labels", labels),
+    ("operator_metadata", operator_metadata),
     ("capstones", capstones),
     ("latex_integrity", latex_integrity),
     ("unicode_tex", unicode_tex),
