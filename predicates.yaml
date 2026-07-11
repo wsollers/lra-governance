@@ -121,6 +121,97 @@ predicates:
       The object U_dot is the neighborhood U of c in X after removing the
       center c.
 
+  - id: pred:is-topology
+    name: IsTopology
+    kind: predicate
+    category: topology
+    arguments:
+      - name: tau
+        role: topology
+        surface: '\tau'
+      - name: X
+        role: carrier
+    returns: truth_value
+    ambient_argument: X
+    surface_forms:
+      - Topology
+      - is a topology
+      - topology axioms
+    description: >
+      The collection tau is a topology on the carrier set X.
+
+  - id: pred:is-metric
+    name: IsMetric
+    kind: predicate
+    category: topology
+    arguments:
+      - name: d
+        role: metric
+      - name: X
+        role: carrier
+    returns: truth_value
+    ambient_argument: X
+    surface_forms:
+      - Metric
+      - is a metric
+      - metric axioms
+    description: >
+      The function d is a metric on the carrier set X.
+
+  - id: pred:is-pseudo-metric
+    name: IsPseudoMetric
+    kind: predicate
+    category: topology
+    arguments:
+      - name: d
+        role: pseudo_metric
+      - name: X
+        role: carrier
+    returns: truth_value
+    ambient_argument: X
+    surface_forms:
+      - PseudoMetric
+      - is a pseudo-metric
+      - pseudo-metric axioms
+    description: >
+      The function d is a pseudo-metric on the carrier set X.
+
+  - id: pred:is-norm
+    name: IsNorm
+    kind: predicate
+    category: topology
+    arguments:
+      - name: norm
+        role: norm
+        surface: '\|\cdot\|'
+      - name: V
+        role: vector_space
+    returns: truth_value
+    ambient_argument: V
+    surface_forms:
+      - Norm
+      - is a norm
+      - norm axioms
+    description: >
+      The function norm is a norm on the ambient vector space V.
+
+  - id: pred:is-euclidean-space
+    name: IsEuclideanSpace
+    kind: predicate
+    category: topology
+    arguments:
+      - name: E
+        role: euclidean_space_structure
+    returns: truth_value
+    ambient_argument: E
+    surface_forms:
+      - EuclideanSpace
+      - is a Euclidean space
+      - Euclidean space structure
+    description: >
+      The packaged object E satisfies the Euclidean space structure expected
+      in the ambient metric or topological context.
+
   - id: pred:is-interval
     name: IsInterval
     kind: predicate
