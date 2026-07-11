@@ -3,18 +3,13 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
+from core.formal_blocks import formal_blocks_for_file
 from core.finding import Finding, finding
-from core.tex import read_text, strip_latex_comments
+from core.tex import read_stripped_text
 from core.file_inventory import validator_files
 from formal_reading import count_quantified_binders, has_formal_reading, has_predicate_reading, standard_quantified_statement_bodies
 
 
-FORMAL_RE = re.compile(
-    r"\\begin\{(?P<env>definition|axiom|theorem|lemma|proposition|corollary)\}"
-    r"(?:\[[^\]]*\])?",
-    re.IGNORECASE,
-)
-SECTION_RE = re.compile(r"\\(?:chapter|section|subsection|subsubsection)\*?\{")
 LABEL_RE = re.compile(r"\\label\{([^}]+)\}")
 PROOF_HYPERREF_RE = re.compile(r"\\hyperref\[(?P<label>prf:[^\]]+)\]", re.IGNORECASE)
 DECORATION_BLOCK_RE = re.compile(
@@ -95,17 +90,16 @@ def validate(volume_root: Path, files) -> list[Finding]:
 
 
 def _validate_file(volume_root: Path, path: Path, findings: list[Finding]) -> None:
-    text = strip_latex_comments(read_text(path))
+    text = read_stripped_text(path)
     _check_decoration_inside_formal_blocks(volume_root, path, text, findings)
-    for begin, end_pos in _formal_blocks(text):
-        block_text = text[begin.start():end_pos]
-        labels = LABEL_RE.findall(block_text)
-        if not labels:
+    for block in formal_blocks_for_file(path):
+        block_text = block.body
+        label = block.label or _first_label(block_text)
+        if not label:
             continue
-        label = labels[0]
-        env = begin.group("env").lower()
-        line = text.count("\n", 0, begin.start()) + 1
-        decoration = text[end_pos:_next_boundary(text, end_pos)]
+        env = block.env
+        line = block.line
+        decoration = text[block.end:block.next_boundary]
         _check_proof_navigation(volume_root, path, block_text, label, env, line, findings)
         _check_source_citations(volume_root, path, decoration, label, line, findings)
         _check_expository_formal_claims(volume_root, path, decoration, label, line, findings)
@@ -118,14 +112,14 @@ def _check_decoration_inside_formal_blocks(
     text: str,
     findings: list[Finding],
 ) -> None:
-    for begin, end_pos in _formal_blocks(text):
+    for block in formal_blocks_for_file(path):
         _check_decoration_inside_span(
             volume_root,
             path,
             text,
-            begin.start(),
-            end_pos,
-            begin.group("env").lower(),
+            block.begin,
+            block.end,
+            block.env,
             findings,
         )
     for match in FORMAL_BOX_RE.finditer(text):
@@ -401,19 +395,9 @@ def _check_failure_modes_block(
             )
 
 
-def _formal_blocks(text: str):
-    for begin in FORMAL_RE.finditer(text):
-        env = begin.group("env")
-        end = re.search(rf"\\end\{{{re.escape(env)}\}}", text[begin.end():], re.IGNORECASE)
-        if end:
-            yield begin, begin.end() + end.end()
-
-
-def _next_boundary(text: str, start: int) -> int:
-    formal = FORMAL_RE.search(text, start)
-    section = SECTION_RE.search(text, start)
-    candidates = [match.start() for match in (formal, section) if match]
-    return min(candidates) if candidates else len(text)
+def _first_label(text: str) -> str:
+    match = LABEL_RE.search(text)
+    return match.group(1) if match else ""
 
 
 def _decoration_key(match) -> str:

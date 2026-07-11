@@ -1,19 +1,13 @@
 from __future__ import annotations
 
 import re
+import os
 from pathlib import Path
 
+from core.formal_blocks import formal_blocks_for_file
 from core.finding import Finding, finding
-from core.tex import read_text, strip_latex_comments
 from core.file_inventory import validator_files
 from formal_reading import find_triggers, has_formal_reading, is_marked_simple, load_concept_surface_forms
-
-
-FORMAL_RE = re.compile(
-    r"\\begin\{(?P<env>definition|axiom|theorem|lemma|proposition|corollary)\}"
-    r"(?:\[(?P<title>[^\]]*)\])?",
-    re.IGNORECASE,
-)
 
 
 def validate(volume_root: Path, files) -> list[Finding]:
@@ -25,16 +19,10 @@ def validate(volume_root: Path, files) -> list[Finding]:
 
 
 def _validate_file(volume_root: Path, path: Path, surface_forms: list[str], findings: list[Finding]) -> None:
-    text = strip_latex_comments(read_text(path))
-    blocks = list(_formal_blocks(text))
-    for index, (begin, end_pos) in enumerate(blocks):
-        next_pos = blocks[index + 1][0].start() if index + 1 < len(blocks) else len(text)
-        block_text = text[begin.start():end_pos]
-        decoration = text[end_pos:next_pos]
-        triggers = find_triggers(block_text, surface_forms)
-        line = text.count("\n", 0, begin.start()) + 1
+    for block in formal_blocks_for_file(path):
+        triggers = find_triggers(block.body, surface_forms)
         unique = sorted(set(triggers))
-        if is_marked_simple(block_text + decoration):
+        if is_marked_simple(block.body + block.decoration):
             if triggers:
                 findings.append(
                     finding(
@@ -42,27 +30,19 @@ def _validate_file(volume_root: Path, path: Path, surface_forms: list[str], find
                         f"Marked simple but invokes {unique[:4]}; logic or registered concepts mean it is not simple.",
                         path,
                         volume_root,
-                        line,
+                        block.line,
                     )
                 )
-        if not has_formal_reading(decoration):
+        if not has_formal_reading(block.decoration):
             findings.append(
                 finding(
                     "formal_reading_missing",
                     "Formal statement has no Standard quantified statement formal reading.",
                     path,
                     volume_root,
-                    line,
+                    block.line,
                 )
             )
-
-
-def _formal_blocks(text: str):
-    for begin in FORMAL_RE.finditer(text):
-        env = begin.group("env")
-        end = re.search(rf"\\end\{{{re.escape(env)}\}}", text[begin.end():], re.IGNORECASE)
-        if end:
-            yield begin, begin.end() + end.end()
 
 
 def _surface_forms(volume_root: Path) -> list[str]:
@@ -76,7 +56,11 @@ def _surface_forms(volume_root: Path) -> list[str]:
 def _candidate_canonical_dirs(volume_root: Path):
     volume_root = volume_root.resolve()
     repo_root = volume_root.parent
+    env_root = os.environ.get("LRA_GOVERNANCE_ROOT")
+    if env_root:
+        yield Path(env_root).resolve()
     yield repo_root
+    yield repo_root.parent / "lra-governance"
     yield repo_root / "canonical"
     yield repo_root / "docs" / "canonical"
     yield repo_root.parent / "Learning-Real-Analysis"

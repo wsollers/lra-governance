@@ -1,0 +1,3293 @@
+# Canonical LRA structure registry.
+# Governed by docs/governance/predicate-standards.md and
+# docs/architecture/canonical-yaml.md.
+
+structures:
+  - id: struct:ordered-set
+    name: OrderedSet
+    kind: structure
+    category: order
+    constructor: '\mathsf{OrderedSet}'
+    arguments:
+      - name: A
+        role: carrier
+      - name: le
+        role: order_relation
+        surface: '\leq'
+    carrier_argument: A
+    structural_arguments:
+      - le
+    surface_forms:
+      - ordered set
+      - ordered structure
+      - order-bearing set
+    description: >
+      Ambient structure built from a carrier set A and a binary relation le
+      used as the order relation. This constructor supplies the structure
+      passed to order predicates; separate predicates state the order axioms
+      when needed.
+
+  - id: struct:preordered-set
+    name: PreorderedSet
+    kind: structure
+    category: order
+    constructor: '\mathsf{PreorderedSet}'
+    arguments:
+      - name: A
+        role: carrier
+      - name: le
+        role: preorder_relation
+        surface: '\leq'
+    carrier_argument: A
+    structural_arguments:
+      - le
+    surface_forms:
+      - preordered set
+      - preorder
+      - preorder structure
+    description: >
+      Ambient ordered structure whose relation is intended to satisfy the
+      preorder axioms on A.
+
+  - id: struct:partially-ordered-set
+    name: PartiallyOrderedSet
+    kind: structure
+    category: order
+    constructor: '\mathsf{PartiallyOrderedSet}'
+    arguments:
+      - name: A
+        role: carrier
+      - name: le
+        role: partial_order_relation
+        surface: '\leq'
+    carrier_argument: A
+    structural_arguments:
+      - le
+    surface_forms:
+      - partially ordered set
+      - poset
+      - partial order structure
+    description: >
+      Ambient ordered structure whose relation is intended to satisfy the
+      partial order axioms on A.
+
+  - id: struct:totally-ordered-set
+    name: TotallyOrderedSet
+    kind: structure
+    category: order
+    constructor: '\mathsf{TotallyOrderedSet}'
+    arguments:
+      - name: A
+        role: carrier
+      - name: le
+        role: total_order_relation
+        surface: '\leq'
+    carrier_argument: A
+    structural_arguments:
+      - le
+    surface_forms:
+      - totally ordered set
+      - total order
+      - linear order
+    description: >
+      Ambient ordered structure whose relation is intended to satisfy the total
+      order axioms on A.
+
+  - id: struct:well-ordered-set
+    name: WellOrderedSet
+    kind: structure
+    category: order
+    constructor: '\mathsf{WellOrderedSet}'
+    arguments:
+      - name: A
+        role: carrier
+      - name: le
+        role: well_order_relation
+        surface: '\leq'
+    carrier_argument: A
+    structural_arguments:
+      - le
+    surface_forms:
+      - well-ordered set
+      - well-order
+      - well-order structure
+    description: >
+      Ambient ordered structure whose relation is intended to satisfy the
+      well-order condition on A.
+
+  - id: struct:dual-poset
+    name: DualPoset
+    kind: structure
+    category: order
+    constructor: '\mathsf{DualPoset}'
+    arguments:
+      - name: A
+        role: carrier
+      - name: ge
+        role: dual_order_relation
+        surface: '\geq'
+    carrier_argument: A
+    structural_arguments:
+      - ge
+    surface_forms:
+      - dual poset
+      - dual ordered set
+      - opposite order
+    description: >
+      Ambient ordered structure obtained by reversing the order relation on a
+      poset with carrier A.
+
+  - id: struct:lattice
+    name: Lattice
+    kind: structure
+    category: order
+    constructor: '\mathsf{Lattice}'
+    arguments:
+      - name: L
+        role: carrier
+      - name: le
+        role: order_relation
+        surface: '\leq'
+      - name: join
+        role: join_operation
+        surface: '\vee'
+      - name: meet
+        role: meet_operation
+        surface: '\wedge'
+    carrier_argument: L
+    structural_arguments:
+      - le
+      - join
+      - meet
+    surface_forms:
+      - lattice
+      - lattice structure
+    description: >
+      Ambient lattice structure on carrier L with order, join, and meet data.
+
+  - id: struct:complete-lattice
+    name: CompleteLattice
+    kind: structure
+    category: order
+    constructor: '\mathsf{CompleteLattice}'
+    arguments:
+      - name: L
+        role: carrier
+      - name: le
+        role: order_relation
+        surface: '\leq'
+      - name: join
+        role: join_operation
+        surface: '\vee'
+      - name: meet
+        role: meet_operation
+        surface: '\wedge'
+    carrier_argument: L
+    structural_arguments:
+      - le
+      - join
+      - meet
+    surface_forms:
+      - complete lattice
+      - complete lattice structure
+    description: >
+      Ambient lattice structure in which arbitrary subsets are intended to
+      have suprema and infima.
+
+  - id: struct:distributive-lattice
+    name: DistributiveLattice
+    kind: structure
+    category: order
+    constructor: '\mathsf{DistributiveLattice}'
+    arguments:
+      - name: L
+        role: carrier
+      - name: le
+        role: order_relation
+        surface: '\leq'
+      - name: join
+        role: join_operation
+        surface: '\vee'
+      - name: meet
+        role: meet_operation
+        surface: '\wedge'
+    carrier_argument: L
+    structural_arguments:
+      - le
+      - join
+      - meet
+    surface_forms:
+      - distributive lattice
+    description: >
+      Ambient lattice structure whose join and meet operations satisfy the
+      distributive laws.
+
+  - id: struct:boolean-lattice
+    name: BooleanLattice
+    kind: structure
+    category: order
+    constructor: '\mathsf{BooleanLattice}'
+    arguments:
+      - name: L
+        role: carrier
+      - name: le
+        role: order_relation
+        surface: '\leq'
+      - name: join
+        role: join_operation
+        surface: '\vee'
+      - name: meet
+        role: meet_operation
+        surface: '\wedge'
+      - name: complement
+        role: complement_operation
+      - name: bottom
+        role: least_element
+        surface: '0'
+      - name: top
+        role: greatest_element
+        surface: '1'
+    carrier_argument: L
+    structural_arguments:
+      - le
+      - join
+      - meet
+      - complement
+      - bottom
+      - top
+    surface_forms:
+      - boolean lattice
+      - complemented distributive lattice
+    description: >
+      Ambient Boolean lattice structure with order, lattice operations,
+      complement, bottom, and top.
+
+  - id: struct:function-space
+    name: FunctionSpace
+    kind: structure
+    category: function
+    constructor: '\mathsf{FunctionSpace}'
+    arguments:
+      - name: A
+        role: domain
+      - name: B
+        role: codomain
+    carrier_argument: null
+    structural_arguments:
+      - A
+      - B
+    surface_forms:
+      - function space
+      - functions from A to B
+    description: >
+      Ambient structure for functions with domain A and codomain B.
+
+  - id: struct:set-family
+    name: SetFamily
+    kind: structure
+    category: set
+    constructor: '\mathsf{SetFamily}'
+    arguments:
+      - name: F
+        role: family
+        surface: '\mathcal{F}'
+      - name: U
+        role: ambient_set
+    carrier_argument: U
+    structural_arguments:
+      - F
+    surface_forms:
+      - set family
+      - family of sets
+      - collection of sets
+    description: >
+      Ambient structure for a family of subsets of a fixed ambient set U.
+
+  - id: struct:sequence
+    name: Sequence
+    kind: structure
+    category: sequence
+    constructor: '\mathsf{Sequence}'
+    arguments:
+      - name: x
+        role: sequence
+      - name: I
+        role: index_set
+      - name: X
+        role: ambient
+    carrier_argument: X
+    structural_arguments:
+      - x
+      - I
+    surface_forms:
+      - sequence
+      - indexed sequence
+      - sequence in an ambient space
+    description: >
+      Indexed object x with index set I and values in the ambient object X.
+      Ordinary real sequences use the natural numbers as the index set.
+
+  - id: struct:tail-sequence
+    name: TailSequence
+    kind: structure
+    category: sequence
+    constructor: '\mathsf{TailSequence}'
+    arguments:
+      - name: x
+        role: source_sequence
+      - name: M
+        role: start_index
+      - name: I
+        role: index_set
+      - name: X
+        role: ambient
+    carrier_argument: X
+    structural_arguments:
+      - x
+      - M
+      - I
+    surface_forms:
+      - tail sequence
+      - M-tail
+      - sequence tail
+    description: >
+      Sequence obtained from a source sequence x by discarding all terms before
+      the start index M and reindexing the remaining terms over I.
+
+  - id: struct:point
+    name: Point
+    kind: structure
+    category: set
+    constructor: '\mathsf{Point}'
+    arguments:
+      - name: x
+        role: element
+      - name: X
+        role: ambient_set
+    carrier_argument: X
+    structural_arguments:
+      - x
+    surface_forms:
+      - point
+      - point of a set
+      - element of an ambient set
+    description: >
+      Ambient typing structure recording that x is a particular point of the
+      set or space X. This structure covers ordinary elements, ordered pairs,
+      tuples, vectors, and other objects by treating them as points of their
+      ambient carrier.
+
+  - id: struct:metric-space
+    name: MetricSpace
+    kind: structure
+    category: topology
+    constructor: '\mathsf{MetricSpace}'
+    arguments:
+      - name: X
+        role: carrier
+      - name: d
+        role: metric
+    carrier_argument: X
+    structural_arguments:
+      - d
+    surface_forms:
+      - metric space
+      - metric structure
+    description: >
+      Ambient metric structure with carrier X and distance function d.
+
+  - id: struct:ball
+    name: Ball
+    kind: structure
+    category: topology
+    constructor: '\mathsf{Ball}'
+    arguments:
+      - name: B
+        role: ball
+      - name: c
+        role: center
+      - name: r
+        role: radius
+      - name: X
+        role: ambient
+    carrier_argument: X
+    structural_arguments:
+      - B
+      - c
+      - r
+    surface_forms:
+      - ball
+      - metric ball
+      - open ball
+    description: >
+      Local region B determined by center c and radius r in the ambient space
+      X. This structure names the region so membership can be stated by
+      predicates such as Within.
+
+  - id: struct:punctured-ball
+    name: PuncturedBall
+    kind: structure
+    category: topology
+    constructor: '\mathsf{PuncturedBall}'
+    arguments:
+      - name: B_dot
+        role: punctured_ball
+        surface: 'B^\times'
+      - name: B
+        role: underlying_ball
+      - name: c
+        role: center
+      - name: r
+        role: radius
+      - name: X
+        role: ambient
+    carrier_argument: X
+    structural_arguments:
+      - B_dot
+      - B
+      - c
+      - r
+    surface_forms:
+      - punctured ball
+      - deleted ball
+    description: >
+      Local region B_dot obtained from the ball B centered at c with radius r
+      in X by removing the center c.
+
+  - id: struct:neighborhood
+    name: Neighborhood
+    kind: structure
+    category: topology
+    constructor: '\mathsf{Neighborhood}'
+    arguments:
+      - name: U
+        role: neighborhood
+      - name: c
+        role: center
+      - name: X
+        role: ambient
+    carrier_argument: X
+    structural_arguments:
+      - U
+      - c
+    surface_forms:
+      - neighborhood
+      - neighbourhood
+    description: >
+      Local region U around center c in the ambient topological space X.
+      This structure names the region independently of any particular point
+      later tested for membership.
+
+  - id: struct:punctured-neighborhood
+    name: PuncturedNeighborhood
+    kind: structure
+    category: topology
+    constructor: '\mathsf{PuncturedNeighborhood}'
+    arguments:
+      - name: U_dot
+        role: punctured_neighborhood
+        surface: 'U^\times'
+      - name: U
+        role: underlying_neighborhood
+      - name: c
+        role: center
+      - name: X
+        role: ambient
+    carrier_argument: X
+    structural_arguments:
+      - U_dot
+      - U
+      - c
+    surface_forms:
+      - punctured neighborhood
+      - punctured neighbourhood
+      - deleted neighborhood
+      - deleted neighbourhood
+    description: >
+      Local region U_dot obtained from the neighborhood U of c in X by
+      removing the center c.
+
+  - id: struct:open-endpoint
+    name: OpenEndpoint
+    kind: structure
+    category: topology
+    constructor: '\mathsf{OpenEndpoint}'
+    arguments:
+      - name: E
+        role: endpoint
+      - name: x
+        role: point
+      - name: X
+        role: ambient
+    carrier_argument: X
+    structural_arguments:
+      - E
+      - x
+    surface_forms:
+      - open endpoint
+      - excluded endpoint
+    description: >
+      Endpoint object E located at x in the ambient ordered or topological
+      space X, with x excluded from the interval determined by E.
+
+  - id: struct:closed-endpoint
+    name: ClosedEndpoint
+    kind: structure
+    category: topology
+    constructor: '\mathsf{ClosedEndpoint}'
+    arguments:
+      - name: E
+        role: endpoint
+      - name: x
+        role: point
+      - name: X
+        role: ambient
+    carrier_argument: X
+    structural_arguments:
+      - E
+      - x
+    surface_forms:
+      - closed endpoint
+      - included endpoint
+    description: >
+      Endpoint object E located at x in the ambient ordered or topological
+      space X, with x included in the interval determined by E.
+
+  - id: struct:unbounded-endpoint
+    name: UnboundedEndpoint
+    kind: structure
+    category: topology
+    constructor: '\mathsf{UnboundedEndpoint}'
+    arguments:
+      - name: E
+        role: endpoint
+      - name: direction
+        role: direction
+        surface: '\pm\infty'
+      - name: X
+        role: ambient
+    carrier_argument: X
+    structural_arguments:
+      - E
+      - direction
+    surface_forms:
+      - unbounded endpoint
+      - infinite endpoint
+      - endpoint at infinity
+    description: >
+      Endpoint object E representing an unbounded left or right endpoint in
+      the ambient ordered or topological space X. The direction records
+      whether the endpoint is toward negative infinity or positive infinity.
+
+  - id: struct:interval
+    name: Interval
+    kind: structure
+    category: topology
+    constructor: '\mathsf{Interval}'
+    arguments:
+      - name: I
+        role: interval
+      - name: E_left
+        role: left_endpoint
+      - name: E_right
+        role: right_endpoint
+      - name: X
+        role: ambient
+    carrier_argument: X
+    structural_arguments:
+      - I
+      - E_left
+      - E_right
+    surface_forms:
+      - interval
+      - interval determined by endpoints
+    description: >
+      Interval object I in the ambient ordered or topological space X,
+      determined by left and right endpoint objects. Endpoint objects record
+      whether finite endpoints are included or excluded and whether an
+      endpoint is unbounded.
+
+  - id: struct:partition
+    name: Partition
+    kind: structure
+    category: integration
+    constructor: '\mathsf{Partition}'
+    arguments:
+      - name: P
+        role: partition
+      - name: I
+        role: interval
+    carrier_argument: I
+    structural_arguments:
+      - P
+    surface_forms:
+      - partition
+      - partition of an interval
+    description: >
+      Integration structure recording that P is a partition object associated
+      with the interval I.
+
+  - id: struct:tagged-partition
+    name: TaggedPartition
+    kind: structure
+    category: integration
+    constructor: '\mathsf{TaggedPartition}'
+    arguments:
+      - name: T
+        role: tagged_partition
+      - name: P
+        role: partition
+      - name: I
+        role: interval
+    carrier_argument: I
+    structural_arguments:
+      - T
+      - P
+    surface_forms:
+      - tagged partition
+      - tagged partition of an interval
+    description: >
+      Integration structure recording a tagged partition T built from a
+      partition P of the interval I.
+
+  - id: struct:gauge
+    name: Gauge
+    kind: structure
+    category: integration
+    constructor: '\mathsf{Gauge}'
+    arguments:
+      - name: delta
+        role: gauge
+        surface: '\delta'
+      - name: I
+        role: interval
+    carrier_argument: I
+    structural_arguments:
+      - delta
+    surface_forms:
+      - gauge
+      - gauge on an interval
+    description: >
+      Integration structure recording a positive radius assignment delta on
+      the interval I.
+
+  - id: struct:riemann-criterion
+    name: RiemannCriterion
+    kind: structure
+    category: integration
+    constructor: '\mathsf{RiemannCriterion}'
+    arguments: []
+    carrier_argument: null
+    structural_arguments: []
+    surface_forms:
+      - Riemann criterion
+      - Riemann integration criterion
+    description: >
+      Integration criterion for Riemann definite integrability.
+
+  - id: struct:darboux-criterion
+    name: DarbouxCriterion
+    kind: structure
+    category: integration
+    constructor: '\mathsf{DarbouxCriterion}'
+    arguments: []
+    carrier_argument: null
+    structural_arguments: []
+    surface_forms:
+      - Darboux criterion
+      - Darboux integration criterion
+    description: >
+      Integration criterion for Darboux definite integrability.
+
+  - id: struct:cauchy-criterion
+    name: CauchyCriterion
+    kind: structure
+    category: integration
+    constructor: '\mathsf{CauchyCriterion}'
+    arguments: []
+    carrier_argument: null
+    structural_arguments: []
+    surface_forms:
+      - Cauchy criterion
+      - Cauchy integration criterion
+    description: >
+      Integration criterion for Cauchy-style definite integrability.
+
+  - id: struct:henstock-kurzweil-criterion
+    name: HenstockKurzweilCriterion
+    kind: structure
+    category: integration
+    constructor: '\mathsf{HenstockKurzweilCriterion}'
+    arguments: []
+    carrier_argument: null
+    structural_arguments: []
+    surface_forms:
+      - Henstock-Kurzweil criterion
+      - Henstock-Kurzweil integration criterion
+    description: >
+      Integration criterion for Henstock-Kurzweil definite integrability.
+
+  - id: struct:mcshane-criterion
+    name: McShaneCriterion
+    kind: structure
+    category: integration
+    constructor: '\mathsf{McShaneCriterion}'
+    arguments: []
+    carrier_argument: null
+    structural_arguments: []
+    surface_forms:
+      - McShane criterion
+      - McShane integration criterion
+    description: >
+      Integration criterion for McShane definite integrability.
+
+  - id: struct:riemann-stieltjes-criterion
+    name: RiemannStieltjesCriterion
+    kind: structure
+    category: integration
+    constructor: '\mathsf{RiemannStieltjesCriterion}'
+    arguments:
+      - name: alpha
+        role: integrator
+        surface: '\alpha'
+    carrier_argument: null
+    structural_arguments:
+      - alpha
+    surface_forms:
+      - Riemann-Stieltjes criterion
+      - Riemann-Stieltjes integration criterion
+    description: >
+      Integration criterion for Riemann-Stieltjes definite integrability with
+      integrator alpha.
+
+  - id: struct:difference-operator
+    name: DifferenceOperator
+    kind: structure
+    category: discrete_calculus
+    constructor: '\mathsf{DifferenceOperator}'
+    arguments:
+      - name: Delta
+        role: difference_operator
+        surface: '\Delta'
+      - name: I
+        role: discrete_domain
+    carrier_argument: I
+    structural_arguments:
+      - Delta
+    surface_forms:
+      - difference operator
+      - finite difference operator
+    description: >
+      Operator structure for taking finite differences of functions or
+      sequences on a discrete domain I.
+
+  - id: struct:forward-difference-operator
+    name: ForwardDifferenceOperator
+    kind: structure
+    category: discrete_calculus
+    constructor: '\mathsf{ForwardDifferenceOperator}'
+    arguments:
+      - name: Delta
+        role: forward_difference_operator
+        surface: '\Delta'
+      - name: I
+        role: discrete_domain
+    carrier_argument: I
+    structural_arguments:
+      - Delta
+    surface_forms:
+      - forward difference operator
+      - one-step difference operator
+    description: >
+      Difference operator Delta that sends a discrete function f to the
+      one-step forward difference Delta f.
+
+  - id: struct:higher-difference-operator
+    name: HigherDifferenceOperator
+    kind: structure
+    category: discrete_calculus
+    constructor: '\mathsf{HigherDifferenceOperator}'
+    arguments:
+      - name: Delta
+        role: difference_operator
+        surface: '\Delta'
+      - name: k
+        role: order
+      - name: I
+        role: discrete_domain
+    carrier_argument: I
+    structural_arguments:
+      - Delta
+      - k
+    surface_forms:
+      - higher difference operator
+      - iterated difference operator
+    description: >
+      Iterated finite-difference operator Delta raised to order k on the
+      discrete domain I.
+
+  - id: struct:shift-operator
+    name: ShiftOperator
+    kind: structure
+    category: discrete_calculus
+    constructor: '\mathsf{ShiftOperator}'
+    arguments:
+      - name: E
+        role: shift_operator
+      - name: I
+        role: discrete_domain
+    carrier_argument: I
+    structural_arguments:
+      - E
+    surface_forms:
+      - shift operator
+      - successor shift
+    description: >
+      Operator structure that shifts a discrete function or sequence forward
+      along the discrete domain I.
+
+  - id: struct:summation-operator
+    name: SummationOperator
+    kind: structure
+    category: discrete_calculus
+    constructor: '\mathsf{SummationOperator}'
+    arguments:
+      - name: Sigma
+        role: summation_operator
+        surface: '\Sigma'
+      - name: I
+        role: discrete_domain
+    carrier_argument: I
+    structural_arguments:
+      - Sigma
+    surface_forms:
+      - summation operator
+      - finite summation operator
+    description: >
+      Operator structure for summing a function or sequence over a discrete
+      domain or finite index interval.
+
+  - id: struct:difference-table
+    name: DifferenceTable
+    kind: structure
+    category: discrete_calculus
+    constructor: '\mathsf{DifferenceTable}'
+    arguments:
+      - name: T
+        role: difference_table
+      - name: f
+        role: discrete_function
+      - name: I
+        role: discrete_domain
+    carrier_argument: I
+    structural_arguments:
+      - T
+      - f
+    surface_forms:
+      - difference table
+      - finite difference table
+    description: >
+      Tabular structure collecting values of a discrete function together
+      with successive finite differences on the domain I.
+
+  - id: struct:topological-space
+    name: TopologicalSpace
+    kind: structure
+    category: topology
+    constructor: '\mathsf{TopologicalSpace}'
+    arguments:
+      - name: X
+        role: carrier
+      - name: tau
+        role: topology
+        surface: '\tau'
+    carrier_argument: X
+    structural_arguments:
+      - tau
+    surface_forms:
+      - topological space
+      - topology
+      - open set structure
+    description: >
+      Ambient topological structure with carrier X and topology tau.
+
+  - id: struct:quotient
+    name: Quotient
+    kind: structure
+    category: quotient
+    constructor: '\mathsf{Quotient}'
+    arguments:
+      - name: A
+        role: carrier
+      - name: sim
+        role: equivalence_relation
+        surface: '\sim'
+    carrier_argument: A
+    structural_arguments:
+      - sim
+    surface_forms:
+      - quotient
+      - quotient structure
+      - quotient by an equivalence relation
+    description: >
+      Ambient quotient structure built from a carrier set A and an equivalence
+      relation sim on A. This constructor packages quotient data before
+      predicates assert quotient-set, quotient-operation, or
+      representative-independence properties.
+
+  - id: struct:magma
+    name: Magma
+    kind: structure
+    category: algebra
+    constructor: '\mathsf{Magma}'
+    arguments:
+      - name: A
+        role: carrier
+      - name: star
+        role: binary_operation
+        surface: '\star'
+    carrier_argument: A
+    structural_arguments:
+      - star
+    surface_forms:
+      - magma
+      - set with a binary operation
+    description: >
+      Algebraic structure consisting of a carrier A and a binary operation
+      star on A.
+
+  - id: struct:semigroup
+    name: Semigroup
+    kind: structure
+    category: algebra
+    constructor: '\mathsf{Semigroup}'
+    arguments:
+      - name: M
+        role: magma
+    carrier_argument: null
+    structural_arguments:
+      - M
+    surface_forms:
+      - semigroup
+    description: >
+      Algebraic structure built from a magma whose operation is intended to be
+      associative.
+
+  - id: struct:monoid
+    name: Monoid
+    kind: structure
+    category: algebra
+    constructor: '\mathsf{Monoid}'
+    arguments:
+      - name: S
+        role: semigroup
+      - name: e
+        role: identity_element
+    carrier_argument: null
+    structural_arguments:
+      - S
+      - e
+    surface_forms:
+      - monoid
+    description: >
+      Algebraic structure built from a semigroup together with a designated
+      identity element.
+
+  - id: struct:commutative-monoid
+    name: CommutativeMonoid
+    kind: structure
+    category: algebra
+    constructor: '\mathsf{CommutativeMonoid}'
+    arguments:
+      - name: M
+        role: monoid
+    carrier_argument: null
+    structural_arguments:
+      - M
+    surface_forms:
+      - commutative monoid
+      - abelian monoid
+    description: >
+      Algebraic structure built from a monoid whose operation is intended to
+      be commutative.
+
+  - id: struct:group
+    name: Group
+    kind: structure
+    category: algebra
+    constructor: '\mathsf{Group}'
+    arguments:
+      - name: M
+        role: monoid
+    carrier_argument: null
+    structural_arguments:
+      - M
+    surface_forms:
+      - group
+    description: >
+      Algebraic structure built from a monoid in which every element is
+      intended to have an inverse.
+
+  - id: struct:abelian-group
+    name: AbelianGroup
+    kind: structure
+    category: algebra
+    constructor: '\mathsf{AbelianGroup}'
+    arguments:
+      - name: G
+        role: group
+    carrier_argument: null
+    structural_arguments:
+      - G
+    surface_forms:
+      - abelian group
+      - commutative group
+    description: >
+      Algebraic structure built from a group whose operation is intended to be
+      commutative.
+
+  - id: struct:semiring
+    name: Semiring
+    kind: structure
+    category: algebra
+    constructor: '\mathsf{Semiring}'
+    arguments:
+      - name: A
+        role: additive_commutative_monoid
+      - name: M
+        role: multiplicative_monoid
+    carrier_argument: null
+    structural_arguments:
+      - A
+      - M
+    surface_forms:
+      - semiring
+    description: >
+      Algebraic structure built from additive commutative monoid data and
+      multiplicative monoid data on the same intended carrier.
+
+  - id: struct:commutative-semiring
+    name: CommutativeSemiring
+    kind: structure
+    category: algebra
+    constructor: '\mathsf{CommutativeSemiring}'
+    arguments:
+      - name: S
+        role: semiring
+    carrier_argument: null
+    structural_arguments:
+      - S
+    surface_forms:
+      - commutative semiring
+    description: >
+      Algebraic structure built from a semiring whose multiplication is
+      intended to be commutative.
+
+  - id: struct:ring
+    name: Ring
+    kind: structure
+    category: algebra
+    constructor: '\mathsf{Ring}'
+    arguments:
+      - name: A
+        role: additive_abelian_group
+      - name: M
+        role: multiplicative_monoid
+    carrier_argument: null
+    structural_arguments:
+      - A
+      - M
+    surface_forms:
+      - ring
+    description: >
+      Algebraic structure built from additive abelian group data and
+      multiplicative monoid data on the same intended carrier.
+
+  - id: struct:commutative-ring
+    name: CommutativeRing
+    kind: structure
+    category: algebra
+    constructor: '\mathsf{CommutativeRing}'
+    arguments:
+      - name: R
+        role: ring
+    carrier_argument: null
+    structural_arguments:
+      - R
+    surface_forms:
+      - commutative ring
+    description: >
+      Algebraic structure built from a ring whose multiplication is intended
+      to be commutative.
+
+  - id: struct:field
+    name: Field
+    kind: structure
+    category: algebra
+    constructor: '\mathsf{Field}'
+    arguments:
+      - name: R
+        role: commutative_ring
+    carrier_argument: null
+    structural_arguments:
+      - R
+    surface_forms:
+      - field
+    description: >
+      Algebraic structure built from a commutative ring whose nonzero elements
+      are intended to form a multiplicative group.
+
+  - id: struct:ordered-field
+    name: OrderedField
+    kind: structure
+    category: algebra
+    constructor: '\mathsf{OrderedField}'
+    arguments:
+      - name: F
+        role: field
+      - name: le
+        role: order_relation
+        surface: '\leq'
+    carrier_argument: null
+    structural_arguments:
+      - F
+      - le
+    surface_forms:
+      - ordered field
+    description: >
+      Algebraic and order structure built from a field and an order relation
+      intended to be compatible with the field operations.
+
+  - id: struct:complete-ordered-field
+    name: CompleteOrderedField
+    kind: structure
+    category: algebra
+    constructor: '\mathsf{CompleteOrderedField}'
+    arguments:
+      - name: F
+        role: ordered_field
+    carrier_argument: null
+    structural_arguments:
+      - F
+    surface_forms:
+      - complete ordered field
+    description: >
+      Algebraic and order structure built from an ordered field intended to
+      satisfy the least-upper-bound completeness property.
+
+  - id: struct:truth-assignment
+    name: TruthAssignment
+    kind: structure
+    category: logic
+    constructor: '\mathsf{TruthAssignment}'
+    arguments:
+      - name: v
+        role: assignment
+      - name: C
+        role: logic_context
+    carrier_argument: C
+    structural_arguments:
+      - v
+    surface_forms:
+      - truth assignment
+    description: >
+      Assignment data giving truth values to the variables or atoms in a
+      propositional or logical context.
+
+  - id: struct:truth-valuation
+    name: TruthValuation
+    kind: structure
+    category: logic
+    constructor: '\mathsf{TruthValuation}'
+    arguments:
+      - name: v_hat
+        role: valuation
+        surface: '\widehat v'
+      - name: v
+        role: truth_assignment
+      - name: C
+        role: logic_context
+    carrier_argument: C
+    structural_arguments:
+      - v_hat
+      - v
+    surface_forms:
+      - truth valuation
+      - valuation
+      - extended truth assignment
+    description: >
+      Valuation data extending a truth assignment from variables or atoms to
+      the formulas in a propositional or logical context.
+
+  - id: struct:binary-connective
+    name: BinaryConnective
+    kind: structure
+    category: logic
+    constructor: '\mathsf{BinaryConnective}'
+    arguments:
+      - name: connective
+        role: connective
+      - name: C
+        role: logic_context
+    carrier_argument: C
+    structural_arguments:
+      - connective
+    surface_forms:
+      - binary connective
+      - two-place connective
+      - binary logical connective
+    description: >
+      Logical connective object that forms a compound formula from two input
+      formulas in the given logical context.
+
+  - id: struct:atomic-formula
+    name: AtomicFormula
+    kind: structure
+    category: logic
+    constructor: '\mathsf{AtomicFormula}'
+    arguments:
+      - name: phi
+        role: formula
+        surface: '\varphi'
+      - name: C
+        role: logic_context
+    carrier_argument: C
+    structural_arguments:
+      - phi
+    surface_forms:
+      - atomic formula
+      - atom
+    description: >
+      Formula object with no logical connective or quantifier decomposition in
+      the given logical context.
+
+  - id: struct:formula
+    name: Formula
+    kind: structure
+    category: logic
+    constructor: '\mathsf{Formula}'
+    arguments:
+      - name: phi
+        role: formula
+        surface: '\varphi'
+      - name: C
+        role: logic_context
+    carrier_argument: C
+    structural_arguments:
+      - phi
+    surface_forms:
+      - formula
+      - well-formed expression
+    description: >
+      Formula object in a propositional or first-order logical context.
+
+  - id: struct:tautology
+    name: Tautology
+    kind: structure
+    category: logic
+    constructor: '\mathsf{Tautology}'
+    arguments:
+      - name: phi
+        role: formula
+        surface: '\varphi'
+      - name: C
+        role: logic_context
+    carrier_argument: C
+    structural_arguments:
+      - phi
+    surface_forms:
+      - tautology
+      - tautological formula
+      - valid propositional formula
+    description: >
+      Formula object belonging to the tautology class in the given logical
+      context.
+
+  - id: struct:term
+    name: Term
+    kind: structure
+    category: logic
+    constructor: '\mathsf{Term}'
+    arguments:
+      - name: t
+        role: term
+      - name: C
+        role: logic_context
+    carrier_argument: C
+    structural_arguments:
+      - t
+    surface_forms:
+      - term
+      - formal term
+    description: >
+      Term object built from the variables, constants, and function symbols of
+      a formal language or signature.
+
+  - id: struct:well-formed-formula
+    name: WellFormedFormula
+    kind: structure
+    category: logic
+    constructor: '\mathsf{WellFormedFormula}'
+    arguments:
+      - name: phi
+        role: formula
+        surface: '\varphi'
+      - name: C
+        role: logic_context
+    carrier_argument: C
+    structural_arguments:
+      - phi
+    surface_forms:
+      - well-formed formula
+      - wff
+    description: >
+      Formula object satisfying the formation rules of the given logical
+      context.
+
+  - id: struct:open-formula
+    name: OpenFormula
+    kind: structure
+    category: logic
+    constructor: '\mathsf{OpenFormula}'
+    arguments:
+      - name: phi
+        role: formula
+        surface: '\varphi'
+      - name: C
+        role: logic_context
+    carrier_argument: C
+    structural_arguments:
+      - phi
+    surface_forms:
+      - open formula
+      - formula with free variables
+    description: >
+      Formula object with at least one free variable in the given logical
+      context.
+
+  - id: struct:sentence
+    name: Sentence
+    kind: structure
+    category: logic
+    constructor: '\mathsf{Sentence}'
+    arguments:
+      - name: phi
+        role: formula
+        surface: '\varphi'
+      - name: C
+        role: logic_context
+    carrier_argument: C
+    structural_arguments:
+      - phi
+    surface_forms:
+      - sentence
+      - closed formula
+    description: >
+      Formula object with no free variables in the given logical context.
+
+  - id: struct:theory
+    name: Theory
+    kind: structure
+    category: logic
+    constructor: '\mathsf{Theory}'
+    arguments:
+      - name: T
+        role: theory
+      - name: C
+        role: logic_context
+    carrier_argument: C
+    structural_arguments:
+      - T
+    surface_forms:
+      - theory
+      - set of sentences
+    description: >
+      Collection of sentences or formulas treated as a theory in a logical
+      context.
+
+  - id: struct:argument
+    name: Argument
+    kind: structure
+    category: logic
+    constructor: '\mathsf{Argument}'
+    arguments:
+      - name: A
+        role: argument
+      - name: C
+        role: logic_context
+    carrier_argument: C
+    structural_arguments:
+      - A
+    surface_forms:
+      - argument
+      - formal argument
+      - premises and conclusion
+    description: >
+      Concrete argument object consisting of premises and a conclusion in a
+      logical context.
+
+  - id: struct:argument-form
+    name: ArgumentForm
+    kind: structure
+    category: logic
+    constructor: '\mathsf{ArgumentForm}'
+    arguments:
+      - name: A
+        role: argument_form
+      - name: C
+        role: logic_context
+    carrier_argument: C
+    structural_arguments:
+      - A
+    surface_forms:
+      - argument form
+      - inference pattern
+    description: >
+      Pattern consisting of premises and a conclusion in a logical context.
+
+  - id: struct:valid-argument-form
+    name: ValidArgumentForm
+    kind: structure
+    category: logic
+    constructor: '\mathsf{ValidArgumentForm}'
+    arguments:
+      - name: A
+        role: argument_form
+      - name: C
+        role: logic_context
+    carrier_argument: C
+    structural_arguments:
+      - A
+    surface_forms:
+      - valid argument form
+      - valid inference pattern
+    description: >
+      Class or object of argument forms treated as valid in the logical
+      context.
+
+  - id: struct:connective-basis
+    name: ConnectiveBasis
+    kind: structure
+    category: logic
+    constructor: '\mathsf{ConnectiveBasis}'
+    arguments:
+      - name: B
+        role: connective_basis
+      - name: C
+        role: logic_context
+    carrier_argument: C
+    structural_arguments:
+      - B
+    surface_forms:
+      - connective basis
+      - set of connectives
+    description: >
+      Collection of connectives used as a basis for building formulas or
+      representing Boolean functions.
+
+  - id: struct:indexed-family
+    name: IndexedFamily
+    kind: structure
+    category: set
+    constructor: '\mathsf{IndexedFamily}'
+    arguments:
+      - name: F
+        role: family
+        surface: '\mathcal{F}'
+      - name: I
+        role: index_set
+      - name: U
+        role: ambient_set
+    carrier_argument: U
+    structural_arguments:
+      - F
+      - I
+    surface_forms:
+      - indexed family
+      - indexed family of sets
+    description: >
+      Family of objects indexed by I, typically a function from I into a
+      powerset or ambient collection over U.
+
+  - id: struct:graph
+    name: Graph
+    kind: structure
+    category: function
+    constructor: '\mathsf{Graph}'
+    arguments:
+      - name: f
+        role: function
+      - name: A
+        role: domain
+      - name: B
+        role: codomain
+    carrier_argument: null
+    structural_arguments:
+      - f
+      - A
+      - B
+    surface_forms:
+      - graph of a function
+      - function graph
+    description: >
+      Graph object associated with a function and its domain and codomain.
+
+  - id: struct:image-operator
+    name: ImageOperator
+    kind: structure
+    category: function
+    constructor: '\mathsf{ImageOperator}'
+    arguments:
+      - name: f
+        role: function
+      - name: A
+        role: domain
+      - name: B
+        role: codomain
+    carrier_argument: null
+    structural_arguments:
+      - f
+      - A
+      - B
+    surface_forms:
+      - image operator
+      - direct image operator
+    description: >
+      Operator that sends a subset of the domain of f to its image under f.
+
+  - id: struct:preimage-operator
+    name: PreimageOperator
+    kind: structure
+    category: function
+    constructor: '\mathsf{PreimageOperator}'
+    arguments:
+      - name: f
+        role: function
+      - name: A
+        role: domain
+      - name: B
+        role: codomain
+    carrier_argument: null
+    structural_arguments:
+      - f
+      - A
+      - B
+    surface_forms:
+      - preimage operator
+      - inverse image operator
+    description: >
+      Operator that sends a subset of the codomain of f to its preimage under
+      f.
+
+  - id: struct:propositional-variable
+    name: PropositionalVariable
+    kind: structure
+    category: logic
+    constructor: '\mathsf{PropositionalVariable}'
+    arguments:
+      - name: P
+        role: symbol
+    carrier_argument: null
+    structural_arguments:
+      - P
+    surface_forms:
+      - propositional variable
+    description: >
+      Propositional variable symbol in a propositional language.
+
+  - id: struct:unary-connective
+    name: UnaryConnective
+    kind: structure
+    category: logic
+    constructor: '\mathsf{UnaryConnective}'
+    arguments:
+      - name: c
+        role: connective
+    carrier_argument: null
+    structural_arguments:
+      - c
+    surface_forms:
+      - unary connective
+    description: >
+      Logical connective object that forms a formula from one input formula.
+
+  - id: struct:molecular-formula
+    name: MolecularFormula
+    kind: structure
+    category: logic
+    constructor: '\mathsf{MolecularFormula}'
+    arguments:
+      - name: phi
+        role: formula
+        surface: '\varphi'
+    carrier_argument: null
+    structural_arguments:
+      - phi
+    surface_forms:
+      - molecular formula
+    description: >
+      Formula object with nontrivial connective or quantifier structure.
+
+  - id: struct:formula-context
+    name: FormulaContext
+    kind: structure
+    category: logic
+    constructor: '\mathsf{FormulaContext}'
+    arguments:
+      - name: C
+        role: context
+    carrier_argument: null
+    structural_arguments:
+      - C
+    surface_forms:
+      - formula context
+      - context with a hole
+    description: >
+      Formula context or expression with a distinguished hole.
+
+  - id: struct:counterexample-assignment
+    name: CounterexampleAssignment
+    kind: structure
+    category: logic
+    constructor: '\mathsf{CounterexampleAssignment}'
+    arguments:
+      - name: v
+        role: assignment
+      - name: X
+        role: target
+    carrier_argument: null
+    structural_arguments:
+      - v
+      - X
+    surface_forms:
+      - counterexample assignment
+    description: >
+      Assignment data witnessing failure of a proposed validity claim.
+
+  - id: struct:syntax-tree
+    name: Tree
+    kind: structure
+    category: logic
+    constructor: '\mathsf{Tree}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - tree
+      - syntax tree
+      - parse tree
+    description: >
+      Tree-shaped data object associated with syntactic construction.
+
+  - id: struct:truth-table
+    name: TruthTable
+    kind: structure
+    category: logic
+    constructor: '\mathsf{TruthTable}'
+    arguments:
+      - name: phi
+        role: formula
+        surface: '\varphi'
+    carrier_argument: null
+    structural_arguments:
+      - phi
+    surface_forms:
+      - truth table
+    description: >
+      Tabular data recording truth values of a formula under assignments.
+
+  - id: struct:extended-truth-assignment
+    name: ExtendedTruthAssignment
+    kind: structure
+    category: logic
+    constructor: '\mathsf{ExtendedTruthAssignment}'
+    arguments:
+      - name: v_hat
+        role: extended_assignment
+        surface: '\widehat v'
+      - name: v
+        role: truth_assignment
+    carrier_argument: null
+    structural_arguments:
+      - v_hat
+      - v
+    surface_forms:
+      - extended truth assignment
+    description: >
+      Extension of a truth assignment from variables to formulas.
+
+  - id: struct:first-order-language
+    name: FirstOrderLanguage
+    kind: structure
+    category: logic
+    constructor: '\mathsf{FirstOrderLanguage}'
+    arguments:
+      - name: L
+        role: language
+    carrier_argument: null
+    structural_arguments:
+      - L
+    surface_forms:
+      - first-order language
+    description: >
+      First-order language data, including variables and nonlogical symbols.
+
+  - id: struct:structure
+    name: Structure
+    kind: structure
+    category: logic
+    constructor: '\mathsf{Structure}'
+    arguments:
+      - name: M
+        role: structure
+      - name: L
+        role: language
+    carrier_argument: L
+    structural_arguments:
+      - M
+    surface_forms:
+      - structure
+      - first-order structure
+    description: >
+      First-order structure interpreting a language.
+
+  - id: struct:variable-assignment
+    name: VariableAssignment
+    kind: structure
+    category: logic
+    constructor: '\mathsf{VariableAssignment}'
+    arguments:
+      - name: s
+        role: assignment
+      - name: M
+        role: structure
+    carrier_argument: M
+    structural_arguments:
+      - s
+    surface_forms:
+      - variable assignment
+    description: >
+      Assignment of variables to elements of a structure.
+
+  - id: struct:modified-assignment
+    name: ModifiedAssignment
+    kind: structure
+    category: logic
+    constructor: '\mathsf{ModifiedAssignment}'
+    arguments:
+      - name: s_prime
+        role: modified_assignment
+        surface: "s'"
+      - name: s
+        role: base_assignment
+    carrier_argument: null
+    structural_arguments:
+      - s_prime
+      - s
+    surface_forms:
+      - modified assignment
+    description: >
+      Assignment obtained from another assignment by changing specified
+      variable values.
+
+  - id: struct:term-evaluation
+    name: TermEvaluation
+    kind: structure
+    category: logic
+    constructor: '\mathsf{TermEvaluation}'
+    arguments:
+      - name: a
+        role: value
+      - name: t
+        role: term
+    carrier_argument: null
+    structural_arguments:
+      - a
+      - t
+    surface_forms:
+      - term evaluation
+    description: >
+      Evaluation data assigning a value to a term in a structure under an
+      assignment.
+
+  - id: struct:variable
+    name: Variable
+    kind: structure
+    category: logic
+    constructor: '\mathsf{Variable}'
+    arguments:
+      - name: x
+        role: variable
+    carrier_argument: null
+    structural_arguments:
+      - x
+    surface_forms:
+      - variable
+    description: >
+      Variable symbol in a formal language.
+
+  - id: struct:constant-symbol
+    name: ConstantSymbol
+    kind: structure
+    category: logic
+    constructor: '\mathsf{ConstantSymbol}'
+    arguments:
+      - name: c
+        role: symbol
+    carrier_argument: null
+    structural_arguments:
+      - c
+    surface_forms:
+      - constant symbol
+    description: >
+      Nullary function symbol in a formal language.
+
+  - id: struct:function-symbol
+    name: FunctionSymbol
+    kind: structure
+    category: logic
+    constructor: '\mathsf{FunctionSymbol}'
+    arguments:
+      - name: f
+        role: symbol
+    carrier_argument: null
+    structural_arguments:
+      - f
+    surface_forms:
+      - function symbol
+    description: >
+      Positive-arity function symbol in a formal language.
+
+  - id: struct:predicate-symbol
+    name: PredicateSymbol
+    kind: structure
+    category: logic
+    constructor: '\mathsf{PredicateSymbol}'
+    arguments:
+      - name: P
+        role: symbol
+    carrier_argument: null
+    structural_arguments:
+      - P
+    surface_forms:
+      - predicate symbol
+      - relation symbol
+    description: >
+      Positive-arity predicate or relation symbol in a formal language.
+
+  - id: struct:universal-formula
+    name: UniversalFormula
+    kind: structure
+    category: logic
+    constructor: '\mathsf{UniversalFormula}'
+    arguments:
+      - name: Phi
+        role: formula
+        surface: '\Phi'
+    carrier_argument: null
+    structural_arguments:
+      - Phi
+    surface_forms:
+      - universal formula
+    description: >
+      Formula whose leading quantifier form is universal.
+
+  - id: struct:existential-formula
+    name: ExistentialFormula
+    kind: structure
+    category: logic
+    constructor: '\mathsf{ExistentialFormula}'
+    arguments:
+      - name: Phi
+        role: formula
+        surface: '\Phi'
+    carrier_argument: null
+    structural_arguments:
+      - Phi
+    surface_forms:
+      - existential formula
+    description: >
+      Formula whose leading quantifier form is existential.
+
+  - id: struct:bounded-quantifier
+    name: BoundedQuantifier
+    kind: structure
+    category: logic
+    constructor: '\mathsf{BoundedQuantifier}'
+    arguments:
+      - name: Phi
+        role: formula
+        surface: '\Phi'
+    carrier_argument: null
+    structural_arguments:
+      - Phi
+    surface_forms:
+      - bounded quantifier
+    description: >
+      Bounded-quantifier expression or bounded quantifier occurrence.
+
+  - id: struct:scope
+    name: Scope
+    kind: structure
+    category: logic
+    constructor: '\mathsf{Scope}'
+    arguments:
+      - name: x
+        role: variable
+      - name: phi
+        role: formula
+        surface: '\varphi'
+    carrier_argument: null
+    structural_arguments:
+      - x
+      - phi
+    surface_forms:
+      - scope
+      - quantifier scope
+    description: >
+      Formula region governed by a quantifier or binding occurrence.
+
+  - id: struct:quantifier-prefix
+    name: QuantifierPrefix
+    kind: structure
+    category: logic
+    constructor: '\mathsf{QuantifierPrefix}'
+    arguments:
+      - name: Pi
+        role: prefix
+        surface: '\Pi'
+    carrier_argument: null
+    structural_arguments:
+      - Pi
+    surface_forms:
+      - quantifier prefix
+    description: >
+      Finite string or sequence of leading quantifiers.
+
+  - id: struct:matrix
+    name: Matrix
+    kind: structure
+    category: logic
+    constructor: '\mathsf{Matrix}'
+    arguments:
+      - name: psi
+        role: matrix
+        surface: '\psi'
+      - name: Phi
+        role: formula
+        surface: '\Phi'
+    carrier_argument: null
+    structural_arguments:
+      - psi
+      - Phi
+    surface_forms:
+      - matrix
+      - quantifier-free matrix
+    description: >
+      Quantifier-free formula body associated with a prenex formula.
+
+  - id: struct:prenex-formula
+    name: PrenexFormula
+    kind: structure
+    category: logic
+    constructor: '\mathsf{PrenexFormula}'
+    arguments:
+      - name: Phi
+        role: formula
+        surface: '\Phi'
+    carrier_argument: null
+    structural_arguments:
+      - Phi
+    surface_forms:
+      - prenex formula
+    description: >
+      Formula with all quantifiers collected in a leading prefix.
+
+  - id: struct:prenex-normal-form
+    name: PrenexNormalForm
+    kind: structure
+    category: logic
+    constructor: '\mathsf{PrenexNormalForm}'
+    arguments:
+      - name: psi
+        role: prenex_formula
+        surface: '\psi'
+      - name: phi
+        role: original_formula
+        surface: '\varphi'
+    carrier_argument: null
+    structural_arguments:
+      - psi
+      - phi
+    surface_forms:
+      - prenex normal form
+    description: >
+      Prenex formula equivalent to a given formula.
+
+  - id: struct:translation-key
+    name: TranslationKey
+    kind: structure
+    category: logic
+    constructor: '\mathsf{TranslationKey}'
+    arguments:
+      - name: K
+        role: key
+    carrier_argument: null
+    structural_arguments:
+      - K
+    surface_forms:
+      - translation key
+    description: >
+      Data assigning a domain and symbol readings for translation into logic.
+
+  - id: struct:domain-of-discourse
+    name: DomainOfDiscourse
+    kind: structure
+    category: logic
+    constructor: '\mathsf{DomainOfDiscourse}'
+    arguments:
+      - name: D
+        role: domain
+      - name: K
+        role: translation_key
+    carrier_argument: K
+    structural_arguments:
+      - D
+    surface_forms:
+      - domain of discourse
+    description: >
+      Domain fixed by a translation key.
+
+  - id: struct:translation-predicate-symbol
+    name: TranslationPredicateSymbol
+    kind: structure
+    category: logic
+    constructor: '\mathsf{TranslationPredicateSymbol}'
+    arguments:
+      - name: P
+        role: predicate_symbol
+      - name: K
+        role: translation_key
+    carrier_argument: K
+    structural_arguments:
+      - P
+    surface_forms:
+      - translation predicate symbol
+    description: >
+      Predicate symbol together with its fixed reading in a translation key.
+
+  - id: struct:translation-relation-symbol
+    name: TranslationRelationSymbol
+    kind: structure
+    category: logic
+    constructor: '\mathsf{TranslationRelationSymbol}'
+    arguments:
+      - name: R
+        role: relation_symbol
+      - name: K
+        role: translation_key
+    carrier_argument: K
+    structural_arguments:
+      - R
+    surface_forms:
+      - translation relation symbol
+    description: >
+      Relation symbol together with its arity and reading in a translation key.
+
+  - id: struct:translation-constant
+    name: TranslationConstant
+    kind: structure
+    category: logic
+    constructor: '\mathsf{TranslationConstant}'
+    arguments:
+      - name: c
+        role: constant
+      - name: K
+        role: translation_key
+    carrier_argument: K
+    structural_arguments:
+      - c
+    surface_forms:
+      - translation constant
+    description: >
+      Constant symbol naming a fixed object in a translation key.
+
+  - id: struct:translation-variable
+    name: TranslationVariable
+    kind: structure
+    category: logic
+    constructor: '\mathsf{TranslationVariable}'
+    arguments:
+      - name: x
+        role: variable
+      - name: K
+        role: translation_key
+    carrier_argument: K
+    structural_arguments:
+      - x
+    surface_forms:
+      - translation variable
+    description: >
+      Variable used in a translation key.
+
+  - id: struct:categorical-a-form
+    name: CategoricalAForm
+    kind: structure
+    category: logic
+    constructor: '\mathsf{CategoricalAForm}'
+    arguments:
+      - name: phi
+        role: formula
+        surface: '\varphi'
+    carrier_argument: null
+    structural_arguments:
+      - phi
+    surface_forms:
+      - categorical A form
+    description: >
+      Universal affirmative categorical form.
+
+  - id: struct:categorical-e-form
+    name: CategoricalEForm
+    kind: structure
+    category: logic
+    constructor: '\mathsf{CategoricalEForm}'
+    arguments:
+      - name: phi
+        role: formula
+        surface: '\varphi'
+    carrier_argument: null
+    structural_arguments:
+      - phi
+    surface_forms:
+      - categorical E form
+    description: >
+      Universal negative categorical form.
+
+  - id: struct:categorical-i-form
+    name: CategoricalIForm
+    kind: structure
+    category: logic
+    constructor: '\mathsf{CategoricalIForm}'
+    arguments:
+      - name: phi
+        role: formula
+        surface: '\varphi'
+    carrier_argument: null
+    structural_arguments:
+      - phi
+    surface_forms:
+      - categorical I form
+    description: >
+      Particular affirmative categorical form.
+
+  - id: struct:categorical-o-form
+    name: CategoricalOForm
+    kind: structure
+    category: logic
+    constructor: '\mathsf{CategoricalOForm}'
+    arguments:
+      - name: phi
+        role: formula
+        surface: '\varphi'
+    carrier_argument: null
+    structural_arguments:
+      - phi
+    surface_forms:
+      - categorical O form
+    description: >
+      Particular negative categorical form.
+
+  - id: struct:universal-translation-pattern
+    name: UniversalTranslationPattern
+    kind: structure
+    category: logic
+    constructor: '\mathsf{UniversalTranslationPattern}'
+    arguments:
+      - name: A
+        role: subject
+      - name: B
+        role: predicate
+    carrier_argument: null
+    structural_arguments:
+      - A
+      - B
+    surface_forms:
+      - universal translation pattern
+    description: >
+      Translation pattern for universal English statements.
+
+  - id: struct:existential-translation-pattern
+    name: ExistentialTranslationPattern
+    kind: structure
+    category: logic
+    constructor: '\mathsf{ExistentialTranslationPattern}'
+    arguments:
+      - name: A
+        role: subject
+      - name: B
+        role: predicate
+    carrier_argument: null
+    structural_arguments:
+      - A
+      - B
+    surface_forms:
+      - existential translation pattern
+    description: >
+      Translation pattern for existential English statements.
+
+  - id: struct:conditional-translation-pattern
+    name: ConditionalTranslationPattern
+    kind: structure
+    category: logic
+    constructor: '\mathsf{ConditionalTranslationPattern}'
+    arguments:
+      - name: A
+        role: antecedent
+      - name: B
+        role: consequent
+    carrier_argument: null
+    structural_arguments:
+      - A
+      - B
+    surface_forms:
+      - conditional translation pattern
+    description: >
+      Translation pattern for conditional English statements.
+
+  - id: struct:negation-translation-pattern
+    name: NegationTranslationPattern
+    kind: structure
+    category: logic
+    constructor: '\mathsf{NegationTranslationPattern}'
+    arguments:
+      - name: phi
+        role: source_formula
+        surface: '\varphi'
+      - name: psi
+        role: negated_formula
+        surface: '\psi'
+    carrier_argument: null
+    structural_arguments:
+      - phi
+      - psi
+    surface_forms:
+      - negation translation pattern
+    description: >
+      Translation pattern recording negation of a formula.
+
+  - id: struct:literal
+    name: Literal
+    kind: structure
+    category: logic
+    constructor: '\mathsf{Literal}'
+    arguments:
+      - name: ell
+        role: literal
+        surface: '\ell'
+    carrier_argument: null
+    structural_arguments:
+      - ell
+    surface_forms:
+      - literal
+    description: >
+      Atomic formula or negated atomic formula in propositional normal forms.
+
+  - id: struct:positive-literal
+    name: PositiveLiteral
+    kind: structure
+    category: logic
+    constructor: '\mathsf{PositiveLiteral}'
+    arguments:
+      - name: ell
+        role: literal
+        surface: '\ell'
+    carrier_argument: null
+    structural_arguments:
+      - ell
+    surface_forms:
+      - positive literal
+    description: >
+      Literal occurring without negation.
+
+  - id: struct:negative-literal
+    name: NegativeLiteral
+    kind: structure
+    category: logic
+    constructor: '\mathsf{NegativeLiteral}'
+    arguments:
+      - name: ell
+        role: literal
+        surface: '\ell'
+    carrier_argument: null
+    structural_arguments:
+      - ell
+    surface_forms:
+      - negative literal
+    description: >
+      Literal occurring as a negated atom.
+
+  - id: struct:clause
+    name: Clause
+    kind: structure
+    category: logic
+    constructor: '\mathsf{Clause}'
+    arguments:
+      - name: C
+        role: clause
+    carrier_argument: null
+    structural_arguments:
+      - C
+    surface_forms:
+      - clause
+    description: >
+      Disjunction or finite set of literals.
+
+  - id: struct:empty-clause
+    name: EmptyClause
+    kind: structure
+    category: logic
+    constructor: '\mathsf{EmptyClause}'
+    arguments:
+      - name: C
+        role: clause
+    carrier_argument: null
+    structural_arguments:
+      - C
+    surface_forms:
+      - empty clause
+    description: >
+      Clause with no literals.
+
+  - id: struct:empty-conjunction
+    name: EmptyConjunction
+    kind: structure
+    category: logic
+    constructor: '\mathsf{EmptyConjunction}'
+    arguments:
+      - name: T
+        role: conjunction
+    carrier_argument: null
+    structural_arguments:
+      - T
+    surface_forms:
+      - empty conjunction
+    description: >
+      Conjunction with no conjuncts.
+
+  - id: struct:negation-normal-form
+    name: NegationNormalForm
+    kind: structure
+    category: logic
+    constructor: '\mathsf{NegationNormalForm}'
+    arguments:
+      - name: phi
+        role: formula
+        surface: '\varphi'
+    carrier_argument: null
+    structural_arguments:
+      - phi
+    surface_forms:
+      - negation normal form
+    description: >
+      Formula form in which negation occurs only directly on atoms.
+
+  - id: struct:nnf-conversion-procedure
+    name: NNFConversionProcedure
+    kind: structure
+    category: logic
+    constructor: '\mathsf{NNFConversionProcedure}'
+    arguments:
+      - name: phi
+        role: source_formula
+        surface: '\varphi'
+      - name: psi
+        role: target_formula
+        surface: '\psi'
+    carrier_argument: null
+    structural_arguments:
+      - phi
+      - psi
+    surface_forms:
+      - NNF conversion procedure
+    description: >
+      Procedure or conversion data turning a formula into negation normal form.
+
+  - id: struct:nand
+    name: NAND
+    kind: structure
+    category: logic
+    constructor: '\mathsf{NAND}'
+    arguments:
+      - name: phi
+        role: left_formula
+        surface: '\varphi'
+      - name: psi
+        role: right_formula
+        surface: '\psi'
+    carrier_argument: null
+    structural_arguments:
+      - phi
+      - psi
+    surface_forms:
+      - NAND
+      - Sheffer stroke
+    description: >
+      NAND connective expression.
+
+  - id: struct:nor
+    name: NOR
+    kind: structure
+    category: logic
+    constructor: '\mathsf{NOR}'
+    arguments:
+      - name: phi
+        role: left_formula
+        surface: '\varphi'
+      - name: psi
+        role: right_formula
+        surface: '\psi'
+    carrier_argument: null
+    structural_arguments:
+      - phi
+      - psi
+    surface_forms:
+      - NOR
+      - Peirce arrow
+    description: >
+      NOR connective expression.
+
+  - id: struct:informal-proof-pattern
+    name: InformalProofPattern
+    kind: structure
+    category: logic
+    constructor: '\mathsf{InformalProofPattern}'
+    arguments:
+      - name: Pi
+        role: pattern
+        surface: '\Pi'
+    carrier_argument: null
+    structural_arguments:
+      - Pi
+    surface_forms:
+      - informal proof pattern
+    description: >
+      Recognized informal pattern for organizing a proof.
+
+  - id: struct:replacement-sequence
+    name: ReplacementSequence
+    kind: structure
+    category: logic
+    constructor: '\mathsf{ReplacementSequence}'
+    arguments:
+      - name: phi
+        role: source_formula
+        surface: '\varphi'
+      - name: psi
+        role: target_formula
+        surface: '\psi'
+    carrier_argument: null
+    structural_arguments:
+      - phi
+      - psi
+    surface_forms:
+      - replacement sequence
+    description: >
+      Sequence of formula replacements connecting two formulas.
+
+  - id: struct:propositional-equivalence-law
+    name: PropositionalEquivalenceLaw
+    kind: structure
+    category: logic
+    constructor: '\mathsf{PropositionalEquivalenceLaw}'
+    arguments:
+      - name: phi
+        role: left_formula
+        surface: '\varphi'
+      - name: psi
+        role: right_formula
+        surface: '\psi'
+    carrier_argument: null
+    structural_arguments:
+      - phi
+      - psi
+    surface_forms:
+      - propositional equivalence law
+    description: >
+      Named or schematic propositional equivalence law.
+
+  - id: struct:theorem
+    name: Theorem
+    kind: structure
+    category: logic
+    constructor: '\mathsf{Theorem}'
+    arguments:
+      - name: T
+        role: theory
+      - name: phi
+        role: sentence
+        surface: '\varphi'
+    carrier_argument: T
+    structural_arguments:
+      - phi
+    surface_forms:
+      - theorem
+    description: >
+      Sentence or formula regarded as a theorem of a theory.
+
+  - id: struct:countermodel
+    name: CounterModel
+    kind: structure
+    category: logic
+    constructor: '\mathsf{CounterModel}'
+    arguments:
+      - name: M
+        role: model
+      - name: X
+        role: target
+    carrier_argument: null
+    structural_arguments:
+      - M
+      - X
+    surface_forms:
+      - countermodel
+    description: >
+      Model data witnessing failure of a semantic consequence or validity
+      claim.
+
+  - id: struct:constant
+    name: Constant
+    kind: structure
+    category: logic
+    constructor: '\mathsf{Constant}'
+    arguments:
+      - name: c
+        role: constant
+    carrier_argument: null
+    structural_arguments:
+      - c
+    surface_forms:
+      - constant
+    description: >
+      Constant object or constant symbol in the relevant formal context.
+
+  - id: struct:property-spec
+    name: PropertySpec
+    kind: structure
+    category: logic
+    constructor: '\mathsf{PropertySpec}'
+    arguments:
+      - name: Phi
+        role: property_specification
+        surface: '\Phi'
+    carrier_argument: null
+    structural_arguments:
+      - Phi
+    surface_forms:
+      - property specification
+      - predicate package
+      - property spec
+    description: >
+      A reusable property specification, often an alias for a conjunction of
+      registered predicates to be applied to members of a family or collection.
+
+  - id: struct:open-bounded-interval
+    name: OpenBoundedInterval
+    kind: structure
+    category: analysis
+    constructor: '\mathsf{OpenBoundedInterval}'
+    arguments: []
+    carrier_argument: null
+    structural_arguments: []
+    surface_forms:
+      - open bounded interval
+      - open bounded interval property
+    description: >
+      Property-specification alias for intervals satisfying IsInterval,
+      IsOpenInterval, and IsBoundedInterval in the relevant ambient ordered or
+      topological space.
+
+  - id: struct:nonempty-bounded-interval
+    name: NonemptyBoundedInterval
+    kind: structure
+    category: analysis
+    constructor: '\mathsf{NonemptyBoundedInterval}'
+    arguments: []
+    carrier_argument: null
+    structural_arguments: []
+    surface_forms:
+      - nonempty bounded interval
+      - nonempty bounded interval property
+    description: >
+      Property-specification alias for intervals satisfying IsInterval,
+      IsNonempty, and IsBoundedInterval in the relevant ambient ordered or
+      topological space.
+
+  - id: struct:reduction
+    name: Reduction
+    kind: structure
+    category: logic
+    constructor: '\mathsf{Reduction}'
+    arguments:
+      - name: phi
+        role: source_formula
+        surface: '\varphi'
+      - name: psi
+        role: target_formula
+        surface: '\psi'
+    carrier_argument: null
+    structural_arguments:
+      - phi
+      - psi
+    surface_forms:
+      - reduction
+      - connective reduction
+    description: >
+      Reduction data translating an expression over one basis into an
+      expression over another basis.
+
+  - id: struct:absolute-value
+    name: AbsoluteValue
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{AbsoluteValue}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - AbsoluteValue
+    description: >
+      Volume II structure or data object named AbsoluteValue.
+
+  - id: struct:binary-operation
+    name: BinaryOperation
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{BinaryOperation}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - BinaryOperation
+    description: >
+      Volume II structure or data object named BinaryOperation.
+
+  - id: struct:closure-context
+    name: ClosureContext
+    kind: structure
+    category: algebra
+    constructor: '\mathsf{ClosureContext}'
+    arguments:
+      - name: X
+        role: ambient
+      - name: D
+        role: admissible_inputs
+      - name: Y
+        role: codomain
+      - name: P
+        role: parameters
+    carrier_argument: X
+    structural_arguments:
+      - D
+      - Y
+      - P
+    surface_forms:
+      - closure context
+      - operation context
+      - formation-rule context
+    description: >
+      Context object for a closure assertion, recording the ambient object,
+      the admissible input object, the codomain, and any parameters needed to
+      interpret the mapping, operation, or formation rule.
+
+  - id: struct:cauchy-sequence
+    name: CauchySequence
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{CauchySequence}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - CauchySequence
+    description: >
+      Volume II structure or data object named CauchySequence.
+
+  - id: struct:dedekind-cut
+    name: DedekindCut
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{DedekindCut}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - DedekindCut
+    description: >
+      Volume II structure or data object named DedekindCut.
+
+  - id: struct:derived-operation
+    name: DerivedOperation
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{DerivedOperation}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - DerivedOperation
+    description: >
+      Volume II structure or data object named DerivedOperation.
+
+  - id: struct:equivalence-class-notation
+    name: EquivalenceClassNotation
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{EquivalenceClassNotation}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - EquivalenceClassNotation
+    description: >
+      Volume II structure or data object named EquivalenceClassNotation.
+
+  - id: struct:extended-real
+    name: ExtendedReal
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{ExtendedReal}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - ExtendedReal
+    description: >
+      Volume II structure or data object named ExtendedReal.
+
+  - id: struct:extended-real-interval
+    name: ExtendedRealInterval
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{ExtendedRealInterval}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - ExtendedRealInterval
+    description: >
+      Volume II structure or data object named ExtendedRealInterval.
+
+  - id: struct:field-laws
+    name: FieldLaws
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{FieldLaws}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - FieldLaws
+    description: >
+      Volume II structure or data object named FieldLaws.
+
+  - id: struct:induced-binary-operation
+    name: InducedBinaryOperation
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{InducedBinaryOperation}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - InducedBinaryOperation
+    description: >
+      Volume II structure or data object named InducedBinaryOperation.
+
+  - id: struct:induced-unary-operation
+    name: InducedUnaryOperation
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{InducedUnaryOperation}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - InducedUnaryOperation
+    description: >
+      Volume II structure or data object named InducedUnaryOperation.
+
+  - id: struct:induction-principle
+    name: InductionPrinciple
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{InductionPrinciple}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - InductionPrinciple
+    description: >
+      Volume II structure or data object named InductionPrinciple.
+
+  - id: struct:integer-prepair
+    name: IntegerPrepair
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{IntegerPrepair}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - IntegerPrepair
+    description: >
+      Volume II structure or data object named IntegerPrepair.
+
+  - id: struct:integral-domain
+    name: IntegralDomain
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{IntegralDomain}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - IntegralDomain
+    description: >
+      Volume II structure or data object named IntegralDomain.
+
+  - id: struct:iterator-data
+    name: IteratorData
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{IteratorData}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - IteratorData
+    description: >
+      Volume II structure or data object named IteratorData.
+
+  - id: struct:iterator-relation
+    name: IteratorRelation
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{IteratorRelation}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - IteratorRelation
+    description: >
+      Volume II structure or data object named IteratorRelation.
+
+  - id: struct:minimal-relation
+    name: MinimalRelation
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{MinimalRelation}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - MinimalRelation
+    description: >
+      Volume II structure or data object named MinimalRelation.
+
+  - id: struct:non-strict-order-from-strict-order
+    name: NonStrictOrderFromStrictOrder
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{NonStrictOrderFromStrictOrder}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - NonStrictOrderFromStrictOrder
+    description: >
+      Volume II structure or data object named NonStrictOrderFromStrictOrder.
+
+  - id: struct:null-sequence
+    name: NullSequence
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{NullSequence}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - NullSequence
+    description: >
+      Volume II structure or data object named NullSequence.
+
+  - id: struct:number-line
+    name: NumberLine
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{NumberLine}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - NumberLine
+    description: >
+      Volume II structure or data object named NumberLine.
+
+  - id: struct:number-system-embedding
+    name: NumberSystemEmbedding
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{NumberSystemEmbedding}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - NumberSystemEmbedding
+    description: >
+      Volume II structure or data object named NumberSystemEmbedding.
+
+  - id: struct:ordered-field-laws
+    name: OrderedFieldLaws
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{OrderedFieldLaws}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - OrderedFieldLaws
+    description: >
+      Volume II structure or data object named OrderedFieldLaws.
+
+  - id: struct:peano-system
+    name: PeanoSystem
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{PeanoSystem}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - PeanoSystem
+    description: >
+      Volume II structure or data object named PeanoSystem.
+
+  - id: struct:positive-cone
+    name: PositiveCone
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{PositiveCone}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - PositiveCone
+    description: >
+      Volume II structure or data object named PositiveCone.
+
+  - id: struct:prefraction
+    name: Prefraction
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{Prefraction}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - Prefraction
+    description: >
+      Volume II structure or data object named Prefraction.
+
+  - id: struct:prefraction-set
+    name: PrefractionSet
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{PrefractionSet}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - PrefractionSet
+    description: >
+      Volume II structure or data object named PrefractionSet.
+
+  - id: struct:pre-integer-set
+    name: PreIntegerSet
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{PreIntegerSet}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - PreIntegerSet
+    description: >
+      Volume II structure or data object named PreIntegerSet.
+
+  - id: struct:presburger-arithmetic
+    name: PresburgerArithmetic
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{PresburgerArithmetic}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - PresburgerArithmetic
+    description: >
+      Volume II structure or data object named PresburgerArithmetic.
+
+  - id: struct:presburger-signature
+    name: PresburgerSignature
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{PresburgerSignature}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - PresburgerSignature
+    description: >
+      Volume II structure or data object named PresburgerSignature.
+
+  - id: struct:real
+    name: Real
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{Real}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - Real
+    description: >
+      Volume II structure or data object named Real.
+
+  - id: struct:relation
+    name: Relation
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{Relation}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - Relation
+    description: >
+      Volume II structure or data object named Relation.
+
+  - id: struct:stage-dependent-step-rule
+    name: StageDependentStepRule
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{StageDependentStepRule}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - StageDependentStepRule
+    description: >
+      Volume II structure or data object named StageDependentStepRule.
+
+  - id: struct:standard-real-interval
+    name: StandardRealInterval
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{StandardRealInterval}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - StandardRealInterval
+    description: >
+      Volume II structure or data object named StandardRealInterval.
+
+  - id: struct:strict-order-from-positive-cone
+    name: StrictOrderFromPositiveCone
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{StrictOrderFromPositiveCone}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - StrictOrderFromPositiveCone
+    description: >
+      Volume II structure or data object named StrictOrderFromPositiveCone.
+
+  - id: struct:strict-total-order
+    name: StrictTotalOrder
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{StrictTotalOrder}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - StrictTotalOrder
+    description: >
+      Volume II structure or data object named StrictTotalOrder.
+
+  - id: struct:unary-operation
+    name: UnaryOperation
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{UnaryOperation}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - UnaryOperation
+    description: >
+      Volume II structure or data object named UnaryOperation.
+
+  - id: struct:reciprocal
+    name: Reciprocal
+    kind: structure
+    category: operation
+    constructor: '\mathsf{Reciprocal}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    polymorphic: true
+    surface_forms:
+      - reciprocal
+      - reciprocal operation
+      - reciprocal transform
+      - reciprocal image
+    description: >
+      Polymorphic reciprocal construction or process. Depending on the input
+      object, it may denote the reciprocal of a nonzero scalar, the pointwise
+      reciprocal of a function or sequence, or the elementwise reciprocal image
+      of a set whose elements lie in a reciprocal domain.
+
+  - id: struct:well-order
+    name: WellOrder
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{WellOrder}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - WellOrder
+    description: >
+      Volume II structure or data object named WellOrder.

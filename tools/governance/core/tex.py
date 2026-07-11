@@ -1,14 +1,40 @@
 from __future__ import annotations
 
+from functools import lru_cache
 from pathlib import Path
 import re
 
 
 INPUT_RE = re.compile(r"\\(?:input|include)\{([^}]+)\}")
 
+_RAW_TEXT_CACHE: dict[Path, str] = {}
+_STRIPPED_TEXT_CACHE: dict[Path, str] = {}
+
+
+def clear_text_cache() -> None:
+    _RAW_TEXT_CACHE.clear()
+    _STRIPPED_TEXT_CACHE.clear()
+    strip_latex_comments.cache_clear()
+
+
+def register_text_cache(path: Path, raw: str, stripped: str | None = None) -> None:
+    key = path.resolve()
+    _RAW_TEXT_CACHE[key] = raw
+    _STRIPPED_TEXT_CACHE[key] = stripped if stripped is not None else strip_latex_comments(raw)
+
 
 def read_text(path: Path) -> str:
-    return path.read_text(encoding="utf-8", errors="replace")
+    key = path.resolve()
+    if key not in _RAW_TEXT_CACHE:
+        _RAW_TEXT_CACHE[key] = path.read_text(encoding="utf-8", errors="replace")
+    return _RAW_TEXT_CACHE[key]
+
+
+def read_stripped_text(path: Path) -> str:
+    key = path.resolve()
+    if key not in _STRIPPED_TEXT_CACHE:
+        _STRIPPED_TEXT_CACHE[key] = strip_latex_comments(read_text(path))
+    return _STRIPPED_TEXT_CACHE[key]
 
 
 def strip_latex_comment(line: str) -> str:
@@ -26,6 +52,7 @@ def strip_latex_comment(line: str) -> str:
     return "".join(out)
 
 
+@lru_cache(maxsize=512)
 def strip_latex_comments(text: str) -> str:
     return "\n".join(strip_latex_comment(line) for line in text.splitlines())
 

@@ -40,6 +40,7 @@ BEGIN_FORMAL_RE = re.compile(
     re.IGNORECASE,
 )
 LABEL_RE = re.compile(r"\\label\{(?P<label>[a-z]+:[^{}]+)\}")
+EUCLID_BOOK_I_ALIAS_RE = re.compile(r"^prop:I\.(?P<number>\d+)$")
 HYPERREF_RE = re.compile(r"\\hyperref\[(?P<label>[^\]]+)\](?:\{(?P<text>[^{}]*)\})?")
 DEPENDENCY_ITEM_RE = re.compile(r"^[ \t]*\\item\s+(?P<text>[^\n]+)$", re.MULTILINE)
 PROOF_FOR_RE = re.compile(r"\\LRAProofFor\{(?P<label>(?:thm|lem|prop|cor):[^{}]+)\}", re.IGNORECASE)
@@ -236,6 +237,24 @@ def failure_modes_from_body(body: str) -> list[dict[str, Any]]:
     return modes
 
 
+def canonical_formal_labels(formal_labels: list[str], path: Path) -> list[str]:
+    """Normalize approved source-text aliases to their canonical formal label."""
+    if len(formal_labels) != 2:
+        return formal_labels
+    path_text = path.as_posix()
+    if "euclidean-geometry/notes/compass-and-straightedge-constructions/propositions.tex" not in path_text:
+        return formal_labels
+    theorem_labels = [label for label in formal_labels if label.startswith("thm:euclid-i-")]
+    proposition_aliases = [label for label in formal_labels if EUCLID_BOOK_I_ALIAS_RE.match(label)]
+    if len(theorem_labels) != 1 or len(proposition_aliases) != 1:
+        return formal_labels
+    theorem_number = theorem_labels[0].removeprefix("thm:euclid-i-")
+    alias_number = EUCLID_BOOK_I_ALIAS_RE.match(proposition_aliases[0])
+    if alias_number and alias_number.group("number") == theorem_number:
+        return theorem_labels
+    return formal_labels
+
+
 def extract_nodes(repo_root: Path, repo: str, start_order: int = 0) -> tuple[list[Node], list[Issue]]:
     nodes: list[Node] = []
     issues: list[Issue] = []
@@ -252,7 +271,10 @@ def extract_nodes(repo_root: Path, repo: str, start_order: int = 0) -> tuple[lis
             if not labels:
                 issues.append(Issue("error", "missing_formal_label", f"{env} has no label.", repo, rel(path, repo_root), line))
                 continue
-            formal_labels = [label for label in labels if label.split(":", 1)[0] in FORMAL_PREFIXES]
+            formal_labels = canonical_formal_labels(
+                [label for label in labels if label.split(":", 1)[0] in FORMAL_PREFIXES],
+                path,
+            )
             if len(formal_labels) != 1:
                 issues.append(
                     Issue(
@@ -473,10 +495,13 @@ def extract_edges_from_universe(root: Path, universe: Universe, universe_ref: st
         blocks = formal_blocks(text)
         for begin, end_pos in blocks:
             block_text = text[begin.start() : end_pos]
-            formal_labels = [
-                label for label in LABEL_RE.findall(block_text)
-                if label.split(":", 1)[0] in FORMAL_PREFIXES
-            ]
+            formal_labels = canonical_formal_labels(
+                [
+                    label for label in LABEL_RE.findall(block_text)
+                    if label.split(":", 1)[0] in FORMAL_PREFIXES
+                ],
+                path,
+            )
             if len(formal_labels) != 1:
                 continue
             source = formal_labels[0]

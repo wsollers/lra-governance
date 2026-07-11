@@ -56,7 +56,7 @@ def set_repo_root(repo_dir: str | Path | None = None) -> Path:
     """
     global REPO_ROOT, CONSTITUTION_DIR, SCHEMA_DIR, PROMPTS_DIR, RESPONSE_SCHEMA_DIR
     global BLOCK_REGISTRY_PATH, ARTIFACT_MATRIX_PATH, FILE_SCHEMA_PATH, AUDIT_REPORT_SCHEMA_PATH
-    global PROMPTS, PREDICATES_PATH, NOTATION_PATH, RELATIONS_PATH, CANONICAL_SOURCES, REPORTS_DIR
+    global PROMPTS, PREDICATES_PATH, STRUCTURES_PATH, NOTATION_PATH, RELATIONS_PATH, CANONICAL_SOURCES, REPORTS_DIR
 
     REPO_ROOT = Path(repo_dir).resolve() if repo_dir else _discover_repo_root()
 
@@ -88,11 +88,13 @@ def set_repo_root(repo_dir: str | Path | None = None) -> Path:
     # Canonical YAML sources always live in lra-governance.
     # They are never duplicated in volume repos.
     PREDICATES_PATH = REPO_ROOT / "predicates.yaml"
+    STRUCTURES_PATH = REPO_ROOT / "structures.yaml"
     NOTATION_PATH = REPO_ROOT / "notation.yaml"
     RELATIONS_PATH = REPO_ROOT / "relations.yaml"
 
     CANONICAL_SOURCES = {
         "predicates": PREDICATES_PATH,
+        "structures": STRUCTURES_PATH,
         "notation": NOTATION_PATH,
         "relations": RELATIONS_PATH,
     }
@@ -142,6 +144,7 @@ FILE_SCHEMA_PATH = Path()
 AUDIT_REPORT_SCHEMA_PATH = Path()
 PROMPTS: dict[str, Path] = {}
 PREDICATES_PATH = Path()
+STRUCTURES_PATH = Path()
 NOTATION_PATH = Path()
 RELATIONS_PATH = Path()
 CANONICAL_SOURCES: dict[str, Path] = {}

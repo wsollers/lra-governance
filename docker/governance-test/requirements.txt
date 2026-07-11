@@ -1,0 +1,5 @@
+pytest
+pyyaml
+jsonschema
+anthropic
+openai

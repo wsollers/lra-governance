@@ -23,6 +23,7 @@ predicate-language version.
 The source-of-truth files live in `lra-governance`:
 
 - `predicates.yaml`
+- `structures.yaml`
 - `notation.yaml`
 - `relations.yaml`
 
@@ -84,7 +85,8 @@ style.
 
 ## Missing Predicate Protocol
 
-Do not invent predicates inline. Apply `predicate-standards.md`: first check
-whether an existing ambient-structure predicate can express the reading by
-changing the ambient argument. If not, report the missing predicate need instead
-of creating an ad hoc name.
+Do not invent predicates or structure constructors inline. Apply
+`predicate-standards.md`: first check whether an existing ambient-structure
+predicate can express the reading by changing the ambient argument. If not,
+report the missing predicate or structure need instead of creating an ad hoc
+name.

@@ -52,6 +52,7 @@ def generate_statement(
         artifact_matrix_row=matrix_yaml,
         artifact_type=artifact_type,
         predicates_yaml=loader.canonical_source("predicates"),
+        structures_yaml=loader.canonical_source("structures"),
         notation_yaml=loader.canonical_source("notation"),
         relations_yaml=loader.canonical_source("relations"),
         chapter_registry=chapter_registry_yaml,

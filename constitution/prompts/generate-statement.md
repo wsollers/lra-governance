@@ -28,8 +28,8 @@ You will receive:
 2. The mathematical content to be formalized.
 3. The requirement row for that artifact type from `artifact-matrix.yaml`.
 4. The block registry from `block-registry.yaml`.
-5. The relevant entries from `predicates.yaml`, `notation.yaml`, and
-   `relations.yaml`.
+5. The relevant entries from `predicates.yaml`, `structures.yaml`,
+   `notation.yaml`, and `relations.yaml`.
 6. The chapter subject and chapter registry context.
 7. The formal mathematical label index, when available. This index contains
    only valid dependency targets from `definition`, `theorem`, `lemma`,
@@ -94,16 +94,22 @@ Before writing any LaTeX, perform these checks silently and apply results:
    predicates with explicit ambient-structure arguments over specialized
    predicate names. If no canonical predicate can express the reading, emit a
    `MISSING_PREDICATE` comment and do not invent a predicate name.
-3. Proof-usage check: generate negation/failure-mode/contrapositive blocks
+3. Structure check: if a predicate reading needs an ambient object such as an
+   ordered set, function space, set family, or topological space, use a
+   constructor from `structures.yaml`. Assign the structure before using it,
+   such as `P=\mathsf{OrderedSet}(A,\leq)`. If no canonical structure can
+   express the ambient object, emit a `MISSING_STRUCTURE` comment and do not
+   invent a constructor.
+4. Proof-usage check: generate negation/failure-mode/contrapositive blocks
    only when the form is mathematically useful or required by the artifact
    matrix. For definitions, the negation and failure modes are normally useful.
-4. Box check: boxes are selective structural emphasis. Definitions are not
+5. Box check: boxes are selective structural emphasis. Definitions are not
    boxed merely because they are first appearances; box them only when they are
    load-bearing for the section or chapter. Axioms are boxed by default. Named
    primary theorem-like results are boxed when required by the artifact matrix.
-5. Proof-link check: include proof links only when the artifact type and
+6. Proof-link check: include proof links only when the artifact type and
    provided context require them.
-6. Label check: if the caller supplies a canonical label, use that exact
+7. Label check: if the caller supplies a canonical label, use that exact
    label. Otherwise, if Candidate Existing Labels contains a label for the
    same mathematical item, reuse that exact label. Invent a new label only
    when the item is genuinely absent from the label index.
@@ -230,6 +236,7 @@ Use this option shape:
   `\forall x,y,z\in A` counts as three, and
   `\forall y\in B\,\exists x\in A` counts as two.
 - Verify predicate names against `predicates.yaml`.
+- Verify structure constructors against `structures.yaml`.
 - Follow `docs/governance/predicate-standards.md` for predicate signatures.
   If the predicate depends on a surrounding structure, pass the whole ambient
   object as an argument and recover its carrier or operations inside the
@@ -237,6 +244,9 @@ Use this option shape:
   `\operatorname{Sequence}(x_n,M)`,
   `\operatorname{ConvergentSequence}(x_n,x_0,M)`, and
   `\operatorname{CauchySequence}(x_n,M)`.
+- Assign newly introduced structures before they appear as predicate
+  arguments, for example `P=\mathsf{OrderedSet}(A,\leq)` before
+  `\operatorname{UpperBound}(u,S,P)`.
 - For definitions, prefer `\coloneqq`:
   `\operatorname{UpperBound}(u,A) \coloneqq ...`.
 - Do not use undefined bare predicate macros such as `\UpperBound`,
@@ -246,6 +256,10 @@ Use this option shape:
 - If no canonical predicate exists, emit:
   `% MISSING_PREDICATE: <description> | Location: <label> | Suggested: <form>`
   and omit the predicate reading block.
+- If no canonical structure exists, emit:
+  `% MISSING_STRUCTURE: <description> | Location: <label> | Suggested: <form>`
+  and omit the predicate reading block if the missing structure is required to
+  make the predicate signature meaningful.
 
 ## Negation And Failure Modes
 
@@ -389,6 +403,7 @@ generations to be placed under separate topic containers, not bundling or
 
 - Use notation from `notation.yaml`.
 - Use predicate names from `predicates.yaml`.
+- Use structure constructors from `structures.yaml`.
 - Use relation names from `relations.yaml`.
 - Do not invent canonical names inline.
 

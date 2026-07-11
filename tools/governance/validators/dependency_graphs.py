@@ -16,6 +16,7 @@ def validate(volume_root: Path) -> list[Finding]:
     issues = dependency_graph.validate_graph(universe, edges, policy)
     for issue in issues:
         path = repo_root / issue.file if issue.file else repo_root
+        severity = "error" if issue.code == "invalid_formal_label_count" else "warning"
         findings.append(
             finding(
                 issue.code,
@@ -23,7 +24,7 @@ def validate(volume_root: Path) -> list[Finding]:
                 path,
                 volume_root,
                 issue.line,
-                "warning",
+                severity,
             )
         )
     return findings

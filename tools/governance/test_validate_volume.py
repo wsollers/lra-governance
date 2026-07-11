@@ -12,7 +12,7 @@ import dependency_graph
 from core import volume as volume_core
 from validate_volume import VALIDATORS
 from core.validator_runner import run_validator
-from validators import block_discipline, book_toc, capstones, chapter_router, dedication_page, dependency_blocks, dependency_graphs, figure_fragments, formal_decoration, formal_reading_required, frontmatter_standard, input_resolution, interpretation_blocks, labels, latex_integrity, math_boxes, notes_structure, print_edition_routing, proof_coverage, proof_file_contract, proof_layout, proof_order, proof_routing, proof_stub_state, reference_voice, structural_chrome, structural_positions, volume_shape
+from validators import block_discipline, book_toc, capstones, chapter_router, dedication_page, dependency_blocks, dependency_graphs, figure_fragments, formal_decoration, formal_reading_required, frontmatter_standard, input_resolution, interpretation_blocks, labels, latex_integrity, math_boxes, notes_structure, operator_metadata, print_edition_routing, proof_coverage, proof_file_contract, proof_layout, proof_order, proof_routing, proof_stub_state, reference_voice, structural_chrome, structural_positions, volume_shape
 
 
 HERE = Path(__file__).resolve().parent
@@ -1278,6 +1278,32 @@ class ValidateVolumeTests(unittest.TestCase):
 
         self.assertEqual(validate_with_inventory(formal_decoration, volume), [])
 
+    def test_operator_metadata_flags_unregistered_operatorname(self):
+        volume = make_volume()
+        note = volume / "integers" / "notes" / "order" / "notes-order.tex"
+        note.write_text(
+            "\n".join(
+                [
+                    r"\begin{remark*}[Predicate reading]",
+                    r"\[",
+                    r"\operatorname{UnknownLocalPredicate}(x)",
+                    r"\quad\text{and}\quad",
+                    r"\operatorname{IsContinuous}(f,I,X,Y)",
+                    r"\quad\text{and}\quad",
+                    r"\operatorname{Carrier}(X)",
+                    r"\]",
+                    r"\end{remark*}",
+                    "",
+                ]
+            ),
+            encoding="utf-8",
+        )
+
+        findings = validate_with_inventory(operator_metadata, volume)
+
+        self.assertEqual([finding.code for finding in findings], ["unregistered_operatorname"])
+        self.assertIn("UnknownLocalPredicate", findings[0].message)
+
     def test_formal_decoration_flags_source_and_expository_claims(self):
         volume = make_volume()
         write(
@@ -2030,6 +2056,55 @@ class ValidateVolumeTests(unittest.TestCase):
         self.assertIn("figure_fragment_missing_label", codes)
         self.assertIn("figure_fragment_must_be_nonfloating", codes)
         self.assertNotIn("figure_fragment_missing_figure_environment", codes)
+
+    def test_validate_volume_book_scope_limits_report_paths(self):
+        if TMP.exists():
+            shutil.rmtree(TMP)
+        repo = TMP / "lra-volume-test"
+        volume = repo / "volume-ii"
+        for book in ("book-a", "book-b"):
+            write(
+                volume / book / "chapter" / "notes" / "topic" / "bad.tex",
+                "\n".join(
+                    [
+                        r"\begin{definition}[Bad]",
+                        rf"\label{{def:{book}-bad}}",
+                        "A bad scoped definition.",
+                        r"\end{definition}",
+                        "",
+                    ]
+                ),
+            )
+        report = TMP / "book-a-report.json"
+        preprocess_dir = TMP / "preprocessed-book-a"
+
+        completed = subprocess.run(
+            [
+                sys.executable,
+                str(HERE / "validate_volume.py"),
+                str(repo),
+                "--book",
+                "book-a",
+                "--json",
+                str(report),
+                "--preprocess-dir",
+                str(preprocess_dir),
+            ],
+            cwd=HERE,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=False,
+        )
+
+        self.assertEqual(completed.returncode, 0, completed.stderr + completed.stdout)
+        data = json.loads(report.read_text(encoding="utf-8"))
+        manifest = json.loads((preprocess_dir / "manifest.json").read_text(encoding="utf-8"))
+        paths = {record["path"] for record in data["records"]}
+        self.assertTrue(paths)
+        self.assertEqual(manifest["file_count"], 1)
+        self.assertTrue(all(path.startswith("book-a/") for path in paths), paths)
+        self.assertFalse(any(path.startswith("book-b/") for path in paths), paths)
 
 
 if __name__ == "__main__":

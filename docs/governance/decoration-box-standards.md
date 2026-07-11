@@ -308,6 +308,12 @@ predicate names or extraction predicate forms here.
 Preserve all hypotheses and ambient variables. For structured objects, state
 the ambient setting explicitly rather than using malformed quantified syntax.
 
+The standard quantified statement belongs to one formal object. If a proposed
+definition or theorem needs separate quantified statements for separate
+predicates, split the formal statement before writing support blocks. The
+support blocks are not a place to choose one item from a multi-definition box;
+the formal box itself must already be atomic.
+
 ## Predicate Readings
 
 Use `Predicate reading` for definitions and theorem-like environments.

@@ -1,5 +1,5 @@
 # Audit Prompt: Chapter Symbol Audit
-# Covers: predicates, notation, and relations used in a chapter
+# Covers: predicates, structures, notation, and relations used in a chapter
 # versus the canonical source files
 
 ## Role
@@ -18,8 +18,8 @@ You report findings only.
 
 All output must be ASCII. Do not emit Unicode mathematical symbols or Unicode
 punctuation. In this markdown report, every mathematical expression, suggested
-canonical form, predicate form, notation form, and relation form must be written
-as raw LaTeX source inside backticks. Use TeX commands such as `\forall`,
+canonical form, predicate form, structure form, notation form, and relation form
+must be written as raw LaTeX source inside backticks. Use TeX commands such as `\forall`,
 `\exists`, `\in`, `\land`, `\lor`, `\Rightarrow`, `\to`, `\varepsilon`,
 `\delta`, and `\mathbb{R}`. Do not write rendered symbols such as forall,
 exists, element-of, logical-and, arrows, Greek letters, smart quotes, en dashes,
@@ -30,15 +30,16 @@ or em dashes as Unicode characters.
 You will receive:
 1. The full contents of the chapter (all .tex files, concatenated or listed).
 2. The full contents of predicates.yaml.
-3. The full contents of notation.yaml.
-4. The full contents of relations.yaml.
-5. The applicable predicate standards from
+3. The full contents of structures.yaml.
+4. The full contents of notation.yaml.
+5. The full contents of relations.yaml.
+6. The applicable predicate standards from
    `docs/governance/predicate-standards.md`, especially ambient-structure
    argument rules.
 
 ## Task
 
-Perform three passes over the chapter content.
+Perform four passes over the chapter content.
 
 ---
 
@@ -66,7 +67,27 @@ Flag these as PREDICATE_LEAKAGE with the block type and location.
 
 ---
 
-### Pass 2 -- Notation Audit
+### Pass 2 -- Structure Audit
+
+Scan the chapter for all ambient structure constructors, including
+`\mathsf{...}` forms and prose references to ordered sets, function spaces, set
+families, topological spaces, and similar ambient objects.
+
+For each structure found:
+
+**MISSING** -- used in the chapter but not registered in structures.yaml.
+**INCONSISTENT** -- registered in structures.yaml but used with different
+  argument roles, constructor spelling, or ambient-object convention.
+**CORRECT** -- present in structures.yaml and used correctly.
+
+Predicate-reading blocks must assign newly introduced ambient structures before
+using predicates that depend on them, for example
+`P=\mathsf{OrderedSet}(A,\leq)` before
+`\operatorname{UpperBound}(u,S,P)`.
+
+---
+
+### Pass 3 -- Notation Audit
 
 Scan the chapter for all mathematical notation: symbols, operators, variable
 conventions, quantifier forms, set names, and spacing conventions.
@@ -86,7 +107,7 @@ Pay particular attention to:
 
 ---
 
-### Pass 3 -- Relation Audit
+### Pass 4 -- Relation Audit
 
 Scan the chapter for all relation names used in formal displays.
 
@@ -98,10 +119,10 @@ For each relation name found:
 
 ---
 
-### Pass 4 -- Unused Registry Entries (Informational)
+### Pass 5 -- Unused Registry Entries (Informational)
 
-List any predicates, notation items, or relations that are registered in the
-canonical files but never referenced in this chapter.
+List any predicates, structures, notation items, or relations that are
+registered in the canonical files but never referenced in this chapter.
 
 This is INFORMATIONAL ONLY -- unused registry entries are not violations.
 Do not recommend deletion without explicit instruction.
@@ -139,6 +160,23 @@ When the report mentions math, write it as raw LaTeX source inside backticks.
 | ...            | ...        | ...      |
 
 ### Correct Predicates
+(list names only -- no table needed)
+
+---
+
+## Structure Audit
+
+### Missing Structures
+| Structure Name | Location in Chapter | Suggested Canonical Form |
+|----------------|--------------------|--------------------------|
+| ...            | ...                | ...                      |
+
+### Inconsistent Structures
+| Structure Name | Registered Form | Used Form | Location |
+|----------------|-----------------|-----------|----------|
+| ...            | ...             | ...       | ...      |
+
+### Correct Structures
 (list names only -- no table needed)
 
 ---
@@ -182,6 +220,9 @@ When the report mentions math, write it as raw LaTeX source inside backticks.
 ### Unused Predicates
 - ...
 
+### Unused Structures
+- ...
+
 ### Unused Notation
 - ...
 
@@ -197,6 +238,8 @@ When the report mentions math, write it as raw LaTeX source inside backticks.
 | Missing predicates    | N     |
 | Inconsistent predicates | N   |
 | Predicate leakage     | N     |
+| Missing structures    | N     |
+| Inconsistent structures | N   |
 | Missing notation      | N     |
 | Inconsistent notation | N     |
 | Missing relations     | N     |
@@ -208,10 +251,12 @@ When the report mentions math, write it as raw LaTeX source inside backticks.
 
 ## After Reviewing This Report
 
-If you wish to add items to predicates.yaml, notation.yaml, or relations.yaml:
+If you wish to add items to predicates.yaml, structures.yaml, notation.yaml, or
+relations.yaml:
 
 Issue an explicit add request in a new message. Example:
   "Add the missing predicate UpperBound to predicates.yaml"
+  "Add the missing structure OrderedSet to structures.yaml"
 
 The assistant will then return a ready-to-paste YAML block for that item only.
 You paste it into the canonical file yourself.
