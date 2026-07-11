@@ -1,6 +1,6 @@
 """
 audits/symbols.py
-Audits a chapter for predicate, notation, and relation consistency
+Audits a chapter for predicate, structure, notation, and relation consistency
 against the canonical source files.
 
 Returns markdown (not JSON) — this audit has a different output contract.
@@ -41,7 +41,7 @@ def audit_symbols(
     chapter_path: Path,
 ) -> str:
     """
-    Audits a chapter's use of predicates, notation, and relations.
+    Audits a chapter's use of predicates, structures, notation, and relations.
 
     Returns:
         A markdown string containing the audit report.
@@ -52,12 +52,14 @@ def audit_symbols(
     chapter_tex    = _collect_chapter_tex(chapter_path)
     base_prompt    = loader.prompt("audit_symbols")
     predicates_yaml = loader.canonical_source("predicates")
+    structures_yaml = loader.canonical_source("structures")
     notation_yaml   = loader.canonical_source("notation")
     relations_yaml  = loader.canonical_source("relations")
 
     system = client.assemble_symbol_audit_system_prompt(
         base_prompt,
         predicates_yaml=predicates_yaml,
+        structures_yaml=structures_yaml,
         notation_yaml=notation_yaml,
         relations_yaml=relations_yaml,
     )

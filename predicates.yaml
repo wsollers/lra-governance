@@ -194,6 +194,44 @@ predicates:
     description: >
       The object I is an interval in X with finite left and right endpoints.
 
+  - id: pred:is-empty
+    name: IsEmpty
+    kind: predicate
+    category: set
+    arguments:
+      - name: A
+        role: object_or_collection
+    returns: truth_value
+    ambient_argument: A
+    polymorphic: true
+    surface_forms:
+      - empty
+      - is empty
+      - has no elements
+      - has no members
+    description: >
+      The object or collection A has no elements, members, points, or
+      admissible inputs in the relevant ambient context.
+
+  - id: pred:is-nonempty
+    name: IsNonempty
+    kind: predicate
+    category: set
+    arguments:
+      - name: A
+        role: object_or_collection
+    returns: truth_value
+    ambient_argument: A
+    polymorphic: true
+    surface_forms:
+      - nonempty
+      - is nonempty
+      - has elements
+      - has members
+    description: >
+      The object or collection A has at least one element, member, point, or
+      admissible input in the relevant ambient context.
+
   - id: pred:converges-to
     name: ConvergesTo
     kind: predicate
@@ -1423,6 +1461,51 @@ predicates:
     description: >
       The pair A and B forms a Dedekind gap in the ordered structure P.
 
+  - id: pred:is-dedekind-separator
+    name: IsDedekindSeparator
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: c
+        role: separator
+      - name: A
+        role: lower_part
+      - name: B
+        role: upper_part
+      - name: P
+        role: ambient_ordered_structure
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - is dedekind separator
+      - dedekind separator
+      - separator point
+    description: >
+      The point c in the ordered structure P separates the lower part A from
+      the upper part B: every element of A is at or below c, and c is at or
+      below every element of B.
+
+  - id: pred:has-dedekind-separator
+    name: HasDedekindSeparator
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: A
+        role: lower_part
+      - name: B
+        role: upper_part
+      - name: P
+        role: ambient_ordered_structure
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - has dedekind separator
+      - admits dedekind separator
+      - has separator point
+    description: >
+      The lower part A and upper part B admit at least one Dedekind separator
+      in the ordered structure P.
+
   - id: pred:nested-closed-intervals
     name: NestedClosedIntervals
     kind: predicate
@@ -1438,6 +1521,27 @@ predicates:
       - nested closed intervals
     description: >
       The family F is a nested family of closed intervals in P.
+
+  - id: pred:nested
+    name: Nested
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: F
+        role: family_or_sequence
+      - name: R
+        role: nesting_relation_or_order
+    returns: truth_value
+    ambient_argument: R
+    polymorphic: true
+    surface_forms:
+      - nested
+      - nested family
+      - decreasing family
+    description: >
+      The family or sequence F is nested with respect to the relation or order
+      R: later members are contained in, refine, or otherwise lie below
+      earlier members according to R.
 
   - id: pred:nested-closed-bounded-intervals
     name: NestedClosedBoundedIntervals
@@ -3316,6 +3420,29 @@ predicates:
     description: >
       The function f takes the same value in B on every input from A.
 
+  - id: pred:constant-on
+    name: ConstantOn
+    kind: predicate
+    category: function
+    arguments:
+      - name: X
+        role: object_or_operator
+      - name: A
+        role: region_or_domain
+    returns: truth_value
+    ambient_argument: A
+    polymorphic: true
+    surface_forms:
+      - constant on
+      - locally constant on
+      - constant over
+    description: >
+      The object, expression, function, operator, or set-valued assignment X
+      has the same value on every admissible input from the region or domain A.
+      This covers functions constant on intervals or sets, operators constant
+      on a class of inputs, and formation rules that return the same output
+      over a specified domain.
+
   - id: pred:composition-compatible
     name: CompositionCompatible
     kind: predicate
@@ -3782,6 +3909,28 @@ predicates:
       The element u_star is the least upper bound of S in the ambient ordered
       structure P.
 
+  - id: pred:epsilon-characterization-of-supremum
+    name: EpsilonCharacterizationOfSupremum
+    kind: predicate
+    category: order
+    arguments:
+      - name: u_star
+        role: supremum_candidate
+        surface: 'u^*'
+      - name: S
+        role: subset
+      - name: P
+        role: ambient
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - epsilon characterization of supremum
+      - epsilon characterization of least upper bound
+    description: >
+      Epsilon-characterization alias for LeastUpperBound(u_star,S,P): u_star
+      is an upper bound of S in P and S has points arbitrarily close below
+      u_star.
+
   - id: pred:greatest-lower-bound
     name: GreatestLowerBound
     kind: predicate
@@ -3803,6 +3952,28 @@ predicates:
     description: >
       The element ell_star is the greatest lower bound of S in the ambient
       ordered structure P.
+
+  - id: pred:epsilon-characterization-of-infimum
+    name: EpsilonCharacterizationOfInfimum
+    kind: predicate
+    category: order
+    arguments:
+      - name: ell_star
+        role: infimum_candidate
+        surface: '\ell^*'
+      - name: S
+        role: subset
+      - name: P
+        role: ambient
+    returns: truth_value
+    ambient_argument: P
+    surface_forms:
+      - epsilon characterization of infimum
+      - epsilon characterization of greatest lower bound
+    description: >
+      Epsilon-characterization alias for GreatestLowerBound(ell_star,S,P):
+      ell_star is a lower bound of S in P and S has points arbitrarily close
+      above ell_star.
 
   - id: pred:chain
     name: Chain
@@ -4026,6 +4197,43 @@ predicates:
     description: >
       The function f preserves order from the ambient ordered structure P to Q.
 
+  - id: pred:is-order-dense-subset
+    name: IsOrderDenseSubset
+    kind: predicate
+    category: order
+    arguments:
+      - name: A
+        role: subset
+      - name: X
+        role: ambient_order
+    returns: truth_value
+    ambient_argument: X
+    polymorphic: true
+    surface_forms:
+      - order dense subset
+      - is order dense in
+    description: >
+      The subset A is order dense in the ordered ambient object X: every
+      nonempty open interval of X contains a point of A.
+
+  - id: pred:has-dense-order
+    name: HasDenseOrder
+    kind: predicate
+    category: order
+    arguments:
+      - name: X
+        role: ambient_order
+    returns: truth_value
+    ambient_argument: X
+    polymorphic: true
+    surface_forms:
+      - dense order
+      - has dense order
+      - order dense
+    description: >
+      The ordered ambient object X has dense order: between any two distinct
+      comparable points of X there is a third point of X.
+
   - id: pred:order-reversing
     name: OrderReversing
     kind: predicate
@@ -4045,6 +4253,95 @@ predicates:
       - antitone function
     description: >
       The function f reverses order from the ambient ordered structure P to Q.
+
+  - id: pred:increasing
+    name: Increasing
+    kind: predicate
+    category: order
+    arguments:
+      - name: X
+        role: sequence_function_or_operator
+      - name: C
+        role: ordered_context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - increasing
+      - nondecreasing
+      - monotone increasing
+    description: >
+      The sequence, function, operator, or other ordered assignment X is
+      monotone increasing in the ordered context C. The context supplies the
+      relevant input/index order and output/value order when they are implicit.
+      When both ordered ambients must be named explicitly, use
+      OrderPreserving.
+
+  - id: pred:decreasing
+    name: Decreasing
+    kind: predicate
+    category: order
+    arguments:
+      - name: X
+        role: sequence_function_or_operator
+      - name: C
+        role: ordered_context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - decreasing
+      - nonincreasing
+      - monotone decreasing
+    description: >
+      The sequence, function, operator, or other ordered assignment X is
+      monotone decreasing in the ordered context C. The context supplies the
+      relevant input/index order and output/value order when they are implicit.
+      When both ordered ambients must be named explicitly, use OrderReversing.
+
+  - id: pred:strictly-increasing
+    name: StrictlyIncreasing
+    kind: predicate
+    category: order
+    arguments:
+      - name: X
+        role: sequence_function_or_operator
+      - name: C
+        role: ordered_context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - strictly increasing
+      - strictly monotone increasing
+    description: >
+      The sequence, function, operator, or other ordered assignment X is
+      strictly monotone increasing in the ordered context C. The context
+      supplies the relevant input/index order and output/value order when they
+      are implicit. When both ordered ambients must be named explicitly, use
+      StrictOrderPreserving.
+
+  - id: pred:strictly-decreasing
+    name: StrictlyDecreasing
+    kind: predicate
+    category: order
+    arguments:
+      - name: X
+        role: sequence_function_or_operator
+      - name: C
+        role: ordered_context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - strictly decreasing
+      - strictly monotone decreasing
+    description: >
+      The sequence, function, operator, or other ordered assignment X is
+      strictly monotone decreasing in the ordered context C. The context
+      supplies the relevant input/index order and output/value order when they
+      are implicit. When both ordered ambients must be named explicitly, use
+      StrictOrderReversing.
 
   - id: pred:strict-order-preserving
     name: StrictOrderPreserving
@@ -4789,6 +5086,55 @@ predicates:
     description: >
       Equivalent representatives in the domain quotient determine equivalent
       outputs in the codomain quotient under F.
+
+  - id: pred:closed-under
+    name: ClosedUnder
+    kind: predicate
+    category: algebra
+    arguments:
+      - name: F
+        role: rule_or_operation
+      - name: A
+        role: stable_collection
+      - name: C
+        role: closure_context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - closed under
+      - stable under
+      - closure under an operation
+      - closure under a formation rule
+    description: >
+      The collection A is closed under the mapping, operation, or formation
+      rule F in the context C: every admissible input determined by C and
+      drawn from A is sent by F to an output still in A.
+
+  - id: pred:members-satisfy
+    name: MembersSatisfy
+    kind: predicate
+    category: set
+    arguments:
+      - name: F
+        role: family_or_collection
+      - name: Phi
+        role: property_specification
+        surface: '\Phi'
+      - name: X
+        role: ambient
+    returns: truth_value
+    ambient_argument: X
+    polymorphic: true
+    surface_forms:
+      - members satisfy
+      - every member satisfies
+      - family members satisfy
+    description: >
+      Every member of the family or collection F satisfies the property
+      specification Phi in the ambient context X. Property specifications may
+      abbreviate conjunctions of existing predicates, such as interval,
+      openness, boundedness, and nonemptiness.
 
   - id: pred:closed-under-unary-operation
     name: ClosedUnderUnaryOperation
@@ -7987,3 +8333,20 @@ predicates:
       - ZeroMultiplicationCollapsesOrder
     description: >
       Volume II predicate or assertion named ZeroMultiplicationCollapsesOrder.
+
+  - id: pred:least-upper-bound-property
+    name: LeastUpperBoundProperty
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - LeastUpperBoundProperty
+    description: >
+      Volume II predicate or assertion named LeastUpperBoundProperty.

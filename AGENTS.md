@@ -42,7 +42,6 @@ Do not include secrets, credentials, tokens, or machine-local private values in
 generated files.
 
 Do not modify mathematical content during governance tasks. The canonical
-vocabulary (`predicates.yaml`, `notation.yaml`, `relations.yaml`) lives in
-`lra-governance`; do not invent predicates, notation, relations, labels, or
-dependencies.
-
+vocabulary (`predicates.yaml`, `structures.yaml`, `notation.yaml`,
+`relations.yaml`) lives in `lra-governance`; do not invent predicates,
+structure constructors, notation, relations, labels, or dependencies.

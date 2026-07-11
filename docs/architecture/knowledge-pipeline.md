@@ -7,7 +7,8 @@ provider-specific agent behavior.
 ## Ownership
 
 - `lra-governance` owns the integrated extraction standards, the canonical YAML
-  sources (`predicates.yaml`, `notation.yaml`, `relations.yaml`), and the
+  sources (`predicates.yaml`, `structures.yaml`, `notation.yaml`,
+  `relations.yaml`), and the
   orchestration scripts, schemas, validators, prompts, logs, reports, and
   committed comparison baselines for the refresh.
 - The independent `lra-volume-*` repos are the canonical TeX source inputs.

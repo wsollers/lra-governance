@@ -37,7 +37,7 @@ judgment-heavy checks:
 - mathematical correctness of negations, contrapositives, and quantified forms;
 - atomicity of definitions and theorem-like statements;
 - canonical notation consistency beyond simple predicate/name scans;
-- full symbol-audit reporting against predicates, notation, and relations;
+- full symbol-audit reporting against predicates, structures, notation, and relations;
 - audit-report output parity for statement audits;
 - volume-stub parity;
 - proof body quality checks beyond layer/layout enforcement.

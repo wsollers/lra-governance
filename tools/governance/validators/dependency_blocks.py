@@ -3,18 +3,14 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
+from core.formal_blocks import formal_blocks_for_file
 from core.finding import Finding, finding
-from core.tex import read_text, strip_latex_comments
+from core.tex import read_stripped_text
 from core.file_inventory import validator_files
 
 
 FORMAL_ENVS = {"definition", "axiom", "theorem", "lemma", "proposition", "corollary"}
 FORMAL_PREFIXES = {"def", "ax", "thm", "lem", "prop", "cor"}
-BEGIN_FORMAL_RE = re.compile(
-    r"\\begin\{(?P<env>definition|axiom|theorem|lemma|proposition|corollary)\}"
-    r"(?:\[[^\]]*\])?",
-    re.IGNORECASE,
-)
 SECTION_RE = re.compile(r"\\(?:chapter|section|subsection|subsubsection)\*?\{")
 DEPENDENCIES_ENV_RE = re.compile(r"\\begin\{dependencies\}(?P<body>[\s\S]*?)\\end\{dependencies\}", re.IGNORECASE)
 DEPENDENCIES_REMARK_RE = re.compile(r"\\begin\{remark\*\}\[Dependencies\](?P<body>[\s\S]*?)\\end\{remark\*\}", re.IGNORECASE)
@@ -33,17 +29,13 @@ def validate(volume_root: Path, files) -> list[Finding]:
 
 
 def _validate_file(volume_root: Path, path: Path, findings: list[Finding]) -> None:
-    text = strip_latex_comments(read_text(path))
-    blocks = list(_formal_blocks(text))
-    for begin, end_pos in blocks:
-        block_text = text[begin.start():end_pos]
-        labels = [label for label in LABEL_RE.findall(block_text) if label.split(":", 1)[0] in FORMAL_PREFIXES]
-        label = labels[0] if labels else "(unlabeled formal block)"
-        window_start = end_pos
-        window_end = _next_boundary(text, window_start)
+    text = read_stripped_text(path)
+    for block in formal_blocks_for_file(path):
+        label = block.label if block.label.split(":", 1)[0] in FORMAL_PREFIXES else "(unlabeled formal block)"
+        window_start = block.end
+        window_end = block.next_boundary
         window = text[window_start:window_end]
         declarations = _dependency_declarations(window)
-        line = text.count("\n", 0, begin.start()) + 1
         if not declarations:
             findings.append(
                 finding(
@@ -51,7 +43,7 @@ def _validate_file(volume_root: Path, path: Path, findings: list[Finding]) -> No
                     f"{label} lacks a dependencies declaration.",
                     path,
                     volume_root,
-                    line,
+                    block.line,
                     "error",
                 )
             )
@@ -132,23 +124,6 @@ def _validate_file(volume_root: Path, path: Path, findings: list[Finding]) -> No
                         "warning",
                     )
                 )
-
-
-def _formal_blocks(text: str):
-    for begin in BEGIN_FORMAL_RE.finditer(text):
-        env = begin.group("env")
-        end = re.search(rf"\\end\{{{re.escape(env)}\}}", text[begin.end():], re.IGNORECASE)
-        if end:
-            yield begin, begin.end() + end.end()
-
-
-def _next_boundary(text: str, start: int) -> int:
-    formal = BEGIN_FORMAL_RE.search(text, start)
-    section = SECTION_RE.search(text, start)
-    candidates = [match.start() for match in (formal, section) if match]
-    return min(candidates) if candidates else len(text)
-
-
 def _dependency_declarations(window: str) -> list[tuple[str, str, int]]:
     declarations: list[tuple[str, str, int]] = []
     for match in DEPENDENCIES_ENV_RE.finditer(window):

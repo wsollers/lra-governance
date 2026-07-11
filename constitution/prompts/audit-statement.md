@@ -206,7 +206,7 @@ exposition may satisfy the interpretation requirement.
 - Predicate readings use canonical ambient-structure arguments before treating
   a missing specialized name as a MISSING_PREDICATE finding.
 - All notation matches notation.yaml.
-- No locally invented predicate, relation, or notation names.
+- No locally invented predicate, structure, relation, or notation names.
 - If an unregistered name is found: flag as MISSING_PREDICATE / MISSING_NOTATION
   with location and suggested canonical form.
 

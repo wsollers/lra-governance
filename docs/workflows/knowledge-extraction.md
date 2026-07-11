@@ -25,6 +25,7 @@ are hard errors.
 Canonical YAML lives in `lra-governance`:
 
 - `predicates.yaml`
+- `structures.yaml`
 - `notation.yaml`
 - `relations.yaml`
 

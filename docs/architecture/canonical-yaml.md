@@ -5,6 +5,7 @@ Source: `DESIGN.md` and `REPOSITORY_STRUCTURE.md`.
 The source-of-truth YAML files live in `lra-governance`:
 
 - `predicates.yaml`
+- `structures.yaml`
 - `notation.yaml`
 - `relations.yaml`
 
@@ -25,7 +26,8 @@ root (for example a `REPO_ROOT` environment variable or a `--repoDir` / `--root`
 option) should be pointed at the `lra-governance` checkout rather than a
 monorepo.
 
-No agent may invent predicate, relation, or notation names locally in content
-files. Missing canonical vocabulary must be reported as a governance or YAML
-update need. Predicate names and signatures, including ambient-structure
-polymorphism, are governed by `docs/governance/predicate-standards.md`.
+No agent may invent predicate, structure, relation, or notation names locally in
+content files. Missing canonical vocabulary must be reported as a governance or
+YAML update need. Predicate names, structure constructors, signatures, and
+ambient-structure polymorphism are governed by
+`docs/governance/predicate-standards.md`.

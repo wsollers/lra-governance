@@ -14,7 +14,8 @@ workspace.
 - `constitution/`
 - `docs/`
 - `tools/`
-- canonical YAML: `predicates.yaml`, `notation.yaml`, `relations.yaml`
+- canonical YAML: `predicates.yaml`, `structures.yaml`, `notation.yaml`,
+  `relations.yaml`
 
 These files are consumed in place. They are **not** copied or synced into the
 other repositories.
@@ -46,6 +47,12 @@ Resolution order used by the local wrapper scripts:
 If none resolve, the wrappers **hard-error** with an actionable setup message
 instead of silently degrading. There are no local synced copies to fall back
 on.
+
+## Docker Validation
+
+Governance owns a lightweight deterministic test image for Python validator
+tests and mounted volume validation. See
+`docs/workflows/docker-validation.md`.
 
 ## Independence (No More Sync)
 

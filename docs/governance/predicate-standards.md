@@ -6,12 +6,17 @@ and the way predicates carry ambient mathematical structure.
 ## Canonical Source
 
 The canonical predicate registry is `predicates.yaml` at the root of
-`lra-governance`. Volume repositories do not own predicate names and must not
-define local substitutes for missing canonical predicates.
+`lra-governance`. Ambient mathematical structure constructors live in
+`structures.yaml` beside it. Volume repositories do not own predicate names or
+structure constructors and must not define local substitutes for missing
+canonical vocabulary.
 
 If a predicate is needed but absent from `predicates.yaml`, record a missing
 predicate need instead of inventing an ad hoc name in a notes file, proof file,
-prompt output, or extraction artifact.
+prompt output, or extraction artifact. If an ambient object such as an ordered
+set, function space, topological space, or set family is needed but absent from
+`structures.yaml`, record a missing structure need instead of passing loose
+pieces indefinitely.
 
 ## Layer Gate
 
@@ -25,7 +30,7 @@ notation.
 
 Predicates that depend on a mathematical setting carry that setting as an
 explicit ambient argument. The ambient argument is normally the whole
-structure, not only its carrier set.
+structure, not only its carrier set or its raw relation symbols.
 
 For example, in a metric space `M=(X,d)`, write
 
@@ -40,6 +45,24 @@ The carrier set and structural data are recovered from the ambient object:
 `\operatorname{Carrier}(M)=X` and `d` is the metric of `M`. Do not replace the
 ambient argument by a loose set parameter when the predicate uses more than the
 set.
+
+For ordered objects, introduce the structure object before using predicates
+that depend on it:
+
+```latex
+\[
+\begin{aligned}
+&P=\mathsf{OrderedSet}(A,\leq),\\
+&\operatorname{UpperBound}(u,S,P)
+  \coloneqq
+  S\subseteq A \wedge u\in A \wedge \forall s\in S\;(s\leq u).
+\end{aligned}
+\]
+```
+
+The structure assignment is part of the predicate reading. It must appear
+before the first predicate that uses the structure unless the structure object
+has already been fixed unambiguously in the same predicate-reading block.
 
 ## Polymorphism And Substitution
 
@@ -57,8 +80,8 @@ cannot be represented by changing the ambient argument.
 
 ## Explicit Unpacking
 
-Predicate readings may unpack the ambient structure before the predicate line
-when this improves readability. Keep the predicate itself ambient-parametric:
+Predicate readings must unpack newly introduced ambient structures before the
+predicate line. Keep the predicate itself ambient-parametric:
 
 ```latex
 \[
@@ -74,6 +97,74 @@ when this improves readability. Keep the predicate itself ambient-parametric:
 
 The unpacking line explains how the predicate reads in that structure. It does
 not change the canonical predicate signature.
+
+## Structure Constructors
+
+Structure constructors are written with `\mathsf{...}` and are registered in
+`structures.yaml`. They build ambient mathematical objects for predicate
+arguments; they are not truth-valued predicates.
+
+Use:
+
+```latex
+P=\mathsf{OrderedSet}(A,\leq)
+\qquad
+T=\mathsf{TopologicalSpace}(X,\tau)
+\qquad
+\mathcal{F}_U=\mathsf{SetFamily}(\mathcal{F},U)
+```
+
+Do not write a structure constructor as if it were a predicate:
+
+```latex
+\operatorname{UpperBound}(u,S,\operatorname{OrderedSet}(A,\leq))
+```
+
+Instead, assign the structure object first:
+
+```latex
+\[
+\begin{aligned}
+&P=\mathsf{OrderedSet}(A,\leq),\\
+&\operatorname{UpperBound}(u,S,P).
+\end{aligned}
+\]
+```
+
+If the validity of the structure itself is at issue, use the appropriate
+predicate separately, for example a predicate asserting that the relation is a
+partial order on the carrier.
+
+## Argument Role Conventions
+
+Use stable argument names in predicate signatures and predicate-reading blocks
+unless local notation has already fixed a different convention:
+
+| Symbol | Role |
+| --- | --- |
+| `A`, `B`, `C` | sets, domains, codomains, carriers |
+| `S`, `T` | subsets of an ambient set |
+| `U` | ambient universe or ambient set |
+| `\mathcal{F}` | family of sets |
+| `\mathcal{C}` | cover |
+| `I` | index set |
+| `i`, `j` | indices |
+| `a`, `b`, `c` | generic elements of sets |
+| `x`, `y`, `z` | generic variables, especially ordered-set elements |
+| `u` | upper-bound candidate |
+| `\ell` | lower-bound candidate |
+| `u^*` | supremum candidate |
+| `\ell^*` | infimum candidate |
+| `f`, `g`, `h` | functions |
+| `R` | relation |
+| `P` | ordered/preordered/poset ambient structure |
+| `T` | topological ambient structure |
+| `M` | model or metric ambient structure, according to chapter context |
+| `s` | assignment in logic/model theory, or local element variable when no assignment is present |
+
+Sequences are written as `(x_n)_{n\in\mathbb{N}}` or as a bold sequence object
+`\mathbf{x}` when the whole sequence is an argument. Reserve uppercase `S` for
+sets and subsets rather than sequence objects.
 
 ## Legacy Readings
 
@@ -99,3 +190,16 @@ Each predicate entry should state:
 Additional metadata may record polymorphism, ambient support, legacy aliases,
 or source notes, but the canonical name and argument convention remain the
 source of truth.
+
+Each structure entry in `structures.yaml` should state:
+
+- `id`, with the `struct:` prefix;
+- `name`, the canonical constructor name;
+- `kind: structure`;
+- `category`;
+- `constructor`, normally `\mathsf{<Name>}`;
+- `arguments`, including carrier and structural roles;
+- `carrier_argument`, when the structure has a carrier;
+- `structural_arguments`;
+- `surface_forms`, for trigger/audit discovery;
+- a short `description`.

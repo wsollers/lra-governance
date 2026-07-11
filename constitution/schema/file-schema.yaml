@@ -31,6 +31,7 @@ governance_root:
   - DESIGN.md
   - REPOSITORY_STRUCTURE.md
   - predicates.yaml              # canonical source — never duplicated
+  - structures.yaml              # canonical source — never duplicated
   - notation.yaml                # canonical source — never duplicated
   - relations.yaml               # canonical source — never duplicated
   - constitution/
@@ -423,6 +424,7 @@ auditor_paths:
 
   canonical_yaml_locations:
     predicates: REPO_ROOT/predicates.yaml
+    structures: REPO_ROOT/structures.yaml
     notation:   REPO_ROOT/notation.yaml
     relations:  REPO_ROOT/relations.yaml
 

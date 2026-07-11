@@ -18,6 +18,7 @@ ALLOWED_NOTE_TOP_ENVS = FORMAL_ENVS | FORMAL_BOX_ENVS | {
     "dependencies",
     "tcolorbox",
     "toolkitbox",
+    "modelbox",
     "signaturebox",
     "topicbox",
     "figure",

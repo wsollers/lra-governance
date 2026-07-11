@@ -25,7 +25,7 @@ rules. They are maintained in the architecture, governance, and routing docs:
   `docs/architecture/repository-layout.md`
 - multi-repo integration boundaries and emergency downstream edits:
   `docs/architecture/multi-repo-sync.md`
-- canonical predicate, notation, and relation YAML storage:
+- canonical predicate, structure, notation, and relation YAML storage:
   `docs/architecture/canonical-yaml.md`
 - generated downstream file policy:
   `docs/architecture/generated-file-policy.md`

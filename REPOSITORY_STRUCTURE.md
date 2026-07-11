@@ -8,7 +8,7 @@ contains repository ownership, layout, and integration rules.
 
 | Repository | Canonical ownership |
 |---|---|
-| `lra-governance` | `DESIGN.md`, `REPOSITORY_STRUCTURE.md`, `AGENTS.md`, `.gitignore`, `constitution/`, `docs/`, `tools/`, generators, schemas, prompts, and the canonical YAML (`predicates.yaml`, `notation.yaml`, `relations.yaml`) |
+| `lra-governance` | `DESIGN.md`, `REPOSITORY_STRUCTURE.md`, `AGENTS.md`, `.gitignore`, `constitution/`, `docs/`, `tools/`, generators, schemas, prompts, and the canonical YAML (`predicates.yaml`, `structures.yaml`, `notation.yaml`, `relations.yaml`) |
 | `lra-common` | shared LaTeX infrastructure: `common/` |
 | `lra-volume-i` through `lra-volume-viii` | volume content under `volume-N/`; self-contained, Overleaf-ready, independently built |
 | `lra-lean` | Lean 4 formalization workspace; independent |
@@ -50,6 +50,7 @@ lra-governance/
   README.md
   .gitignore
   predicates.yaml             canonical vocabulary (moved from the retired monorepo)
+  structures.yaml
   notation.yaml
   relations.yaml
   constitution/

@@ -79,7 +79,7 @@ def prompt(name: str) -> str:
 
 def canonical_source(name: str) -> str:
     """
-    Returns the raw text of a canonical source file (predicates, notation, relations).
+    Returns the raw text of a canonical source file.
     Returns empty string with a warning if the file does not exist.
     """
     path = config.CANONICAL_SOURCES[name]

@@ -26,6 +26,26 @@ notation:
     symbol: '\operatorname{int}'
     category: topology_operator
     description: Interior operator on subsets of a topological space.
+  - id: not:closure-operator
+    name: Closure
+    symbol: '\operatorname{Closure}'
+    category: topology_operator
+    description: Closure operator on subsets of a metric or topological space.
+  - id: not:diameter
+    name: Diameter
+    symbol: '\operatorname{diam}'
+    category: metric_operator
+    description: Diameter of a subset of a metric space.
+  - id: not:distance
+    name: Distance
+    symbol: '\operatorname{Distance}'
+    category: metric_operator
+    description: Distance function or distance value in a metric space.
+  - id: not:length
+    name: Length
+    symbol: '\operatorname{Length}'
+    category: interval_operator
+    description: Length of a bounded interval, determined by its endpoints.
   - id: not:real-part
     symbol: '\operatorname{Re}'
     category: complex_operator
@@ -38,6 +58,61 @@ notation:
     symbol: '\operatorname{sgn}'
     category: function_operator
     description: Sign function.
+  - id: not:natural-logarithm
+    name: NaturalLogarithm
+    symbol: '\ln'
+    category: elementary_function
+    description: Natural logarithm function.
+  - id: not:sine
+    name: Sine
+    symbol: '\sin'
+    category: elementary_function
+    description: Sine function.
+  - id: not:cosine
+    name: Cosine
+    symbol: '\cos'
+    category: elementary_function
+    description: Cosine function.
+  - id: not:inverse-tangent
+    name: Arctangent
+    symbol: '\arctan'
+    category: elementary_function
+    description: Principal inverse tangent function.
+  - id: not:hyperbolic-sine
+    name: HyperbolicSine
+    symbol: '\sinh'
+    category: elementary_function
+    description: Hyperbolic sine function.
+  - id: not:hyperbolic-cosine
+    name: HyperbolicCosine
+    symbol: '\cosh'
+    category: elementary_function
+    description: Hyperbolic cosine function.
+  - id: not:hyperbolic-tangent
+    name: HyperbolicTangent
+    symbol: '\tanh'
+    category: elementary_function
+    description: Hyperbolic tangent function.
+  - id: not:limit-superior
+    name: LimitSuperior
+    symbol: '\limsup'
+    category: analysis_operator
+    description: Limit superior operator.
+  - id: not:limit-inferior
+    name: LimitInferior
+    symbol: '\liminf'
+    category: analysis_operator
+    description: Limit inferior operator.
+  - id: not:partition-mesh
+    name: PartitionMesh
+    symbol: '\|P\|'
+    category: integration_operator
+    description: Mesh, or norm, of a finite partition P.
+  - id: not:floor-function
+    name: FloorFunction
+    symbol: '\lfloor x\rfloor'
+    category: arithmetic_operator
+    description: Floor, or integer part, of a real number x.
   - id: not:hyperbolic-secant
     symbol: '\operatorname{sech}'
     category: elementary_function

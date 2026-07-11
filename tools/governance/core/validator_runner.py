@@ -4,10 +4,14 @@ import inspect
 from pathlib import Path
 from typing import Iterable
 
+from .formal_blocks import clear_formal_block_cache
 from .file_inventory import files_to_validate
+from .tex import clear_text_cache
 
 
 def default_file_inventory(volume_root: Path | str) -> list[Path]:
+    clear_text_cache()
+    clear_formal_block_cache()
     return files_to_validate([volume_root], only_reachable=False)
 
 

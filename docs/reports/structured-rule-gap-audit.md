@@ -114,7 +114,7 @@ Recommendation: intentionally leave as prose plus audit heuristic.
   machine-detectable but depend on canonical YAML and local mathematical
   context.
 - Why existing schema does not already cover it: The rule is data-dependent on
-  `predicates.yaml`, `notation.yaml`, and `relations.yaml`, which are owned by
+  `predicates.yaml`, `structures.yaml`, `notation.yaml`, and `relations.yaml`, which are owned by
   `Learning-Real-Analysis`.
 - Proposed existing schema file to extend: no schema change recommended.
 - Enforcement status: auditable.

@@ -9,7 +9,7 @@ no active rules. Do not generate agent wrappers for this repo.
 
 Where its former responsibilities went:
 
-- **Canonical YAML** (`predicates.yaml`, `notation.yaml`, `relations.yaml`) →
+- **Canonical YAML** (`predicates.yaml`, `structures.yaml`, `notation.yaml`, `relations.yaml`) →
   `lra-governance` (see `docs/architecture/canonical-yaml.md`).
 - **Integration / omnibus build** → retired; each `lra-volume-*` repo builds its
   own digital and print PDFs independently and publishes to

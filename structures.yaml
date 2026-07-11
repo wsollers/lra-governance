@@ -327,6 +327,33 @@ structures:
       Indexed object x with index set I and values in the ambient object X.
       Ordinary real sequences use the natural numbers as the index set.
 
+  - id: struct:tail-sequence
+    name: TailSequence
+    kind: structure
+    category: sequence
+    constructor: '\mathsf{TailSequence}'
+    arguments:
+      - name: x
+        role: source_sequence
+      - name: M
+        role: start_index
+      - name: I
+        role: index_set
+      - name: X
+        role: ambient
+    carrier_argument: X
+    structural_arguments:
+      - x
+      - M
+      - I
+    surface_forms:
+      - tail sequence
+      - M-tail
+      - sequence tail
+    description: >
+      Sequence obtained from a source sequence x by discarding all terms before
+      the start index M and reindexing the remaining terms over I.
+
   - id: struct:point
     name: Point
     kind: structure
@@ -2547,6 +2574,58 @@ structures:
     description: >
       Constant object or constant symbol in the relevant formal context.
 
+  - id: struct:property-spec
+    name: PropertySpec
+    kind: structure
+    category: logic
+    constructor: '\mathsf{PropertySpec}'
+    arguments:
+      - name: Phi
+        role: property_specification
+        surface: '\Phi'
+    carrier_argument: null
+    structural_arguments:
+      - Phi
+    surface_forms:
+      - property specification
+      - predicate package
+      - property spec
+    description: >
+      A reusable property specification, often an alias for a conjunction of
+      registered predicates to be applied to members of a family or collection.
+
+  - id: struct:open-bounded-interval
+    name: OpenBoundedInterval
+    kind: structure
+    category: analysis
+    constructor: '\mathsf{OpenBoundedInterval}'
+    arguments: []
+    carrier_argument: null
+    structural_arguments: []
+    surface_forms:
+      - open bounded interval
+      - open bounded interval property
+    description: >
+      Property-specification alias for intervals satisfying IsInterval,
+      IsOpenInterval, and IsBoundedInterval in the relevant ambient ordered or
+      topological space.
+
+  - id: struct:nonempty-bounded-interval
+    name: NonemptyBoundedInterval
+    kind: structure
+    category: analysis
+    constructor: '\mathsf{NonemptyBoundedInterval}'
+    arguments: []
+    carrier_argument: null
+    structural_arguments: []
+    surface_forms:
+      - nonempty bounded interval
+      - nonempty bounded interval property
+    description: >
+      Property-specification alias for intervals satisfying IsInterval,
+      IsNonempty, and IsBoundedInterval in the relevant ambient ordered or
+      topological space.
+
   - id: struct:reduction
     name: Reduction
     kind: structure
@@ -2601,6 +2680,50 @@ structures:
       - BinaryOperation
     description: >
       Volume II structure or data object named BinaryOperation.
+
+  - id: struct:closure-context
+    name: ClosureContext
+    kind: structure
+    category: algebra
+    constructor: '\mathsf{ClosureContext}'
+    arguments:
+      - name: X
+        role: ambient
+      - name: D
+        role: admissible_inputs
+      - name: Y
+        role: codomain
+      - name: P
+        role: parameters
+    carrier_argument: X
+    structural_arguments:
+      - D
+      - Y
+      - P
+    surface_forms:
+      - closure context
+      - operation context
+      - formation-rule context
+    description: >
+      Context object for a closure assertion, recording the ambient object,
+      the admissible input object, the codomain, and any parameters needed to
+      interpret the mapping, operation, or formation rule.
+
+  - id: struct:cauchy-sequence
+    name: CauchySequence
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{CauchySequence}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - CauchySequence
+    description: >
+      Volume II structure or data object named CauchySequence.
 
   - id: struct:dedekind-cut
     name: DedekindCut
@@ -3098,6 +3221,22 @@ structures:
     description: >
       Volume II structure or data object named StrictOrderFromPositiveCone.
 
+  - id: struct:strict-total-order
+    name: StrictTotalOrder
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{StrictTotalOrder}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - StrictTotalOrder
+    description: >
+      Volume II structure or data object named StrictTotalOrder.
+
   - id: struct:unary-operation
     name: UnaryOperation
     kind: structure
@@ -3113,3 +3252,42 @@ structures:
       - UnaryOperation
     description: >
       Volume II structure or data object named UnaryOperation.
+
+  - id: struct:reciprocal
+    name: Reciprocal
+    kind: structure
+    category: operation
+    constructor: '\mathsf{Reciprocal}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    polymorphic: true
+    surface_forms:
+      - reciprocal
+      - reciprocal operation
+      - reciprocal transform
+      - reciprocal image
+    description: >
+      Polymorphic reciprocal construction or process. Depending on the input
+      object, it may denote the reciprocal of a nonzero scalar, the pointwise
+      reciprocal of a function or sequence, or the elementwise reciprocal image
+      of a set whose elements lie in a reciprocal domain.
+
+  - id: struct:well-order
+    name: WellOrder
+    kind: structure
+    category: volume_ii
+    constructor: '\mathsf{WellOrder}'
+    arguments:
+      - name: X
+        role: object
+    carrier_argument: null
+    structural_arguments:
+      - X
+    surface_forms:
+      - WellOrder
+    description: >
+      Volume II structure or data object named WellOrder.

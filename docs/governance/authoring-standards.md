@@ -134,6 +134,26 @@ local concept cluster.
 
 ## Multi-Definition Source Passages
 
+Formal statements follow a one-object rule: each `definition`, `axiom`,
+`theorem`, `lemma`, `proposition`, or `corollary` environment must introduce or
+assert exactly one primary predicate-level mathematical sentence. In practical
+terms, a formal environment has exactly one formal label and one governing
+standard quantified statement. Do not put independently nameable concepts such
+as bounded above, bounded below, and bounded in one definition, or minimum and
+maximum in one definition. Define each atomic predicate separately, then define
+compound predicates as their own formal statements using the atomic predicates.
+
+Aliases and notation variants for the same predicate may share a formal block,
+but independent predicates may not. A conjunction is permitted only when the
+conjunction itself is the single concept being defined or asserted, and its
+components have already been introduced as separate formal objects.
+
+The only approved legacy exception is the Euclid Book I source-text proposition
+alias pattern in the Euclidean geometry construction propositions: a canonical
+`thm:euclid-i-N` label may coexist with its historical `prop:I.N` alias. The
+dependency graph normalizes that pair to the canonical theorem label. Do not
+use this exception for new mathematical content.
+
 When converting a source passage that contains several related definitions,
 operations, cases, or constructions, do not bundle the independent concepts
 into one formal definition environment. Classify the passage as a related

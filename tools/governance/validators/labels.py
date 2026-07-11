@@ -10,6 +10,7 @@ from core.volume import chapter_roots
 
 
 LABEL_RE = re.compile(r"\\label\{([^}]+)\}")
+EUCLID_BOOK_I_ALIAS_RE = re.compile(r"^prop:I\.\d+$")
 FORMAL_BEGIN_RE = re.compile(
     r"\\begin\{(?P<env>definition|axiom|theorem|lemma|proposition|corollary)\}"
     r"(?:\[[^\]]*\])?",
@@ -72,6 +73,8 @@ def _check_duplicate_and_slug_labels(volume_root: Path, findings: list[Finding],
             prefix, slug = label.split(":", 1)
             if prefix in IGNORED_LABEL_PREFIXES:
                 continue
+            if _is_euclid_book_i_alias(tex, volume_root, label):
+                continue
             if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)+", slug):
                 findings.append(
                     finding(
@@ -94,6 +97,16 @@ def _check_duplicate_and_slug_labels(volume_root: Path, findings: list[Finding],
                         "warning",
                     )
                 )
+
+
+def _is_euclid_book_i_alias(tex: Path, volume_root: Path, label: str) -> bool:
+    if not EUCLID_BOOK_I_ALIAS_RE.fullmatch(label):
+        return False
+    rel_path = tex.relative_to(volume_root).as_posix()
+    return (
+        rel_path
+        == "book-geometry/euclidean-geometry/notes/compass-and-straightedge-constructions/propositions.tex"
+    )
 
 
 def _check_formal_block_labels(volume_root: Path, tex: Path, findings: list[Finding]) -> None:

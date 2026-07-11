@@ -9,7 +9,7 @@ content sync; the "ownership" column below is authority, not a copy direction.
 
 | Repository | Canonical ownership |
 | --- | --- |
-| `lra-governance` | Governance docs, architecture docs, repo overlays, prompts, schemas, constitution files, generators, governance tools, and the canonical YAML vocabulary (`predicates.yaml`, `notation.yaml`, `relations.yaml`). Consumed directly; never fanned out. |
+| `lra-governance` | Governance docs, architecture docs, repo overlays, prompts, schemas, constitution files, generators, governance tools, and the canonical YAML vocabulary (`predicates.yaml`, `structures.yaml`, `notation.yaml`, `relations.yaml`). Consumed directly; never fanned out. |
 | `lra-common` | Shared LaTeX infrastructure: `common/`. Consumed directly by builds through the Docker image or an explicit checkout. |
 | `lra-volume-i` through `lra-volume-viii` | Volume content under `volume-N/`. Self-contained, Overleaf-ready, independently built; publishes PDFs to `lra-volumes-output`. |
 | `lra-lean` | Lean 4 formalization workspace. Independent. |

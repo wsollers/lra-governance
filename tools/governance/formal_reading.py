@@ -1,12 +1,11 @@
 r"""Trigger-dictionary loader for the formal_reading_required rule.
 
 Trigger set = a fixed LOGIC FLOOR (symbols + English logic words) + CONCEPT SURFACE
-FORMS for canonical predicates/objects/structures. The registry has no explicit
-`surface_forms` field yet, so forms are derived from the CamelCase `name`
-(CauchySequence -> "cauchy sequence"). Names are regex-extracted, NOT yaml-parsed,
-because predicates.yaml can contain unquoted scalars (e.g. `formal: |x - c| < r`)
-that break yaml.safe_load; regex extraction is robust to that. An explicit
-`surface_forms:` list is honoured when present and parseable.
+FORMS for canonical predicates/objects/structures. Forms are derived from the
+CamelCase `name` (CauchySequence -> "cauchy sequence") and from explicit
+`surface_forms:` lists. Names are regex-extracted, NOT yaml-parsed, because
+canonical YAML can contain unquoted scalars that break yaml.safe_load; regex
+extraction is robust to that.
 
 A small COMMON_NOUN_STOPLIST suppresses single-word derived forms too colloquial to
 trigger safely. Multi-word and explicit forms are never stoplisted. Favours few false

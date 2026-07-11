@@ -46,6 +46,9 @@ owned work, but they do not fork or weaken the global rules.
 - `decoration-audit-standards.md`
 - `repo-overlays/`
 
+Workflow-specific instructions, including Docker validation, live under
+`docs/workflows/`.
+
 ## Source Compatibility
 
 Current policy should be added to the smallest applicable modular document in

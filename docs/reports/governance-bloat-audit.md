@@ -176,7 +176,7 @@ full proof-file checklists with:
 ### Canonical YAML Ownership
 
 Repeated theme:
-`predicates.yaml`, `notation.yaml`, and `relations.yaml` live in
+`predicates.yaml`, `structures.yaml`, `notation.yaml`, and `relations.yaml` live in
 `Learning-Real-Analysis` and are not owned by leaf repos.
 
 Locations:
