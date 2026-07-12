@@ -214,8 +214,15 @@ def list_open_validator_issues(repo: str) -> list[dict[str, Any]]:
     return issues
 
 
-def sync_issues(repo: str, issues: list[ValidatorIssue], close_stale: bool, dry_run: bool, request_delay: float = 2.0) -> dict[str, int]:
-    counts = {"created": 0, "updated": 0, "closed": 0, "unchanged": 0}
+def sync_issues(
+    repo: str,
+    issues: list[ValidatorIssue],
+    close_stale: bool,
+    dry_run: bool,
+    request_delay: float = 2.0,
+    max_writes: int | None = 25,
+) -> dict[str, int]:
+    counts = {"created": 0, "updated": 0, "closed": 0, "unchanged": 0, "deferred": 0}
     if dry_run:
         for issue in issues:
             print(f"would sync {issue.fingerprint}: {issue.title}")
@@ -235,9 +242,15 @@ def sync_issues(repo: str, issues: list[ValidatorIssue], close_stale: bool, dry_
             if existing.get("title") == issue.title and issue_label_names(existing) == set(issue.labels):
                 counts["unchanged"] += 1
                 continue
+            if _write_limit_reached(counts, max_writes):
+                counts["deferred"] += 1
+                continue
             gh_api(repo, f"/repos/{repo}/issues/{existing['number']}", "PATCH", payload)
             counts["updated"] += 1
         else:
+            if _write_limit_reached(counts, max_writes):
+                counts["deferred"] += 1
+                continue
             gh_api(repo, f"/repos/{repo}/issues", "POST", payload)
             counts["created"] += 1
         time.sleep(request_delay)
@@ -245,10 +258,19 @@ def sync_issues(repo: str, issues: list[ValidatorIssue], close_stale: bool, dry_
         for existing in existing_open:
             fingerprint = extract_fingerprint(existing.get("body") or "")
             if fingerprint and fingerprint not in current_fingerprints:
+                if _write_limit_reached(counts, max_writes):
+                    counts["deferred"] += 1
+                    continue
                 gh_api(repo, f"/repos/{repo}/issues/{existing['number']}", "PATCH", {"state": "closed"})
                 counts["closed"] += 1
                 time.sleep(request_delay)
     return counts
+
+
+def _write_limit_reached(counts: dict[str, int], max_writes: int | None) -> bool:
+    if max_writes is None or max_writes <= 0:
+        return False
+    return counts["created"] + counts["updated"] + counts["closed"] >= max_writes
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -260,12 +282,14 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--close-stale", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--request-delay", type=float, default=float(os.environ.get("LRA_ISSUE_REQUEST_DELAY", "2.0")))
+    parser.add_argument("--max-writes", type=int, default=int(os.environ.get("LRA_ISSUE_MAX_WRITES", "25")))
     args = parser.parse_args(argv)
     if not args.repo:
         print("fatal: --repo or GITHUB_REPOSITORY is required", file=sys.stderr)
         return 2
     issues = load_issues(args.report, args.repo, args.run_url, args.commit)
-    counts = sync_issues(args.repo, issues, args.close_stale, args.dry_run, args.request_delay)
+    max_writes = None if args.max_writes <= 0 else args.max_writes
+    counts = sync_issues(args.repo, issues, args.close_stale, args.dry_run, args.request_delay, max_writes)
     print(json.dumps({"repo": args.repo, "issues": len(issues), **counts}, sort_keys=True))
     return 0
 
