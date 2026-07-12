@@ -9,6 +9,7 @@ import re
 import subprocess
 import sys
 import tempfile
+import time
 import urllib.parse
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -135,23 +136,36 @@ def extract_fingerprint(body: str) -> str | None:
     return match.group(1) if match else None
 
 
-def gh_api(repo: str, endpoint: str, method: str = "GET", payload: dict[str, Any] | None = None) -> Any:
+def gh_api(repo: str, endpoint: str, method: str = "GET", payload: dict[str, Any] | None = None, attempts: int = 4) -> Any:
     cmd = ["gh", "api", endpoint, "--method", method]
-    if payload is not None:
-        with tempfile.NamedTemporaryFile("w", encoding="utf-8", suffix=".json", delete=False) as handle:
-            json.dump(payload, handle)
-            tmp_name = handle.name
-        try:
-            completed = subprocess.run([*cmd, "--input", tmp_name], text=True, capture_output=True, check=False)
-        finally:
-            Path(tmp_name).unlink(missing_ok=True)
-    else:
-        completed = subprocess.run(cmd, text=True, capture_output=True, check=False)
-    if completed.returncode != 0:
-        raise RuntimeError(f"gh api failed for {repo} {endpoint}: {completed.stderr.strip()}")
-    if not completed.stdout.strip():
-        return None
-    return json.loads(completed.stdout)
+    for attempt in range(1, attempts + 1):
+        if payload is not None:
+            with tempfile.NamedTemporaryFile("w", encoding="utf-8", suffix=".json", delete=False) as handle:
+                json.dump(payload, handle)
+                tmp_name = handle.name
+            try:
+                completed = subprocess.run([*cmd, "--input", tmp_name], text=True, capture_output=True, check=False)
+            finally:
+                Path(tmp_name).unlink(missing_ok=True)
+        else:
+            completed = subprocess.run(cmd, text=True, capture_output=True, check=False)
+        if completed.returncode == 0:
+            if not completed.stdout.strip():
+                return None
+            return json.loads(completed.stdout)
+        stderr = completed.stderr.strip()
+        if attempt < attempts and _is_rate_limited(stderr):
+            wait_seconds = 75 * attempt
+            print(f"GitHub API rate limit while calling {endpoint}; retrying in {wait_seconds}s", file=sys.stderr)
+            time.sleep(wait_seconds)
+            continue
+        raise RuntimeError(f"gh api failed for {repo} {endpoint}: {stderr}")
+    return None
+
+
+def _is_rate_limited(stderr: str) -> bool:
+    text = stderr.lower()
+    return "secondary rate limit" in text or "rate limit exceeded" in text or "temporarily blocked from content creation" in text
 
 
 def ensure_labels(repo: str, labels: set[str]) -> None:
@@ -159,9 +173,22 @@ def ensure_labels(repo: str, labels: set[str]) -> None:
         "lra-validator": "5319e7",
         "lra-proof": "0e8a16",
     }
-    for label in sorted(labels):
+    existing = existing_labels(repo)
+    for label in sorted(labels - existing):
         payload = {"name": label, "color": colors.get(label, "ededed")}
-        subprocess.run(["gh", "api", f"/repos/{repo}/labels", "--method", "POST", "-f", f"name={payload['name']}", "-f", f"color={payload['color']}"], text=True, capture_output=True, check=False)
+        gh_api(repo, f"/repos/{repo}/labels", "POST", payload)
+
+
+def existing_labels(repo: str) -> set[str]:
+    labels: set[str] = set()
+    page = 1
+    while True:
+        batch = gh_api(repo, f"/repos/{repo}/labels?per_page=100&page={page}")
+        if not batch:
+            break
+        labels.update(label["name"] for label in batch if isinstance(label, dict) and "name" in label)
+        page += 1
+    return labels
 
 
 def find_open_issue(repo: str, fingerprint: str) -> dict[str, Any] | None:
@@ -183,7 +210,7 @@ def list_open_validator_issues(repo: str) -> list[dict[str, Any]]:
     return issues
 
 
-def sync_issues(repo: str, issues: list[ValidatorIssue], close_stale: bool, dry_run: bool) -> dict[str, int]:
+def sync_issues(repo: str, issues: list[ValidatorIssue], close_stale: bool, dry_run: bool, request_delay: float = 2.0) -> dict[str, int]:
     counts = {"created": 0, "updated": 0, "closed": 0, "unchanged": 0}
     if dry_run:
         for issue in issues:
@@ -206,12 +233,14 @@ def sync_issues(repo: str, issues: list[ValidatorIssue], close_stale: bool, dry_
         else:
             gh_api(repo, f"/repos/{repo}/issues", "POST", payload)
             counts["created"] += 1
+        time.sleep(request_delay)
     if close_stale:
         for existing in existing_open:
             fingerprint = extract_fingerprint(existing.get("body") or "")
             if fingerprint and fingerprint not in current_fingerprints:
                 gh_api(repo, f"/repos/{repo}/issues/{existing['number']}", "PATCH", {"state": "closed"})
                 counts["closed"] += 1
+                time.sleep(request_delay)
     return counts
 
 
@@ -223,12 +252,13 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--commit", default=os.environ.get("GITHUB_SHA"))
     parser.add_argument("--close-stale", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--request-delay", type=float, default=float(os.environ.get("LRA_ISSUE_REQUEST_DELAY", "2.0")))
     args = parser.parse_args(argv)
     if not args.repo:
         print("fatal: --repo or GITHUB_REPOSITORY is required", file=sys.stderr)
         return 2
     issues = load_issues(args.report, args.repo, args.run_url, args.commit)
-    counts = sync_issues(args.repo, issues, args.close_stale, args.dry_run)
+    counts = sync_issues(args.repo, issues, args.close_stale, args.dry_run, args.request_delay)
     print(json.dumps({"repo": args.repo, "issues": len(issues), **counts}, sort_keys=True))
     return 0
 
