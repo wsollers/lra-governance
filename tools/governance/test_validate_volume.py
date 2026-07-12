@@ -1540,6 +1540,115 @@ class ValidateVolumeTests(unittest.TestCase):
         self.assertIn("source_crosswalk_without_citation", codes)
         self.assertIn("formal_claim_inside_expository_block", codes)
 
+    def test_formal_decoration_accepts_source_comparison_with_bottom_citation(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{definition}[Source Compared]",
+                    r"\label{def:source-compared}",
+                    "A source-compared object is organized for comparison.",
+                    r"\end{definition}",
+                    r"\begin{remark*}[Interpretation]",
+                    "The object is used only to exercise source comparison metadata.",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Source comparison]",
+                    "Compared with Dedekind's presentation, this version separates the",
+                    "ambient set from the ordering relation.",
+                    r"\citet{DedekindContinuityIrrationalNumbers}",
+                    r"\end{remark*}",
+                    r"\NoLocalDependencies",
+                    "",
+                ]
+            ),
+        )
+
+        codes = {finding.code for finding in validate_with_inventory(formal_decoration, volume)}
+
+        self.assertNotIn("unknown_decoration_block", codes)
+        self.assertNotIn("source_crosswalk_without_citation", codes)
+        self.assertNotIn("source_comparison_citation_not_at_bottom", codes)
+
+    def test_formal_decoration_flags_source_comparison_without_citation(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{definition}[Uncited Source Comparison]",
+                    r"\label{def:uncited-source-comparison}",
+                    "An uncited comparison has no source evidence.",
+                    r"\end{definition}",
+                    r"\begin{remark*}[Interpretation]",
+                    "The object is used only to exercise source comparison metadata.",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Source comparison]",
+                    "Compared with a source presentation, this version is reorganized.",
+                    r"\end{remark*}",
+                    r"\NoLocalDependencies",
+                    "",
+                ]
+            ),
+        )
+
+        codes = {finding.code for finding in validate_with_inventory(formal_decoration, volume)}
+
+        self.assertIn("source_crosswalk_without_citation", codes)
+
+    def test_formal_decoration_flags_source_comparison_citation_not_at_bottom(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{definition}[Midstream Source Comparison]",
+                    r"\label{def:midstream-source-comparison}",
+                    "A midstream comparison cites before the final prose.",
+                    r"\end{definition}",
+                    r"\begin{remark*}[Interpretation]",
+                    "The object is used only to exercise source comparison metadata.",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Source comparison]",
+                    r"\citet{TaoAnalysisI}",
+                    "The block continues after the citation.",
+                    r"\end{remark*}",
+                    r"\NoLocalDependencies",
+                    "",
+                ]
+            ),
+        )
+
+        codes = {finding.code for finding in validate_with_inventory(formal_decoration, volume)}
+
+        self.assertIn("source_comparison_citation_not_at_bottom", codes)
+
+    def test_formal_decoration_rejects_named_comparison_block_titles(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{definition}[Named Comparison]",
+                    r"\label{def:named-comparison}",
+                    "A named comparison uses an obsolete title.",
+                    r"\end{definition}",
+                    r"\begin{remark*}[Interpretation]",
+                    "The object is used only to exercise source comparison metadata.",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Comparison with Feferman]",
+                    r"This title is no longer canonical. \citet{FefermanNumberSystems1964}",
+                    r"\end{remark*}",
+                    r"\NoLocalDependencies",
+                    "",
+                ]
+            ),
+        )
+
+        codes = {finding.code for finding in validate_with_inventory(formal_decoration, volume)}
+
+        self.assertIn("unknown_decoration_block", codes)
+
     def test_formal_decoration_flags_order_unknown_forbidden_and_parent(self):
         volume = make_volume()
         write(
@@ -1575,7 +1684,6 @@ class ValidateVolumeTests(unittest.TestCase):
 
         self.assertIn("decoration_order", codes)
         self.assertIn("forbidden_decoration_block", codes)
-        self.assertIn("legacy_failure_mode_decomposition", codes)
         self.assertIn("unknown_decoration_block", codes)
 
     def test_formal_decoration_requires_predicate_reading_for_multiple_binders(self):
@@ -2295,6 +2403,99 @@ class ValidateVolumeTests(unittest.TestCase):
             finding.code == "dependency_cycle" and finding.severity == "error"
             for finding in findings
         ))
+
+    def test_dependency_graphs_invalid_formal_label_count_is_error(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-order.tex",
+            "\n".join(
+                [
+                    r"\begin{definition}[Bundled Objects]",
+                    r"\label{def:first-object}",
+                    r"\label{def:second-object}",
+                    "This incorrectly bundles two formal labels.",
+                    r"\end{definition}",
+                    r"\NoLocalDependencies",
+                    "",
+                ]
+            ),
+        )
+
+        findings = validate_with_inventory(dependency_graphs, volume)
+
+        self.assertTrue(any(
+            finding.code == "invalid_formal_label_count" and finding.severity == "error"
+            for finding in findings
+        ))
+
+    def test_dependency_graphs_accepts_euclid_book_i_legacy_alias(self):
+        if TMP.exists():
+            shutil.rmtree(TMP)
+        repo = TMP / "lra-volume-i"
+        volume = repo / "volume-i"
+        propositions = (
+            volume
+            / "book-geometry"
+            / "euclidean-geometry"
+            / "notes"
+            / "compass-and-straightedge-constructions"
+            / "propositions.tex"
+        )
+        write(volume / "index.tex", r"\input{volume-i/book-geometry/index}" + "\n")
+        write(
+            volume / "book-geometry" / "index.tex",
+            r"\input{volume-i/book-geometry/euclidean-geometry/notes/compass-and-straightedge-constructions/propositions}"
+            + "\n",
+        )
+        write(
+            propositions,
+            "\n".join(
+                [
+                    r"\begin{theorem}[Euclid I.1]",
+                    r"\label{thm:euclid-i-1}",
+                    r"\label{prop:I.1}",
+                    "Euclid's historical label is preserved as an alias.",
+                    r"\end{theorem}",
+                    r"\NoLocalDependencies",
+                    "",
+                ]
+            ),
+        )
+
+        dependency_codes = {
+            finding.code
+            for finding in validate_with_inventory(dependency_graphs, volume)
+        }
+        label_codes = {finding.code for finding in validate_with_inventory(labels, volume)}
+
+        self.assertNotIn("invalid_formal_label_count", dependency_codes)
+        self.assertNotIn("weak_label_slug", label_codes)
+
+    def test_dependency_graphs_rejects_euclid_alias_outside_approved_file(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-order.tex",
+            "\n".join(
+                [
+                    r"\begin{theorem}[Not Euclid]",
+                    r"\label{thm:euclid-i-1}",
+                    r"\label{prop:I.1}",
+                    "The legacy alias is only approved in Euclid Book I propositions.",
+                    r"\end{theorem}",
+                    r"\NoLocalDependencies",
+                    "",
+                ]
+            ),
+        )
+
+        dependency_findings = validate_with_inventory(dependency_graphs, volume)
+        label_codes = {finding.code for finding in validate_with_inventory(labels, volume)}
+
+        self.assertTrue(any(
+            finding.code == "invalid_formal_label_count" and finding.severity == "error"
+            for finding in dependency_findings
+        ))
+        self.assertIn("weak_label_slug", label_codes)
 
     def test_validate_volume_reports_shape_without_fail_fast(self):
         volume = make_volume()

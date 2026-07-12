@@ -134,7 +134,7 @@ level is `N` or when a conditional trigger is not met. Never reorder.
 12. remark*[Contrapositive quantified statement] (thm/lem/prop/cor only, useful multi-binder implications)
 13. remark*[Contrapositive predicate reading] (if step 12 and step 8 generated)
 14. remark*[Interpretation] (always)
-15. remark*[Historical note] or remark*[Comparison with Feferman] (if a source crosswalk is supplied)
+15. remark*[Historical note] or remark*[Source comparison] (if a source crosswalk is supplied)
 16. remark*[Exposition] (if broader conceptual framing materially helps)
 17. remark*[Examples] (definitions only, if concept-boundary value is high)
 18. remark*[Non-Examples] (definitions only, if concept-boundary value is high)
@@ -228,8 +228,7 @@ Use this option shape:
 ## Predicate Reading
 
 - Use `\begin{remark*}[Predicate reading]` for definitions and theorem-like
-  results. Do not use `Definition predicate reading` in newly generated
-  content; that title is legacy migration input only.
+  results.
 - Generate this block whenever the Standard quantified statement contains at
   least two quantified variable binders. Count comma-separated binders
   separately: `\forall x,y` counts as two, `\forall x,y,z` counts as three,
@@ -277,8 +276,7 @@ Use this option shape:
   and Predicate reading block exist.
 - Include `\begin{remark*}[Failure modes]` whenever the negated statement has
   named branches, witness behavior, or multiple independent ways to fail.
-- Use one structured Failure modes block. Do not generate
-  `Failure mode decomposition`; that title is legacy migration input only.
+- Use one structured `Failure modes` block.
 - The Failure modes block uses a `description` environment. The first item is
   `\item[Exposition.]` and gives the general failure picture. Each following
   `\item[<Mode name>.]` contains mode-specific exposition, a quantified failure
@@ -323,8 +321,8 @@ Use this option shape:
   a known source correspondence.
 - Use `\begin{remark*}[Historical note]` when the generated item corresponds
   directly to a named theorem, definition, axiom, or construction in a source.
-- Use `\begin{remark*}[Comparison with Feferman]` when the generated item
-  splits, refines, renames, packages, or reorganizes material from Feferman's
+- Use `\begin{remark*}[Source comparison]` when the generated item splits,
+  refines, renames, packages, or reorganizes material from a cited source
   presentation.
 - Place the source crosswalk remark after `Interpretation` and before
   `Exposition`, Examples, Non-Examples, and `Dependencies`.
@@ -335,6 +333,7 @@ Use this option shape:
 - Use natbib-compatible citations such as
   `\citet{FefermanNumberSystems1964}` or
   `\citep{FefermanNumberSystems1964}`. Do not use biblatex-only commands.
+- End every `Source comparison` block with the citation command.
 
 ## Examples And Non-Examples
 

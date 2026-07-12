@@ -65,11 +65,6 @@ NO_LOCAL_RE = re.compile(r"\\NoLocalDependencies\b")
 DEFINITIONAL_ROOT_RE = re.compile(r"\\DefinitionalRoot\b")
 SECTION_RE = re.compile(r"\\(?:chapter|section|subsection|subsubsection)\*?\{")
 COMMENT_RE = re.compile(r"(?<!\\)%.*$")
-SUPPORT_TITLE_ALIASES = {
-    "definition predicate reading": "predicate reading",
-    "failure mode decomposition": "failure modes",
-}
-
 
 @dataclass
 class Node:
@@ -177,8 +172,7 @@ def next_formal_or_section(text: str, start: int) -> int:
 
 
 def normalize_support_title(title: str) -> str:
-    key = re.sub(r"\s+", " ", title.strip().lower())
-    return SUPPORT_TITLE_ALIASES.get(key, key)
+    return re.sub(r"\s+", " ", title.strip().lower())
 
 
 def support_blocks_after(text: str, start: int) -> list[dict[str, Any]]:

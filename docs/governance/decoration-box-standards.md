@@ -55,7 +55,7 @@ The standardized decoration blocks are:
 - Interpretation;
 - Notation;
 - Historical note;
-- Comparison with Feferman;
+- Source comparison;
 - Exposition;
 - Examples;
 - Non-Examples;
@@ -80,7 +80,7 @@ When a block is present, use this order:
 9. Contrapositive predicate reading
 10. Interpretation
 11. Notation
-12. Historical note or Comparison with Feferman
+12. Historical note or Source comparison
 13. Exposition
 14. Examples
 15. Non-Examples
@@ -171,7 +171,7 @@ variant drops only the box wrapper, never the label or the required blocks.
 <notation convention introduced or fixed by the statement>
 \end{remark*}
 
-\begin{remark*}[Historical note]                       % C: known source correspondence (or "Comparison with Feferman")
+\begin{remark*}[Historical note]                       % C: known source correspondence (or "Source comparison")
 <short provenance prose with \citet{...}>
 \end{remark*}
 
@@ -283,8 +283,7 @@ Real, validator-passing references: the definition skeleton matches
 
 Easy-to-get-wrong points:
 
-- The predicate-reading title is always `Predicate reading`. `Definition
-  predicate reading` is a legacy title accepted only during migration.
+- The predicate-reading title is always `Predicate reading`.
 - The proof link is `\hyperref[prf:<root>]{\textit{Go to proof.}}`, placed inside
   the environment body before `\end{...}`, and only for thm/lem/prop/cor — never
   definitions or axioms.
@@ -432,13 +431,20 @@ Do not confuse `remark*` titled `Exposition` with the topic-level
 
 ## Source Crosswalks
 
-Use `Historical note` for direct provenance and `Comparison with Feferman` for
-structural comparison with Feferman's presentation.
+Use `Historical note` for direct provenance and `Source comparison` for
+structural comparison with a cited source presentation.
 
 Source crosswalks appear after Interpretation and before Exposition,
 Examples, Non-Examples, and Dependencies. They
 must not appear inside formal environments, quantified statements, predicate
 readings, negation blocks, or failure-mode decompositions.
+
+`Source comparison` blocks use a generic title so the comparison target can be
+Peano, Dedekind, Landau, Tao, Feferman, or any other cited source without
+creating one-off block titles. Name the source in the prose body and end the
+block with a natbib-compatible citation command such as
+`\citet{DedekindContinuityIrrationalNumbers}` or
+`\citep{TaoAnalysisI}`.
 
 ## Examples And Non-Examples
 

@@ -127,7 +127,6 @@ exposition may satisfy the interpretation requirement.
 - Each following item names one mode using `\item[<Mode name>.]`?
 - Each mode contains mode-specific exposition, a quantified failure display,
   and a predicate reading when predicate language exists?
-- Does not use the legacy "Failure mode decomposition" block?
 
 ### contrapositive_quantified_stmt
 - Absent for def and ax?
@@ -160,7 +159,7 @@ exposition may satisfy the interpretation requirement.
 
 ### source_crosswalk
 - Optional only.
-- If present, title is exactly "Historical note" or "Comparison with Feferman"?
+- If present, title is exactly "Historical note" or "Source comparison"?
 - Appears after Interpretation and before Exposition, Examples, Non-Examples,
   and Dependencies?
 - Is short expository metadata, not formal mathematics?
@@ -168,8 +167,11 @@ exposition may satisfy the interpretation requirement.
   statement content?
 - Uses a valid bibliography key and a citation command supported by the repo
   bibliography stack, such as \citet{...} or \citep{...}?
-- "Historical note" is used for direct provenance; "Comparison with Feferman"
-  is used for structural differences, splitting, refinement, or repackaging?
+- "Historical note" is used for direct provenance; "Source comparison" is used
+  for structural differences, splitting, refinement, or repackaging relative to
+  a cited source?
+- Does every "Source comparison" block end with a natbib-compatible citation
+  command?
 
 ### examples
 - Optional for definitions only?

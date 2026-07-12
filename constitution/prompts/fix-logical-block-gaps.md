@@ -87,13 +87,12 @@ include it. For biconditionals, include the negation of the iff instead.
 
 ### Failure modes (DESIGN.md §10.6)
 
-When failure modes are generated, also generate a decomposition block.
-This block may use underbraces or equivalent visual grouping.
-The Failure modes block is structured with a `description` environment. Its
-first item is `\item[Exposition.]`; each following item names one mode and
-contains mode-specific exposition, a quantified failure display, and a
-predicate reading of the failure when predicate language exists. Do not generate
-`remark*[Failure modes]`; that title is legacy migration input.
+When failure modes are generated, use `remark*[Failure modes]`. The block may
+use underbraces or equivalent visual grouping. The Failure modes block is
+structured with a `description` environment. Its first item is
+`\item[Exposition.]`; each following item names one mode and contains
+mode-specific exposition, a quantified failure display, and a predicate reading
+of the failure when predicate language exists.
 
 ---
 
@@ -463,4 +462,3 @@ belongs in the notes layer, not only in the proof file.
 **GAPS 13 and 14 (Rolle and MVT):** The hypothesis-failure analysis with
 explicit counterexamples is the content that makes these theorems useful
 for building intuition. Do not omit the counterexamples.
-

@@ -55,11 +55,6 @@ _DEFINITION_REQUIRED_REMARKS = {
     "interpretation",
     "dependencies",
 }
-_LEGACY_REMARK_TITLES = {
-    "definition predicate reading": "predicate reading",
-    "failure mode decomposition": "failure modes",
-}
-
 
 @dataclass(frozen=True)
 class Finding:
@@ -310,15 +305,6 @@ def _validate_required_logical_blocks(tex: str) -> list[Finding]:
     findings: list[Finding] = []
     remarks = [(_normalize_title(title), body) for title, body in _REMARK.findall(tex)]
     titles = _support_titles(tex)
-    for legacy, canonical in _LEGACY_REMARK_TITLES.items():
-        if legacy in titles:
-            findings.append(
-                Finding(
-                    "FAIL",
-                    "legacy_logical_block_title",
-                    f"Generated block uses legacy remark title `{legacy}`; use `{canonical}`.",
-                )
-            )
     if "standard quantified statement" not in titles:
         findings.append(
             Finding(

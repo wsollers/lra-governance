@@ -21,7 +21,13 @@ EXPOSITORY_BLOCK_RE = re.compile(
     re.IGNORECASE,
 )
 FORMAL_INNER_RE = re.compile(r"\\begin\{(?:definition|axiom|theorem|lemma|proposition|corollary)\}", re.IGNORECASE)
-CITATION_RE = re.compile(r"\\cite[t|p]?\{")
+CITATION_RE = re.compile(r"\\cite(?:t|p)?\{")
+SOURCE_CROSSWALK_RE = re.compile(
+    r"\\begin\{remark\*\}\[(?P<title>Historical note|Source comparison)\]"
+    r"(?P<body>[\s\S]*?)"
+    r"\\end\{remark\*\}",
+    re.IGNORECASE,
+)
 FORMAL_BOX_RE = re.compile(
     r"\\begin\{(?P<env>definitionbox|definitionalbox|axiombox|theorembox|lemmabox|propositionbox|corollarybox)\}"
     r"(?:\{[^{}]*\})?"
@@ -32,11 +38,11 @@ FORMAL_BOX_RE = re.compile(
 DECORATION_INSIDE_FORMAL_RE = re.compile(
     r"\\begin\{(?:remark\*|example\*|dependencies)\}"
     r"|\\textbf\{(?:"
-    r"Standard quantified statement|Quantified form|"
-    r"Definition predicate reading|Predicate reading|Predicate form|"
-    r"Negated quantified statement|Negated quantified form|Negated form|"
-    r"Negation predicate reading|Negated predicate form|"
-    r"Failure modes|Failure mode decomposition|"
+    r"Standard quantified statement|"
+    r"Predicate reading|"
+    r"Negated quantified statement|"
+    r"Negation predicate reading|"
+    r"Failure modes|"
     r"Contrapositive quantified statement|Contrapositive predicate reading|"
     r"Interpretation|Exposition|Examples|Non-Examples|Dependencies"
     r")\.?\}",
@@ -55,15 +61,11 @@ DECORATION_ORDER = {
     "interpretation": 100,
     "notation": 102,
     "historical note": 105,
-    "comparison with feferman": 105,
+    "source comparison": 105,
     "exposition": 110,
     "examples": 120,
     "non-examples": 130,
     "dependencies": 140,
-}
-LEGACY_DECORATION_ORDER = {
-    "definition predicate reading": DECORATION_ORDER["predicate reading"],
-    "failure mode decomposition": DECORATION_ORDER["failure modes"],
 }
 DEPENDENT_DECORATION_PARENTS = {
     "negation predicate reading": "negated quantified statement",
@@ -211,16 +213,31 @@ def _check_source_citations(
     line: int,
     findings: list[Finding],
 ) -> None:
-    if re.search(r"\\begin\{remark\*\}\[(Historical note|Comparison with Feferman)\]", decoration) and not CITATION_RE.search(decoration):
-        findings.append(
-            finding(
-                "source_crosswalk_without_citation",
-                f"{label} has a source/provenance block without a citation.",
-                path,
-                volume_root,
-                line,
+    for match in SOURCE_CROSSWALK_RE.finditer(decoration):
+        title = match.group("title")
+        body = match.group("body")
+        block_line = line + _line_at(decoration, match.start()) - 1
+        if not CITATION_RE.search(body):
+            findings.append(
+                finding(
+                    "source_crosswalk_without_citation",
+                    f"{label} has a source/provenance block without a citation.",
+                    path,
+                    volume_root,
+                    block_line,
+                )
             )
-        )
+            continue
+        if title.lower() == "source comparison" and not _ends_with_citation(body):
+            findings.append(
+                finding(
+                    "source_comparison_citation_not_at_bottom",
+                    f"{label} Source comparison block must end with a citation command.",
+                    path,
+                    volume_root,
+                    block_line,
+                )
+            )
 
 
 def _check_expository_formal_claims(
@@ -271,17 +288,6 @@ def _check_decoration_blocks(
         key = _decoration_key(match)
         block_line = line + _line_at(decoration, match.start()) - 1
         rank = DECORATION_ORDER.get(key)
-        if rank is None and key in LEGACY_DECORATION_ORDER:
-            rank = LEGACY_DECORATION_ORDER[key]
-            findings.append(
-                finding(
-                    f"legacy_{key.replace(' ', '_')}",
-                    f"{label} uses legacy decoration block '{key}'; migrate to the canonical block title.",
-                    path,
-                    volume_root,
-                    block_line,
-                )
-            )
         if rank is None:
             findings.append(
                 finding(
@@ -434,6 +440,11 @@ def _decoration_key(match) -> str:
     if env == "dependencies":
         return "dependencies"
     return re.sub(r"\s+", " ", (match.group("title") or "").strip().lower())
+
+
+def _ends_with_citation(body: str) -> bool:
+    stripped = body.strip()
+    return bool(re.search(r"\\cite(?:t|p)?\{[^{}]+\}\.?\s*$", stripped))
 
 
 def _line_at(text: str, offset: int) -> int:

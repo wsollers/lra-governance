@@ -756,11 +756,7 @@ _DECORATION_ORDER = {
     "predicate reading":30,"negated quantified statement":40,"negation predicate reading":50,
     "failure modes":60,"contrapositive quantified statement":70,
     "contrapositive predicate reading":80,"interpretation":100,"notation":102,"historical note":105,
-    "comparison with feferman":105,"exposition":110,"examples":120,"non-examples":130,"dependencies":140,
-}
-_LEGACY_DECORATION_ORDER = {
-    "definition predicate reading": _DECORATION_ORDER["predicate reading"],
-    "failure mode decomposition": _DECORATION_ORDER["failure modes"],
+    "source comparison":105,"exposition":110,"examples":120,"non-examples":130,"dependencies":140,
 }
 _DEPENDENT_DECORATION_PARENTS = {
     "negation predicate reading":"negated quantified statement",
@@ -772,12 +768,21 @@ _FORBIDDEN_DECORATION_BY_ENV = {
     "theorem":{"examples","non-examples"},"lemma":{"examples","non-examples"},
     "proposition":{"examples","non-examples"},"corollary":{"examples","non-examples"},
 }
+_CITATION_RE = re.compile(r"\\cite(?:t|p)?\{")
+_SOURCE_CROSSWALK_RE = re.compile(
+    r"\\begin\{remark\*\}\[(?P<title>Historical note|Source comparison)\]"
+    r"(?P<body>[\s\S]*?)"
+    r"\\end\{remark\*\}",
+    re.IGNORECASE,
+)
 _DECORATION_BLOCK_RE = re.compile(
     r"\\begin\{(?P<env>remark\*|example\*|dependencies)\}(?:\[(?P<title>[^\]]+)\])?", re.IGNORECASE)
 def _decoration_key(m):
     env=m.group("env").lower()
     if env=="dependencies": return "dependencies"
     return re.sub(r"\s+"," ",(m.group("title") or "").strip().lower())
+def _ends_with_citation(body: str) -> bool:
+    return bool(re.search(r"\\cite(?:t|p)?\{[^{}]+\}\.?\s*$", body.strip()))
 def _dependency_bodies(dec):
     return re.findall(r"\\begin\{dependencies\}(.*?)\\end\{dependencies\}", dec, re.DOTALL)
 
@@ -870,10 +875,17 @@ def formal_block_decoration(text: str, info: FileInfo, ctx: Context):
                     if target.split(":",1)[0] not in _DEPENDENCY_PREFIXES:
                         yield Issue("invalid_dependency_target",
                             f"{label} dependency targets non-statement label {target}.", "error", ln)
-        if re.search(r"\\begin\{remark\*\}\[(Historical note|Comparison with Feferman)\]", dec) \
-           and not re.search(r"\\cite[t|p]?\{", dec):
-            yield Issue("source_crosswalk_without_citation",
-                f"{label} has a source/provenance block without a citation.", "error", ln)
+        for source_match in _SOURCE_CROSSWALK_RE.finditer(dec):
+            title = source_match.group("title")
+            body = source_match.group("body")
+            block_line = ln + _line_at(dec, source_match.start()) - 1
+            if not _CITATION_RE.search(body):
+                yield Issue("source_crosswalk_without_citation",
+                    f"{label} has a source/provenance block without a citation.", "error", block_line)
+                continue
+            if title.lower() == "source comparison" and not _ends_with_citation(body):
+                yield Issue("source_comparison_citation_not_at_bottom",
+                    f"{label} Source comparison block must end with a citation command.", "error", block_line)
         for ex in re.finditer(r"\\begin\{remark\*\}\[(Examples|Non-Examples|Exposition)\]([\s\S]*?)\\end\{remark\*\}", dec):
             body=ex.group(2)
             if LABEL_RE.search(body) or re.search(r"\\begin\{(?:definition|axiom|theorem|lemma|proposition|corollary)\}", body):
@@ -897,11 +909,6 @@ def formal_block_decoration(text: str, info: FileInfo, ctx: Context):
         for m in _DECORATION_BLOCK_RE.finditer(dec):
             key=_decoration_key(m)
             rank=_DECORATION_ORDER.get(key)
-            if rank is None and key in _LEGACY_DECORATION_ORDER:
-                rank=_LEGACY_DECORATION_ORDER[key]
-                yield Issue(f"legacy_{key.replace(' ', '_')}",
-                    f"{label} uses legacy decoration block '{key}'; migrate to the canonical block title.",
-                    "error", ln + _line_at(dec, m.start()) - 1)
             if rank is None:
                 yield Issue("unknown_decoration_block",
                     f"{label} has nonstandard decoration block '{key}'.",
