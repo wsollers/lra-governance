@@ -191,6 +191,10 @@ def existing_labels(repo: str) -> set[str]:
     return labels
 
 
+def issue_label_names(issue: dict[str, Any]) -> set[str]:
+    return {label["name"] for label in issue.get("labels", []) if isinstance(label, dict) and "name" in label}
+
+
 def find_open_issue(repo: str, fingerprint: str) -> dict[str, Any] | None:
     query = f'repo:{repo} is:issue is:open "{FINGERPRINT_PREFIX} {fingerprint}" in:body'
     result = gh_api(repo, f"/search/issues?q={urllib.parse.quote(query)}")
@@ -228,6 +232,9 @@ def sync_issues(repo: str, issues: list[ValidatorIssue], close_stale: bool, dry_
         existing = existing_by_fingerprint.get(issue.fingerprint)
         payload = {"title": issue.title, "body": issue.body, "labels": issue.labels}
         if existing:
+            if existing.get("title") == issue.title and issue_label_names(existing) == set(issue.labels):
+                counts["unchanged"] += 1
+                continue
             gh_api(repo, f"/repos/{repo}/issues/{existing['number']}", "PATCH", payload)
             counts["updated"] += 1
         else:
