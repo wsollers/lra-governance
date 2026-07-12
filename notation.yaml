@@ -297,3 +297,53 @@ notation:
     symbol: '\operatorname{PreQ}'
     category: operator_notation
     description: Operator notation for PreQ.
+  - id: not:diagonal-matrix-operator
+    name: DiagonalMatrixOperator
+    symbol: '\operatorname{diag}'
+    category: linear_algebra_operator
+    description: Diagonal matrix formed from the listed diagonal entries.
+  - id: not:linear-span-operator
+    name: LinearSpanOperator
+    symbol: '\operatorname{span}'
+    category: linear_algebra_operator
+    description: Linear span of a family of vectors.
+  - id: not:ieee-bit-width
+    name: IEEEBitWidth
+    symbol: '\operatorname{BitWidth}'
+    category: numerical_analysis_operator
+    description: Total bit width accessor for an IEEE binary format.
+  - id: not:ieee-sign-width
+    name: IEEESignWidth
+    symbol: '\operatorname{SignWidth}'
+    category: numerical_analysis_operator
+    description: Sign-field width accessor for an IEEE binary format.
+  - id: not:ieee-exponent-width
+    name: IEEEExponentWidth
+    symbol: '\operatorname{ExponentWidth}'
+    category: numerical_analysis_operator
+    description: Exponent-field width accessor for an IEEE binary format.
+  - id: not:ieee-fraction-width
+    name: IEEEFractionWidth
+    symbol: '\operatorname{FractionWidth}'
+    category: numerical_analysis_operator
+    description: Fraction-field width accessor for an IEEE binary format.
+  - id: not:ieee-exponent-bias
+    name: IEEEExponentBias
+    symbol: '\operatorname{ExponentBias}'
+    category: numerical_analysis_operator
+    description: Exponent-bias accessor for an IEEE binary format.
+  - id: not:ieee-sign-field
+    name: IEEESignField
+    symbol: '\operatorname{SignField}'
+    category: numerical_analysis_operator
+    description: Sign-field accessor for an IEEE binary datum.
+  - id: not:ieee-exponent-field
+    name: IEEEExponentField
+    symbol: '\operatorname{ExponentField}'
+    category: numerical_analysis_operator
+    description: Exponent-field accessor for an IEEE binary datum.
+  - id: not:ieee-fraction-field
+    name: IEEEFractionField
+    symbol: '\operatorname{FractionField}'
+    category: numerical_analysis_operator
+    description: Fraction-field accessor for an IEEE binary datum.

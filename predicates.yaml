@@ -8441,3 +8441,29 @@ predicates:
       - LeastUpperBoundProperty
     description: >
       Volume II predicate or assertion named LeastUpperBoundProperty.
+
+  - id: pred:has-ieee-class
+    name: HasIEEEClass
+    kind: predicate
+    category: numerical_analysis
+    arguments:
+      - name: x
+        role: datum
+      - name: F
+        role: format
+      - name: C
+        role: encoding_class
+    returns: truth_value
+    ambient_argument: F
+    polymorphic: false
+    surface_forms:
+      - has IEEE class
+      - IEEE encoding class
+      - normal IEEE datum
+      - subnormal IEEE datum
+      - IEEE infinity encoding
+      - IEEE NaN encoding
+    description: >
+      The IEEE binary datum x in format F has encoding class C. Standard
+      classes include normal, subnormal, infinity, and NaN; these are class
+      objects rather than separate predicate names.

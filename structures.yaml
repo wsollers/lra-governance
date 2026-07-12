@@ -3291,3 +3291,170 @@ structures:
       - WellOrder
     description: >
       Volume II structure or data object named WellOrder.
+
+  - id: struct:ieee-binary-format
+    name: IEEEBinaryFormat
+    kind: structure
+    category: numerical_analysis
+    constructor: '\mathsf{IEEEBinaryFormat}'
+    arguments:
+      - name: F
+        role: format
+      - name: b
+        role: bit_width
+      - name: s
+        role: sign_width
+      - name: e
+        role: exponent_width
+      - name: p
+        role: fraction_width
+      - name: beta
+        role: exponent_bias
+        surface: '\beta'
+    carrier_argument: null
+    structural_arguments:
+      - F
+      - b
+      - s
+      - e
+      - p
+      - beta
+    surface_forms:
+      - IEEE binary format
+      - IEEE 754 binary format
+      - floating-point format
+      - binary interchange format
+    description: >
+      Packaged IEEE 754 binary floating-point format. The package records the
+      total bit width, sign-field width, exponent-field width, fraction-field
+      width, and exponent bias.
+
+  - id: struct:ieee-binary-datum
+    name: IEEEBinaryDatum
+    kind: structure
+    category: numerical_analysis
+    constructor: '\mathsf{IEEEBinaryDatum}'
+    arguments:
+      - name: x
+        role: datum
+      - name: s
+        role: sign_field
+      - name: e
+        role: exponent_field
+      - name: f
+        role: fraction_field
+      - name: F
+        role: format
+    carrier_argument: F
+    structural_arguments:
+      - x
+      - s
+      - e
+      - f
+    surface_forms:
+      - IEEE binary datum
+      - IEEE 754 binary floating-point datum
+      - IEEE binary floating-point datum
+      - floating-point datum
+    description: >
+      Packaged IEEE 754 binary floating-point datum in a fixed binary format.
+      The datum carries sign, exponent, and fraction fields as structural
+      slots; those slots are not separate predicates.
+
+  - id: struct:ieee-encoding-class
+    name: IEEEEncodingClass
+    kind: structure
+    category: numerical_analysis
+    constructor: '\mathsf{IEEEEncodingClass}'
+    arguments:
+      - name: C
+        role: encoding_class
+      - name: tag
+        role: class_tag
+    carrier_argument: null
+    structural_arguments:
+      - C
+      - tag
+    surface_forms:
+      - IEEE encoding class
+      - floating-point encoding class
+      - normal encoding
+      - subnormal encoding
+      - infinity encoding
+      - NaN encoding
+    description: >
+      Classification object for an IEEE binary datum, such as normal,
+      subnormal, infinity, or NaN. Classification is asserted by
+      HasIEEEClass rather than by separate ad hoc datum predicates.
+
+  - id: struct:binary16-format
+    name: Binary16Format
+    kind: structure
+    category: numerical_analysis
+    constructor: '\mathsf{Binary16Format}'
+    arguments:
+      - name: F
+        role: format
+    carrier_argument: null
+    structural_arguments:
+      - F
+    surface_forms:
+      - binary16
+      - half precision
+      - IEEE binary16 format
+    description: >
+      Named IEEE 754 binary16 interchange format object.
+
+  - id: struct:binary32-format
+    name: Binary32Format
+    kind: structure
+    category: numerical_analysis
+    constructor: '\mathsf{Binary32Format}'
+    arguments:
+      - name: F
+        role: format
+    carrier_argument: null
+    structural_arguments:
+      - F
+    surface_forms:
+      - binary32
+      - single precision
+      - IEEE binary32 format
+    description: >
+      Named IEEE 754 binary32 interchange format object.
+
+  - id: struct:binary64-format
+    name: Binary64Format
+    kind: structure
+    category: numerical_analysis
+    constructor: '\mathsf{Binary64Format}'
+    arguments:
+      - name: F
+        role: format
+    carrier_argument: null
+    structural_arguments:
+      - F
+    surface_forms:
+      - binary64
+      - double precision
+      - IEEE binary64 format
+    description: >
+      Named IEEE 754 binary64 interchange format object.
+
+  - id: struct:binary128-format
+    name: Binary128Format
+    kind: structure
+    category: numerical_analysis
+    constructor: '\mathsf{Binary128Format}'
+    arguments:
+      - name: F
+        role: format
+    carrier_argument: null
+    structural_arguments:
+      - F
+    surface_forms:
+      - binary128
+      - quadruple precision
+      - IEEE binary128 format
+    description: >
+      Named IEEE 754 binary128 interchange format object.
