@@ -137,6 +137,24 @@ def _filter_findings_for_chapter(findings, chapter_rel: str | None):
     return [finding for finding in findings if finding.path == chapter_rel or finding.path.startswith(prefix)]
 
 
+def _filter_findings_for_inventory(findings, volume_root: Path, inventory: list[Path]):
+    wired_tex = {path.resolve() for path in inventory if path.suffix == ".tex"}
+    kept = []
+    root = volume_root.resolve()
+    for item in findings:
+        path = (root / item.path).resolve()
+        if path.suffix == ".tex" and path.exists():
+            try:
+                path.relative_to(root)
+            except ValueError:
+                kept.append(item)
+                continue
+            if path not in wired_tex:
+                continue
+        kept.append(item)
+    return kept
+
+
 def _validators_for_scope(book_scope: str | None):
     if not book_scope:
         return VALIDATORS
@@ -199,7 +217,8 @@ def main(argv=None) -> int:
     for _name, validator in validators:
         all_findings.extend(run_validator(validator, volume.root, inventory))
 
-    report_findings = _filter_findings_for_chapter(all_findings, chapter_filter)
+    gated_findings = _filter_findings_for_inventory(all_findings, volume.root, inventory)
+    report_findings = _filter_findings_for_chapter(gated_findings, chapter_filter)
     report_title = f"validate volume: {volume.root}"
     if book_scope:
         report_title += f" (scoped to book: {book_scope}; validators: {len(validators)}/{len(VALIDATORS)})"
@@ -207,13 +226,13 @@ def main(argv=None) -> int:
         report_title += f" (report filtered to chapter: {chapter_filter}; gate: full volume)"
     print_report(report_title, report_findings)
     if chapter_filter and not book_scope:
-        errors, warnings, reviews = _counts(all_findings)
-        print(f"\nfull volume gate: {len(all_findings)} issue(s) [{errors} error, {warnings} warning, {reviews} review]")
+        errors, warnings, reviews = _counts(gated_findings)
+        print(f"\nfull volume gate: {len(gated_findings)} issue(s) [{errors} error, {warnings} warning, {reviews} review]")
     if args.json:
         write_json_report(Path(args.json), volume.root, report_findings)
         print(f"\njson report: {args.json}")
 
-    errors = _counts(all_findings)[0]
+    errors = _counts(gated_findings)[0]
     if args.fail_on_errors and errors:
         if temp_context is not None:
             temp_context.cleanup()

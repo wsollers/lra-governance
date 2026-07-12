@@ -3,6 +3,7 @@ import subprocess
 import sys
 import unittest
 import json
+import inspect
 from pathlib import Path
 from unittest.mock import patch
 
@@ -13,8 +14,9 @@ from core.file_inventory import files_to_validate
 from core.formal_blocks import clear_formal_block_cache
 from core.tex import clear_text_cache
 from core import volume as volume_core
-from validate_volume import VALIDATORS
+from validate_volume import VALIDATORS, _filter_findings_for_inventory
 from core.validator_runner import run_validator
+from core.finding import finding
 from validators import block_discipline, book_toc, capstones, chapter_router, dedication_page, dependency_blocks, dependency_graphs, figure_fragments, formal_decoration, formal_reading_required, frontmatter_standard, input_resolution, interpretation_blocks, labels, latex_integrity, math_boxes, notes_structure, operator_metadata, print_edition_routing, proof_coverage, proof_file_contract, proof_layout, proof_order, proof_routing, proof_stub_state, reference_voice, structural_chrome, structural_positions, unicode_tex, volume_shape
 
 
@@ -231,6 +233,50 @@ class ValidateVolumeTests(unittest.TestCase):
     def tearDown(self):
         if TMP.exists():
             shutil.rmtree(TMP)
+
+    def test_all_registered_validators_accept_file_inventory(self):
+        for name, validator in VALIDATORS:
+            with self.subTest(validator=name):
+                self.assertIn("files", inspect.signature(validator.validate).parameters)
+
+    def test_full_validator_runner_ignores_unwired_tex_files(self):
+        volume = make_volume()
+        bad = volume / "integers" / "notes" / "order" / "notes-unwired-bad.tex"
+        write(
+            bad,
+            "\n".join(
+                [
+                    r"\begin{tikzpicture}",
+                    r"\draw (0,0) -- (1,1);",
+                    r"\end{tikzpicture}",
+                    r"\begin{definition}[Unwired]",
+                    r"\label{def:unwired}",
+                    "Unwired content.",
+                    r"\end{definition}",
+                    "",
+                ]
+            ),
+        )
+
+        for name, validator in VALIDATORS:
+            with self.subTest(validator=name):
+                findings = run_validator(validator, volume)
+                bad_findings = [finding for finding in findings if Path(finding.path).resolve() == bad.resolve()]
+                self.assertEqual([], bad_findings)
+
+    def test_reporting_gate_drops_findings_for_unwired_tex_files(self):
+        volume = make_volume()
+        wired = volume / "integers" / "notes" / "order" / "notes-order.tex"
+        unwired = volume / "integers" / "notes" / "order" / "notes-unwired-bad.tex"
+        write(unwired, "Unwired content.\n")
+        findings = [
+            finding("wired_issue", "Wired.", wired, volume, severity="warning"),
+            finding("unwired_issue", "Unwired.", unwired, volume, severity="warning"),
+        ]
+
+        filtered = _filter_findings_for_inventory(findings, volume, files_to_validate([volume]))
+
+        self.assertEqual(["wired_issue"], [item.code for item in filtered])
 
     def test_core_volume_excludes_special_validation_directories(self):
         volume = make_volume()
@@ -606,6 +652,44 @@ class ValidateVolumeTests(unittest.TestCase):
         volume = make_volume()
 
         self.assertEqual(validate_with_inventory(proof_layout, volume), [])
+
+    def test_proof_layout_ignores_unrouted_proof_files(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "proofs" / "order" / "prf-retired.tex",
+            "\n".join(
+                [
+                    r"\newpage",
+                    r"\phantomsection",
+                    r"\label{prf:retired}",
+                    r"\LRAProofFor{prop:retired}",
+                    "",
+                    r"\begin{remark*}[Return]",
+                    r"\hyperref[prop:retired]{Return to Proposition}",
+                    r"\end{remark*}",
+                    "",
+                    r"\begin{proposition*}[Retired]",
+                    "Retired statement.",
+                    r"\end{proposition*}",
+                    "",
+                    r"\begin{proof}",
+                    "TODO: professional standard proof for retired.",
+                    r"\end{proof}",
+                    "",
+                    r"\begin{proof}",
+                    "TODO: detailed learning proof for retired.",
+                    r"\end{proof}",
+                    "",
+                    r"\NoLocalDependencies",
+                    "",
+                ]
+            ),
+        )
+
+        codes = {finding.code for finding in run_validator(proof_layout, volume)}
+
+        self.assertNotIn("proof_not_in_topic_index", codes)
+        self.assertNotIn("unknown_note_topic", codes)
 
     def test_proof_file_contract_accepts_canonical_fixture(self):
         volume = make_volume()
@@ -1300,6 +1384,42 @@ class ValidateVolumeTests(unittest.TestCase):
 
         self.assertIn("inline_tikzpicture", codes)
 
+    def test_structural_chrome_allows_standalone_tikz_figure_file(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "figures" / "fig-order-diagram.tex",
+            "\n".join(
+                [
+                    r"\begin{tikzpicture}",
+                    r"\draw (0,0) -- (1,1);",
+                    r"\end{tikzpicture}",
+                    "",
+                ]
+            ),
+        )
+        with (volume / "integers" / "notes" / "order" / "notes-order.tex").open("a", encoding="utf-8") as handle:
+            handle.write(
+                "\n".join(
+                    [
+                        r"\begin{figure}[H]",
+                        r"\input{volume-ii/integers/figures/fig-order-diagram}",
+                        r"\caption{Order diagram}",
+                        r"\label{fig:order-diagram}",
+                        r"\end{figure}",
+                        "",
+                    ]
+                )
+            )
+
+        findings = validate_with_inventory(structural_chrome, volume)
+        figure_findings = [
+            finding
+            for finding in findings
+            if finding.code == "inline_tikzpicture" and "fig-order-diagram" in finding.path
+        ]
+
+        self.assertEqual([], figure_findings)
+
     def test_structural_chrome_flags_retired_text_and_hand_rolled_breadcrumb(self):
         volume = make_volume()
         write(
@@ -1745,6 +1865,29 @@ class ValidateVolumeTests(unittest.TestCase):
         by_code = {finding.code: finding for finding in findings}
 
         self.assertEqual(by_code["multiple_formal_labels_in_box"].severity, "warning")
+
+    def test_math_boxes_flags_label_on_decorative_box(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "index.tex",
+            r"\input{volume-ii/integers/notes/order/notes-extra}" "\n",
+        )
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{theorembox}{Hausdorff Maximum Principle}",
+                    r"\label{thm:hausdorff}",
+                    "Every poset has a maximal chain.",
+                    r"\end{theorembox}",
+                    "",
+                ]
+            ),
+        )
+
+        codes = {finding.code for finding in validate_with_inventory(math_boxes, volume)}
+
+        self.assertIn("formal_label_on_box", codes)
 
     def test_math_boxes_checks_canonical_wrapper_when_present(self):
         volume = make_volume()
@@ -2344,7 +2487,7 @@ class ValidateVolumeTests(unittest.TestCase):
         )
         write(figure_dir / "_src" / "standalone.tex", r"\documentclass{standalone}")
 
-        codes = {finding.code for finding in validate_with_inventory(figure_fragments, volume)}
+        codes = {finding.code for finding in run_validator(figure_fragments, volume, [figure_dir / "good.tex", figure_dir / "bad.tex"])}
 
         self.assertIn("figure_fragment_document_tag", codes)
         self.assertIn("figure_fragment_missing_caption", codes)

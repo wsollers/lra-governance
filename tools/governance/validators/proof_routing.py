@@ -5,7 +5,7 @@ from pathlib import Path
 from core.finding import Finding, finding
 from core.file_inventory import validator_file_set
 from core.tex import INPUT_RE, is_routed, read_text, strip_latex_comment, strip_latex_comments
-from core.volume import routed_chapter_roots, is_ignored
+from core.volume import routed_chapter_roots
 
 
 def validate(volume_root: Path, files) -> list[Finding]:
@@ -39,13 +39,7 @@ def validate(volume_root: Path, files) -> list[Finding]:
                 )
             _check_router_only(volume_root, proofs_index, findings, "proofs_index_contains_rendered_content", "proofs/index.tex")
 
-        if not proofs_root.exists():
-            continue
-        for topic_dir in sorted(
-            path
-            for path in proofs_root.iterdir()
-            if path.is_dir() and path.name != "exercises" and not is_ignored(path, proofs_root)
-        ):
+        for topic_dir in _active_topic_dirs(proofs_root, included):
             index = topic_dir / "index.tex"
             index_included = index.exists() and index.resolve() in included
             if index_included:
@@ -75,7 +69,7 @@ def validate(volume_root: Path, files) -> list[Finding]:
                             volume_root,
                         )
                     )
-            for proof_file in sorted(topic_dir.glob("*.tex")):
+            for proof_file in _active_topic_files(topic_dir, included):
                 if proof_file.name == "index.tex":
                     continue
                 if proof_file.resolve() not in included:
@@ -90,6 +84,26 @@ def validate(volume_root: Path, files) -> list[Finding]:
                         )
                     )
     return findings
+
+
+def _active_topic_dirs(proofs_root: Path, included: set[Path]) -> list[Path]:
+    topics: set[Path] = set()
+    for path in included:
+        try:
+            rel = path.relative_to(proofs_root)
+        except ValueError:
+            continue
+        if len(rel.parts) >= 2 and rel.parts[0] != "exercises":
+            topics.add(proofs_root / rel.parts[0])
+    return sorted(topics)
+
+
+def _active_topic_files(topic_dir: Path, included: set[Path]) -> list[Path]:
+    return sorted(
+        path
+        for path in included
+        if path.parent == topic_dir and path.name != "index.tex"
+    )
 
 
 def _directly_inputs(index_path: Path, target: Path, chapter_root: Path) -> bool:

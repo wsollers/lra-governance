@@ -5,9 +5,9 @@ import re
 from pathlib import Path
 
 from core.finding import Finding, finding
-from core.file_inventory import reachable_files, validator_file_set
+from core.file_inventory import validator_file_set
 from core.tex import read_text, strip_latex_comments
-from core.volume import routed_chapter_roots, is_ignored, latex_input_path
+from core.volume import routed_chapter_roots
 
 
 DEFAULT_SCHEMA = {
@@ -120,7 +120,7 @@ def _validate_chapter_reachability(volume_root: Path, chapters: list[Path], find
     # the volume index through the router chain (volume -> book -> chapter). This
     # follows \input chains, so it accepts both single-tier (volume -> chapter)
     # and book-tier (volume -> book -> chapter) layouts.
-    reachable = reachable_files(volume_root)
+    reachable = validator_file_set(volume_root, files)
     for chapter in chapters:
         if (chapter / "index.tex").resolve() not in reachable:
             _add(
@@ -154,19 +154,13 @@ def _validate_notes_shape(volume_root: Path, chapter: Path, findings: list[Findi
     if not notes_root.is_dir():
         return
     topic_re = re.compile(schema["topic_name_pattern"])
-    for child in notes_root.iterdir():
-        if is_ignored(child, notes_root) or child.name == "index.tex":
-            continue
-        if child.is_file() and child.suffix == ".tex":
-            if child.resolve() not in included:
-                continue
+    for child in _active_direct_files(notes_root, included):
+        if child.name != "index.tex":
             _add(findings, volume_root, child, "flat_note_body", "Note body files must live under notes/{topic}/, not directly under notes/.")
-        elif child.is_dir():
-            if not _active_tree(child, included):
-                continue
-            if not topic_re.fullmatch(child.name):
-                _add(findings, volume_root, child, "noncanonical_topic_name", "Topic directory names must be lowercase kebab-case.")
-            _required_file(findings, volume_root, child / "index.tex", f"notes/{child.name}/index.tex")
+    for child in _topic_paths(notes_root, included):
+        if not topic_re.fullmatch(child.name):
+            _add(findings, volume_root, child, "noncanonical_topic_name", "Topic directory names must be lowercase kebab-case.")
+        _required_file(findings, volume_root, child / "index.tex", f"notes/{child.name}/index.tex")
 
 
 def _validate_proofs_shape(volume_root: Path, chapter: Path, findings: list[Finding], schema: dict, included: set[Path]) -> None:
@@ -175,24 +169,16 @@ def _validate_proofs_shape(volume_root: Path, chapter: Path, findings: list[Find
         return
     topic_re = re.compile(schema["topic_name_pattern"])
     proof_file_re = re.compile(schema["proof_file_pattern"])
-    for child in proofs_root.iterdir():
-        if is_ignored(child, proofs_root) or child.name == "index.tex":
-            continue
-        if child.is_file() and child.suffix == ".tex":
-            if child.resolve() not in included:
-                continue
+    for child in _active_direct_files(proofs_root, included):
+        if child.name != "index.tex":
             _add(findings, volume_root, child, "flat_proof_file", "Proof files must live under proofs/{topic}/, not directly under proofs/.")
-        elif child.is_dir() and child.name != "exercises":
-            if not _active_tree(child, included):
-                continue
-            if not topic_re.fullmatch(child.name):
-                _add(findings, volume_root, child, "noncanonical_topic_name", "Topic directory names must be lowercase kebab-case.")
-            _required_file(findings, volume_root, child / "index.tex", f"proofs/{child.name}/index.tex")
-            for proof_file in child.glob("*.tex"):
-                if proof_file.resolve() not in included:
-                    continue
-                if proof_file.name != "index.tex" and not proof_file_re.fullmatch(proof_file.name):
-                    _add(findings, volume_root, proof_file, "noncanonical_proof_filename", "Proof files must be named prf-{slug}.tex.")
+    for child in _topic_paths(proofs_root, included, exclude={"exercises"}):
+        if not topic_re.fullmatch(child.name):
+            _add(findings, volume_root, child, "noncanonical_topic_name", "Topic directory names must be lowercase kebab-case.")
+        _required_file(findings, volume_root, child / "index.tex", f"proofs/{child.name}/index.tex")
+        for proof_file in _active_direct_files(child, included):
+            if proof_file.name != "index.tex" and not proof_file_re.fullmatch(proof_file.name):
+                _add(findings, volume_root, proof_file, "noncanonical_proof_filename", "Proof files must be named prf-{slug}.tex.")
 
     notes_topics = _topic_dirs(chapter / "notes", included)
     proof_topics = _topic_dirs(proofs_root, included)
@@ -211,11 +197,7 @@ def _validate_proofs_shape(volume_root: Path, chapter: Path, findings: list[Find
             item.format(chapter=chapter.name)
             for item in schema.get("exercises_allowed_files", DEFAULT_SCHEMA["exercises_allowed_files"])
         }
-        for child in exercises_root.iterdir():
-            if is_ignored(child, exercises_root):
-                continue
-            if not _active_tree(child, included):
-                continue
+        for child in _active_exercise_paths(exercises_root, included):
             if child.is_dir():
                 _add(findings, volume_root, child, "noncanonical_exercises_path", "proofs/exercises/ may contain only index.tex and the canonical capstone file.")
             elif child.is_file() and child.name not in allowed:
@@ -227,19 +209,37 @@ def _topic_dirs(parent: Path, included: set[Path]) -> set[str]:
         return set()
     return {
         child.name
-        for child in parent.iterdir()
-        if child.is_dir()
-        and not is_ignored(child, parent)
-        and child.name != "exercises"
-        and _active_tree(child, included)
+        for child in _topic_paths(parent, included, exclude={"exercises"})
     }
 
 
-def _active_tree(path: Path, included: set[Path]) -> bool:
-    resolved = path.resolve()
-    if path.is_file():
-        return resolved in included
-    return any(item == resolved or resolved in item.parents for item in included)
+def _active_direct_files(parent: Path, included: set[Path]) -> list[Path]:
+    return sorted(path for path in included if path.parent == parent and path.suffix == ".tex")
+
+
+def _topic_paths(parent: Path, included: set[Path], exclude: set[str] | None = None) -> list[Path]:
+    excluded = exclude or set()
+    topics: set[Path] = set()
+    for path in included:
+        try:
+            rel = path.relative_to(parent)
+        except ValueError:
+            continue
+        if len(rel.parts) >= 2 and rel.parts[0] not in excluded:
+            topics.add(parent / rel.parts[0])
+    return sorted(topics)
+
+
+def _active_exercise_paths(exercises_root: Path, included: set[Path]) -> list[Path]:
+    paths: set[Path] = set()
+    for path in included:
+        try:
+            rel = path.relative_to(exercises_root)
+        except ValueError:
+            continue
+        if rel.parts:
+            paths.add(exercises_root / rel.parts[0])
+    return sorted(paths)
 
 
 def _note_topic_requires_proofs(topic_root: Path, schema: dict, included: set[Path]) -> bool:
@@ -247,9 +247,7 @@ def _note_topic_requires_proofs(topic_root: Path, schema: dict, included: set[Pa
     if not envs:
         return False
     proof_bearing_re = re.compile(rf"\\begin\{{(?:{envs})\}}(?:\[[^\]]*\])?", re.IGNORECASE)
-    for tex in sorted(topic_root.glob("*.tex")):
-        if tex.resolve() not in included:
-            continue
+    for tex in _active_direct_files(topic_root, included):
         if not tex.is_file():
             continue
         text = strip_latex_comments(read_text(tex))

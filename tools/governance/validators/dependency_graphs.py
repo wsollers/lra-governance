@@ -12,7 +12,7 @@ ERROR_CODES = {
 }
 
 
-def validate(volume_root: Path) -> list[Finding]:
+def validate(volume_root: Path, files) -> list[Finding]:
     repo_root = volume_root.parent
     repos_root = repo_root.parent
     policy = dependency_graph.load_policy(_policy_path(repo_root))

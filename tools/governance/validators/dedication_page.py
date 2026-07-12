@@ -10,7 +10,7 @@ from core.tex import INPUT_RE, read_text, strip_latex_comments
 DEDICATION_INPUT = "common/dedication"
 
 
-def validate(volume_root: Path) -> list[Finding]:
+def validate(volume_root: Path, files) -> list[Finding]:
     findings: list[Finding] = []
     registry = _registry_for(volume_root)
     if registry is None:

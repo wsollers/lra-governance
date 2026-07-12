@@ -49,7 +49,7 @@ def _router_layers(lines: list[tuple[int, str]]) -> list[tuple[int, str]]:
     return layers
 
 
-def validate(volume_root: Path) -> list[Finding]:
+def validate(volume_root: Path, files) -> list[Finding]:
     findings: list[Finding] = []
     for chapter in routed_chapter_roots(volume_root):
         index = chapter / "index.tex"

@@ -6,7 +6,7 @@ from pathlib import Path
 from core.finding import Finding, finding
 from core.file_inventory import validator_file_set
 from core.tex import INPUT_RE, is_routed, read_text, strip_latex_comment
-from core.volume import routed_chapter_roots, is_ignored
+from core.volume import routed_chapter_roots
 
 
 FORMAL_ENV_RE = re.compile(r"\\begin\{(?:definition|axiom|theorem|lemma|proposition|corollary)\}")
@@ -25,11 +25,7 @@ def validate(volume_root: Path, files) -> list[Finding]:
         notes_index = notes_root / "index.tex"
         if notes_index.exists() and notes_index.resolve() in included:
             _check_router_content(volume_root, notes_index, findings)
-        if not notes_root.exists():
-            continue
-        for topic_dir in sorted(
-            path for path in notes_root.iterdir() if path.is_dir() and not is_ignored(path, notes_root)
-        ):
+        for topic_dir in _active_topic_dirs(notes_root, included):
             topic_index = topic_dir / "index.tex"
             topic_index_included = topic_index.exists() and topic_index.resolve() in included
             if topic_index_included:
@@ -44,7 +40,7 @@ def validate(volume_root: Path, files) -> list[Finding]:
                             volume_root,
                         )
                     )
-            for body in sorted(topic_dir.glob("*.tex")):
+            for body in _active_topic_files(topic_dir, included):
                 if body.name == "index.tex":
                     continue
                 if body.resolve() not in included:
@@ -63,6 +59,26 @@ def validate(volume_root: Path, files) -> list[Finding]:
                     )
                 _check_body_heading(volume_root, body, findings)
     return findings
+
+
+def _active_topic_dirs(notes_root: Path, included: set[Path]) -> list[Path]:
+    topics: set[Path] = set()
+    for path in included:
+        try:
+            rel = path.relative_to(notes_root)
+        except ValueError:
+            continue
+        if len(rel.parts) >= 2:
+            topics.add(notes_root / rel.parts[0])
+    return sorted(topics)
+
+
+def _active_topic_files(topic_dir: Path, included: set[Path]) -> list[Path]:
+    return sorted(
+        path
+        for path in included
+        if path.parent == topic_dir and path.name != "index.tex"
+    )
 
 
 def _check_router_content(volume_root: Path, index: Path, findings: list[Finding]) -> None:

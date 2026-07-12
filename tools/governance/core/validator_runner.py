@@ -1,6 +1,4 @@
 from __future__ import annotations
-
-import inspect
 from pathlib import Path
 from typing import Iterable
 
@@ -18,9 +16,7 @@ def default_file_inventory(volume_root: Path | str) -> list[Path]:
 def run_validator(validator, volume_root: Path | str, files: Iterable[Path] | None = None):
     root = Path(volume_root)
     inventory = list(files) if files is not None else default_file_inventory(root)
-    if "files" in inspect.signature(validator.validate).parameters:
-        return validator.validate(root, files=inventory)
-    return validator.validate(root)
+    return validator.validate(root, files=inventory)
 
 
 def run_validators(validators, volume_root: Path | str, files: Iterable[Path] | None = None):

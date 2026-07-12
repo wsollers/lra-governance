@@ -4,9 +4,9 @@ import re
 from pathlib import Path
 
 from core.finding import Finding, finding
-from core.file_inventory import validator_files
+from core.file_inventory import validator_file_set, validator_files
 from core.tex import INPUT_RE, read_text, strip_latex_comments
-from core.volume import routed_chapter_roots, is_ignored
+from core.volume import routed_chapter_roots
 
 
 NOTE_FORMAL_RE = re.compile(
@@ -24,6 +24,7 @@ def validate(volume_root: Path, files) -> list[Finding]:
 
 
 def _validate_chapter(volume_root: Path, chapter: Path, findings: list[Finding], files=None) -> None:
+    included = validator_file_set(chapter, files)
     notes_index = chapter / "notes" / "index.tex"
     proofs_index = chapter / "proofs" / "index.tex"
     notes_inputs = [_routed_topic_name(target) for target in _ordered_inputs(notes_index)]
@@ -40,9 +41,7 @@ def _validate_chapter(volume_root: Path, chapter: Path, findings: list[Finding],
 
     proof_label_order = _proof_label_order(chapter, files)
     proofs_root = chapter / "proofs"
-    if not proofs_root.exists():
-        return
-    for topic_dir in sorted(path for path in proofs_root.iterdir() if path.is_dir() and path.name != "exercises"):
+    for topic_dir in _active_topic_dirs(proofs_root, included):
         index = topic_dir / "index.tex"
         actual = [f"prf:{Path(target).stem.removeprefix('prf-')}" for target in _ordered_inputs(index)]
         routed_roots = {label.split(":", 1)[1] for label in actual}
@@ -65,8 +64,6 @@ def _proof_label_order(chapter: Path, files=None) -> list[str]:
     if not notes_root.exists():
         return []
     for tex in validator_files(notes_root, files):
-        if is_ignored(tex, chapter):
-            continue
         text = strip_latex_comments(read_text(tex))
         for begin in NOTE_FORMAL_RE.finditer(text):
             env = begin.group("env")
@@ -78,6 +75,18 @@ def _proof_label_order(chapter: Path, files=None) -> list[str]:
                 line = text.count("\n", 0, begin.start()) + 1
                 labels.append((f"prf:{match.group('label').split(':', 1)[1].casefold()}", tex, line))
     return [label for label, _path, _line in sorted(labels, key=lambda item: (item[1].as_posix(), item[2]))]
+
+
+def _active_topic_dirs(proofs_root: Path, included: set[Path]) -> list[Path]:
+    topics: set[Path] = set()
+    for path in included:
+        try:
+            rel = path.relative_to(proofs_root)
+        except ValueError:
+            continue
+        if len(rel.parts) >= 2 and rel.parts[0] != "exercises":
+            topics.add(proofs_root / rel.parts[0])
+    return sorted(topics)
 
 
 def _ordered_inputs(path: Path) -> list[str]:

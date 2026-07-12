@@ -372,7 +372,8 @@ def _check_retired_structural_text(volume_root: Path, path: Path, text: str, fin
 
 
 def _check_inline_tikz(volume_root: Path, path: Path, rel: str, text: str, findings: list[Finding]) -> None:
-    if Path(rel).name.startswith("figure-"):
+    rel_path = Path(rel)
+    if rel_path.name.startswith("figure-") or "figures" in rel_path.parts:
         return
     match = re.search(r"\\begin\{tikzpicture\}", text)
     if match:

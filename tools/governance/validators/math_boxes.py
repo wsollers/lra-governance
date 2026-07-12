@@ -52,6 +52,7 @@ def validate(volume_root: Path, files) -> list[Finding]:
 def _validate_file(volume_root: Path, path: Path, findings: list[Finding]) -> None:
     text = read_text(path)
     _check_boxed_nonformal_content(volume_root, path, text, findings)
+    _check_labels_on_decorative_boxes(volume_root, path, text, findings)
     _check_multi_label_decorative_boxes(volume_root, path, text, findings)
     for block in _formal_blocks(text):
         kind = _classify_wrapper(block)
@@ -113,6 +114,26 @@ def _check_multi_label_decorative_boxes(volume_root: Path, path: Path, text: str
                 volume_root,
                 text.count("\n", 0, match.start()) + 1,
                 "warning",
+            )
+        )
+
+
+def _check_labels_on_decorative_boxes(volume_root: Path, path: Path, text: str, findings: list[Finding]) -> None:
+    for match in FORMAL_BOX_RE.finditer(text):
+        body = match.group("body")
+        formal = FORMAL_RE.search(body)
+        label = FORMAL_LABEL_RE.search(body)
+        if not label:
+            continue
+        if formal and formal.start() < label.start():
+            continue
+        findings.append(
+            finding(
+                "formal_label_on_box",
+                "Formal labels must be placed inside the theorem/definition/lemma/proposition/corollary environment, not directly on the decorative box.",
+                path,
+                volume_root,
+                text.count("\n", 0, match.start("body") + label.start()) + 1,
             )
         )
 

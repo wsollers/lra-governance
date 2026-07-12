@@ -5,6 +5,7 @@ import re
 from pathlib import Path
 
 from core.finding import Finding, finding
+from core.file_inventory import validator_file_set
 from core.tex import INPUT_RE, read_text, strip_latex_comments
 
 
@@ -12,8 +13,9 @@ BOOK_DIR_RE = re.compile(r"^volume-(i|ii|iii|iv|v|vi|vii|viii)/book-[a-z0-9]+(?:
 BOOK_ROOT_RE = re.compile(r"^volume-(i|ii|iii|iv|v|vi|vii|viii)-[a-z0-9]+(?:-[a-z0-9]+)*\.tex$")
 
 
-def validate(volume_root: Path) -> list[Finding]:
+def validate(volume_root: Path, files) -> list[Finding]:
     findings: list[Finding] = []
+    included = validator_file_set(volume_root.parent, files)
     registry = _registry_for(volume_root)
     if registry is None:
         findings.append(
@@ -31,7 +33,7 @@ def validate(volume_root: Path) -> list[Finding]:
     _validate_registry_shape(volume_root, registry, findings)
     if (repo_root / "main.tex").is_file() or (volume_root / "main.tex").is_file():
         return findings
-    _validate_registered_book_dirs(repo_root, volume_root, books, findings)
+    _validate_registered_book_dirs(repo_root, volume_root, books, findings, included)
     _validate_volume_index_routes_books(volume_root, books, findings)
     for book in books:
         _validate_book(repo_root, volume_root, book, findings)
@@ -123,11 +125,15 @@ def _validate_registry_shape(volume_root: Path, registry: dict, findings: list[F
             )
 
 
-def _validate_registered_book_dirs(repo_root: Path, volume_root: Path, books: list[dict], findings: list[Finding]) -> None:
+def _validate_registered_book_dirs(repo_root: Path, volume_root: Path, books: list[dict], findings: list[Finding], included: set[Path]) -> None:
     registered = {book.get("book_dir") for book in books if isinstance(book.get("book_dir"), str)}
-    for path in sorted(volume_root.glob("book-*")):
-        if not path.is_dir():
-            continue
+    active_books = {
+        path.relative_to(volume_root).parts[0]
+        for path in included
+        if path.is_relative_to(volume_root) and path.relative_to(volume_root).parts and path.relative_to(volume_root).parts[0].startswith("book-")
+    }
+    for name in sorted(active_books):
+        path = volume_root / name
         rel = path.relative_to(repo_root).as_posix()
         if rel not in registered:
             findings.append(
