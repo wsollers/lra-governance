@@ -33,30 +33,10 @@ approves a visibility change.
 
 ## Repository Structure
 
-The root structure is:
-
-```text
-lra-proof-vault/
-  README.md
-  index.json
-  theorem-map.yaml
-  metadata-template.yaml
-  inbox/
-  reviewed/
-  extracted/
-  rejected/
-  volume-i/
-  volume-ii/
-  volume-iii/
-  volume-iv/
-  volume-v/
-  volume-vi/
-  volume-vii/
-  volume-viii/
-```
-
-Future memorialized proofs should live under the relevant volume, book,
-chapter, and theorem directory:
+The proof-vault repository owns its local folder layout, scripts, Docker photo
+pipeline, and operational commands. Governance records only the cross-repo
+contract: memorialized proofs live under the relevant volume, book, chapter,
+and theorem directory, using route-style metadata keyed by theorem identity.
 
 ```text
 volume-i/
@@ -134,31 +114,11 @@ attempts:
   tags: []
 ```
 
-Consumers such as the Knowledge Explorer should not depend on the legacy root
-`theorem-map.yaml` file. The governance extraction pipeline builds
-`lra-knowledge-explorer/proof-vault-index.json` directly from route-style
-metadata and legacy markdown records where present.
-
-After any volume/book/chapter refactor, regenerate each affected volume's
-`build/knowledge/theorem-routes.json` artifact and import all available volume
-route files into the proof vault. The standard dry-run command is:
-
-```powershell
-python scripts\sync_routes.py --root . `
-  --source ..\lra-volume-i\build\knowledge\theorem-routes.json `
-  --source ..\lra-volume-ii\build\knowledge\theorem-routes.json `
-  --source ..\lra-volume-iii\build\knowledge\theorem-routes.json `
-  --source ..\lra-volume-iv\build\knowledge\theorem-routes.json `
-  --source ..\lra-volume-v\build\knowledge\theorem-routes.json `
-  --source ..\lra-volume-vi\build\knowledge\theorem-routes.json `
-  --source ..\lra-volume-vii\build\knowledge\theorem-routes.json `
-  --source ..\lra-volume-viii\build\knowledge\theorem-routes.json `
-  --migrate-paths --dry-run
-```
-
-Run the same command with `--apply` only after reviewing planned and blocked
-moves. The proof vault must not run path migration against stale route
-artifacts.
+Consumers such as the Knowledge Explorer must use route-style metadata and
+current route snapshots, not the legacy root `theorem-map.yaml` file. After any
+volume/book/chapter refactor, regenerate the affected volume route artifacts
+and import current routes into the proof vault before migrating vault paths. The
+proof vault must not run path migration against stale route artifacts.
 
 Allowed metadata includes:
 
@@ -233,87 +193,28 @@ and the fallback must still produce a sanitized copy before git staging.
 If sanitization cannot be verified, stop and report the issue instead of
 committing the image.
 
-## Future Memorialization Workflow
+## Memorialization Workflow Contract
 
-The command:
+The operational photo-pipeline commands live in `lra-proof-vault`. Any
+memorialization workflow must satisfy these governance-level requirements:
 
-```text
-Memorialize proof image
-```
+1. Incoming images are staged outside tracked git content until sanitized.
+2. The proof-vault Docker photo pipeline is the default workflow for
+   sanitization, OCR, Markdown/TeX artifact generation, metadata updates, and
+   validation.
+3. OCR output is evidence, not authoritative proof content. Preserve OCR
+   mistakes in the OCR artifact rather than silently correcting them.
+4. Mathematics is verified against the image and theorem route before an
+   attempt is marked accepted.
+5. Route-style proof-vault metadata records OCR paths, display artifact paths,
+   review status, OCR engine/profile/quality, and attempt summaries.
+6. A reviewed-correct proof used as canonical content must update the owning
+   canonical proof file with both proof bodies, dependencies, and the
+   proof-vault backlink.
+7. No raw image may be committed at any stage.
 
-should perform the following steps:
-
-1. Store the incoming image in a staging area outside tracked git content.
-2. Run the Docker photo pipeline from `lra-proof-vault`.
-3. Sanitize the image by removing embedded metadata with Pillow, ExifTool, and
-   ImageMagick stripping.
-4. Create or update route-style proof-vault metadata.
-5. OCR the sanitized image into a plain-text artifact with the configured OCR
-   provider. The default provider may be local Ollama/Qwen vision with
-   Tesseract preprocessing retries as fallback. Preserve OCR mistakes in the
-   OCR artifact rather than silently correcting them.
-6. Verify the mathematics against the image and theorem route before accepting
-   the attempt. OCR text is provisional evidence; it is not authoritative proof
-   content.
-7. Produce Markdown and TeX display artifacts. When a reviewed canonical proof
-   already exists, reconstruct accepted display text from that canonical proof
-   and keep the OCR text as evidence. Otherwise, only mark display text accepted
-   after mathematical verification and review.
-8. Record `ocr_text_path`, `markdown_path`, `tex_path`, `text_source`,
-   `text_review_status`, OCR engine/profile, OCR quality, and OCR attempt
-   summaries on the attempt metadata.
-9. Commit the proof vault repository.
-10. Push the proof vault repository.
-11. Add a `\ProofVaultURL{...}` backlink to the canonical theorem proof file
-    with `lra-proof-vault/scripts/apply_leaf_backlinks.py`, or an equivalent
-    deterministic step that validates the exact leaf proof file.
-12. If the proof was accepted as correct and memorialized, ensure the owning
-   canonical proof file has both proof bodies populated, dependencies populated,
-   and the proof-vault backlink in place. Knowledge Explorer derives To Prove
-   status from canonical proof files, accepted proof-vault metadata, and
-   `to-prove.json`.
-13. Commit the canonical repository.
-14. Push the canonical repository.
-
-No raw image may be committed at any stage of this workflow.
-
-The standard one-photo command shape is:
-
-```powershell
-docker run --rm `
-  -v F:\repos:/repos `
-  -w /repos/lra-proof-vault `
-  lra-proof-vault `
-  --root /repos/lra-proof-vault `
-  --repos-root /repos `
-  --file /repos/path/to/photo.jpg `
-  --theorem-id <stable-theorem-label> `
-  --review-status <review-status> `
-  --ocr-provider auto `
-  --from-canonical-proof
-```
-
-In `auto` mode, the proof-vault tooling may try a configured local Ollama/Qwen
-vision model first and use Tesseract retries when the vision pass is
-unavailable or judged garbled. Docker Desktop users who want containerized
-runs to reach host Ollama should pass an `--ollama-url` reachable from the
-container, such as `http://host.docker.internal:11434`.
-
-For existing vault records, the standard audit/backfill command is:
-
-```powershell
-docker run --rm `
-  -v F:\repos:/repos `
-  -w /repos/lra-proof-vault `
-  lra-proof-vault `
-  --backfill-existing `
-  --root /repos/lra-proof-vault `
-  --repos-root /repos `
-  --refresh-placeholder-ocr
-```
-
-The backfill command must report every `medium: handwritten-photo` attempt as
-complete, or the run must stop for repair before deployment.
+Existing-record backfills must report every `medium: handwritten-photo` attempt
+as complete, or the run must stop for repair before deployment.
 
 ## Backlink Rules
 

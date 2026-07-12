@@ -28,7 +28,7 @@ VOICE_BANNED_PATTERNS = {
     r"\blearners?\b": "classroom voice",
     r"\binstructors?\b": "classroom voice",
     r"\bteachers?\b": "classroom voice",
-    r"\bclass(?:room)?\b": "classroom voice",
+    r"\bclassrooms?\b": "classroom voice",
     r"\bcourse\b": "course-transcript voice",
     r"\blecture\b": "course-transcript voice",
     r"\blesson\b": "workbook voice",

@@ -73,8 +73,10 @@ requested or locally required.
 Structural toolkits should use the shared `toolkitbox` macro. Local files must
 not hand-roll gray toolkit `tcolorbox` styling when `toolkitbox` is available.
 Quick-reference tables inside toolkits should put any navigation `\hyperref`
-on the leading concept/row-label cell and should not carry a separate `Detail`
-column whose only purpose is a link.
+on the leading name cell and should not carry a separate `Detail` column whose
+only purpose is a link. Toolkit tables use exactly two columns, headed `Name`
+and `Meaning`; the first column carries the linked name and the second gives
+the short structural meaning.
 
 Toolkits are navigational and structural summaries. They do not replace formal
 definitions, signature presentations, interpretation remarks, or dependency

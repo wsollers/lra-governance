@@ -1,6 +1,6 @@
 # lra-nurbs Overlay
 
-Stub overlay for C++ / Vulkan / geometry / simulation work.
+Repo overlay for C++ / Vulkan / geometry / simulation work.
 
 Owned concerns:
 

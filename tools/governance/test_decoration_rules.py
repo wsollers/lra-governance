@@ -117,18 +117,30 @@ SN2 = dr.FileInfo("vol/bounds/notes/sec/index.tex", "section_note")
 SN_BODY = dr.FileInfo("vol/bounds/notes/sec/notes-sec.tex", "section_note")
 
 def test_toolkit_valid_after_subsection():
-    t = "\\section{Open Balls}\n\\begin{toolkitbox}{Toolkit: Open Balls}\norients def:open-ball\n\\end{toolkitbox}"
+    t = ("\\section{Open Balls}\n\\begin{toolkitbox}{Toolkit: Open Balls}\n"
+         "\\begin{tabular}{l l}\n\\textbf{Name} & \\textbf{Meaning} \\\\\n"
+         "\\hyperref[def:open-ball]{Open ball} & metric neighborhood \\\\\n"
+         "\\end{tabular}\n\\end{toolkitbox}")
     assert "toolkit_misplaced" not in _codes(dr.run_file_rules(t, SN2, dr.Context()))
 
 def test_toolkit_valid_one_exposition_between():
     t = ("\\section{Open Balls}\n\\begin{exposition}\nwhy balls\n\\end{exposition}\n"
-         "\\begin{toolkitbox}{Toolkit}\norients def:open-ball\n\\end{toolkitbox}")
+         "\\begin{toolkitbox}{Toolkit}\n\\begin{tabular}{l l}\n"
+         "\\textbf{Name} & \\textbf{Meaning} \\\\\n"
+         "\\hyperref[def:open-ball]{Open ball} & metric neighborhood \\\\\n"
+         "\\end{tabular}\n\\end{toolkitbox}")
     assert "toolkit_misplaced" not in _codes(dr.run_file_rules(t, SN2, dr.Context()))
 
 def test_toolkit_valid_consecutive_router_run():
     t = ("\\section{Constructions}\n"
-         "\\begin{toolkitbox}{Dedekind}\nx\n\\end{toolkitbox}\n"
-         "\\begin{toolkitbox}{Cauchy}\ny\n\\end{toolkitbox}\n"
+         "\\begin{toolkitbox}{Dedekind}\n\\begin{tabular}{l l}\n"
+         "\\textbf{Name} & \\textbf{Meaning} \\\\\n"
+         "\\hyperref[def:dedekind-cut]{Dedekind cut} & lower set construction \\\\\n"
+         "\\end{tabular}\n\\end{toolkitbox}\n"
+         "\\begin{toolkitbox}{Cauchy}\n\\begin{tabular}{l l}\n"
+         "\\textbf{Name} & \\textbf{Meaning} \\\\\n"
+         "\\hyperref[def:cauchy-sequence]{Cauchy sequence} & metric completion construction \\\\\n"
+         "\\end{tabular}\n\\end{toolkitbox}\n"
          "\\input{vol/reals/notes/constructions/notes-dedekind}")
     codes = _codes(dr.run_file_rules(t, SN2, dr.Context()))
     assert "toolkit_misplaced" not in codes
@@ -136,11 +148,17 @@ def test_toolkit_valid_consecutive_router_run():
 
 def test_toolkit_valid_in_main_notes_index():
     info = dr.FileInfo("vol/bounds/notes/index.tex", "section_note")
-    t = "\\section{Bounds}\n\\begin{toolkitbox}{Bounds}\nx\n\\end{toolkitbox}\n\\input{vol/bounds/notes/sec/index}"
+    t = ("\\section{Bounds}\n\\begin{toolkitbox}{Bounds}\n\\begin{tabular}{l l}\n"
+         "\\textbf{Name} & \\textbf{Meaning} \\\\\n"
+         "\\hyperref[def:upper-bound]{Upper bound} & bounding above \\\\\n"
+         "\\end{tabular}\n\\end{toolkitbox}\n\\input{vol/bounds/notes/sec/index}")
     assert "toolkit_not_in_notes_router" not in _codes(dr.run_file_rules(t, info, dr.Context()))
 
 def test_toolkit_misplaced_after_section():
-    t = "\\section{Topology}\n\\begin{toolkitbox}{Toolkit}\nx\n\\end{toolkitbox}"
+    t = ("\\section{Topology}\n\\begin{toolkitbox}{Toolkit}\n\\begin{tabular}{l l}\n"
+         "\\textbf{Name} & \\textbf{Meaning} \\\\\n"
+         "\\hyperref[def:open-set]{Open set} & topological primitive \\\\\n"
+         "\\end{tabular}\n\\end{toolkitbox}")
     assert dr.run_file_rules(t, SN2, dr.Context()) == []
 
 def test_toolkit_misplaced_prose_between():
@@ -170,12 +188,31 @@ def test_toolkit_detail_column_flagged():
 
 def test_toolkit_concept_link_without_detail_ok():
     t = ("\\subsection{X}\n\\begin{toolkitbox}{T}\n\\begin{tabular}{l l}\n"
-         "\\textbf{Concept} & \\textbf{Meaning} \\\\\n"
+         "\\textbf{Name} & \\textbf{Meaning} \\\\\n"
          "\\hyperref[def:x]{X} & meaning \\\\\n"
          "\\end{tabular}\n\\end{toolkitbox}")
     codes = _codes(dr.run_file_rules(t, SN2, dr.Context()))
     assert "toolkit_detail_column" not in codes
     assert "toolkit_detail_link_cell" not in codes
+
+def test_toolkit_table_shape_flagged():
+    three_col = ("\\subsection{X}\n\\begin{toolkitbox}{T}\n\\begin{tabular}{l l l}\n"
+                 "\\textbf{Name} & \\textbf{Meaning} & \\textbf{Extra} \\\\\n"
+                 "\\hyperref[def:x]{X} & meaning & extra \\\\\n"
+                 "\\end{tabular}\n\\end{toolkitbox}")
+    role_col = ("\\subsection{X}\n\\begin{toolkitbox}{T}\n\\begin{tabular}{l l}\n"
+                "\\textbf{Name} & \\textbf{Role} \\\\\n"
+                "\\hyperref[def:x]{X} & role \\\\\n"
+                "\\end{tabular}\n\\end{toolkitbox}")
+    concept_col = ("\\subsection{X}\n\\begin{toolkitbox}{T}\n\\begin{tabular}{l l}\n"
+                   "\\textbf{Concept} & \\textbf{Meaning} \\\\\n"
+                   "\\hyperref[def:x]{X} & meaning \\\\\n"
+                   "\\end{tabular}\n\\end{toolkitbox}")
+    missing = "\\subsection{X}\n\\begin{toolkitbox}{T}\ntext\n\\end{toolkitbox}"
+    assert "toolkit_table_not_two_columns" in _codes(dr.run_file_rules(three_col, SN2, dr.Context()))
+    assert "toolkit_second_column_not_meaning" in _codes(dr.run_file_rules(role_col, SN2, dr.Context()))
+    assert "toolkit_first_column_not_name" in _codes(dr.run_file_rules(concept_col, SN2, dr.Context()))
+    assert "toolkit_missing_table" in _codes(dr.run_file_rules(missing, SN2, dr.Context()))
 
 def test_toolkit_hand_rolled():
     t = "\\subsection{X}\n\\begin{tcolorbox}[colback=gray!6, title={Toolkit: X}]\nx\n\\end{tcolorbox}"

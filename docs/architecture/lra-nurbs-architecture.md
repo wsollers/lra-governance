@@ -58,13 +58,8 @@ CI has three independent jobs:
 The Linux container is the portable non-MSVC build path. It uses Clang 18,
 libc++, and the project C++23 feature set.
 
-## Design Principles
+## Design Policy
 
-Keep C++ modern, explicit, and domain-oriented. Prefer value types, RAII,
-scoped enums, `std::span`, `std::optional`, `std::expected`,
-`std::string_view`, and `[[nodiscard]]` where they clarify contracts.
-
-Reusable abstractions should follow actual callers. Do not promote a helper
-into a shared service or kernel until the architecture has a clear boundary for
-it. Apply C++ Core Guidelines concerns around ownership, lifetime, slicing,
-copy/move behavior, and explicit contracts.
+Agent-facing C++ / Vulkan / geometry / simulation implementation standards live
+in `docs/governance/repo-overlays/lra-nurbs.md`. This architecture document
+records ownership, layout, service boundaries, and build architecture.

@@ -3,8 +3,10 @@
 Use this workflow to mechanically audit volume, chapter, and topic folder
 layout.
 
-Machine-readable layout authority lives in
-`constitution/schema/file-schema.yaml`.
+The focused layout audit follows the broad layout contract in
+`constitution/schema/file-schema.yaml`. The integrated `validate_volume.py`
+`volume_shape` gate reads the compact enforced shape subset in
+`docs/governance/volume-structure.schema.json`.
 
 Run from `lra-governance` against a leaf repo, volume, chapter, or section.
 When unsure, discover the available targets first:
@@ -32,8 +34,8 @@ python tools\governance\audit_volume_layout.py --root F:\repos\lra-volume-ii --f
 ```
 
 The audited rule set is the volume/chapter/topic layout portion of
-`constitution/schema/file-schema.yaml`, with human-facing context in
-`docs/governance/volume-structure.md`.
+`constitution/schema/file-schema.yaml`, with human-facing context and the
+integrated validator schema pointer in `docs/governance/volume-structure.md`.
 
 The audit does not move files or modify source.
 

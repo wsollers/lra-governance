@@ -238,16 +238,20 @@ def main() -> int:
         repo_dir = output_root / "edges" / repo.name
         dependency_graph.write_json(repo_dir / "edges.json", edge_report)
         dependency_graph.write_markdown(repo_dir / "edges.md", dependency_graph.edges_markdown(edge_report))
-        repo_validation = dependency_graph.validate_graph(universe, edge_report, policy)
-        validation_issues.extend(repo_validation)
-        write_json(repo_dir / "validation.json", {"issues": repo_validation})
-        dependency_graph.write_markdown(repo_dir / "validation.md", dependency_graph.validation_markdown(repo_validation))
         edges_by_repo[repo.name] = edge_counts(edge_report)
         log.append(
             f"repo={repo.name} edges={len(edge_report.edges)} "
-            f"declarations={len(edge_report.declarations)} issues={len(edge_report.issues)} "
-            f"validation_issues={len(repo_validation)}"
+            f"declarations={len(edge_report.declarations)} issues={len(edge_report.issues)}"
         )
+
+    for edge_report in edge_reports:
+        repo_dir = output_root / "edges" / edge_report.repo
+        merged_edges = dependency_graph.merge_edge_reports(edge_report, edge_reports)
+        repo_validation = dependency_graph.validate_graph(universe, merged_edges, policy)
+        validation_issues.extend(repo_validation)
+        write_json(repo_dir / "validation.json", {"issues": repo_validation})
+        dependency_graph.write_markdown(repo_dir / "validation.md", dependency_graph.validation_markdown(repo_validation))
+        log.append(f"repo={edge_report.repo} validation_issues={len(repo_validation)}")
 
     combined_edges = [asdict(edge) for report in edge_reports for edge in report.edges]
     combined_declarations = [item for report in edge_reports for item in report.declarations]

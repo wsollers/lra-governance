@@ -69,6 +69,7 @@ DEPENDENT_DECORATION_PARENTS = {
     "negation predicate reading": "negated quantified statement",
     "contrapositive predicate reading": "contrapositive quantified statement",
 }
+REPEATABLE_DECORATION_BLOCKS = {"failure modes", "exposition", "examples", "non-examples"}
 FORBIDDEN_DECORATION_BY_ENV = {
     "definition": {"contrapositive quantified statement", "contrapositive predicate reading"},
     "axiom": {"contrapositive quantified statement", "contrapositive predicate reading", "examples", "non-examples"},
@@ -307,6 +308,7 @@ def _check_decoration_blocks(
         seen.append((key, rank, match.start()))
 
     seen_keys = {key for key, _rank, _pos in seen}
+    _check_duplicate_decoration_blocks(volume_root, path, decoration, label, line, seen, findings)
     for child, parent in DEPENDENT_DECORATION_PARENTS.items():
         if child in seen_keys and parent not in seen_keys:
             findings.append(
@@ -329,6 +331,33 @@ def _check_decoration_blocks(
                     line + _line_at(decoration, right_pos) - 1,
                 )
             )
+
+
+def _check_duplicate_decoration_blocks(
+    volume_root: Path,
+    path: Path,
+    decoration: str,
+    label: str,
+    line: int,
+    seen: list[tuple[str, int, int]],
+    findings: list[Finding],
+) -> None:
+    first_seen: dict[str, int] = {}
+    for key, _rank, pos in seen:
+        if key in REPEATABLE_DECORATION_BLOCKS:
+            continue
+        if key not in first_seen:
+            first_seen[key] = pos
+            continue
+        findings.append(
+            finding(
+                "duplicate_decoration_block",
+                f"{label} has more than one {key} block; keep one block of each canonical support type.",
+                path,
+                volume_root,
+                line + _line_at(decoration, pos) - 1,
+            )
+        )
 
 
 def _check_failure_modes_block(

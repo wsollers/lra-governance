@@ -2,6 +2,34 @@
 
 Audit date: 2026-06-03
 
+## Update — 2026-07-12
+
+The first conservative consolidation pass from this audit has now been applied:
+
+- `constitution/schema/file-schema.yaml` no longer carries repository ownership
+  lists, volume-repo root inventory, or auditor/canonical-YAML discovery rules.
+  It keeps volume, chapter, topic, proof, stub, capstone, and breadcrumb layout
+  rules, and points architecture/tooling facts to the owning architecture docs.
+- `docs/governance/handwritten-proof-vault-standards.md` has been narrowed to
+  the cross-repo governance contract: privacy, sanitization, route-style
+  metadata, stale-route safety, backlinks, canonical-proof completeness, and
+  explorer text artifacts. Repository-local command shapes and photo-pipeline
+  mechanics belong in `lra-proof-vault`.
+- The proof-stub duplication finding remains resolved; workflows point to
+  `docs/governance/proof-standards.md` and
+  `constitution/schema/file-schema.yaml`.
+
+Remaining high-value consolidation targets:
+
+1. Move or pointerize the remaining detailed router/topic/breadcrumb policies
+   in `constitution/master.md` if they become duplicated in schema-backed
+   governance docs.
+2. Add prompt composition tooling before attempting to deduplicate common
+   prompt scaffolding.
+3. Continue extending existing `constitution/schema/` files for
+   machine-checkable rules rather than creating a second structured authority
+   system.
+
 ## Update — 2026-06-24
 
 The multi-repo architecture changed after this audit, so several findings below
@@ -25,10 +53,9 @@ are now partially superseded:
 - `constitution/master.md` has since adopted an Authority Pointers section, so
   the "remove repo map from master.md" target is largely done.
 
-Known still-stale data file: `constitution/schema/file-schema.yaml` retains an
-old `monorepo_root` block and `auditor_paths` that point canonical YAML at a
-retired `REPO_ROOT`; fixing it correctly requires touching the validator/auditor
-code and is tracked separately.
+Historical note: this update previously identified
+`constitution/schema/file-schema.yaml` as still carrying stale multi-repo and
+auditor-path material. That has since been resolved by the 2026-07-12 cleanup.
 
 The corpus measurements and remaining duplication findings below predate these
 changes and should be re-measured before the next consolidation pass.
@@ -437,15 +464,12 @@ Recommended routes:
 
 ## High-Priority Consolidation Targets
 
-1. `constitution/master.md`: remove mechanical architecture/tooling sections
-   after adding pointers.
-2. `docs/governance/handwritten-proof-vault-standards.md`: update to current
-   route-snapshot proof-vault design.
-3. Proof-stub workflow docs: keep task steps but point detailed invariant
-   checks to proof standards/schema.
-4. Prompt common scaffolding: consider shared preamble/composition only after
+1. `constitution/master.md`: pointerize or move any remaining detailed
+   router/topic/breadcrumb policy that is better owned by schema-backed
+   governance docs.
+2. Prompt common scaffolding: consider shared preamble/composition only after
    prompt-builder support exists.
-5. Structured rule data: extend existing `constitution/schema/` rather than
+3. Structured rule data: extend existing `constitution/schema/` rather than
    creating a second authority system.
 
 ## Unresolved Ambiguity

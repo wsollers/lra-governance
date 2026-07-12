@@ -43,11 +43,11 @@ LRA/VolumeII/
 Lower layers may not import higher layers. Arithmetic modules may use the
 recursion architecture but should not redefine foundational concepts.
 
-## Formalization Style
+## Formalization Policy
 
-Formal source should read like maintainable mathematics. Use clear namespaces,
-descriptive declaration and hypothesis names, explicit proof structure, and
-small reusable lemmas where a proof exposes reusable mathematical content.
+Agent-facing Lean implementation standards live in
+`docs/governance/repo-overlays/lra-lean.md`. This architecture document records
+ownership, layout, and import boundaries.
 
 Volume II must remain Mathlib-free. Mathlib imports are not allowed in
 `LRA/VolumeII/**`; future higher-volume work may opt into Mathlib only when the

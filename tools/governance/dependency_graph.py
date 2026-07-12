@@ -638,6 +638,54 @@ def load_edges(path: Path) -> EdgeReport:
     )
 
 
+def merge_edge_reports(target: EdgeReport, reports: list[EdgeReport]) -> EdgeReport:
+    """Return a target-scoped report with dependency edges from every report.
+
+    Closure validation needs the global dependency graph: if a Volume III theorem
+    depends on a Volume I definition, the validator must be able to continue
+    through Volume I's outgoing edges instead of treating that definition as a
+    terminal leaf. Extraction issues remain scoped to the target report so a
+    per-volume validation does not report every other repo's local cleanup work.
+    """
+    edges: list[Edge] = []
+    declarations: list[dict[str, Any]] = []
+    seen_edges: set[tuple[Any, ...]] = set()
+    seen_declarations: set[str] = set()
+
+    for report in reports:
+        for edge in report.edges:
+            key = (
+                edge.kind,
+                edge.source_id,
+                edge.target_id,
+                edge.source,
+                edge.target,
+                edge.repo,
+                edge.file,
+                edge.line,
+                edge.status,
+            )
+            if key in seen_edges:
+                continue
+            seen_edges.add(key)
+            edges.append(edge)
+        for declaration in report.declarations:
+            key = json.dumps(declaration, sort_keys=True)
+            if key in seen_declarations:
+                continue
+            seen_declarations.add(key)
+            declarations.append(declaration)
+
+    return EdgeReport(
+        root=target.root,
+        repo=target.repo,
+        universe=target.universe,
+        edges=edges,
+        declarations=declarations,
+        issues=list(target.issues),
+    )
+
+
 def allowed_root(node: Node, policy: dict[str, Any]) -> bool:
     if node.kind == "ax":
         return True
@@ -876,9 +924,19 @@ def cmd_edges(args: argparse.Namespace) -> int:
 def cmd_validate(args: argparse.Namespace) -> int:
     universe = load_universe(args.universe.resolve())
     edge_report = load_edges(args.edges.resolve())
+    edge_reports = [edge_report]
+    edge_reports.extend(load_edges(path.resolve()) for path in args.extra_edges)
+    if len(edge_reports) > 1:
+        edge_report = merge_edge_reports(edge_report, edge_reports)
     policy = load_policy(args.policy)
     issues = validate_graph(universe, edge_report, policy)
-    payload = {"universe": str(args.universe), "edges": str(args.edges), "policy": str(args.policy) if args.policy else "", "issues": [asdict(issue) for issue in issues]}
+    payload = {
+        "universe": str(args.universe),
+        "edges": str(args.edges),
+        "extra_edges": [str(path) for path in args.extra_edges],
+        "policy": str(args.policy) if args.policy else "",
+        "issues": [asdict(issue) for issue in issues],
+    }
     write_json(args.out, payload)
     if args.markdown:
         write_markdown(args.markdown, validation_markdown(issues))
@@ -911,6 +969,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p = sub.add_parser("validate", help="Validate extracted graph mechanics.")
     p.add_argument("--universe", type=Path, required=True)
     p.add_argument("--edges", type=Path, required=True)
+    p.add_argument("--extra-edges", type=Path, nargs="*", default=[])
     p.add_argument("--policy", type=Path)
     p.add_argument("--out", type=Path, required=True)
     p.add_argument("--markdown", type=Path)

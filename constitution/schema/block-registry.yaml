@@ -27,7 +27,10 @@ blocks:
     notes: >
       Exactly one toolkit box per section. Names the concept family, lists the
       atomic notions that follow, provides structural orientation. Must enumerate
-      exactly the atomic items that follow. Not a formal definition or theorem.
+      exactly the atomic items that follow. Toolkit quick-reference tables have
+      exactly two columns headed Name and Meaning; the first column carries the
+      linked item name and the second gives the short orientation. Not a formal
+      definition or theorem.
 
   - id: environment_label
     display: Environment + Label

@@ -48,6 +48,18 @@ def _validate_file(volume_root: Path, path: Path, findings: list[Finding]) -> No
                 )
             )
             continue
+        for decl_kind, decl_body, decl_offset in declarations:
+            if decl_kind == "dependencies_env" and DEFINITIONAL_ROOT_RE.search(decl_body):
+                findings.append(
+                    finding(
+                        "definitional_root_inside_dependencies",
+                        f"{label} places \\DefinitionalRoot inside a dependencies environment; use it as a standalone marker.",
+                        path,
+                        volume_root,
+                        text.count("\n", 0, window_start + decl_offset) + 1,
+                        "error",
+                    )
+                )
         if len(declarations) > 1:
             findings.append(
                 finding(
@@ -66,6 +78,17 @@ def _validate_file(volume_root: Path, path: Path, findings: list[Finding]) -> No
                 finding(
                     "legacy_dependency_remark",
                     f"{label} uses remark*[Dependencies] instead of the dependencies environment.",
+                    path,
+                    volume_root,
+                    dep_line,
+                    "warning",
+                )
+            )
+        if kind == "no_local" and block.env.lower() != "axiom":
+            findings.append(
+                finding(
+                    "no_local_dependencies_on_non_axiom",
+                    f"{label} uses \\NoLocalDependencies outside an axiom; use explicit dependencies or \\DefinitionalRoot for reviewed primitive definitions.",
                     path,
                     volume_root,
                     dep_line,

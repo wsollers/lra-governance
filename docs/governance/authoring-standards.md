@@ -60,6 +60,16 @@ Quick-reference tables inside a Toolkit put navigation links on the leading
 concept or row-label cell. Do not use a separate trailing `Detail` or
 `Reference` column whose only purpose is a `\hyperref` link.
 
+Toolkit quick-reference tables use exactly two columns:
+
+```latex
+\textbf{Name} & \textbf{Meaning} \\
+```
+
+The first column contains the linked concept, result, rule, or construction
+name. The second column is titled `Meaning` and gives the short orientation
+that makes the item useful in the local topic.
+
 Toolkit links are resolved against the assembled artifact graph, not merely the
 current topic, chapter, book, or volume. If a referenced concept has a stable
 label anywhere that may be available in a higher-level build, link to that

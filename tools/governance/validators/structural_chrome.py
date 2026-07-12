@@ -116,6 +116,62 @@ def _check_toolkit(
     for match in TOOLKITBOX_RE.finditer(text):
         body = match.group(0)
         line = text.count("\n", 0, match.start()) + 1
+        tabulars = list(_tabulars(body))
+        if not tabulars:
+            findings.append(
+                finding(
+                    "toolkit_missing_table",
+                    "Toolkit boxes must contain a two-column quick-reference table.",
+                    path,
+                    volume_root,
+                    line,
+                )
+            )
+        for tabular_start, spec, table_body in tabulars:
+            table_line = text.count("\n", 0, match.start() + tabular_start) + 1
+            column_count = _tabular_column_count(spec)
+            if column_count != 2:
+                findings.append(
+                    finding(
+                        "toolkit_table_not_two_columns",
+                        "Toolkit quick-reference tables must have exactly two columns: linked name and Meaning.",
+                        path,
+                        volume_root,
+                        table_line,
+                    )
+                )
+            headers = _table_headers(table_body)
+            if len(headers) < 2:
+                findings.append(
+                    finding(
+                        "toolkit_table_header_missing",
+                        "Toolkit quick-reference tables must start with headers for linked name and Meaning.",
+                        path,
+                        volume_root,
+                        table_line,
+                    )
+                )
+            else:
+                if _normalize_header(headers[0]) != "name":
+                    findings.append(
+                        finding(
+                            "toolkit_first_column_not_name",
+                            "Toolkit quick-reference tables must use Name as the first column header.",
+                            path,
+                            volume_root,
+                            table_line,
+                        )
+                    )
+                if _normalize_header(headers[1]) != "meaning":
+                    findings.append(
+                        finding(
+                            "toolkit_second_column_not_meaning",
+                            "Toolkit quick-reference tables must use Meaning as the second column header.",
+                            path,
+                            volume_root,
+                            table_line,
+                        )
+                    )
         if FORMAL_OR_PROOF_RE.search(body):
             findings.append(
                 finding(
@@ -216,6 +272,70 @@ def _toolkit_table_rows(body: str):
         if "\\textbf{" in row:
             continue
         yield match.start("row"), row
+
+
+def _tabulars(body: str):
+    begin = r"\begin{tabular}"
+    end = r"\end{tabular}"
+    position = 0
+    while True:
+        start = body.find(begin, position)
+        if start == -1:
+            return
+        spec_start = body.find("{", start + len(begin))
+        if spec_start == -1:
+            return
+        spec_end = _balanced_group_end(body, spec_start)
+        if spec_end is None:
+            return
+        end_start = body.find(end, spec_end)
+        if end_start == -1:
+            return
+        yield start, body[spec_start + 1 : spec_end - 1], body[spec_end:end_start]
+        position = end_start + len(end)
+
+
+def _balanced_group_end(text: str, start: int) -> int | None:
+    depth = 0
+    for index in range(start, len(text)):
+        char = text[index]
+        if char == "{" and (index == 0 or text[index - 1] != "\\"):
+            depth += 1
+        elif char == "}" and (index == 0 or text[index - 1] != "\\"):
+            depth -= 1
+            if depth == 0:
+                return index + 1
+    return None
+
+
+def _tabular_column_count(spec: str) -> int:
+    count = 0
+    index = 0
+    while index < len(spec):
+        char = spec[index]
+        if char in "lcr":
+            count += 1
+            index += 1
+        elif char in "pmb" and index + 1 < len(spec) and spec[index + 1] == "{":
+            end = _balanced_group_end(spec, index + 1)
+            count += 1
+            index = end if end is not None else index + 1
+        elif char in "| @!<>":
+            index += 1
+        else:
+            index += 1
+    return count
+
+
+def _table_headers(table_body: str) -> list[str]:
+    match = re.search(r"(?P<row>.*?)(?:\\\\|\\cr)", table_body, re.DOTALL)
+    if not match:
+        return []
+    return re.findall(r"\\textbf\{([^}]+)\}", match.group("row"))
+
+
+def _normalize_header(header: str) -> str:
+    return re.sub(r"\s+", " ", header.strip()).lower()
 
 
 def _first_unescaped_ampersand(text: str) -> int | None:

@@ -125,17 +125,19 @@ proof location, not a mathematical prerequisite.
 
 ## Silent Foundational Marker
 
-If a note-body statement is foundational within the local scope and has no
-local dependencies to display, use:
+Use `\NoLocalDependencies` only for axiom statements with no local
+mathematical prerequisites:
 
 ```latex
 \NoLocalDependencies
 ```
 
-Do not print a visible dependency block that says only "No local dependencies."
+Do not use `\NoLocalDependencies` on ordinary definitions, theorems, lemmas,
+propositions, or corollaries. If a definition is a reviewed primitive, mark it
+with `\DefinitionalRoot`; otherwise write an explicit dependency block.
 
-The silent marker satisfies dependency recording for local foundational
-statement artifacts. It is not prose and should render nothing.
+Do not print a visible dependency block that says only "No local dependencies."
+The silent marker is structural metadata, not prose, and should render nothing.
 
 ## TODO Dependencies
 

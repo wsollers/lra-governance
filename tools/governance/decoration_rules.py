@@ -362,6 +362,46 @@ def toolkit_content(text: str, info: FileInfo, ctx: Context):
     for m in re.finditer(r"\\begin\{toolkitbox\}.*?\\end\{toolkitbox\}", text, re.DOTALL):
         body = m.group(0)
         line = text.count("\n",0,m.start())+1
+        tabulars = list(_tabulars(body))
+        if not tabulars:
+            yield Issue(
+                "toolkit_missing_table",
+                "Toolkit boxes must contain a two-column quick-reference table.",
+                "error",
+                line,
+            )
+        for tabular_start, spec, table_body in tabulars:
+            table_line = text.count("\n", 0, m.start() + tabular_start) + 1
+            if _tabular_column_count(spec) != 2:
+                yield Issue(
+                    "toolkit_table_not_two_columns",
+                    "Toolkit quick-reference tables must have exactly two columns: linked name and Meaning.",
+                    "error",
+                    table_line,
+                )
+            headers = _table_headers(table_body)
+            if len(headers) < 2:
+                yield Issue(
+                    "toolkit_table_header_missing",
+                    "Toolkit quick-reference tables must start with headers for linked name and Meaning.",
+                    "error",
+                    table_line,
+                )
+            else:
+                if _normalize_header(headers[0]) != "name":
+                    yield Issue(
+                        "toolkit_first_column_not_name",
+                        "Toolkit quick-reference tables must use Name as the first column header.",
+                        "error",
+                        table_line,
+                    )
+                if _normalize_header(headers[1]) != "meaning":
+                    yield Issue(
+                        "toolkit_second_column_not_meaning",
+                        "Toolkit quick-reference tables must use Meaning as the second column header.",
+                        "error",
+                        table_line,
+                    )
         if re.search(r"\\begin\{(definition|theorem|lemma|proposition|corollary|axiom|proof)\}", body):
             yield Issue("toolkit_contains_formal",
                 "Toolkit box contains a formal environment; a toolkit orients (lists labels) and "
@@ -377,6 +417,70 @@ def toolkit_content(text: str, info: FileInfo, ctx: Context):
             yield Issue("toolkit_detail_link_cell",
                 "Toolkit quick-reference links belong on the leading concept/row label, not in a trailing detail cell.",
                 "error", line)
+
+
+def _tabulars(body: str):
+    begin = r"\begin{tabular}"
+    end = r"\end{tabular}"
+    position = 0
+    while True:
+        start = body.find(begin, position)
+        if start == -1:
+            return
+        spec_start = body.find("{", start + len(begin))
+        if spec_start == -1:
+            return
+        spec_end = _balanced_group_end(body, spec_start)
+        if spec_end is None:
+            return
+        end_start = body.find(end, spec_end)
+        if end_start == -1:
+            return
+        yield start, body[spec_start + 1 : spec_end - 1], body[spec_end:end_start]
+        position = end_start + len(end)
+
+
+def _balanced_group_end(text: str, start: int) -> int | None:
+    depth = 0
+    for index in range(start, len(text)):
+        char = text[index]
+        if char == "{" and (index == 0 or text[index - 1] != "\\"):
+            depth += 1
+        elif char == "}" and (index == 0 or text[index - 1] != "\\"):
+            depth -= 1
+            if depth == 0:
+                return index + 1
+    return None
+
+
+def _tabular_column_count(spec: str) -> int:
+    count = 0
+    index = 0
+    while index < len(spec):
+        char = spec[index]
+        if char in "lcr":
+            count += 1
+            index += 1
+        elif char in "pmb" and index + 1 < len(spec) and spec[index + 1] == "{":
+            end = _balanced_group_end(spec, index + 1)
+            count += 1
+            index = end if end is not None else index + 1
+        elif char in "| @!<>":
+            index += 1
+        else:
+            index += 1
+    return count
+
+
+def _table_headers(table_body: str) -> list[str]:
+    match = re.search(r"(?P<row>.*?)(?:\\\\|\\cr)", table_body, re.DOTALL)
+    if not match:
+        return []
+    return re.findall(r"\\textbf\{([^}]+)\}", match.group("row"))
+
+
+def _normalize_header(header: str) -> str:
+    return re.sub(r"\s+", " ", header.strip()).lower()
 
 @file_rule("toolkit_format")
 def toolkit_format(text: str, info: FileInfo, ctx: Context):
@@ -687,7 +791,7 @@ _VOICE_BANNED_PATTERNS = {
     r"\byourself\b":"direct reader address", r"\byourselves\b":"direct reader address",
     r"\bstudents?\b":"classroom voice", r"\breaders?\b":"reader-address voice",
     r"\blearners?\b":"classroom voice", r"\binstructors?\b":"classroom voice",
-    r"\bteachers?\b":"classroom voice", r"\bclass(?:room)?\b":"classroom voice",
+    r"\bteachers?\b":"classroom voice", r"\bclassrooms?\b":"classroom voice",
     r"\bcourse\b":"course-transcript voice", r"\blecture\b":"course-transcript voice",
     r"\blesson\b":"workbook voice", r"\bworkbook\b":"workbook voice", r"\bworksheet\b":"workbook voice",
     r"\bhomework\b":"workbook voice",

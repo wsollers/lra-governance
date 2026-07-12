@@ -1,6 +1,6 @@
 # lra-lean Overlay
 
-Stub overlay for Lean formalization.
+Repo overlay for Lean formalization.
 
 Owned concerns:
 

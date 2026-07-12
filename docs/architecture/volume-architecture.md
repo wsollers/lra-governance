@@ -1,219 +1,75 @@
-# Eight-Volume Architecture
+# Volume And Book Architecture
 
-This document defines the canonical target volume and book architecture for
-Learning Real Analysis. A volume is the broad shelf title. A book is a
-named subject partition inside a volume and has its own
-`volume-{roman}-{book-slug}.tex` entry root.
+This document records the stable architecture for LRA volume repositories. It
+is a router, not the canonical inventory of every volume, book, chapter, or
+frontmatter asset.
 
-## Target Volumes
+## Authorities
 
-| Volume | Roman | Repository | Display title | Frontispiece | Lifespan | Image path | Status |
-|---:|---|---|---|---|---|---|---|
-| 1 | I | `wsollers/lra-volume-i` | `Logic, Sets, and Proof` | Georg Cantor | 1845-1918 | `images/cantor.png` | active |
-| 2 | II | `wsollers/lra-volume-ii` | `Origins of Numbers` | Richard Dedekind | 1831-1916 | `images/dedekind.png` | active |
-| 3 | III | `wsollers/lra-volume-iii` | `Classical Analysis` | Augustin-Louis Cauchy | 1789-1857 | `images/cauchy.png` | active |
-| 4 | IV | `wsollers/lra-volume-iv` | `Mathematical Spaces` | Constantin Caratheodory | 1873-1950 | `images/caratheodory.png` | active |
-| 5 | V | `wsollers/lra-volume-v` | `Modern Analysis` | Stefan Banach | 1892-1945 | `images/banach.png` | active |
-| 6 | VI | `wsollers/lra-volume-vi` | `Algebra` | Emmy Noether | 1882-1935 | `images/noether.png` | active |
-| 7 | VII | `wsollers/lra-volume-vii` | `Advanced Logic` | David Hilbert | 1862-1943 | `images/hilbert.png` | active |
-| 8 | VIII | `wsollers/lra-volume-viii` | `Applied and Computational Mathematics` | Isaac Newton | 1643-1727 | `images/newton.png` | active |
+| Concern | Authority |
+| --- | --- |
+| Book and volume registry data, root names, expected TOC, migration aliases | `docs/architecture/book-registry.json` |
+| Volume, book, chapter, topic, proof, capstone, and breadcrumb shape | `docs/governance/volume-structure.md` |
+| Integrated volume-shape validator schema | `docs/governance/volume-structure.schema.json` |
+| Broader constitutional layout/proof/stub schema | `constitution/schema/file-schema.yaml` |
+| Frontmatter, frontispiece, title, image, and dedication rules | `docs/architecture/frontmatter-and-frontispiece-standard.md` and `docs/architecture/dedication-page-standard.md` |
+| Build and render behavior | `docs/architecture/latex-build-and-rendering.md` |
 
-## Canonical Book Naming Table
+## Architecture
 
-This table summarizes the book-level display titles. The machine-readable
-registry for exact TeX root names, output names, and migration aliases is
-`docs/architecture/book-registry.json`. Book titles must not be confused with
-volume titles.
+Each `lra-volume-*` repository is an independent Overleaf-ready source repo. A
+volume is the broad shelf title. A book is a named subject partition inside a
+volume. Each volume builds from a full-volume root named `volume-{roman}.tex`;
+each book builds from a book root named `volume-{roman}-{book-slug}.tex`.
 
-The registry also stores each book's expected source TOC: canonical book
-directory, routed chapter order, and each chapter's notes-topic route order.
-The governance validator compares current routers against that expected TOC so
-missing or misplaced chapters and sections are caught before rendering.
-
-| Volume | Volume title | Canonical book title | Current root slug | Notes |
-|---|---|---|---|---|
-| I | Logic, Sets, and Proof | Mathematical Logic and Proof | `book-logic` | Introductory formal logic, proof systems, and axiom-system tooling. |
-| I | Logic, Sets, and Proof | Set Theory | `book-sets` | Set-theoretic foundations. |
-| I | Logic, Sets, and Proof | Foundational Geometry | `book-geometry` | Euclidean, trigonometric, and analytic geometry foundations. |
-| II | Origins of Numbers | Discrete Number Systems | `book-discrete-algebraic` | Formalizing number systems through natural, whole, and integer systems. |
-| II | Origins of Numbers | The Continuum | `book-continuum` | Embeddings, rationals, reals, complex numbers, and number-line constructions. |
-| III | Classical Analysis | Bounds, Sequences, and Series | `book-analysis-i` | Foundational real-analysis toolkit, bounds, functions without limits, sequences, series, and function sequences. |
-| III | Classical Analysis | Functions, Continuity, and Differentiation | `book-analysis-ii` | Elementary functions, limits, continuity, and differentiation. |
-| III | Classical Analysis | Integration | `book-integration` | Riemann integration and related classical integration material. |
-| IV | Mathematical Spaces | Mathematical Spaces | `book-spaces` | Metric spaces, topological spaces, measure spaces, set algebra, and algebras of sets. |
-| V | Modern Analysis | Modern Analysis | `book-measure`, `book-probability`, `book-functional-analysis`, `book-complex-analysis` | Current roots are subject partitions under the Modern Analysis volume. |
-| VI | Algebra | Algebra | `book-algebra`, `book-linear-algebra`, `book-lattice-order` | Current roots are algebraic subject partitions under the Algebra volume. |
-| VII | Advanced Logic | Advanced Logic | `book-category-theory`, `book-model-theory`, `book-proof-theory`, `book-type-theory`, `book-lambda-calculus` | Current roots are advanced-logic subject partitions. |
-| VIII | Applied and Computational Mathematics | Applied and Computational Mathematics | `book-applied-methods`, `book-numerical-foundations` | Applied methods and numerical foundations. |
-
-## Frontmatter Mathematician Assignment
-
-Volume roots use the volume frontispiece from the target-volume table. Book
-roots use book-specific frontmatter figures. The image path is the canonical
-target filename for generated portrait assets.
-
-| Scope | Volume/book | Frontmatter mathematician | Lifespan | Image path | Status |
-|---|---|---|---|---|---|
-| Volume | I, `Logic, Sets, and Proof` | Georg Cantor | 1845-1918 | `images/cantor.png` | confirmed |
-| Book | I, `Mathematical Logic and Proof` | Gottlob Frege | 1848-1925 | `images/frege.png` | confirmed |
-| Book | I, `Set Theory` | Ernst Zermelo | 1871-1953 | `images/zermelo.png` | confirmed |
-| Book | I, `Foundational Geometry` | Euclid | fl. c. 300 BCE | `images/euclid.png` | proposed |
-| Volume | II, `Origins of Numbers` | Richard Dedekind | 1831-1916 | `images/dedekind.png` | confirmed |
-| Book | II, `Discrete Number Systems` | Giuseppe Peano | 1858-1932 | `images/peano.png` | confirmed |
-| Book | II, `The Continuum` | Karl Weierstrass | 1815-1897 | `images/weierstrass.png` | proposed |
-| Volume | III, `Classical Analysis` | Augustin-Louis Cauchy | 1789-1857 | `images/cauchy.png` | confirmed |
-| Book | III, `Bounds, Sequences, and Series` | Bernard Bolzano | 1781-1848 | `images/bolzano.png` | confirmed |
-| Book | III, `Functions, Continuity, and Differentiation` | Rudolf Lipschitz | 1832-1903 | `images/lipschitz.png` | confirmed |
-| Book | III, `Integration` | Bernhard Riemann | 1826-1866 | `images/riemann.png` | confirmed |
-| Volume | IV, `Mathematical Spaces` | Constantin Caratheodory | 1873-1950 | `images/caratheodory.png` | confirmed |
-| Subject | IV, `Metric Spaces` | Maurice Frechet | 1878-1973 | `images/frechet.png` | confirmed |
-| Subject | IV, `Measure Spaces` | Emile Borel | 1871-1956 | `images/borel.png` | confirmed |
-| Subject | IV, `Topological Spaces` | Felix Hausdorff | 1868-1942 | `images/hausdorff.png` | confirmed |
-| Volume | V, `Modern Analysis` | Stefan Banach | 1892-1945 | `images/banach.png` | confirmed |
-| Volume | VI, `Algebra` | Emmy Noether | 1882-1935 | `images/noether.png` | confirmed |
-| Book | VI, `Linear Algebra` | Hermann Grassmann | 1809-1877 | `images/grassmann.png` | confirmed |
-| Book | VI, `Algebra` | Emil Artin | 1898-1962 | `images/artin.png` | confirmed |
-| Book | VI, `Lattice and Order Theory` | Garrett Birkhoff | 1911-1996 | `images/birkhoff.png` | proposed |
-| Volume | VII, `Advanced Logic` | David Hilbert | 1862-1943 | `images/hilbert.png` | confirmed |
-
-## Book Root Naming
-
-Every book must eventually build from a readable root named:
+Source content is routed through:
 
 ```text
-volume-{roman}-{book-slug}.tex
+volume-{roman}/
+  index.tex
+  book-{slug}/
+    index.tex
+    {chapter}/
+      index.tex
+      chapter.yaml
+      notes/
+      proofs/
 ```
 
-The produced PDF uses the same stem:
+Legacy roots such as `volume-{roman}-{book-slug}-main.tex`,
+`main-book-*.tex`, and transitional `main.tex` are accepted only during
+migration. New work should use the canonical full-volume and book-root naming
+recorded in `book-registry.json`.
 
-```text
-volume-{roman}-{book-slug}.pdf
-```
+## Ownership
 
-Examples:
+Volume repos own their volume content, chapter-local bibliography shards, and
+render assets needed by that volume. They do not own shared LaTeX
+infrastructure, governance rules, canonical YAML, Lean formalization,
+C++/Vulkan simulation, numerical benchmark workflows, PDF extraction tooling,
+or source-profile staging.
 
-- `volume-i-mathematical-logic-and-proof.tex`;
-- `volume-ii-the-continuum.tex`;
-- `volume-iii-functions-continuity-and-differentiation.tex`.
+Shared LaTeX infrastructure is supplied by `lra-common`. Governance and
+validation tools are supplied by `lra-governance`. There is no assembled
+monorepo and no volume-to-monorepo sync.
 
-The full-volume root is `volume-{roman}.tex`; it carries the volume
-frontmatter, an independent volume table of contents, and then routes every book
-through `volume-{roman}/index.tex`. Legacy `volume-{roman}-{book-slug}-main.tex`,
-`main-book-*.tex`, and transitional `main.tex` roots are accepted only while
-old branches are being migrated.
+## Validation
 
-Open naming decisions:
+Run `tools/governance/validate_volume.py` through the local volume wrapper or
+the governance Docker/build helpers as the acceptance gate. The first validator,
+`volume_shape`, uses `docs/governance/volume-structure.schema.json`; broader
+layout, proof, stub, and capstone contracts are documented in
+`constitution/schema/file-schema.yaml`.
 
-- whether Modern Analysis, Algebra, Advanced Logic, and Applied and
-  Computational Mathematics should keep subject-level roots as book titles or
-  collapse under one book title per volume.
-
-## Book Migration Checklist
-
-1. Verify governance ground rules first: book registry, metadata fields,
-   filename rules, validators, Docker build discovery, and output naming must
-   all agree before content roots are renamed.
-2. Rename or create book roots using
-   `volume-{roman}-{book-slug}.tex`.
-3. Duplicate and specialize book frontmatter so each book has its own title
-   page, copyright/frontmatter policy, table of contents, and introduction
-   hook.
-4. Build each book independently and publish PDFs using the matching
-   `volume-{roman}-{book-slug}.pdf` names.
-5. Update Knowledge Explorer navigation from volume-only selection to
-   volume/book/chapter selection.
-6. Update knowledge extraction so records carry volume metadata and book
-   metadata, including `book_slug`, `book_title`, and source root.
-7. Add expected book-level TOC validation so misplaced or missing sections are
-   caught mechanically.
-
-## Canonical Volume Metadata Fields
-
-Every volume must have one canonical metadata record. The record may live in a
-volume-level YAML file or another approved registry, but it must expose these
-fields:
-
-- `volume_number`: Arabic number, such as `1`.
-- `roman_numeral`: Roman numeral, such as `I`.
-- `repository`: GitHub repository name, such as `wsollers/lra-volume-i`.
-- `display_title`: canonical displayed volume title.
-- `series_title`: frontmatter series title; normally `From Cantor to Ito`, or
-  `From Turing to Carmack` for applied and computational books.
-- `frontmatter_mathematician`: full mathematician name.
-- `mathematician_lifespan`: birth-death years, formatted as `YYYY-YYYY`.
-- `image_path`: volume-relative image path, formatted as
-  `images/<filename>.png`.
-- `frontmatter_file`: standard frontmatter renderer, normally
-  `volume-*/frontmatter.tex`.
-- `status`: one of `active`, `planned`, `stub`, `migrated`, or `archived`.
-
-The metadata record is the authority for title and frontmatter consistency.
-Generated frontmatter pages, volume indexes, PDF entry roots, and repository
-documentation should agree with this record once the relevant migration phase
-has run.
-
-## Status Values
-
-- `active`: the volume repository exists and is part of the current build or
-  migration workflow.
-- `planned`: the target volume is part of the architecture but is not yet a
-  fully populated repository.
-- `stub`: the repository or volume directory exists with placeholder content.
-- `migrated`: content has been moved or split according to the target
-  architecture.
-- `archived`: historical content retained for reference and not part of the
-  active volume route.
-
-Archives must remain untouched unless a later task explicitly authorizes an
-archive-only maintenance change.
-
-## Title Consistency Rule
-
-For each volume, these places must use the same displayed volume title:
-
-- every volume and book frontmatter page;
-- volume index;
-- `\part` title;
-- volume metadata.
-
-Book frontmatter pages additionally display the canonical book title recorded
-in `book-registry.json`.
+Use `tools/governance/audit_volume_layout.py` only for focused migration or
+layout reports. After moving theorem or proof source paths, regenerate and
+validate theorem-route artifacts before syncing route-dependent consumers such
+as the proof vault.
 
 ## Migration Rule
 
-The migration must proceed by stubs first and small chapter-level moves later.
-Do not perform bulk moves across multiple domains in a single commit. Do not
-rename repositories, create new repositories, or move content until the
-metadata conventions, frontmatter conventions, and workflow update plan are in
-place.
-
-When content eventually moves:
-
-- preserve theorem labels;
-- preserve proof labels;
-- preserve citations;
-- preserve cross-references;
-- leave archives intact;
-- prefer router files or compatibility stubs when they reduce breakage;
-- test the source and destination volume builds before pushing.
-
-## Current Integration Points
-
-Each volume has an active `lra-volume-*` repository with a standalone build
-root. Local Docker/build tooling recognizes the eight-volume identifier set.
-The volume repos build independently; there is no monorepo and no
-volume-to-monorepo sync. The knowledge refresh, orchestrated from
-`lra-governance`, reads all eight `lra-volume-*` source trees.
-
-## Deferred Phase 0 Findings
-
-The deferred Phase 0 inventory (title, frontispiece, and image issues) is
-recorded once in `docs/architecture/frontmatter-and-frontispiece-standard.md`.
-Those items are intentionally deferred and must not be fixed as part of this
-governance phase.
-
-## Related Documents
-
-- `docs/architecture/frontmatter-and-frontispiece-standard.md`
-- `docs/architecture/dedication-page-standard.md`
-- `docs/plans/volume-renumbering-and-frontmatter-migration-plan.md`
+Volume and book migrations should proceed in small reviewable steps. Preserve
+theorem labels, proof labels, citations, cross-references, and router
+reachability. Leave archives untouched unless a task explicitly authorizes
+archive maintenance. Validate the affected source and build roots before
+pushing.

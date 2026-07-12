@@ -598,7 +598,6 @@ class ValidateVolumeTests(unittest.TestCase):
                     "",
                 ]
             ),
-            encoding="utf-8",
         )
 
         codes = {finding.code for finding in validate_with_inventory(proof_file_contract, volume)}
@@ -633,7 +632,6 @@ class ValidateVolumeTests(unittest.TestCase):
                     "",
                 ]
             ),
-            encoding="utf-8",
         )
 
         codes = {finding.code for finding in validate_with_inventory(proof_file_contract, volume)}
@@ -657,7 +655,6 @@ class ValidateVolumeTests(unittest.TestCase):
                     "",
                 ]
             ),
-            encoding="utf-8",
         )
 
         codes = {finding.code for finding in validate_with_inventory(proof_file_contract, volume)}
@@ -681,7 +678,6 @@ class ValidateVolumeTests(unittest.TestCase):
                     "",
                 ]
             ),
-            encoding="utf-8",
         )
 
         codes = {finding.code for finding in validate_with_inventory(proof_file_contract, volume)}
@@ -715,7 +711,6 @@ class ValidateVolumeTests(unittest.TestCase):
                     "",
                 ]
             ),
-            encoding="utf-8",
         )
 
         codes = {finding.code for finding in validate_with_inventory(proof_file_contract, volume)}
@@ -1161,6 +1156,7 @@ class ValidateVolumeTests(unittest.TestCase):
                     r"\section{Order Notes}",
                     r"\begin{toolkitbox}{Order Toolkit}",
                     r"\begin{tabular}{l l}",
+                    r"\textbf{Name} & \textbf{Meaning} \\",
                     r"\hyperref[prop:order]{Order} & valid target \\",
                     r"\hyperref[def:missing-order]{Missing} & invalid target \\",
                     r"\end{tabular}",
@@ -1192,6 +1188,7 @@ class ValidateVolumeTests(unittest.TestCase):
                     r"\section{Order Notes}",
                     r"\begin{toolkitbox}{Order Toolkit}",
                     r"\begin{tabular}{l l}",
+                    r"\textbf{Name} & \textbf{Meaning} \\",
                     r"Order & \hyperref[prop:order]{valid target} \\",
                     r"\end{tabular}",
                     r"\end{toolkitbox}",
@@ -1209,6 +1206,47 @@ class ValidateVolumeTests(unittest.TestCase):
                 for finding in findings
             )
         )
+
+    def test_structural_chrome_flags_toolkit_table_shape(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "index.tex",
+            "\n".join(
+                [
+                    r"\section{Order Notes}",
+                    r"\begin{toolkitbox}{Order Toolkit}",
+                    r"\begin{tabular}{l l l}",
+                    r"\textbf{Name} & \textbf{Meaning} & \textbf{Extra} \\",
+                    r"\hyperref[prop:order]{Order} & valid target & extra \\",
+                    r"\end{tabular}",
+                    r"\end{toolkitbox}",
+                    r"\begin{toolkitbox}{Role Toolkit}",
+                    r"\begin{tabular}{l l}",
+                    r"\textbf{Name} & \textbf{Role} \\",
+                    r"\hyperref[prop:order]{Order} & valid target \\",
+                    r"\end{tabular}",
+                    r"\end{toolkitbox}",
+                    r"\begin{toolkitbox}{Concept Toolkit}",
+                    r"\begin{tabular}{l l}",
+                    r"\textbf{Concept} & \textbf{Meaning} \\",
+                    r"\hyperref[prop:order]{Order} & valid target \\",
+                    r"\end{tabular}",
+                    r"\end{toolkitbox}",
+                    r"\begin{toolkitbox}{Missing Table}",
+                    "plain list",
+                    r"\end{toolkitbox}",
+                    r"\input{volume-ii/integers/notes/order/notes-order}",
+                    "",
+                ]
+            ),
+        )
+
+        codes = {finding.code for finding in validate_with_inventory(structural_chrome, volume)}
+
+        self.assertIn("toolkit_table_not_two_columns", codes)
+        self.assertIn("toolkit_second_column_not_meaning", codes)
+        self.assertIn("toolkit_first_column_not_name", codes)
+        self.assertIn("toolkit_missing_table", codes)
 
     def test_structural_chrome_flags_inline_tikzpicture(self):
         volume = make_volume()
@@ -1272,6 +1310,22 @@ class ValidateVolumeTests(unittest.TestCase):
         codes = {finding.code for finding in validate_with_inventory(reference_voice, volume)}
 
         self.assertIn("non_reference_voice", codes)
+
+    def test_reference_voice_accepts_mathematical_class(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{remark*}[Interpretation]",
+                    "The equivalence class records all representatives of the same object.",
+                    r"\end{remark*}",
+                    "",
+                ]
+            ),
+        )
+
+        self.assertEqual(validate_with_inventory(reference_voice, volume), [])
 
     def test_formal_decoration_accepts_canonical_fixture(self):
         volume = make_volume()
@@ -1441,6 +1495,76 @@ class ValidateVolumeTests(unittest.TestCase):
 
         self.assertIn("failure_modes_missing_exposition_item", codes)
         self.assertIn("failure_mode_missing_predicate_display", codes)
+
+    def test_formal_decoration_flags_duplicate_support_blocks(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{definition}[Duplicate Support Blocks]",
+                    r"\label{def:duplicate-support-blocks}",
+                    "A duplicate support block test is an ordered object.",
+                    r"\end{definition}",
+                    r"\begin{remark*}[Standard quantified statement]",
+                    "For every admissible object, the definition applies.",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Interpretation]",
+                    "First interpretation.",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Interpretation]",
+                    "Second interpretation.",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Failure modes]",
+                    r"\begin{description}",
+                    r"\item[Exposition.]",
+                    "First failure family.",
+                    r"\item[First branch.]",
+                    r"\[",
+                    r"\exists x\in A,\quad x \notin A.",
+                    r"\]",
+                    r"\end{description}",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Failure modes]",
+                    r"\begin{description}",
+                    r"\item[Exposition.]",
+                    "Second failure family.",
+                    r"\item[Second branch.]",
+                    r"\[",
+                    r"\exists y\in A,\quad y \notin A.",
+                    r"\]",
+                    r"\end{description}",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Exposition]",
+                    "First exposition.",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Exposition]",
+                    "Second exposition.",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Examples]",
+                    "First example.",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Examples]",
+                    "Second example.",
+                    r"\end{remark*}",
+                    r"\begin{dependencies}",
+                    r"\begin{itemize}",
+                    r"  \item \hyperref[def:ordered-set]{Ordered Set}",
+                    r"\end{itemize}",
+                    r"\end{dependencies}",
+                    "",
+                ]
+            ),
+        )
+
+        findings = validate_with_inventory(formal_decoration, volume)
+        duplicate_findings = [
+            finding for finding in findings
+            if finding.code == "duplicate_decoration_block"
+        ]
+
+        self.assertEqual(len(duplicate_findings), 1)
+        self.assertIn("interpretation", duplicate_findings[0].message)
 
     def test_formal_decoration_requires_matching_go_to_proof_link(self):
         volume = make_volume()
@@ -1793,6 +1917,53 @@ class ValidateVolumeTests(unittest.TestCase):
 
         self.assertEqual(validate_with_inventory(dependency_blocks, volume), [])
 
+    def test_dependency_blocks_flags_no_local_on_non_axiom(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{definition}[Primitive-looking Definition]",
+                    r"\label{def:primitive-looking-definition}",
+                    "A primitive-looking definition is not an axiom.",
+                    r"\end{definition}",
+                    r"\NoLocalDependencies",
+                    "",
+                ]
+            ),
+        )
+
+        codes = {finding.code for finding in validate_with_inventory(dependency_blocks, volume)}
+
+        self.assertIn("no_local_dependencies_on_non_axiom", codes)
+
+    def test_dependency_blocks_flags_definitional_root_inside_dependencies(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{definition}[Primitive Definition]",
+                    r"\label{def:primitive-definition}",
+                    "A primitive definition is reviewed as a root.",
+                    r"\end{definition}",
+                    r"\begin{dependencies}",
+                    r"\DefinitionalRoot",
+                    r"\end{dependencies}",
+                    "",
+                ]
+            ),
+        )
+
+        findings = validate_with_inventory(dependency_blocks, volume)
+        codes = {finding.code for finding in findings}
+
+        self.assertIn("definitional_root_inside_dependencies", codes)
+        self.assertTrue(any(
+            finding.code == "definitional_root_inside_dependencies" and finding.severity == "error"
+            for finding in findings
+        ))
+
     def test_dependency_blocks_flags_missing_and_bad_targets(self):
         volume = make_volume()
         note = volume / "integers" / "notes" / "order" / "notes-order.tex"
@@ -1858,6 +2029,95 @@ class ValidateVolumeTests(unittest.TestCase):
 
         self.assertNotIn("volume-ii/integers/notes/order/orphan-duplicate.tex", files)
         self.assertNotIn("duplicate_global_label", codes)
+
+    def test_dependency_graph_closure_uses_merged_cross_volume_edges(self):
+        if TMP.exists():
+            shutil.rmtree(TMP)
+        volume_i = TMP / "lra-volume-i" / "volume-i"
+        volume_ii = TMP / "lra-volume-ii" / "volume-ii"
+        write(volume_i / "index.tex", r"\input{volume-i/book-sets/index}" + "\n")
+        write(volume_i / "book-sets" / "index.tex", r"\input{volume-i/book-sets/notes-order}" + "\n")
+        write(
+            volume_i / "book-sets" / "notes-order.tex",
+            "\n".join(
+                [
+                    r"\begin{axiom}[Set Foundation]",
+                    r"\label{ax:set-foundation}",
+                    "Sets have a foundation.",
+                    r"\end{axiom}",
+                    r"\NoLocalDependencies",
+                    "",
+                    r"\begin{definition}[Base Structure]",
+                    r"\label{def:base-structure}",
+                    "A base structure is a set with the foundational datum.",
+                    r"\end{definition}",
+                    r"\begin{dependencies}",
+                    r"\begin{itemize}",
+                    r"  \item \hyperref[ax:set-foundation]{Set Foundation}",
+                    r"\end{itemize}",
+                    r"\end{dependencies}",
+                    "",
+                ]
+            ),
+        )
+        write(volume_ii / "index.tex", r"\input{volume-ii/book-analysis/index}" + "\n")
+        write(volume_ii / "book-analysis" / "index.tex", r"\input{volume-ii/book-analysis/notes-theorem}" + "\n")
+        write(
+            volume_ii / "book-analysis" / "notes-theorem.tex",
+            "\n".join(
+                [
+                    r"\begin{theorem}[Uses Base Structure]",
+                    r"\label{thm:uses-base-structure}",
+                    "Every base structure is available for analysis.",
+                    r"\end{theorem}",
+                    r"\begin{dependencies}",
+                    r"\begin{itemize}",
+                    r"  \item \hyperref[def:base-structure]{Base Structure}",
+                    r"\end{itemize}",
+                    r"\end{dependencies}",
+                    "",
+                ]
+            ),
+        )
+
+        codes = {finding.code for finding in validate_with_inventory(dependency_graphs, volume_ii)}
+
+        self.assertNotIn("closure_leaf_not_allowed_root", codes)
+
+    def test_dependency_graph_cycles_are_errors(self):
+        volume = make_volume()
+        cycle_tex = "\n".join(
+            [
+                r"\begin{theorem}[First Cycle Node]",
+                r"\label{thm:first-cycle-node}",
+                "First cycle node.",
+                r"\end{theorem}",
+                r"\begin{dependencies}",
+                r"\begin{itemize}",
+                r"  \item \hyperref[thm:second-cycle-node]{Second Cycle Node}",
+                r"\end{itemize}",
+                r"\end{dependencies}",
+                "",
+                r"\begin{theorem}[Second Cycle Node]",
+                r"\label{thm:second-cycle-node}",
+                "Second cycle node.",
+                r"\end{theorem}",
+                r"\begin{dependencies}",
+                r"\begin{itemize}",
+                r"  \item \hyperref[thm:first-cycle-node]{First Cycle Node}",
+                r"\end{itemize}",
+                r"\end{dependencies}",
+                "",
+            ]
+        )
+        write(volume / "integers" / "notes" / "order" / "notes-order.tex", cycle_tex)
+
+        findings = validate_with_inventory(dependency_graphs, volume)
+
+        self.assertTrue(any(
+            finding.code == "dependency_cycle" and finding.severity == "error"
+            for finding in findings
+        ))
 
     def test_validate_volume_reports_shape_without_fail_fast(self):
         volume = make_volume()

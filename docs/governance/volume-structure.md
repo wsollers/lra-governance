@@ -4,7 +4,10 @@ The volume validator treats the volume tree as the atomic validation target.
 `volume_shape` runs first. If the shape gate fails, downstream validators do not
 run.
 
-The machine-readable contract lives in `docs/governance/volume-structure.schema.json`.
+The integrated volume-shape validator reads the compact machine contract in
+`docs/governance/volume-structure.schema.json`. The broader constitutional
+layout contract for volume, chapter, topic, proof, stub, capstone, and
+breadcrumb rules lives in `constitution/schema/file-schema.yaml`.
 
 ## Repository Ownership And Build Boundary
 
@@ -23,8 +26,10 @@ explicit `lra-common` checkout. It is not committed, copied, or synced into
 volume repos.
 
 `tools/governance/validate_volume.py` is the deterministic acceptance gate for
-current volume structure. Use `tools/governance/audit_volume_layout.py` only
-when a task needs a focused migration or layout report.
+current volume structure and runs the `volume_shape` validator first. Use
+`tools/governance/audit_volume_layout.py` only when a task needs a focused
+migration or layout report; it should agree with the broader layout contract in
+`constitution/schema/file-schema.yaml`.
 
 ## Canonical Shape
 

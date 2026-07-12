@@ -89,6 +89,17 @@ When a block is present, use this order:
 Do not reorder blocks for aesthetics. Omit only blocks that the governing
 artifact standard does not require.
 
+## Cardinality Rule
+
+For each formal artifact, use at most one block of each canonical support type.
+For example, do not attach two `Interpretation` blocks to the same definition,
+theorem, lemma, proposition, corollary, or axiom. Merge duplicate content into
+the single canonical block.
+
+`Failure modes`, `Exposition`, `Examples`, and `Non-Examples` may repeat when
+the surrounding artifact genuinely needs multiple source-supported failure,
+explanatory, or boundary blocks. They still follow the ordering rule above.
+
 ## Canonical Statement Skeleton
 
 Three sources govern a statement artifact, and the decoration audit in
