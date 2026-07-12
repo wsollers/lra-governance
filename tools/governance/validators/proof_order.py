@@ -6,7 +6,7 @@ from pathlib import Path
 from core.finding import Finding, finding
 from core.file_inventory import validator_files
 from core.tex import INPUT_RE, read_text, strip_latex_comments
-from core.volume import chapter_roots, is_ignored
+from core.volume import routed_chapter_roots, is_ignored
 
 
 NOTE_FORMAL_RE = re.compile(
@@ -18,7 +18,7 @@ LABEL_RE = re.compile(r"\\label\{(?P<label>(?:thm|lem|prop|cor):[A-Za-z0-9-]+)\}
 
 def validate(volume_root: Path, files) -> list[Finding]:
     findings: list[Finding] = []
-    for chapter in chapter_roots(volume_root):
+    for chapter in routed_chapter_roots(volume_root):
         _validate_chapter(volume_root, chapter, findings, files)
     return findings
 

@@ -5,7 +5,7 @@ from pathlib import Path
 
 from core.finding import Finding, finding
 from core.tex import strip_latex_comment
-from core.volume import chapter_roots, latex_input_path
+from core.volume import routed_chapter_roots, latex_input_path
 
 
 CHAPTER_LINE_RE = re.compile(r"\\chapter(?!\*)(?:\[[^\]]*\])?\{.*\}$")
@@ -51,7 +51,7 @@ def _router_layers(lines: list[tuple[int, str]]) -> list[tuple[int, str]]:
 
 def validate(volume_root: Path) -> list[Finding]:
     findings: list[Finding] = []
-    for chapter in chapter_roots(volume_root):
+    for chapter in routed_chapter_roots(volume_root):
         index = chapter / "index.tex"
         if not index.exists():
             continue

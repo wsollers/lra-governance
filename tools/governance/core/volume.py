@@ -108,6 +108,24 @@ def chapter_roots(volume_root: Path) -> list[Path]:
     return sorted(set(chapters))
 
 
+def routed_chapter_roots(volume_root: Path) -> list[Path]:
+    from .file_inventory import reachable_files
+
+    reachable = reachable_files(volume_root)
+    chapters: set[Path] = set()
+    for path in reachable:
+        if path.name != "index.tex":
+            continue
+        chapter = path.parent
+        try:
+            chapter.relative_to(volume_root.resolve())
+        except ValueError:
+            continue
+        if is_chapter_root(chapter):
+            chapters.add(chapter.resolve())
+    return sorted(chapters)
+
+
 def iter_all_tex(root: Path):
     from .file_inventory import all_files
 

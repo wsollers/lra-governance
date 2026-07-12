@@ -6,7 +6,7 @@ from pathlib import Path
 from core.finding import Finding, finding
 from core.file_inventory import validator_file_set
 from core.tex import INPUT_RE, is_routed, read_text, strip_latex_comment
-from core.volume import chapter_roots, is_ignored
+from core.volume import routed_chapter_roots, is_ignored
 
 
 FORMAL_ENV_RE = re.compile(r"\\begin\{(?:definition|axiom|theorem|lemma|proposition|corollary)\}")
@@ -19,7 +19,7 @@ TOOLKIT_END_RE = re.compile(r"\\end\{toolkitbox\}")
 
 def validate(volume_root: Path, files) -> list[Finding]:
     findings: list[Finding] = []
-    for chapter in chapter_roots(volume_root):
+    for chapter in routed_chapter_roots(volume_root):
         included = validator_file_set(chapter, files)
         notes_root = chapter / "notes"
         notes_index = notes_root / "index.tex"

@@ -6,7 +6,7 @@ from pathlib import Path
 from core.finding import Finding, finding
 from core.file_inventory import validator_files
 from core.tex import read_text
-from core.volume import chapter_roots
+from core.volume import routed_chapter_roots
 
 
 LABEL_RE = re.compile(r"\\label\{([^}]+)\}")
@@ -42,7 +42,7 @@ BAD_LABEL_PARTS = {
 def validate(volume_root: Path, files) -> list[Finding]:
     findings: list[Finding] = []
     _check_duplicate_and_slug_labels(volume_root, findings, files)
-    for chapter in chapter_roots(volume_root):
+    for chapter in routed_chapter_roots(volume_root):
         for tex in validator_files(chapter, files):
             _check_formal_block_labels(volume_root, tex, findings)
     return findings

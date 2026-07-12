@@ -82,7 +82,7 @@ def reachable_files(
 
     entry = root / "index.tex"
     if not entry.exists():
-        return set(all_files(root, include_excluded=include_excluded, suffixes=suffixes))
+        return set()
 
     included: set[Path] = set()
     pending = [entry.resolve()]

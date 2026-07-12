@@ -6,7 +6,7 @@ from pathlib import Path
 from core.finding import Finding, finding
 from core.file_inventory import validator_file_set
 from core.tex import input_targets, read_text, strip_latex_comment
-from core.volume import chapter_roots, latex_input_path
+from core.volume import routed_chapter_roots, latex_input_path
 
 
 TCOLORBOX_RE = re.compile(r"\\begin\{tcolorbox\}")
@@ -15,7 +15,7 @@ INPUT_ORDER_RE = re.compile(r"\\(?:input|include)\{([^}]+)\}")
 
 def validate(volume_root: Path, files) -> list[Finding]:
     findings: list[Finding] = []
-    for chapter in chapter_roots(volume_root):
+    for chapter in routed_chapter_roots(volume_root):
         included = validator_file_set(chapter, files)
         capstone = chapter / "proofs" / "exercises" / f"capstone-{chapter.name}.tex"
         if capstone.exists() and capstone.resolve() in included:

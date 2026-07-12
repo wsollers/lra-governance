@@ -4,7 +4,7 @@ import json
 import re
 from pathlib import Path
 
-from core.file_inventory import all_files
+from core.file_inventory import validator_files
 from core.finding import Finding, finding
 from core.tex import INPUT_RE, read_text, strip_latex_comments
 
@@ -23,7 +23,7 @@ PART_RE = re.compile(r"\\part(?:\[[^\]]*\])?\{([^}]+)\}")
 LRAMETA_SERIES_RE = re.compile(r"series\s*=\s*\{([^{}]+)\}")
 
 
-def validate(volume_root: Path) -> list[Finding]:
+def validate(volume_root: Path, files) -> list[Finding]:
     findings: list[Finding] = []
     registry = _registry_for(volume_root)
     if registry is None:
@@ -37,7 +37,7 @@ def validate(volume_root: Path) -> list[Finding]:
     for book in registry.get("books", []):
         _validate_book_root(volume_root, registry, book, findings)
     _validate_volume_index(volume_root, registry, findings)
-    _validate_lrameta_series(volume_root, registry, findings)
+    _validate_lrameta_series(volume_root, registry, findings, files)
     return findings
 
 
@@ -264,11 +264,11 @@ def _validate_volume_index(volume_root: Path, registry: dict, findings: list[Fin
         )
 
 
-def _validate_lrameta_series(volume_root: Path, registry: dict, findings: list[Finding]) -> None:
+def _validate_lrameta_series(volume_root: Path, registry: dict, findings: list[Finding], files) -> None:
     expected = registry.get("series_title")
     if not expected:
         return
-    for path in all_files(volume_root, suffixes=(".tex",)):
+    for path in validator_files(volume_root, files, suffixes=(".tex",)):
         text = strip_latex_comments(read_text(path))
         for match in LRAMETA_SERIES_RE.finditer(text):
             actual = match.group(1).strip()

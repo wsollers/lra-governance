@@ -9,10 +9,13 @@ from unittest.mock import patch
 from generators.chapter_stub import stub_chapter
 from generators.section_stub import stub_section
 import dependency_graph
+from core.file_inventory import files_to_validate
+from core.formal_blocks import clear_formal_block_cache
+from core.tex import clear_text_cache
 from core import volume as volume_core
 from validate_volume import VALIDATORS
 from core.validator_runner import run_validator
-from validators import block_discipline, book_toc, capstones, chapter_router, dedication_page, dependency_blocks, dependency_graphs, figure_fragments, formal_decoration, formal_reading_required, frontmatter_standard, input_resolution, interpretation_blocks, labels, latex_integrity, math_boxes, notes_structure, operator_metadata, print_edition_routing, proof_coverage, proof_file_contract, proof_layout, proof_order, proof_routing, proof_stub_state, reference_voice, structural_chrome, structural_positions, volume_shape
+from validators import block_discipline, book_toc, capstones, chapter_router, dedication_page, dependency_blocks, dependency_graphs, figure_fragments, formal_decoration, formal_reading_required, frontmatter_standard, input_resolution, interpretation_blocks, labels, latex_integrity, math_boxes, notes_structure, operator_metadata, print_edition_routing, proof_coverage, proof_file_contract, proof_layout, proof_order, proof_routing, proof_stub_state, reference_voice, structural_chrome, structural_positions, unicode_tex, volume_shape
 
 
 HERE = Path(__file__).resolve().parent
@@ -24,7 +27,9 @@ def write(path: Path, text: str = ""):
     path.write_text(text, encoding="utf-8")
 
 def validate_with_inventory(validator, volume: Path):
-    return run_validator(validator, volume)
+    clear_text_cache()
+    clear_formal_block_cache()
+    return run_validator(validator, volume, files_to_validate([volume], only_reachable=False))
 
 
 def make_volume() -> Path:
@@ -256,6 +261,35 @@ class ValidateVolumeTests(unittest.TestCase):
         volume = make_volume()
 
         self.assertEqual(validate_with_inventory(volume_shape, volume), [])
+
+    def test_validators_ignore_unwired_topic_files(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "orphan-topic" / "index.tex",
+            "\n".join(
+                [
+                    r"\section{Orphan}",
+                    r"\begin{toolkitbox}{Unwired Toolkit}",
+                    "This bad toolkit has no table and uses an em dash — but is not routed.",
+                    r"\end{toolkitbox}",
+                    "",
+                ]
+            ),
+        )
+
+        structural_codes = {finding.code for finding in run_validator(structural_chrome, volume)}
+        unicode_codes = {finding.code for finding in run_validator(unicode_tex, volume)}
+        shape_codes = {finding.code for finding in run_validator(volume_shape, volume)}
+
+        self.assertNotIn("toolkit_missing_table", structural_codes)
+        self.assertNotIn("non_ascii_tex_character", unicode_codes)
+        self.assertNotIn("orphan_proofs_topic", shape_codes)
+
+    def test_reachable_inventory_does_not_fallback_to_directory_walk(self):
+        root = TMP / "unrouted-tree"
+        write(root / "loose" / "bad.tex", "Loose file.\n")
+
+        self.assertEqual(files_to_validate([root]), [])
 
     def test_volume_shape_flags_legacy_capstone_and_flat_proof(self):
         volume = make_volume()
@@ -2134,6 +2168,7 @@ class ValidateVolumeTests(unittest.TestCase):
                 str(HERE / "validate_volume.py"),
                 str(volume),
                 "--fail-on-errors",
+                "--no-preprocess",
             ],
             cwd=HERE,
             text=True,
@@ -2157,7 +2192,7 @@ class ValidateVolumeTests(unittest.TestCase):
         for name, validator in VALIDATORS:
             self.assertEqual(validate_with_inventory(validator, volume), [], name)
 
-    def test_volume_shape_flags_canonical_chapter_not_routed_from_volume_index(self):
+    def test_volume_shape_ignores_canonical_chapter_not_routed_from_volume_index(self):
         volume = make_volume()
         chapter = volume / "orphaned"
         write(chapter / "chapter.yaml", "subject: orphaned\n")
@@ -2186,7 +2221,7 @@ class ValidateVolumeTests(unittest.TestCase):
 
         codes = {finding.code for finding in validate_with_inventory(volume_shape, volume)}
 
-        self.assertIn("chapter_not_in_volume_index", codes)
+        self.assertNotIn("chapter_not_in_volume_index", codes)
 
     def test_section_generator_emits_shape_accepted_by_validators(self):
         if TMP.exists():
@@ -2323,6 +2358,7 @@ class ValidateVolumeTests(unittest.TestCase):
         repo = TMP / "lra-volume-test"
         volume = repo / "volume-ii"
         for book in ("book-a", "book-b"):
+            write(volume / book / "index.tex", rf"\input{{chapter/notes/topic/bad}}" + "\n")
             write(
                 volume / book / "chapter" / "notes" / "topic" / "bad.tex",
                 "\n".join(
@@ -2362,7 +2398,7 @@ class ValidateVolumeTests(unittest.TestCase):
         manifest = json.loads((preprocess_dir / "manifest.json").read_text(encoding="utf-8"))
         paths = {record["path"] for record in data["records"]}
         self.assertTrue(paths)
-        self.assertEqual(manifest["file_count"], 1)
+        self.assertEqual(manifest["file_count"], 2)
         self.assertTrue(all(path.startswith("book-a/") for path in paths), paths)
         self.assertFalse(any(path.startswith("book-b/") for path in paths), paths)
 

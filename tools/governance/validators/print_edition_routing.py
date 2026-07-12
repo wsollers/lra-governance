@@ -5,7 +5,7 @@ from pathlib import Path
 from core.finding import Finding, finding
 from core.file_inventory import validator_files
 from core.tex import read_text
-from core.volume import chapter_roots, is_ignored
+from core.volume import routed_chapter_roots, is_ignored
 from rules.routing import print_edition_inputs
 
 
@@ -17,7 +17,7 @@ class FileInfo:
 
 def validate(volume_root: Path, files) -> list[Finding]:
     findings: list[Finding] = []
-    for chapter in chapter_roots(volume_root):
+    for chapter in routed_chapter_roots(volume_root):
         for tex in validator_files(chapter, files):
             if is_ignored(tex, volume_root):
                 continue

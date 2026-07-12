@@ -12,7 +12,7 @@ from .tex import clear_text_cache
 def default_file_inventory(volume_root: Path | str) -> list[Path]:
     clear_text_cache()
     clear_formal_block_cache()
-    return files_to_validate([volume_root], only_reachable=False)
+    return files_to_validate([volume_root])
 
 
 def run_validator(validator, volume_root: Path | str, files: Iterable[Path] | None = None):

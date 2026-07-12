@@ -7,7 +7,7 @@ from pathlib import Path
 from core.finding import Finding, finding
 from core.file_inventory import reachable_files, validator_file_set
 from core.tex import read_text, strip_latex_comments
-from core.volume import chapter_roots, is_ignored, latex_input_path
+from core.volume import routed_chapter_roots, is_ignored, latex_input_path
 
 
 DEFAULT_SCHEMA = {
@@ -69,7 +69,7 @@ def validate(volume_root: Path, files) -> list[Finding]:
         _required_file(findings, volume_root, volume_root / relative, f"volume {relative}")
     _validate_entry_roots(volume_root, findings, schema)
 
-    chapters = chapter_roots(volume_root)
+    chapters = routed_chapter_roots(volume_root)
     if not chapters:
         _add(findings, volume_root, volume_root, "missing_chapters", "Volume contains no canonical chapter roots.")
         return findings

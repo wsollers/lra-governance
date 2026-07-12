@@ -1,27 +1,11 @@
 from __future__ import annotations
 
-import os
 from pathlib import Path
 
+from core.file_inventory import validator_files
 from core.finding import Finding, finding
 from core.tex import read_text
 
-
-IGNORED_DIR_NAMES = {
-    ".git",
-    ".history",
-    ".venv",
-    "__pycache__",
-    "archive",
-    "build",
-    "dist",
-    "node_modules",
-    "out",
-    "output",
-    "outputs",
-    "reports",
-    "venv",
-}
 
 REPLACEMENTS = {
     "\u2014": "---",
@@ -37,23 +21,11 @@ REPLACEMENTS = {
 }
 
 
-def validate(volume_root: Path) -> list[Finding]:
+def validate(volume_root: Path, files) -> list[Finding]:
     findings: list[Finding] = []
-    for tex in _tex_files(volume_root):
+    for tex in validator_files(volume_root, files):
         _validate_file(volume_root, tex, findings)
     return findings
-
-
-def _tex_files(volume_root: Path) -> list[Path]:
-    root = volume_root.resolve()
-    files: list[Path] = []
-    for dirpath, dirnames, filenames in os.walk(root):
-        dirnames[:] = [name for name in dirnames if name not in IGNORED_DIR_NAMES]
-        for filename in filenames:
-            path = Path(dirpath) / filename
-            if path.suffix == ".tex":
-                files.append(path.resolve())
-    return sorted(files)
 
 
 def _validate_file(volume_root: Path, path: Path, findings: list[Finding]) -> None:
