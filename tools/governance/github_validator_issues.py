@@ -190,9 +190,15 @@ def sync_issues(repo: str, issues: list[ValidatorIssue], close_stale: bool, dry_
             print(f"would sync {issue.fingerprint}: {issue.title}")
         return counts
     ensure_labels(repo, {label for issue in issues for label in issue.labels})
+    existing_by_fingerprint: dict[str, dict[str, Any]] = {}
+    existing_open = list_open_validator_issues(repo)
+    for existing in existing_open:
+        fingerprint = extract_fingerprint(existing.get("body") or "")
+        if fingerprint and fingerprint not in existing_by_fingerprint:
+            existing_by_fingerprint[fingerprint] = existing
     current_fingerprints = {issue.fingerprint for issue in issues}
     for issue in issues:
-        existing = find_open_issue(repo, issue.fingerprint)
+        existing = existing_by_fingerprint.get(issue.fingerprint)
         payload = {"title": issue.title, "body": issue.body, "labels": issue.labels}
         if existing:
             gh_api(repo, f"/repos/{repo}/issues/{existing['number']}", "PATCH", payload)
@@ -201,7 +207,7 @@ def sync_issues(repo: str, issues: list[ValidatorIssue], close_stale: bool, dry_
             gh_api(repo, f"/repos/{repo}/issues", "POST", payload)
             counts["created"] += 1
     if close_stale:
-        for existing in list_open_validator_issues(repo):
+        for existing in existing_open:
             fingerprint = extract_fingerprint(existing.get("body") or "")
             if fingerprint and fingerprint not in current_fingerprints:
                 gh_api(repo, f"/repos/{repo}/issues/{existing['number']}", "PATCH", {"state": "closed"})
