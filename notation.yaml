@@ -46,6 +46,62 @@ notation:
     symbol: '\operatorname{Length}'
     category: interval_operator
     description: Length of a bounded interval, determined by its endpoints.
+  - id: not:centered-open-interval
+    name: CenteredOpenIntervalNotation
+    symbol: 'I_r(c)'
+    template: 'I_{<radius>}(<center>)'
+    category: interval_notation
+    description: Notation for the open interval centered at c with radius r.
+  - id: not:punctured-centered-open-interval
+    name: PuncturedCenteredOpenIntervalNotation
+    symbol: 'I^\times_r(c)'
+    template: 'I^{\times}_{<radius>}(<center>)'
+    category: interval_notation
+    description: >
+      Notation for the punctured open interval centered at c with radius r.
+  - id: not:centered-closed-interval
+    name: CenteredClosedIntervalNotation
+    symbol: '\overline{I}_r(c)'
+    template: '\overline{I}_{<radius>}(<center>)'
+    category: interval_notation
+    description: Notation for the closed interval centered at c with radius r.
+  - id: not:open-ball
+    name: OpenBallNotation
+    symbol: 'B_r(c)'
+    template: 'B_{<radius>}(<center>)'
+    category: topology_notation
+    description: Notation for the open ball centered at c with radius r.
+  - id: not:punctured-open-ball
+    name: PuncturedOpenBallNotation
+    symbol: 'B^\times_r(c)'
+    template: 'B^{\times}_{<radius>}(<center>)'
+    category: topology_notation
+    description: Notation for the punctured open ball centered at c with radius r.
+  - id: not:closed-ball
+    name: ClosedBallNotation
+    symbol: '\overline{B}_r(c)'
+    template: '\overline{B}_{<radius>}(<center>)'
+    category: topology_notation
+    description: >
+      Notation for the closed ball centered at c with radius r. The overline
+      marks the closed-ball convention and should not be confused with an
+      assertion that the closed ball equals the closure of the corresponding
+      open ball in every metric space.
+  - id: not:open-ball-closure
+    name: OpenBallClosureNotation
+    symbol: '\overline{B_r(c)}'
+    template: '\overline{B_{<radius>}(<center>)}'
+    category: topology_notation
+    description: >
+      Notation for the topological closure of the open ball B_r(c) in the
+      ambient metric or topological space.
+  - id: not:punctured-closed-ball
+    name: PuncturedClosedBallNotation
+    symbol: '\overline{B}^\times_r(c)'
+    template: '\overline{B}^{\times}_{<radius>}(<center>)'
+    category: topology_notation
+    description: >
+      Notation for the punctured closed ball centered at c with radius r.
   - id: not:real-part
     symbol: '\operatorname{Re}'
     category: complex_operator

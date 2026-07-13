@@ -31,6 +31,24 @@ They are not duplicated into volume repos and should be treated as read-only by
 automated authoring processes unless the task is specifically to update the
 canonical YAML source.
 
+## Notation Templates
+
+Notation entries may include an optional `template` field when a symbol is a
+family of expressions rather than a single fixed token. The `symbol` field gives
+the representative house form; the `template` field gives the TeX pattern with
+angle-bracket placeholders for substitutable parts.
+
+For example:
+
+```yaml
+symbol: 'I_r(c)'
+template: 'I_{<radius>}(<center>)'
+```
+
+The template records notation shape only. It does not assert the mathematical
+object exists, expand the notation, or replace the corresponding structure and
+predicate entries in `structures.yaml` and `predicates.yaml`.
+
 ## Standard Notation Normalizations
 
 Preserve mathematical meaning; normalize mathematical notation.

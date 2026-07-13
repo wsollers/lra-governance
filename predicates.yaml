@@ -75,6 +75,60 @@ predicates:
       The object B_dot is the ball B centered at c with radius r in X after
       removing the center c.
 
+  - id: pred:is-closed-ball
+    name: IsClosedBall
+    kind: predicate
+    category: topology
+    arguments:
+      - name: B_bar
+        role: closed_ball
+        surface: '\overline{B}'
+      - name: c
+        role: center
+      - name: r
+        role: radius
+      - name: X
+        role: ambient
+    returns: truth_value
+    ambient_argument: X
+    polymorphic: true
+    surface_forms:
+      - is a closed ball
+      - closed ball
+      - metric closed ball
+    description: >
+      The object B_bar is the closed ball centered at c with radius r in the
+      ambient space X.
+
+  - id: pred:is-punctured-closed-ball
+    name: IsPuncturedClosedBall
+    kind: predicate
+    category: topology
+    arguments:
+      - name: B_bar_dot
+        role: punctured_closed_ball
+        surface: '\overline{B}^{\times}'
+      - name: B_bar
+        role: underlying_closed_ball
+        surface: '\overline{B}'
+      - name: c
+        role: center
+      - name: r
+        role: radius
+      - name: X
+        role: ambient
+    returns: truth_value
+    ambient_argument: X
+    polymorphic: true
+    surface_forms:
+      - is a punctured closed ball
+      - is a deleted closed ball
+      - punctured closed ball
+      - deleted closed ball
+    description: >
+      The object B_bar_dot is the closed ball B_bar centered at c with radius r
+      in X after removing the center c.
+
   - id: pred:is-neighborhood
     name: IsNeighborhood
     kind: predicate
@@ -266,6 +320,86 @@ predicates:
       - closed interval
     description: >
       The object I is an interval in X whose finite endpoints are included.
+
+  - id: pred:is-centered-open-interval
+    name: IsCenteredOpenInterval
+    kind: predicate
+    category: topology
+    arguments:
+      - name: I
+        role: interval
+      - name: c
+        role: center
+      - name: r
+        role: radius
+      - name: X
+        role: ambient
+    returns: truth_value
+    ambient_argument: X
+    polymorphic: true
+    surface_forms:
+      - is a centered open interval
+      - centered open interval
+      - symmetric open interval
+      - open interval centered at a point
+    description: >
+      The object I is the open interval centered at c with radius r in the
+      ambient ordered or topological space X.
+
+  - id: pred:is-punctured-centered-open-interval
+    name: IsPuncturedCenteredOpenInterval
+    kind: predicate
+    category: topology
+    arguments:
+      - name: I_dot
+        role: punctured_interval
+        surface: 'I^\times'
+      - name: I
+        role: underlying_interval
+      - name: c
+        role: center
+      - name: r
+        role: radius
+      - name: X
+        role: ambient
+    returns: truth_value
+    ambient_argument: X
+    polymorphic: true
+    surface_forms:
+      - is a punctured centered open interval
+      - is a deleted centered open interval
+      - punctured centered open interval
+      - deleted centered open interval
+      - punctured symmetric open interval
+      - deleted symmetric open interval
+    description: >
+      The object I_dot is the centered open interval I centered at c with
+      radius r in X after removing the center c.
+
+  - id: pred:is-centered-closed-interval
+    name: IsCenteredClosedInterval
+    kind: predicate
+    category: topology
+    arguments:
+      - name: I
+        role: interval
+      - name: c
+        role: center
+      - name: r
+        role: radius
+      - name: X
+        role: ambient
+    returns: truth_value
+    ambient_argument: X
+    polymorphic: true
+    surface_forms:
+      - is a centered closed interval
+      - centered closed interval
+      - symmetric closed interval
+      - closed interval centered at a point
+    description: >
+      The object I is the closed interval centered at c with radius r in the
+      ambient ordered or topological space X.
 
   - id: pred:is-bounded-interval
     name: IsBoundedInterval

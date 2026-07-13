@@ -454,6 +454,64 @@ structures:
       Local region B_dot obtained from the ball B centered at c with radius r
       in X by removing the center c.
 
+  - id: struct:closed-ball
+    name: ClosedBall
+    kind: structure
+    category: topology
+    constructor: '\mathsf{ClosedBall}'
+    arguments:
+      - name: B_bar
+        role: closed_ball
+        surface: '\overline{B}'
+      - name: c
+        role: center
+      - name: r
+        role: radius
+      - name: X
+        role: ambient
+    carrier_argument: X
+    structural_arguments:
+      - B_bar
+      - c
+      - r
+    surface_forms:
+      - closed ball
+      - metric closed ball
+    description: >
+      Local region B_bar determined by center c and radius r in the ambient
+      space X, consisting of points whose distance from c is at most r.
+
+  - id: struct:punctured-closed-ball
+    name: PuncturedClosedBall
+    kind: structure
+    category: topology
+    constructor: '\mathsf{PuncturedClosedBall}'
+    arguments:
+      - name: B_bar_dot
+        role: punctured_closed_ball
+        surface: '\overline{B}^{\times}'
+      - name: B_bar
+        role: underlying_closed_ball
+        surface: '\overline{B}'
+      - name: c
+        role: center
+      - name: r
+        role: radius
+      - name: X
+        role: ambient
+    carrier_argument: X
+    structural_arguments:
+      - B_bar_dot
+      - B_bar
+      - c
+      - r
+    surface_forms:
+      - punctured closed ball
+      - deleted closed ball
+    description: >
+      Local region B_bar_dot obtained from the closed ball B_bar centered at c
+      with radius r in X by removing the center c.
+
   - id: struct:neighborhood
     name: Neighborhood
     kind: structure
@@ -606,6 +664,92 @@ structures:
       determined by left and right endpoint objects. Endpoint objects record
       whether finite endpoints are included or excluded and whether an
       endpoint is unbounded.
+
+  - id: struct:centered-open-interval
+    name: CenteredOpenInterval
+    kind: structure
+    category: topology
+    constructor: '\mathsf{CenteredOpenInterval}'
+    arguments:
+      - name: I
+        role: interval
+      - name: c
+        role: center
+      - name: r
+        role: radius
+      - name: X
+        role: ambient
+    carrier_argument: X
+    structural_arguments:
+      - I
+      - c
+      - r
+    surface_forms:
+      - centered open interval
+      - symmetric open interval
+      - open interval centered at a point
+    description: >
+      Open interval I centered at c with radius r in the ambient ordered or
+      topological space X.
+
+  - id: struct:punctured-centered-open-interval
+    name: PuncturedCenteredOpenInterval
+    kind: structure
+    category: topology
+    constructor: '\mathsf{PuncturedCenteredOpenInterval}'
+    arguments:
+      - name: I_dot
+        role: punctured_interval
+        surface: 'I^\times'
+      - name: I
+        role: underlying_interval
+      - name: c
+        role: center
+      - name: r
+        role: radius
+      - name: X
+        role: ambient
+    carrier_argument: X
+    structural_arguments:
+      - I_dot
+      - I
+      - c
+      - r
+    surface_forms:
+      - punctured centered open interval
+      - deleted centered open interval
+      - punctured symmetric open interval
+      - deleted symmetric open interval
+    description: >
+      Local interval I_dot obtained from the centered open interval I centered
+      at c with radius r in X by removing the center c.
+
+  - id: struct:centered-closed-interval
+    name: CenteredClosedInterval
+    kind: structure
+    category: topology
+    constructor: '\mathsf{CenteredClosedInterval}'
+    arguments:
+      - name: I
+        role: interval
+      - name: c
+        role: center
+      - name: r
+        role: radius
+      - name: X
+        role: ambient
+    carrier_argument: X
+    structural_arguments:
+      - I
+      - c
+      - r
+    surface_forms:
+      - centered closed interval
+      - symmetric closed interval
+      - closed interval centered at a point
+    description: >
+      Closed interval I centered at c with radius r in the ambient ordered or
+      topological space X.
 
   - id: struct:partition
     name: Partition
