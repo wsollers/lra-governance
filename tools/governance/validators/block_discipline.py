@@ -63,6 +63,7 @@ TOP_LEVEL_COMMANDS = (
     "\\NoLocalDependencies",
     "\\DefinitionalRoot",
     "\\SourceVariantOf",
+    "\\LeanFormalizes",
     "\\medskip",
     "\\smallskip",
     "\\bigskip",

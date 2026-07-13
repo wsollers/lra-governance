@@ -17,7 +17,7 @@ from core import volume as volume_core
 from validate_volume import VALIDATORS, _filter_findings_for_inventory
 from core.validator_runner import run_validator
 from core.finding import finding
-from validators import block_discipline, book_toc, capstones, chapter_router, dedication_page, dependency_blocks, dependency_graphs, figure_fragments, formal_decoration, formal_reading_required, frontmatter_standard, input_resolution, interpretation_blocks, labels, latex_integrity, math_boxes, notes_structure, operator_metadata, print_edition_routing, proof_coverage, proof_file_contract, proof_layout, proof_order, proof_routing, proof_stub_state, reference_voice, source_variants, structural_chrome, structural_positions, unicode_tex, volume_shape
+from validators import block_discipline, book_toc, capstones, chapter_router, dedication_page, dependency_blocks, dependency_graphs, figure_fragments, formal_decoration, formal_reading_required, frontmatter_standard, input_resolution, interpretation_blocks, labels, latex_integrity, lean_formalizations, math_boxes, notes_structure, operator_metadata, print_edition_routing, proof_coverage, proof_file_contract, proof_layout, proof_order, proof_routing, proof_stub_state, reference_voice, source_variants, structural_chrome, structural_positions, unicode_tex, volume_shape
 
 
 HERE = Path(__file__).resolve().parent
@@ -2505,6 +2505,81 @@ class ValidateVolumeTests(unittest.TestCase):
 
         self.assertIn("source_variant_unattached", codes)
 
+    def test_lean_formalization_validator_accepts_attached_macro(self):
+        volume = make_volume()
+        notes = volume / "integers" / "notes" / "order" / "notes-order.tex"
+        notes.write_text(
+            notes.read_text(encoding="utf-8").replace(
+                "The proposition records a reflexive order comparison.\n"
+                r"\end{remark*}" + "\n"
+                r"\begin{dependencies}",
+                "\n".join(
+                    [
+                        "The proposition records a reflexive order comparison.",
+                        r"\end{remark*}",
+                        r"\LeanFormalizes{prop:order}{lra-lean}{LRA.VolumeII.Integers.Order}{order_refl}{checked}",
+                        r"\begin{dependencies}",
+                    ]
+                ),
+            ),
+            encoding="utf-8",
+        )
+
+        self.assertEqual(validate_with_inventory(lean_formalizations, volume), [])
+
+    def test_lean_formalization_validator_rejects_malformed_macro(self):
+        volume = make_volume()
+        notes = volume / "integers" / "notes" / "order" / "notes-order.tex"
+        notes.write_text(
+            notes.read_text(encoding="utf-8").replace(
+                "The proposition records a reflexive order comparison.\n"
+                r"\end{remark*}" + "\n"
+                r"\begin{dependencies}",
+                "The proposition records a reflexive order comparison.\n"
+                r"\end{remark*}" + "\n"
+                r"\LeanFormalizes{prop:order}{lra-lean}{LRA.VolumeII.Integers.Order}{order_refl}{done}" + "\n"
+                r"\begin{dependencies}",
+            ),
+            encoding="utf-8",
+        )
+
+        codes = {finding.code for finding in validate_with_inventory(lean_formalizations, volume)}
+
+        self.assertIn("lean_formalizes_malformed", codes)
+
+    def test_lean_formalization_validator_rejects_label_mismatch(self):
+        volume = make_volume()
+        notes = volume / "integers" / "notes" / "order" / "notes-order.tex"
+        notes.write_text(
+            notes.read_text(encoding="utf-8").replace(
+                "The proposition records a reflexive order comparison.\n"
+                r"\end{remark*}" + "\n"
+                r"\begin{dependencies}",
+                "The proposition records a reflexive order comparison.\n"
+                r"\end{remark*}" + "\n"
+                r"\LeanFormalizes{ax:order-foundation}{lra-lean}{LRA.VolumeII.Integers.Order}{order_refl}{checked}" + "\n"
+                r"\begin{dependencies}",
+            ),
+            encoding="utf-8",
+        )
+
+        codes = {finding.code for finding in validate_with_inventory(lean_formalizations, volume)}
+
+        self.assertIn("lean_formalizes_label_mismatch", codes)
+
+    def test_lean_formalization_validator_rejects_unattached_macro(self):
+        volume = make_volume()
+        notes = volume / "integers" / "notes" / "order" / "notes-order.tex"
+        notes.write_text(
+            r"\LeanFormalizes{prop:order}{lra-lean}{LRA.VolumeII.Integers.Order}{order_refl}{checked}" + "\n"
+            + notes.read_text(encoding="utf-8"),
+            encoding="utf-8",
+        )
+
+        codes = {finding.code for finding in validate_with_inventory(lean_formalizations, volume)}
+
+        self.assertIn("lean_formalizes_unattached", codes)
+
     def test_dependency_graph_extracts_source_variant_edge(self):
         volume = make_volume()
         repo = volume.parent
@@ -2535,6 +2610,39 @@ class ValidateVolumeTests(unittest.TestCase):
         self.assertEqual(variants[0].target, "ax:order-foundation")
         self.assertEqual(variants[0].source_author, "Tao")
         self.assertEqual(variants[0].source_book, "Analysis I, Section 4.1")
+
+    def test_dependency_graph_extracts_lean_formalization_edge(self):
+        volume = make_volume()
+        repo = volume.parent
+        notes = volume / "integers" / "notes" / "order" / "notes-order.tex"
+        notes.write_text(
+            notes.read_text(encoding="utf-8").replace(
+                "The proposition records a reflexive order comparison.\n"
+                r"\end{remark*}" + "\n"
+                r"\begin{dependencies}",
+                "\n".join(
+                    [
+                        "The proposition records a reflexive order comparison.",
+                        r"\end{remark*}",
+                        r"\LeanFormalizes{prop:order}{lra-lean}{LRA.VolumeII.Integers.Order}{order_refl}{checked}",
+                        r"\begin{dependencies}",
+                    ]
+                ),
+            ),
+            encoding="utf-8",
+        )
+
+        universe = dependency_graph.build_universe(repo.parent, repo.name)
+        report = dependency_graph.extract_edges_from_universe(repo, universe, "in-memory")
+        formalizations = [edge for edge in report.edges if edge.kind == "lean_formalizes"]
+
+        self.assertEqual(len(formalizations), 1)
+        self.assertEqual(formalizations[0].source, "prop:order")
+        self.assertEqual(formalizations[0].target, "prop:order")
+        self.assertEqual(formalizations[0].verification_repo, "lra-lean")
+        self.assertEqual(formalizations[0].verification_module, "LRA.VolumeII.Integers.Order")
+        self.assertEqual(formalizations[0].verification_declaration, "order_refl")
+        self.assertEqual(formalizations[0].verification_status, "checked")
 
     def test_dependency_graph_rejects_missing_source_variant_target(self):
         volume = make_volume()

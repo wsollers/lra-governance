@@ -421,10 +421,23 @@ def build_export(run_dir: Path, repos_root: Path, version: dict[str, Any], regis
     proof_used_by: dict[str, list[str]] = defaultdict(list)
     source_variants: dict[str, list[dict[str, str]]] = defaultdict(list)
     canonical_variants: dict[str, list[dict[str, str]]] = defaultdict(list)
+    verification_records: dict[str, list[dict[str, str]]] = defaultdict(list)
     graph_edges: list[dict[str, Any]] = []
     seen_edges: set[tuple[str, str, str]] = set()
     for edge in combined["edges"]:
         kind = edge.get("kind") or "depends_on"
+        if kind == "lean_formalizes":
+            verification_records[edge["source"]].append(
+                {
+                    "system": str(edge.get("verification_system") or "Lean 4"),
+                    "repo": str(edge.get("verification_repo") or ""),
+                    "module": str(edge.get("verification_module") or ""),
+                    "declaration": str(edge.get("verification_declaration") or ""),
+                    "status": str(edge.get("verification_status") or "pending"),
+                    "source_label": str(edge.get("source") or ""),
+                }
+            )
+            continue
         key = (edge["source"], edge["target"], kind)
         if key in seen_edges:
             continue
@@ -485,6 +498,7 @@ def build_export(run_dir: Path, repos_root: Path, version: dict[str, Any], regis
         support_blocks = node.get("support_blocks") or []
         logical_blocks = logical_blocks_for(node)
         failure_modes = failure_modes_for(node)
+        verifications = verification_records.get(label, [])
         exported = {
             "id": label,
             "kind": kind,
@@ -535,6 +549,9 @@ def build_export(run_dir: Path, repos_root: Path, version: dict[str, Any], regis
             "logical_blocks": logical_blocks,
             "failure_modes": failure_modes,
         }
+        if verifications:
+            exported["verifications"] = verifications
+            exported["verification"] = verifications[0]
         if examples_by_label.get(label):
             exported["examples"] = examples_by_label[label]
         exported_nodes.append(exported)

@@ -52,6 +52,15 @@ SOURCE_VARIANT_RE = re.compile(
     r"\{(?P<kind>source_variant_of|reduces_to)\}",
     re.IGNORECASE,
 )
+LEAN_FORMALIZES_RE = re.compile(
+    r"\\LeanFormalizes"
+    r"\{(?P<label>(?:def|ax|thm|lem|prop|cor):[^{}]+)\}"
+    r"\{(?P<repo>[A-Za-z0-9_.-]+)\}"
+    r"\{(?P<module>[A-Za-z][A-Za-z0-9_'.]*(?:\.[A-Za-z][A-Za-z0-9_'.]*)*)\}"
+    r"\{(?P<decl>[A-Za-z_][A-Za-z0-9_'.]*)\}"
+    r"\{(?P<status>checked|statement|pending|incomplete)\}",
+    re.IGNORECASE,
+)
 DEPENDENCIES_ENV_RE = re.compile(
     r"\\begin\{dependencies\}(?P<body>[\s\S]*?)\\end\{dependencies\}",
     re.IGNORECASE,
@@ -105,6 +114,11 @@ class Edge:
     kind: str = "depends_on"
     source_author: str = ""
     source_book: str = ""
+    verification_system: str = ""
+    verification_repo: str = ""
+    verification_module: str = ""
+    verification_declaration: str = ""
+    verification_status: str = ""
 
 
 @dataclass
@@ -416,6 +430,47 @@ def source_variant_matches(window: str) -> list[re.Match[str]]:
     return list(SOURCE_VARIANT_RE.finditer(window))
 
 
+def lean_formalization_matches(window: str) -> list[re.Match[str]]:
+    return list(LEAN_FORMALIZES_RE.finditer(window))
+
+
+def append_lean_formalization_edges(
+    *,
+    edges: list[Edge],
+    text: str,
+    root: Path,
+    path: Path,
+    repo: str,
+    source: str,
+    source_id: str | None,
+    source_line: int,
+    window_start: int,
+    window: str,
+) -> None:
+    for match in lean_formalization_matches(window):
+        target = match.group("label").strip()
+        edges.append(
+            Edge(
+                source=source,
+                target=target,
+                source_id=source_id,
+                target_id=source_id if target == source else None,
+                display=match.group("decl").strip(),
+                repo=repo,
+                file=rel(path, root),
+                line=line_at(text, window_start + match.start()) or source_line,
+                block_kind="lean_formalization",
+                status="ok",
+                kind="lean_formalizes",
+                verification_system="Lean 4",
+                verification_repo=match.group("repo").strip(),
+                verification_module=match.group("module").strip(),
+                verification_declaration=match.group("decl").strip(),
+                verification_status=match.group("status").strip().lower(),
+            )
+        )
+
+
 def append_source_variant_edges(
     *,
     edges: list[Edge],
@@ -583,6 +638,18 @@ def extract_edges_from_universe(root: Path, universe: Universe, universe_ref: st
                 window_start=window_start,
                 window=window,
                 by_label=by_label,
+            )
+            append_lean_formalization_edges(
+                edges=edges,
+                text=text,
+                root=root,
+                path=path,
+                repo=repo,
+                source=source,
+                source_id=source_id,
+                source_line=line,
+                window_start=window_start,
+                window=window,
             )
             dep_blocks = dependency_blocks(window)
             declaration = {

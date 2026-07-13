@@ -29,6 +29,10 @@ modal should include a `Verification` tab that displays:
 - source path when known,
 - well-formatted formal code when available.
 
+The UI must surface the proof modal when formal verification is the only proof
+companion for a node. In that case, opening proofs should land on the
+`Verification` tab rather than an empty standard-proof tab.
+
 The UI must not present pending or incomplete targets as checked. Missing code
 or missing metadata should render as an explicit empty state, not as a broken
 panel.

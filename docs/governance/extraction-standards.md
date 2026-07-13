@@ -207,6 +207,38 @@ the target result rather than by repeating the target's proof.
 `Source comparison` remark blocks remain prose crosswalks. They may explain the
 variant relationship, but they do not by themselves create graph edges.
 
+## Lean Formalization Metadata
+
+Use `\LeanFormalizes` when a book definition, axiom, theorem, lemma,
+proposition, or corollary has a corresponding Lean declaration.
+
+The canonical source form is:
+
+```latex
+\LeanFormalizes{<book-label>}{<repo>}{<module>}{<declaration>}{<status>}
+```
+
+where:
+
+- `<book-label>` is the label of the immediately preceding formal artifact,
+  with prefix `def:`, `ax:`, `thm:`, `lem:`, `prop:`, or `cor:`;
+- `<repo>` is normally `lra-lean`;
+- `<module>` is the Lean module path, such as
+  `LRA.VolumeII.Integers.Polish.LandauWorkup`;
+- `<declaration>` is the Lean declaration name;
+- `<status>` is one of `checked`, `statement`, `pending`, or `incomplete`.
+
+Place the macro immediately after the formal artifact's support blocks and
+before the dependency block or `\NoLocalDependencies`. The macro renders no PDF
+output. Extraction attaches the verification metadata to the book node. Multiple
+macros may be attached to the same artifact when one book result is represented
+by several Lean declarations.
+
+Use `checked` only when the target declaration is accepted by the Lean build
+without placeholders for that declaration. Use `statement` when the declaration
+exists but the proof is incomplete, and `pending` when the target is planned but
+not yet written.
+
 ## Exposition Metadata
 
 `Exposition` remark blocks are extractable explanatory metadata. They preserve

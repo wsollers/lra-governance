@@ -26,6 +26,11 @@ Volume II may carry lightweight verification metadata: LaTeX label,
 verification status, target formalization repository, and target module or
 declaration name when known.
 
+Use `\LeanFormalizes{<book-label>}{lra-lean}{<module>}{<declaration>}{<status>}`
+for extraction-visible Lean mappings. The `<book-label>` must match the
+immediately preceding formal artifact. Use `checked` only for declarations that
+build in `lra-lean` without placeholders for that declaration.
+
 Do not inline formal proof code as ordinary volume prose. The volume may point
 to the formalization, but `lra-lean` owns checked formal source and any
 implementation workflow. `lra-knowledge-explorer` owns the UI surface that
