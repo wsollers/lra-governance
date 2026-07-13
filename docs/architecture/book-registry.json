@@ -677,6 +677,10 @@
             {
               "chapter": "measure-spaces",
               "notes": []
+            },
+            {
+              "chapter": "normed-linear-spaces",
+              "notes": []
             }
           ],
           "frontmatter_mathematician": "Constantin Caratheodory",
