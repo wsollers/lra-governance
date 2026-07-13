@@ -52,6 +52,7 @@ def validate(volume_root: Path, files) -> list[Finding]:
 def _validate_file(volume_root: Path, path: Path, findings: list[Finding]) -> None:
     text = read_text(path)
     _check_boxed_nonformal_content(volume_root, path, text, findings)
+    _check_bare_formal_boxes(volume_root, path, text, findings)
     _check_labels_on_decorative_boxes(volume_root, path, text, findings)
     _check_multi_label_decorative_boxes(volume_root, path, text, findings)
     for block in _formal_blocks(text):
@@ -96,6 +97,22 @@ def _check_boxed_nonformal_content(volume_root: Path, path: Path, text: str, fin
                     text.count("\n", 0, match.start()) + 1,
                 )
             )
+
+
+def _check_bare_formal_boxes(volume_root: Path, path: Path, text: str, findings: list[Finding]) -> None:
+    for match in FORMAL_BOX_RE.finditer(text):
+        body = match.group("body")
+        if FORMAL_RE.search(body):
+            continue
+        findings.append(
+            finding(
+                "bare_formal_box_content",
+                f"{match.group('env')} contains content without an inner formal environment; wrap the statement in the matching definition/theorem/lemma/proposition/corollary/axiom environment.",
+                path,
+                volume_root,
+                text.count("\n", 0, match.start()) + 1,
+            )
+        )
 
 
 def _check_multi_label_decorative_boxes(volume_root: Path, path: Path, text: str, findings: list[Finding]) -> None:

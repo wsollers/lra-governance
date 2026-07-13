@@ -21,6 +21,8 @@ ALLOWED_NOTE_TOP_ENVS = FORMAL_ENVS | FORMAL_BOX_ENVS | {
     "modelbox",
     "signaturebox",
     "topicbox",
+    "restatementbox",
+    "derivationbox",
     "figure",
     "longtable",
     "tabular",
@@ -34,7 +36,8 @@ ALLOWED_NOTE_TOP_ENVS = FORMAL_ENVS | FORMAL_BOX_ENVS | {
     "lra-not-visible",
 }
 ALLOWED_PROOF_TOP_ENVS = {"remark*", "proof", "dependencies"} | STARRED_RESTATEMENT_ENVS
-FORBIDDEN_PROOF_STRUCTURE_ENVS = {"topicbox", "exposition"}
+FORBIDDEN_PROOF_STRUCTURE_ENVS = {"topicbox", "restatementbox", "derivationbox", "exposition"}
+FORBIDDEN_DERIVATIONBOX_ENVS = FORMAL_ENVS | FORMAL_BOX_ENVS | {"proof"} | STARRED_RESTATEMENT_ENVS
 
 BEGIN_ENV_RE = re.compile(r"\\begin\{([^{}]+)\}(?:\[[^\]]*\])?")
 END_ENV_RE = re.compile(r"\\end\{([^{}]+)\}")
@@ -100,6 +103,16 @@ def _validate_file(volume_root: Path, path: Path, findings: list[Finding]) -> No
         begin = BEGIN_ENV_RE.match(stripped)
         if begin:
             env = begin.group(1)
+            if stack and stack[-1] == "derivationbox" and env in FORBIDDEN_DERIVATIONBOX_ENVS:
+                findings.append(
+                    finding(
+                        "formal_or_proof_inside_derivationbox",
+                        "derivationbox is pedagogical note-side explanation; move formal statements and proof environments to governed formal/proof artifacts.",
+                        path,
+                        volume_root,
+                        line_no,
+                    )
+                )
             if not stack and env not in allowed:
                 if is_proof and env in FORBIDDEN_PROOF_STRUCTURE_ENVS:
                     findings.append(
@@ -144,7 +157,7 @@ def _validate_file(volume_root: Path, path: Path, findings: list[Finding]) -> No
                 )
             )
         end = END_ENV_RE.match(stripped)
-        if end and stack:
+        if end and stack and stack[-1] == end.group(1):
             stack.pop()
 
 

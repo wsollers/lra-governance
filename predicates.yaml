@@ -863,6 +863,31 @@ predicates:
       The object f tends to L as its input tends to a from the source ambient
       object X, with values in Y.
 
+  - id: pred:negligible-at
+    name: NegligibleAt
+    kind: predicate
+    category: analysis
+    arguments:
+      - name: f
+        role: function
+      - name: g
+        role: comparison_scale
+      - name: lp
+        role: limit_point_datum
+        surface: '\ell p'
+    returns: truth_value
+    ambient_argument: lp
+    polymorphic: true
+    surface_forms:
+      - negligible at
+      - little-o at a point
+      - asymptotically negligible at a point
+    description: >
+      The function f is asymptotically negligible relative to the comparison
+      scale g at the limit-point datum lp. The datum lp carries the basepoint
+      and domain, so the non-vacuity/accumulation-point condition is part of
+      the input rather than a hidden side condition.
+
   - id: pred:left-limit
     name: LeftLimit
     kind: predicate

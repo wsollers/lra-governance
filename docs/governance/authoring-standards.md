@@ -142,6 +142,26 @@ Toolkit. Item-adjacent exposition remains available in body files when it is
 mathematically substantive and attached to a definition, theorem, example, or
 local concept cluster.
 
+## Pedagogical Boxes
+
+Use `restatementbox` for note-side reminders that restate an already governed
+theorem-like idea for teaching or reference. A restatement box is not a formal
+artifact. It does not receive a formal label, does not create dependencies, does
+not create a proof obligation, and does not replace the canonical theorem,
+lemma, proposition, or corollary.
+
+Use `derivationbox` for note-side calculations and pedagogical proof-like
+passages whose purpose is explanation rather than formal certification. A
+derivation box may show why a formula is plausible, unpack a computation, or
+teach a technique before the canonical result appears. It must not contain a
+`proof` environment, a formal theorem-like environment, a formal statement box,
+a formal label, or proof-vault navigation.
+
+When a result needs formal status, state it in the appropriate formal
+environment and provide the required proof-file stub or proof under
+`proofs/**/*.tex`. A `derivationbox` may support the reader's understanding,
+but it is not the repository proof artifact.
+
 ## Multi-Definition Source Passages
 
 Formal statements follow a one-object rule: each `definition`, `axiom`,
@@ -157,12 +177,6 @@ Aliases and notation variants for the same predicate may share a formal block,
 but independent predicates may not. A conjunction is permitted only when the
 conjunction itself is the single concept being defined or asserted, and its
 components have already been introduced as separate formal objects.
-
-The only approved legacy exception is the Euclid Book I source-text proposition
-alias pattern in the Euclidean geometry construction propositions: a canonical
-`thm:euclid-i-N` label may coexist with its historical `prop:I.N` alias. The
-dependency graph normalizes that pair to the canonical theorem label. Do not
-use this exception for new mathematical content.
 
 When converting a source passage that contains several related definitions,
 operations, cases, or constructions, do not bundle the independent concepts

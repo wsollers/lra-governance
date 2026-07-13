@@ -1128,6 +1128,32 @@ class ValidateVolumeTests(unittest.TestCase):
         self.assertIn("top_level_prose", codes)
         self.assertIn("plain_remark_or_example", codes)
 
+    def test_block_discipline_ignores_nested_display_math_endings(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{definitionbox}{Definition}",
+                    r"\begin{definition}[Matrix Display]\label{def:matrix-display}",
+                    r"\[",
+                    r"  A = \begin{pmatrix}",
+                    r"    1 & 0 \\",
+                    r"    0 & 1",
+                    r"  \end{pmatrix}.",
+                    r"\]",
+                    "This sentence is still inside the definition.",
+                    r"\end{definition}",
+                    r"\end{definitionbox}",
+                    "",
+                ]
+            ),
+        )
+
+        codes = {finding.code for finding in validate_with_inventory(block_discipline, volume)}
+
+        self.assertNotIn("top_level_prose", codes)
+
     def test_block_discipline_flags_proof_inside_note(self):
         volume = make_volume()
         write(
@@ -1146,6 +1172,72 @@ class ValidateVolumeTests(unittest.TestCase):
 
         self.assertIn("proof_inside_note", codes)
 
+    def test_block_discipline_accepts_restatementbox_in_note(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{restatementbox}{Restatement (Order Reflexivity)}",
+                    r"For every ordered integer \(n\), one has \(n \preceq n\).",
+                    r"\end{restatementbox}",
+                    "",
+                ]
+            ),
+        )
+
+        codes = {finding.code for finding in validate_with_inventory(block_discipline, volume)}
+
+        self.assertNotIn("unexpected_top_level_environment", codes)
+        self.assertNotIn("top_level_prose", codes)
+
+    def test_block_discipline_accepts_derivationbox_in_note(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{derivationbox}{Derivation (Order Reflexivity)}",
+                    r"Starting from the order axiom, one reads \(n \preceq n\).",
+                    r"\[",
+                    r"n \preceq n.",
+                    r"\]",
+                    r"\end{derivationbox}",
+                    "",
+                ]
+            ),
+        )
+
+        codes = {finding.code for finding in validate_with_inventory(block_discipline, volume)}
+
+        self.assertNotIn("unexpected_top_level_environment", codes)
+        self.assertNotIn("top_level_prose", codes)
+
+    def test_block_discipline_flags_formal_or_proof_inside_derivationbox(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{derivationbox}{Derivation (Order)}",
+                    r"\begin{proof}",
+                    "This is a proof environment, not a pedagogical derivation.",
+                    r"\end{proof}",
+                    r"\end{derivationbox}",
+                    r"\begin{derivationbox}{Formal statement}",
+                    r"\begin{theorem}[Order]",
+                    "A formal theorem belongs outside the derivation box.",
+                    r"\end{theorem}",
+                    r"\end{derivationbox}",
+                    "",
+                ]
+            ),
+        )
+
+        codes = {finding.code for finding in validate_with_inventory(block_discipline, volume)}
+
+        self.assertIn("formal_or_proof_inside_derivationbox", codes)
+
     def test_block_discipline_flags_topicbox_or_exposition_in_proof(self):
         volume = make_volume()
         write(
@@ -1155,6 +1247,12 @@ class ValidateVolumeTests(unittest.TestCase):
                     r"\begin{topicbox}{Proof idea}",
                     "This structural box is not allowed in proof files.",
                     r"\end{topicbox}",
+                    r"\begin{restatementbox}{Proof idea}",
+                    "This teaching restatement is not allowed in proof files.",
+                    r"\end{restatementbox}",
+                    r"\begin{derivationbox}{Proof idea}",
+                    "This teaching derivation is not allowed in proof files.",
+                    r"\end{derivationbox}",
                     r"\begin{exposition}",
                     "This exposition block is not allowed in proof files.",
                     r"\end{exposition}",
@@ -1996,6 +2094,67 @@ class ValidateVolumeTests(unittest.TestCase):
         codes = {finding.code for finding in validate_with_inventory(math_boxes, volume)}
 
         self.assertIn("formal_label_on_box", codes)
+
+    def test_math_boxes_flags_bare_formal_box_content(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "index.tex",
+            r"\input{volume-ii/integers/notes/order/notes-extra}" "\n",
+        )
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{propositionbox}{Definition (Bare Matrix)}",
+                    r"A bare boxed definition has no inner definition environment.",
+                    r"\[",
+                    r"A \in \mathbb{R}^{m \times n}.",
+                    r"\]",
+                    r"\end{propositionbox}",
+                    r"\begin{theorembox}{Theorem (Bare Rule)}",
+                    r"A bare boxed theorem has no inner theorem environment.",
+                    r"\end{theorembox}",
+                    "",
+                ]
+            ),
+        )
+
+        findings = validate_with_inventory(math_boxes, volume)
+        matches = [finding for finding in findings if finding.code == "bare_formal_box_content"]
+
+        self.assertEqual(len(matches), 2)
+        self.assertTrue(all(finding.severity == "error" for finding in matches))
+
+    def test_math_boxes_accepts_formal_box_with_inner_environment(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "index.tex",
+            r"\input{volume-ii/integers/notes/order/notes-extra}" "\n",
+        )
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{propositionbox}{Proposition (Boxed Rule)}",
+                    r"\begin{proposition}[Boxed Rule]",
+                    r"\label{prop:boxed-rule}",
+                    "A boxed proposition has an inner proposition environment.",
+                    r"\end{proposition}",
+                    r"\end{propositionbox}",
+                    r"\begin{definitionbox}{Definition (Boxed Object)}",
+                    r"\begin{definition}[Boxed Object]",
+                    r"\label{def:boxed-object}",
+                    "A boxed definition has an inner definition environment.",
+                    r"\end{definition}",
+                    r"\end{definitionbox}",
+                    "",
+                ]
+            ),
+        )
+
+        codes = {finding.code for finding in validate_with_inventory(math_boxes, volume)}
+
+        self.assertNotIn("bare_formal_box_content", codes)
 
     def test_math_boxes_checks_canonical_wrapper_when_present(self):
         volume = make_volume()

@@ -29,6 +29,12 @@ Definitions and axioms are stable knowledge nodes, but they are not proof
 obligations unless explicitly marked by a local workflow or governance task.
 Local claims inside proof files do not create proof-stub obligations.
 
+Note files may contain `derivationbox` passages for pedagogical calculations
+and proof-like teaching, but those passages are not canonical proofs and do not
+satisfy proof-stub obligations. A note file must not contain a `proof`
+environment. When a theorem-like statement is expected to have a proof, create
+or update the corresponding `proofs/**/*.tex` proof file.
+
 The proof-to-theorem association is the source-visible macro:
 
 ```latex

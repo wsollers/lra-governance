@@ -4,10 +4,10 @@ Decoration box standards govern the non-statement information blocks that
 surround definitions, theorem-like environments, and related formal artifacts.
 
 These blocks are part of the standard information set for an artifact. They are
-not decorative flourish. They provide formal restatements, predicate readings,
-failure-mode analysis, interpretation, exposition, examples, non-examples, source
-crosswalks, dependencies, and proof navigation where the artifact type
-requires them.
+not decorative flourish. They provide quantified restatements, predicate
+readings, failure-mode analysis, interpretation, exposition, examples,
+non-examples, source crosswalks, dependencies, and proof navigation where the
+artifact type requires them.
 
 ## Rendering Rule
 
@@ -23,6 +23,36 @@ crosswalks, and dependency blocks.
 The owning definition, theorem, lemma, proposition, corollary, or axiom remains
 the primary formal artifact. Decoration blocks are attached metadata and do not
 create an independent theorem-like visual hierarchy.
+
+## Formal And Pedagogical Containers
+
+Formal statement boxes contain the matching formal environment. For example, a
+`theorembox` contains a `theorem`, a `propositionbox` contains a `proposition`,
+and a `definitionbox` contains a `definition`. The inner formal environment owns
+the statement label, proof-navigation link when required, and extraction
+identity.
+
+Unnumbered starred environments such as `theorem*` are reserved for proof-file
+restatements and local presentation. They do not satisfy the formal-box
+contract inside `theorembox`, `lemmabox`, `propositionbox`, `corollarybox`,
+`definitionbox`, or `axiombox`.
+
+Use `restatementbox` in note files for theorem-shaped reminders or teaching
+restatements that help the reader recognize an already governed result. A
+`restatementbox` is not a theorem-like artifact: it does not carry a formal
+label, does not create a proof obligation, does not satisfy dependencies, and
+does not replace the governed statement.
+
+Use `derivationbox` in note files for pedagogical calculations, heuristic
+derivations, worked transformations, and proof-like teaching passages that do
+not assert a new formal result. A `derivationbox` is not a proof file and not a
+formal statement container. It must not contain `proof`, formal theorem-like
+environments, formal statement boxes, formal labels, or proof-vault navigation.
+
+Canonical proofs remain in the owning `proofs/**/prf-*.tex` files. Note-side
+derivations may prepare or explain a proof idea, but they do not replace the
+professional and detailed learning proof layers required by the proof-file
+standard.
 
 ## Scope
 
