@@ -300,6 +300,9 @@
               "chapter": "integers",
               "notes": [
                 "construction-of-z",
+                "tao-construction",
+                "mendelson-construction",
+                "construction-comparison",
                 "operations-on-z-classes",
                 "algebraic-structure-of-z",
                 "order-on-z",
