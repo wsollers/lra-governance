@@ -86,6 +86,7 @@ The standardized decoration blocks are:
 - Notation;
 - Historical note;
 - Source comparison;
+- Source variant metadata;
 - Exposition;
 - Examples;
 - Non-Examples;
@@ -111,10 +112,11 @@ When a block is present, use this order:
 10. Interpretation
 11. Notation
 12. Historical note or Source comparison
-13. Exposition
-14. Examples
-15. Non-Examples
-16. Dependencies or `\NoLocalDependencies`
+13. `\SourceVariantOf`, when the artifact is a source variant
+14. Exposition
+15. Examples
+16. Non-Examples
+17. Dependencies or `\NoLocalDependencies`
 
 Do not reorder blocks for aesthetics. Omit only blocks that the governing
 artifact standard does not require.
@@ -205,6 +207,8 @@ variant drops only the box wrapper, never the label or the required blocks.
 <short provenance prose with \citet{...}>
 \end{remark*}
 
+\SourceVariantOf{<target-label>}{<author>}{<book-or-source>}{source_variant_of} % C: extraction-visible source variant
+
 \begin{remark*}[Exposition]                            % C: broader conceptual framing, not a restatement
 <narrative>
 \end{remark*}
@@ -294,6 +298,8 @@ blocks become available. Use the matching box (`theorembox`, `lemmabox`,
 \begin{remark*}[Historical note]                       % C: known source correspondence
 <provenance prose>
 \end{remark*}
+
+\SourceVariantOf{<target-label>}{<author>}{<book-or-source>}{source_variant_of} % C: extraction-visible source variant
 
 \begin{remark*}[Exposition]                            % C
 <narrative>
@@ -475,6 +481,12 @@ creating one-off block titles. Name the source in the prose body and end the
 block with a natbib-compatible citation command such as
 `\citet{DedekindContinuityIrrationalNumbers}` or
 `\citep{TaoAnalysisI}`.
+
+Use `\SourceVariantOf{<target-label>}{<author>}{<book-or-source>}{<kind>}` when
+the source crosswalk must be extraction-visible. The macro renders nothing in
+the PDF and must appear after Historical note / Source comparison and before
+Exposition, Examples, Non-Examples, and Dependencies. Allowed `<kind>` values
+are `source_variant_of` and `reduces_to`.
 
 ## Examples And Non-Examples
 

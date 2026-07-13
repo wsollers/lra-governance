@@ -409,7 +409,7 @@ def failure_modes_for(node: dict[str, Any]) -> list[dict[str, Any]]:
     return modes
 
 
-def build_export(run_dir: Path, repos_root: Path, version: dict[str, Any], registry: dict[str, Any]) -> tuple[dict[str, Any], list[dict[str, str]]]:
+def build_export(run_dir: Path, repos_root: Path, version: dict[str, Any], registry: dict[str, Any]) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     universe = load_json(run_dir / "universe.json")
     combined = load_json(run_dir / "combined-edges.json")
     nodes = universe["nodes"]
@@ -419,7 +419,9 @@ def build_export(run_dir: Path, repos_root: Path, version: dict[str, Any], regis
     used_by: dict[str, list[str]] = defaultdict(list)
     proof_depends_on: dict[str, list[str]] = defaultdict(list)
     proof_used_by: dict[str, list[str]] = defaultdict(list)
-    graph_edges: list[dict[str, str]] = []
+    source_variants: dict[str, list[dict[str, str]]] = defaultdict(list)
+    canonical_variants: dict[str, list[dict[str, str]]] = defaultdict(list)
+    graph_edges: list[dict[str, Any]] = []
     seen_edges: set[tuple[str, str, str]] = set()
     for edge in combined["edges"]:
         kind = edge.get("kind") or "depends_on"
@@ -427,10 +429,24 @@ def build_export(run_dir: Path, repos_root: Path, version: dict[str, Any], regis
         if key in seen_edges:
             continue
         seen_edges.add(key)
-        graph_edges.append({"from": edge["source"], "to": edge["target"], "kind": kind})
+        graph_edge: dict[str, Any] = {"from": edge["source"], "to": edge["target"], "kind": kind}
+        if kind in {"source_variant_of", "reduces_to"}:
+            graph_edge["source_author"] = str(edge.get("source_author") or "")
+            graph_edge["source_book"] = str(edge.get("source_book") or "")
+        graph_edges.append(graph_edge)
         if kind == "proof_depends_on":
             proof_depends_on[edge["source"]].append(edge["target"])
             proof_used_by[edge["target"]].append(edge["source"])
+        elif kind in {"source_variant_of", "reduces_to"}:
+            record = {
+                "source": edge["source"],
+                "target": edge["target"],
+                "kind": kind,
+                "author": str(edge.get("source_author") or ""),
+                "book": str(edge.get("source_book") or ""),
+            }
+            source_variants[edge["source"]].append(record)
+            canonical_variants[edge["target"]].append(record)
         else:
             depends_on[edge["source"]].append(edge["target"])
             used_by[edge["target"]].append(edge["source"])
@@ -461,6 +477,8 @@ def build_export(run_dir: Path, repos_root: Path, version: dict[str, Any], regis
         users = used_by.get(label, [])
         proof_deps = proof_depends_on.get(label, [])
         proof_users = proof_used_by.get(label, [])
+        variant_links = source_variants.get(label, [])
+        variant_sources = canonical_variants.get(label, [])
         statement = statement_for_node(repos_root, node)
         kind = KIND_DISPLAY.get(node["kind"], node["kind"])
         name = title_for(node)
@@ -495,6 +513,8 @@ def build_export(run_dir: Path, repos_root: Path, version: dict[str, Any], regis
             "used_by_ids": users,
             "proof_depends_on_ids": proof_deps,
             "proof_used_by_ids": proof_users,
+            "source_variant_of": variant_links,
+            "source_variants": variant_sources,
             "prereq_ids": [],
             "equivalent_to_ids": [],
             "implies_ids": [],

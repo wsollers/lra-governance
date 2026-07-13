@@ -529,7 +529,7 @@ _PLAIN_BLOCK_RE = re.compile(r"\\begin\{(remark|example)\}(?!\*)")
 _TOP_LEVEL_COMMANDS = ("\\chapter","\\section","\\subsection","\\subsubsection",
     "\\paragraph","\\input","\\include","\\label","\\newpage","\\clearpage",
     "\\phantomsection","\\noindent","\\FloatBarrier","\\LRAProofFor",
-    "\\LRAExcludeFromPrintEditionBegin","\\LRAExcludeFromPrintEditionEnd","\\NoLocalDependencies","\\DefinitionalRoot",
+    "\\LRAExcludeFromPrintEditionBegin","\\LRAExcludeFromPrintEditionEnd","\\NoLocalDependencies","\\DefinitionalRoot","\\SourceVariantOf",
     "\\medskip","\\smallskip","\\bigskip","\\vspace")
 _IGNORED_LABEL_PREFIXES = {"ch","sec","subsec","toc"}
 _BAD_LABEL_PARTS = {"the","following","this","with","therefore","and","or","let","denote","page"}

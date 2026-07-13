@@ -17,7 +17,7 @@ from core import volume as volume_core
 from validate_volume import VALIDATORS, _filter_findings_for_inventory
 from core.validator_runner import run_validator
 from core.finding import finding
-from validators import block_discipline, book_toc, capstones, chapter_router, dedication_page, dependency_blocks, dependency_graphs, figure_fragments, formal_decoration, formal_reading_required, frontmatter_standard, input_resolution, interpretation_blocks, labels, latex_integrity, math_boxes, notes_structure, operator_metadata, print_edition_routing, proof_coverage, proof_file_contract, proof_layout, proof_order, proof_routing, proof_stub_state, reference_voice, structural_chrome, structural_positions, unicode_tex, volume_shape
+from validators import block_discipline, book_toc, capstones, chapter_router, dedication_page, dependency_blocks, dependency_graphs, figure_fragments, formal_decoration, formal_reading_required, frontmatter_standard, input_resolution, interpretation_blocks, labels, latex_integrity, math_boxes, notes_structure, operator_metadata, print_edition_routing, proof_coverage, proof_file_contract, proof_layout, proof_order, proof_routing, proof_stub_state, reference_voice, source_variants, structural_chrome, structural_positions, unicode_tex, volume_shape
 
 
 HERE = Path(__file__).resolve().parent
@@ -2449,6 +2449,119 @@ class ValidateVolumeTests(unittest.TestCase):
         volume = make_volume()
 
         self.assertEqual(validate_with_inventory(dependency_graphs, volume), [])
+
+    def test_source_variant_validator_accepts_attached_macro(self):
+        volume = make_volume()
+        notes = volume / "integers" / "notes" / "order" / "notes-order.tex"
+        notes.write_text(
+            notes.read_text(encoding="utf-8").replace(
+                "The proposition records a reflexive order comparison.\n"
+                r"\end{remark*}" + "\n"
+                r"\begin{dependencies}",
+                "\n".join(
+                    [
+                        "The proposition records a reflexive order comparison.",
+                        r"\end{remark*}",
+                        r"\SourceVariantOf{ax:order-foundation}{Tao}{Analysis I, Section 4.1}{source_variant_of}",
+                        r"\begin{dependencies}",
+                    ]
+                ),
+            ),
+            encoding="utf-8",
+        )
+
+        self.assertEqual(validate_with_inventory(source_variants, volume), [])
+
+    def test_source_variant_validator_rejects_malformed_macro(self):
+        volume = make_volume()
+        notes = volume / "integers" / "notes" / "order" / "notes-order.tex"
+        notes.write_text(
+            notes.read_text(encoding="utf-8").replace(
+                "The proposition records a reflexive order comparison.\n"
+                r"\end{remark*}" + "\n"
+                r"\begin{dependencies}",
+                "The proposition records a reflexive order comparison.\n"
+                r"\end{remark*}" + "\n"
+                r"\SourceVariantOf{ax:order-foundation}{Tao}{Analysis I}" + "\n"
+                r"\begin{dependencies}",
+            ),
+            encoding="utf-8",
+        )
+
+        codes = {finding.code for finding in validate_with_inventory(source_variants, volume)}
+
+        self.assertIn("source_variant_malformed", codes)
+
+    def test_source_variant_validator_rejects_unattached_macro(self):
+        volume = make_volume()
+        notes = volume / "integers" / "notes" / "order" / "notes-order.tex"
+        notes.write_text(
+            r"\SourceVariantOf{ax:order-foundation}{Tao}{Analysis I, Section 4.1}{source_variant_of}" + "\n"
+            + notes.read_text(encoding="utf-8"),
+            encoding="utf-8",
+        )
+
+        codes = {finding.code for finding in validate_with_inventory(source_variants, volume)}
+
+        self.assertIn("source_variant_unattached", codes)
+
+    def test_dependency_graph_extracts_source_variant_edge(self):
+        volume = make_volume()
+        repo = volume.parent
+        notes = volume / "integers" / "notes" / "order" / "notes-order.tex"
+        notes.write_text(
+            notes.read_text(encoding="utf-8").replace(
+                "The proposition records a reflexive order comparison.\n"
+                r"\end{remark*}" + "\n"
+                r"\begin{dependencies}",
+                "\n".join(
+                    [
+                        "The proposition records a reflexive order comparison.",
+                        r"\end{remark*}",
+                        r"\SourceVariantOf{ax:order-foundation}{Tao}{Analysis I, Section 4.1}{source_variant_of}",
+                        r"\begin{dependencies}",
+                    ]
+                ),
+            ),
+            encoding="utf-8",
+        )
+
+        universe = dependency_graph.build_universe(repo.parent, repo.name)
+        report = dependency_graph.extract_edges_from_universe(repo, universe, "in-memory")
+        variants = [edge for edge in report.edges if edge.kind == "source_variant_of"]
+
+        self.assertEqual(len(variants), 1)
+        self.assertEqual(variants[0].source, "prop:order")
+        self.assertEqual(variants[0].target, "ax:order-foundation")
+        self.assertEqual(variants[0].source_author, "Tao")
+        self.assertEqual(variants[0].source_book, "Analysis I, Section 4.1")
+
+    def test_dependency_graph_rejects_missing_source_variant_target(self):
+        volume = make_volume()
+        notes = volume / "integers" / "notes" / "order" / "notes-order.tex"
+        notes.write_text(
+            notes.read_text(encoding="utf-8").replace(
+                "The proposition records a reflexive order comparison.\n"
+                r"\end{remark*}" + "\n"
+                r"\begin{dependencies}",
+                "\n".join(
+                    [
+                        "The proposition records a reflexive order comparison.",
+                        r"\end{remark*}",
+                        r"\SourceVariantOf{thm:missing-target}{Tao}{Analysis I, Section 4.1}{source_variant_of}",
+                        r"\begin{dependencies}",
+                    ]
+                ),
+            ),
+            encoding="utf-8",
+        )
+
+        findings = validate_with_inventory(dependency_graphs, volume)
+
+        self.assertTrue(any(
+            finding.code == "missing_source_variant_target" and finding.severity == "error"
+            for finding in findings
+        ))
 
     def test_dependency_graph_uses_live_reachable_files(self):
         volume = make_volume()

@@ -9,6 +9,8 @@ import dependency_graph
 ERROR_CODES = {
     "dependency_cycle",
     "invalid_formal_label_count",
+    "ambiguous_source_variant_target",
+    "missing_source_variant_target",
 }
 
 

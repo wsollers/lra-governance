@@ -173,6 +173,40 @@ non_examples:
 Non-example metadata should preserve the failed condition when the source text
 identifies it.
 
+## Source Variant Metadata
+
+Use `\SourceVariantOf` when a source-specific definition, theorem, lemma,
+proposition, corollary, or axiom is the same mathematical object as a canonical
+LRA artifact, or when it explicitly reduces to one.
+
+The canonical source form is:
+
+```latex
+\SourceVariantOf{<target-label>}{<author>}{<book-or-source>}{<kind>}
+```
+
+where:
+
+- `<target-label>` is a formal label with prefix `def:`, `ax:`, `thm:`, `lem:`,
+  `prop:`, or `cor:`;
+- `<author>` is the source author displayed by the explorer, such as `Tao`;
+- `<book-or-source>` is the source work displayed by the explorer, such as
+  `Analysis I, Section 4.1`;
+- `<kind>` is either `source_variant_of` or `reduces_to`.
+
+Place the macro immediately after the source-specific formal artifact's support
+blocks and before the dependency block or `\NoLocalDependencies`. The macro
+renders no PDF output. Extraction attaches the metadata to the preceding formal
+artifact and emits an edge from that source artifact to the target label.
+
+Use `source_variant_of` when the source statement is the same mathematical
+content in different notation, carrier, source convention, or exposition. Use
+`reduces_to` when the source statement is intentionally proved by translating to
+the target result rather than by repeating the target's proof.
+
+`Source comparison` remark blocks remain prose crosswalks. They may explain the
+variant relationship, but they do not by themselves create graph edges.
+
 ## Exposition Metadata
 
 `Exposition` remark blocks are extractable explanatory metadata. They preserve

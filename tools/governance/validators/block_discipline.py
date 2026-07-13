@@ -62,6 +62,7 @@ TOP_LEVEL_COMMANDS = (
     "\\LRAExcludeFromPrintEditionEnd",
     "\\NoLocalDependencies",
     "\\DefinitionalRoot",
+    "\\SourceVariantOf",
     "\\medskip",
     "\\smallskip",
     "\\bigskip",

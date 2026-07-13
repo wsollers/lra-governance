@@ -44,6 +44,14 @@ EUCLID_BOOK_I_ALIAS_RE = re.compile(r"^prop:I\.(?P<number>\d+)$")
 HYPERREF_RE = re.compile(r"\\hyperref\[(?P<label>[^\]]+)\](?:\{(?P<text>[^{}]*)\})?")
 DEPENDENCY_ITEM_RE = re.compile(r"^[ \t]*\\item\s+(?P<text>[^\n]+)$", re.MULTILINE)
 PROOF_FOR_RE = re.compile(r"\\LRAProofFor\{(?P<label>(?:thm|lem|prop|cor):[^{}]+)\}", re.IGNORECASE)
+SOURCE_VARIANT_RE = re.compile(
+    r"\\SourceVariantOf"
+    r"\{(?P<target>(?:def|ax|thm|lem|prop|cor):[^{}]+)\}"
+    r"\{(?P<author>[^{}]+)\}"
+    r"\{(?P<book>[^{}]+)\}"
+    r"\{(?P<kind>source_variant_of|reduces_to)\}",
+    re.IGNORECASE,
+)
 DEPENDENCIES_ENV_RE = re.compile(
     r"\\begin\{dependencies\}(?P<body>[\s\S]*?)\\end\{dependencies\}",
     re.IGNORECASE,
@@ -95,6 +103,8 @@ class Edge:
     block_kind: str
     status: str = "ok"
     kind: str = "depends_on"
+    source_author: str = ""
+    source_book: str = ""
 
 
 @dataclass
@@ -402,6 +412,61 @@ def dependency_blocks(window: str) -> list[tuple[str, str, int]]:
     return sorted(blocks, key=lambda item: item[2])
 
 
+def source_variant_matches(window: str) -> list[re.Match[str]]:
+    return list(SOURCE_VARIANT_RE.finditer(window))
+
+
+def append_source_variant_edges(
+    *,
+    edges: list[Edge],
+    issues: list[Issue],
+    text: str,
+    root: Path,
+    path: Path,
+    repo: str,
+    source: str,
+    source_id: str | None,
+    source_line: int,
+    window_start: int,
+    window: str,
+    by_label: dict[str, list[Node]],
+) -> None:
+    for match in source_variant_matches(window):
+        target = match.group("target").strip()
+        author = re.sub(r"\s+", " ", match.group("author").strip())
+        book = re.sub(r"\s+", " ", match.group("book").strip())
+        kind = match.group("kind").strip().lower()
+        line = line_at(text, window_start + match.start())
+        target_matches = by_label.get(target, [])
+        status = "ok"
+        target_id = None
+        if len(target_matches) == 0:
+            status = "missing_target"
+            issues.append(Issue("error", "missing_source_variant_target", f"{source} source variant targets unknown label {target}.", repo, rel(path, root), line, source, target))
+        elif len(target_matches) > 1:
+            status = "ambiguous_target"
+            issues.append(Issue("error", "ambiguous_source_variant_target", f"{source} source variant target {target} has multiple global matches.", repo, rel(path, root), line, source, target))
+        else:
+            target_id = target_matches[0].id
+        edges.append(
+            Edge(
+                source=source,
+                target=target,
+                source_id=source_id,
+                target_id=target_id,
+                display=target,
+                repo=repo,
+                file=rel(path, root),
+                line=line or source_line,
+                block_kind="source_variant",
+                status=status,
+                kind=kind,
+                source_author=author,
+                source_book=book,
+            )
+        )
+
+
 def append_dependency_edges(
     *,
     edges: list[Edge],
@@ -505,6 +570,20 @@ def extract_edges_from_universe(root: Path, universe: Universe, universe_ref: st
             window_start = end_pos
             window_end = next_boundary(text, window_start)
             window = text[window_start:window_end]
+            append_source_variant_edges(
+                edges=edges,
+                issues=issues,
+                text=text,
+                root=root,
+                path=path,
+                repo=repo,
+                source=source,
+                source_id=source_id,
+                source_line=line,
+                window_start=window_start,
+                window=window,
+                by_label=by_label,
+            )
             dep_blocks = dependency_blocks(window)
             declaration = {
                 "source": source,
