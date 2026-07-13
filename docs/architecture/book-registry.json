@@ -932,6 +932,10 @@
             {
               "chapter": "proof-theory",
               "notes": []
+            },
+            {
+              "chapter": "formal-verification",
+              "notes": []
             }
           ],
           "frontmatter_mathematician": "Gerhard Gentzen",
