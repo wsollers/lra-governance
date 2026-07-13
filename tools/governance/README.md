@@ -17,6 +17,8 @@ Available and planned tools:
   proof-stub status, topic-mirrored proof folders, and proof index reachability.
 - `audit_volume_layout.py` - deterministic scanner for volume, chapter, topic,
   and router layout.
+- `export_flashcards.py` - read-only exporter for labeled notes definitions,
+  theorems, lemmas, propositions, corollaries, and axioms as flashcard records.
 - `generate_stub.py` - deterministic scaffold for canonical stub chapters and
   topic-paired stub sections.
 - `generate_agent_wrappers.py`
@@ -88,6 +90,20 @@ continues to use full-volume errors as the failure gate.
 
 Use scoped audit tools such as `audit_proof_layout.py` and
 `audit_volume_layout.py` only when a task needs a focused report.
+
+## Flashcard Export
+
+Run from `lra-governance` against a volume repo, volume root, chapter root,
+notes folder, or single `.tex` file. The exporter writes one card for each
+labeled formal notes block.
+
+```powershell
+python tools\governance\export_flashcards.py F:\repos\lra-volume-ii --output build\flashcards\volume-ii.tsv
+python tools\governance\export_flashcards.py F:\repos\lra-volume-ii\volume-ii\book-discrete-algebraic\whole-numbers --format jsonl --output build\flashcards\whole-numbers.jsonl
+```
+
+The default TSV has `Front`, `Back`, `Tags`, `Source`, and `Label` columns and
+is suitable for Anki-style tab-separated imports.
 
 ## Stub Generation
 
