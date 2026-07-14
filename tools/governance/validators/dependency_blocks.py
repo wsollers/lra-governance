@@ -20,6 +20,70 @@ HYPERREF_RE = re.compile(r"\\hyperref\[(?P<label>[^\]]+)\]")
 ITEM_RE = re.compile(r"^[ \t]*\\item\s+(?P<text>[^\n]+)$", re.MULTILINE)
 LABEL_RE = re.compile(r"\\label\{(?P<label>[a-z]+:[^{}]+)\}")
 
+LAYER_NAMES = {
+    0: "carrier/type foundation",
+    1: "ambient/set context",
+    2: "constructor/operation/notation",
+    3: "defining concept",
+    4: "theorem or proof-use dependency",
+}
+
+FOUNDATION_DEF_TOKENS = {
+    "natural",
+    "naturals",
+    "integer",
+    "integers",
+    "rational",
+    "rationals",
+    "real",
+    "reals",
+    "complex",
+    "complexes",
+    "field",
+    "ordered-field",
+}
+AMBIENT_DEF_TOKENS = {
+    "ordered-set",
+    "order",
+    "metric-space",
+    "topological-space",
+    "function-space",
+    "set-family",
+    "subset",
+    "cartesian-product",
+    "relation",
+}
+CONSTRUCTOR_DEF_TOKENS = {
+    "addition",
+    "subtraction",
+    "multiplication",
+    "division",
+    "absolute-value",
+    "set-arithmetic-images",
+    "image",
+    "preimage",
+    "reciprocal-image",
+    "sequence",
+    "function",
+    "interval",
+}
+CONCEPT_DEF_TOKENS = {
+    "upper-bound",
+    "lower-bound",
+    "bounded",
+    "supremum",
+    "infimum",
+    "maximum",
+    "minimum",
+    "least-upper-bound",
+    "greatest-lower-bound",
+    "limit",
+    "convergence",
+    "continuity",
+    "derivative",
+    "integral",
+}
+
 
 def validate(volume_root: Path, files) -> list[Finding]:
     findings: list[Finding] = []
@@ -147,6 +211,83 @@ def _validate_file(volume_root: Path, path: Path, findings: list[Finding]) -> No
                         "warning",
                     )
                 )
+        _check_dependency_order(volume_root, path, text, label, window_start, offset, body, findings)
+
+
+def _check_dependency_order(
+    volume_root: Path,
+    path: Path,
+    full_text: str,
+    owner_label: str,
+    window_start: int,
+    decl_offset: int,
+    body: str,
+    findings: list[Finding],
+) -> None:
+    classified: list[tuple[int, str, int]] = []
+    for ref in HYPERREF_RE.finditer(body):
+        target = ref.group("label").strip()
+        layer = _dependency_order_layer(target)
+        if layer is None:
+            continue
+        classified.append((layer, target, ref.start()))
+    if len(classified) < 2:
+        return
+
+    highest_layer = classified[0][0]
+    highest_target = classified[0][1]
+    for layer, target, start in classified[1:]:
+        if layer < highest_layer:
+            findings.append(
+                finding(
+                    "dependency_order_inversion",
+                    (
+                        f"{owner_label} lists {target} ({LAYER_NAMES[layer]}) after "
+                        f"{highest_target} ({LAYER_NAMES[highest_layer]}). Order dependency blocks by "
+                        "carrier/type foundations, ambient/set context, constructors/operations, "
+                        "defining concepts, then theorem/proof-use dependencies."
+                    ),
+                    path,
+                    volume_root,
+                    full_text.count("\n", 0, window_start + decl_offset + start) + 1,
+                    "review",
+                )
+            )
+            return
+        if layer > highest_layer:
+            highest_layer = layer
+            highest_target = target
+
+
+def _dependency_order_layer(label: str) -> int | None:
+    prefix, _, slug = label.partition(":")
+    if prefix in {"thm", "lem", "prop", "cor", "ax"}:
+        return 4
+    if prefix != "def":
+        return None
+    tokens = _label_tokens(slug)
+    if tokens & CONCEPT_DEF_TOKENS:
+        return 3
+    if tokens & FOUNDATION_DEF_TOKENS:
+        return 0
+    if tokens & AMBIENT_DEF_TOKENS:
+        return 1
+    if tokens & CONSTRUCTOR_DEF_TOKENS:
+        return 2
+    return None
+
+
+def _label_tokens(slug: str) -> set[str]:
+    normalized = slug.lower().replace("_", "-")
+    parts = {part for part in normalized.split("-") if part}
+    tokens = set(parts)
+    pieces = [part for part in normalized.split("-") if part]
+    for width in range(2, min(4, len(pieces)) + 1):
+        for index in range(0, len(pieces) - width + 1):
+            tokens.add("-".join(pieces[index : index + width]))
+    return tokens
+
+
 def _dependency_declarations(window: str) -> list[tuple[str, str, int]]:
     declarations: list[tuple[str, str, int]] = []
     for match in DEPENDENCIES_ENV_RE.finditer(window):

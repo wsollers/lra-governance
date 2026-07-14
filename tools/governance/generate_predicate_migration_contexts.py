@@ -14,7 +14,7 @@ from core.formal_blocks import FormalBlock, formal_blocks_for_file
 from core.tex import line_at, read_stripped_text
 from core.validator_runner import run_validator
 from core.volume import resolve_volume
-from validators import predicate_reading_signatures
+from validators import predicate_reading_constructions, predicate_reading_signatures
 
 
 CALL_RE = re.compile(r"\\(?:operatorname|mathsf)\{(?P<name>[^}]+)\}")
@@ -39,7 +39,9 @@ def main(argv=None) -> int:
     packets_dir.mkdir(parents=True, exist_ok=True)
 
     files = files_to_validate([chapter], only_reachable=False)
-    findings = run_validator(predicate_reading_signatures, volume.root, files)
+    findings = []
+    for validator in (predicate_reading_signatures, predicate_reading_constructions):
+        findings.extend(run_validator(validator, volume.root, files))
     blocks = _formal_blocks(files, volume.root)
     signatures = _signatures()
     findings_by_block = _findings_by_block(blocks, findings)
@@ -127,7 +129,7 @@ def _packet_text(volume_root: Path, chapter: Path, index: int, block: FormalBloc
     deps = "\n\n".join(match.group(0).strip() for match in DEPENDENCIES_RE.finditer(block.decoration)) or "(none found)"
     predicate_blocks = "\n\n".join(match.group(0).strip() for match in PREDICATE_READING_RE.finditer(block.decoration)) or "(none found)"
     nearby = _nearby_definitions(block, blocks, volume_root)
-    finding_text = "\n".join(f"- `{item.code}` at line {item.line}: {item.message}" for item in findings) or "- No predicate signature findings for this item."
+    finding_text = "\n".join(f"- `{item.code}` at line {item.line}: {item.message}" for item in findings) or "- No predicate signature/construction findings for this item."
     signature_text = "\n".join(f"- `{name}`: {signatures[name]}" for name in operators if name in signatures) or "- No registered predicate/structure calls detected."
     return "\n".join(
         [

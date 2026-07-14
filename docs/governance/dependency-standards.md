@@ -165,6 +165,47 @@ prefix:
 Do not use `prf:` labels as dependency targets. A `prf:` label identifies a
 proof location, not a mathematical prerequisite.
 
+## Dependency Order
+
+Within a visible dependency block, order dependencies by mathematical role
+before ordinary reading preference. The preferred order is:
+
+1. carrier and type foundations, such as number systems and basic object
+   universes;
+2. ambient and set context, such as ordered sets, metric spaces, topological
+   spaces, subsets, and Cartesian products;
+3. constructors, operations, notation, and image-forming definitions;
+4. defining concepts used by the owning artifact, such as upper bounds,
+   lower bounds, suprema, infima, maxima, minima, and analogous local
+   vocabulary;
+5. theorem-like or axiom-level proof-use dependencies.
+
+For example, a predicate-reading block that constructs
+`P=\mathsf{OrderedSet}(\mathbb{R},\leq)` and uses translated sets before
+invoking supremum vocabulary should list real numbers and ambient/set context
+before addition and set-image construction, and should list upper bound before
+supremum:
+
+```latex
+\begin{dependencies}
+\begin{itemize}
+  \item \hyperref[def:reals]{Real Numbers}
+  \item \hyperref[def:ordered-set]{Ordered Set}
+  \item \hyperref[def:subset]{Subset}
+  \item \hyperref[def:addition-on-r]{Addition on $\mathbb{R}$}
+  \item \hyperref[def:set-arithmetic-images]{Set Arithmetic Images}
+  \item \hyperref[def:real-upper-bound]{Upper Bound}
+  \item \hyperref[def:supremum]{Supremum}
+\end{itemize}
+\end{dependencies}
+```
+
+This order keeps parse/type context visible before the formal constructions
+that use it, and keeps proof-use results after the vocabulary they act on.
+When two dependencies have the same role, keep the local pedagogical order.
+If a dependency cannot be classified by role, do not reorder the block merely
+to satisfy a guessed hierarchy.
+
 ## Silent Foundational Marker
 
 Use `\NoLocalDependencies` only for axiom statements with no local

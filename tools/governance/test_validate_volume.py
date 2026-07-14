@@ -17,7 +17,7 @@ from core import volume as volume_core
 from validate_volume import VALIDATORS, _filter_findings_for_inventory
 from core.validator_runner import run_validator
 from core.finding import finding
-from validators import block_discipline, book_toc, capstones, chapter_router, dedication_page, dependency_blocks, dependency_graphs, figure_fragments, formal_decoration, formal_predicate_leakage, formal_reading_required, frontmatter_standard, input_resolution, interpretation_blocks, labels, latex_integrity, lean_formalizations, math_boxes, notes_structure, operator_metadata, predicate_reading_signatures, print_edition_routing, proof_coverage, proof_file_contract, proof_layout, proof_order, proof_routing, proof_stub_state, reference_voice, source_variants, structural_chrome, structural_positions, unicode_tex, volume_shape
+from validators import block_discipline, book_toc, capstones, chapter_router, dedication_page, dependency_blocks, dependency_graphs, figure_fragments, formal_decoration, formal_predicate_leakage, formal_reading_required, frontmatter_standard, input_resolution, interpretation_blocks, labels, latex_integrity, lean_formalizations, math_boxes, notes_structure, operator_metadata, predicate_reading_constructions, predicate_reading_signatures, print_edition_routing, proof_coverage, proof_file_contract, proof_layout, proof_order, proof_routing, proof_stub_state, reference_voice, source_variants, structural_chrome, structural_positions, unicode_tex, volume_shape
 
 
 HERE = Path(__file__).resolve().parent
@@ -1706,6 +1706,94 @@ class ValidateVolumeTests(unittest.TestCase):
 
         self.assertEqual(validate_with_inventory(predicate_reading_signatures, volume), [])
 
+    def test_predicate_reading_constructions_flags_untyped_replacement_map(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{definitionbox}{Definition (Bad Image Reading)}",
+                    r"\begin{definition}[Bad Image Reading]",
+                    r"\label{def:bad-image-reading}",
+                    r"An image reading uses an inline map.",
+                    r"\end{definition}",
+                    r"\end{definitionbox}",
+                    r"\begin{remark*}[Predicate reading]",
+                    r"\[",
+                    r"\operatorname{ReplacementImage}(A+B,A\times B,(a,b)\mapsto a+b).",
+                    r"\]",
+                    r"\end{remark*}",
+                    "",
+                ]
+            ),
+        )
+
+        findings = validate_with_inventory(predicate_reading_constructions, volume)
+
+        self.assertEqual([item.code for item in findings], ["predicate_reading_untyped_functional_argument"])
+        self.assertIn("inline functional rule", findings[0].message)
+
+    def test_predicate_reading_constructions_flags_unconstructed_symbolic_arguments(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{definitionbox}{Definition (Bad Constructed Image Reading)}",
+                    r"\begin{definition}[Bad Constructed Image Reading]",
+                    r"\label{def:bad-constructed-image-reading}",
+                    r"An image reading uses undeclared symbols.",
+                    r"\end{definition}",
+                    r"\end{definitionbox}",
+                    r"\begin{remark*}[Predicate reading]",
+                    r"\[",
+                    r"\operatorname{ReplacementImage}(C,D,\varphi).",
+                    r"\]",
+                    r"\end{remark*}",
+                    "",
+                ]
+            ),
+        )
+
+        findings = validate_with_inventory(predicate_reading_constructions, volume)
+
+        self.assertEqual(
+            [item.code for item in findings],
+            [
+                "predicate_reading_unconstructed_set_argument",
+                "predicate_reading_unconstructed_functional_argument",
+            ],
+        )
+        self.assertIn("'D'", findings[0].message)
+        self.assertIn(r"\varphi", findings[1].message)
+
+    def test_predicate_reading_constructions_accepts_typed_replacement_setup(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{definitionbox}{Definition (Good Image Reading)}",
+                    r"\begin{definition}[Good Image Reading]",
+                    r"\label{def:good-image-reading}",
+                    r"An image reading constructs its arguments.",
+                    r"\end{definition}",
+                    r"\end{definitionbox}",
+                    r"\begin{remark*}[Predicate reading]",
+                    r"\[",
+                    r"D=A\times B,\qquad \varphi\colon D\to\mathbb{R},\quad (a,b)\mapsto a+b.",
+                    r"\]",
+                    r"\[",
+                    r"\operatorname{ReplacementImage}(C,D,\varphi).",
+                    r"\]",
+                    r"\end{remark*}",
+                    "",
+                ]
+            ),
+        )
+
+        self.assertEqual(validate_with_inventory(predicate_reading_constructions, volume), [])
+
     def test_formal_predicate_leakage_flags_predicate_in_formal_statement(self):
         volume = make_volume()
         write(
@@ -2619,6 +2707,66 @@ class ValidateVolumeTests(unittest.TestCase):
         volume = make_volume()
 
         self.assertEqual(validate_with_inventory(dependency_blocks, volume), [])
+
+    def test_dependency_blocks_accepts_dependency_role_order(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{theorem}[Ordered Supremum Translation]",
+                    r"\label{thm:ordered-supremum-translation}",
+                    "A translated supremum remains a translated supremum.",
+                    r"\end{theorem}",
+                    r"\begin{dependencies}",
+                    r"\begin{itemize}",
+                    r"  \item \hyperref[def:reals]{Real Numbers}",
+                    r"  \item \hyperref[def:ordered-set]{Ordered Set}",
+                    r"  \item \hyperref[def:subset]{Subset}",
+                    r"  \item \hyperref[def:addition-on-r]{Addition on $\mathbb{R}$}",
+                    r"  \item \hyperref[def:set-arithmetic-images]{Set Arithmetic Images}",
+                    r"  \item \hyperref[def:real-upper-bound]{Upper Bound}",
+                    r"  \item \hyperref[def:supremum]{Supremum}",
+                    r"  \item \hyperref[thm:translation-invariance-supremum]{Translation Invariance of the Supremum}",
+                    r"\end{itemize}",
+                    r"\end{dependencies}",
+                    "",
+                ]
+            ),
+        )
+
+        codes = {finding.code for finding in validate_with_inventory(dependency_blocks, volume)}
+
+        self.assertNotIn("dependency_order_inversion", codes)
+
+    def test_dependency_blocks_flags_dependency_order_inversion(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{theorem}[Disordered Supremum Translation]",
+                    r"\label{thm:disordered-supremum-translation}",
+                    "A dependency block lists concepts before their parse context.",
+                    r"\end{theorem}",
+                    r"\begin{dependencies}",
+                    r"\begin{itemize}",
+                    r"  \item \hyperref[def:supremum]{Supremum}",
+                    r"  \item \hyperref[def:reals]{Real Numbers}",
+                    r"  \item \hyperref[def:ordered-set]{Ordered Set}",
+                    r"\end{itemize}",
+                    r"\end{dependencies}",
+                    "",
+                ]
+            ),
+        )
+
+        findings = validate_with_inventory(dependency_blocks, volume)
+
+        self.assertTrue(any(
+            finding.code == "dependency_order_inversion" and finding.severity == "review"
+            for finding in findings
+        ))
 
     def test_dependency_blocks_flags_no_local_on_non_axiom(self):
         volume = make_volume()

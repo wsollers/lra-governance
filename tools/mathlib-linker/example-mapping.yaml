@@ -1,0 +1,24 @@
+# Example mapping: order-category predicates from predicates.yaml
+# mapped to candidate Mathlib4 identifiers. Extend as you go.
+- lra_name: UpperBound
+  candidates: [upperBounds]
+- lra_name: LowerBound
+  candidates: [lowerBounds]
+- lra_name: BoundedAbove
+  candidates: [BddAbove]
+- lra_name: BoundedBelow
+  candidates: [BddBelow]
+- lra_name: Bounded
+  candidates: [Bornology.IsBounded, Metric.Bounded]
+- lra_name: LeastElement
+  candidates: [IsLeast]
+- lra_name: GreatestElement
+  candidates: [IsGreatest]
+- lra_name: LeastUpperBound
+  candidates: [IsLUB]
+- lra_name: GreatestLowerBound
+  candidates: [IsGLB]
+- lra_name: HasLeastUpperBoundProperty
+  candidates: [ConditionallyCompleteLattice, exists_isLUB]
+- lra_name: DedekindCut
+  candidates: [DedekindCut, Real.Cut]

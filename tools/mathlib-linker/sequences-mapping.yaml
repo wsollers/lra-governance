@@ -1,0 +1,24 @@
+# Test mapping: sequences/convergence notes
+# (book-analysis-i/sequences/notes/definition, /convergence)
+#
+# CAUTION -- see sequences-output.md notes: "Sequence -> Set.range" is a
+# BAD candidate mapping that still resolved cleanly. Resolution success is
+# not the same claim as mapping correctness; this file needs a human pass.
+- lra_name: Sequence
+  candidates: [Set.range]   # WRONG -- keeping to document the failure mode
+- lra_name: ConvergesTo
+  candidates: [Filter.Tendsto]
+- lra_name: uniqueness-of-limits
+  candidates: [tendsto_nhds_unique]
+- lra_name: limit-preserves-eventual-order
+  candidates: [le_of_tendsto_of_tendsto]
+- lra_name: constant-squeeze-theorem
+  candidates: [tendsto_const_nhds]
+- lra_name: sequence-squeeze-theorem
+  candidates: [tendsto_of_tendsto_of_tendsto_of_le_of_le]
+- lra_name: absolute-value-squeeze-theorem
+  candidates: [squeeze_zero, squeeze_zero_norm]
+- lra_name: NullSequence
+  candidates: [tendsto_zero_iff_norm_tendsto_zero, NormedAddCommGroup.tendsto_nhds_zero]
+- lra_name: Eventually
+  candidates: [Filter.Eventually]

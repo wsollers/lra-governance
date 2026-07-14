@@ -94,12 +94,15 @@ continues to use full-volume errors as the failure gate.
 Use scoped audit tools such as `audit_proof_layout.py` and
 `audit_volume_layout.py` only when a task needs a focused report.
 
-The integrated validator also reports predicate-reading signature drift. These
-review-level findings compare `\operatorname{...}` and `\mathsf{...}` calls in
-Predicate reading blocks against `predicates.yaml` and `structures.yaml`, so
-legacy implicit ambient forms such as `IsCauchy(x_n)` or two-argument
-`ConvergesTo(x_n,L)` are visible without making the current migration backlog a
-hard failure gate.
+The integrated validator also reports predicate-reading signature and
+construction drift. These review-level findings compare `\operatorname{...}`
+and `\mathsf{...}` calls in Predicate reading blocks against `predicates.yaml`
+and `structures.yaml`, so legacy implicit ambient forms such as
+`IsCauchy(x_n)` or two-argument `ConvergesTo(x_n,L)` are visible without making
+the current migration backlog a hard failure gate. A companion construction
+check flags under-built predicate arguments, such as a `ReplacementImage`
+functional argument passed as an inline `\mapsto` rule or a symbolic domain
+argument that was not constructed in the same Predicate reading block.
 
 ## Flashcard Export
 

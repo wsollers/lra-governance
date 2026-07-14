@@ -93,6 +93,30 @@ structures:
       Ambient ordered structure whose relation is intended to satisfy the total
       order axioms on A.
 
+  - id: struct:order-dense-set
+    name: OrderDenseSet
+    kind: structure
+    category: order
+    constructor: '\mathsf{OrderDenseSet}'
+    arguments:
+      - name: A
+        role: subset
+      - name: P
+        role: ambient_order
+    carrier_argument: A
+    structural_arguments:
+      - P
+    surface_forms:
+      - order dense set
+      - order-dense set
+      - order dense subset
+      - dense in the order
+    description: >
+      Context object packaging a subset A as order dense in the ambient ordered
+      structure P. Predicates such as IsOrderDenseSubset(A,P) assert the
+      order-density condition, while HasDenseOrder(P) is the self-dense
+      ambient-order case.
+
   - id: struct:well-ordered-set
     name: WellOrderedSet
     kind: structure
