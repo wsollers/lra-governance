@@ -64,6 +64,40 @@ The structure assignment is part of the predicate reading. It must appear
 before the first predicate that uses the structure unless the structure object
 has already been fixed unambiguously in the same predicate-reading block.
 
+## Signature Enforcement
+
+Predicate-reading blocks must use the argument signatures registered in
+`predicates.yaml` and `structures.yaml`. A predicate call must have the
+registered number of arguments, and a structure constructor must be introduced
+with its registered constructor form.
+
+For example, if `predicates.yaml` registers
+`ConvergesTo(x,L,X)` and `IsCauchy(x,X)`, do not write the legacy implicit
+forms:
+
+```latex
+\operatorname{ConvergesTo}(x_n,L)
+\qquad
+\operatorname{IsCauchy}(x_n)
+```
+
+Instead, introduce or name the sequence object and pass the ambient object:
+
+```latex
+\[
+\begin{aligned}
+&\mathbf{x}=\mathsf{Sequence}((x_n),\mathbb{N},\mathbb{R}),\\
+&\operatorname{ConvergesTo}(\mathbf{x},L,\mathbb{R})
+  \Longleftrightarrow
+  \operatorname{IsCauchy}(\mathbf{x},\mathbb{R}).
+\end{aligned}
+\]
+```
+
+Validators may surface mismatched arities, missing ambient arguments, and
+structure constructors written as `\operatorname{...}`. During broad migrations
+these findings may be review-level, but new content should satisfy them.
+
 ## Polymorphism And Substitution
 
 Prefer polymorphic predicates over families of specialized names. A predicate
@@ -134,6 +168,33 @@ Instead, assign the structure object first:
 If the validity of the structure itself is at issue, use the appropriate
 predicate separately, for example a predicate asserting that the relation is a
 partial order on the carrier.
+
+## Construction Lines
+
+A predicate-reading block may introduce local construction lines that name the
+objects used by later predicates. These lines are part of the formal reading of
+the block, not ordinary exposition.
+
+Use construction lines for sequences, ordered ambients, topological ambients,
+metric ambients, function spaces, set families, and similar packaged context:
+
+```latex
+\[
+\begin{aligned}
+&P=\mathsf{OrderedSet}(\mathbb{N},\leq),\\
+&Q=\mathsf{OrderedSet}(\mathbb{R},\leq),\\
+&\mathbf{x}=\mathsf{Sequence}((x_n),\mathbb{N},\mathbb{R}),\\
+&\operatorname{OrderPreserving}(\mathbf{x},P,Q).
+\end{aligned}
+\]
+```
+
+Construction lines should use stable local names (`P`, `Q`, `M`, `T`,
+`\mathbf{x}`, and similar) and should appear before all predicate calls that
+use them. They should not hide mathematical data: if the construction mentions
+`\mathbb{N}`, `\mathbb{Z}`, `\mathbb{Q}`, `\mathbb{R}`, `\mathbb{C}`, an order
+relation, a topology, a metric, or a function space, those objects are part of
+the parse context and must be visible to dependency extraction.
 
 ## Argument Role Conventions
 

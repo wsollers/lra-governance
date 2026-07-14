@@ -353,7 +353,11 @@ notation:
   - id: not:pre-operator
     symbol: '\operatorname{Pre}'
     category: operator_notation
-    description: Operator notation for Pre.
+    description: >
+      Pre-carrier notation for the raw set used before quotienting in a
+      construction, such as \operatorname{Pre}\mathbb{Z},
+      \operatorname{Pre}\mathbb{Q}, or \operatorname{Pre}\mathbb{C}. This is
+      set-valued/operator notation, not a predicate.
   - id: not:preq-operator
     symbol: '\operatorname{PreQ}'
     category: operator_notation

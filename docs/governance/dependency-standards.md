@@ -65,6 +65,48 @@ What is the informal motivation?
 Those belong to proof navigation, source crosswalk remarks, reading order,
 toolkits, interpretation remarks, or exposition remarks.
 
+## Parse And Type Dependencies
+
+Predicate-reading and formal-reading blocks create parse dependencies. If a
+statement or predicate-reading block uses a mathematical carrier, ambient
+object, packaged structure, or construction, the owning artifact must depend on
+the formal item that introduces that object or structure.
+
+Examples of parse/type dependencies include:
+
+- `\mathbb{N}`, `\mathbb{Z}`, `\mathbb{Q}`, `\mathbb{R}`, and `\mathbb{C}`;
+- ordered structures such as `P=\mathsf{OrderedSet}(A,\leq)`;
+- sequence structures such as
+  `\mathbf{x}=\mathsf{Sequence}((x_n),\mathbb{N},\mathbb{R})`;
+- metric, topological, function-space, interval-family, and set-family
+  structures;
+- named relations or operations that are part of a structure constructor.
+
+Thus a predicate-reading line such as
+
+```latex
+\mathbf{x}=\mathsf{Sequence}((x_n),\mathbb{N},\mathbb{R})
+```
+
+creates dependency requirements for the formal artifacts for natural numbers,
+real numbers, and sequences. A line such as
+
+```latex
+Q=\mathsf{OrderedSet}(\mathbb{R},\leq)
+```
+
+creates dependency requirements for the formal artifacts for real numbers, the
+relevant order on the real line, and ordered sets.
+
+These dependencies are not optional stylistic links. They are what allow the
+Knowledge Explorer to recover the type/ambient route that makes a predicate
+well-formed.
+
+If the relevant formal item exists, link it explicitly in the dependency block.
+If it does not yet exist, write a TODO dependency note rather than inventing a
+label. New generated or hand-authored content must not omit these parse/type
+dependencies merely because they are visible in the predicate-reading line.
+
 ## Definition Dependency Rule
 
 A definition may list both direct vocabulary prerequisites and structural

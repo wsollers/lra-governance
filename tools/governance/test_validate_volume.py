@@ -17,7 +17,7 @@ from core import volume as volume_core
 from validate_volume import VALIDATORS, _filter_findings_for_inventory
 from core.validator_runner import run_validator
 from core.finding import finding
-from validators import block_discipline, book_toc, capstones, chapter_router, dedication_page, dependency_blocks, dependency_graphs, figure_fragments, formal_decoration, formal_predicate_leakage, formal_reading_required, frontmatter_standard, input_resolution, interpretation_blocks, labels, latex_integrity, lean_formalizations, math_boxes, notes_structure, operator_metadata, print_edition_routing, proof_coverage, proof_file_contract, proof_layout, proof_order, proof_routing, proof_stub_state, reference_voice, source_variants, structural_chrome, structural_positions, unicode_tex, volume_shape
+from validators import block_discipline, book_toc, capstones, chapter_router, dedication_page, dependency_blocks, dependency_graphs, figure_fragments, formal_decoration, formal_predicate_leakage, formal_reading_required, frontmatter_standard, input_resolution, interpretation_blocks, labels, latex_integrity, lean_formalizations, math_boxes, notes_structure, operator_metadata, predicate_reading_signatures, print_edition_routing, proof_coverage, proof_file_contract, proof_layout, proof_order, proof_routing, proof_stub_state, reference_voice, source_variants, structural_chrome, structural_positions, unicode_tex, volume_shape
 
 
 HERE = Path(__file__).resolve().parent
@@ -1610,6 +1610,102 @@ class ValidateVolumeTests(unittest.TestCase):
         self.assertEqual([finding.code for finding in findings], ["unregistered_operatorname"])
         self.assertIn("UnknownLocalPredicate", findings[0].message)
 
+    def test_predicate_reading_signatures_flags_ambientless_sequence_predicates(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{definitionbox}{Definition (Bad Sequence Reading)}",
+                    r"\begin{definition}[Bad Sequence Reading]",
+                    r"\label{def:bad-sequence-reading}",
+                    r"A bad sequence reading uses implicit ambients.",
+                    r"\end{definition}",
+                    r"\end{definitionbox}",
+                    r"\begin{remark*}[Predicate reading]",
+                    r"\[",
+                    r"\operatorname{Sequence}(x_n) \coloneqq \operatorname{Sequence}(x_n,\mathbb{R}),",
+                    r"\qquad \operatorname{IsCauchy}(x_n).",
+                    r"\]",
+                    r"\end{remark*}",
+                    "",
+                ]
+            ),
+        )
+
+        findings = validate_with_inventory(predicate_reading_signatures, volume)
+
+        self.assertEqual(
+            [item.code for item in findings],
+            [
+                "structure_constructor_operatorname",
+                "predicate_reading_missing_ambient",
+                "structure_constructor_operatorname",
+                "predicate_reading_missing_ambient",
+            ],
+        )
+        self.assertIn("Sequence", findings[0].message)
+        self.assertIn("IsCauchy", findings[-1].message)
+
+    def test_predicate_reading_signatures_flags_predicate_arity(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{theorembox}{Theorem (Bad Cauchy Criterion Reading)}",
+                    r"\begin{theorem}[Bad Cauchy Criterion Reading]",
+                    r"\label{thm:bad-cauchy-criterion-reading}",
+                    r"Every Cauchy sequence converges.",
+                    r"\hyperref[prf:bad-cauchy-criterion-reading]{\textit{Go to proof.}}",
+                    r"\end{theorem}",
+                    r"\end{theorembox}",
+                    r"\begin{remark*}[Predicate reading]",
+                    r"\[",
+                    r"\exists L\in\mathbb{R}\;\operatorname{ConvergesTo}(x_n,L)",
+                    r"\Longleftrightarrow \operatorname{IsCauchy}(x_n).",
+                    r"\]",
+                    r"\end{remark*}",
+                    "",
+                ]
+            ),
+        )
+
+        findings = validate_with_inventory(predicate_reading_signatures, volume)
+
+        self.assertEqual(
+            [item.code for item in findings],
+            ["predicate_reading_signature_arity", "predicate_reading_missing_ambient"],
+        )
+        self.assertIn("ConvergesTo", findings[0].message)
+        self.assertIn("IsCauchy", findings[1].message)
+
+    def test_predicate_reading_signatures_accepts_explicit_ambient_setup(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{definitionbox}{Definition (Real Cauchy Reading)}",
+                    r"\begin{definition}[Real Cauchy Reading]",
+                    r"\label{def:real-cauchy-reading}",
+                    r"A real Cauchy reading has explicit ambient data.",
+                    r"\end{definition}",
+                    r"\end{definitionbox}",
+                    r"\begin{remark*}[Predicate reading]",
+                    r"\[",
+                    r"\mathbf{x}=\mathsf{Sequence}((x_n),\mathbb{N},\mathbb{R}),",
+                    r"\qquad \operatorname{ConvergesTo}(\mathbf{x},L,\mathbb{R})",
+                    r"\Longleftrightarrow \operatorname{IsCauchy}(\mathbf{x},\mathbb{R}).",
+                    r"\]",
+                    r"\end{remark*}",
+                    "",
+                ]
+            ),
+        )
+
+        self.assertEqual(validate_with_inventory(predicate_reading_signatures, volume), [])
+
     def test_formal_predicate_leakage_flags_predicate_in_formal_statement(self):
         volume = make_volume()
         write(
@@ -1632,15 +1728,15 @@ class ValidateVolumeTests(unittest.TestCase):
         self.assertEqual([finding.code for finding in findings], ["predicate_operator_in_formal_statement"])
         self.assertIn("PointwiseRelation", findings[0].message)
 
-    def test_formal_predicate_leakage_flags_predicate_style_notation_in_formal_statement(self):
+    def test_formal_predicate_leakage_allows_registered_operator_notation_in_formal_statement(self):
         volume = make_volume()
         write(
             volume / "integers" / "notes" / "order" / "notes-extra.tex",
             "\n".join(
                 [
-                    r"\begin{propositionbox}{Proposition (Bad At Point)}",
-                    r"\begin{proposition}[Bad At Point]",
-                    r"\label{prop:bad-at-point}",
+                    r"\begin{propositionbox}{Proposition (At Point)}",
+                    r"\begin{proposition}[At Point]",
+                    r"\label{prop:at-point}",
                     r"For every \(x\), \(F(x)=\operatorname{AtPointOp}_{\Phi}(f,g;x)\).",
                     r"\end{proposition}",
                     r"\end{propositionbox}",
@@ -1651,8 +1747,7 @@ class ValidateVolumeTests(unittest.TestCase):
 
         findings = validate_with_inventory(formal_predicate_leakage, volume)
 
-        self.assertEqual([finding.code for finding in findings], ["predicate_operator_in_formal_statement"])
-        self.assertIn("AtPointOp", findings[0].message)
+        self.assertEqual(findings, [])
 
     def test_formal_predicate_leakage_allows_predicate_readings_and_ordinary_notation(self):
         volume = make_volume()
@@ -1671,6 +1766,25 @@ class ValidateVolumeTests(unittest.TestCase):
                     r"\operatorname{PointwiseRelation}(=,(f,g),A).",
                     r"\]",
                     r"\end{remark*}",
+                    "",
+                ]
+            ),
+        )
+
+        self.assertEqual(validate_with_inventory(formal_predicate_leakage, volume), [])
+
+    def test_formal_predicate_leakage_allows_registered_formal_statement_notation(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{definitionbox}{Definition (Precarrier)}",
+                    r"\begin{definition}[Precarrier]",
+                    r"\label{def:precarrier}",
+                    r"The integer prepair set is \(\operatorname{Pre}\mathbb{Z}:=\mathbb{W}\times\mathbb{W}\).",
+                    r"\end{definition}",
+                    r"\end{definitionbox}",
                     "",
                 ]
             ),

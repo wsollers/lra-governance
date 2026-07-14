@@ -111,9 +111,11 @@ blocks:
       "Predicate reading" for definitions and theorem-like environments.
       Predicate signatures and ambient-structure arguments are governed by
       docs/governance/predicate-standards.md; use the canonical ambient object
-      argument rather than inventing specialized names. Underbrace
-      decomposition permitted when it clarifies conjunctive or disjunctive
-      structure.
+      argument rather than inventing specialized names. Structure constructors
+      are introduced with \mathsf{...} construction lines before the predicates
+      that use them, and those construction lines expose parse/type
+      dependencies for the dependency block. Underbrace decomposition permitted
+      when it clarifies conjunctive or disjunctive structure.
 
   - id: negated_quantified_stmt
     display: Negated Quantified Statement
@@ -304,4 +306,9 @@ blocks:
       marker \NoLocalDependencies rather than a visible remark that says
       "No local dependencies." Dependency labels point to formal
       items only (def, thm, lem, prop, cor, ax) — never to proof labels.
-      Optional downstream blocks: Consequences, Equivalent forms.
+      Predicate-reading construction lines create parse/type dependency
+      pressure: carriers such as \mathbb{N}, \mathbb{Q}, \mathbb{R}, structures
+      such as OrderedSet, Sequence, MetricSpace, and the relations or
+      operations packaged by those structures must be represented by explicit
+      dependency links when their formal targets exist. Optional downstream
+      blocks: Consequences, Equivalent forms.

@@ -18,6 +18,7 @@ UPPER_CAMEL_RE = re.compile(r"^[A-Z][A-Za-z0-9]*$")
 
 def validate(volume_root: Path, files) -> list[Finding]:
     findings: list[Finding] = []
+    allowed_notation_names = _formal_statement_allowed_operator_names()
     forbidden_names = _formal_statement_forbidden_operator_names()
     if not forbidden_names:
         return findings
@@ -27,6 +28,8 @@ def validate(volume_root: Path, files) -> list[Finding]:
         for block in formal_blocks_for_file(tex):
             for match in OPERATORNAME_RE.finditer(block.body):
                 name = match.group(1).strip()
+                if name in allowed_notation_names:
+                    continue
                 if name not in forbidden_names:
                     continue
                 findings.append(
@@ -58,6 +61,14 @@ def _formal_statement_forbidden_operator_names() -> frozenset[str]:
         if name:
             names.add(str(name).strip())
 
+    return frozenset(name for name in names if name)
+
+
+@lru_cache(maxsize=1)
+def _formal_statement_allowed_operator_names() -> frozenset[str]:
+    root = Path(__file__).resolve().parents[3]
+    names: set[str] = set()
+
     notation = _load_yaml(root / "notation.yaml").get("notation", []) or []
     for item in notation:
         if not isinstance(item, dict):
@@ -65,7 +76,7 @@ def _formal_statement_forbidden_operator_names() -> frozenset[str]:
         symbol = str(item.get("symbol") or "")
         for match in OPERATORNAME_RE.finditer(symbol):
             name = match.group(1).strip()
-            if UPPER_CAMEL_RE.fullmatch(name):
+            if name:
                 names.add(name)
 
     return frozenset(name for name in names if name)
