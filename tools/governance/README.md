@@ -19,6 +19,9 @@ Available and planned tools:
   and router layout.
 - `export_flashcards.py` - read-only exporter for labeled notes definitions,
   theorems, lemmas, propositions, corollaries, and axioms as flashcard records.
+- `generate_predicate_migration_contexts.py` - read-only generator for
+  predicate/dependency migration issue reports and per-formal-item context
+  packets.
 - `generate_stub.py` - deterministic scaffold for canonical stub chapters and
   topic-paired stub sections.
 - `generate_agent_wrappers.py`
@@ -111,6 +114,15 @@ python tools\governance\export_flashcards.py F:\repos\lra-volume-ii\volume-ii\bo
 
 The default TSV has `Front`, `Back`, `Tags`, `Source`, and `Label` columns and
 is suitable for Anki-style tab-separated imports.
+
+## Predicate Migration Contexts
+
+Generate a chapter-level issue summary and one context packet per formal item.
+Outputs are written under ignored `migration-reports/` by default.
+
+```powershell
+python tools\governance\generate_predicate_migration_contexts.py --volume F:\repos\lra-volume-iii --chapter bounding
+```
 
 ## Stub Generation
 
