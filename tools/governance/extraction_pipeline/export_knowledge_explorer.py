@@ -399,7 +399,18 @@ def logical_blocks_for(node: dict[str, Any]) -> dict[str, str]:
     return blocks
 
 
-def failure_modes_for(node: dict[str, Any]) -> list[dict[str, Any]]:
+def failure_modes_text_for(node: dict[str, Any]) -> str:
+    bodies: list[str] = []
+    for block in node.get("support_blocks") or []:
+        if str(block.get("canonical_title") or "").strip().lower() != "failure modes":
+            continue
+        body = str(block.get("body_tex") or "").strip()
+        if body:
+            bodies.append(body)
+    return "\n\n".join(bodies)
+
+
+def failure_mode_items_for(node: dict[str, Any]) -> list[dict[str, Any]]:
     modes: list[dict[str, Any]] = []
     for block in node.get("support_blocks") or []:
         if str(block.get("canonical_title") or "").strip().lower() != "failure modes":
@@ -497,7 +508,8 @@ def build_export(run_dir: Path, repos_root: Path, version: dict[str, Any], regis
         name = title_for(node)
         support_blocks = node.get("support_blocks") or []
         logical_blocks = logical_blocks_for(node)
-        failure_modes = failure_modes_for(node)
+        failure_modes = failure_modes_text_for(node)
+        failure_mode_items = failure_mode_items_for(node)
         verifications = verification_records.get(label, [])
         exported = {
             "id": label,
@@ -548,6 +560,7 @@ def build_export(run_dir: Path, repos_root: Path, version: dict[str, Any], regis
             "support_blocks": support_blocks,
             "logical_blocks": logical_blocks,
             "failure_modes": failure_modes,
+            "failure_mode_items": failure_mode_items,
         }
         if verifications:
             exported["verifications"] = verifications
