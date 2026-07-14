@@ -13,10 +13,23 @@ and house normalization rules.
 
 ## No Predicate Leakage
 
-Canonical predicate names must not appear in definition bodies, theorem-like
-bodies, standard quantified statements, negated quantified statements, or
-contrapositive quantified statements unless a task explicitly requests a
-predicate-language version.
+Canonical predicate names must not appear in formal statement bodies. This
+applies to boxed and unboxed `definition`, `axiom`, `theorem`, `lemma`,
+`proposition`, and `corollary` environments. Formal statement bodies must use
+ordinary mathematical notation and prose such as "is injective", "is bounded",
+or an explicit displayed formula.
+
+Predicate-style operator notation from the canonical notation registry is also
+barred from formal statement bodies when it functions as predicate vocabulary,
+for example UpperCamel names such as `\operatorname{AtPointOp}`. Predicate
+language belongs in `Predicate reading`, `Negation predicate reading`,
+`Contrapositive predicate reading`, and predicate-form failure displays.
+
+The integrated volume validator enforces this as
+`predicate_operator_in_formal_statement`. Do not work around the validator by
+renaming a predicate locally or moving predicate language into a formal theorem
+statement. Rewrite the formal statement in ordinary mathematical notation and
+place the extraction-oriented predicate form in the appropriate support block.
 
 ## Canonical Sources
 

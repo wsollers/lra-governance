@@ -17,7 +17,7 @@ from core import volume as volume_core
 from validate_volume import VALIDATORS, _filter_findings_for_inventory
 from core.validator_runner import run_validator
 from core.finding import finding
-from validators import block_discipline, book_toc, capstones, chapter_router, dedication_page, dependency_blocks, dependency_graphs, figure_fragments, formal_decoration, formal_reading_required, frontmatter_standard, input_resolution, interpretation_blocks, labels, latex_integrity, lean_formalizations, math_boxes, notes_structure, operator_metadata, print_edition_routing, proof_coverage, proof_file_contract, proof_layout, proof_order, proof_routing, proof_stub_state, reference_voice, source_variants, structural_chrome, structural_positions, unicode_tex, volume_shape
+from validators import block_discipline, book_toc, capstones, chapter_router, dedication_page, dependency_blocks, dependency_graphs, figure_fragments, formal_decoration, formal_predicate_leakage, formal_reading_required, frontmatter_standard, input_resolution, interpretation_blocks, labels, latex_integrity, lean_formalizations, math_boxes, notes_structure, operator_metadata, print_edition_routing, proof_coverage, proof_file_contract, proof_layout, proof_order, proof_routing, proof_stub_state, reference_voice, source_variants, structural_chrome, structural_positions, unicode_tex, volume_shape
 
 
 HERE = Path(__file__).resolve().parent
@@ -1610,6 +1610,74 @@ class ValidateVolumeTests(unittest.TestCase):
         self.assertEqual([finding.code for finding in findings], ["unregistered_operatorname"])
         self.assertIn("UnknownLocalPredicate", findings[0].message)
 
+    def test_formal_predicate_leakage_flags_predicate_in_formal_statement(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{propositionbox}{Proposition (Bad Predicate)}",
+                    r"\begin{proposition}[Bad Predicate]",
+                    r"\label{prop:bad-predicate}",
+                    r"If \(\operatorname{PointwiseRelation}(\leq,(f,g),A)\), then \(f\leq g\) on \(A\).",
+                    r"\end{proposition}",
+                    r"\end{propositionbox}",
+                    "",
+                ]
+            ),
+        )
+
+        findings = validate_with_inventory(formal_predicate_leakage, volume)
+
+        self.assertEqual([finding.code for finding in findings], ["predicate_operator_in_formal_statement"])
+        self.assertIn("PointwiseRelation", findings[0].message)
+
+    def test_formal_predicate_leakage_flags_predicate_style_notation_in_formal_statement(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{propositionbox}{Proposition (Bad At Point)}",
+                    r"\begin{proposition}[Bad At Point]",
+                    r"\label{prop:bad-at-point}",
+                    r"For every \(x\), \(F(x)=\operatorname{AtPointOp}_{\Phi}(f,g;x)\).",
+                    r"\end{proposition}",
+                    r"\end{propositionbox}",
+                    "",
+                ]
+            ),
+        )
+
+        findings = validate_with_inventory(formal_predicate_leakage, volume)
+
+        self.assertEqual([finding.code for finding in findings], ["predicate_operator_in_formal_statement"])
+        self.assertIn("AtPointOp", findings[0].message)
+
+    def test_formal_predicate_leakage_allows_predicate_readings_and_ordinary_notation(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{definitionbox}{Definition (Domain Equality)}",
+                    r"\begin{definition}[Domain Equality]",
+                    r"\label{def:domain-equality}",
+                    r"Two functions have the same domain if \(\operatorname{dom}(f)=\operatorname{dom}(g)\).",
+                    r"\end{definition}",
+                    r"\end{definitionbox}",
+                    r"\begin{remark*}[Predicate reading]",
+                    r"\[",
+                    r"\operatorname{PointwiseRelation}(=,(f,g),A).",
+                    r"\]",
+                    r"\end{remark*}",
+                    "",
+                ]
+            ),
+        )
+
+        self.assertEqual(validate_with_inventory(formal_predicate_leakage, volume), [])
+
     def test_formal_decoration_flags_source_and_expository_claims(self):
         volume = make_volume()
         write(
@@ -1855,6 +1923,83 @@ class ValidateVolumeTests(unittest.TestCase):
 
         self.assertIn("failure_modes_missing_exposition_item", codes)
         self.assertIn("failure_mode_missing_predicate_display", codes)
+
+    def test_formal_decoration_flags_exposition_only_failure_modes(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{definition}[Equal Functions]",
+                    r"\label{def:equal-functions-extra}",
+                    r"Functions \(f\) and \(g\) are equal on \(A\) if \(f(x)=g(x)\) for all \(x\in A\).",
+                    r"\end{definition}",
+                    r"\begin{remark*}[Standard quantified statement]",
+                    r"\[",
+                    r"f=g\text{ on }A\Longleftrightarrow \forall x\in A\;(f(x)=g(x)).",
+                    r"\]",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Negated quantified statement]",
+                    r"\[",
+                    r"\neg(f=g\text{ on }A)\Longleftrightarrow \exists x\in A\;(f(x)\neq g(x)).",
+                    r"\]",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Failure modes]",
+                    r"\begin{description}",
+                    r"\item[Exposition.]",
+                    "At least one input separates their output values.",
+                    r"\end{description}",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Interpretation]",
+                    "Function equality is checked at every input.",
+                    r"\end{remark*}",
+                    r"\NoLocalDependencies",
+                    "",
+                ]
+            ),
+        )
+
+        codes = {finding.code for finding in validate_with_inventory(formal_decoration, volume)}
+
+        self.assertIn("failure_modes_exposition_only", codes)
+
+    def test_formal_decoration_allows_failure_modes_with_named_branch(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{definition}[Two Condition Object]",
+                    r"\label{def:two-condition-object-extra}",
+                    "An object is admissible when it satisfies two conditions.",
+                    r"\end{definition}",
+                    r"\begin{remark*}[Standard quantified statement]",
+                    r"\[",
+                    r"x\in A\Longleftrightarrow P(x)\wedge Q(x).",
+                    r"\]",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Failure modes]",
+                    r"\begin{description}",
+                    r"\item[Exposition.]",
+                    "Failure occurs by losing one of the defining conditions.",
+                    r"\item[First condition fails.]",
+                    r"\[",
+                    r"\exists x\;(x\notin A\wedge \neg P(x)).",
+                    r"\]",
+                    r"\end{description}",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Interpretation]",
+                    "The named branch records a genuine failure mode.",
+                    r"\end{remark*}",
+                    r"\NoLocalDependencies",
+                    "",
+                ]
+            ),
+        )
+
+        codes = {finding.code for finding in validate_with_inventory(formal_decoration, volume)}
+
+        self.assertNotIn("failure_modes_exposition_only", codes)
 
     def test_formal_decoration_flags_duplicate_support_blocks(self):
         volume = make_volume()

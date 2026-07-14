@@ -402,6 +402,17 @@ def _check_failure_modes_block(
                 block_line,
             )
         )
+    if items and all(item.group("title").strip().lower().rstrip(".") == "exposition" for item in items):
+        findings.append(
+            finding(
+                "failure_modes_exposition_only",
+                f"{label} Failure modes block contains only exposition; move it to Interpretation/Exposition or use the negated quantified statement instead.",
+                path,
+                volume_root,
+                block_line,
+                severity="review",
+            )
+        )
     for item in items:
         if item.group("title").strip().lower().rstrip(".") == "exposition":
             continue

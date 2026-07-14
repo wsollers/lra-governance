@@ -22,6 +22,11 @@ notation:
     symbol: '\operatorname{id}'
     category: function_operator
     description: Identity function.
+  - id: not:at-point-operation
+    name: AtPointOperationNotation
+    symbol: '\operatorname{AtPointOp}'
+    category: function_operator
+    description: Notation for applying a real operation to function values at a single input.
   - id: not:interior-operator
     symbol: '\operatorname{int}'
     category: topology_operator

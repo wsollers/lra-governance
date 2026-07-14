@@ -2,6 +2,193 @@
 # Governed by docs/governance/predicate-standards.md.
 
 predicates:
+  - id: pred:at-point-operation
+    name: AtPointOperation
+    kind: predicate
+    category: function
+    arguments:
+      - name: Op
+        role: operation
+      - name: f_tuple
+        role: functions
+      - name: x
+        role: point
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - at-point operation
+      - operation applied at a point
+    description: >
+      A value-level operation is applied to the values of a tuple of functions
+      at a single input.
+
+  - id: pred:pointwise-operation
+    name: PointwiseOperation
+    kind: predicate
+    category: function
+    arguments:
+      - name: Op
+        role: operation
+      - name: f_tuple
+        role: functions
+      - name: A
+        role: domain
+    returns: truth_value
+    ambient_argument: A
+    polymorphic: true
+    surface_forms:
+      - pointwise operation
+      - operation applied pointwise
+    description: >
+      A value-level operation is lifted to functions by applying it at every
+      input in the domain.
+
+  - id: pred:at-point-relation
+    name: AtPointRelation
+    kind: predicate
+    category: function
+    arguments:
+      - name: Rel
+        role: relation
+      - name: f_tuple
+        role: functions
+      - name: x
+        role: point
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - at-point relation
+      - relation at a point
+    description: >
+      A value-level relation is checked on the values of a tuple of functions
+      at a single input.
+
+  - id: pred:pointwise-relation
+    name: PointwiseRelation
+    kind: predicate
+    category: function
+    arguments:
+      - name: Rel
+        role: relation
+      - name: f_tuple
+        role: functions
+      - name: A
+        role: domain
+    returns: truth_value
+    ambient_argument: A
+    polymorphic: true
+    surface_forms:
+      - pointwise relation
+      - relation on a set pointwise
+    description: >
+      A value-level relation holds on a tuple of function values at every input
+      in the domain.
+
+  - id: pred:pointwise-relation-near
+    name: PointwiseRelationNear
+    kind: predicate
+    category: function
+    arguments:
+      - name: Rel
+        role: relation
+      - name: f_tuple
+        role: functions
+      - name: c
+        role: base_point
+      - name: A
+        role: domain
+    returns: truth_value
+    ambient_argument: A
+    polymorphic: true
+    surface_forms:
+      - pointwise relation near a point
+      - relation near a point
+    description: >
+      A value-level relation holds for function values throughout some deleted
+      neighbourhood of a base point inside the domain.
+
+  - id: pred:bounded-near
+    name: BoundedNear
+    kind: predicate
+    category: function
+    arguments:
+      - name: f
+        role: function
+      - name: c
+        role: base_point
+      - name: A
+        role: domain
+    returns: truth_value
+    ambient_argument: A
+    polymorphic: true
+    surface_forms:
+      - bounded near
+      - locally bounded
+    description: >
+      A real-valued function is bounded on some deleted neighbourhood of a base
+      point inside the domain.
+
+  - id: pred:bounded-away-from-zero
+    name: BoundedAwayFromZero
+    kind: predicate
+    category: function
+    arguments:
+      - name: f
+        role: function
+      - name: A
+        role: domain
+    returns: truth_value
+    ambient_argument: A
+    polymorphic: true
+    surface_forms:
+      - bounded away from zero
+      - separated from zero
+    description: >
+      The absolute value of a real-valued function has a positive lower bound
+      on the domain.
+
+  - id: pred:bounded-away-from-zero-near
+    name: BoundedAwayFromZeroNear
+    kind: predicate
+    category: function
+    arguments:
+      - name: f
+        role: function
+      - name: c
+        role: base_point
+      - name: A
+        role: domain
+    returns: truth_value
+    ambient_argument: A
+    polymorphic: true
+    surface_forms:
+      - bounded away from zero near
+      - locally separated from zero
+    description: >
+      A real-valued function is bounded away from zero on some deleted
+      neighbourhood of a base point inside the domain.
+
+  - id: pred:uniformly-bounded-family
+    name: UniformlyBoundedFamily
+    kind: predicate
+    category: function
+    arguments:
+      - name: F
+        role: family
+      - name: I
+        role: index_set
+      - name: A
+        role: domain
+    returns: truth_value
+    ambient_argument: A
+    polymorphic: true
+    surface_forms:
+      - uniformly bounded family
+      - family uniformly bounded on a set
+    description: >
+      One real bound controls every function in the family at every input in
+      the domain.
+
   - id: pred:within
     name: Within
     kind: predicate
