@@ -7,6 +7,25 @@ time before processing the corpus in batches. Source repositories are
 `lra-volume-i` through `lra-volume-viii`; vocabulary and policy come from
 `lra-governance`.
 
+## External reviewer requirement
+
+Review must be performed by the governed external transport in
+`docs/workflows/external-gpt-reviewer.md`. Codex prepares the input packet but may
+not generate or self-certify the semantic package.
+
+Required call properties:
+
+```yaml
+provider: openai_responses_api
+requested_model: gpt-5.6
+resolved_model: gpt-5.6-sol...
+reasoning_effort: high
+self_review: false
+```
+
+A Codex subagent, second Codex pass, or unverified manually written package is not
+an external review. Stop when the external transport is unavailable.
+
 ## One-at-a-time phase
 
 Continue one at a time until ten consecutive varied artifacts require no schema
@@ -29,6 +48,7 @@ source:
   file: "<path>"
   label: def:supremum
   environment_kind: definition
+  source_hash: "sha256:<digest>"
   current_tex: |
     ...
   nearby_context: |
@@ -50,6 +70,18 @@ verification_context:
 Send only the owning environment, attached support blocks, minimal convention
 context, and exact commits.
 
+## Reviewer invocation
+
+```powershell
+python <governance-root>\tools\governance\invoke_external_gpt_reviewer.py semantic `
+  --input <semantic-input.json> `
+  --output <label-root> `
+  --prompt <governance-root>\constitution\prompts\calibrate-semantic-artifact.md
+```
+
+The executor writes the package and `external-review-receipt.yaml`. Codex must not
+repair a partial result.
+
 ## Required return package
 
 ```text
@@ -62,48 +94,50 @@ context, and exact commits.
 ├── source-map.yaml
 ├── registry-needs.yaml
 ├── formalization-links.yaml
-└── proof-vault-links.yaml
+├── proof-vault-links.yaml
+└── external-review-receipt.yaml
 ```
 
-`artifact.yaml` is reviewed semantic content.
-`corrected.tex` preserves governed environments, labels, titles, block order,
-proof links, and dependencies.
-`source.patch` is the exact unified diff.
-`validation.yaml` contains all checks.
-`source-map.yaml` maps fields to source lines and origin classes.
-`registry-needs.yaml` reports missing/ambiguous canonical vocabulary.
-The two resolver files contain refreshable Lean/Mathlib and proof-vault lookup data.
+`artifact.yaml` is reviewed semantic content. `corrected.tex` preserves governed
+environments, labels, titles, block order, proof links, and dependencies.
+`source.patch` is the exact unified diff. The other YAML files record validation,
+source provenance, registry needs, and refreshable verification links. The receipt
+records the external GPT-5.6 response evidence.
 
 ## Codex integration rules
 
-1. Validate `artifact.yaml`.
-2. Stop on errors or blocking ambiguity.
-3. Compare returned TeX and patch with the exact target.
-4. Apply only the reviewed environment patch.
-5. Preserve unrelated source.
-6. Run volume governance validation and the target build.
-7. Store the approved item as a golden fixture.
-8. Report every applied file and check.
+1. Validate `artifact.yaml` and `package.yaml`.
+2. Live-verify the external response evidence.
+3. Stop on errors, blocking ambiguity, wrong model, or unverifiable response ID.
+4. Compare returned TeX and patch with the exact target.
+5. Apply only the reviewed environment patch.
+6. Preserve unrelated source.
+7. Run volume governance validation and the actual target build.
+8. Store the approved item as a golden fixture.
+9. Report every applied file and check.
 
-Do not hand-correct renderer-owned TeX. Patch the record or renderer and regenerate.
+Do not hand-correct reviewer or renderer output. Route defects back through a new
+external review call or fix the schema/renderer under separate approval.
 
 ## Validation
 
 ```powershell
-python tools\governance\validate_semantic_artifact.py `
+python <governance-root>\tools\governance\validate_semantic_artifact.py `
   --artifact <artifact.yaml> `
   --package-dir <returned-package-directory> `
-  --governance-root <lra-governance> `
-  --repos-root F:\repos `
+  --governance-root <governance-root> `
+  --repos-root <repos-root> `
   --strict
+
+python <governance-root>\tools\governance\validate_external_reviewer_evidence.py `
+  --package <returned-package-directory>\package.yaml `
+  --verify-live
 ```
 
-The validator covers schema, atomic labels, registry IDs/arities, binder scope,
-logical policy, relationship namespaces, verification-link shape, unresolved
-ambiguity, and presentation-key exclusion.
-
-Owning-repo checks additionally validate exact label targets, compilation, Lean
-builds, Mathlib declaration resolution, and proof-vault routes.
+The first validator covers schema, atomic labels, registry IDs/arities, binder
+scope, logical policy, relationships, verification links, unresolved ambiguity,
+and presentation-key exclusion. The second retrieves the stored external result
+and verifies its ID, GPT-5.6 model, completion status, and output hash.
 
 ## Golden fixtures
 
@@ -130,14 +164,12 @@ Move to dependency-related groups of five only when:
 - registry signatures and ambient arguments resolve;
 - source maps preserve origin distinctions;
 - Lean and proof-vault data remain foreign keys, not copied state;
-- every golden fixture still passes.
+- every external response live-verifies;
+- every golden fixture passes.
 
 Route unusual items back to individual calibration.
 
 ## Reversible topic audit mode
 
-For topic-by-topic review that stores semantic packages and validation evidence but
-must leave the canonical TeX unchanged, use
-`docs/workflows/topic-semantic-audit-loop.md`. That workflow temporarily applies
-one reviewed artifact, validates it, reverts the source commit, and only then moves
-to the next artifact.
+For topic-by-topic review that stores packages and evidence but leaves canonical
+TeX unchanged, use `docs/workflows/topic-semantic-audit-loop.md`.
