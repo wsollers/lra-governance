@@ -75,7 +75,14 @@ def expected_overall_for_status(status: str) -> set[str]:
         return {"blocked"}
     if status == "failed":
         return {"fail", "infrastructure_error"}
-    return {"not_run", "pass", "pass_with_warnings", "fail", "blocked", "infrastructure_error"}
+    return {
+        "not_run",
+        "pass",
+        "pass_with_warnings",
+        "fail",
+        "blocked",
+        "infrastructure_error",
+    }
 
 
 def validate_audit_record(
@@ -91,8 +98,12 @@ def validate_audit_record(
         result.errors.append(f"artifacts[{index}].audit_validation_file: {exc}")
         return
 
-    schema_validate(audit, audit_schema_path, f"audit[{entry.get('label')}]"," 
-        " result)
+    schema_validate(
+        audit,
+        audit_schema_path,
+        f"audit[{entry.get('label')}]",
+        result,
+    )
 
     artifact = audit.get("artifact") or {}
     crosswalk = {
@@ -135,7 +146,9 @@ def validate_audit_record(
         result.errors.append(
             f"artifacts[{index}].logic_result: manifest and audit record differ"
         )
-    if bool(entry.get("source_restored")) != bool(reversion.get("source_restored")):
+    if bool(entry.get("source_restored")) != bool(
+        reversion.get("source_restored")
+    ):
         result.errors.append(
             f"artifacts[{index}].source_restored: manifest and audit record differ"
         )
@@ -161,7 +174,9 @@ def validate_audit_record(
             f"artifacts[{index}].revert_commit: temporary application lacks revert commit"
         )
     if reversion.get("source_restored"):
-        for file_index, item in enumerate(reversion.get("verified_files") or [], start=1):
+        for file_index, item in enumerate(
+            reversion.get("verified_files") or [], start=1
+        ):
             if not item.get("matches"):
                 result.errors.append(
                     f"artifacts[{index}].reversion.verified_files[{file_index}]: "
@@ -196,7 +211,9 @@ def semantic_checks(
     for source in (data.get("source_baseline") or {}).get("source_files") or []:
         path = str((source or {}).get("path") or "")
         if path in source_paths:
-            result.errors.append(f"source_baseline.source_files: duplicate path {path}")
+            result.errors.append(
+                f"source_baseline.source_files: duplicate path {path}"
+            )
         source_paths.add(path)
 
     for index, entry in enumerate(artifacts, start=1):
@@ -206,10 +223,14 @@ def semantic_checks(
         order = entry.get("order")
         status = str(entry.get("status") or "")
         review_directory = Path(str(entry.get("review_directory") or ""))
-        audit_validation_file = Path(str(entry.get("audit_validation_file") or ""))
+        audit_validation_file = Path(
+            str(entry.get("audit_validation_file") or "")
+        )
 
         if label in labels:
-            result.errors.append(f"artifacts[{index}].label: duplicate label {label}")
+            result.errors.append(
+                f"artifacts[{index}].label: duplicate label {label}"
+            )
         labels.add(label)
         if isinstance(order, int):
             orders.append(order)
@@ -217,7 +238,8 @@ def semantic_checks(
         expected_slug = label.replace(":", "-")
         if review_directory.name != expected_slug:
             result.errors.append(
-                f"artifacts[{index}].review_directory: expected basename {expected_slug!r}"
+                f"artifacts[{index}].review_directory: expected basename "
+                f"{expected_slug!r}"
             )
         expected_audit = review_directory / AUDIT_FILE
         if audit_validation_file != expected_audit:
@@ -226,7 +248,11 @@ def semantic_checks(
                 f"{expected_audit.as_posix()!r}"
             )
 
-        folder = review_directory if review_directory.is_absolute() else repo_root / review_directory
+        folder = (
+            review_directory
+            if review_directory.is_absolute()
+            else repo_root / review_directory
+        )
         audit_path = (
             audit_validation_file
             if audit_validation_file.is_absolute()
@@ -236,7 +262,8 @@ def semantic_checks(
         if status == "queued":
             if folder.exists():
                 result.warnings.append(
-                    f"artifacts[{index}]: queued entry already has review directory {folder}"
+                    f"artifacts[{index}]: queued entry already has review directory "
+                    f"{folder}"
                 )
             continue
 
@@ -246,10 +273,13 @@ def semantic_checks(
             )
             continue
 
-        missing_review = sorted(name for name in REVIEW_FILES if not (folder / name).exists())
+        missing_review = sorted(
+            name for name in REVIEW_FILES if not (folder / name).exists()
+        )
         if status in {"reviewed", "validated", "failed"} and missing_review:
             result.errors.append(
-                f"artifacts[{index}]: missing review files: {', '.join(missing_review)}"
+                f"artifacts[{index}]: missing review files: "
+                f"{', '.join(missing_review)}"
             )
 
         if status in TERMINAL:
@@ -257,7 +287,8 @@ def semantic_checks(
             if not audit_path.exists():
                 if strict:
                     result.errors.append(
-                        f"artifacts[{index}].audit_validation_file: missing {audit_path}"
+                        f"artifacts[{index}].audit_validation_file: "
+                        f"missing {audit_path}"
                     )
             elif audit_schema_path.exists():
                 validate_audit_record(
@@ -276,19 +307,23 @@ def semantic_checks(
             ):
                 if not entry.get(field_name):
                     result.errors.append(
-                        f"artifacts[{index}].{field_name}: required for validated entry"
+                        f"artifacts[{index}].{field_name}: required for "
+                        "validated entry"
                     )
             if not entry.get("source_restored"):
                 result.errors.append(
-                    f"artifacts[{index}].source_restored: validated source must be restored"
+                    f"artifacts[{index}].source_restored: validated source "
+                    "must be restored"
                 )
             if entry.get("deterministic_result") not in PASS_RESULTS:
                 result.errors.append(
-                    f"artifacts[{index}].deterministic_result: validated entry did not pass"
+                    f"artifacts[{index}].deterministic_result: validated "
+                    "entry did not pass"
                 )
             if entry.get("logic_result") not in PASS_RESULTS:
                 result.errors.append(
-                    f"artifacts[{index}].logic_result: validated entry did not pass"
+                    f"artifacts[{index}].logic_result: validated entry did "
+                    "not pass"
                 )
 
         if (
@@ -297,7 +332,8 @@ def semantic_checks(
             and status in TERMINAL
         ):
             result.errors.append(
-                f"artifacts[{index}]: temporary source commit lacks matching revert"
+                f"artifacts[{index}]: temporary source commit lacks matching "
+                "revert"
             )
 
     if sorted(orders) != list(range(1, len(artifacts) + 1)):
@@ -314,12 +350,15 @@ def semantic_checks(
     for key, value in expected.items():
         if summary.get(key) != value:
             result.errors.append(
-                f"summary.{key}: expected {value}, found {summary.get(key)!r}"
+                f"summary.{key}: expected {value}, "
+                f"found {summary.get(key)!r}"
             )
 
     all_terminal = len(artifacts) == sum(counts.values())
     if strict and not topic.get("inventory_commit"):
-        result.errors.append("topic.inventory_commit: required in strict mode")
+        result.errors.append(
+            "topic.inventory_commit: required in strict mode"
+        )
     if all_terminal:
         if not summary.get("source_restored"):
             result.errors.append(
