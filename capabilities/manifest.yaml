@@ -16,6 +16,21 @@ capabilities:
       - capabilities/build-repo/build_repo.py
     verify:
       - "python capabilities/build-repo/build_repo.py --root {root}"
+  - id: calibrate-semantic-artifact
+    applies_to: [volume]
+    triggers: ["calibrate semantic artifact", "semantic artifact", "review semantic artifact",
+               "artifact yaml", "calibrate definition", "calibrate theorem"]
+    reads:
+      - capabilities/calibrate-semantic-artifact/capability.md
+      - docs/workflows/semantic-artifact-calibration.md
+      - docs/architecture/semantic-artifact-record.md
+      - constitution/prompts/calibrate-semantic-artifact.md
+      - constitution/schema/semantic-artifact.schema.json
+      - constitution/schema/semantic-artifact-package.schema.json
+      - constitution/schema/semantic-artifact-support.schema.json
+      - tools/governance/validate_semantic_artifact.py
+    verify:
+      - "python tools/governance/validate_semantic_artifact.py --artifact {target} --governance-root {canonical} --strict"
   - id: author-statement
     applies_to: [volume]
     triggers: ["author statement", "generate the latex", "append the", "the theorem",
