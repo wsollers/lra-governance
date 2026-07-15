@@ -54,9 +54,10 @@ jobs:
       - name: Test capability routing
         run: python capabilities/test_resolve.py
 
-      - name: Test semantic artifact validators
+      - name: Test semantic artifact validators and transport
         run: |
           python -m unittest \
             tools/governance/test_validate_semantic_artifact.py \
             tools/governance/test_validate_topic_semantic_audit.py \
-            tools/governance/test_validate_external_reviewer_evidence.py
+            tools/governance/test_validate_external_reviewer_evidence.py \
+            tools/governance/test_invoke_external_gpt_reviewer.py
