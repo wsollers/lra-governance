@@ -1,0 +1,45 @@
+schema_version: lra-topic-semantic-audit/1.0
+topic:
+  repository: wsollers/lra-volume-iii
+  branch: audit/bounds-extremals-semantic-artifacts
+  volume: volume-iii
+  book: book-analysis-i
+  chapter: bounding
+  topic_id: bounds-extremals
+  notes_directory: volume-iii/book-analysis-i/bounding/notes/bounds-extremals
+  governance_commit: dddddddddddddddddddddddddddddddddddddddd
+  inventory_commit: eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+  started_at: null
+  completed_at: null
+source_baseline:
+  commit: ffffffffffffffffffffffffffffffffffffffff
+  router_closure_hash: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  source_files:
+    - path: volume-iii/book-analysis-i/bounding/notes/bounds-extremals/notes-bounds-extremals.tex
+      blob_sha: '1111111111111111111111111111111111111111'
+artifacts:
+  - order: 1
+    label: def:supremum
+    kind: definition
+    title: Supremum
+    source_file: volume-iii/book-analysis-i/bounding/notes/bounds-extremals/notes-bounds-extremals.tex
+    source_line_start: 100
+    source_line_end: 150
+    review_directory: volume-iii/book-analysis-i/bounding/notes/bounds-extremals/def-supremum
+    audit_validation_file: volume-iii/book-analysis-i/bounding/notes/bounds-extremals/def-supremum/audit-validation.yaml
+    status: validated
+    review_commit: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    temporary_apply_commit: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+    revert_commit: cccccccccccccccccccccccccccccccccccccccc
+    deterministic_result: pass
+    logic_result: pass
+    source_restored: true
+    blocking_issues: []
+    notes: null
+summary:
+  inventory_count: 1
+  validated_count: 1
+  failed_count: 0
+  blocked_count: 0
+  source_restored: true
+  unresolved_labels: []
