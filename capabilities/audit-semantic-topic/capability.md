@@ -18,7 +18,7 @@ validate topic artifacts <topic>
 - Target split volume repository and exact `notes/<topic>/` identifier.
 - Clean target branch or permission to create `audit/<topic>-semantic-artifacts`.
 - `lra-governance` checkout or `LRA_GOVERNANCE_ROOT`.
-- `OPENAI_API_KEY` and outbound Responses API access.
+- External OpenAI Responses API credentials and network access.
 
 ## Required reviewer transport
 
@@ -38,7 +38,7 @@ custom Codex agent, or Workspace Agent trigger is not an accepted substitute.
 
 1. Follow `docs/workflows/topic-semantic-audit-loop.md` and
    `docs/workflows/external-gpt-reviewer.md`.
-2. Use `constitution/prompts/audit-topic-semantic-artifacts.md`.
+2. Use `constitution/prompts/audit-topic-semantic-artifacts-external.md`.
 3. Enter plan mode before edits and pass external-review preflight.
 4. Inventory reachable primary formal environments in source order.
 5. Commit the queued topic manifest before reviewer calls.
@@ -60,8 +60,8 @@ custom Codex agent, or Workspace Agent trigger is not an accepted substitute.
 
 - reason through or author the semantic package in Codex;
 - use a Codex subagent or second Codex pass as reviewer;
-- proceed when `OPENAI_API_KEY`, network access, response ID, or live verification
-  is unavailable;
+- proceed when external network access, response ID, or live verification is
+  unavailable;
 - accept a model other than requested `gpt-5.6` resolving to GPT-5.6 Sol;
 - reuse the semantic response ID for logic validation;
 - mark `REVIEW_PACKAGE_NOT_PRODUCED` as a terminal blocker;
