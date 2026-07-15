@@ -9,4 +9,9 @@ Current schema sources remain under `constitution/schema/` and
 - `constitution/schema/file-schema.yaml`
 - `constitution/schema/block-registry.yaml`
 - `constitution/schema/artifact-matrix.yaml`
+- `constitution/schema/semantic-artifact.schema.json`
+- `constitution/schema/semantic-artifact-package.schema.json`
+- `constitution/schema/semantic-artifact-support.schema.json`
 - `constitution/schemas/audit-report.json`
+
+Semantic-artifact examples live under `constitution/schema/examples/`.

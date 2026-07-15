@@ -7,6 +7,7 @@ the success gates.
 | Trigger | Capability | Overlay | Reads (load only these) | Bound verifier (must exit 0) |
 |---|---|---|---|---|
 | Build, validate, check, run CI, or monitor workflows for a repo | `build-repo/` | `overlays/<repo>.md` | capability doc, `reference-index.md`, `build_repo.py` | `build_repo.py` exits 0 |
+| Calibrate one formal environment into reviewed semantic YAML and governed LaTeX | `calibrate-semantic-artifact/` | `overlays/<repo>.md` | capability doc, semantic-artifact workflow/design, calibration prompt, schemas, validator, registries, one nearby example | semantic artifact/package validation passes; volume validation and build pass |
 | Write a theorem, lemma, proposition, corollary, axiom, or general statement | `author-statement/` | `overlays/<repo>.md` | capability doc, `reference-index.md`, `proof_stub.py`, registries if needed, one nearby example | validation passes; governance book build succeeds |
 | Write a definition | `author-definition/` | `overlays/<repo>.md` | capability doc, `reference-index.md`, `verify.py`, predicates registry if needed, one nearby example | validation passes; governance book build succeeds |
 | Scaffold a planned chapter | `author-stub-chapter/` | `overlays/<repo>.md` | capability doc, `reference-index.md`, `stub_chapter.py` | validation passes; governance book build succeeds |

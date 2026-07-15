@@ -1,0 +1,107 @@
+schema_version: lra.semantic-artifact/1.0
+identity:
+  label: def:example
+  kind: definition
+  title: Example
+  canonical_name: Example
+  status: draft
+  atomicity:
+    status: atomic
+    concepts_detected:
+      - Example
+    owning_concept: Example
+    split_reason: null
+location:
+  repository: wsollers/lra-volume-i
+  commit: '0000000000000000000000000000000000000000'
+  volume: i
+  book: mathematical-logic-and-proof
+  chapter: propositional-logic
+  topic: syntax
+  source_file: volume-i/book-logic/propositional-logic/notes/syntax/notes-syntax.tex
+  source_line_start: 1
+  source_line_end: 20
+  source_hash: sha256:0000000000000000000000000000000000000000000000000000000000000000
+classification:
+  mathematical_domain: logic
+  artifact_form: predicate_definition
+  logical_shape: atomic
+  logical_framework: mathematical_vernacular
+  language_level: metalanguage
+context: []
+parameters:
+  - id: param-phi
+    symbol: '\varphi'
+    role: object
+    type:
+      kind: formula
+      reference: term:formula
+      carrier: null
+      ambient: null
+    implicit: false
+assumptions: []
+statement:
+  canonical_prose: Replace with reviewed prose.
+  canonical_latex: Replace with reviewed LaTeX.
+  semantic_ast:
+    kind: raw_latex
+    latex: '\operatorname{Example}(\varphi)'
+logical_forms:
+  standard_quantified:
+    latex: Replace with the standard quantified statement.
+    ast:
+      kind: raw_latex
+      latex: '\operatorname{Example}(\varphi)'
+  predicate_reading: null
+  negation:
+    mechanical: null
+    approved_normal_form: null
+    normalization_requires: []
+  contrapositive: null
+  equivalent_forms: []
+semantics:
+  witness_dependencies: []
+  vacuity_behavior: []
+  definedness:
+    mode: total
+    conditions: []
+    obligations: []
+  uniqueness_conditions: []
+  equality_cases: []
+  edge_cases: []
+failure_analysis:
+  applicability_failures: []
+  statement_failure_modes: []
+  counterexample_shape: null
+relationships:
+  dependency_edges: []
+  ontology_edges: []
+  provenance_edges: []
+  proof_edges: []
+notation:
+  introduced: []
+  used: []
+  local_conventions: []
+exposition:
+  interpretation: Replace with reviewed interpretation.
+  exposition: []
+  examples: []
+  non_examples: []
+  common_confusions: []
+verification:
+  canonical_proof: null
+  formalizations: []
+  external_library_crosswalks: []
+  proof_vault_records: []
+provenance:
+  explicit_from_source: []
+  normalized_from_source: []
+  inferred_from_registry: []
+  generated_by_analysis: []
+  unresolved: []
+governance:
+  governance_repository: wsollers/lra-governance
+  governance_commit: '0000000000000000000000000000000000000000'
+  registry_commit: '0000000000000000000000000000000000000000'
+  schema_commit: '0000000000000000000000000000000000000000'
+  renderer_contract: governed-tex-v1
