@@ -60,14 +60,18 @@ def schema_validate(data: dict[str, Any], schema_path: Path, result: Result) -> 
         result.errors.append(f"schema:{location}: {error.message}")
 
 
-def semantic_checks(data: dict[str, Any], manifest_path: Path, strict: bool, result: Result) -> None:
+def semantic_checks(
+    data: dict[str, Any],
+    repo_root: Path,
+    strict: bool,
+    result: Result,
+) -> None:
     artifacts = data.get("artifacts") or []
     summary = data.get("summary") or {}
 
     labels: set[str] = set()
     orders: list[int] = []
     counts = {"validated": 0, "failed": 0, "blocked": 0}
-    root = manifest_path.parent
 
     for index, entry in enumerate(artifacts, start=1):
         if not isinstance(entry, dict):
@@ -89,7 +93,7 @@ def semantic_checks(data: dict[str, Any], manifest_path: Path, strict: bool, res
                 f"artifacts[{index}].review_directory: expected basename {expected_slug!r}"
             )
 
-        folder = review_directory if review_directory.is_absolute() else root.parent.parent.parent / review_directory
+        folder = review_directory if review_directory.is_absolute() else repo_root / review_directory
         if not folder.exists():
             result.errors.append(f"artifacts[{index}].review_directory: missing directory {folder}")
             continue
@@ -157,6 +161,7 @@ def format_report(result: Result) -> str:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("manifest", type=Path)
+    parser.add_argument("--repo-root", type=Path, required=True)
     parser.add_argument("--governance-root", type=Path, default=Path(__file__).resolve().parents[2])
     parser.add_argument("--strict", action="store_true")
     parser.add_argument("--format", choices=("text", "json"), default="text")
@@ -176,7 +181,7 @@ def main() -> int:
         schema_validate(data, schema_path, result)
 
     if data:
-        semantic_checks(data, args.manifest, args.strict, result)
+        semantic_checks(data, args.repo_root.resolve(), args.strict, result)
 
     if args.format == "json":
         print(json.dumps({"clean": result.clean, "errors": result.errors, "warnings": result.warnings}, indent=2))
