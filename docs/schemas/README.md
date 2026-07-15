@@ -12,6 +12,8 @@ Current schema sources remain under `constitution/schema/` and
 - `constitution/schema/semantic-artifact.schema.json`
 - `constitution/schema/semantic-artifact-package.schema.json`
 - `constitution/schema/semantic-artifact-support.schema.json`
+- `constitution/schema/artifact-audit-validation.schema.json`
+- `constitution/schema/topic-semantic-audit.schema.json`
 - `constitution/schemas/audit-report.json`
 
 Semantic-artifact examples live under `constitution/schema/examples/`.
