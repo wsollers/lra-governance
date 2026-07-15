@@ -71,6 +71,12 @@ DEPENDENT_DECORATION_PARENTS = {
     "negation predicate reading": "negated quantified statement",
     "contrapositive predicate reading": "contrapositive quantified statement",
 }
+FAILURE_MODE_DECOMPOSITION_TRIGGERS = {
+    "negated quantified statement",
+    "negation predicate reading",
+    "contrapositive quantified statement",
+    "contrapositive predicate reading",
+}
 REPEATABLE_DECORATION_BLOCKS = {"failure modes", "exposition", "examples", "non-examples"}
 FORBIDDEN_DECORATION_BY_ENV = {
     "definition": {"contrapositive quantified statement", "contrapositive predicate reading"},
@@ -326,6 +332,27 @@ def _check_decoration_blocks(
                     line,
                 )
             )
+    if seen_keys & FAILURE_MODE_DECOMPOSITION_TRIGGERS:
+        if "failure modes" not in seen_keys:
+            findings.append(
+                finding(
+                    "missing_failure_mode_decomposition",
+                    f"{label} has negation or contrapositive support but lacks a Failure modes decomposition block.",
+                    path,
+                    volume_root,
+                    line,
+                )
+            )
+        elif not _has_named_failure_mode_branch(decoration):
+            findings.append(
+                finding(
+                    "failure_mode_decomposition_missing_branch",
+                    f"{label} has negation or contrapositive support, so its Failure modes block must include at least one named non-exposition branch.",
+                    path,
+                    volume_root,
+                    line,
+                )
+            )
     for (left_key, left_rank, _left_pos), (right_key, right_rank, right_pos) in zip(seen, seen[1:]):
         if right_rank < left_rank:
             findings.append(
@@ -364,6 +391,20 @@ def _check_duplicate_decoration_blocks(
                 line + _line_at(decoration, pos) - 1,
             )
         )
+
+
+def _has_named_failure_mode_branch(decoration: str) -> bool:
+    for body_match in re.finditer(
+        r"\\begin\{remark\*\}\[Failure modes\](?P<body>[\s\S]*?)\\end\{remark\*\}",
+        decoration,
+        re.IGNORECASE,
+    ):
+        body = body_match.group("body")
+        for item in re.finditer(r"\\item\[(?P<title>[^\]]+)\]", body):
+            title = item.group("title").strip().lower().rstrip(".")
+            if title != "exposition":
+                return True
+    return False
 
 
 def _check_failure_modes_block(

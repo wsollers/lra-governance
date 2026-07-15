@@ -2202,6 +2202,122 @@ class ValidateVolumeTests(unittest.TestCase):
         codes = {finding.code for finding in validate_with_inventory(formal_decoration, volume)}
 
         self.assertNotIn("failure_modes_exposition_only", codes)
+        self.assertNotIn("failure_mode_decomposition_missing_branch", codes)
+
+    def test_formal_decoration_requires_failure_modes_for_negation_support(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{definition}[Negated Without Decomposition]",
+                    r"\label{def:negated-without-decomposition}",
+                    "An object is admissible when it satisfies a condition.",
+                    r"\end{definition}",
+                    r"\begin{remark*}[Standard quantified statement]",
+                    r"\[",
+                    r"x\in A\Longleftrightarrow P(x).",
+                    r"\]",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Negated quantified statement]",
+                    r"\[",
+                    r"x\notin A\Longleftrightarrow \neg P(x).",
+                    r"\]",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Interpretation]",
+                    "The negation identifies the failed condition.",
+                    r"\end{remark*}",
+                    r"\NoLocalDependencies",
+                    "",
+                ]
+            ),
+        )
+
+        codes = {finding.code for finding in validate_with_inventory(formal_decoration, volume)}
+
+        self.assertIn("missing_failure_mode_decomposition", codes)
+
+    def test_formal_decoration_requires_failure_modes_for_contrapositive_support(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{proposition}[Contrapositive Without Decomposition]",
+                    r"\label{prop:contrapositive-without-decomposition}",
+                    r"If $P(x)$, then $Q(x)$.",
+                    r"\hyperref[prf:contrapositive-without-decomposition]{\textit{Go to proof.}}",
+                    r"\end{proposition}",
+                    r"\begin{remark*}[Standard quantified statement]",
+                    r"\[",
+                    r"\forall x\in A,\quad P(x)\Longrightarrow Q(x).",
+                    r"\]",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Contrapositive quantified statement]",
+                    r"\[",
+                    r"\forall x\in A,\quad \neg Q(x)\Longrightarrow \neg P(x).",
+                    r"\]",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Interpretation]",
+                    "The contrapositive records the same implication backwards through failure.",
+                    r"\end{remark*}",
+                    r"\begin{dependencies}",
+                    r"\begin{itemize}",
+                    r"  \item \hyperref[ax:order-foundation]{Order foundation}.",
+                    r"\end{itemize}",
+                    r"\end{dependencies}",
+                    "",
+                ]
+            ),
+        )
+
+        codes = {finding.code for finding in validate_with_inventory(formal_decoration, volume)}
+
+        self.assertIn("missing_failure_mode_decomposition", codes)
+
+    def test_formal_decoration_accepts_negation_with_failure_mode_decomposition(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{definition}[Negated With Decomposition]",
+                    r"\label{def:negated-with-decomposition}",
+                    "An object is admissible when it satisfies a condition.",
+                    r"\end{definition}",
+                    r"\begin{remark*}[Standard quantified statement]",
+                    r"\[",
+                    r"x\in A\Longleftrightarrow P(x).",
+                    r"\]",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Negated quantified statement]",
+                    r"\[",
+                    r"x\notin A\Longleftrightarrow \neg P(x).",
+                    r"\]",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Failure modes]",
+                    r"\begin{description}",
+                    r"\item[Exposition.]",
+                    "Failure means the defining condition does not hold.",
+                    r"\item[Condition fails.]",
+                    r"\[",
+                    r"x\notin A\Longleftrightarrow \neg P(x).",
+                    r"\]",
+                    r"\end{description}",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Interpretation]",
+                    "The named branch records the actual failed condition.",
+                    r"\end{remark*}",
+                    r"\NoLocalDependencies",
+                    "",
+                ]
+            ),
+        )
+
+        codes = {finding.code for finding in validate_with_inventory(formal_decoration, volume)}
+
+        self.assertNotIn("missing_failure_mode_decomposition", codes)
+        self.assertNotIn("failure_mode_decomposition_missing_branch", codes)
 
     def test_formal_decoration_flags_duplicate_support_blocks(self):
         volume = make_volume()
