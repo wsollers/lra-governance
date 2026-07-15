@@ -82,22 +82,23 @@ class ExternalReviewerTransportTests(unittest.TestCase):
             "semantic_reviewer",
             bundle,
         )
-        self.assertTrue(payload["background"] if "background" in payload else True)
+        self.assertEqual(payload["model"], "gpt-5.6")
+        self.assertEqual(payload["reasoning"]["effort"], "high")
         self.assertIn("constitution/schema/semantic-artifact.schema.json", input_text)
         self.assertIn("predicates.yaml", input_text)
         self.assertIn("structures.yaml", input_text)
         self.assertIn("docs/architecture/semantic-artifact-record.md", input_text)
-        self.assertIn((ROOT / "predicates.yaml").read_text(encoding="utf-8")[:120], input_text)
+        self.assertIn("predicates:", input_text)
 
     def test_background_response_polls_until_completed(self):
-        calls: list[tuple[str, str]] = []
+        calls: list[tuple[str, str, dict | None]] = []
         queued = {"id": "resp_poll", "model": "gpt-5.6-sol", "status": "queued"}
         running = {"id": "resp_poll", "model": "gpt-5.6-sol", "status": "in_progress"}
         completed = response("resp_poll", semantic_result())
         sequence = iter([(queued, "req_1"), (running, None), (completed, None)])
 
         def fake_request(method, url, api_key, payload=None, timeout=60.0):
-            calls.append((method, url))
+            calls.append((method, url, payload))
             return next(sequence)
 
         with patch.object(MODULE, "request_json", side_effect=fake_request):
@@ -111,8 +112,10 @@ class ExternalReviewerTransportTests(unittest.TestCase):
             )
         self.assertEqual(request_id, "req_1")
         self.assertEqual(final["status"], "completed")
-        self.assertEqual([method for method, _ in calls], ["POST", "GET", "GET"])
+        self.assertEqual([method for method, _, _ in calls], ["POST", "GET", "GET"])
         self.assertTrue(calls[1][1].endswith("/resp_poll"))
+        self.assertIsNotNone(calls[0][2])
+        self.assertTrue(calls[0][2]["background"])
 
     def test_failed_validation_is_sent_to_distinct_external_repair_call(self):
         with tempfile.TemporaryDirectory() as temp:
