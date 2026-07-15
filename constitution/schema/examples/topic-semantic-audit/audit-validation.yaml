@@ -1,0 +1,85 @@
+schema_version: lra-artifact-audit-validation/1.0
+artifact:
+  label: def:supremum
+  kind: definition
+  source_file: volume-iii/book-analysis-i/bounding/notes/bounds-extremals/notes-bounds-extremals.tex
+  review_directory: volume-iii/book-analysis-i/bounding/notes/bounds-extremals/def-supremum
+review_package:
+  result: pass
+  review_commit: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  semantic_artifact_command: >-
+    python tools/governance/validate_semantic_artifact.py --artifact artifact.yaml --strict
+  exit_code: 0
+  findings: []
+temporary_application:
+  applied: true
+  commit: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+  changed_files:
+    - path: volume-iii/book-analysis-i/bounding/notes/bounds-extremals/notes-bounds-extremals.tex
+      pre_apply_blob_sha: '1111111111111111111111111111111111111111'
+      tested_blob_sha: '2222222222222222222222222222222222222222'
+deterministic_validation:
+  result: pass
+  checks:
+    - id: semantic_artifact
+      command: >-
+        python tools/governance/validate_semantic_artifact.py --artifact artifact.yaml --strict
+      result: pass
+      exit_code: 0
+      started_at: null
+      completed_at: null
+      log_path: null
+      findings: []
+    - id: volume
+      command: >-
+        python tools/governance/validate_volume.py lra-volume-iii --fail-on-errors
+      result: pass
+      exit_code: 0
+      started_at: null
+      completed_at: null
+      log_path: null
+      findings: []
+    - id: build
+      command: python ../lra-governance/scripts/build_volume.py --root .
+      result: pass
+      exit_code: 0
+      started_at: null
+      completed_at: null
+      log_path: null
+      findings: []
+logic_validation:
+  result: pass
+  reviewer:
+    provider: OpenAI
+    model: gpt-reviewer
+    prompt: constitution/prompts/validate-semantic-artifact-logic.md
+    run_id: null
+  checks:
+    binder_scope: {result: pass, notes: null}
+    language_level: {result: pass, notes: null}
+    assumptions_and_conclusion: {result: pass, notes: null}
+    statement_shape: {result: pass, notes: null}
+    quantifier_order: {result: pass, notes: null}
+    witness_dependencies: {result: pass, notes: null}
+    negation: {result: pass, notes: null}
+    normalization_assumptions: {result: pass, notes: null}
+    contrapositive: {result: not_applicable, notes: Definitions do not have contrapositives.}
+    applicability_failure: {result: pass, notes: null}
+    order_strength: {result: pass, notes: null}
+    predicate_signatures: {result: pass, notes: null}
+    failure_modes: {result: pass, notes: null}
+    yaml_tex_equivalence: {result: pass, notes: null}
+  findings: []
+reversion:
+  required: true
+  commit: cccccccccccccccccccccccccccccccccccccccc
+  source_restored: true
+  verified_files:
+    - path: volume-iii/book-analysis-i/bounding/notes/bounds-extremals/notes-bounds-extremals.tex
+      expected_blob_sha: '1111111111111111111111111111111111111111'
+      actual_blob_sha: '1111111111111111111111111111111111111111'
+      matches: true
+overall:
+  result: pass
+  blocking_issues: []
+  warnings: []

@@ -1,0 +1,209 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lra.local/schema/artifact-audit-validation.schema.json",
+  "title": "LRA Artifact Audit Validation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "artifact",
+    "review_package",
+    "temporary_application",
+    "deterministic_validation",
+    "logic_validation",
+    "reversion",
+    "overall"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "lra-artifact-audit-validation/1.0"
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "kind", "source_file", "review_directory"],
+      "properties": {
+        "label": {"type": "string", "pattern": "^(def|ax|thm|lem|prop|cor):[a-z0-9]+(?:-[a-z0-9]+)*$"},
+        "kind": {"enum": ["definition", "axiom", "theorem", "lemma", "proposition", "corollary"]},
+        "source_file": {"type": "string", "minLength": 1},
+        "review_directory": {"type": "string", "minLength": 1}
+      }
+    },
+    "review_package": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["result", "review_commit", "semantic_artifact_command", "exit_code", "findings"],
+      "properties": {
+        "result": {"$ref": "#/$defs/result"},
+        "review_commit": {"anyOf": [{"$ref": "#/$defs/commit"}, {"type": "null"}]},
+        "semantic_artifact_command": {"type": ["string", "null"]},
+        "exit_code": {"type": ["integer", "null"]},
+        "findings": {"type": "array", "items": {"$ref": "#/$defs/finding"}}
+      }
+    },
+    "temporary_application": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["applied", "commit", "changed_files"],
+      "properties": {
+        "applied": {"type": "boolean"},
+        "commit": {"anyOf": [{"$ref": "#/$defs/commit"}, {"type": "null"}]},
+        "changed_files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "pre_apply_blob_sha", "tested_blob_sha"],
+            "properties": {
+              "path": {"type": "string", "minLength": 1},
+              "pre_apply_blob_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+              "tested_blob_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+            }
+          }
+        }
+      }
+    },
+    "deterministic_validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["result", "checks"],
+      "properties": {
+        "result": {"$ref": "#/$defs/result"},
+        "checks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "command", "result", "exit_code", "log_path", "findings"],
+            "properties": {
+              "id": {"enum": ["semantic_artifact", "volume", "proof_layout", "build", "other"]},
+              "command": {"type": "string", "minLength": 1},
+              "result": {"$ref": "#/$defs/result"},
+              "exit_code": {"type": ["integer", "null"]},
+              "started_at": {"type": ["string", "null"], "format": "date-time"},
+              "completed_at": {"type": ["string", "null"], "format": "date-time"},
+              "log_path": {"type": ["string", "null"]},
+              "findings": {"type": "array", "items": {"$ref": "#/$defs/finding"}}
+            }
+          }
+        }
+      }
+    },
+    "logic_validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["result", "reviewer", "checks", "findings"],
+      "properties": {
+        "result": {"$ref": "#/$defs/result"},
+        "reviewer": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["provider", "model", "prompt", "run_id"],
+          "properties": {
+            "provider": {"type": "string", "minLength": 1},
+            "model": {"type": "string", "minLength": 1},
+            "prompt": {"type": "string", "minLength": 1},
+            "run_id": {"type": ["string", "null"]}
+          }
+        },
+        "checks": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "binder_scope",
+            "language_level",
+            "assumptions_and_conclusion",
+            "statement_shape",
+            "quantifier_order",
+            "witness_dependencies",
+            "negation",
+            "normalization_assumptions",
+            "contrapositive",
+            "applicability_failure",
+            "order_strength",
+            "predicate_signatures",
+            "failure_modes",
+            "yaml_tex_equivalence"
+          ],
+          "properties": {
+            "binder_scope": {"$ref": "#/$defs/checkResult"},
+            "language_level": {"$ref": "#/$defs/checkResult"},
+            "assumptions_and_conclusion": {"$ref": "#/$defs/checkResult"},
+            "statement_shape": {"$ref": "#/$defs/checkResult"},
+            "quantifier_order": {"$ref": "#/$defs/checkResult"},
+            "witness_dependencies": {"$ref": "#/$defs/checkResult"},
+            "negation": {"$ref": "#/$defs/checkResult"},
+            "normalization_assumptions": {"$ref": "#/$defs/checkResult"},
+            "contrapositive": {"$ref": "#/$defs/checkResult"},
+            "applicability_failure": {"$ref": "#/$defs/checkResult"},
+            "order_strength": {"$ref": "#/$defs/checkResult"},
+            "predicate_signatures": {"$ref": "#/$defs/checkResult"},
+            "failure_modes": {"$ref": "#/$defs/checkResult"},
+            "yaml_tex_equivalence": {"$ref": "#/$defs/checkResult"}
+          }
+        },
+        "findings": {"type": "array", "items": {"$ref": "#/$defs/finding"}}
+      }
+    },
+    "reversion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required", "commit", "source_restored", "verified_files"],
+      "properties": {
+        "required": {"type": "boolean"},
+        "commit": {"anyOf": [{"$ref": "#/$defs/commit"}, {"type": "null"}]},
+        "source_restored": {"type": "boolean"},
+        "verified_files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "expected_blob_sha", "actual_blob_sha", "matches"],
+            "properties": {
+              "path": {"type": "string", "minLength": 1},
+              "expected_blob_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+              "actual_blob_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+              "matches": {"type": "boolean"}
+            }
+          }
+        }
+      }
+    },
+    "overall": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["result", "blocking_issues", "warnings"],
+      "properties": {
+        "result": {"$ref": "#/$defs/result"},
+        "blocking_issues": {"type": "array", "items": {"type": "string"}},
+        "warnings": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  },
+  "$defs": {
+    "commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "result": {
+      "enum": ["not_run", "pass", "pass_with_warnings", "fail", "blocked", "infrastructure_error"]
+    },
+    "checkResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["result", "notes"],
+      "properties": {
+        "result": {"enum": ["pass", "warning", "fail", "not_applicable", "blocked"]},
+        "notes": {"type": ["string", "null"]}
+      }
+    },
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "severity", "message"],
+      "properties": {
+        "code": {"type": "string", "pattern": "^[A-Z0-9_]+$"},
+        "severity": {"enum": ["info", "warning", "error", "blocking"]},
+        "message": {"type": "string", "minLength": 1},
+        "field": {"type": ["string", "null"]}
+      }
+    }
+  }
+}

@@ -32,11 +32,14 @@ def expect(repo, task, cap):
 def test_define_routes_to_author_definition():
     expect("lra-volume-i", "define X", "author-definition")
 
+
 def test_generate_the_definition_routes_to_author_definition():
     expect("lra-volume-i", "generate the definition for continuity", "author-definition")
 
+
 def test_write_the_def_routes_to_author_definition():
     expect("lra-volume-i", "write the def for a Cauchy sequence", "author-definition")
+
 
 def test_append_the_definition_routes_to_author_definition():
     # authoring a definition, not a provable statement
@@ -47,12 +50,23 @@ def test_append_the_definition_routes_to_author_definition():
 def test_append_the_lemma_routes_to_author_statement():
     expect("lra-volume-i", "append the lemma", "author-statement")
 
+
 def test_the_theorem_routes_to_author_statement():
     expect("lra-volume-i", "author statement for the theorem", "author-statement")
+
 
 def test_the_axiom_stays_with_author_statement():
     # axiom is non-provable but ruled to stay with author-statement (not author-definition)
     expect("lra-volume-i", "the axiom of completeness", "author-statement")
+
+
+# --- semantic audit routing ---
+def test_lra_audit_topic_routes_to_topic_semantic_audit():
+    expect("lra-volume-iii", "LRA audit topic bounds-extremals", "audit-semantic-topic")
+
+
+def test_single_artifact_calibration_still_routes_separately():
+    expect("lra-volume-iii", "calibrate semantic artifact", "calibrate-semantic-artifact")
 
 
 # --- a definition task in a non-volume kind must NOT select a volume authoring
@@ -63,11 +77,14 @@ def test_define_does_not_leak_into_lean():
     assert got.startswith("FATAL:"), f"expected non-resolution in lean, got {got!r}"
     assert "no capability matches" in got, f"expected kind-rejection, got {got!r}"
 
+
 def test_lean_routes_to_lean_capability():
     expect("lra-lean", "formalize addition commutativity", "author-lean-theorem")
 
+
 def test_numerical_analysis_routes_to_cpp_capability():
     expect("lra-numerical-analysis", "implement the solver", "cpp-build-task")
+
 
 def test_nurbs_routes_to_cpp_capability():
     expect("lra-nurbs", "implement surface evaluation", "cpp-build-task")
@@ -90,12 +107,18 @@ def test_governance_validate_routes_to_build_repo():
 
 
 if __name__ == "__main__":
-    tests = [v for k, v in sorted(globals().items()) if k.startswith("test_") and callable(v)]
+    tests = [
+        v
+        for k, v in sorted(globals().items())
+        if k.startswith("test_") and callable(v)
+    ]
     failed = 0
     for t in tests:
         try:
-            t(); print(f"  ok   {t.__name__}")
+            t()
+            print(f"  ok   {t.__name__}")
         except AssertionError as e:
-            failed += 1; print(f"  FAIL {t.__name__}: {e}")
+            failed += 1
+            print(f"  FAIL {t.__name__}: {e}")
     print(f"\n{len(tests)-failed}/{len(tests)} passed")
     sys.exit(1 if failed else 0)
