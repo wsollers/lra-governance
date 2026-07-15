@@ -3,23 +3,23 @@
 ## Goal
 
 Audit every formal environment in one notes topic without leaving the reviewed
-LaTeX applied to the book source. The durable output is the reviewer package and
-validation evidence. Each candidate source replacement is committed, validated,
-and then reverted before the next artifact.
+LaTeX applied to the book source. The durable output is the semantic-review
+package and validation evidence. Each candidate source replacement is committed,
+validated, and then reverted before the next artifact.
 
 This is an audit and calibration workflow. It is not the permanent source-update
 workflow in `semantic-artifact-calibration.md`.
 
 ## Mobile command
 
-From the target volume repository, the user may invoke the whole workflow with:
+From the target volume repository, the user invokes the whole workflow with:
 
 ```text
 LRA audit topic <topic>
 ```
 
-The topic is the repository topic identifier under `notes/<topic>/`, not a PDF
-heading guessed from rendered output.
+The topic is the repository identifier under `notes/<topic>/`, not a heading
+guessed from rendered PDF output.
 
 ## Preconditions
 
@@ -58,6 +58,16 @@ Create `notes/<topic>/semantic-topic-audit.yaml` with the source-ordered queue.
 The queue is governed by
 `constitution/schema/topic-semantic-audit.schema.json`.
 
+Commit the initial inventory before reviewer calls:
+
+```text
+Initialize semantic audit for <topic>
+```
+
+The committed initial manifest keeps every entry at `queued`. Per-item commit IDs
+and results are written into the manifest only at topic closeout. This keeps the
+working tree clean for every temporary source transaction.
+
 ## Artifact folder
 
 For label `<prefix>:<root>`, use the direct sibling folder:
@@ -74,7 +84,7 @@ notes/bounds-extremals/def-supremum/
 
 The folder is audit data and must not be input by the topic router.
 
-Each folder contains:
+Each reviewed folder contains:
 
 ```text
 package.yaml
@@ -86,12 +96,14 @@ source-map.yaml
 registry-needs.yaml
 formalization-links.yaml
 proof-vault-links.yaml
-logic-validation.yaml
-execution-validation.yaml
+audit-validation.yaml
 ```
 
-The first eight files are the semantic-review package. The final two are produced
-by the repository audit loop.
+The first nine files are the semantic-review package. The final file records the
+actual repository validation transaction and independent logic validation.
+
+A blocked artifact may contain only `audit-validation.yaml` plus any reviewer
+response needed to explain the blocker.
 
 ## Reviewer call
 
@@ -110,9 +122,9 @@ Use `constitution/prompts/calibrate-semantic-artifact.md` as the reviewer contra
 The reviewer must return the complete semantic-artifact package. Do not silently
 repair or supplement a partial response.
 
-If the artifact is compound or has blocking ambiguity, record the blocker in the
-artifact folder and skip temporary source application. Continue only when the
-queue entry can truthfully be marked `blocked`.
+If the artifact is compound or has blocking ambiguity, create its folder, record
+the blocker in `audit-validation.yaml`, skip temporary source application, and
+continue only when the queue entry can truthfully be marked `blocked`.
 
 ## Per-artifact commit and validation transaction
 
@@ -123,13 +135,14 @@ For each nonblocked artifact, execute this transaction serially.
 Write the returned package to `notes/<topic>/<label-slug>/` and validate its
 schema and registry references.
 
-Commit only that reviewer package:
+Commit only the nine reviewer-package files:
 
 ```text
 Record semantic review for <label>
 ```
 
-Record the commit as `review_commit` in the queue entry.
+Do not include `audit-validation.yaml` in this commit. Record the resulting SHA
+outside the manifest until topic closeout.
 
 ### 2. Apply the reviewed TeX temporarily
 
@@ -144,7 +157,7 @@ Commit the temporary source replacement:
 Temporarily apply semantic review for <label>
 ```
 
-Record the commit as `temporary_apply_commit`.
+Record the temporary commit SHA outside the manifest until topic closeout.
 
 ### 3. Run deterministic validators
 
@@ -166,16 +179,16 @@ For theorem-like artifacts, also run the strict proof-layout audit for the ownin
 chapter/topic. Run the normal target volume or book build.
 
 Capture command, start/end time, exit code, source commit under test, and log path.
-Raw logs may remain in ignored run output; durable results go in
-`execution-validation.yaml`.
+Raw logs may remain in ignored run output. Keep the durable structured results in
+memory or ignored run state until the source revert succeeds.
 
 ### 4. Run logic validation
 
 Invoke a second read-only reviewer call whose job is validation, not rewriting.
-It receives the original source, reviewed artifact YAML, temporarily applied TeX,
-and deterministic validator results.
+Use `constitution/prompts/validate-semantic-artifact-logic.md`.
 
-The logic validator must independently check:
+It receives the original source, reviewed artifact YAML, temporarily applied TeX,
+and deterministic validator results. It independently checks:
 
 - parameter and binder declaration and scope;
 - object-language versus metalanguage level;
@@ -191,8 +204,9 @@ The logic validator must independently check:
 - failure-mode exhaustiveness;
 - semantic equivalence between `artifact.yaml` and the applied TeX.
 
-Write `logic-validation.yaml`. The validator may return `pass`,
-`pass_with_warnings`, `fail`, or `blocked`. It must not edit the package or source.
+The logic reviewer returns only the `logic_validation` record. It may report
+`pass`, `pass_with_warnings`, `fail`, or `blocked`. It must not edit the package or
+source.
 
 ### 5. Revert the temporary source commit
 
@@ -205,18 +219,35 @@ git revert --no-edit <temporary_apply_commit>
 
 Do not reset or revert the earlier reviewer-package commit.
 
-Record the generated revert commit as `revert_commit`.
+Record the generated revert SHA. Verify every source blob changed by the temporary
+commit exactly matches its pre-application hash. A mismatch is a blocking audit
+failure.
 
-Verify all source blobs changed by the temporary commit exactly match their
-pre-application hashes. A mismatch is a blocking audit failure.
+### 6. Write the audit record
 
-Only after the revert succeeds, write or finalize `execution-validation.yaml` and
-`logic-validation.yaml` in the artifact folder. Leave those validation files
-uncommitted until the topic is exhausted.
+Only after the revert succeeds, create or finalize:
 
-### 6. Continue
+```text
+notes/<topic>/<label-slug>/audit-validation.yaml
+```
 
-Update the in-memory and working-copy queue entry, then process the next primary
+The file is governed by
+`constitution/schema/artifact-audit-validation.schema.json` and records:
+
+- reviewer-package validation;
+- temporary application commit and changed-file hashes;
+- deterministic validator/build commands and results;
+- independent logic validation;
+- revert commit and source-restoration evidence;
+- overall result and findings.
+
+Leave every per-item `audit-validation.yaml` uncommitted until the topic is
+exhausted. When committing the next reviewer package, stage only that package's
+nine review files explicitly.
+
+### 7. Continue
+
+Update run state outside the committed manifest, then process the next primary
 environment in source order. Never send multiple artifacts in one reviewer call.
 
 ## Topic completion
@@ -226,10 +257,10 @@ After every queue item is `validated`, `failed`, or `blocked`:
 1. verify no temporary source replacement remains;
 2. verify the topic router and all original source blobs match the topic-start
    state except for audit folders;
-3. finalize `semantic-topic-audit.yaml` with counts, commits, validator results,
-   and unresolved items;
-4. validate the topic audit manifest;
-5. commit all per-artifact validation files and the topic manifest together:
+3. finalize `semantic-topic-audit.yaml` with counts, per-item commits, validator
+   results, and unresolved items;
+4. validate every `audit-validation.yaml` and the topic manifest;
+5. commit all per-artifact audit records and the finalized topic manifest together:
 
 ```text
 Record semantic validation for <topic>
@@ -238,10 +269,14 @@ Record semantic validation for <topic>
 6. stop and report to the user. Do not permanently apply corrected TeX and do not
    begin another topic without a new user instruction.
 
+The final validation commit SHA is reported in the Codex result. It is not stored
+inside the same commit's manifest, because a commit cannot contain its own SHA.
+
 ## Durable branch state
 
 At completion, the branch may contain:
 
+- one initial inventory commit;
 - one reviewer-package commit per artifact;
 - one temporary-application commit and one matching revert commit per tested
   artifact;
