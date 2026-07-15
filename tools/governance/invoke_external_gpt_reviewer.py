@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 """Invoke an external GPT-5.6 reviewer through the OpenAI Responses API.
 
-This program is the only governed transport for semantic and logic reviews in the
-reversible topic-audit workflow. It deliberately runs outside the Codex reasoning
-thread and records response evidence that can be live-verified later.
+The executor owns four invariants that must not be delegated to Codex:
+
+1. build and embed the canonical governance authority bundle;
+2. run stored Responses API requests in background mode and poll to completion;
+3. validate semantic packages before publishing them;
+4. route validator failures to a new external repair response rather than repairing
+   reviewer output locally.
 """
 from __future__ import annotations
 
@@ -12,11 +16,16 @@ import datetime as dt
 import hashlib
 import json
 import os
+import shutil
+import subprocess
 import sys
+import tempfile
+import time
 import urllib.error
 import urllib.request
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 import yaml
 
@@ -25,6 +34,28 @@ REQUESTED_MODEL = "gpt-5.6"
 REASONING_EFFORT = "high"
 PROVIDER = "openai_responses_api"
 EXECUTOR = "tools/governance/invoke_external_gpt_reviewer.py"
+IN_PROGRESS_STATUSES = {"queued", "in_progress"}
+SUCCESS_STATUS = "completed"
+
+# These files are loaded by the executor itself. The calling Codex thread cannot
+# omit, summarize, or replace them.
+AUTHORITY_PATHS = (
+    "constitution/schema/semantic-artifact.schema.json",
+    "constitution/schema/semantic-artifact-package.schema.json",
+    "constitution/schema/semantic-artifact-support.schema.json",
+    "constitution/schema/external-review-receipt.schema.json",
+    "constitution/schema/artifact-audit-validation.schema.json",
+    "constitution/schema/topic-semantic-audit.schema.json",
+    "constitution/schema/artifact-matrix.yaml",
+    "constitution/schema/block-registry.yaml",
+    "constitution/schema/examples/semantic-artifact.example.yaml",
+    "predicates.yaml",
+    "structures.yaml",
+    "notation.yaml",
+    "relations.yaml",
+    "docs/architecture/semantic-artifact-record.md",
+    "docs/workflows/semantic-artifact-calibration.md",
+)
 
 SEMANTIC_FILE_KEYS = {
     "artifact_yaml": "artifact.yaml",
@@ -36,6 +67,37 @@ SEMANTIC_FILE_KEYS = {
     "formalization_links_yaml": "formalization-links.yaml",
     "proof_vault_links_yaml": "proof-vault-links.yaml",
 }
+
+PUBLISHED_FILES = (
+    "package.yaml",
+    "external-review-receipt.yaml",
+    *SEMANTIC_FILE_KEYS.values(),
+)
+
+
+@dataclass(frozen=True)
+class ValidationRun:
+    returncode: int
+    stdout: str
+    stderr: str
+    commands: tuple[str, ...]
+
+    @property
+    def clean(self) -> bool:
+        return self.returncode == 0
+
+
+@dataclass(frozen=True)
+class AuthorityBundle:
+    files: tuple[dict[str, str], ...]
+    sha256: str
+
+    def as_json(self) -> dict[str, Any]:
+        return {
+            "schema_version": "lra.governance-authority-bundle/1.0",
+            "sha256": self.sha256,
+            "files": list(self.files),
+        }
 
 
 def now_utc() -> str:
@@ -63,6 +125,24 @@ def load_prompt(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 
 
+def build_authority_bundle(governance_root: Path) -> AuthorityBundle:
+    files: list[dict[str, str]] = []
+    for relative in AUTHORITY_PATHS:
+        path = governance_root / relative
+        if not path.exists():
+            raise FileNotFoundError(f"required governance authority file is missing: {path}")
+        content = path.read_text(encoding="utf-8")
+        files.append(
+            {
+                "path": relative,
+                "sha256": sha256_text(content),
+                "content": content,
+            }
+        )
+    canonical = json.dumps(files, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
+    return AuthorityBundle(tuple(files), sha256_text(canonical))
+
+
 def extract_output_text(response: dict[str, Any]) -> str:
     chunks: list[str] = []
     for item in response.get("output", []) or []:
@@ -79,26 +159,68 @@ def extract_output_text(response: dict[str, Any]) -> str:
     return text
 
 
-def post_response(payload: dict[str, Any], api_key: str) -> tuple[dict[str, Any], str | None]:
+def request_json(
+    method: str,
+    url: str,
+    api_key: str,
+    payload: dict[str, Any] | None = None,
+    *,
+    timeout: float = 60.0,
+) -> tuple[dict[str, Any], str | None]:
+    data = None if payload is None else json.dumps(payload).encode("utf-8")
     request = urllib.request.Request(
-        API_URL,
-        data=json.dumps(payload).encode("utf-8"),
+        url,
+        data=data,
         headers={
             "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json",
         },
-        method="POST",
+        method=method,
     )
     try:
-        with urllib.request.urlopen(request, timeout=600) as response:
+        with urllib.request.urlopen(request, timeout=timeout) as response:
             body = json.loads(response.read().decode("utf-8"))
             request_id = response.headers.get("x-request-id")
     except urllib.error.HTTPError as exc:
         detail = exc.read().decode("utf-8", errors="replace")
         raise RuntimeError(f"OpenAI Responses API returned HTTP {exc.code}: {detail}") from exc
+    except urllib.error.URLError as exc:
+        raise RuntimeError(f"OpenAI Responses API transport failed: {exc}") from exc
     if not isinstance(body, dict):
         raise ValueError("OpenAI response root was not an object")
     return body, request_id
+
+
+def submit_background_response(
+    payload: dict[str, Any],
+    api_key: str,
+    *,
+    poll_interval: float,
+    poll_timeout: float,
+    sleep: Callable[[float], None] = time.sleep,
+    monotonic: Callable[[], float] = time.monotonic,
+) -> tuple[dict[str, Any], str | None]:
+    request_payload = dict(payload)
+    request_payload["background"] = True
+    response, request_id = request_json("POST", API_URL, api_key, request_payload)
+    response_id = response.get("id")
+    if not isinstance(response_id, str) or not response_id.startswith("resp_"):
+        raise ValueError(f"background response did not return a valid id: {response_id!r}")
+
+    deadline = monotonic() + poll_timeout
+    while response.get("status") in IN_PROGRESS_STATUSES:
+        if monotonic() >= deadline:
+            raise TimeoutError(
+                f"background response {response_id} did not complete within {poll_timeout:g} seconds"
+            )
+        sleep(max(0.0, poll_interval))
+        response, _ = request_json("GET", f"{API_URL}/{response_id}", api_key)
+
+    status = response.get("status")
+    if status != SUCCESS_STATUS:
+        error = response.get("error") or response.get("incomplete_details") or "no details"
+        raise RuntimeError(f"background response {response_id} ended with status {status!r}: {error}")
+    return response, request_id
 
 
 def semantic_schema() -> dict[str, Any]:
@@ -109,10 +231,7 @@ def semantic_schema() -> dict[str, Any]:
         "properties": {
             "result": {"enum": ["reviewed", "blocked"]},
             "blocking_issues": {"type": "array", "items": {"type": "string"}},
-            **{
-                key: {"type": "string", "minLength": 1}
-                for key in SEMANTIC_FILE_KEYS
-            },
+            **{key: {"type": "string", "minLength": 1} for key in SEMANTIC_FILE_KEYS},
         },
     }
 
@@ -208,14 +327,29 @@ def evidence(
     }
 
 
-def request_payload(prompt_text: str, packet: dict[str, Any], role: str) -> tuple[dict[str, Any], str]:
-    input_text = (
-        f"ROLE: {role}\n\n"
-        "Follow the governed prompt below. Return only the requested JSON object.\n\n"
-        f"GOVERNED PROMPT:\n{prompt_text}\n\n"
-        "INPUT PACKET:\n"
-        + json.dumps(packet, indent=2, ensure_ascii=False)
-    )
+def request_payload(
+    prompt_text: str,
+    packet: dict[str, Any],
+    role: str,
+    authority: AuthorityBundle,
+    repair_context: dict[str, Any] | None = None,
+) -> tuple[dict[str, Any], str]:
+    sections = [
+        f"ROLE: {role}",
+        "Follow the governed prompt and canonical authority files below. Return only the requested JSON object.",
+        "The authority bundle is complete and controlling. Do not invent illustrative schema shapes or registry entries.",
+        f"GOVERNED PROMPT:\n{prompt_text}",
+        "CANONICAL GOVERNANCE AUTHORITY BUNDLE:\n"
+        + json.dumps(authority.as_json(), indent=2, ensure_ascii=False),
+        "INPUT PACKET:\n" + json.dumps(packet, indent=2, ensure_ascii=False),
+    ]
+    if repair_context is not None:
+        sections.append(
+            "EXTERNAL REPAIR REQUEST:\n"
+            "A prior external response failed deterministic validation. Produce a complete replacement package; do not omit any required file.\n"
+            + json.dumps(repair_context, indent=2, ensure_ascii=False)
+        )
+    input_text = "\n\n".join(sections)
     schema = semantic_schema() if role == "semantic_reviewer" else logic_schema()
     payload = {
         "model": REQUESTED_MODEL,
@@ -250,45 +384,31 @@ def write_receipt(path: Path, reviewer: dict[str, Any], result: str, blockers: l
     )
 
 
-def run_semantic(args: argparse.Namespace, packet: dict[str, Any], api_key: str) -> int:
-    output_dir: Path = args.output
-    output_dir.mkdir(parents=True, exist_ok=True)
-    prompt = load_prompt(args.prompt)
-    payload, input_text = request_payload(prompt, packet, "semantic_reviewer")
-    started_at = now_utc()
-    response, request_id = post_response(payload, api_key)
-    completed_at = now_utc()
-    output_text = extract_output_text(response)
-    result = json.loads(output_text)
-    if not isinstance(result, dict):
-        raise ValueError("semantic reviewer output was not an object")
-    reviewer = evidence(
-        role="semantic_reviewer",
-        response=response,
-        request_id=request_id,
-        prompt_path=args.prompt,
-        input_text=input_text,
-        output_text=output_text,
-        started_at=started_at,
-        completed_at=completed_at,
-    )
+def stage_semantic_attempt(
+    attempt_dir: Path,
+    result: dict[str, Any],
+    reviewer: dict[str, Any],
+    packet: dict[str, Any],
+    completed_at: str,
+) -> str:
+    attempt_dir.mkdir(parents=True, exist_ok=True)
     blockers = [str(item) for item in result.get("blocking_issues", [])]
     review_result = str(result.get("result") or "")
     if review_result not in {"reviewed", "blocked"}:
         raise ValueError(f"unexpected semantic result: {review_result!r}")
     if review_result == "blocked" and not blockers:
         raise ValueError("blocked semantic review must identify at least one blocking issue")
-    write_receipt(output_dir / "external-review-receipt.yaml", reviewer, review_result, blockers)
 
+    write_receipt(attempt_dir / "external-review-receipt.yaml", reviewer, review_result, blockers)
     for key, filename in SEMANTIC_FILE_KEYS.items():
         content = result.get(key)
         if not isinstance(content, str) or not content.strip():
             raise ValueError(f"semantic reviewer omitted {key}")
-        (output_dir / filename).write_text(content.rstrip() + "\n", encoding="utf-8")
+        (attempt_dir / filename).write_text(content.rstrip() + "\n", encoding="utf-8")
 
     source = packet.get("source") or {}
     governance = packet.get("governance") or {}
-    artifact = yaml.safe_load((output_dir / "artifact.yaml").read_text(encoding="utf-8")) or {}
+    artifact = yaml.safe_load((attempt_dir / "artifact.yaml").read_text(encoding="utf-8")) or {}
     label = str((artifact.get("identity") or {}).get("label") or source.get("label") or "")
     files = {
         "artifact": "artifact.yaml",
@@ -322,27 +442,248 @@ def run_semantic(args: argparse.Namespace, packet: dict[str, Any], api_key: str)
             "notes": None if review_result == "reviewed" else "; ".join(blockers),
         },
         "files": {
-            key: {"path": filename, "sha256": file_sha256(output_dir / filename)}
+            key: {"path": filename, "sha256": file_sha256(attempt_dir / filename)}
             for key, filename in files.items()
         },
     }
-    (output_dir / "package.yaml").write_text(
+    (attempt_dir / "package.yaml").write_text(
         yaml.safe_dump(package, sort_keys=False, allow_unicode=True), encoding="utf-8"
     )
-    if review_result == "blocked":
-        print(f"external semantic review blocked: {reviewer['response_id']}")
-        return 3
-    print(f"external semantic review completed: {reviewer['response_id']}")
-    return 0
+    return review_result
+
+
+def run_semantic_validation(
+    attempt_dir: Path,
+    governance_root: Path,
+    repos_root: Path | None,
+) -> ValidationRun:
+    commands: list[str] = []
+    semantic_cmd = [
+        sys.executable,
+        str(governance_root / "tools/governance/validate_semantic_artifact.py"),
+        "--artifact",
+        str(attempt_dir / "artifact.yaml"),
+        "--package-dir",
+        str(attempt_dir),
+        "--governance-root",
+        str(governance_root),
+        "--strict",
+    ]
+    if repos_root is not None:
+        semantic_cmd.extend(["--repos-root", str(repos_root)])
+    commands.append(subprocess.list2cmdline(semantic_cmd))
+    first = subprocess.run(semantic_cmd, capture_output=True, text=True)
+    stdout = first.stdout
+    stderr = first.stderr
+    if first.returncode != 0:
+        return ValidationRun(first.returncode, stdout, stderr, tuple(commands))
+
+    evidence_cmd = [
+        sys.executable,
+        str(governance_root / "tools/governance/validate_external_reviewer_evidence.py"),
+        "--package",
+        str(attempt_dir / "package.yaml"),
+    ]
+    commands.append(subprocess.list2cmdline(evidence_cmd))
+    second = subprocess.run(evidence_cmd, capture_output=True, text=True)
+    return ValidationRun(
+        second.returncode,
+        stdout + second.stdout,
+        stderr + second.stderr,
+        tuple(commands),
+    )
+
+
+def write_attempt_diagnostics(
+    diagnostics_dir: Path,
+    attempt: int,
+    *,
+    response: dict[str, Any] | None,
+    output_text: str | None,
+    validation: ValidationRun | None,
+    error: str | None,
+) -> None:
+    folder = diagnostics_dir / f"attempt-{attempt:02d}"
+    folder.mkdir(parents=True, exist_ok=True)
+    if response is not None:
+        (folder / "response.json").write_text(
+            json.dumps(response, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+        )
+    if output_text is not None:
+        (folder / "output.txt").write_text(output_text + "\n", encoding="utf-8")
+    if validation is not None:
+        (folder / "validator.json").write_text(
+            json.dumps(
+                {
+                    "returncode": validation.returncode,
+                    "commands": list(validation.commands),
+                    "stdout": validation.stdout,
+                    "stderr": validation.stderr,
+                },
+                indent=2,
+            )
+            + "\n",
+            encoding="utf-8",
+        )
+    if error is not None:
+        (folder / "error.txt").write_text(error + "\n", encoding="utf-8")
+
+
+def publish_attempt(attempt_dir: Path, output_dir: Path) -> None:
+    output_dir.mkdir(parents=True, exist_ok=True)
+    for filename in PUBLISHED_FILES:
+        target = output_dir / filename
+        if target.exists():
+            target.unlink()
+        shutil.copy2(attempt_dir / filename, target)
+
+
+def run_semantic(args: argparse.Namespace, packet: dict[str, Any], api_key: str) -> int:
+    output_dir: Path = args.output
+    diagnostics_dir: Path = args.diagnostics_dir or (
+        output_dir.parent / ".external-review-diagnostics" / output_dir.name
+    )
+    authority = build_authority_bundle(args.governance_root)
+    prompt = load_prompt(args.prompt)
+    repair_context: dict[str, Any] | None = None
+    total_attempts = args.max_repair_attempts + 1
+
+    for attempt in range(1, total_attempts + 1):
+        payload, input_text = request_payload(
+            prompt,
+            packet,
+            "semantic_reviewer",
+            authority,
+            repair_context,
+        )
+        started_at = now_utc()
+        response: dict[str, Any] | None = None
+        output_text: str | None = None
+        validation: ValidationRun | None = None
+        try:
+            response, request_id = submit_background_response(
+                payload,
+                api_key,
+                poll_interval=args.poll_interval,
+                poll_timeout=args.poll_timeout,
+            )
+            completed_at = now_utc()
+            output_text = extract_output_text(response)
+            result = json.loads(output_text)
+            if not isinstance(result, dict):
+                raise ValueError("semantic reviewer output was not an object")
+            reviewer = evidence(
+                role="semantic_reviewer",
+                response=response,
+                request_id=request_id,
+                prompt_path=args.prompt,
+                input_text=input_text,
+                output_text=output_text,
+                started_at=started_at,
+                completed_at=completed_at,
+            )
+            with tempfile.TemporaryDirectory(prefix=f"lra-review-attempt-{attempt}-") as temp:
+                attempt_dir = Path(temp)
+                review_result = stage_semantic_attempt(
+                    attempt_dir,
+                    result,
+                    reviewer,
+                    packet,
+                    completed_at,
+                )
+                if review_result == "blocked":
+                    publish_attempt(attempt_dir, output_dir)
+                    write_attempt_diagnostics(
+                        diagnostics_dir,
+                        attempt,
+                        response=response,
+                        output_text=output_text,
+                        validation=None,
+                        error=None,
+                    )
+                    print(f"external semantic review blocked: {reviewer['response_id']}")
+                    return 3
+
+                validation = run_semantic_validation(
+                    attempt_dir,
+                    args.governance_root,
+                    args.repos_root,
+                )
+                write_attempt_diagnostics(
+                    diagnostics_dir,
+                    attempt,
+                    response=response,
+                    output_text=output_text,
+                    validation=validation,
+                    error=None,
+                )
+                if validation.clean:
+                    publish_attempt(attempt_dir, output_dir)
+                    print(f"external semantic review completed: {reviewer['response_id']}")
+                    return 0
+
+            repair_context = {
+                "attempt": attempt,
+                "prior_response_id": response.get("id"),
+                "prior_reviewer_output": result,
+                "validator": {
+                    "returncode": validation.returncode if validation else None,
+                    "commands": list(validation.commands) if validation else [],
+                    "stdout": validation.stdout if validation else "",
+                    "stderr": validation.stderr if validation else "",
+                },
+                "required_action": (
+                    "Return a complete replacement package conforming exactly to the embedded canonical schemas and registries. "
+                    "Correct every validator finding. Do not omit any required file string."
+                ),
+            }
+        except Exception as exc:
+            message = str(exc)
+            write_attempt_diagnostics(
+                diagnostics_dir,
+                attempt,
+                response=response,
+                output_text=output_text,
+                validation=validation,
+                error=message,
+            )
+            repair_context = {
+                "attempt": attempt,
+                "prior_response_id": response.get("id") if response else None,
+                "prior_output_text": output_text,
+                "transport_or_shape_error": message,
+                "required_action": (
+                    "Produce a fresh, complete semantic package using the embedded authority bundle. "
+                    "Return every required file string."
+                ),
+            }
+
+        if attempt < total_attempts:
+            print(f"external semantic attempt {attempt} failed validation; requesting external repair")
+
+    raise RuntimeError(
+        f"external semantic review failed after {total_attempts} attempts; diagnostics: {diagnostics_dir}"
+    )
 
 
 def run_logic(args: argparse.Namespace, packet: dict[str, Any], api_key: str) -> int:
     output_path: Path = args.output
     output_path.parent.mkdir(parents=True, exist_ok=True)
+    authority = build_authority_bundle(args.governance_root)
     prompt = load_prompt(args.prompt)
-    payload, input_text = request_payload(prompt, packet, "logic_validator")
+    payload, input_text = request_payload(
+        prompt,
+        packet,
+        "logic_validator",
+        authority,
+    )
     started_at = now_utc()
-    response, request_id = post_response(payload, api_key)
+    response, request_id = submit_background_response(
+        payload,
+        api_key,
+        poll_interval=args.poll_interval,
+        poll_timeout=args.poll_timeout,
+    )
     completed_at = now_utc()
     output_text = extract_output_text(response)
     result = json.loads(output_text)
@@ -378,11 +719,24 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--prompt", required=True, type=Path)
     parser.add_argument("--api-key-env", default="OPENAI_API_KEY")
+    parser.add_argument(
+        "--governance-root",
+        type=Path,
+        default=Path(__file__).resolve().parents[2],
+    )
+    parser.add_argument("--repos-root", type=Path)
+    parser.add_argument("--diagnostics-dir", type=Path)
+    parser.add_argument("--poll-interval", type=float, default=2.0)
+    parser.add_argument("--poll-timeout", type=float, default=1800.0)
+    parser.add_argument("--max-repair-attempts", type=int, default=2)
     return parser.parse_args()
 
 
 def main() -> int:
     args = parse_args()
+    if args.max_repair_attempts < 0:
+        print("ERROR: --max-repair-attempts must be nonnegative", file=sys.stderr)
+        return 2
     api_key = os.environ.get(args.api_key_env)
     if not api_key:
         print(
@@ -392,7 +746,11 @@ def main() -> int:
         return 2
     try:
         packet = load_json(args.input)
-        return run_semantic(args, packet, api_key) if args.role == "semantic" else run_logic(args, packet, api_key)
+        return (
+            run_semantic(args, packet, api_key)
+            if args.role == "semantic"
+            else run_logic(args, packet, api_key)
+        )
     except Exception as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
         return 2
