@@ -2,19 +2,12 @@
 
 ## Purpose
 
-Semantic-artifact review and logic validation must be performed by an external
-GPT-5.6 model call, not by the Codex thread that edits the repository and not by
-a Codex subagent. This workflow uses the OpenAI Responses API because it returns
-a retrievable response identifier and a resolved model name.
-
-A published ChatGPT Workspace Agent trigger is not the transport for this loop.
-The current trigger endpoint accepts work asynchronously but does not return a
-review result or a retrievable public run identifier. It therefore cannot supply
-the synchronous, verifiable package required before temporary TeX application.
+Semantic-artifact review and logic validation are performed by an external
+GPT-5.6 Responses API call, not by the Codex thread and not by a Codex subagent.
+The transport returns retrievable response identifiers and refuses to proceed when
+external review cannot be verified.
 
 ## Governed model and transport
-
-The fixed request configuration is:
 
 ```yaml
 provider: openai_responses_api
@@ -22,10 +15,8 @@ requested_model: gpt-5.6
 resolved_model: gpt-5.6-sol...
 reasoning_effort: high
 store: true
+background: true
 ```
-
-The `gpt-5.6` API alias resolves to GPT-5.6 Sol. Do not substitute a Codex model,
-a lower GPT tier, a Workspace Agent trigger, or an unrecorded manual response.
 
 Canonical executor:
 
@@ -33,62 +24,127 @@ Canonical executor:
 tools/governance/invoke_external_gpt_reviewer.py
 ```
 
+Do not substitute a Codex model, a lower GPT tier, a manually authored response,
+or an unverified trigger.
+
 ## Authentication
 
-The caller must provide `OPENAI_API_KEY` through the execution environment.
-Never place the key in a prompt, YAML file, command-line argument, commit, log,
-or pull request.
+Provide the API credential through `OPENAI_API_KEY`. Never place the value in a
+prompt, YAML file, command-line argument, commit, diagnostic, or pull request.
+When credentials or outbound access are unavailable, stop as infrastructure
+failure. Codex must not fall back to its own reasoning.
 
-If the key or outbound API access is unavailable, stop the audit as an
-infrastructure blocker. Codex must not fall back to its own reasoning.
+## Automatic governance-authority bundle
+
+The executor—not Codex—loads and embeds the canonical authority bundle on every
+semantic and logic request. The bundle contains the exact file path, SHA-256 hash,
+and full UTF-8 contents of:
+
+```text
+constitution/schema/semantic-artifact.schema.json
+constitution/schema/semantic-artifact-package.schema.json
+constitution/schema/semantic-artifact-support.schema.json
+constitution/schema/external-review-receipt.schema.json
+constitution/schema/artifact-audit-validation.schema.json
+constitution/schema/topic-semantic-audit.schema.json
+constitution/schema/artifact-matrix.yaml
+constitution/schema/block-registry.yaml
+constitution/schema/examples/semantic-artifact.example.yaml
+predicates.yaml
+structures.yaml
+notation.yaml
+relations.yaml
+docs/architecture/semantic-artifact-record.md
+docs/workflows/semantic-artifact-calibration.md
+```
+
+A missing authority file stops the request before an API call. The calling input
+packet may add artifact-specific source and context, but it cannot remove or
+replace canonical authority files.
+
+## Background execution and polling
+
+Every request is created with `background: true` and `store: true`. The initial
+POST is expected to return quickly with a response ID. The executor polls
+`GET /v1/responses/{response_id}` while status is `queued` or `in_progress` and
+accepts output only after terminal status `completed`.
+
+Defaults:
+
+```text
+poll interval: 2 seconds
+poll timeout: 1800 seconds
+```
+
+They can be changed with `--poll-interval` and `--poll-timeout`. A timeout or
+non-completed terminal status is an infrastructure failure; it is not a
+mathematical blocker.
 
 ## Semantic review call
-
-Create one JSON input packet for one formal artifact and run:
 
 ```powershell
 python <governance-root>\tools\governance\invoke_external_gpt_reviewer.py semantic `
   --input <run-dir>\semantic-input.json `
   --output <artifact-folder> `
-  --prompt <governance-root>\constitution\prompts\calibrate-semantic-artifact.md
+  --prompt <governance-root>\constitution\prompts\calibrate-semantic-artifact.md `
+  --governance-root <governance-root> `
+  --repos-root <repos-root>
 ```
 
-The executor requests structured output from `gpt-5.6`, writes the eight review
-files, builds `package.yaml`, and writes `external-review-receipt.yaml`. The
-receipt and package record:
+The executor requests strict structured output, stages the eight review files,
+builds `package.yaml`, writes `external-review-receipt.yaml`, and runs:
 
-- provider and reviewer role;
-- requested and resolved models;
-- reasoning effort;
-- OpenAI `response_id` and request ID;
-- governed prompt and executor;
-- input and output hashes;
-- start and completion timestamps;
-- `self_review: false`.
+```text
+validate_semantic_artifact.py --strict
+validate_external_reviewer_evidence.py --package ...
+```
 
-A blocked semantic response still receives an external receipt. Absence of a
-response is incomplete work, not a genuine mathematical blocker.
+Nothing is published to the artifact folder until the staged package passes.
+
+## External repair retries
+
+When a staged semantic package fails deterministic validation, the executor does
+not edit it. It preserves the response and validator report under:
+
+```text
+<artifact-parent>/.external-review-diagnostics/<artifact-name>/attempt-NN/
+```
+
+It then creates a new external GPT-5.6 response containing:
+
+- the same complete authority bundle;
+- the original artifact input packet;
+- the prior external response ID and reviewer output;
+- exact validator commands, exit code, stdout, and stderr;
+- an instruction to return a complete replacement package.
+
+The replacement receives a distinct response ID. The default is two repair
+attempts after the initial call, controlled by `--max-repair-attempts`. Codex may
+not patch or complete any attempt locally.
+
+If all external attempts fail, the executor returns infrastructure failure and
+leaves the canonical artifact folder unpublished. Failed attempts remain in
+ignored diagnostics.
 
 ## Logic validation call
 
-After deterministic validation of the temporarily applied TeX, create a separate
-logic input packet and run:
+After deterministic validation of temporarily applied TeX, use a separate request:
 
 ```powershell
 python <governance-root>\tools\governance\invoke_external_gpt_reviewer.py logic `
   --input <run-dir>\logic-input.json `
   --output <run-dir>\logic-validation.yaml `
-  --prompt <governance-root>\constitution\prompts\validate-semantic-artifact-logic.md
+  --prompt <governance-root>\constitution\prompts\validate-semantic-artifact-logic.md `
+  --governance-root <governance-root>
 ```
 
-The logic call must use a new Responses API request. Its `response_id` must differ
-from the semantic reviewer response ID. Codex copies the returned
-`logic_validation` object into `audit-validation.yaml` without revising it.
+The logic response uses the same automatic authority bundle and background polling.
+Its response ID must differ from every semantic attempt. Codex copies the returned
+logic record without revising it.
 
 ## Evidence validation
 
-Before temporary source application, validate the semantic package and live
-response evidence:
+Before source application:
 
 ```powershell
 python <governance-root>\tools\governance\validate_semantic_artifact.py `
@@ -103,7 +159,7 @@ python <governance-root>\tools\governance\validate_external_reviewer_evidence.py
   --verify-live
 ```
 
-After logic validation and source reversion, validate the complete audit record:
+After logic validation and source reversion:
 
 ```powershell
 python <governance-root>\tools\governance\validate_external_reviewer_evidence.py `
@@ -111,7 +167,7 @@ python <governance-root>\tools\governance\validate_external_reviewer_evidence.py
   --verify-live
 ```
 
-At topic closeout, validate all review evidence in one pass:
+At topic closeout:
 
 ```powershell
 python <governance-root>\tools\governance\validate_external_reviewer_evidence.py `
@@ -120,9 +176,8 @@ python <governance-root>\tools\governance\validate_external_reviewer_evidence.py
   --verify-live
 ```
 
-Live verification retrieves each stored response from the Responses API and
-checks the response ID, resolved GPT-5.6 Sol model, completion status, and output
-hash. A locally written or falsified reviewer record cannot satisfy this gate.
+Live verification retrieves each stored response and checks response ID, resolved
+GPT-5.6 Sol model, completion status, and output hash.
 
 ## Forbidden fallbacks
 
@@ -132,9 +187,9 @@ The following never count as external review:
 - a Codex plan-mode response;
 - a Codex subagent or custom `.codex/agents` reviewer;
 - a second pass by the same Codex model;
-- a manually authored YAML receipt;
-- a Workspace Agent trigger without a returned review payload;
+- local repair of external output;
+- a manually authored receipt;
 - a response with a missing or unverifiable response ID;
 - any model other than requested `gpt-5.6` resolving to GPT-5.6 Sol.
 
-If any forbidden fallback is attempted, stop before changing mathematical source.
+If any fallback is attempted, stop before changing mathematical source.
