@@ -71,11 +71,38 @@ DEPENDENT_DECORATION_PARENTS = {
     "negation predicate reading": "negated quantified statement",
     "contrapositive predicate reading": "contrapositive quantified statement",
 }
+DEPENDENT_DECORATION_CHILDREN = {
+    "negated quantified statement": "negation predicate reading",
+    "contrapositive quantified statement": "contrapositive predicate reading",
+}
 FAILURE_MODE_DECOMPOSITION_TRIGGERS = {
     "negated quantified statement",
     "negation predicate reading",
     "contrapositive quantified statement",
     "contrapositive predicate reading",
+}
+PREDICATE_READING_BLOCKS = {
+    "predicate reading",
+    "negation predicate reading",
+    "contrapositive predicate reading",
+}
+NEGATIVE_OR_CONTRAPOSITIVE_PREDICATE_READINGS = {
+    "negation predicate reading",
+    "contrapositive predicate reading",
+}
+GENERIC_FAILURE_MODE_LABELS = {
+    "case",
+    "condition fails",
+    "conclusion fails",
+    "contrapositive",
+    "displayed failure",
+    "failure",
+    "first branch",
+    "first condition fails",
+    "hypothesis fails",
+    "mechanism",
+    "negation",
+    "second branch",
 }
 REPEATABLE_DECORATION_BLOCKS = {"failure modes", "exposition", "examples", "non-examples"}
 FORBIDDEN_DECORATION_BY_ENV = {
@@ -317,6 +344,16 @@ def _check_decoration_blocks(
             )
         if key == "failure modes":
             _check_failure_modes_block(volume_root, path, decoration, match, label, line, findings)
+        if key in PREDICATE_READING_BLOCKS and not re.search(r"\\\[[\s\S]*?\\\]", _block_body_from(decoration, match)):
+            findings.append(
+                finding(
+                    "predicate_reading_missing_display",
+                    f"{label} {key} block must contain a displayed predicate-reading formula.",
+                    path,
+                    volume_root,
+                    block_line,
+                )
+            )
         seen.append((key, rank, match.start()))
 
     seen_keys = {key for key, _rank, _pos in seen}
@@ -332,6 +369,27 @@ def _check_decoration_blocks(
                     line,
                 )
             )
+    for parent, child in DEPENDENT_DECORATION_CHILDREN.items():
+        if parent in seen_keys and child not in seen_keys:
+            findings.append(
+                finding(
+                    "missing_dependent_child_block",
+                    f"{parent} requires child block {child} for {label}.",
+                    path,
+                    volume_root,
+                    line,
+                )
+            )
+    if seen_keys & FAILURE_MODE_DECOMPOSITION_TRIGGERS and "standard quantified statement" not in seen_keys:
+        findings.append(
+            finding(
+                "missing_positive_support_block",
+                f"{label} has negation or contrapositive support but lacks a Standard quantified statement block.",
+                path,
+                volume_root,
+                line,
+            )
+        )
     if seen_keys & FAILURE_MODE_DECOMPOSITION_TRIGGERS:
         if "failure modes" not in seen_keys:
             findings.append(
@@ -460,6 +518,18 @@ def _check_failure_modes_block(
         item_body = item.group("body")
         item_line = block_line + _line_at(body, item.start()) - 1
         displays = re.findall(r"\\\[[\s\S]*?\\\]", item_body)
+        item_title = item.group("title").strip()
+        if not _is_predicate_or_structure_failure_label(item_title):
+            findings.append(
+                finding(
+                    "failure_mode_label_not_predicate_or_structure",
+                    f"{label} failure mode '{item_title}' should be labeled by the failing predicate, structure, or canonical condition.",
+                    path,
+                    volume_root,
+                    item_line,
+                    severity="review",
+                )
+            )
         if not displays:
             findings.append(
                 finding(
@@ -470,7 +540,7 @@ def _check_failure_modes_block(
                     item_line,
                 )
             )
-        if has_predicate_reading(decoration) and len(displays) < 2:
+        if _failure_modes_require_predicate_display(decoration) and len(displays) < 2:
             findings.append(
                 finding(
                     "failure_mode_missing_predicate_display",
@@ -480,6 +550,39 @@ def _check_failure_modes_block(
                     item_line,
                 )
             )
+
+
+def _block_body_from(decoration: str, match) -> str:
+    block_match = re.search(
+        r"\\begin\{remark\*\}\[[^\]]+\](?P<body>[\s\S]*?)\\end\{remark\*\}",
+        decoration[match.start():],
+        re.IGNORECASE,
+    )
+    return block_match.group("body") if block_match else ""
+
+
+def _failure_modes_require_predicate_display(decoration: str) -> bool:
+    return has_predicate_reading(decoration) or any(
+        re.search(
+            rf"\\begin\{{remark\*\}}\[{re.escape(title)}\]",
+            decoration,
+            re.IGNORECASE,
+        )
+        for title in NEGATIVE_OR_CONTRAPOSITIVE_PREDICATE_READINGS
+    )
+
+
+def _is_predicate_or_structure_failure_label(title: str) -> bool:
+    normalized = title.strip().lower().rstrip(".")
+    if normalized in GENERIC_FAILURE_MODE_LABELS:
+        return False
+    if re.search(r"\\(?:operatorname|mathsf)\{[^{}]+\}", title):
+        return True
+    if re.search(r"(?<![A-Za-z])(?:Is|Has)?[A-Z][A-Za-z0-9]*(?:Bound|Set|Compact|Cover|Subcover|Open|Closed|Cauchy|Convergent|Positive|Nonempty|Supremum|Infimum|Maximum|Minimum)[A-Za-z0-9]*(?![A-Za-z])", title):
+        return True
+    if re.search(r"\\(?:neq|notin|subseteq|leq|geq|exists|forall|varnothing)\b", title):
+        return True
+    return False
 
 
 def _first_label(text: str) -> str:

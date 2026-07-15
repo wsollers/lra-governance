@@ -376,6 +376,10 @@ canonical predicate exists, do not invent one merely to fill the block.
 Use `\operatorname{...}` predicate notation unless a shared macro is explicitly
 defined.
 
+`Predicate reading`, `Negation predicate reading`, and `Contrapositive
+predicate reading` blocks must contain at least one displayed formula. A prose
+sentence may explain the display, but prose alone is not a predicate reading.
+
 Predicate signatures and ambient-structure arguments are governed by
 `predicate-standards.md`. When a concept depends on a surrounding structure,
 pass the whole ambient object as a predicate argument, for example
@@ -390,6 +394,10 @@ readings unless the predicate is canonical and useful.
 Negated quantified statements and negation predicate readings are proof-use
 blocks. Include them when the negated form is a standard proof tool or when the
 artifact-specific standard requires them.
+
+Negation support is attached to the positive support packet. A negated
+quantified statement requires the corresponding `Negation predicate reading`,
+and the pair requires a preceding `Standard quantified statement`.
 
 Push negations inward and preserve the same ambient hypotheses and free
 variables as the positive statement.
@@ -407,6 +415,20 @@ following item names one failure mode and contains mode-specific exposition, a
 quantified failure display, and a predicate reading of the failure when
 predicate language exists.
 
+Failure-mode item labels name the failing predicate, structure constructor, or
+canonical formal condition. Use labels such as
+`\item[\(\operatorname{UpperBound}(u,A,P)\).]`,
+`\item[\(\operatorname{IsCompact}(K,\mathbb{R})\).]`, or
+`\item[\(\mathsf{OrderedSet}(S,\leq)\).]`. Do not use generic labels such as
+`Displayed failure`, `Mechanism`, `Case`, `Negation`, `Contrapositive`,
+`Condition fails`, or `Conclusion fails` as final failure-mode labels.
+
+When negation or contrapositive predicate readings are present, each
+non-exposition failure mode records both levels: the quantified failure display
+and the matching predicate-reading display. The exposition item gives the
+overall failure landscape; the subsequent items itemize the concrete predicate
+or structure failures.
+
 Do not use failure-mode blocks as informal interpretation. If the goal is to
 explain meaning, use `Interpretation`.
 
@@ -419,6 +441,10 @@ Do not generate contrapositive blocks for definitions or axioms.
 
 Include contrapositives only when they are standard proof tools for the result,
 not merely because they can be formed mechanically.
+
+A contrapositive quantified statement requires the corresponding
+`Contrapositive predicate reading`, and the pair requires the positive
+`Standard quantified statement`.
 
 ## Interpretation
 

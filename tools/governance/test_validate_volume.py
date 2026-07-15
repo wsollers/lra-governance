@@ -2275,14 +2275,14 @@ class ValidateVolumeTests(unittest.TestCase):
 
         self.assertIn("missing_failure_mode_decomposition", codes)
 
-    def test_formal_decoration_accepts_negation_with_failure_mode_decomposition(self):
+    def test_formal_decoration_requires_negation_predicate_reading_for_negated_statement(self):
         volume = make_volume()
         write(
             volume / "integers" / "notes" / "order" / "notes-extra.tex",
             "\n".join(
                 [
-                    r"\begin{definition}[Negated With Decomposition]",
-                    r"\label{def:negated-with-decomposition}",
+                    r"\begin{definition}[Negated Without Predicate Reading]",
+                    r"\label{def:negated-without-predicate-reading}",
                     "An object is admissible when it satisfies a condition.",
                     r"\end{definition}",
                     r"\begin{remark*}[Standard quantified statement]",
@@ -2305,6 +2305,261 @@ class ValidateVolumeTests(unittest.TestCase):
                     r"\]",
                     r"\end{description}",
                     r"\end{remark*}",
+                    r"\NoLocalDependencies",
+                    "",
+                ]
+            ),
+        )
+
+        codes = {finding.code for finding in validate_with_inventory(formal_decoration, volume)}
+
+        self.assertIn("missing_dependent_child_block", codes)
+        self.assertNotIn("missing_failure_mode_decomposition", codes)
+
+    def test_formal_decoration_requires_contrapositive_predicate_reading_for_contrapositive_statement(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{proposition}[Contrapositive Without Predicate Reading]",
+                    r"\label{prop:contrapositive-without-predicate-reading}",
+                    r"If $P(x)$, then $Q(x)$.",
+                    r"\hyperref[prf:contrapositive-without-predicate-reading]{\textit{Go to proof.}}",
+                    r"\end{proposition}",
+                    r"\begin{remark*}[Standard quantified statement]",
+                    r"\[",
+                    r"\forall x\in A,\quad P(x)\Longrightarrow Q(x).",
+                    r"\]",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Contrapositive quantified statement]",
+                    r"\[",
+                    r"\forall x\in A,\quad \neg Q(x)\Longrightarrow \neg P(x).",
+                    r"\]",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Failure modes]",
+                    r"\begin{description}",
+                    r"\item[Exposition.]",
+                    "Failure of the conclusion forces failure of the hypothesis.",
+                    r"\item[Conclusion fails.]",
+                    r"\[",
+                    r"\forall x\in A,\quad \neg Q(x)\Longrightarrow \neg P(x).",
+                    r"\]",
+                    r"\end{description}",
+                    r"\end{remark*}",
+                    r"\begin{dependencies}",
+                    r"\begin{itemize}",
+                    r"  \item \hyperref[ax:order-foundation]{Order foundation}.",
+                    r"\end{itemize}",
+                    r"\end{dependencies}",
+                    "",
+                ]
+            ),
+        )
+
+        codes = {finding.code for finding in validate_with_inventory(formal_decoration, volume)}
+
+        self.assertIn("missing_dependent_child_block", codes)
+        self.assertNotIn("missing_failure_mode_decomposition", codes)
+
+    def test_formal_decoration_requires_positive_support_for_negation_or_contrapositive(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{definition}[Negation Without Positive Support]",
+                    r"\label{def:negation-without-positive-support}",
+                    "An object is inadmissible when a condition fails.",
+                    r"\end{definition}",
+                    r"\begin{remark*}[Negated quantified statement]",
+                    r"\[",
+                    r"x\notin A\Longleftrightarrow \neg P(x).",
+                    r"\]",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Negation predicate reading]",
+                    r"\[",
+                    r"\neg\operatorname{P}(x).",
+                    r"\]",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Failure modes]",
+                    r"\begin{description}",
+                    r"\item[Exposition.]",
+                    "Failure is recorded by the missing predicate.",
+                    r"\item[\(\operatorname{P}(x)\).]",
+                    r"\[",
+                    r"x\notin A\Longleftrightarrow \neg P(x).",
+                    r"\]",
+                    r"\[",
+                    r"\neg\operatorname{P}(x).",
+                    r"\]",
+                    r"\end{description}",
+                    r"\end{remark*}",
+                    r"\NoLocalDependencies",
+                    "",
+                ]
+            ),
+        )
+
+        codes = {finding.code for finding in validate_with_inventory(formal_decoration, volume)}
+
+        self.assertIn("missing_positive_support_block", codes)
+
+    def test_formal_decoration_requires_displays_in_predicate_reading_blocks(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{definition}[Prose Predicate Reading]",
+                    r"\label{def:prose-predicate-reading}",
+                    "An object is admissible when it satisfies a condition.",
+                    r"\end{definition}",
+                    r"\begin{remark*}[Standard quantified statement]",
+                    r"\[",
+                    r"x\in A\Longleftrightarrow P(x).",
+                    r"\]",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Predicate reading]",
+                    "For each x, membership in A means P holds.",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Interpretation]",
+                    "The prose-only predicate reading is not inspectable.",
+                    r"\end{remark*}",
+                    r"\NoLocalDependencies",
+                    "",
+                ]
+            ),
+        )
+
+        codes = {finding.code for finding in validate_with_inventory(formal_decoration, volume)}
+
+        self.assertIn("predicate_reading_missing_display", codes)
+
+    def test_formal_decoration_requires_predicate_display_in_failure_branch_for_negation_reading(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{definition}[Failure Branch Missing Predicate Display]",
+                    r"\label{def:failure-branch-missing-predicate-display}",
+                    "An object is admissible when it satisfies a condition.",
+                    r"\end{definition}",
+                    r"\begin{remark*}[Standard quantified statement]",
+                    r"\[",
+                    r"x\in A\Longleftrightarrow P(x).",
+                    r"\]",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Negated quantified statement]",
+                    r"\[",
+                    r"x\notin A\Longleftrightarrow \neg P(x).",
+                    r"\]",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Negation predicate reading]",
+                    r"\[",
+                    r"\neg\operatorname{P}(x).",
+                    r"\]",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Failure modes]",
+                    r"\begin{description}",
+                    r"\item[Exposition.]",
+                    "Failure is the loss of the predicate condition.",
+                    r"\item[\(\operatorname{P}(x)\).]",
+                    r"\[",
+                    r"x\notin A\Longleftrightarrow \neg P(x).",
+                    r"\]",
+                    r"\end{description}",
+                    r"\end{remark*}",
+                    r"\NoLocalDependencies",
+                    "",
+                ]
+            ),
+        )
+
+        codes = {finding.code for finding in validate_with_inventory(formal_decoration, volume)}
+
+        self.assertIn("failure_mode_missing_predicate_display", codes)
+
+    def test_formal_decoration_reviews_generic_failure_mode_labels(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{definition}[Generic Failure Label]",
+                    r"\label{def:generic-failure-label}",
+                    "An object is admissible when it satisfies a condition.",
+                    r"\end{definition}",
+                    r"\begin{remark*}[Standard quantified statement]",
+                    r"\[",
+                    r"x\in A\Longleftrightarrow P(x).",
+                    r"\]",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Failure modes]",
+                    r"\begin{description}",
+                    r"\item[Exposition.]",
+                    "Failure is the loss of a predicate condition.",
+                    r"\item[Displayed failure.]",
+                    r"\[",
+                    r"\neg P(x).",
+                    r"\]",
+                    r"\end{description}",
+                    r"\end{remark*}",
+                    r"\NoLocalDependencies",
+                    "",
+                ]
+            ),
+        )
+
+        findings = validate_with_inventory(formal_decoration, volume)
+        matching = [
+            finding
+            for finding in findings
+            if finding.code == "failure_mode_label_not_predicate_or_structure"
+        ]
+
+        self.assertEqual(len(matching), 1)
+        self.assertEqual(matching[0].severity, "review")
+
+    def test_formal_decoration_accepts_negation_with_failure_mode_decomposition(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{definition}[Negated With Decomposition]",
+                    r"\label{def:negated-with-decomposition}",
+                    "An object is admissible when it satisfies a condition.",
+                    r"\end{definition}",
+                    r"\begin{remark*}[Standard quantified statement]",
+                    r"\[",
+                    r"x\in A\Longleftrightarrow P(x).",
+                    r"\]",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Negated quantified statement]",
+                    r"\[",
+                    r"x\notin A\Longleftrightarrow \neg P(x).",
+                    r"\]",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Negation predicate reading]",
+                    r"\[",
+                    r"\neg\operatorname{P}(x).",
+                    r"\]",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Failure modes]",
+                    r"\begin{description}",
+                    r"\item[Exposition.]",
+                    "Failure means the defining condition does not hold.",
+                    r"\item[\(\operatorname{P}(x)\).]",
+                    r"\[",
+                    r"x\notin A\Longleftrightarrow \neg P(x).",
+                    r"\]",
+                    r"\[",
+                    r"\neg\operatorname{P}(x).",
+                    r"\]",
+                    r"\end{description}",
+                    r"\end{remark*}",
                     r"\begin{remark*}[Interpretation]",
                     "The named branch records the actual failed condition.",
                     r"\end{remark*}",
@@ -2318,6 +2573,68 @@ class ValidateVolumeTests(unittest.TestCase):
 
         self.assertNotIn("missing_failure_mode_decomposition", codes)
         self.assertNotIn("failure_mode_decomposition_missing_branch", codes)
+        self.assertNotIn("missing_dependent_child_block", codes)
+        self.assertNotIn("predicate_reading_missing_display", codes)
+        self.assertNotIn("failure_mode_missing_predicate_display", codes)
+        self.assertNotIn("failure_mode_label_not_predicate_or_structure", codes)
+
+    def test_formal_decoration_accepts_contrapositive_with_predicate_reading_and_failure_modes(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{proposition}[Contrapositive With Predicate Reading]",
+                    r"\label{prop:contrapositive-with-predicate-reading}",
+                    r"If $P(x)$, then $Q(x)$.",
+                    r"\hyperref[prf:contrapositive-with-predicate-reading]{\textit{Go to proof.}}",
+                    r"\end{proposition}",
+                    r"\begin{remark*}[Standard quantified statement]",
+                    r"\[",
+                    r"\forall x\in A,\quad P(x)\Longrightarrow Q(x).",
+                    r"\]",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Contrapositive quantified statement]",
+                    r"\[",
+                    r"\forall x\in A,\quad \neg Q(x)\Longrightarrow \neg P(x).",
+                    r"\]",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Contrapositive predicate reading]",
+                    r"\[",
+                    r"\neg\operatorname{Q}(x)\Longrightarrow\neg\operatorname{P}(x).",
+                    r"\]",
+                    r"\end{remark*}",
+                    r"\begin{remark*}[Failure modes]",
+                    r"\begin{description}",
+                    r"\item[Exposition.]",
+                    "Failure of the conclusion forces failure of the hypothesis.",
+                    r"\item[\(\operatorname{Q}(x)\).]",
+                    r"\[",
+                    r"\forall x\in A,\quad \neg Q(x)\Longrightarrow \neg P(x).",
+                    r"\]",
+                    r"\[",
+                    r"\neg\operatorname{Q}(x)\Longrightarrow\neg\operatorname{P}(x).",
+                    r"\]",
+                    r"\end{description}",
+                    r"\end{remark*}",
+                    r"\begin{dependencies}",
+                    r"\begin{itemize}",
+                    r"  \item \hyperref[ax:order-foundation]{Order foundation}.",
+                    r"\end{itemize}",
+                    r"\end{dependencies}",
+                    "",
+                ]
+            ),
+        )
+
+        codes = {finding.code for finding in validate_with_inventory(formal_decoration, volume)}
+
+        self.assertNotIn("missing_failure_mode_decomposition", codes)
+        self.assertNotIn("failure_mode_decomposition_missing_branch", codes)
+        self.assertNotIn("missing_dependent_child_block", codes)
+        self.assertNotIn("predicate_reading_missing_display", codes)
+        self.assertNotIn("failure_mode_missing_predicate_display", codes)
+        self.assertNotIn("failure_mode_label_not_predicate_or_structure", codes)
 
     def test_formal_decoration_flags_duplicate_support_blocks(self):
         volume = make_volume()
