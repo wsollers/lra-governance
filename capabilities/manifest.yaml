@@ -23,20 +23,25 @@ capabilities:
     reads:
       - capabilities/audit-semantic-topic/capability.md
       - docs/workflows/topic-semantic-audit-loop.md
+      - docs/workflows/external-gpt-reviewer.md
       - docs/workflows/semantic-artifact-calibration.md
       - docs/architecture/semantic-artifact-record.md
-      - constitution/prompts/audit-topic-semantic-artifacts.md
+      - constitution/prompts/audit-topic-semantic-artifacts-external.md
       - constitution/prompts/calibrate-semantic-artifact.md
       - constitution/prompts/validate-semantic-artifact-logic.md
       - constitution/schema/semantic-artifact.schema.json
       - constitution/schema/semantic-artifact-package.schema.json
       - constitution/schema/semantic-artifact-support.schema.json
+      - constitution/schema/external-review-receipt.schema.json
       - constitution/schema/artifact-audit-validation.schema.json
       - constitution/schema/topic-semantic-audit.schema.json
+      - tools/governance/invoke_external_gpt_reviewer.py
+      - tools/governance/validate_external_reviewer_evidence.py
       - tools/governance/validate_semantic_artifact.py
       - tools/governance/validate_topic_semantic_audit.py
     verify:
       - "python tools/governance/validate_topic_semantic_audit.py {target} --repo-root {root} --governance-root {canonical} --strict"
+      - "python tools/governance/validate_external_reviewer_evidence.py --topic-manifest {target} --repo-root {root} --verify-live"
   - id: calibrate-semantic-artifact
     applies_to: [volume]
     triggers: ["calibrate semantic artifact", "semantic artifact", "review semantic artifact",
@@ -44,11 +49,15 @@ capabilities:
     reads:
       - capabilities/calibrate-semantic-artifact/capability.md
       - docs/workflows/semantic-artifact-calibration.md
+      - docs/workflows/external-gpt-reviewer.md
       - docs/architecture/semantic-artifact-record.md
       - constitution/prompts/calibrate-semantic-artifact.md
       - constitution/schema/semantic-artifact.schema.json
       - constitution/schema/semantic-artifact-package.schema.json
       - constitution/schema/semantic-artifact-support.schema.json
+      - constitution/schema/external-review-receipt.schema.json
+      - tools/governance/invoke_external_gpt_reviewer.py
+      - tools/governance/validate_external_reviewer_evidence.py
       - tools/governance/validate_semantic_artifact.py
     verify:
       - "python tools/governance/validate_semantic_artifact.py --artifact {target} --governance-root {canonical} --strict"
