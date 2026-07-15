@@ -26,6 +26,8 @@ jobs:
         run: |
           python -m py_compile \
             capabilities/resolve.py \
+            tools/governance/invoke_external_gpt_reviewer.py \
+            tools/governance/validate_external_reviewer_evidence.py \
             tools/governance/validate_semantic_artifact.py \
             tools/governance/validate_topic_semantic_audit.py
 
@@ -40,6 +42,7 @@ jobs:
               Path("constitution/schema/semantic-artifact.schema.json"),
               Path("constitution/schema/semantic-artifact-package.schema.json"),
               Path("constitution/schema/semantic-artifact-support.schema.json"),
+              Path("constitution/schema/external-review-receipt.schema.json"),
               Path("constitution/schema/artifact-audit-validation.schema.json"),
               Path("constitution/schema/topic-semantic-audit.schema.json"),
           ]
@@ -55,4 +58,5 @@ jobs:
         run: |
           python -m unittest \
             tools/governance/test_validate_semantic_artifact.py \
-            tools/governance/test_validate_topic_semantic_audit.py
+            tools/governance/test_validate_topic_semantic_audit.py \
+            tools/governance/test_validate_external_reviewer_evidence.py
