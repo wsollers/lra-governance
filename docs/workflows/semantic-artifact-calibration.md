@@ -133,3 +133,11 @@ Move to dependency-related groups of five only when:
 - every golden fixture still passes.
 
 Route unusual items back to individual calibration.
+
+## Reversible topic audit mode
+
+For topic-by-topic review that stores semantic packages and validation evidence but
+must leave the canonical TeX unchanged, use
+`docs/workflows/topic-semantic-audit-loop.md`. That workflow temporarily applies
+one reviewed artifact, validates it, reverts the source commit, and only then moves
+to the next artifact.

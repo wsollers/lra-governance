@@ -9,6 +9,8 @@ Modules:
   - fixture: `fixtures/interval-arithmetic-cluster-golden.tex`
   - fixture: `fixtures/interval-algebra-law-cluster-golden.tex`
 - `artifact-payload-generation.md`
+- `semantic-artifact-calibration.md`
+- `topic-semantic-audit-loop.md`
 - `breadcrumb-footer-migration.md`
 - `knowledge-extraction.md`
 - `bibliography-entry.md`

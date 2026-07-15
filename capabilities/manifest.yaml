@@ -16,6 +16,27 @@ capabilities:
       - capabilities/build-repo/build_repo.py
     verify:
       - "python capabilities/build-repo/build_repo.py --root {root}"
+  - id: audit-semantic-topic
+    applies_to: [volume]
+    triggers: ["lra audit topic", "audit semantic topic", "topic semantic audit",
+               "validate topic artifacts", "audit topic artifacts"]
+    reads:
+      - capabilities/audit-semantic-topic/capability.md
+      - docs/workflows/topic-semantic-audit-loop.md
+      - docs/workflows/semantic-artifact-calibration.md
+      - docs/architecture/semantic-artifact-record.md
+      - constitution/prompts/audit-topic-semantic-artifacts.md
+      - constitution/prompts/calibrate-semantic-artifact.md
+      - constitution/prompts/validate-semantic-artifact-logic.md
+      - constitution/schema/semantic-artifact.schema.json
+      - constitution/schema/semantic-artifact-package.schema.json
+      - constitution/schema/semantic-artifact-support.schema.json
+      - constitution/schema/artifact-audit-validation.schema.json
+      - constitution/schema/topic-semantic-audit.schema.json
+      - tools/governance/validate_semantic_artifact.py
+      - tools/governance/validate_topic_semantic_audit.py
+    verify:
+      - "python tools/governance/validate_topic_semantic_audit.py {target} --repo-root {root} --governance-root {canonical} --strict"
   - id: calibrate-semantic-artifact
     applies_to: [volume]
     triggers: ["calibrate semantic artifact", "semantic artifact", "review semantic artifact",
