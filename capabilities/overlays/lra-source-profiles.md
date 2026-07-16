@@ -8,4 +8,4 @@ Success gates:
 - `python scripts\validate_source_indexes.py`
 - `python -m pytest tests`
 
-No manifest-backed LLM capability is exposed for repo kind `source_profiles` yet.
+No manifest-backed LLM capability is exposed for repo kind `python_tool` yet.

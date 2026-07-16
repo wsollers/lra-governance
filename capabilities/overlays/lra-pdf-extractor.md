@@ -7,4 +7,4 @@ PDF/source ingestion, bibliography normalization, candidate extraction, OCR/clea
 Success gates:
 - `python -m pytest tests`
 
-No manifest-backed LLM capability is exposed for repo kind `pdf_extractor` yet.
+No manifest-backed LLM capability is exposed for repo kind `python_tool` yet.

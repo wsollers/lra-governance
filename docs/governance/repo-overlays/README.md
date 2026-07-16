@@ -57,3 +57,10 @@ Generated capability overlays under `capabilities/overlays/` are resolver
 summaries derived from `capabilities/overlays-config.yaml`. They must include
 all specialist repos so `build-repo` can route validation, but they do not
 replace the canonical overlays above.
+
+The Python-based specialist repos currently use the shared resolver kind
+`python_tool`: `lra-knowledge-explorer`, `lra-pdf-extractor`, and
+`lra-source-profiles`. They all enter validation through `build-repo` and
+declare repo-local success gates in `capabilities/overlays-config.yaml`. Do not
+infer validation from whether a repo happens to have `scripts/`, `tools/`, or
+`src/`; read the configured gates and the repo-local README.

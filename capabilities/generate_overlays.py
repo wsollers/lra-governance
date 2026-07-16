@@ -40,7 +40,7 @@ Pass `--canonical-dir <path-to-lra-governance>` to `validate_decoration.py` to e
 def _bullets(items):
     return "\n".join(f"- `{item}`" for item in items)
 
-def nonvolume_overlay(repo, kind, title, build_environment=None, success_gates=None):
+def nonvolume_overlay(repo, kind, title, build_environment=None, success_gates=None, purpose_override=None):
     if kind == "governance":
         return f"""# Repo Overlay -- {repo}
 
@@ -78,24 +78,17 @@ Do not run LaTeX volume render checks as substitutes for governance tests.
         "vault": (
             "Handwritten proof records; volumes link here via \\ProofVaultURL.",
             None),
-        "web": (
-            "Knowledge Explorer web app consuming extracted knowledge-graph data.",
-            None),
-        "pdf_extractor": (
-            "PDF/source ingestion, bibliography normalization, candidate extraction, "
-            "OCR/cleanup assistance, and staged review outputs. Candidate artifacts "
-            "must be reviewed in the owning repo before integration.",
-            None),
-        "source_profiles": (
-            "Source-profile metadata, active source selections, volume/chapter source "
-            "indexes, cached Markdown extracts, and attachment-slot exports. Outputs "
-            "are staging/review inputs for owning repos.",
+        "python_tool": (
+            "Python tooling repo. Use the repo-local README plus configured success gates; "
+            "do not infer ownership from whether local helpers live under scripts/, tools/, or src/.",
             None),
         "governance": (
             "Canonical governance source for authoring standards, schemas, capabilities, validators, and generated repo overlays.",
             None),
     }
     purpose, cap = blocks[kind]
+    if purpose_override:
+        purpose = purpose_override
     if not cap:
         gate_block = ""
         if success_gates:
@@ -144,6 +137,7 @@ def main():
                 r["title"],
                 r.get("build_environment"),
                 r.get("success_gates"),
+                r.get("purpose"),
             )
         (outdir / f"{r['repo']}.md").write_text(md, encoding="utf-8")
         print(f"wrote overlays/{r['repo']}.md")

@@ -1,6 +1,6 @@
 # Per-repo overlay config consumed by generate_overlays.py.
 # kind: volume -> uses the LaTeX authoring capabilities (stub/statement).
-#       library|lean|cpp|vault|web|pdf_extractor|source_profiles -> authoring capabilities do NOT apply; overlay documents purpose.
+#       library|lean|cpp|vault|python_tool -> authoring capabilities do NOT apply; overlay documents purpose.
 # plain_style: true -> Vol IV style; verifiers pass --no-require-box (definitions are not boxed).
 # title: short repo identity shown to agents.
 repos:
@@ -58,18 +58,21 @@ repos:
     kind: vault
     title: "Handwritten proof records"
   - repo: lra-knowledge-explorer
-    kind: web
+    kind: python_tool
     title: "Knowledge Explorer web app"
+    purpose: "Knowledge Explorer web app consuming extracted knowledge-graph data."
     success_gates:
       - "python -m pytest tests"
   - repo: lra-pdf-extractor
-    kind: pdf_extractor
+    kind: python_tool
     title: "PDF/source ingestion and candidate extraction tooling"
+    purpose: "PDF/source ingestion, bibliography normalization, candidate extraction, OCR/cleanup assistance, and staged review outputs. Candidate artifacts must be reviewed in the owning repo before integration."
     success_gates:
       - "python -m pytest tests"
   - repo: lra-source-profiles
-    kind: source_profiles
+    kind: python_tool
     title: "Source profiles, source indexes, and active profile exports"
+    purpose: "Source-profile metadata, active source selections, volume/chapter source indexes, cached Markdown extracts, and attachment-slot exports. Outputs are staging/review inputs for owning repos."
     success_gates:
       - "python scripts\\validate_source_indexes.py"
       - "python -m pytest tests"
