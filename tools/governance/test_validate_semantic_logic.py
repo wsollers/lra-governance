@@ -228,6 +228,14 @@ class SemanticLogicValidationTests(unittest.TestCase):
             volume = root / "lra-volume-i"
             target = volume / "volume-i" / "book-order" / "bounds"
             target.mkdir(parents=True)
+            (volume / "volume-i-book-order.tex").write_text(
+                r"\input{volume-i/book-order/bounds/index}" + "\n",
+                encoding="utf-8",
+            )
+            (target / "index.tex").write_text(
+                r"\chapter{Bounds}" + "\n" + r"\input{volume-i/book-order/bounds/notes-upper-lower-bounds}" + "\n",
+                encoding="utf-8",
+            )
             source = target / "notes-upper-lower-bounds.tex"
             source.write_text(CORRECTED_TEX.replace(r"\begin{definition}", r"\begin{definition}[Upper Bound in the Real Line]").replace(r"\end{definition}", r"\label{def:real-upper-bound}\end{definition}"), encoding="utf-8")
             artifact = root / "artifact.yaml"
@@ -255,6 +263,87 @@ class SemanticLogicValidationTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertIn('"source_resolution"', result.stdout)
         self.assertIn('"label": "def:real-upper-bound"', result.stdout)
+
+    def test_missing_routed_artifact_becomes_generation_queue_not_failure(self):
+        with temp_dir() as temp:
+            root = Path(temp)
+            volume = root / "lra-volume-i"
+            target = volume / "volume-i" / "book-order" / "bounds"
+            target.mkdir(parents=True)
+            (volume / "volume-i-book-order.tex").write_text(
+                r"\input{volume-i/book-order/bounds/index}" + "\n",
+                encoding="utf-8",
+            )
+            (target / "index.tex").write_text(
+                r"\chapter{Bounds}" + "\n" + r"\input{volume-i/book-order/bounds/notes-upper-lower-bounds}" + "\n",
+                encoding="utf-8",
+            )
+            (target / "notes-upper-lower-bounds.tex").write_text(
+                CORRECTED_TEX.replace(r"\begin{definition}", r"\begin{definition}[Upper Bound in the Real Line]").replace(r"\end{definition}", r"\label{def:real-upper-bound}\end{definition}"),
+                encoding="utf-8",
+            )
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(VALIDATOR),
+                    "--repos-root",
+                    str(root),
+                    "--volume",
+                    "i",
+                    "--chapter",
+                    "bounds",
+                    "--format",
+                    "json",
+                ],
+                capture_output=True,
+                text=True,
+            )
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn('"generation_queue"', result.stdout)
+        self.assertIn('"label": "def:real-upper-bound"', result.stdout)
+        self.assertNotIn("def:unrouted", result.stdout)
+
+    def test_unrouted_tex_is_not_semantic_generation_source(self):
+        with temp_dir() as temp:
+            root = Path(temp)
+            volume = root / "lra-volume-i"
+            target = volume / "volume-i" / "book-order" / "bounds"
+            target.mkdir(parents=True)
+            (volume / "volume-i-book-order.tex").write_text(
+                r"\input{volume-i/book-order/bounds/index}" + "\n",
+                encoding="utf-8",
+            )
+            (target / "index.tex").write_text(
+                r"\chapter{Bounds}" + "\n" + r"\input{volume-i/book-order/bounds/routed}" + "\n",
+                encoding="utf-8",
+            )
+            (target / "routed.tex").write_text(
+                r"\begin{definition}[Routed]\label{def:routed}Routed.\end{definition}" + "\n",
+                encoding="utf-8",
+            )
+            (target / "unrouted.tex").write_text(
+                r"\begin{definition}[Unrouted]\label{def:unrouted}Unrouted.\end{definition}" + "\n",
+                encoding="utf-8",
+            )
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(VALIDATOR),
+                    "--repos-root",
+                    str(root),
+                    "--volume",
+                    "i",
+                    "--chapter",
+                    "bounds",
+                    "--format",
+                    "json",
+                ],
+                capture_output=True,
+                text=True,
+            )
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn('"label": "def:routed"', result.stdout)
+        self.assertNotIn("def:unrouted", result.stdout)
 
     def test_rejects_definition_iff_latex_with_rhs_only_ast(self):
         data = real_upper_bound_artifact()

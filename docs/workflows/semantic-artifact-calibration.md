@@ -163,9 +163,20 @@ python <governance-root>\tools\governance\validate_semantic_logic.py `
 python <governance-root>\tools\governance\validate_semantic_logic.py `
   --repos-root <repos-root> `
   --volume <i-viii> `
-  --target <volume-relative-chapter-or-topic> `
-  --require-all-formal-artifacts `
+  --book <book-slug-or-root> `
+  --chapter <chapter-slug> `
+  --section <section-slug> `
+  --label <optional-def-or-thm-label> `
   --output <run-dir>\logic-batch-validation.yaml
+
+python <governance-root>\tools\governance\semantic_artifact_inventory.py `
+  --repos-root <repos-root> `
+  --volume <i-viii> `
+  --book <book-slug-or-root> `
+  --chapter <chapter-slug> `
+  --section <section-slug> `
+  --label <optional-def-or-thm-label> `
+  --output <run-dir>\semantic-artifact-inventory.yaml
 
 python <governance-root>\tools\governance\compare_semantic_ast_extractors.py `
   --source-tex <run-dir>\artifact-source-snippet.tex `
@@ -184,9 +195,21 @@ whether the package is trusted for source integration.
 directly when it contains `artifact` or `artifact_yaml` plus optional
 `corrected_tex`. Source resolution from TeX must always specify the owning
 volume with `--volume`; do not search all volumes implicitly for a candidate
-definition or theorem. Batch target validation checks every existing semantic
-package under the target, and `--require-all-formal-artifacts` additionally
-fails any formal source label in the target that lacks a matching package.
+definition or theorem.
+
+Scope validation is inventory-first. `semantic_artifact_inventory.py` lists the
+formal environments that are actually reachable from rendered book roots, in
+book input order, and supports the filter order `volume -> book -> chapter ->
+section -> label`. Do not build candidate lists from raw filesystem globs.
+Files that exist on disk but are not routed into a book root are not validation
+source.
+
+Batch semantic logic validation checks every existing semantic package in the
+selected routed scope. Missing packages are not validation failures. They are
+reported as `generation_queue` entries containing the exact source block,
+location, suggested package path, and an `llm_packet` suitable for reviewer
+artifact generation. Existing packages may still fail if their AST or
+corrected-TeX contract is invalid.
 
 ## Golden fixtures
 

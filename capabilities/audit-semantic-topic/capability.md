@@ -42,6 +42,10 @@ The local validator may be called directly on reviewer payloads with
 `--llm-data`, or against a source label with `--volume <i-viii> --target ...
 --label ...`; volume-scoped source resolution must never search all volumes
 implicitly.
+Use `semantic_artifact_inventory.py` to construct the queue for a volume, book,
+chapter, section, or label. It follows routed book inputs only. Missing
+semantic packages become generation queue entries; they are not validation
+failures by themselves.
 
 ## Do
 

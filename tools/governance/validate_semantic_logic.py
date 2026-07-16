@@ -18,6 +18,8 @@ from typing import Any, Iterable
 
 import yaml
 
+from semantic_artifact_inventory import artifact_package_for, routed_formals
+
 
 CHECK_NAMES = (
     "binder_scope",
@@ -1296,55 +1298,89 @@ def validate(data: dict[str, Any], corrected_tex: str) -> LogicResult:
 
 
 def batch_validate_target(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
-    volume_root = resolve_volume_root(args.volume, args.repos_root, args.volume_root)
-    target = (volume_root / args.target).resolve() if args.target is not None and not args.target.is_absolute() else args.target.resolve()
-    if not target.exists():
-        raise FileNotFoundError(target)
-
-    candidates = formal_candidates(target)
-    packages = artifact_package_index(target)
+    repo_root, volume_source, _roots, candidates = routed_formals(args)
     items: list[dict[str, Any]] = []
-    missing: list[dict[str, Any]] = []
+    generation_queue: list[dict[str, Any]] = []
     exit_code = 0
-    labels = {candidate.label for candidate in candidates}
 
-    for label, (artifact, corrected) in sorted(packages.items()):
-        if label not in labels:
+    for candidate in candidates:
+        package = artifact_package_for(candidate, repo_root)
+        artifact = repo_root / package["artifact"]
+        corrected = repo_root / package["corrected_tex"]
+        if not package["exists"]:
+            generation_queue.append(
+                {
+                    "label": candidate.label,
+                    "kind": candidate.kind,
+                    "title": candidate.title,
+                    "source": candidate.as_json(repo_root),
+                    "suggested_package": package,
+                    "llm_packet": {
+                        "task": {
+                            "mode": "generate_semantic_artifact",
+                            "requested_action": "create_artifact_package",
+                        },
+                        "source": {
+                            "repository_root": str(repo_root),
+                            "file": candidate.source_file.relative_to(repo_root).as_posix(),
+                            "label": candidate.label,
+                            "environment_kind": candidate.kind,
+                            "source_line_start": candidate.line_start,
+                            "source_line_end": candidate.line_end,
+                            "current_tex": candidate.text,
+                        },
+                    },
+                }
+            )
             continue
         data = load_mapping(artifact)
         result = validate(data, corrected.read_text(encoding="utf-8")).as_json()
-        candidate = next(item for item in candidates if item.label == label)
         item = {
-            "label": label,
-            "candidate": candidate.as_json(volume_root),
-            "artifact": artifact.relative_to(volume_root).as_posix(),
-            "corrected_tex": corrected.relative_to(volume_root).as_posix(),
+            "label": candidate.label,
+            "candidate": candidate.as_json(repo_root),
+            "artifact": artifact.relative_to(repo_root).as_posix(),
+            "corrected_tex": corrected.relative_to(repo_root).as_posix(),
             "result": result,
         }
         items.append(item)
         if result["result"] not in {"pass", "pass_with_warnings"}:
             exit_code = 1
 
-    if args.require_all_formal_artifacts:
-        packaged = {item["label"] for item in items}
-        for candidate in candidates:
-            if candidate.label not in packaged:
-                missing.append(candidate.as_json(volume_root))
-        if missing:
-            exit_code = 1
-
     payload = {
         "schema_version": "lra.semantic-logic-batch/1.0",
         "volume": args.volume,
-        "volume_root": str(volume_root),
-        "target": target.relative_to(volume_root).as_posix(),
+        "repo_root": str(repo_root),
+        "volume_source": volume_source.relative_to(repo_root).as_posix(),
+        "filters": {
+            "book": args.book,
+            "chapter": args.chapter,
+            "section": args.section,
+            "label": args.label,
+            "target": args.target.as_posix() if args.target else None,
+        },
         "formal_candidates": len(candidates),
         "validated_packages": len(items),
-        "missing_packages": missing,
+        "generation_queue": generation_queue,
+        "missing_packages": [item["source"] for item in generation_queue],
         "result": "fail" if exit_code else "pass",
         "items": items,
     }
     return payload, exit_code
+
+
+def resolve_routed_candidate(args: argparse.Namespace) -> tuple[Path, Any]:
+    if args.volume is None:
+        raise ValueError("--volume is required when resolving --label from source")
+    repo_root, _volume_source, _roots, candidates = routed_formals(args)
+    if not args.label:
+        raise ValueError("--label is required for source resolution")
+    matches = [candidate for candidate in candidates if candidate.label == args.label]
+    if not matches:
+        raise ValueError(f"label {args.label!r} was not found in routed source for the requested scope")
+    if len(matches) > 1:
+        locations = ", ".join(item.source_file.relative_to(repo_root).as_posix() for item in matches)
+        raise ValueError(f"label {args.label!r} is ambiguous in routed source: {locations}")
+    return repo_root, matches[0]
 
 
 def main() -> int:
@@ -1359,21 +1395,25 @@ def main() -> int:
     parser.add_argument("--repos-root", type=Path)
     parser.add_argument("--volume-root", type=Path)
     parser.add_argument("--volume", choices=tuple(VOLUME_NAMES), help="Required for volume-scoped source resolution.")
+    parser.add_argument("--book", help="Limit routed inventory validation to one book slug or book root stem.")
+    parser.add_argument("--chapter", help="Limit routed inventory validation to one chapter slug.")
+    parser.add_argument("--section", help="Limit routed inventory validation to one notes/proofs section slug.")
     parser.add_argument("--target", type=Path, help="Volume-relative chapter/topic/file target for batch validation or label resolution.")
     parser.add_argument("--label", help="Resolve corrected TeX from the formal block with this label.")
     parser.add_argument(
         "--require-all-formal-artifacts",
         action="store_true",
-        help="In --target batch mode, fail labels that do not have artifact.yaml and corrected.tex packages.",
+        help="Compatibility flag; missing packages are reported in generation_queue, not treated as validation failures.",
     )
     parser.add_argument("--output", type=Path)
     parser.add_argument("--format", choices=("yaml", "json"), default="yaml")
     args = parser.parse_args()
 
     try:
-        if args.target is not None and args.artifact is None and args.llm_data is None and args.label is None:
+        scope_requested = any([args.target, args.book, args.chapter, args.section, args.label])
+        if scope_requested and args.artifact is None and args.llm_data is None:
             if args.volume is None:
-                raise ValueError("--volume is required for --target batch validation")
+                raise ValueError("--volume is required for scoped batch validation")
             payload, return_code = batch_validate_target(args)
         else:
             candidate = None
@@ -1390,20 +1430,14 @@ def main() -> int:
             elif llm_tex is not None:
                 corrected_tex = llm_tex
             elif args.label is not None:
-                if args.volume is None:
-                    raise ValueError("--volume is required when resolving --label from source")
-                volume_root = resolve_volume_root(args.volume, args.repos_root, args.volume_root)
-                target = None
-                if args.target is not None:
-                    target = (volume_root / args.target).resolve() if not args.target.is_absolute() else args.target.resolve()
-                candidate = resolve_candidate(volume_root, args.label, target)
+                repo_root, candidate = resolve_routed_candidate(args)
                 corrected_tex = candidate.text
             else:
                 raise ValueError("one of --corrected-tex, --llm-data corrected_tex, or --label source resolution is required")
 
             payload = validate(data, corrected_tex).as_json()
             if candidate is not None:
-                payload["source_resolution"] = candidate.as_json(resolve_volume_root(args.volume, args.repos_root, args.volume_root))
+                payload["source_resolution"] = candidate.as_json(repo_root)
             return_code = 0 if payload["result"] in {"pass", "pass_with_warnings"} else 1
     except Exception as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
