@@ -40,7 +40,7 @@ Pass `--canonical-dir <path-to-lra-governance>` to `validate_decoration.py` to e
 def _bullets(items):
     return "\n".join(f"- `{item}`" for item in items)
 
-def nonvolume_overlay(repo, kind, title, build_environment=None, success_gates=None, purpose_override=None):
+def nonvolume_overlay(repo, kind, title, build_environment=None, success_gates=None, purpose_override=None, layout=None):
     if kind == "governance":
         return f"""# Repo Overlay -- {repo}
 
@@ -101,18 +101,26 @@ Repo identity: {title}.
 {gate_block}
 No manifest-backed LLM capability is exposed for repo kind `{kind}` yet.
 """
-    env_block = (
-        f"\nBuild environment: {build_environment}. Run the success gates from this environment.\n"
-        if build_environment else ""
-    )
+    extra_blocks = []
+    if build_environment:
+        extra_blocks.append(f"Build environment: {build_environment}. Run the success gates from this environment.")
+    if layout:
+        extra_blocks.append(
+            "Layout gate:\n"
+            "- `python tools/governance/validate_code_repo_layout.py --root <repo-root> "
+            f"--repo {repo} --governance-root <lra-governance>`"
+        )
+    extra_block = "\n\n".join(extra_blocks)
+    if extra_block:
+        extra_block += "\n\n"
     gate_block = _bullets(success_gates or [])
     return f"""# Repo Overlay -- {repo}
 
 Repo identity: {title}.
 
 {purpose}
-{env_block}
-Success gates:
+
+{extra_block}Success gates:
 {gate_block}
 
 Capabilities (domain-specific to this repo; same author -> validate spine as the volumes):
@@ -138,6 +146,7 @@ def main():
                 r.get("build_environment"),
                 r.get("success_gates"),
                 r.get("purpose"),
+                r.get("layout"),
             )
         (outdir / f"{r['repo']}.md").write_text(md, encoding="utf-8")
         print(f"wrote overlays/{r['repo']}.md")

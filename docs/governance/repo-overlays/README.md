@@ -64,3 +64,7 @@ The Python-based specialist repos currently use the shared resolver kind
 declare repo-local success gates in `capabilities/overlays-config.yaml`. Do not
 infer validation from whether a repo happens to have `scripts/`, `tools/`, or
 `src/`; read the configured gates and the repo-local README.
+
+Shared code layout and style rules live in
+`docs/governance/code-repo-standards.md` and are enforced by
+`tools/governance/validate_code_repo_layout.py`.

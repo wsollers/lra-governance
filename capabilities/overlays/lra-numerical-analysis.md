@@ -6,6 +6,9 @@ C++ / numerical companion.
 
 Build environment: MSVC x64 developer environment. Run the success gates from this environment.
 
+Layout gate:
+- `python tools/governance/validate_code_repo_layout.py --root <repo-root> --repo lra-numerical-analysis --governance-root <lra-governance>`
+
 Success gates:
 - `powershell -ExecutionPolicy Bypass -File tools\build-msvc.ps1 -Configuration Debug`
 

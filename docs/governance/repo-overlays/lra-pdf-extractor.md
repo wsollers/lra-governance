@@ -93,4 +93,8 @@ Load these governance documents for PDF-extractor work:
 
 Use the local `[external:lra-pdf-extractor] README.md`, `pyproject.toml`,
 `src/`, `tests/`, and relevant local docs for implementation details.
+Shared Python layout and code-style rules live in
+`docs/governance/code-repo-standards.md` and are enforced by
+`tools/governance/validate_code_repo_layout.py` through the shared
+`build-repo` path.
 

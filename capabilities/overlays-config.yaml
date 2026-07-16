@@ -44,12 +44,22 @@ repos:
     kind: cpp
     title: "C++ / numerical companion"
     build_environment: "MSVC x64 developer environment"
+    layout:
+      language: cpp
+      required_dirs: ["cmake", "docker", "tools"]
+      code_roots: ["include", "src", "projects"]
+      test_roots: ["tests", "projects/*/tests"]
     success_gates:
       - "powershell -ExecutionPolicy Bypass -File tools\\build-msvc.ps1 -Configuration Debug"
   - repo: lra-nurbs
     kind: cpp
     title: "NURBS / numerical geometry"
     build_environment: "MSVC x64 developer environment"
+    layout:
+      language: cpp
+      required_dirs: ["cmake", "docker", "tools"]
+      code_roots: ["include", "src", "projects"]
+      test_roots: ["tests", "projects/*/tests"]
     success_gates:
       - "cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug"
       - "cmake --build build"
@@ -61,18 +71,30 @@ repos:
     kind: python_tool
     title: "Knowledge Explorer web app"
     purpose: "Knowledge Explorer web app consuming extracted knowledge-graph data."
+    layout:
+      language: python
+      code_roots: ["src", "tools", "scripts", "reorder"]
+      test_roots: ["tests"]
     success_gates:
       - "python -m pytest tests"
   - repo: lra-pdf-extractor
     kind: python_tool
     title: "PDF/source ingestion and candidate extraction tooling"
     purpose: "PDF/source ingestion, bibliography normalization, candidate extraction, OCR/cleanup assistance, and staged review outputs. Candidate artifacts must be reviewed in the owning repo before integration."
+    layout:
+      language: python
+      code_roots: ["src", "tools", "scripts"]
+      test_roots: ["tests"]
     success_gates:
       - "python -m pytest tests"
   - repo: lra-source-profiles
     kind: python_tool
     title: "Source profiles, source indexes, and active profile exports"
     purpose: "Source-profile metadata, active source selections, volume/chapter source indexes, cached Markdown extracts, and attachment-slot exports. Outputs are staging/review inputs for owning repos."
+    layout:
+      language: python
+      code_roots: ["src", "tools", "scripts"]
+      test_roots: ["tests"]
     success_gates:
       - "python scripts\\validate_source_indexes.py"
       - "python -m pytest tests"

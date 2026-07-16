@@ -19,6 +19,11 @@ but it must not be injected into volume content instructions.
 This repo does not own Lean formalization, NURBS/Vulkan simulation, or shared
 LaTeX infrastructure.
 
+Shared C/C++ layout and code-style rules live in
+`docs/governance/code-repo-standards.md` and are enforced by
+`tools/governance/validate_code_repo_layout.py` through the shared
+`build-repo` path.
+
 ## Workspace Shape
 
 The repo is a C++23 numerical software laboratory. Prefer this layout:

@@ -31,6 +31,10 @@ Load these governance documents for explorer work:
 Use the local `[external:lra-knowledge-explorer] README.md` and `PIPELINE.md`
 for operational details. Do not load Lean, PDF-extractor, source-profile, or
 volume authoring overlays unless the task explicitly crosses that boundary.
+Shared Python layout and code-style rules live in
+`docs/governance/code-repo-standards.md` and are enforced by
+`tools/governance/validate_code_repo_layout.py` through the shared
+`build-repo` path.
 
 ## Formal Verification Surface
 

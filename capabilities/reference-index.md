@@ -57,6 +57,7 @@ For `cpp-build-task`:
 
 - Numerical-analysis overlay: `docs/governance/repo-overlays/lra-numerical-analysis.md`
 - NURBS overlay, when working in `lra-nurbs`: `docs/governance/repo-overlays/lra-nurbs.md`
+- Shared code layout and style: `docs/governance/code-repo-standards.md`
 - Build/render standards: `docs/governance/build-render-standards.md`
 - Repository layout: `docs/architecture/repository-layout.md`
 
@@ -73,6 +74,7 @@ For `build-repo`:
 - Lean overlay: `docs/governance/repo-overlays/lra-lean.md`
 - C++ numerical overlay: `docs/governance/repo-overlays/lra-numerical-analysis.md`
 - NURBS overlay: `docs/governance/repo-overlays/lra-nurbs.md`
+- Shared code layout and style: `docs/governance/code-repo-standards.md`
 - Governance audit workflow: `docs/workflows/governance-audit.md`
 
 Prefer `capabilities/build-repo/build_repo.py --dry-run` before opening broader

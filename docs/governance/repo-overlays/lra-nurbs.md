@@ -20,6 +20,11 @@ Use local CMake, tests, and repo validators for implementation changes.
 Canonical architecture and layout guidance lives in
 `docs/architecture/lra-nurbs-architecture.md`.
 
+Shared C/C++ layout and code-style rules live in
+`docs/governance/code-repo-standards.md` and are enforced by
+`tools/governance/validate_code_repo_layout.py` through the shared
+`build-repo` path.
+
 ## Implementation Standards
 
 `lra-nurbs` is a C++23 / Vulkan / geometry / simulation codebase. Keep new C++

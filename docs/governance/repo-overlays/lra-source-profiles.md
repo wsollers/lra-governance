@@ -91,3 +91,7 @@ Load these governance documents for source-profile work:
 
 Use the local `[external:lra-source-profiles] README.md`, `workflows/`, source
 indexes, and scripts for operational details.
+Shared Python layout and code-style rules live in
+`docs/governance/code-repo-standards.md` and are enforced by
+`tools/governance/validate_code_repo_layout.py` through the shared
+`build-repo` path.
