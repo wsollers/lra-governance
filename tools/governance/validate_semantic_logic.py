@@ -14,7 +14,7 @@ import re
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterable
 
 import yaml
 
@@ -38,6 +38,16 @@ CHECK_NAMES = (
 )
 
 ROOT = Path(__file__).resolve().parents[2]
+VOLUME_NAMES = {
+    "i": "lra-volume-i",
+    "ii": "lra-volume-ii",
+    "iii": "lra-volume-iii",
+    "iv": "lra-volume-iv",
+    "v": "lra-volume-v",
+    "vi": "lra-volume-vi",
+    "vii": "lra-volume-vii",
+    "viii": "lra-volume-viii",
+}
 EXPLICIT_COERCION_FUNCTIONS = {
     "coerce",
     "cast",
@@ -48,6 +58,12 @@ EXPLICIT_COERCION_FUNCTIONS = {
     "inclusion",
     "subtype_val",
 }
+FORMAL_ENV_RE = re.compile(
+    r"\\begin\{(?P<env>definition|axiom|theorem|lemma|proposition|corollary)\}"
+    r"(?:\[(?P<title>[^\]]+)\])?",
+    re.IGNORECASE,
+)
+LABEL_RE = re.compile(r"\\label\{(?P<label>[^{}]+)\}")
 
 
 @dataclass
@@ -107,11 +123,185 @@ class LogicResult:
         }
 
 
+@dataclass(frozen=True)
+class FormalCandidate:
+    label: str
+    kind: str
+    title: str | None
+    path: Path
+    line_start: int
+    line_end: int
+    text: str
+
+    def as_json(self, root: Path | None = None) -> dict[str, Any]:
+        path = self.path
+        if root is not None:
+            try:
+                rendered = path.relative_to(root).as_posix()
+            except ValueError:
+                rendered = str(path)
+        else:
+            rendered = str(path)
+        return {
+            "label": self.label,
+            "kind": self.kind,
+            "title": self.title,
+            "path": rendered,
+            "line_start": self.line_start,
+            "line_end": self.line_end,
+        }
+
+
 def load_mapping(path: Path) -> dict[str, Any]:
     data = yaml.safe_load(path.read_text(encoding="utf-8"))
     if not isinstance(data, dict):
         raise ValueError(f"{path}: root must be a mapping")
     return data
+
+
+def load_serialized_mapping(path: Path) -> dict[str, Any]:
+    text = sys.stdin.read() if str(path) == "-" else path.read_text(encoding="utf-8")
+    try:
+        data = json.loads(text)
+    except json.JSONDecodeError:
+        data = yaml.safe_load(text)
+    if not isinstance(data, dict):
+        raise ValueError(f"{path}: root must be a mapping")
+    return data
+
+
+def parse_embedded_mapping(value: Any, field: str) -> dict[str, Any]:
+    if isinstance(value, dict):
+        return value
+    if isinstance(value, str):
+        try:
+            data = json.loads(value)
+        except json.JSONDecodeError:
+            data = yaml.safe_load(value)
+        if isinstance(data, dict):
+            return data
+    raise ValueError(f"{field}: expected an object or serialized YAML/JSON mapping")
+
+
+def extract_llm_artifact_and_tex(payload: dict[str, Any]) -> tuple[dict[str, Any], str | None]:
+    """Extract artifact data and corrected TeX from a governed LLM payload.
+
+    Accepted envelopes are intentionally practical: direct objects, reviewer
+    strings (`artifact_yaml` / `corrected_tex`), or a nested
+    `semantic_review` packet produced by the external reviewer tooling.
+    """
+    candidates = [
+        payload,
+        payload.get("semantic_review") if isinstance(payload.get("semantic_review"), dict) else None,
+        payload.get("result") if isinstance(payload.get("result"), dict) else None,
+    ]
+    for candidate in candidates:
+        if not isinstance(candidate, dict):
+            continue
+        if "artifact" in candidate:
+            artifact = parse_embedded_mapping(candidate["artifact"], "artifact")
+        elif "artifact_yaml" in candidate:
+            artifact = parse_embedded_mapping(candidate["artifact_yaml"], "artifact_yaml")
+        else:
+            continue
+        corrected_tex = candidate.get("corrected_tex")
+        if corrected_tex is None:
+            corrected_tex = candidate.get("corrected_tex_source")
+        if corrected_tex is not None and not isinstance(corrected_tex, str):
+            raise ValueError("corrected_tex: expected a string")
+        return artifact, corrected_tex
+    raise ValueError("LLM payload must contain artifact/artifact_yaml data")
+
+
+def tex_files(target: Path) -> Iterable[Path]:
+    if target.is_file():
+        if target.suffix == ".tex":
+            yield target
+        return
+    for path in sorted(target.rglob("*.tex")):
+        parts = {part.lower() for part in path.parts}
+        if "build" in parts or ".external-review-diagnostics" in parts:
+            continue
+        if path.name == "corrected.tex" and (path.parent / "artifact.yaml").exists():
+            continue
+        yield path
+
+
+def line_for_offset(text: str, offset: int) -> int:
+    return text[:offset].count("\n") + 1
+
+
+def formal_candidates(target: Path) -> list[FormalCandidate]:
+    candidates: list[FormalCandidate] = []
+    for path in tex_files(target):
+        text = path.read_text(encoding="utf-8", errors="ignore")
+        starts = list(FORMAL_ENV_RE.finditer(text))
+        for index, start in enumerate(starts):
+            next_start = starts[index + 1].start() if index + 1 < len(starts) else len(text)
+            block = text[start.start() : next_start]
+            label_match = LABEL_RE.search(block)
+            if not label_match:
+                continue
+            label = label_match.group("label")
+            if not re.match(r"^(def|ax|thm|lem|prop|cor):", label):
+                continue
+            candidates.append(
+                FormalCandidate(
+                    label=label,
+                    kind=start.group("env").lower(),
+                    title=start.group("title"),
+                    path=path,
+                    line_start=line_for_offset(text, start.start()),
+                    line_end=line_for_offset(text, next_start),
+                    text=block,
+                )
+            )
+    return candidates
+
+
+def resolve_volume_root(volume: str, repos_root: Path | None, explicit_root: Path | None) -> Path:
+    if volume not in VOLUME_NAMES:
+        raise ValueError(f"unknown volume {volume!r}; expected one of {', '.join(VOLUME_NAMES)}")
+    if explicit_root is not None:
+        root = explicit_root.resolve()
+        if not root.exists():
+            raise FileNotFoundError(root)
+        return root
+    if repos_root is None:
+        raise ValueError("--repos-root is required when --volume-root is not supplied")
+    root = (repos_root / VOLUME_NAMES[volume]).resolve()
+    if not root.exists():
+        raise FileNotFoundError(root)
+    return root
+
+
+def resolve_candidate(volume_root: Path, label: str, target: Path | None = None) -> FormalCandidate:
+    search_root = target.resolve() if target is not None else volume_root
+    matches = [candidate for candidate in formal_candidates(search_root) if candidate.label == label]
+    if not matches:
+        raise ValueError(f"label {label!r} was not found under {search_root}")
+    if len(matches) > 1:
+        locations = ", ".join(str(item.path) for item in matches)
+        raise ValueError(f"label {label!r} is ambiguous under {search_root}: {locations}")
+    return matches[0]
+
+
+def artifact_package_index(target: Path) -> dict[str, tuple[Path, Path]]:
+    packages: dict[str, tuple[Path, Path]] = {}
+    for artifact in sorted(target.rglob("artifact.yaml")):
+        if ".external-review-diagnostics" in {part.lower() for part in artifact.parts}:
+            continue
+        corrected = artifact.parent / "corrected.tex"
+        if not corrected.exists():
+            continue
+        try:
+            data = load_mapping(artifact)
+        except Exception:
+            continue
+        label = str((data.get("identity") or {}).get("label") or "")
+        if label:
+            packages[label] = (artifact, corrected)
+    return packages
 
 
 def registry_signatures() -> tuple[
@@ -1105,18 +1295,116 @@ def validate(data: dict[str, Any], corrected_tex: str) -> LogicResult:
     return result
 
 
+def batch_validate_target(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
+    volume_root = resolve_volume_root(args.volume, args.repos_root, args.volume_root)
+    target = (volume_root / args.target).resolve() if args.target is not None and not args.target.is_absolute() else args.target.resolve()
+    if not target.exists():
+        raise FileNotFoundError(target)
+
+    candidates = formal_candidates(target)
+    packages = artifact_package_index(target)
+    items: list[dict[str, Any]] = []
+    missing: list[dict[str, Any]] = []
+    exit_code = 0
+    labels = {candidate.label for candidate in candidates}
+
+    for label, (artifact, corrected) in sorted(packages.items()):
+        if label not in labels:
+            continue
+        data = load_mapping(artifact)
+        result = validate(data, corrected.read_text(encoding="utf-8")).as_json()
+        candidate = next(item for item in candidates if item.label == label)
+        item = {
+            "label": label,
+            "candidate": candidate.as_json(volume_root),
+            "artifact": artifact.relative_to(volume_root).as_posix(),
+            "corrected_tex": corrected.relative_to(volume_root).as_posix(),
+            "result": result,
+        }
+        items.append(item)
+        if result["result"] not in {"pass", "pass_with_warnings"}:
+            exit_code = 1
+
+    if args.require_all_formal_artifacts:
+        packaged = {item["label"] for item in items}
+        for candidate in candidates:
+            if candidate.label not in packaged:
+                missing.append(candidate.as_json(volume_root))
+        if missing:
+            exit_code = 1
+
+    payload = {
+        "schema_version": "lra.semantic-logic-batch/1.0",
+        "volume": args.volume,
+        "volume_root": str(volume_root),
+        "target": target.relative_to(volume_root).as_posix(),
+        "formal_candidates": len(candidates),
+        "validated_packages": len(items),
+        "missing_packages": missing,
+        "result": "fail" if exit_code else "pass",
+        "items": items,
+    }
+    return payload, exit_code
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--artifact", required=True, type=Path)
-    parser.add_argument("--corrected-tex", required=True, type=Path)
+    parser.add_argument("--artifact", type=Path)
+    parser.add_argument("--corrected-tex", type=Path)
+    parser.add_argument(
+        "--llm-data",
+        type=Path,
+        help="JSON/YAML LLM payload containing artifact/artifact_yaml and optional corrected_tex; use '-' for stdin.",
+    )
+    parser.add_argument("--repos-root", type=Path)
+    parser.add_argument("--volume-root", type=Path)
+    parser.add_argument("--volume", choices=tuple(VOLUME_NAMES), help="Required for volume-scoped source resolution.")
+    parser.add_argument("--target", type=Path, help="Volume-relative chapter/topic/file target for batch validation or label resolution.")
+    parser.add_argument("--label", help="Resolve corrected TeX from the formal block with this label.")
+    parser.add_argument(
+        "--require-all-formal-artifacts",
+        action="store_true",
+        help="In --target batch mode, fail labels that do not have artifact.yaml and corrected.tex packages.",
+    )
     parser.add_argument("--output", type=Path)
     parser.add_argument("--format", choices=("yaml", "json"), default="yaml")
     args = parser.parse_args()
 
     try:
-        data = load_mapping(args.artifact)
-        corrected_tex = args.corrected_tex.read_text(encoding="utf-8")
-        payload = validate(data, corrected_tex).as_json()
+        if args.target is not None and args.artifact is None and args.llm_data is None and args.label is None:
+            if args.volume is None:
+                raise ValueError("--volume is required for --target batch validation")
+            payload, return_code = batch_validate_target(args)
+        else:
+            candidate = None
+            llm_tex = None
+            if args.llm_data is not None:
+                data, llm_tex = extract_llm_artifact_and_tex(load_serialized_mapping(args.llm_data))
+            elif args.artifact is not None:
+                data = load_mapping(args.artifact)
+            else:
+                raise ValueError("one of --artifact or --llm-data is required")
+
+            if args.corrected_tex is not None:
+                corrected_tex = args.corrected_tex.read_text(encoding="utf-8")
+            elif llm_tex is not None:
+                corrected_tex = llm_tex
+            elif args.label is not None:
+                if args.volume is None:
+                    raise ValueError("--volume is required when resolving --label from source")
+                volume_root = resolve_volume_root(args.volume, args.repos_root, args.volume_root)
+                target = None
+                if args.target is not None:
+                    target = (volume_root / args.target).resolve() if not args.target.is_absolute() else args.target.resolve()
+                candidate = resolve_candidate(volume_root, args.label, target)
+                corrected_tex = candidate.text
+            else:
+                raise ValueError("one of --corrected-tex, --llm-data corrected_tex, or --label source resolution is required")
+
+            payload = validate(data, corrected_tex).as_json()
+            if candidate is not None:
+                payload["source_resolution"] = candidate.as_json(resolve_volume_root(args.volume, args.repos_root, args.volume_root))
+            return_code = 0 if payload["result"] in {"pass", "pass_with_warnings"} else 1
     except Exception as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
         return 2
@@ -1130,7 +1418,7 @@ def main() -> int:
         args.output.write_text(text, encoding="utf-8")
     else:
         print(text, end="")
-    return 0 if payload["result"] in {"pass", "pass_with_warnings"} else 1
+    return return_code
 
 
 if __name__ == "__main__":

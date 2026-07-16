@@ -40,6 +40,8 @@ is specifically to define a term.
 - `python tools/governance/validate_decoration.py --root <volume-root> --chapter <chapter> --canonical-dir <canonical-root>`
 - `python <governance-root>/tools/governance/validate_semantic_artifact.py --artifact <artifact.yaml> --package-dir <package-dir> --governance-root <governance-root> --repos-root <repos-root>`
 - `python <governance-root>/tools/governance/validate_semantic_logic.py --artifact <artifact.yaml> --corrected-tex <corrected.tex> --output <logic-validation.yaml>`
+- `python <governance-root>/tools/governance/validate_semantic_logic.py --llm-data <reviewer-output.json> --output <logic-validation.yaml>` when validating reviewer-returned artifact data before it has been split into files.
+- `python <governance-root>/tools/governance/validate_semantic_logic.py --artifact <artifact.yaml> --repos-root <repos-root> --volume <i-viii> --target <volume-relative-chapter-or-topic> --label <thm-or-lem-label> --output <logic-validation.yaml>` when the source/corrected TeX must be resolved from indexed volume documents; the volume is mandatory.
 - `python <governance-root>/tools/governance/compare_semantic_ast_extractors.py --source-tex <artifact-source-snippet.tex> --artifact <artifact.yaml> --output <ast-extractor-comparison.yaml>`
 - For provable statements: `python tools/governance/audit_proof_layout.py --root <volume-root> --chapter <chapter> --strict`
 - `cd <volume-root> && python ../lra-governance/scripts/build_volume.py --root .`

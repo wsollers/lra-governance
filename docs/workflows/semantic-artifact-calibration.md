@@ -148,6 +148,25 @@ python <governance-root>\tools\governance\validate_semantic_logic.py `
   --corrected-tex <returned-package-directory>\corrected.tex `
   --output <run-dir>\logic-validation.yaml
 
+python <governance-root>\tools\governance\validate_semantic_logic.py `
+  --llm-data <reviewer-output.json> `
+  --output <run-dir>\logic-validation.yaml
+
+python <governance-root>\tools\governance\validate_semantic_logic.py `
+  --artifact <returned-package-directory>\artifact.yaml `
+  --repos-root <repos-root> `
+  --volume <i-viii> `
+  --target <volume-relative-chapter-or-topic> `
+  --label <def-or-thm-label> `
+  --output <run-dir>\logic-validation.yaml
+
+python <governance-root>\tools\governance\validate_semantic_logic.py `
+  --repos-root <repos-root> `
+  --volume <i-viii> `
+  --target <volume-relative-chapter-or-topic> `
+  --require-all-formal-artifacts `
+  --output <run-dir>\logic-batch-validation.yaml
+
 python <governance-root>\tools\governance\compare_semantic_ast_extractors.py `
   --source-tex <run-dir>\artifact-source-snippet.tex `
   --artifact <returned-package-directory>\artifact.yaml `
@@ -160,6 +179,14 @@ and presentation-key exclusion. The second retrieves the stored external result
 and verifies its ID, GPT-5.6 model, completion status, and output hash. The
 logic validator and extractor comparison are the local AST gate; they control
 whether the package is trusted for source integration.
+
+`validate_semantic_logic.py --llm-data` accepts the governed reviewer payload
+directly when it contains `artifact` or `artifact_yaml` plus optional
+`corrected_tex`. Source resolution from TeX must always specify the owning
+volume with `--volume`; do not search all volumes implicitly for a candidate
+definition or theorem. Batch target validation checks every existing semantic
+package under the target, and `--require-all-formal-artifacts` additionally
+fails any formal source label in the target that lacks a matching package.
 
 ## Golden fixtures
 

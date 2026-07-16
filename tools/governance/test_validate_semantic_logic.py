@@ -2,14 +2,16 @@ from __future__ import annotations
 
 import subprocess
 import sys
-import tempfile
 import unittest
+import uuid
+from contextlib import contextmanager
 from pathlib import Path
 
 import yaml
 
 ROOT = Path(__file__).resolve().parents[2]
 VALIDATOR = ROOT / "tools" / "governance" / "validate_semantic_logic.py"
+TEMP_ROOT = ROOT / ".test-tmp" / "semantic-logic"
 SUPREMUM_REFERENCE = ROOT.parent / "lra-volume-iii" / "build" / "reference" / "def-supremum-reference" / "def-supremum"
 LIMIT_REFERENCE = ROOT.parent / "lra-volume-iii" / "build" / "reference" / "def-limit-function-reference" / "def-limit-function"
 
@@ -130,12 +132,20 @@ Equivalently, \operatorname{UpperBound}(u,A,P_{\mathbb{R}}).
 """
 
 
+@contextmanager
+def temp_dir():
+    TEMP_ROOT.mkdir(parents=True, exist_ok=True)
+    path = TEMP_ROOT / f"case-{uuid.uuid4().hex}"
+    path.mkdir(parents=True)
+    yield str(path)
+
+
 class SemanticLogicValidationTests(unittest.TestCase):
     def run_validator(self, artifact_data: dict):
         return self.run_validator_with_tex(artifact_data, CORRECTED_TEX)
 
     def run_validator_with_tex(self, artifact_data: dict, corrected_tex: str):
-        with tempfile.TemporaryDirectory() as temp:
+        with temp_dir() as temp:
             root = Path(temp)
             artifact = root / "artifact.yaml"
             corrected = root / "corrected.tex"
@@ -160,6 +170,91 @@ class SemanticLogicValidationTests(unittest.TestCase):
         result = self.run_validator(real_upper_bound_artifact())
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertIn('"result": "pass"', result.stdout)
+
+    def test_accepts_llm_payload_with_embedded_artifact_yaml_and_tex(self):
+        with temp_dir() as temp:
+            root = Path(temp)
+            packet = root / "llm.json"
+            packet.write_text(
+                yaml.safe_dump(
+                    {
+                        "artifact_yaml": yaml.safe_dump(real_upper_bound_artifact(), sort_keys=False),
+                        "corrected_tex": CORRECTED_TEX,
+                    },
+                    sort_keys=False,
+                ),
+                encoding="utf-8",
+            )
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(VALIDATOR),
+                    "--llm-data",
+                    str(packet),
+                    "--format",
+                    "json",
+                ],
+                capture_output=True,
+                text=True,
+            )
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn('"result": "pass"', result.stdout)
+
+    def test_rejects_label_resolution_without_specified_volume(self):
+        with temp_dir() as temp:
+            root = Path(temp)
+            artifact = root / "artifact.yaml"
+            artifact.write_text(yaml.safe_dump(real_upper_bound_artifact(), sort_keys=False), encoding="utf-8")
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(VALIDATOR),
+                    "--artifact",
+                    str(artifact),
+                    "--label",
+                    "def:real-upper-bound",
+                    "--format",
+                    "json",
+                ],
+                capture_output=True,
+                text=True,
+            )
+        self.assertEqual(result.returncode, 2)
+        self.assertIn("--volume is required", result.stderr)
+
+    def test_resolves_candidate_source_from_specified_volume(self):
+        with temp_dir() as temp:
+            root = Path(temp)
+            volume = root / "lra-volume-i"
+            target = volume / "volume-i" / "book-order" / "bounds"
+            target.mkdir(parents=True)
+            source = target / "notes-upper-lower-bounds.tex"
+            source.write_text(CORRECTED_TEX.replace(r"\begin{definition}", r"\begin{definition}[Upper Bound in the Real Line]").replace(r"\end{definition}", r"\label{def:real-upper-bound}\end{definition}"), encoding="utf-8")
+            artifact = root / "artifact.yaml"
+            artifact.write_text(yaml.safe_dump(real_upper_bound_artifact(), sort_keys=False), encoding="utf-8")
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(VALIDATOR),
+                    "--artifact",
+                    str(artifact),
+                    "--repos-root",
+                    str(root),
+                    "--volume",
+                    "i",
+                    "--target",
+                    "volume-i/book-order/bounds",
+                    "--label",
+                    "def:real-upper-bound",
+                    "--format",
+                    "json",
+                ],
+                capture_output=True,
+                text=True,
+            )
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn('"source_resolution"', result.stdout)
+        self.assertIn('"label": "def:real-upper-bound"', result.stdout)
 
     def test_rejects_definition_iff_latex_with_rhs_only_ast(self):
         data = real_upper_bound_artifact()

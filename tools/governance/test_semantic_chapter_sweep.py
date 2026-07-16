@@ -3,13 +3,15 @@ from __future__ import annotations
 import json
 import subprocess
 import sys
-import tempfile
 import unittest
+import uuid
+from contextlib import contextmanager
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[2]
 TOOL = ROOT / "tools" / "governance" / "semantic_chapter_sweep.py"
+TEMP_ROOT = ROOT / ".test-tmp" / "semantic-chapter-sweep"
 
 
 DARBOUX_SOURCE = r"""
@@ -56,9 +58,15 @@ The function \(f\) is in \(C^{1,1}\) if its derivative is Lipschitz.
 
 
 class SemanticChapterSweepTests(unittest.TestCase):
+    @contextmanager
+    def temp_dir(self):
+        TEMP_ROOT.mkdir(parents=True, exist_ok=True)
+        path = TEMP_ROOT / f"case-{uuid.uuid4().hex}"
+        path.mkdir(parents=True)
+        yield path
+
     def run_sweep(self, source: str) -> dict:
-        with tempfile.TemporaryDirectory() as tmp:
-            repo = Path(tmp)
+        with self.temp_dir() as repo:
             tex = repo / "chapter.tex"
             tex.write_text(source, encoding="utf-8")
             completed = subprocess.run(
@@ -80,8 +88,7 @@ class SemanticChapterSweepTests(unittest.TestCase):
             return json.loads(completed.stdout)
 
     def run_sweep_with_knowledge(self, source: str, knowledge_ids: list[str]) -> dict:
-        with tempfile.TemporaryDirectory() as tmp:
-            repo = Path(tmp)
+        with self.temp_dir() as repo:
             tex = repo / "chapter.tex"
             tex.write_text(source, encoding="utf-8")
             knowledge = repo / "knowledge.json"

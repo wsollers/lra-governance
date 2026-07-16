@@ -38,6 +38,10 @@ Logic validation uses the local semantic AST validator by default through
 `tools/governance/invoke_external_gpt_reviewer.py logic`, backed by
 `validate_semantic_logic.py`. External logic review is allowed only when
 explicitly requested by the workflow or user.
+The local validator may be called directly on reviewer payloads with
+`--llm-data`, or against a source label with `--volume <i-viii> --target ...
+--label ...`; volume-scoped source resolution must never search all volumes
+implicitly.
 
 ## Do
 
