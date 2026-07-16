@@ -45,10 +45,12 @@ implicitly.
 Use `get_semantic_validation_targets.py` or `semantic_artifact_inventory.py` to
 construct the queue for a volume, book, chapter, section, or label. The target
 inventory follows routed book inputs only. Missing semantic packages must be
-materialized with `create_semantic_validation_artifacts.py` or by the default
-scoped `validate_semantic_logic.py` create-then-validate path. Missing packages
-become generation queue entries and generation request artifacts; they are not
-validation failures by themselves.
+materialized with `create_semantic_validation_artifacts.py` or by
+`validate_semantic_scope.py`. Missing packages become generation queue entries
+and generation request artifacts; they are not validation failures by
+themselves. When the user requests LLM input, run
+`validate_semantic_scope.py --mode python-llm` with supplied LLM/reviewer
+payloads; the scope validator does not make hidden API calls.
 
 ## Do
 

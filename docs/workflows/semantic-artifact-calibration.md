@@ -152,6 +152,27 @@ python <governance-root>\tools\governance\validate_semantic_logic.py `
   --llm-data <reviewer-output.json> `
   --output <run-dir>\logic-validation.yaml
 
+python <governance-root>\tools\governance\validate_semantic_scope.py `
+  --mode python `
+  --repos-root <repos-root> `
+  --volume <i-viii> `
+  --book <book-slug-or-root> `
+  --chapter <chapter-slug> `
+  --section <section-slug> `
+  --label <optional-def-or-thm-label> `
+  --output <run-dir>\semantic-scope-validation.yaml
+
+python <governance-root>\tools\governance\validate_semantic_scope.py `
+  --mode python-llm `
+  --repos-root <repos-root> `
+  --volume <i-viii> `
+  --book <book-slug-or-root> `
+  --chapter <chapter-slug> `
+  --section <section-slug> `
+  --label <optional-def-or-thm-label> `
+  --llm-data-dir <run-dir>\llm-payloads `
+  --output <run-dir>\semantic-scope-validation.yaml
+
 python <governance-root>\tools\governance\validate_semantic_logic.py `
   --artifact <returned-package-directory>\artifact.yaml `
   --repos-root <repos-root> `
@@ -216,7 +237,8 @@ directly when it contains `artifact` or `artifact_yaml` plus optional
 volume with `--volume`; do not search all volumes implicitly for a candidate
 definition or theorem.
 
-Scope validation is create-then-validate:
+Scope validation is create-then-validate and should use
+`validate_semantic_scope.py`:
 
 1. Get targets with `get_semantic_validation_targets.py` or
    `semantic_artifact_inventory.py`. Both list only formal environments that
@@ -224,8 +246,12 @@ Scope validation is create-then-validate:
    support the filter order `volume -> book -> chapter -> section -> label`.
 2. Create missing validation artifacts with
    `create_semantic_validation_artifacts.py`, or let
-   `validate_semantic_logic.py` do this automatically during scoped validation.
+   `validate_semantic_scope.py` do this automatically during scoped validation.
 3. Validate every semantic package that exists after creation.
+4. In `--mode python-llm`, consume supplied LLM/reviewer payloads from
+   `--llm-data-dir` or `--llm-data`, validate them with the deterministic AST
+   validator, and materialize passing payloads into `artifact.yaml` and
+   `corrected.tex` when the payload includes `corrected_tex`.
 
 Do not build candidate lists from raw filesystem globs. Files that exist on
 disk but are not routed into a book root are not validation source.
@@ -242,9 +268,12 @@ Batch semantic logic validation checks every existing semantic package in the
 selected routed scope. Missing packages are not validation failures. They are
 reported as `generation_queue` entries containing the exact source block,
 location, suggested package path, and an `llm_packet`, and by default the
-validator creates the corresponding generation request artifacts. Use
+scope validator creates the corresponding generation request artifacts. Use
 `--no-create-missing` only for fast inspection runs. Existing packages may still
-fail if their AST or corrected-TeX contract is invalid.
+fail if their AST or corrected-TeX contract is invalid. `--mode python-llm`
+does not make a hidden API call; it requires supplied payload files. Missing
+payloads are reported as `pending_llm_data` and the scope exits pending unless
+`--allow-pending` is used.
 
 ## Golden fixtures
 
