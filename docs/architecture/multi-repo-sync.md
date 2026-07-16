@@ -22,6 +22,10 @@ volume-to-monorepo content sync.
 - `Learning-Real-Analysis`, the former assembled monorepo, is retired.
 - `lra-pdf-extractor` is an independent tool repo and is not a source of direct
   sync into notes.
+- `lra-reading-categorizer` is an independent local collection-management repo
+  and is not a source of direct sync into notes, bibliography shards,
+  source-profile manifests, extractor outputs, canonical YAML, or
+  theorem-explorer data.
 - `lra-source-profiles` is an independent profile/staging repo and is not a
   source of direct sync into notes, bibliography shards, canonical YAML, or
   theorem-explorer data.
@@ -55,6 +59,20 @@ synced into downstream repos.
 
 Integration into `lra-common`, `lra-volume-*`, or `lra-knowledge-explorer` must
 occur through reviewable PRs in the owning repo.
+
+Generated agent wrappers for this repo, if needed, must delegate to
+`lra-governance` instead of copying governance implementations.
+
+## lra-reading-categorizer
+
+`lra-reading-categorizer` is a local reading-library categorization UI. It may
+import reviewed source-profile data into a recoverable queue, maintain the
+approved reading taxonomy, copy PDFs into managed `readings/` folders through
+explicit UI actions, and export categorization progress for review.
+
+Those outputs are not automatically synced into `lra-source-profiles`,
+`lra-pdf-extractor`, `lra-volume-*`, or `lra-knowledge-explorer`. Integration
+must occur through reviewable changes in the owning repo.
 
 Generated agent wrappers for this repo, if needed, must delegate to
 `lra-governance` instead of copying governance implementations.

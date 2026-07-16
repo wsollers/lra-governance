@@ -17,6 +17,7 @@ content sync; the "ownership" column below is authority, not a copy direction.
 | `lra-knowledge-explorer` | Extraction pipeline and HTML theorem explorer. Rebuilt by the governance-orchestrated refresh over the volume repos. |
 | `lra-numerical-analysis` | Numerical methods, experiments, benchmarks, plots, numerical reports. Independent. |
 | `lra-pdf-extractor` | PDF/source ingestion, bibliography extraction and normalization, candidate extraction, review workflow, staged outputs. Independent tool repo; reviewable candidates only. |
+| `lra-reading-categorizer` | Human-in-the-loop UI, taxonomy, queue state, review exports, and managed reading-folder scaffold for categorizing a local mathematical PDF collection. Independent collection-management repo. |
 | `lra-source-profiles` | Dynamic source profiles, candidate classification, active source indexes, attachment exports, source review workflow. Independent profile/staging repo; reviewed artifacts only. |
 | `lra-volumes-output` | Published digital and print PDFs from independent volume builds. |
 
@@ -31,6 +32,11 @@ governance rules.
 `lra-source-profiles` is a source selection and profile staging tool. It does
 not own final LRA note content, final bibliography shards, canonical YAML,
 theorem explorer internals, or governance rules.
+
+`lra-reading-categorizer` is a local collection-management UI for assigning
+PDFs to the approved reading taxonomy. It does not own source-profile manifests,
+extractor outputs, final LRA note content, final bibliography shards, canonical
+YAML, theorem explorer internals, or governance rules.
 
 ## Governance And Common Resolution
 

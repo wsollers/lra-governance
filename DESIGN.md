@@ -55,6 +55,7 @@ appropriate modular document instead.
 | LaTeX build and rendering expectations | `docs/architecture/latex-build-and-rendering.md` |
 | Numerical-analysis software workbench tasks | `docs/governance/repo-overlays/lra-numerical-analysis.md` |
 | Source profile selection, classification, active-profile export, and review workflow | `docs/governance/repo-overlays/lra-source-profiles.md` |
+| Reading-library PDF categorization UI and taxonomy workflow | `docs/governance/repo-overlays/lra-reading-categorizer.md` |
 | Multi-repo integration boundaries | `docs/architecture/multi-repo-sync.md` |
 | Generated file headers, drift, and full-replace policy | `docs/architecture/generated-file-policy.md` |
 | Knowledge extraction workflow | `docs/workflows/knowledge-extraction.md` |
@@ -78,6 +79,7 @@ interpreting repo-local agent rules.
 | `lra-knowledge-explorer` | `docs/governance/repo-overlays/lra-knowledge-explorer.md` |
 | `lra-numerical-analysis` | `docs/governance/repo-overlays/lra-numerical-analysis.md` |
 | `lra-pdf-extractor` | `docs/governance/repo-overlays/lra-pdf-extractor.md` |
+| `lra-reading-categorizer` | `docs/governance/repo-overlays/lra-reading-categorizer.md` |
 | `lra-source-profiles` | `docs/governance/repo-overlays/lra-source-profiles.md` |
 
 Repo overlays are additive. They refine the global rules for owned work, but

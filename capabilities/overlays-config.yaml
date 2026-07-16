@@ -87,6 +87,16 @@ repos:
       test_roots: ["tests"]
     success_gates:
       - "python -m pytest tests"
+  - repo: lra-reading-categorizer
+    kind: python_tool
+    title: "Reading library categorization UI"
+    purpose: "Human-in-the-loop UI and taxonomy tooling for categorizing the local mathematical PDF collection. Outputs are local reading-library placement and review artifacts, not direct volume/source-profile integration."
+    layout:
+      language: python
+      code_roots: ["src", "scripts"]
+      test_roots: ["tests"]
+    success_gates:
+      - "python -m unittest discover -s tests"
   - repo: lra-source-profiles
     kind: python_tool
     title: "Source profiles, source indexes, and active profile exports"

@@ -16,6 +16,7 @@ contains repository ownership, layout, and integration rules.
 | `lra-knowledge-explorer` | extraction pipeline, HTML theorem graph, GitHub Pages site |
 | `lra-numerical-analysis` | numerical methods, experiments, benchmarks, plots, numerical reports; independent |
 | `lra-pdf-extractor` | PDF/source ingestion, bibliography extraction, candidate staging; independent tool repo, reviewable candidates only |
+| `lra-reading-categorizer` | human-in-the-loop UI, taxonomy, queue state, and managed folder scaffold for categorizing a local mathematical PDF collection; independent collection-management repo |
 | `lra-source-profiles` | dynamic source profiles, classification, active source indexes, attachment exports; independent profile/staging repo |
 | `lra-volumes-output` | published digital and print PDFs from independent volume builds |
 
