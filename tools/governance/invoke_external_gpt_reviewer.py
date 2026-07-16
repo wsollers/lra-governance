@@ -46,10 +46,13 @@ AUTHORITY_PATHS = (
     "constitution/schema/external-review-receipt.schema.json",
     "constitution/schema/artifact-audit-validation.schema.json",
     "constitution/schema/topic-semantic-audit.schema.json",
+    "constitution/schema/lean-crosswalk.schema.json",
     "constitution/schema/artifact-matrix.yaml",
     "constitution/schema/block-registry.yaml",
     "constitution/schema/examples/semantic-artifact.example.yaml",
     "predicates.yaml",
+    "semantic-aliases.yaml",
+    "lean-crosswalk.yaml",
     "structures.yaml",
     "notation.yaml",
     "relations.yaml",
@@ -712,12 +715,52 @@ def run_logic(args: argparse.Namespace, packet: dict[str, Any], api_key: str) ->
     return 0 if result.get("result") in {"pass", "pass_with_warnings"} else 4
 
 
+def run_local_logic(args: argparse.Namespace, packet: dict[str, Any]) -> int:
+    artifact_path = args.artifact or Path(
+        str((packet.get("semantic_review") or {}).get("artifact_path") or "")
+    )
+    corrected_path = args.corrected_tex or Path(
+        str((packet.get("semantic_review") or {}).get("corrected_tex_path") or "")
+    )
+    if not artifact_path or str(artifact_path) == ".":
+        raise ValueError("local logic validation requires --artifact")
+    if not corrected_path or str(corrected_path) == ".":
+        raise ValueError("local logic validation requires --corrected-tex")
+
+    output_path: Path = args.output
+    cmd = [
+        sys.executable,
+        str(args.governance_root / "tools/governance/validate_semantic_logic.py"),
+        "--artifact",
+        str(artifact_path),
+        "--corrected-tex",
+        str(corrected_path),
+        "--output",
+        str(output_path),
+    ]
+    run = subprocess.run(cmd, capture_output=True, text=True)
+    if run.stdout:
+        print(run.stdout, end="")
+    if run.stderr:
+        print(run.stderr, end="", file=sys.stderr)
+    return run.returncode
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("role", choices=("semantic", "logic"))
     parser.add_argument("--input", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
-    parser.add_argument("--prompt", required=True, type=Path)
+    parser.add_argument("--prompt", type=Path)
+    parser.add_argument(
+        "--logic-reviewer",
+        choices=("local", "external"),
+        default="local",
+        help="Logic validation defaults to the local Python verifier; use external to call OpenAI.",
+    )
+    parser.add_argument("--use-openai", action="store_true", help="Alias for --logic-reviewer external.")
+    parser.add_argument("--artifact", type=Path, help="Artifact YAML for local logic validation.")
+    parser.add_argument("--corrected-tex", type=Path, help="Corrected TeX for local logic validation.")
     parser.add_argument("--api-key-env", default="OPENAI_API_KEY")
     parser.add_argument(
         "--governance-root",
@@ -737,8 +780,16 @@ def main() -> int:
     if args.max_repair_attempts < 0:
         print("ERROR: --max-repair-attempts must be nonnegative", file=sys.stderr)
         return 2
+    if args.use_openai:
+        args.logic_reviewer = "external"
+    if args.role == "semantic" and not args.prompt:
+        print("ERROR: semantic review requires --prompt", file=sys.stderr)
+        return 2
+    if args.role == "logic" and args.logic_reviewer == "external" and not args.prompt:
+        print("ERROR: external logic review requires --prompt", file=sys.stderr)
+        return 2
     api_key = os.environ.get(args.api_key_env)
-    if not api_key:
+    if (args.role == "semantic" or args.logic_reviewer == "external") and not api_key:
         print(
             f"ERROR: {args.api_key_env} is not set; external GPT-5.6 review cannot run",
             file=sys.stderr,
@@ -746,11 +797,11 @@ def main() -> int:
         return 2
     try:
         packet = load_json(args.input)
-        return (
-            run_semantic(args, packet, api_key)
-            if args.role == "semantic"
-            else run_logic(args, packet, api_key)
-        )
+        if args.role == "semantic":
+            return run_semantic(args, packet, api_key)
+        if args.logic_reviewer == "external":
+            return run_logic(args, packet, api_key)
+        return run_local_logic(args, packet)
     except Exception as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
         return 2

@@ -119,6 +119,12 @@ records the external GPT-5.6 response evidence.
 Do not hand-correct reviewer or renderer output. Route defects back through a new
 external review call or fix the schema/renderer under separate approval.
 
+Local reference packages are useful calibration artifacts, but they must not
+masquerade as external review evidence. A package with synthetic response IDs,
+placeholder hashes, or a local-reference note is not live evidence, even if its
+YAML is schema-shaped. Such packages are for validator development only and must
+not be applied to source.
+
 ## Validation
 
 ```powershell
@@ -168,6 +174,74 @@ Move to dependency-related groups of five only when:
 - every golden fixture passes.
 
 Route unusual items back to individual calibration.
+
+## Closeout status policy
+
+Artifact review must distinguish four outcomes:
+
+- `mathematically_valid`: the core statement and mechanical negation are correct;
+- `schema_valid`: the artifact and support files validate structurally;
+- `governance_ready`: all labels, source provenance, proof provenance, registry
+  signatures, and carried-context metadata resolve without warnings;
+- `requires_migration`: the artifact is meaningful but should not remain in its
+  current formal kind or concept ownership slot.
+
+A package may be useful for calibration while still reporting
+`governance_ready: pass_with_warnings`. Do not apply such a package to canonical
+source unattended. Warnings that require closeout include:
+
+- unresolved dependency or ontology labels;
+- unverified proof edges or canonical proof routes;
+- source hash mismatches or local-only source commits;
+- equivalent-characterization edges from one `def:*` artifact to another
+  `def:*`;
+- quantified LaTeX whose quantifier binders are absent from the AST;
+- theorem-level approved negations or contrapositives recorded in YAML but
+  missing from corrected TeX;
+- claimed ontology IDs or registry structures that do not resolve or do not
+  appear structurally in the AST;
+- raw-LaTeX binder domains where structured binder metadata is needed for full
+  validation.
+
+Theorem/proof policy:
+
+- proof incompleteness is allowed during proof-reset workflows and should warn
+  as `PROOF_INCOMPLETE`, `PROOF_STRUCTURE_EMPTY`, or
+  `PROOF_DEPENDENCIES_TODO`;
+- theorem dependencies used only inside a proof route should be recorded as
+  `dependency_edges[].kind: proof-tool`, not as definitional prerequisites;
+- do not add proof dependencies that assume the conclusion's missing regularity.
+  For example, Darboux's theorem for derivatives must not depend on the
+  continuous-function Darboux property for `f'`, because no continuity of `f'`
+  is assumed;
+- the attached owned proof should be recorded as
+  `relationships.proof_edges[].kind: canonical-proof`, with proof incompleteness
+  represented by proof-completion warnings rather than a missing edge;
+- proof-statement divergence is blocking. The theorem statement, proof
+  restatement, cited definitions, hypotheses, domains, quantifier order, and
+  conclusion must describe the same mathematical claim;
+- if the proof file is still a stub, meaning both proof bodies are TODO/reset
+  placeholders, a proof-restatement mismatch is repairable by overwriting the
+  proof's unnumbered restatement with the canonical theorem statement. This is
+  a restatement synchronization, not proof generation. It must preserve the
+  proof label, `\LRAProofFor{...}`, return link, proof-body TODOs, proof
+  structure, dependencies block, and routing. Do not use this shortcut for an
+  authored/non-stub proof; authored proof divergence remains blocking and
+  requires review;
+- theorem-level failure modes must be failures of the theorem, not merely
+  failures of one predicate appearing inside the theorem. For an equivalence
+  theorem, failure means disagreement among formulations.
+
+Generation output must be compared against the Python validators before it is
+trusted. At minimum, run the semantic artifact validator, the local semantic
+logic validator, and the independent AST extractor comparison. The generated
+artifact may be mathematically plausible, but if the Python validators disagree
+with it, the validator output controls the closeout status until the artifact or
+the validator rule is repaired under governance.
+
+Only `governance_ready: pass` packages are candidates for unattended
+section-wide processing. `pass_with_warnings` packages are supervised
+calibration artifacts.
 
 ## Reversible topic audit mode
 

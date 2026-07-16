@@ -1,0 +1,202 @@
+schema_version: lra.lean-crosswalk/1.0
+source:
+  library: mathlib4
+  docs_base_url: https://leanprover-community.github.io/mathlib4_docs
+  repository_url: https://github.com/leanprover-community/mathlib4
+  note: >
+    LRA keeps pedagogical names in TeX and semantic artifacts. This registry
+    maps those names to Lean/mathlib declarations so tooling can render a Lean
+    lens, link to formal documentation, and eventually feed Lean-backed gates.
+
+entries:
+  - id: lean-crosswalk:upper-bound
+    lra:
+      predicate_id: pred:upper-bound
+      name: UpperBound
+      surface_forms:
+        - upper bound
+        - is an upper bound of
+    lean:
+      declaration: upperBounds
+      display_name: upperBounds
+      module: Mathlib.Order.Bounds.Defs
+      kind: definition
+      docs_url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Order/Bounds/Defs.html#upperBounds
+      source_url: https://github.com/leanprover-community/mathlib4/blob/master/Mathlib/Order/Bounds/Defs.lean
+      signature: "upperBounds (s : Set α) : Set α"
+      proposition_lens: "u ∈ upperBounds A"
+      expansion: "∀ x, x ∈ A → x ≤ u"
+    lra_lean:
+      declaration: Bounds.IsUpperBound
+      display_name: IsUpperBound
+      module: LRA.VolumeIII.Bounds
+      file: LRA/VolumeIII/Bounds.lean
+      line_hint: 32
+      kind: definition
+      signature: "IsUpperBound [LE F] (u : F) (A : Set F) : Prop"
+      proposition_lens: "Bounds.IsUpperBound u A"
+      expansion: "∀ x ∈ A, x ≤ u"
+      bridge_to_mathlib: null
+    semantic_role: predicate_set_membership
+    notes: >
+      Lean represents upper-boundhood as membership in the set of upper
+      bounds. The LRA predicate UpperBound(u,A,P) corresponds to
+      u ∈ upperBounds A for the ambient order P.
+
+  - id: lean-crosswalk:least-upper-bound
+    lra:
+      predicate_id: pred:least-upper-bound
+      name: LeastUpperBound
+      surface_forms:
+        - least upper bound
+        - supremum
+    lean:
+      declaration: IsLUB
+      display_name: IsLUB
+      module: Mathlib.Order.Bounds.Defs
+      kind: definition
+      docs_url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Order/Bounds/Defs.html#IsLUB
+      source_url: https://github.com/leanprover-community/mathlib4/blob/master/Mathlib/Order/Bounds/Defs.lean
+      signature: "IsLUB (s : Set α) : α → Prop"
+      proposition_lens: "IsLUB A s"
+      expansion: "s ∈ upperBounds A ∧ s ∈ lowerBounds (upperBounds A)"
+    lra_lean:
+      declaration: Bounds.IsSupremum
+      display_name: IsSupremum
+      module: LRA.VolumeIII.Bounds
+      file: LRA/VolumeIII/Bounds.lean
+      line_hint: 53
+      kind: definition
+      signature: "IsSupremum [Preorder F] (s : F) (A : Set F) : Prop"
+      proposition_lens: "Bounds.IsSupremum s A"
+      expansion: "IsUpperBound s A ∧ ∀ u, IsUpperBound u A → s ≤ u"
+      bridge_to_mathlib:
+        declaration: Bounds.SupremumIffIsLUB
+        kind: theorem
+        signature: "IsSupremum s A ↔ IsLUB A s"
+        file: LRA/VolumeIII/Bounds.lean
+        line_hint: 81
+    semantic_role: predicate
+    notes: >
+      This is the preferred formal anchor for the textbook statement
+      "s is the supremum of A." It is a proposition, unlike sSup, which is an
+      operation with convention values outside the nonempty/bounded-above case.
+
+  - id: lean-crosswalk:supremum-operator
+    lra:
+      predicate_id: pred:least-upper-bound
+      name: Supremum
+      surface_forms:
+        - supremum
+        - sup
+    lean:
+      declaration: sSup
+      display_name: sSup
+      module: Mathlib.Order.ConditionallyCompleteLattice.Defs
+      kind: operation
+      docs_url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Order/ConditionallyCompleteLattice/Defs.html#sSup
+      source_url: https://github.com/leanprover-community/mathlib4/blob/master/Mathlib/Order/ConditionallyCompleteLattice/Defs.lean
+      signature: "sSup : Set α → α"
+      proposition_lens: "IsLUB A (sSup A)"
+      expansion: null
+    lra_lean:
+      declaration: Bounds.IsSupremum
+      display_name: IsSupremum
+      module: LRA.VolumeIII.Bounds
+      file: LRA/VolumeIII/Bounds.lean
+      line_hint: 53
+      kind: definition
+      signature: "IsSupremum [Preorder F] (s : F) (A : Set F) : Prop"
+      proposition_lens: "Bounds.IsSupremum s A"
+      expansion: "IsUpperBound s A ∧ ∀ u, IsUpperBound u A → s ≤ u"
+      bridge_to_mathlib:
+        declaration: Bounds.SupremumIffIsLUB
+        kind: theorem
+        signature: "IsSupremum s A ↔ IsLUB A s"
+        file: LRA/VolumeIII/Bounds.lean
+        line_hint: 81
+    semantic_role: operator
+    notes: >
+      Use sSup for the value/operator lens. Use IsLUB for validating the
+      predicate content of the definition.
+
+  - id: lean-crosswalk:nonempty
+    lra:
+      predicate_id: pred:is-nonempty
+      name: IsNonempty
+      surface_forms:
+        - nonempty
+        - not empty
+    lean:
+      declaration: Set.Nonempty
+      display_name: Set.Nonempty
+      module: Mathlib.Data.Set.Basic
+      kind: definition
+      docs_url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Set/Basic.html#Set.Nonempty
+      source_url: https://github.com/leanprover-community/mathlib4/blob/master/Mathlib/Data/Set/Basic.lean
+      signature: "Set.Nonempty (s : Set α) : Prop"
+      proposition_lens: "A.Nonempty"
+      expansion: "∃ x, x ∈ A"
+    lra_lean: null
+    semantic_role: applicability_predicate
+    notes: >
+      For supremum over reals this belongs in applicability assumptions, not
+      in the failure condition for being an upper bound or least upper bound.
+
+  - id: lean-crosswalk:bounded-above
+    lra:
+      predicate_id: pred:bounded-above
+      name: BoundedAbove
+      surface_forms:
+        - bounded above
+        - has an upper bound
+    lean:
+      declaration: BddAbove
+      display_name: BddAbove
+      module: Mathlib.Order.Bounds.Defs
+      kind: definition
+      docs_url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Order/Bounds/Defs.html#BddAbove
+      source_url: https://github.com/leanprover-community/mathlib4/blob/master/Mathlib/Order/Bounds/Defs.lean
+      signature: "BddAbove (s : Set α) : Prop"
+      proposition_lens: "BddAbove A"
+      expansion: "∃ u, u ∈ upperBounds A"
+    lra_lean:
+      declaration: Bounds.IsBoundedAbove
+      display_name: IsBoundedAbove
+      module: LRA.VolumeIII.Bounds
+      file: LRA/VolumeIII/Bounds.lean
+      line_hint: 38
+      kind: definition
+      signature: "IsBoundedAbove [LE F] (A : Set F) : Prop"
+      proposition_lens: "Bounds.IsBoundedAbove A"
+      expansion: "∃ u, IsUpperBound u A"
+      bridge_to_mathlib: null
+    semantic_role: applicability_predicate
+    notes: >
+      This is an existence/applicability condition for the usual real
+      supremum theorem, not part of the mechanical negation of IsLUB.
+
+  - id: lean-crosswalk:tends-to
+    lra:
+      predicate_id: pred:tends-to
+      name: TendsTo
+      surface_forms:
+        - tends to
+        - function limit
+        - epsilon-delta limit
+    lean:
+      declaration: Filter.Tendsto
+      display_name: Tendsto
+      module: Mathlib.Order.Filter.Defs
+      kind: definition
+      docs_url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Order/Filter/Defs.html#Filter.Tendsto
+      source_url: https://github.com/leanprover-community/mathlib4/blob/master/Mathlib/Order/Filter/Defs.lean
+      signature: "Tendsto (f : α → β) (l₁ : Filter α) (l₂ : Filter β) : Prop"
+      proposition_lens: "Filter.Tendsto f (𝓝[≠] c ⊓ Filter.principal A) (𝓝 L)"
+      expansion: "∀ s, s ∈ 𝓝 L → f ⁻¹' s ∈ 𝓝[≠] c ⊓ Filter.principal A"
+    lra_lean: null
+    semantic_role: predicate
+    notes: >
+      Mathlib's primitive is filter convergence. The epsilon-delta statement
+      for real-valued functions is a derived metric-neighborhood
+      specialization, not the primitive definition of Tendsto itself.

@@ -47,6 +47,31 @@ output, not as competing authority.
 Repository commits, source ranges, registry/schema versions, origin classification,
 review state, and unresolved ambiguity.
 
+Artifact origin is a statement-level classification, not just a source-map
+detail. Use it to distinguish a theorem copied from one source from a theorem
+that LRA deliberately derives by combining source-backed components.
+
+```yaml
+provenance:
+  origin:
+    kind: explicit_source_statement | normalized_source_statement |
+      author_derived_from_source_components | registry_inferred |
+      external_library_crosswalk | conjectural_or_unresolved
+    source_status: single_primary_statement | composite_source_route |
+      no_primary_source_found | unresolved
+    primary_source_statement: null
+    component_sources: []
+    derivation_rule: null
+    requires_review: true
+```
+
+For example, a derivative-equivalence theorem may be LRA-authored even when it is
+source-backed: one source component supplies equivalence of function-limit
+formulations, another supplies derivative-as-difference-quotient-limit, and the
+artifact records the instantiation rule. Such an artifact should use
+`kind: author_derived_from_source_components`, not pretend that a single source
+contains the exact theorem statement.
+
 ## Required top-level shape
 
 The machine authority is
@@ -131,6 +156,13 @@ or recursion consistency/completeness.
 
 `standard_quantified` is reviewed.
 
+Every quantifier written in `standard_quantified.latex` must be represented in
+`standard_quantified.ast`. Do not pair a fully quantified LaTeX statement with
+an AST that contains only the implication body; that loses binder ownership and
+breaks later negation, dependency, and formalization checks.
+When one quantifier binds several variables, such as `\forall x,y\in I`, record
+separate structural binder nodes for each variable.
+
 `negation.mechanical` is derived from the AST.
 `negation.approved_normal_form` is the reviewed useful form.
 `normalization_requires` records every extra fact used to simplify it, such as
@@ -138,15 +170,32 @@ totality of an order, nonemptiness, classical logic, or decidability.
 
 Definitions and axioms do not receive contrapositives.
 
+For theorem-like artifacts, a recorded approved negation or contrapositive is
+part of the source repair contract. `corrected.tex` must include a named block
+showing that logical form; do not store logical forms in YAML while omitting
+them from the reviewed TeX patch.
+
 ## Relationship namespaces
 
 Keep separate:
 
 - `dependency_edges`: prerequisite, structural-existence, structural-pairing,
-  proof-use;
+  proof-use, proof-tool;
 - `ontology_edges`: specializes, derives_from, uses_ambient, legacy_alias_of;
 - `provenance_edges`: source_variant_of, reduces_to;
-- `proof_edges`: links among statements and proof evidence.
+- `proof_edges`: links among statements and proof evidence, including
+  `canonical-proof` for the owned proof record.
+
+Use `proof-tool` when a theorem or lemma is not a definitional prerequisite but
+is explicitly part of the proof route, such as the Extreme Value Theorem in
+Rolle's theorem. Use `canonical-proof` when the artifact is linked to its owned
+volume proof label, even if that proof is intentionally reset or incomplete.
+
+Do not overclaim ontology or structure usage. A `struct:*` or `pred:*`
+`ontology_id` must exist in the canonical registries. A structure listed in
+`registry_structures` must appear as a structured AST application; raw LaTeX
+notation is not enough. For instance, if `(x,y)` is still represented as
+`raw_latex`, do not claim `struct:interval` for it.
 
 ## Verification attachments
 
@@ -189,6 +238,13 @@ Do not duplicate OCR details or attempt history.
 Field-level mappings belong in `source-map.yaml`. An unresolved item has a code,
 question, candidates, and `blocks_generation`. Meaning-changing ambiguity blocks
 generation.
+
+When `provenance.origin.kind` is
+`author_derived_from_source_components`, the artifact must identify a composite
+source route, list component source evidence, and state the derivation rule that
+turns those components into the LRA theorem. This is the governed representation
+for “I knew this theorem could be made from the sources,” and it must remain
+visibly different from a directly quoted or normalized primary theorem.
 
 ## Return-package manifest
 

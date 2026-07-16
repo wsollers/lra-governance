@@ -13,9 +13,13 @@ There is no monorepo.
    `docs/governance/proof-standards.md` verbatim and substituting only the
    theorem root, restatement, and dependency links. The shape is enforced by
    `constitution/schema/file-schema.yaml`; do not improvise it.
-5. Inspect nearby statements, proof stubs, and topic indexes before editing.
-6. Ensure the proof file is routed through the chapter's proof indexes.
-7. Run:
+5. The proof restatement must be copied from the theorem-like statement. If a
+   later validator finds a mismatch while the proof remains a TODO stub,
+   overwrite the proof restatement from the theorem source and preserve the
+   rest of the stub.
+6. Inspect nearby statements, proof stubs, and topic indexes before editing.
+7. Ensure the proof file is routed through the chapter's proof indexes.
+8. Run:
 
 ```bash
 python scripts/build_volume.py --validate-only

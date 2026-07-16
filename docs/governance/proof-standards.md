@@ -155,6 +155,15 @@ return navigation, any `\ProofVaultURL{...}`, the theorem restatement, the
 proof-structure remark, the dependency block, and extraction metadata, unless an
 explicit refactor task says otherwise.
 
+If a theorem-like statement changes while its proof file is still a stub, the
+proof restatement must be synchronized to the theorem source. A proof is still a
+stub when both proof bodies remain TODO/reset placeholders. In that case, replace
+only the unnumbered theorem/proposition/lemma/corollary restatement inside the
+proof file with the current theorem statement, preserving every other proof-file
+layer. This automatic synchronization is not allowed for authored proofs; once a
+proof body has real content, a restatement disagreement is a blocking review
+issue rather than an automatic overwrite.
+
 ## Two-Layer Proof Rule
 
 The professional proof is compact and rigorous. The detailed learning proof

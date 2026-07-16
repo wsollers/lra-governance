@@ -12,6 +12,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+import yaml
+
 
 GOVERNANCE_TOOL_ROOT = Path(__file__).resolve().parents[1]
 if str(GOVERNANCE_TOOL_ROOT) not in sys.path:
@@ -420,6 +422,83 @@ def failure_mode_items_for(node: dict[str, Any]) -> list[dict[str, Any]]:
     return modes
 
 
+RELATIONSHIP_NAMESPACES = (
+    "dependency_edges",
+    "ontology_edges",
+    "provenance_edges",
+    "proof_edges",
+)
+
+
+def semantic_relationship_edges_for(label: str, artifact: dict[str, Any]) -> list[dict[str, Any]]:
+    relationships = artifact.get("relationships") or {}
+    edges: list[dict[str, Any]] = []
+    for namespace in RELATIONSHIP_NAMESPACES:
+        for edge in relationships.get(namespace, []) or []:
+            if not isinstance(edge, dict):
+                continue
+            target = str(edge.get("target") or "")
+            if not target:
+                continue
+            edges.append(
+                {
+                    "from": label,
+                    "to": target,
+                    "kind": str(edge.get("kind") or ""),
+                    "namespace": namespace,
+                    "display": edge.get("display"),
+                    "notes": edge.get("notes"),
+                    "source": "semantic_artifact",
+                }
+            )
+    return edges
+
+
+def grouped_semantic_relationships(edges: list[dict[str, Any]]) -> dict[str, list[dict[str, Any]]]:
+    grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for edge in edges:
+        grouped[str(edge.get("namespace") or "relationships")].append(
+            {
+                "kind": str(edge.get("kind") or ""),
+                "target": str(edge.get("to") or ""),
+                "display": edge.get("display"),
+                "notes": edge.get("notes"),
+            }
+        )
+    return dict(grouped)
+
+
+def apply_semantic_artifact_relationships(exported: dict[str, Any], artifact: dict[str, Any]) -> list[dict[str, Any]]:
+    edges = semantic_relationship_edges_for(str(exported["id"]), artifact)
+    exported["semantic_relationships"] = grouped_semantic_relationships(edges)
+    exported["semantic_relationship_edges"] = [
+        {
+            "kind": edge["kind"],
+            "target": edge["to"],
+            "namespace": edge["namespace"],
+            "display": edge.get("display"),
+            "notes": edge.get("notes"),
+        }
+        for edge in edges
+    ]
+    return edges
+
+
+def collect_semantic_artifacts(run_dir: Path) -> dict[str, dict[str, Any]]:
+    artifacts: dict[str, dict[str, Any]] = {}
+    for path in sorted(run_dir.rglob("artifact.yaml")):
+        try:
+            artifact = yaml.safe_load(path.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        if not isinstance(artifact, dict):
+            continue
+        label = str((artifact.get("identity") or {}).get("label") or "")
+        if label:
+            artifacts[label] = artifact
+    return artifacts
+
+
 def build_export(run_dir: Path, repos_root: Path, version: dict[str, Any], registry: dict[str, Any]) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     universe = load_json(run_dir / "universe.json")
     combined = load_json(run_dir / "combined-edges.json")
@@ -482,6 +561,7 @@ def build_export(run_dir: Path, repos_root: Path, version: dict[str, Any], regis
     toc = registry_toc(registry)
     routes = registry_routes(registry)
     proof_files = collect_proof_files(repos_root, routes)
+    semantic_artifacts = collect_semantic_artifacts(run_dir)
 
     for node in sorted(nodes, key=lambda item: item["source_order"]):
         label = node["label"]
@@ -567,6 +647,13 @@ def build_export(run_dir: Path, repos_root: Path, version: dict[str, Any], regis
             exported["verification"] = verifications[0]
         if examples_by_label.get(label):
             exported["examples"] = examples_by_label[label]
+        if label in semantic_artifacts:
+            semantic_edges = apply_semantic_artifact_relationships(exported, semantic_artifacts[label])
+            for semantic_edge in semantic_edges:
+                key = (semantic_edge["from"], semantic_edge["to"], semantic_edge["kind"])
+                if key not in seen_edges:
+                    seen_edges.add(key)
+                    graph_edges.append(semantic_edge)
         exported_nodes.append(exported)
 
     knowledge = {

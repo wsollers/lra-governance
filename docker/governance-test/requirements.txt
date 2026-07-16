@@ -3,3 +3,6 @@ pyyaml
 jsonschema
 anthropic
 openai
+pylatexenc
+tree-sitter
+tree-sitter-language-pack

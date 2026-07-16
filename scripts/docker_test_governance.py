@@ -24,7 +24,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "pytest_args",
         nargs=argparse.REMAINDER,
-        help="Optional pytest arguments after --, default: tools/governance/test_*.py",
+        help="Optional pytest arguments after --, default: tools/governance",
     )
     args = parser.parse_args(argv)
 
@@ -39,7 +39,7 @@ def main(argv: list[str] | None = None) -> int:
     if pytest_args and pytest_args[0] == "--":
         pytest_args = pytest_args[1:]
     if not pytest_args:
-        pytest_args = ["tools/governance/test_*.py"]
+        pytest_args = ["tools/governance"]
 
     pytest_cmd = " ".join(shlex.quote(arg) for arg in pytest_args)
     inner = (

@@ -1,0 +1,149 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lra.local/schema/lean-crosswalk.schema.json",
+  "title": "LRA Lean Crosswalk Registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "source", "entries"],
+  "properties": {
+    "schema_version": { "const": "lra.lean-crosswalk/1.0" },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["library", "docs_base_url", "repository_url", "note"],
+      "properties": {
+        "library": { "type": "string", "minLength": 1 },
+        "docs_base_url": { "type": "string", "format": "uri" },
+        "repository_url": { "type": "string", "format": "uri" },
+        "note": { "type": "string", "minLength": 1 }
+      }
+    },
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "lra", "lean", "lra_lean", "semantic_role", "notes"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^lean-crosswalk:[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "lra": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["predicate_id", "name", "surface_forms"],
+            "properties": {
+              "predicate_id": {
+                "type": "string",
+                "pattern": "^pred:[a-z0-9]+(?:-[a-z0-9]+)*$"
+              },
+              "name": { "type": "string", "minLength": 1 },
+              "surface_forms": {
+                "type": "array",
+                "minItems": 1,
+                "items": { "type": "string", "minLength": 1 }
+              }
+            }
+          },
+          "lean": {
+            "$ref": "#/$defs/mathlibLeanAnchor"
+          },
+          "lra_lean": {
+            "anyOf": [
+              { "$ref": "#/$defs/lraLeanAnchor" },
+              { "type": "null" }
+            ]
+          },
+          "semantic_role": {
+            "enum": [
+              "predicate",
+              "predicate_set_membership",
+              "operator",
+              "applicability_predicate",
+              "structure",
+              "notation"
+            ]
+          },
+          "notes": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "leanKind": {
+      "enum": ["definition", "theorem", "lemma", "operation", "class", "instance"]
+    },
+    "mathlibLeanAnchor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "declaration",
+        "display_name",
+        "module",
+        "kind",
+        "docs_url",
+        "source_url",
+        "signature",
+        "proposition_lens",
+        "expansion"
+      ],
+      "properties": {
+        "declaration": { "type": "string", "minLength": 1 },
+        "display_name": { "type": "string", "minLength": 1 },
+        "module": { "type": "string", "minLength": 1 },
+        "kind": { "$ref": "#/$defs/leanKind" },
+        "docs_url": { "type": "string", "format": "uri" },
+        "source_url": { "type": "string", "format": "uri" },
+        "signature": { "type": "string", "minLength": 1 },
+        "proposition_lens": { "type": "string", "minLength": 1 },
+        "expansion": { "type": ["string", "null"] }
+      }
+    },
+    "lraLeanAnchor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "declaration",
+        "display_name",
+        "module",
+        "file",
+        "line_hint",
+        "kind",
+        "signature",
+        "proposition_lens",
+        "expansion",
+        "bridge_to_mathlib"
+      ],
+      "properties": {
+        "declaration": { "type": "string", "minLength": 1 },
+        "display_name": { "type": "string", "minLength": 1 },
+        "module": { "type": "string", "minLength": 1 },
+        "file": { "type": "string", "minLength": 1 },
+        "line_hint": { "type": "integer", "minimum": 1 },
+        "kind": { "$ref": "#/$defs/leanKind" },
+        "signature": { "type": "string", "minLength": 1 },
+        "proposition_lens": { "type": "string", "minLength": 1 },
+        "expansion": { "type": ["string", "null"] },
+        "bridge_to_mathlib": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["declaration", "kind", "signature", "file", "line_hint"],
+              "properties": {
+                "declaration": { "type": "string", "minLength": 1 },
+                "kind": { "$ref": "#/$defs/leanKind" },
+                "signature": { "type": "string", "minLength": 1 },
+                "file": { "type": "string", "minLength": 1 },
+                "line_hint": { "type": "integer", "minimum": 1 }
+              }
+            },
+            { "type": "null" }
+          ]
+        }
+      }
+    }
+  }
+}

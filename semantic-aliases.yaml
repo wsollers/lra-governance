@@ -1,0 +1,25 @@
+schema_version: lra.semantic-aliases/1.0
+predicate_aliases:
+  - id: alias:empty-set-as-is-empty
+    source_predicate: pred:empty-set
+    source_name: EmptySet
+    source_surface_forms:
+      - '\operatorname{EmptySet}(A)'
+      - empty set
+      - null set
+    normalized_predicate: pred:is-empty
+    normalized_name: IsEmpty
+    normalized_surface_forms:
+      - 'A=\varnothing'
+      - empty
+      - is empty
+      - has no elements
+    grammatical_role: noun_phrase
+    logical_role: predicate
+    allowed_fields:
+      - failure_analysis.applicability_failures
+      - logical_forms.negation
+    reason: >
+      Some source support blocks use EmptySet as a truth-valued emptiness test
+      on an argument. The canonical condition predicate for that use is
+      IsEmpty.

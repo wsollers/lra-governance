@@ -1,4 +1,5 @@
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -45,6 +46,93 @@ class ExportKnowledgeExplorerTests(unittest.TestCase):
         self.assertIn("\\begin{description}", failure_modes)
         self.assertIn("Not an upper bound", failure_modes)
         self.assertEqual(["Not an upper bound.", "Not least."], [item["title"] for item in failure_mode_items])
+
+    def test_semantic_relationship_edges_are_collected_and_grouped(self):
+        artifact = {
+            "relationships": {
+                "dependency_edges": [
+                    {
+                        "kind": "equivalent-language",
+                        "target": "def:epsilon-neighbourhood",
+                        "display": "Centered Open Interval",
+                        "notes": "Packages the output tolerance geometrically.",
+                    }
+                ],
+                "ontology_edges": [
+                    {
+                        "kind": "instantiates",
+                        "target": "pred:tends-to",
+                        "display": "TendsTo",
+                        "notes": "Real-line epsilon-delta instance.",
+                    },
+                    {
+                        "kind": "uses",
+                        "target": "pred:is-cluster",
+                        "display": "IsCluster",
+                        "notes": "Nonvacuity condition.",
+                    },
+                ],
+                "provenance_edges": [],
+                "proof_edges": [
+                    {
+                        "kind": "related-proof",
+                        "target": "prf:limit-unique",
+                        "display": "Uniqueness proof",
+                        "notes": "Downstream proof link.",
+                    },
+                    {
+                        "kind": "supports",
+                        "target": "thm:limit-unique",
+                        "display": "Uniqueness of Limits",
+                        "notes": "The theorem uses this definition.",
+                    },
+                ],
+            }
+        }
+        exported = {"id": "def:limit-function"}
+
+        edges = export_knowledge_explorer.apply_semantic_artifact_relationships(exported, artifact)
+
+        self.assertEqual(
+            [
+                ("equivalent-language", "dependency_edges", "def:epsilon-neighbourhood"),
+                ("instantiates", "ontology_edges", "pred:tends-to"),
+                ("uses", "ontology_edges", "pred:is-cluster"),
+                ("related-proof", "proof_edges", "prf:limit-unique"),
+                ("supports", "proof_edges", "thm:limit-unique"),
+            ],
+            [(edge["kind"], edge["namespace"], edge["to"]) for edge in edges],
+        )
+        self.assertEqual("pred:tends-to", exported["semantic_relationships"]["ontology_edges"][0]["target"])
+        self.assertEqual("thm:limit-unique", exported["semantic_relationships"]["proof_edges"][1]["target"])
+
+    def test_semantic_artifacts_are_discovered_by_identity_label(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            run_dir = Path(tmp)
+            artifact_dir = run_dir / "semantic" / "def-limit-function"
+            artifact_dir.mkdir(parents=True)
+            (artifact_dir / "artifact.yaml").write_text(
+                "\n".join(
+                    [
+                        "identity:",
+                        "  label: def:limit-function",
+                        "relationships:",
+                        "  ontology_edges:",
+                        "    - kind: instantiates",
+                        "      target: pred:tends-to",
+                    ]
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            artifacts = export_knowledge_explorer.collect_semantic_artifacts(run_dir)
+
+        self.assertIn("def:limit-function", artifacts)
+        self.assertEqual(
+            "pred:tends-to",
+            artifacts["def:limit-function"]["relationships"]["ontology_edges"][0]["target"],
+        )
 
 
 if __name__ == "__main__":

@@ -1,2 +1,5 @@
 pytest
 pyyaml
+pylatexenc
+tree-sitter
+tree-sitter-language-pack

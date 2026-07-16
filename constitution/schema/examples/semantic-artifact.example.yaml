@@ -94,6 +94,20 @@ verification:
   external_library_crosswalks: []
   proof_vault_records: []
 provenance:
+  origin:
+    kind: explicit_source_statement
+    source_status: single_primary_statement
+    primary_source_statement:
+      role: primary_statement
+      source_id: null
+      label: def:example
+      citation: null
+      page_range: null
+      evidence: Source environment directly states the artifact.
+      notes: Example placeholder.
+    component_sources: []
+    derivation_rule: null
+    requires_review: false
   explicit_from_source: []
   normalized_from_source: []
   inferred_from_registry: []

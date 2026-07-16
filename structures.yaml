@@ -17,6 +17,15 @@ structures:
     carrier_argument: A
     structural_arguments:
       - le
+    carried_context:
+      - kind: carrier
+        source: argument
+        argument: A
+        exposes_as: carrier
+      - kind: order_relation
+        source: argument
+        argument: le
+        exposes_as: order_relation
     surface_forms:
       - ordered set
       - ordered structure
@@ -41,6 +50,15 @@ structures:
     carrier_argument: A
     structural_arguments:
       - le
+    carried_context:
+      - kind: carrier
+        source: argument
+        argument: A
+        exposes_as: carrier
+      - kind: preorder_relation
+        source: argument
+        argument: le
+        exposes_as: order_relation
     surface_forms:
       - preordered set
       - preorder
@@ -63,6 +81,15 @@ structures:
     carrier_argument: A
     structural_arguments:
       - le
+    carried_context:
+      - kind: carrier
+        source: argument
+        argument: A
+        exposes_as: carrier
+      - kind: partial_order_relation
+        source: argument
+        argument: le
+        exposes_as: order_relation
     surface_forms:
       - partially ordered set
       - poset
@@ -85,6 +112,15 @@ structures:
     carrier_argument: A
     structural_arguments:
       - le
+    carried_context:
+      - kind: carrier
+        source: argument
+        argument: A
+        exposes_as: carrier
+      - kind: total_order_relation
+        source: argument
+        argument: le
+        exposes_as: order_relation
     surface_forms:
       - totally ordered set
       - total order
@@ -300,6 +336,15 @@ structures:
     structural_arguments:
       - A
       - B
+    carried_context:
+      - kind: domain
+        source: argument
+        argument: A
+        exposes_as: function_domain
+      - kind: codomain
+        source: argument
+        argument: B
+        exposes_as: function_codomain
     surface_forms:
       - function space
       - functions from A to B
@@ -320,6 +365,15 @@ structures:
     carrier_argument: U
     structural_arguments:
       - F
+    carried_context:
+      - kind: family
+        source: argument
+        argument: F
+        exposes_as: set_family
+      - kind: ambient_set
+        source: argument
+        argument: U
+        exposes_as: ambient_set
     surface_forms:
       - set family
       - family of sets
@@ -343,6 +397,19 @@ structures:
     structural_arguments:
       - x
       - I
+    carried_context:
+      - kind: sequence
+        source: argument
+        argument: x
+        exposes_as: indexed_object
+      - kind: index_set
+        source: argument
+        argument: I
+        exposes_as: index_set
+      - kind: ambient
+        source: argument
+        argument: X
+        exposes_as: value_ambient
     surface_forms:
       - sequence
       - indexed sequence
@@ -414,6 +481,15 @@ structures:
     carrier_argument: X
     structural_arguments:
       - d
+    carried_context:
+      - kind: carrier
+        source: argument
+        argument: X
+        exposes_as: carrier
+      - kind: metric
+        source: argument
+        argument: d
+        exposes_as: metric
     surface_forms:
       - metric space
       - metric structure
@@ -1072,6 +1148,15 @@ structures:
     carrier_argument: X
     structural_arguments:
       - tau
+    carried_context:
+      - kind: carrier
+        source: argument
+        argument: X
+        exposes_as: carrier
+      - kind: topology
+        source: argument
+        argument: tau
+        exposes_as: topology
     surface_forms:
       - topological space
       - topology
@@ -1670,6 +1755,19 @@ structures:
     structural_arguments:
       - F
       - I
+    carried_context:
+      - kind: family
+        source: argument
+        argument: F
+        exposes_as: indexed_family
+      - kind: index_set
+        source: argument
+        argument: I
+        exposes_as: index_set
+      - kind: ambient_set
+        source: argument
+        argument: U
+        exposes_as: ambient_set
     surface_forms:
       - indexed family
       - indexed family of sets
@@ -1694,6 +1792,19 @@ structures:
       - f
       - A
       - B
+    carried_context:
+      - kind: function
+        source: argument
+        argument: f
+        exposes_as: function
+      - kind: domain
+        source: argument
+        argument: A
+        exposes_as: function_domain
+      - kind: codomain
+        source: argument
+        argument: B
+        exposes_as: function_codomain
     surface_forms:
       - graph of a function
       - function graph
@@ -1717,6 +1828,19 @@ structures:
       - f
       - A
       - B
+    carried_context:
+      - kind: function
+        source: argument
+        argument: f
+        exposes_as: function
+      - kind: domain
+        source: argument
+        argument: A
+        exposes_as: function_domain
+      - kind: codomain
+        source: argument
+        argument: B
+        exposes_as: function_codomain
     surface_forms:
       - image operator
       - direct image operator
@@ -1740,6 +1864,19 @@ structures:
       - f
       - A
       - B
+    carried_context:
+      - kind: function
+        source: argument
+        argument: f
+        exposes_as: function
+      - kind: domain
+        source: argument
+        argument: A
+        exposes_as: function_domain
+      - kind: codomain
+        source: argument
+        argument: B
+        exposes_as: function_codomain
     surface_forms:
       - preimage operator
       - inverse image operator

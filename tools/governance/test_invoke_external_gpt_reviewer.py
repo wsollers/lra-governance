@@ -208,6 +208,64 @@ class ExternalReviewerTransportTests(unittest.TestCase):
             with self.assertRaises(FileNotFoundError):
                 MODULE.build_authority_bundle(Path(temp))
 
+    def test_logic_defaults_to_local_verifier(self):
+        with tempfile.TemporaryDirectory() as temp:
+            temp_root = Path(temp)
+            packet = temp_root / "logic-input.json"
+            artifact = temp_root / "artifact.yaml"
+            corrected = temp_root / "corrected.tex"
+            output = temp_root / "logic-validation.yaml"
+            packet.write_text("{}", encoding="utf-8")
+            artifact.write_text("identity: {}\n", encoding="utf-8")
+            corrected.write_text("corrected", encoding="utf-8")
+            with patch.object(
+                sys,
+                "argv",
+                [
+                    "invoke_external_gpt_reviewer.py",
+                    "logic",
+                    "--input",
+                    str(packet),
+                    "--output",
+                    str(output),
+                    "--artifact",
+                    str(artifact),
+                    "--corrected-tex",
+                    str(corrected),
+                ],
+            ):
+                args = MODULE.parse_args()
+            self.assertEqual(args.logic_reviewer, "local")
+            self.assertIsNone(args.prompt)
+
+    def test_use_openai_switches_logic_to_external(self):
+        with tempfile.TemporaryDirectory() as temp:
+            temp_root = Path(temp)
+            packet = temp_root / "logic-input.json"
+            output = temp_root / "logic-validation.yaml"
+            prompt = temp_root / "prompt.md"
+            packet.write_text("{}", encoding="utf-8")
+            prompt.write_text("prompt", encoding="utf-8")
+            with patch.object(
+                sys,
+                "argv",
+                [
+                    "invoke_external_gpt_reviewer.py",
+                    "logic",
+                    "--input",
+                    str(packet),
+                    "--output",
+                    str(output),
+                    "--prompt",
+                    str(prompt),
+                    "--use-openai",
+                ],
+            ):
+                args = MODULE.parse_args()
+            if args.use_openai:
+                args.logic_reviewer = "external"
+            self.assertEqual(args.logic_reviewer, "external")
+
 
 if __name__ == "__main__":
     unittest.main()

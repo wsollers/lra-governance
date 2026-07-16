@@ -71,6 +71,14 @@ Predicate-reading blocks must use the argument signatures registered in
 registered number of arguments, and a structure constructor must be introduced
 with its registered constructor form.
 
+Surface forms that describe equivalent presentations of a concept are not
+automatically new canonical predicates. For example, a source may discuss
+epsilon--delta, neighbourhood, and sequential formulations of the derivative.
+If the registry has one canonical derivative predicate plus the lower-level
+limit and convergence predicates needed to express the other forms, record the
+extra names as equivalent-language aliases or registry needs. Do not silently
+promote `Derivative_top` or `Derivative_seq` to canonical predicate IDs.
+
 For example, if `predicates.yaml` registers
 `ConvergesTo(x,L,X)` and `IsCauchy(x,X)`, do not write the legacy implicit
 forms:
@@ -227,6 +235,23 @@ Sequences are written as `(x_n)_{n\in\mathbb{N}}` or as a bold sequence object
 `\mathbf{x}` when the whole sequence is an argument. Reserve uppercase `S` for
 sets and subsets rather than sequence objects.
 
+## Domain-Carrying Function Predicates
+
+Some function predicates intentionally do not include a separate domain
+argument because the domain is carried by the typed function datum. For example,
+the canonical limit predicate is
+`TendsTo(f,a,L,X,Y)`, not `TendsTo(f,A,a,L,X,Y)`. In such a predicate, if
+`f:A\to Y`, then `A` is intrinsic to `f`, while `X` records the source ambient
+space in which the approach to `a` is interpreted.
+
+Registry entries that use this convention must declare
+`domain_convention.kind: typed_function_domain`. Semantic artifacts using such
+predicates must keep the restricted-domain quantification visible in the
+quantified form, for example `\forall x\in A`, and must not pass the domain set
+as a shifted predicate argument. If this convention is not mathematically
+adequate for a topic, add a governed predicate or structure representation
+rather than inventing a local argument order.
+
 ## Legacy Readings
 
 Older notes may use implicit ambient predicates such as
@@ -236,6 +261,23 @@ should use the ambient-explicit form, for example
 and scoped; do not mix implicit and explicit signatures in new blocks.
 
 ## Registry Fields
+
+Predicate and structure registries are machine-readable contracts, not glossaries.
+They must preserve:
+
+- arity, by the length of the ordered `arguments` list;
+- argument position, by YAML list order, optionally mirrored by a matching
+  `position` field;
+- argument role/type intent, by each argument's `role`;
+- predicate return type, by `returns`;
+- structure assembly data, by `carrier_argument`, `structural_arguments`, and
+  `carried_context` where applicable.
+
+No semantic data may disappear merely because it is packaged inside a predicate
+or structure argument. If an argument carries a domain, codomain, carrier,
+relation, topology, metric, operation, index set, ambient space, or similar
+context, the registry must expose that packaging through existing structure
+fields or through `carried_context`.
 
 Each predicate entry should state:
 
@@ -247,6 +289,16 @@ Each predicate entry should state:
 - `returns`;
 - `surface_forms`, for trigger/audit discovery;
 - a short `description`.
+
+Predicate entries may include `carried_context` items of the form:
+
+```yaml
+carried_context:
+  - kind: domain
+    source: type_of_argument
+    argument: f
+    exposes_as: admissible_input_domain
+```
 
 Additional metadata may record polymorphism, ambient support, legacy aliases,
 or source notes, but the canonical name and argument convention remain the
@@ -264,3 +316,22 @@ Each structure entry in `structures.yaml` should state:
 - `structural_arguments`;
 - `surface_forms`, for trigger/audit discovery;
 - a short `description`.
+
+Structure entries may include `carried_context` items of the form:
+
+```yaml
+carried_context:
+  - kind: carrier
+    source: argument
+    argument: X
+    exposes_as: carrier
+  - kind: topology
+    source: argument
+    argument: tau
+    exposes_as: topology
+```
+
+The registry contract validator rejects missing names/roles, duplicate argument
+names, mismatched explicit positions, predicate return types other than
+`truth_value`, structure carrier/structural references that do not point to real
+arguments, and carried-context references to non-existent arguments.

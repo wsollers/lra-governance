@@ -1176,6 +1176,31 @@ predicates:
         role: target_ambient
     returns: truth_value
     ambient_argument: Y
+    domain_convention:
+      kind: typed_function_domain
+      function_argument: f
+      source_point_argument: a
+      source_ambient_argument: X
+      quantification_scope: admissible inputs in the declared domain of f
+      notes: >
+        When f is a typed function datum, for example f:A -> Y, the domain A
+        is intrinsic to f and is not a separate TendsTo argument. The source
+        ambient X records the ambient space in which the source point and
+        approach live; semantic artifacts must make any restricted-domain
+        quantification explicit in their quantified form.
+    carried_context:
+      - kind: domain
+        source: type_of_argument
+        argument: f
+        exposes_as: admissible_input_domain
+      - kind: source_ambient
+        source: argument
+        argument: X
+        exposes_as: approach_ambient
+      - kind: target_ambient
+        source: argument
+        argument: Y
+        exposes_as: value_ambient
     polymorphic: true
     surface_forms:
       - tends to
@@ -1226,6 +1251,23 @@ predicates:
         role: target_ambient
     returns: truth_value
     ambient_argument: Y
+    carried_context:
+      - kind: domain
+        source: type_of_argument
+        argument: f
+        exposes_as: admissible_input_domain
+      - kind: side
+        source: predicate
+        argument: X
+        exposes_as: left_hand_approach
+      - kind: source_ambient
+        source: argument
+        argument: X
+        exposes_as: approach_ambient
+      - kind: target_ambient
+        source: argument
+        argument: Y
+        exposes_as: value_ambient
     polymorphic: true
     surface_forms:
       - left limit
@@ -1251,6 +1293,23 @@ predicates:
         role: target_ambient
     returns: truth_value
     ambient_argument: Y
+    carried_context:
+      - kind: domain
+        source: type_of_argument
+        argument: f
+        exposes_as: admissible_input_domain
+      - kind: side
+        source: predicate
+        argument: X
+        exposes_as: right_hand_approach
+      - kind: source_ambient
+        source: argument
+        argument: X
+        exposes_as: approach_ambient
+      - kind: target_ambient
+        source: argument
+        argument: Y
+        exposes_as: value_ambient
     polymorphic: true
     surface_forms:
       - right limit
@@ -1272,6 +1331,15 @@ predicates:
         role: target_ambient
     returns: truth_value
     ambient_argument: Y
+    carried_context:
+      - kind: domain
+        source: type_of_argument
+        argument: f
+        exposes_as: admissible_input_domain
+      - kind: target_ambient
+        source: argument
+        argument: Y
+        exposes_as: target_ambient
     polymorphic: true
     surface_forms:
       - limit at infinity
@@ -1295,6 +1363,23 @@ predicates:
         role: target_ambient
     returns: truth_value
     ambient_argument: Y
+    carried_context:
+      - kind: domain
+        source: type_of_argument
+        argument: f
+        exposes_as: admissible_input_domain
+      - kind: locus
+        source: argument
+        argument: Locus
+        exposes_as: continuity_locus
+      - kind: source_ambient
+        source: argument
+        argument: X
+        exposes_as: source_ambient
+      - kind: target_ambient
+        source: argument
+        argument: Y
+        exposes_as: target_ambient
     polymorphic: true
     surface_forms:
       - is continuous
@@ -1319,6 +1404,23 @@ predicates:
         role: target_ambient
     returns: truth_value
     ambient_argument: Y
+    carried_context:
+      - kind: domain
+        source: type_of_argument
+        argument: f
+        exposes_as: admissible_input_domain
+      - kind: locus
+        source: argument
+        argument: Locus
+        exposes_as: uniformity_locus
+      - kind: source_ambient
+        source: argument
+        argument: X
+        exposes_as: source_ambient
+      - kind: target_ambient
+        source: argument
+        argument: Y
+        exposes_as: target_ambient
     polymorphic: true
     surface_forms:
       - is uniformly continuous
@@ -1344,6 +1446,27 @@ predicates:
         role: lipschitz_constant
     returns: truth_value
     ambient_argument: Y
+    carried_context:
+      - kind: domain
+        source: type_of_argument
+        argument: f
+        exposes_as: admissible_input_domain
+      - kind: locus
+        source: argument
+        argument: Locus
+        exposes_as: lipschitz_locus
+      - kind: source_ambient
+        source: argument
+        argument: X
+        exposes_as: source_ambient
+      - kind: target_ambient
+        source: argument
+        argument: Y
+        exposes_as: target_ambient
+      - kind: constant
+        source: argument
+        argument: C
+        exposes_as: lipschitz_constant
     polymorphic: true
     surface_forms:
       - is lipschitz
@@ -1371,6 +1494,31 @@ predicates:
         role: upper_lipschitz_constant
     returns: truth_value
     ambient_argument: Y
+    carried_context:
+      - kind: domain
+        source: type_of_argument
+        argument: f
+        exposes_as: admissible_input_domain
+      - kind: locus
+        source: argument
+        argument: Locus
+        exposes_as: bilipschitz_locus
+      - kind: source_ambient
+        source: argument
+        argument: X
+        exposes_as: source_ambient
+      - kind: target_ambient
+        source: argument
+        argument: Y
+        exposes_as: target_ambient
+      - kind: lower_constant
+        source: argument
+        argument: c
+        exposes_as: lower_lipschitz_constant
+      - kind: upper_constant
+        source: argument
+        argument: C
+        exposes_as: upper_lipschitz_constant
     polymorphic: true
     surface_forms:
       - is bi-lipschitz
@@ -1394,6 +1542,23 @@ predicates:
         role: target_ambient
     returns: truth_value
     ambient_argument: Y
+    carried_context:
+      - kind: domain
+        source: type_of_argument
+        argument: f
+        exposes_as: admissible_input_domain
+      - kind: locus
+        source: argument
+        argument: Locus
+        exposes_as: discontinuity_locus
+      - kind: source_ambient
+        source: argument
+        argument: X
+        exposes_as: source_ambient
+      - kind: target_ambient
+        source: argument
+        argument: Y
+        exposes_as: target_ambient
     polymorphic: true
     surface_forms:
       - is discontinuous
@@ -1543,6 +1708,27 @@ predicates:
         role: target_ambient
     returns: truth_value
     ambient_argument: Y
+    carried_context:
+      - kind: derivative
+        source: argument
+        argument: D
+        exposes_as: derivative_object
+      - kind: domain
+        source: type_of_argument
+        argument: f
+        exposes_as: admissible_input_domain
+      - kind: locus
+        source: argument
+        argument: Locus
+        exposes_as: derivative_locus
+      - kind: source_ambient
+        source: argument
+        argument: X
+        exposes_as: source_ambient
+      - kind: target_ambient
+        source: argument
+        argument: Y
+        exposes_as: target_ambient
     polymorphic: true
     surface_forms:
       - derivative
@@ -1567,6 +1753,31 @@ predicates:
         role: target_ambient
     returns: truth_value
     ambient_argument: Y
+    carried_context:
+      - kind: derivative
+        source: argument
+        argument: D
+        exposes_as: derivative_object
+      - kind: domain
+        source: type_of_argument
+        argument: f
+        exposes_as: admissible_input_domain
+      - kind: locus
+        source: argument
+        argument: Locus
+        exposes_as: derivative_locus
+      - kind: side
+        source: predicate
+        argument: X
+        exposes_as: left_hand_approach
+      - kind: source_ambient
+        source: argument
+        argument: X
+        exposes_as: source_ambient
+      - kind: target_ambient
+        source: argument
+        argument: Y
+        exposes_as: target_ambient
     polymorphic: true
     surface_forms:
       - left derivative
@@ -1591,6 +1802,31 @@ predicates:
         role: target_ambient
     returns: truth_value
     ambient_argument: Y
+    carried_context:
+      - kind: derivative
+        source: argument
+        argument: D
+        exposes_as: derivative_object
+      - kind: domain
+        source: type_of_argument
+        argument: f
+        exposes_as: admissible_input_domain
+      - kind: locus
+        source: argument
+        argument: Locus
+        exposes_as: derivative_locus
+      - kind: side
+        source: predicate
+        argument: X
+        exposes_as: right_hand_approach
+      - kind: source_ambient
+        source: argument
+        argument: X
+        exposes_as: source_ambient
+      - kind: target_ambient
+        source: argument
+        argument: Y
+        exposes_as: target_ambient
     polymorphic: true
     surface_forms:
       - right derivative
@@ -1613,6 +1849,23 @@ predicates:
         role: target_ambient
     returns: truth_value
     ambient_argument: Y
+    carried_context:
+      - kind: domain
+        source: type_of_argument
+        argument: f
+        exposes_as: admissible_input_domain
+      - kind: locus
+        source: argument
+        argument: Locus
+        exposes_as: differentiability_locus
+      - kind: source_ambient
+        source: argument
+        argument: X
+        exposes_as: source_ambient
+      - kind: target_ambient
+        source: argument
+        argument: Y
+        exposes_as: target_ambient
     polymorphic: true
     surface_forms:
       - is differentiable
@@ -2027,6 +2280,19 @@ predicates:
       - name: C
         role: integration_criterion
     returns: truth_value
+    carried_context:
+      - kind: domain
+        source: type_of_argument
+        argument: f
+        exposes_as: admissible_input_domain
+      - kind: interval
+        source: argument
+        argument: I
+        exposes_as: integration_domain
+      - kind: criterion
+        source: argument
+        argument: C
+        exposes_as: integration_criterion
     surface_forms:
       - is integrable
       - integrable by criterion
