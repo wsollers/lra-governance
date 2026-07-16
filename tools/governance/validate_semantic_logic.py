@@ -18,6 +18,7 @@ from typing import Any, Iterable
 
 import yaml
 
+from create_semantic_validation_artifacts import build_generation_request, create_requests
 from semantic_artifact_inventory import artifact_package_for, routed_formals
 
 
@@ -1308,30 +1309,7 @@ def batch_validate_target(args: argparse.Namespace) -> tuple[dict[str, Any], int
         artifact = repo_root / package["artifact"]
         corrected = repo_root / package["corrected_tex"]
         if not package["exists"]:
-            generation_queue.append(
-                {
-                    "label": candidate.label,
-                    "kind": candidate.kind,
-                    "title": candidate.title,
-                    "source": candidate.as_json(repo_root),
-                    "suggested_package": package,
-                    "llm_packet": {
-                        "task": {
-                            "mode": "generate_semantic_artifact",
-                            "requested_action": "create_artifact_package",
-                        },
-                        "source": {
-                            "repository_root": str(repo_root),
-                            "file": candidate.source_file.relative_to(repo_root).as_posix(),
-                            "label": candidate.label,
-                            "environment_kind": candidate.kind,
-                            "source_line_start": candidate.line_start,
-                            "source_line_end": candidate.line_end,
-                            "current_tex": candidate.text,
-                        },
-                    },
-                }
-            )
+            generation_queue.append(build_generation_request(candidate, repo_root))
             continue
         data = load_mapping(artifact)
         result = validate(data, corrected.read_text(encoding="utf-8")).as_json()
@@ -1345,6 +1323,17 @@ def batch_validate_target(args: argparse.Namespace) -> tuple[dict[str, Any], int
         items.append(item)
         if result["result"] not in {"pass", "pass_with_warnings"}:
             exit_code = 1
+
+    creation = None
+    if generation_queue and not args.no_create_missing:
+        creation = create_requests(
+            generation_queue,
+            repo_root,
+            mode=args.create_mode,
+            dry_run=args.create_dry_run,
+            overwrite=args.overwrite_generated,
+            limit=args.create_limit,
+        )
 
     payload = {
         "schema_version": "lra.semantic-logic-batch/1.0",
@@ -1361,6 +1350,7 @@ def batch_validate_target(args: argparse.Namespace) -> tuple[dict[str, Any], int
         "formal_candidates": len(candidates),
         "validated_packages": len(items),
         "generation_queue": generation_queue,
+        "creation": creation,
         "missing_packages": [item["source"] for item in generation_queue],
         "result": "fail" if exit_code else "pass",
         "items": items,
@@ -1405,6 +1395,15 @@ def main() -> int:
         action="store_true",
         help="Compatibility flag; missing packages are reported in generation_queue, not treated as validation failures.",
     )
+    parser.add_argument(
+        "--no-create-missing",
+        action="store_true",
+        help="Do not create generation-request artifacts for missing scoped semantic packages.",
+    )
+    parser.add_argument("--create-mode", choices=("prompt", "packet"), default="prompt")
+    parser.add_argument("--create-dry-run", action="store_true")
+    parser.add_argument("--overwrite-generated", action="store_true")
+    parser.add_argument("--create-limit", type=int)
     parser.add_argument("--output", type=Path)
     parser.add_argument("--format", choices=("yaml", "json"), default="yaml")
     args = parser.parse_args()

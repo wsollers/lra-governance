@@ -298,10 +298,15 @@ class SemanticLogicValidationTests(unittest.TestCase):
                 capture_output=True,
                 text=True,
             )
+            request_path = target / "def-real-upper-bound" / "generation-request.json"
+            source_path = target / "def-real-upper-bound" / "source.tex"
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertIn('"generation_queue"', result.stdout)
+        self.assertIn('"creation"', result.stdout)
         self.assertIn('"label": "def:real-upper-bound"', result.stdout)
         self.assertNotIn("def:unrouted", result.stdout)
+        self.assertTrue(request_path.exists())
+        self.assertTrue(source_path.exists())
 
     def test_unrouted_tex_is_not_semantic_generation_source(self):
         with temp_dir() as temp:
@@ -341,9 +346,11 @@ class SemanticLogicValidationTests(unittest.TestCase):
                 capture_output=True,
                 text=True,
             )
+            unrouted_package = target / "def-unrouted"
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertIn('"label": "def:routed"', result.stdout)
         self.assertNotIn("def:unrouted", result.stdout)
+        self.assertFalse(unrouted_package.exists())
 
     def test_rejects_definition_iff_latex_with_rhs_only_ast(self):
         data = real_upper_bound_artifact()

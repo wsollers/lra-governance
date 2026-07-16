@@ -106,6 +106,10 @@ Every new or permanently revised formal environment must be accompanied by a
 semantic artifact record and must pass the local semantic AST gate before it is
 accepted. This applies to `definition`, `axiom`, `theorem`, `lemma`,
 `proposition`, and `corollary` environments, boxed or unboxed.
+For scoped work, use the create-then-validate path in
+`validate_semantic_logic.py`: it gets routed targets, creates missing
+generation request artifacts, and validates packages that exist. Use
+`--no-create-missing` only for fast inspection runs.
 
 The gate consists of:
 

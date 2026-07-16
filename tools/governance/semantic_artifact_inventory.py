@@ -60,8 +60,8 @@ class RoutedFormal:
     chapter: str | None
     section: str | None
 
-    def as_json(self, repo_root: Path) -> dict[str, Any]:
-        return {
+    def as_json(self, repo_root: Path, include_source_text: bool = False) -> dict[str, Any]:
+        payload = {
             "label": self.label,
             "kind": self.kind,
             "title": self.title,
@@ -74,6 +74,9 @@ class RoutedFormal:
             "source_line_end": self.line_end,
             "artifact_package": artifact_package_for(self, repo_root),
         }
+        if include_source_text:
+            payload["source_text"] = self.text
+        return payload
 
 
 def resolve_repo_root(repos_root: Path | None, volume_root: Path | None, volume: str | None) -> Path:
@@ -272,7 +275,7 @@ def inventory(args: argparse.Namespace) -> dict[str, Any]:
         },
         "book_roots": [root.relative_to(repo_root).as_posix() for root in roots],
         "count": len(filtered),
-        "items": [item.as_json(repo_root) for item in filtered],
+        "items": [item.as_json(repo_root, getattr(args, "include_source_text", False)) for item in filtered],
     }
 
 
@@ -286,6 +289,11 @@ def main() -> int:
     parser.add_argument("--section")
     parser.add_argument("--label")
     parser.add_argument("--target", type=Path)
+    parser.add_argument(
+        "--include-source-text",
+        action="store_true",
+        help="Include the routed TeX block in each item for downstream artifact generation.",
+    )
     parser.add_argument("--output", type=Path)
     parser.add_argument("--format", choices=("yaml", "json"), default="yaml")
     args = parser.parse_args()

@@ -178,6 +178,25 @@ python <governance-root>\tools\governance\semantic_artifact_inventory.py `
   --label <optional-def-or-thm-label> `
   --output <run-dir>\semantic-artifact-inventory.yaml
 
+python <governance-root>\tools\governance\get_semantic_validation_targets.py `
+  --repos-root <repos-root> `
+  --volume <i-viii> `
+  --book <book-slug-or-root> `
+  --chapter <chapter-slug> `
+  --section <section-slug> `
+  --label <optional-def-or-thm-label> `
+  --include-source-text `
+  --output <run-dir>\semantic-validation-targets.yaml
+
+python <governance-root>\tools\governance\create_semantic_validation_artifacts.py `
+  --repos-root <repos-root> `
+  --volume <i-viii> `
+  --book <book-slug-or-root> `
+  --chapter <chapter-slug> `
+  --section <section-slug> `
+  --label <optional-def-or-thm-label> `
+  --output <run-dir>\semantic-artifact-creation.yaml
+
 python <governance-root>\tools\governance\compare_semantic_ast_extractors.py `
   --source-tex <run-dir>\artifact-source-snippet.tex `
   --artifact <returned-package-directory>\artifact.yaml `
@@ -197,19 +216,35 @@ directly when it contains `artifact` or `artifact_yaml` plus optional
 volume with `--volume`; do not search all volumes implicitly for a candidate
 definition or theorem.
 
-Scope validation is inventory-first. `semantic_artifact_inventory.py` lists the
-formal environments that are actually reachable from rendered book roots, in
-book input order, and supports the filter order `volume -> book -> chapter ->
-section -> label`. Do not build candidate lists from raw filesystem globs.
-Files that exist on disk but are not routed into a book root are not validation
-source.
+Scope validation is create-then-validate:
+
+1. Get targets with `get_semantic_validation_targets.py` or
+   `semantic_artifact_inventory.py`. Both list only formal environments that
+   are actually reachable from rendered book roots, in book input order, and
+   support the filter order `volume -> book -> chapter -> section -> label`.
+2. Create missing validation artifacts with
+   `create_semantic_validation_artifacts.py`, or let
+   `validate_semantic_logic.py` do this automatically during scoped validation.
+3. Validate every semantic package that exists after creation.
+
+Do not build candidate lists from raw filesystem globs. Files that exist on
+disk but are not routed into a book root are not validation source.
+
+The deterministic creation step writes `generation-request.json`, `prompt.md`,
+and `source.tex` into the suggested package directory for each missing semantic
+package. These are generation request artifacts, not reviewed semantic
+packages. They allow Codex plan mode, a new Codex thread, or an external
+reviewer workflow to create the real package files one by one. A saved target
+inventory must be produced with `--include-source-text` before it can be used as
+input to the creator.
 
 Batch semantic logic validation checks every existing semantic package in the
 selected routed scope. Missing packages are not validation failures. They are
 reported as `generation_queue` entries containing the exact source block,
-location, suggested package path, and an `llm_packet` suitable for reviewer
-artifact generation. Existing packages may still fail if their AST or
-corrected-TeX contract is invalid.
+location, suggested package path, and an `llm_packet`, and by default the
+validator creates the corresponding generation request artifacts. Use
+`--no-create-missing` only for fast inspection runs. Existing packages may still
+fail if their AST or corrected-TeX contract is invalid.
 
 ## Golden fixtures
 
