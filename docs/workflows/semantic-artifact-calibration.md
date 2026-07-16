@@ -173,6 +173,12 @@ python <governance-root>\tools\governance\validate_semantic_scope.py `
   --llm-data-dir <run-dir>\llm-payloads `
   --output <run-dir>\semantic-scope-validation.yaml
 
+python <governance-root>\tools\governance\validate_semantic_label.py `
+  <def-or-thm-label> `
+  --repos-root <repos-root> `
+  --with-llm `
+  --output <run-dir>\semantic-label-validation.yaml
+
 python <governance-root>\tools\governance\validate_semantic_logic.py `
   --artifact <returned-package-directory>\artifact.yaml `
   --repos-root <repos-root> `
@@ -274,6 +280,13 @@ fail if their AST or corrected-TeX contract is invalid. `--mode python-llm`
 does not make a hidden API call; it requires supplied payload files. Missing
 payloads are reported as `pending_llm_data` and the scope exits pending unless
 `--allow-pending` is used.
+
+For a single known label, use `validate_semantic_label.py`. It accepts natural
+agent requests such as "validate with LLM `def:supremum`": the tool resolves the
+label to one routed formal source, creates request artifacts, validates any
+available package or supplied LLM payload, and reports the preferred LLM payload
+path. If the label appears in more than one routed location, the tool stops and
+requires `--volume` or a narrower target instead of guessing.
 
 ## Golden fixtures
 
