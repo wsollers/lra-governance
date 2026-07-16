@@ -15,7 +15,7 @@ workspace.
 - `docs/`
 - `tools/`
 - canonical YAML: `predicates.yaml`, `structures.yaml`, `notation.yaml`,
-  `relations.yaml`
+  `relations.yaml`, `semantic-aliases.yaml`, `lean-crosswalk.yaml`
 
 These files are consumed in place. They are **not** copied or synced into the
 other repositories.

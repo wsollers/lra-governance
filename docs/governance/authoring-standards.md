@@ -100,6 +100,26 @@ must have a matching `\]`, every `\begin{...}` must have a matching
 intentionally part of the mathematical display. Close display math before
 citations, labels, environment endings, or prose continuation.
 
+## Semantic AST Gate
+
+Every new or permanently revised formal environment must be accompanied by a
+semantic artifact record and must pass the local semantic AST gate before it is
+accepted. This applies to `definition`, `axiom`, `theorem`, `lemma`,
+`proposition`, and `corollary` environments, boxed or unboxed.
+
+The gate consists of:
+
+- `validate_semantic_artifact.py` for schema, registry, provenance,
+  relationship, and governance readiness;
+- `validate_semantic_logic.py` for deterministic AST logic checks;
+- `compare_semantic_ast_extractors.py` against the exact source snippet for an
+  independent source/AST comparison;
+- the normal volume validator and build for the owning leaf repo.
+
+If these validators disagree with a generated or reviewed artifact, the
+validator output controls the closeout status until the artifact, source,
+registry, or validator rule is repaired under governance.
+
 ## Chapter Entries
 
 Chapter openings use the canonical entry pattern from `DESIGN.md`: breadcrumb,

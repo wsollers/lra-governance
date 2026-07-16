@@ -20,11 +20,18 @@ Write one mathematical definition in a volume chapter.
 4. Use a canonical `\operatorname{<Name>}` only when that name exists in the
    predicate registry. Otherwise omit the predicate reading and report the gap.
 5. Append to the target file unless the user asked for returned LaTeX only.
+6. Create or update the semantic artifact package and run the local semantic
+   AST gate before treating the definition as ready. The gate is
+   `validate_semantic_artifact.py`, `validate_semantic_logic.py`, and
+   `compare_semantic_ast_extractors.py` against the exact source snippet.
 
 ## Success Gates
 
 - `python tools/governance/validate_decoration.py --root <volume-root> --chapter <chapter> --canonical-dir <canonical-root>`
 - `python capabilities/author-definition/verify.py --target <file> --kind definition --predicates <canonical-root>/predicates.yaml`
+- `python <governance-root>/tools/governance/validate_semantic_artifact.py --artifact <artifact.yaml> --package-dir <package-dir> --governance-root <governance-root> --repos-root <repos-root>`
+- `python <governance-root>/tools/governance/validate_semantic_logic.py --artifact <artifact.yaml> --corrected-tex <corrected.tex> --output <logic-validation.yaml>`
+- `python <governance-root>/tools/governance/compare_semantic_ast_extractors.py --source-tex <artifact-source-snippet.tex> --artifact <artifact.yaml> --output <ast-extractor-comparison.yaml>`
 - `cd <volume-root> && python ../lra-governance/scripts/build_volume.py --root .`
 
 ## Reference Escalation

@@ -29,10 +29,18 @@ is specifically to define a term.
    matching `proofs/<section>/prf-<slug>.tex` file using `proof_stub.render_proof_stub(...)`
    and route it from the section proof index. Do this in the same change as the statement.
 5. Axioms and definitions do not get proof stubs.
+6. For every new formal statement, create or update the semantic artifact
+   package and run the local semantic AST gate before treating the statement as
+   ready. The gate is `validate_semantic_artifact.py`,
+   `validate_semantic_logic.py`, and `compare_semantic_ast_extractors.py`
+   against the exact source snippet.
 
 ## Success Gates
 
 - `python tools/governance/validate_decoration.py --root <volume-root> --chapter <chapter> --canonical-dir <canonical-root>`
+- `python <governance-root>/tools/governance/validate_semantic_artifact.py --artifact <artifact.yaml> --package-dir <package-dir> --governance-root <governance-root> --repos-root <repos-root>`
+- `python <governance-root>/tools/governance/validate_semantic_logic.py --artifact <artifact.yaml> --corrected-tex <corrected.tex> --output <logic-validation.yaml>`
+- `python <governance-root>/tools/governance/compare_semantic_ast_extractors.py --source-tex <artifact-source-snippet.tex> --artifact <artifact.yaml> --output <ast-extractor-comparison.yaml>`
 - For provable statements: `python tools/governance/audit_proof_layout.py --root <volume-root> --chapter <chapter> --strict`
 - `cd <volume-root> && python ../lra-governance/scripts/build_volume.py --root .`
 

@@ -22,8 +22,8 @@ validate topic artifacts <topic>
 
 ## Required reviewer transport
 
-Both semantic review and logic validation must use
-`tools/governance/invoke_external_gpt_reviewer.py` with:
+Semantic review must use `tools/governance/invoke_external_gpt_reviewer.py`
+with:
 
 ```yaml
 provider: openai_responses_api
@@ -33,6 +33,11 @@ reasoning_effort: high
 
 The API-resolved model must be GPT-5.6 Sol. A Codex thread, Codex subagent,
 custom Codex agent, or Workspace Agent trigger is not an accepted substitute.
+
+Logic validation uses the local semantic AST validator by default through
+`tools/governance/invoke_external_gpt_reviewer.py logic`, backed by
+`validate_semantic_logic.py`. External logic review is allowed only when
+explicitly requested by the workflow or user.
 
 ## Do
 
@@ -48,10 +53,11 @@ custom Codex agent, or Workspace Agent trigger is not an accepted substitute.
 8. Commit the reviewer package and receipt.
 9. Apply reviewed TeX in a separate temporary commit.
 10. Run deterministic validators and the normal target build.
-11. Use a second, distinct external GPT-5.6 response for logic validation.
+11. Run local semantic logic validation and independent AST extractor
+    comparison.
 12. Revert exactly the temporary source commit and verify source hashes.
-13. Record both response IDs and live-verification results in
-    `audit-validation.yaml`.
+13. Record semantic response IDs, live-verification results, local logic
+    validation, and AST extractor comparison in `audit-validation.yaml`.
 14. Continue until the topic queue is exhausted.
 15. Commit all audit records and the completed topic manifest together.
 16. Stop for user review.
@@ -63,7 +69,7 @@ custom Codex agent, or Workspace Agent trigger is not an accepted substitute.
 - proceed when external network access, response ID, or live verification is
   unavailable;
 - accept a model other than requested `gpt-5.6` resolving to GPT-5.6 Sol;
-- reuse the semantic response ID for logic validation;
+- substitute Codex reasoning for local semantic logic validation;
 - mark `REVIEW_PACKAGE_NOT_PRODUCED` as a terminal blocker;
 - permanently apply corrected TeX;
 - modify canonical registries, proof sources, Lean, or proof-vault data;
@@ -72,8 +78,10 @@ custom Codex agent, or Workspace Agent trigger is not an accepted substitute.
 ## Success gates
 
 - every terminal item has external semantic reviewer evidence;
-- every terminal item has a distinct external logic reviewer response;
-- all response IDs pass live retrieval, model, status, and output-hash checks;
+- every terminal item has local semantic logic validation and independent AST
+  extractor comparison evidence;
+- all external response IDs pass live retrieval, model, status, and output-hash
+  checks;
 - semantic package, audit record, and topic manifest schemas pass;
 - full-volume validation and actual target build results are recorded;
 - every temporary source commit has a matching revert;

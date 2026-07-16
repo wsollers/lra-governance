@@ -107,14 +107,18 @@ records the external GPT-5.6 response evidence.
 ## Codex integration rules
 
 1. Validate `artifact.yaml` and `package.yaml`.
-2. Live-verify the external response evidence.
-3. Stop on errors, blocking ambiguity, wrong model, or unverifiable response ID.
-4. Compare returned TeX and patch with the exact target.
-5. Apply only the reviewed environment patch.
-6. Preserve unrelated source.
-7. Run volume governance validation and the actual target build.
-8. Store the approved item as a golden fixture.
-9. Report every applied file and check.
+2. Run the local semantic logic validator on `artifact.yaml` and `corrected.tex`.
+3. Run independent AST extractor comparison on the exact source/corrected
+   environment snippet and `artifact.yaml`.
+4. Live-verify the external response evidence.
+5. Stop on errors, blocking ambiguity, wrong model, unverifiable response ID, or
+   any AST-gate disagreement.
+6. Compare returned TeX and patch with the exact target.
+7. Apply only the reviewed environment patch.
+8. Preserve unrelated source.
+9. Run volume governance validation and the actual target build.
+10. Store the approved item as a golden fixture.
+11. Report every applied file and check.
 
 Do not hand-correct reviewer or renderer output. Route defects back through a new
 external review call or fix the schema/renderer under separate approval.
@@ -138,12 +142,24 @@ python <governance-root>\tools\governance\validate_semantic_artifact.py `
 python <governance-root>\tools\governance\validate_external_reviewer_evidence.py `
   --package <returned-package-directory>\package.yaml `
   --verify-live
+
+python <governance-root>\tools\governance\validate_semantic_logic.py `
+  --artifact <returned-package-directory>\artifact.yaml `
+  --corrected-tex <returned-package-directory>\corrected.tex `
+  --output <run-dir>\logic-validation.yaml
+
+python <governance-root>\tools\governance\compare_semantic_ast_extractors.py `
+  --source-tex <run-dir>\artifact-source-snippet.tex `
+  --artifact <returned-package-directory>\artifact.yaml `
+  --output <run-dir>\ast-extractor-comparison.yaml
 ```
 
 The first validator covers schema, atomic labels, registry IDs/arities, binder
 scope, logical policy, relationships, verification links, unresolved ambiguity,
 and presentation-key exclusion. The second retrieves the stored external result
-and verifies its ID, GPT-5.6 model, completion status, and output hash.
+and verifies its ID, GPT-5.6 model, completion status, and output hash. The
+logic validator and extractor comparison are the local AST gate; they control
+whether the package is trusted for source integration.
 
 ## Golden fixtures
 
@@ -238,6 +254,10 @@ logic validator, and the independent AST extractor comparison. The generated
 artifact may be mathematically plausible, but if the Python validators disagree
 with it, the validator output controls the closeout status until the artifact or
 the validator rule is repaired under governance.
+
+This requirement applies to every future permanent addition or revision of a
+formal mathematical environment. External review supplies semantic content and
+evidence; the local AST gate decides whether that content may be integrated.
 
 Only `governance_ready: pass` packages are candidates for unattended
 section-wide processing. `pass_with_warnings` packages are supervised

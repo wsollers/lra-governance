@@ -6,6 +6,36 @@ external reviewer and not a theorem prover. Its job is to make the semantic
 artifact record carry enough structured metadata that common logic regressions
 can be checked without an OpenAI call.
 
+## Mandatory use for new formal material
+
+Every future addition or permanent revision of a formal mathematical
+environment must pass the semantic AST gate before it is treated as ready for
+commit, review, or unattended batch processing. Formal mathematical
+environments are `definition`, `axiom`, `theorem`, `lemma`, `proposition`, and
+`corollary` environments in volume notes, plus any governed corrected TeX that
+replaces one of those environments.
+
+The required AST gate is:
+
+1. schema and artifact validation with `validate_semantic_artifact.py`;
+2. deterministic logic validation with `validate_semantic_logic.py`;
+3. independent source extraction comparison with
+   `compare_semantic_ast_extractors.py`;
+4. normal volume validation and build for the owning leaf repo.
+
+The semantic AST gate is blocking, not advisory. If a generated or reviewed
+artifact disagrees with the local logic validator or the independent extractor
+comparison, the artifact, source, registry, or validator rule must be repaired
+under governance before the new formal material can be accepted. Do not
+substitute a Codex explanation, a proof sketch, or an external-review receipt
+for a passing local AST gate.
+
+Proof-body-only edits do not require a new semantic artifact when they leave the
+owned statement, proof restatement, dependency claims, and logical forms
+unchanged. If a proof edit introduces or changes a theorem-like statement,
+restatement, dependency claim, equivalence, negation, contrapositive, or
+predicate reading, run the AST gate for the affected formal environment.
+
 ## Default transport policy
 
 `tools/governance/invoke_external_gpt_reviewer.py logic` defaults to the local
@@ -242,6 +272,11 @@ python <governance-root>\tools\governance\compare_semantic_ast_extractors.py `
   --artifact <artifact-folder>\artifact.yaml `
   --output <run-dir>\ast-extractor-comparison.yaml
 ```
+
+`<artifact-source-snippet.tex>` is the exact source environment being added or
+replaced, including its governed support blocks and no unrelated neighboring
+material. For a semantic package, it should match the source represented by the
+artifact's source hash or the `corrected.tex` candidate being validated.
 
 The comparison tool currently emits a compact fact AST from multiple readers:
 

@@ -81,19 +81,37 @@ A Codex thread, Codex subagent, custom Codex agent, second Codex pass, manually 
 
 5. Commit only the external semantic package and receipt with `Record semantic review for <label>`.
 6. Record source blob hashes, apply only `corrected.tex`, and commit `Temporarily apply semantic review for <label>`.
-7. Run strict semantic validation, live evidence validation, full-volume validation, applicable proof-layout validation, and the normal volume/book build. `--validate-only` is not a build substitute. Capture commands, timestamps, exit codes, tested commit, and log paths.
-8. Build a separate logic packet and invoke a new external GPT-5.6 response:
+7. Run strict semantic validation, local semantic logic validation, independent
+   AST extractor comparison, live evidence validation, full-volume validation,
+   applicable proof-layout validation, and the normal volume/book build.
+   `--validate-only` is not a build substitute. Capture commands, timestamps,
+   exit codes, tested commit, and log paths.
+8. Build a separate logic packet and invoke the local semantic logic verifier:
 
    ```powershell
    python <governance-root>\tools\governance\invoke_external_gpt_reviewer.py logic `
      --input <run-dir>\logic-input.json `
      --output <run-dir>\logic-validation.yaml `
-     --prompt <governance-root>\constitution\prompts\validate-semantic-artifact-logic.md
+     --artifact <artifact-folder>\artifact.yaml `
+     --corrected-tex <artifact-folder>\corrected.tex `
+     --governance-root <governance-root>
    ```
 
-   Its response ID must differ from the semantic response ID. Copy the returned logic record without revision.
+   Also compare independent source extractors against the artifact:
+
+   ```powershell
+   python <governance-root>\tools\governance\compare_semantic_ast_extractors.py `
+     --source-tex <run-dir>\artifact-source-snippet.tex `
+     --artifact <artifact-folder>\artifact.yaml `
+     --output <run-dir>\ast-extractor-comparison.yaml
+   ```
+
+   The local logic record and extractor comparison are deterministic evidence.
+   If external logic review is explicitly requested, use
+   `--logic-reviewer external`; its response ID must differ from the semantic
+   response ID and must live-verify.
 9. Revert exactly the temporary source commit with `git revert --no-edit <temporary_apply_commit>` and verify every changed source blob matches its pre-application hash.
-10. Write `audit-validation.yaml`, then live-verify both reviewers:
+10. Write `audit-validation.yaml`, then live-verify external reviewer evidence:
 
     ```powershell
     python <governance-root>\tools\governance\validate_external_reviewer_evidence.py `
@@ -129,7 +147,8 @@ Do not permanently apply corrected TeX or begin another topic.
 - Missing external response: leave queued; do not fabricate a blocker.
 - Wrong provider/model/reasoning effort or unverifiable response evidence: fail before source application.
 - Package validation failure: do not apply TeX.
-- Logic validation failure: revert source, record failure, continue.
+- Local logic validation or AST extractor comparison failure: revert source,
+  record failure, continue.
 - Source changed since inventory: stop; do not silently rebase.
 - Revert/hash mismatch: stop immediately.
 - Never fix canonical registries, Lean declarations, proof-vault routes, or source mathematics inside this audit loop.

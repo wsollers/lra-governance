@@ -16,7 +16,18 @@ TODO proof bodies with canonical proof content.
 5. Replace only the professional proof TODO body and detailed learning proof
    TODO body unless the task explicitly authorizes broader edits.
 6. Add or refine dependency/proof-structure remarks as needed.
-7. Run:
+7. If the edit changes the owned theorem-like statement, proof restatement,
+   dependency claims, predicate reading, equivalence, negation, contrapositive,
+   or any other formal logical content, update the semantic artifact package and
+   run the semantic AST gate:
+
+```bash
+python ../lra-governance/tools/governance/validate_semantic_artifact.py --artifact <artifact.yaml> --package-dir <package-dir> --governance-root ../lra-governance --repos-root ..
+python ../lra-governance/tools/governance/validate_semantic_logic.py --artifact <artifact.yaml> --corrected-tex <corrected.tex> --output <logic-validation.yaml>
+python ../lra-governance/tools/governance/compare_semantic_ast_extractors.py --source-tex <artifact-source-snippet.tex> --artifact <artifact.yaml> --output <ast-extractor-comparison.yaml>
+```
+
+8. Run:
 
 ```bash
 python scripts/build_volume.py --validate-only

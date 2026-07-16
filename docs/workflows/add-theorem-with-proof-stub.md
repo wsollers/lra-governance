@@ -19,14 +19,27 @@ There is no monorepo.
    rest of the stub.
 6. Inspect nearby statements, proof stubs, and topic indexes before editing.
 7. Ensure the proof file is routed through the chapter's proof indexes.
-8. Run:
+8. Create or update the semantic artifact package for the new theorem-like
+   statement, including `statement.semantic_ast`,
+   `logical_forms.standard_quantified.ast`, any predicate reading AST, and the
+   source snippet for the exact new environment.
+9. Run the semantic AST gate:
+
+```bash
+python ../lra-governance/tools/governance/validate_semantic_artifact.py --artifact <artifact.yaml> --package-dir <package-dir> --governance-root ../lra-governance --repos-root ..
+python ../lra-governance/tools/governance/validate_semantic_logic.py --artifact <artifact.yaml> --corrected-tex <corrected.tex> --output <logic-validation.yaml>
+python ../lra-governance/tools/governance/compare_semantic_ast_extractors.py --source-tex <artifact-source-snippet.tex> --artifact <artifact.yaml> --output <ast-extractor-comparison.yaml>
+```
+
+10. Run:
 
 ```bash
 python scripts/build_volume.py --validate-only
 ```
 
-The theorem and proof stub should be committed together. If validation fails,
-the change is not ready; fix it before committing.
+The theorem, proof stub, and semantic artifact evidence should be committed
+together. If validation or the AST gate fails, the change is not ready; fix it
+before committing.
 
 ## Ownership
 

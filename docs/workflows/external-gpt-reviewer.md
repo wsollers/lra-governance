@@ -2,10 +2,12 @@
 
 ## Purpose
 
-Semantic-artifact review and logic validation are performed by an external
-GPT-5.6 Responses API call, not by the Codex thread and not by a Codex subagent.
-The transport returns retrievable response identifiers and refuses to proceed when
-external review cannot be verified.
+Semantic-artifact review is performed by an external GPT-5.6 Responses API
+call, not by the Codex thread and not by a Codex subagent. Logic validation
+defaults to the local semantic AST validator; an external logic call is allowed
+only when explicitly requested for review or calibration. The transport returns
+retrievable response identifiers and refuses to proceed when external review
+cannot be verified.
 
 ## Governed model and transport
 
@@ -37,8 +39,9 @@ failure. Codex must not fall back to its own reasoning.
 ## Automatic governance-authority bundle
 
 The executor—not Codex—loads and embeds the canonical authority bundle on every
-semantic and logic request. The bundle contains the exact file path, SHA-256 hash,
-and full UTF-8 contents of:
+external semantic request and every explicitly requested external logic request.
+The bundle contains the exact file path, SHA-256 hash, and full UTF-8 contents
+of:
 
 ```text
 constitution/schema/semantic-artifact.schema.json
@@ -128,19 +131,35 @@ ignored diagnostics.
 
 ## Logic validation call
 
-After deterministic validation of temporarily applied TeX, use a separate request:
+After deterministic validation of temporarily applied TeX, use the local
+semantic logic verifier by default:
 
 ```powershell
 python <governance-root>\tools\governance\invoke_external_gpt_reviewer.py logic `
+  --input <run-dir>\logic-input.json `
+  --output <run-dir>\logic-validation.yaml `
+  --artifact <artifact-folder>\artifact.yaml `
+  --corrected-tex <artifact-folder>\corrected.tex `
+  --governance-root <governance-root>
+```
+
+The local logic result is deterministic validation evidence, not external
+review evidence, and it does not have a response ID.
+
+Use an external GPT-5.6 logic request only when explicitly requested:
+
+```powershell
+python <governance-root>\tools\governance\invoke_external_gpt_reviewer.py logic `
+  --logic-reviewer external `
   --input <run-dir>\logic-input.json `
   --output <run-dir>\logic-validation.yaml `
   --prompt <governance-root>\constitution\prompts\validate-semantic-artifact-logic.md `
   --governance-root <governance-root>
 ```
 
-The logic response uses the same automatic authority bundle and background polling.
-Its response ID must differ from every semantic attempt. Codex copies the returned
-logic record without revising it.
+When external logic review is used, the logic response uses the same automatic
+authority bundle and background polling. Its response ID must differ from every
+semantic attempt. Codex copies the returned logic record without revising it.
 
 ## Evidence validation
 
@@ -159,7 +178,7 @@ python <governance-root>\tools\governance\validate_external_reviewer_evidence.py
   --verify-live
 ```
 
-After logic validation and source reversion:
+After external logic validation and source reversion:
 
 ```powershell
 python <governance-root>\tools\governance\validate_external_reviewer_evidence.py `
@@ -176,8 +195,9 @@ python <governance-root>\tools\governance\validate_external_reviewer_evidence.py
   --verify-live
 ```
 
-Live verification retrieves each stored response and checks response ID, resolved
-GPT-5.6 Sol model, completion status, and output hash.
+Live verification retrieves each stored external response and checks response
+ID, resolved GPT-5.6 Sol model, completion status, and output hash. Local logic
+validation outputs are checked by their deterministic validator result instead.
 
 ## Forbidden fallbacks
 
