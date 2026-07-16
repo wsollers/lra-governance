@@ -20,6 +20,20 @@ checks as substitutes for Lean validation.
 Canonical architecture and layout guidance lives in
 `docs/architecture/lra-lean-architecture.md`.
 
+## Governance Doc Set
+
+Load these governance documents for Lean work:
+
+- `docs/governance/repo-overlays/lra-lean.md`;
+- `docs/architecture/lra-lean-architecture.md`;
+- `docs/architecture/semantic-artifact-record.md` when mapping checked Lean
+  declarations to semantic artifacts or explorer verification metadata.
+
+Use `[external:lra-lean] README.md`, `lakefile.lean`, `lean-toolchain`, and the
+nearest Lean module for implementation details. Do not load volume authoring,
+PDF-extractor, source-profile, or numerical overlays unless the task explicitly
+crosses that boundary.
+
 ## Implementation Standards
 
 Lean code should be readable formal mathematics, not compressed tactic output.

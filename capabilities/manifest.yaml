@@ -5,7 +5,7 @@ version: 2
 # {root}/{chapter}/{canonical}/{target} are substituted by the resolver.
 capabilities:
   - id: build-repo
-    applies_to: [volume, lean, cpp, library, vault, web, governance]
+    applies_to: [volume, lean, cpp, library, vault, web, governance, pdf_extractor, source_profiles]
     triggers: ["dispatch workflow", "dispatch workflows", "monitor workflow", "monitor workflows",
                "github action", "github actions", "build repo", "build repository",
                "validate repo", "validate repository", "check repo", "check repository",

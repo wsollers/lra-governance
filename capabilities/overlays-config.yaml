@@ -1,6 +1,6 @@
 # Per-repo overlay config consumed by generate_overlays.py.
 # kind: volume -> uses the LaTeX authoring capabilities (stub/statement).
-#       library|lean|cpp|vault|web -> authoring capabilities do NOT apply; overlay documents purpose.
+#       library|lean|cpp|vault|web|pdf_extractor|source_profiles -> authoring capabilities do NOT apply; overlay documents purpose.
 # plain_style: true -> Vol IV style; verifiers pass --no-require-box (definitions are not boxed).
 # title: short repo identity shown to agents.
 repos:
@@ -60,3 +60,16 @@ repos:
   - repo: lra-knowledge-explorer
     kind: web
     title: "Knowledge Explorer web app"
+    success_gates:
+      - "python -m pytest tests"
+  - repo: lra-pdf-extractor
+    kind: pdf_extractor
+    title: "PDF/source ingestion and candidate extraction tooling"
+    success_gates:
+      - "python -m pytest tests"
+  - repo: lra-source-profiles
+    kind: source_profiles
+    title: "Source profiles, source indexes, and active profile exports"
+    success_gates:
+      - "python scripts\\validate_source_indexes.py"
+      - "python -m pytest tests"

@@ -1,6 +1,6 @@
 # lra-knowledge-explorer Overlay
 
-Stub overlay for theorem explorer and extraction pipeline work.
+This overlay applies to `lra-knowledge-explorer`.
 
 Owned concerns:
 
@@ -16,6 +16,21 @@ orchestrated from `lra-governance` over the independent volume repos, but
 extractor code ownership remains with `lra-knowledge-explorer`.
 
 Do not duplicate canonical YAML ownership here.
+
+## Governance Doc Set
+
+Load these governance documents for explorer work:
+
+- `docs/architecture/knowledge-pipeline.md`;
+- `docs/architecture/theorem-explorer-pipeline.md`;
+- `docs/workflows/knowledge-extraction.md`;
+- `docs/governance/extraction-standards.md`;
+- `docs/architecture/local-semantic-logic-verifier.md` only when semantic AST
+  fields affect explorer extraction or display.
+
+Use the local `[external:lra-knowledge-explorer] README.md` and `PIPELINE.md`
+for operational details. Do not load Lean, PDF-extractor, source-profile, or
+volume authoring overlays unless the task explicitly crosses that boundary.
 
 ## Formal Verification Surface
 

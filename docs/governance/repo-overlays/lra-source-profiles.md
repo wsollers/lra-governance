@@ -76,3 +76,18 @@ owning repository's normal review path.
 If source-profile work reveals that final note content, bibliography entries,
 canonical YAML, or extraction records need changes, report the owning repo and
 required follow-up rather than applying those changes from this repo.
+
+## Governance Doc Set
+
+Load these governance documents for source-profile work:
+
+- `docs/governance/repo-overlays/lra-source-profiles.md`;
+- `docs/architecture/repository-layout.md`;
+- `docs/architecture/multi-repo-sync.md`;
+- `docs/architecture/knowledge-pipeline.md` only when active-profile exports
+  feed authoring or explorer work;
+- `docs/governance/repo-overlays/lra-pdf-extractor.md` only when coordinating
+  PDF ingestion and Markdown extraction boundaries.
+
+Use the local `[external:lra-source-profiles] README.md`, `workflows/`, source
+indexes, and scripts for operational details.

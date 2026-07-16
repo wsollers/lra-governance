@@ -81,18 +81,31 @@ Do not run LaTeX volume render checks as substitutes for governance tests.
         "web": (
             "Knowledge Explorer web app consuming extracted knowledge-graph data.",
             None),
+        "pdf_extractor": (
+            "PDF/source ingestion, bibliography normalization, candidate extraction, "
+            "OCR/cleanup assistance, and staged review outputs. Candidate artifacts "
+            "must be reviewed in the owning repo before integration.",
+            None),
+        "source_profiles": (
+            "Source-profile metadata, active source selections, volume/chapter source "
+            "indexes, cached Markdown extracts, and attachment-slot exports. Outputs "
+            "are staging/review inputs for owning repos.",
+            None),
         "governance": (
             "Canonical governance source for authoring standards, schemas, capabilities, validators, and generated repo overlays.",
             None),
     }
     purpose, cap = blocks[kind]
     if not cap:
+        gate_block = ""
+        if success_gates:
+            gate_block = "\nSuccess gates:\n" + _bullets(success_gates) + "\n"
         return f"""# Repo Overlay -- {repo}
 
 Repo identity: {title}.
 
 {purpose}
-
+{gate_block}
 No manifest-backed LLM capability is exposed for repo kind `{kind}` yet.
 """
     env_block = (

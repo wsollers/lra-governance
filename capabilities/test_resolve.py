@@ -106,6 +106,26 @@ def test_governance_validate_routes_to_build_repo():
     expect("lra-governance", "validate repo", "build-repo")
 
 
+def test_pdf_extractor_build_routes_to_build_repo():
+    expect("lra-pdf-extractor", "validate repo", "build-repo")
+
+
+def test_source_profiles_build_routes_to_build_repo():
+    expect("lra-source-profiles", "check repository", "build-repo")
+
+
+def test_definition_does_not_leak_into_pdf_extractor():
+    got = route("lra-pdf-extractor", "define X")
+    assert got.startswith("FATAL:"), f"expected non-resolution in pdf extractor, got {got!r}"
+    assert "no capability matches" in got, f"expected kind-rejection, got {got!r}"
+
+
+def test_statement_does_not_leak_into_source_profiles():
+    got = route("lra-source-profiles", "append the theorem")
+    assert got.startswith("FATAL:"), f"expected non-resolution in source profiles, got {got!r}"
+    assert "no capability matches" in got, f"expected kind-rejection, got {got!r}"
+
+
 if __name__ == "__main__":
     tests = [
         v

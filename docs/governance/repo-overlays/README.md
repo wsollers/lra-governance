@@ -39,3 +39,21 @@ Volume-class overlays now include:
 Each generated downstream wrapper should combine the global rules with exactly
 the matching overlay. Overlays should link to local README or workflow files
 for operational details instead of copying large local technical manuals.
+
+## Specialist Repo Routing Matrix
+
+Use this matrix when deciding which governance docs to load for specialist repo
+work. Do not combine specialist overlays unless the task explicitly crosses the
+integration boundary.
+
+| Repository | Overlay | Required governance / architecture docs | Local docs | Validation entrypoint |
+| --- | --- | --- | --- | --- |
+| `lra-source-profiles` | `docs/governance/repo-overlays/lra-source-profiles.md` | `docs/architecture/repository-layout.md`, `docs/architecture/multi-repo-sync.md`, `docs/architecture/knowledge-pipeline.md` when exports feed explorer or authoring work | `[external:lra-source-profiles] README.md`, relevant `workflows/` docs | `python scripts\validate_source_indexes.py`, `python -m pytest tests` |
+| `lra-pdf-extractor` | `docs/governance/repo-overlays/lra-pdf-extractor.md` | `docs/architecture/repository-layout.md`, `docs/architecture/multi-repo-sync.md`, `docs/governance/authoring-standards.md` only for candidate-output shape, `docs/architecture/knowledge-pipeline.md` only for explorer handoff | `[external:lra-pdf-extractor] README.md`, relevant `docs/` files | `python -m pytest tests` |
+| `lra-lean` | `docs/governance/repo-overlays/lra-lean.md` | `docs/architecture/lra-lean-architecture.md`, `docs/architecture/semantic-artifact-record.md` when mapping Lean declarations to semantic artifacts | `[external:lra-lean] README.md`, nearest Lean module | `.\build.ps1 docker-build`, `.\build.ps1 build-all` on Windows; Docker/Lake gates from the overlay otherwise |
+| `lra-knowledge-explorer` | `docs/governance/repo-overlays/lra-knowledge-explorer.md` | `docs/architecture/knowledge-pipeline.md`, `docs/architecture/theorem-explorer-pipeline.md`, `docs/workflows/knowledge-extraction.md`, `docs/governance/extraction-standards.md` | `[external:lra-knowledge-explorer] README.md`, `PIPELINE.md` | `python -m pytest tests`; extraction smoke commands only when graph output changes |
+
+Generated capability overlays under `capabilities/overlays/` are resolver
+summaries derived from `capabilities/overlays-config.yaml`. They must include
+all specialist repos so `build-repo` can route validation, but they do not
+replace the canonical overlays above.

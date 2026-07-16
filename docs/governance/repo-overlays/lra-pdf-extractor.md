@@ -66,9 +66,9 @@ Local models must not be treated as authorities for:
 - silent bulk edits,
 - volume-owned bibliography updates.
 
-## Future Agent Rules
+## Generated Agent Rules
 
-When generated agent wrappers are implemented, this repo should receive:
+Generated agent wrappers for this repo receive:
 
 - global safety and ownership rules,
 - this `lra-pdf-extractor` overlay,
@@ -78,4 +78,19 @@ When generated agent wrappers are implemented, this repo should receive:
 
 It should not receive Lean, NURBS/Vulkan, volume-only, or
 numerical-analysis-specific overlays.
+
+## Governance Doc Set
+
+Load these governance documents for PDF-extractor work:
+
+- `docs/governance/repo-overlays/lra-pdf-extractor.md`;
+- `docs/architecture/repository-layout.md`;
+- `docs/architecture/multi-repo-sync.md`;
+- `docs/governance/authoring-standards.md` only when checking staged
+  candidate LaTeX shape;
+- `docs/architecture/knowledge-pipeline.md` only when producing or handing off
+  explorer-facing candidate data.
+
+Use the local `[external:lra-pdf-extractor] README.md`, `pyproject.toml`,
+`src/`, `tests/`, and relevant local docs for implementation details.
 
