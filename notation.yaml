@@ -164,6 +164,28 @@ notation:
     symbol: '\liminf'
     category: analysis_operator
     description: Limit inferior operator.
+  - id: not:supremum-operator
+    name: SupremumOperator
+    symbol: '\sup'
+    category: order_operator
+    description: Supremum operator notation for the least upper bound of a set.
+    operator_alias:
+      result_predicate: LeastUpperBound
+      definition_label: def:supremum
+      result_argument_role: least_upper_bound
+      set_argument_role: set
+      ambient_argument_default: '\mathbb{R}'
+  - id: not:infimum-operator
+    name: InfimumOperator
+    symbol: '\inf'
+    category: order_operator
+    description: Infimum operator notation for the greatest lower bound of a set.
+    operator_alias:
+      result_predicate: GreatestLowerBound
+      definition_label: def:infimum
+      result_argument_role: greatest_lower_bound
+      set_argument_role: set
+      ambient_argument_default: '\mathbb{R}'
   - id: not:partition-mesh
     name: PartitionMesh
     symbol: '\|P\|'
@@ -334,10 +356,95 @@ notation:
     symbol: '\Longleftrightarrow'
     category: connective
     description: Biconditional connective.
+    notation_role:
+      role: logical_equivalence
+      parser_connective: true
+      preferred_context: displayed_formal_logic
   - id: not:implies
     symbol: '\Rightarrow'
     category: connective
     description: Implication connective.
+    notation_role:
+      role: logical_implication
+      parser_connective: true
+      preferred_context: compact_or_inline_logic
+  - id: not:long-implies
+    symbol: '\Longrightarrow'
+    category: connective
+    description: Long implication connective for displayed formal logic.
+    notation_role:
+      role: logical_implication
+      parser_connective: true
+      preferred_context: displayed_formal_logic
+  - id: not:inline-iff
+    symbol: '\iff'
+    category: connective
+    description: Inline biconditional connective.
+    notation_role:
+      role: logical_equivalence
+      parser_connective: true
+      preferred_context: compact_or_inline_logic
+  - id: not:function-type-arrow
+    symbol: '\to'
+    category: function_notation
+    description: >
+      Function type arrow, as in f\colon A\to B.
+    notation_role:
+      role: function_type_arrow
+      parser_connective: false
+      preferred_context: function_signature
+  - id: not:function-rule-arrow
+    symbol: '\mapsto'
+    category: function_notation
+    description: >
+      Function rule arrow, as in x\mapsto f(x).
+    notation_role:
+      role: function_rule_arrow
+      parser_connective: false
+      preferred_context: function_rule
+  - id: not:function-signature-colon
+    symbol: '\colon'
+    category: punctuation_notation
+    description: >
+      Function signature colon, as in f\colon A\to B.
+    notation_role:
+      role: function_signature_colon
+      parser_connective: false
+      preferred_context: function_signature
+  - id: not:set-builder-colon
+    symbol: ':'
+    category: punctuation_notation
+    description: >
+      Set-builder separator, as in \{x\in X: x>0\}.
+    notation_role:
+      role: set_builder_separator
+      parser_connective: false
+      preferred_context: set_builder
+  - id: not:set-builder-mid
+    symbol: '\mid'
+    category: punctuation_notation
+    description: >
+      Alternate set-builder separator, as in \{x\in X\mid x>0\}.
+    notation_role:
+      role: set_builder_separator
+      parser_connective: false
+      preferred_context: set_builder
+  - id: not:less-than-or-equal-house
+    symbol: '\leq'
+    category: relation_notation
+    description: House form for less-than-or-equal relation.
+    notation_role:
+      role: order_relation
+      parser_connective: false
+      preferred_context: mathematical_relation
+  - id: not:greater-than-or-equal-house
+    symbol: '\geq'
+    category: relation_notation
+    description: House form for greater-than-or-equal relation.
+    notation_role:
+      role: order_relation
+      parser_connective: false
+      preferred_context: mathematical_relation
   - id: not:domain-operator-uppercase
     symbol: '\operatorname{Dom}'
     category: operator_notation
@@ -412,3 +519,22 @@ notation:
     symbol: '\operatorname{FractionField}'
     category: numerical_analysis_operator
     description: Fraction-field accessor for an IEEE binary datum.
+
+operator_bridges:
+  - id: bridge:sup-equals-negative-inf
+    description: >
+      Reflection identity bridge used to unfold statements of the form
+      \sup(-A)=-\inf A into least-upper-bound and greatest-lower-bound
+      predicate witnesses before definitional expansion.
+    pattern: sup_set_equals_negative_inf_set
+    left_operator: '\sup'
+    right_operator: '\inf'
+    witness_symbol: i
+    ambient_argument_default: '\mathbb{R}'
+    expansions:
+      - from_operator: '\inf'
+        result: '<witness>'
+        set: '<right_set>'
+      - from_operator: '\sup'
+        result: '-<witness>'
+        set: '<left_set>'

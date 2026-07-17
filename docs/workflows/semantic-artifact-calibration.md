@@ -196,6 +196,9 @@ python <governance-root>\tools\governance\validate_semantic_logic.py `
   --label <optional-def-or-thm-label> `
   --output <run-dir>\logic-batch-validation.yaml
 
+python <governance-root>\tools\governance\validate_latex_math_style.py `
+  --target <volume-repo>\<changed-tex-file-or-topic-directory>
+
 python <governance-root>\tools\governance\semantic_artifact_inventory.py `
   --repos-root <repos-root> `
   --volume <i-viii> `
@@ -223,6 +226,18 @@ python <governance-root>\tools\governance\create_semantic_validation_artifacts.p
   --section <section-slug> `
   --label <optional-def-or-thm-label> `
   --output <run-dir>\semantic-artifact-creation.yaml
+
+python <governance-root>\tools\governance\render_semantic_validation_report.py `
+  --repos-root <repos-root> `
+  --volume <i-viii> `
+  --book <book-slug-or-root> `
+  --chapter <chapter-slug> `
+  --section <optional-section-slug> `
+  --label <optional-def-or-thm-label> `
+  --scope-validation <run-dir>\semantic-scope-validation.yaml `
+  --llm-data-dir <run-dir>\llm-payloads `
+  --output-index <target-volume-root>\build\bounding-rpt.md `
+  --output-dir <target-volume-root>\build\bounding-rpt
 
 python <governance-root>\tools\governance\compare_semantic_ast_extractors.py `
   --source-tex <run-dir>\artifact-source-snippet.tex `
@@ -287,6 +302,57 @@ label to one routed formal source, creates request artifacts, validates any
 available package or supplied LLM payload, and reports the preferred LLM payload
 path. If the label appears in more than one routed location, the tool stops and
 requires `--volume` or a narrower target instead of guessing.
+
+For a chapter-level LLM validation pass, use the Markdown report renderer after
+each scope validation run. The report renderer does not validate mathematics by
+itself and does not call an API. It reads the routed formal inventory, the scope
+validation output, any existing semantic package, and any supplied LLM payloads,
+then writes:
+
+- one index file, such as `build/bounding-rpt.md`;
+- one per-formal report under a sibling directory, such as
+  `build/bounding-rpt/def-supremum.md`.
+
+Each per-formal report must include the exact original routed TeX environment,
+the surrounding source-side decoration data, a comparison against existing
+artifact fields and LLM payload fields, and the deterministic validator status.
+The comparison is diagnostic. The AST validator remains the validation gate.
+
+For Volume III's bounding chapter, the default local run shape is:
+
+```powershell
+python tools\governance\semantic_artifact_inventory.py `
+  --repos-root F:\repos `
+  --volume iii `
+  --chapter bounding `
+  --include-source-text `
+  --format json `
+  --output F:\repos\lra-volume-iii\build\bounding-inventory.json
+
+python tools\governance\validate_semantic_scope.py `
+  --mode python-llm `
+  --repos-root F:\repos `
+  --volume iii `
+  --chapter bounding `
+  --llm-data-dir F:\repos\lra-volume-iii\build\bounding-llm-payloads `
+  --allow-pending `
+  --format json `
+  --output F:\repos\lra-volume-iii\build\bounding-scope-validation.json
+
+python tools\governance\render_semantic_validation_report.py `
+  --repos-root F:\repos `
+  --volume iii `
+  --chapter bounding `
+  --scope-validation F:\repos\lra-volume-iii\build\bounding-scope-validation.json `
+  --llm-data-dir F:\repos\lra-volume-iii\build\bounding-llm-payloads `
+  --output-index F:\repos\lra-volume-iii\build\bounding-rpt.md `
+  --output-dir F:\repos\lra-volume-iii\build\bounding-rpt
+```
+
+When Codex is the LLM source, create payloads from the generated request packets
+in small batches, rerun `validate_semantic_scope.py --mode python-llm`, then
+rerender the reports. Missing payloads remain pending and must not be reported
+as successful validation.
 
 ## Golden fixtures
 

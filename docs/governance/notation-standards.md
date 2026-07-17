@@ -114,6 +114,25 @@ convention being quoted or compared. When source notation is preserved
 intentionally, add a brief review note if the notation differs from house
 style.
 
+## LaTeX Math Style Enforcement
+
+Source TeX must remain standard mathematical LaTeX. Do not replace ordinary
+notation such as `\colon`, `\to`, or `\mapsto` with parser-friendly surrogate
+syntax. Register the notation role in `notation.yaml` and update the parser or
+validator to understand it.
+
+The source-level house style is governed by `latex-math-style.md`. The focused
+validator is:
+
+```powershell
+python tools\governance\validate_latex_math_style.py --target <tex-file-or-directory>
+```
+
+Use this validator when adding or revising notation-heavy definitions,
+theorems, quantified statement blocks, or generated TeX. It distinguishes
+function signatures, function rules, set-builder separators, and logical
+connectives according to the registry metadata.
+
 ## Missing Predicate Protocol
 
 Do not invent predicates or structure constructors inline. Apply

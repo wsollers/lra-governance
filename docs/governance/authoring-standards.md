@@ -100,6 +100,21 @@ must have a matching `\]`, every `\begin{...}` must have a matching
 intentionally part of the mathematical display. Close display math before
 citations, labels, environment endings, or prose continuation.
 
+## LaTeX Math Style
+
+Source-level mathematical notation is governed by `latex-math-style.md` and
+the canonical notation roles in `notation.yaml`. Use standard mathematical
+LaTeX such as `f\colon A\to B`, `x\mapsto f(x)`, set-builder separators, and
+displayed logical connectives in their proper roles. Do not rewrite source
+notation into parser-shaped substitutes; repair the parser, notation registry,
+or style validator instead.
+
+For notation-heavy changes, run:
+
+```powershell
+python tools\governance\validate_latex_math_style.py --target <tex-file-or-directory>
+```
+
 ## Semantic AST Gate
 
 Every new or permanently revised formal environment must be accompanied by a

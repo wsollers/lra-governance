@@ -3,3 +3,6 @@ pyyaml
 pylatexenc
 tree-sitter
 tree-sitter-language-pack
+nltk
+sympy
+latex2sympy2
