@@ -10,6 +10,7 @@ Modules:
   - fixture: `fixtures/interval-algebra-law-cluster-golden.tex`
 - `artifact-payload-generation.md`
 - `semantic-artifact-calibration.md`
+- `semantic-rewrite-progress.md`
 - `topic-semantic-audit-loop.md`
 - `breadcrumb-footer-migration.md`
 - `knowledge-extraction.md`

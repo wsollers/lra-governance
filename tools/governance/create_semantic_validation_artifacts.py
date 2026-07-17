@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -17,10 +18,54 @@ from semantic_artifact_inventory import VOLUME_NAMES, artifact_package_for, rout
 REQUEST_SCHEMA = "lra.semantic-validation-artifact-request/1.0"
 SUMMARY_SCHEMA = "lra.semantic-validation-artifact-creation/1.0"
 
+FORMALIZATION_RECORD_RE = re.compile(
+    r"\\begin\{formalizationrecord\}.*?\\Formalizes\{(?P<label>[^}]+)\}"
+    r".*?\\textbf\{Lean module:\}\s*\\texttt\{(?P<module>[^}]+)\}\.\\par"
+    r".*?\\LeanDeclaration\{(?P<declaration>[^}]+)\}"
+    r".*?\\textbf\{Status:\}\s*(?P<status>.*?)\\par"
+    r".*?\\begin\{leancode\}(?P<code>.*?)\\end\{leancode\}"
+    r".*?\\end\{formalizationrecord\}",
+    re.S,
+)
+FORMALIZATION_SOURCE_RE = re.compile(r"\\FormalizationSource\{(?P<source>[^}]*)\}")
+
+
+def _clean_latex_text(value: str) -> str:
+    return " ".join(value.replace("\\texttt{lra-lean}", "lra-lean").replace(".", " ").split())
+
+
+def extract_formalization_records(source_text: str, label: str) -> list[dict[str, Any]]:
+    records: list[dict[str, Any]] = []
+    for match in FORMALIZATION_RECORD_RE.finditer(source_text):
+        if match.group("label") != label:
+            continue
+        block = match.group(0)
+        source_match = FORMALIZATION_SOURCE_RE.search(block)
+        status_text = _clean_latex_text(match.group("status"))
+        status = "checked" if "checked" in status_text.lower() else status_text
+        records.append(
+            {
+                "artifact_label": label,
+                "system": "Lean 4",
+                "repository": "lra-lean",
+                "module": match.group("module"),
+                "declaration": match.group("declaration").replace(r"\_", "_"),
+                "status": status,
+                "environment": {
+                    "mathlib_policy": "prohibited",
+                },
+                "source_reference": source_match.group("source") if source_match else "",
+                "source_path": "",
+                "code": match.group("code").strip(),
+            }
+        )
+    return records
+
 
 def build_generation_request(candidate: Any, repo_root: Path) -> dict[str, Any]:
     package = artifact_package_for(candidate, repo_root)
     source = candidate.as_json(repo_root, include_source_text=False)
+    formalizations = extract_formalization_records(candidate.text, candidate.label)
     return {
         "schema_version": REQUEST_SCHEMA,
         "label": candidate.label,
@@ -41,6 +86,7 @@ def build_generation_request(candidate: Any, repo_root: Path) -> dict[str, Any]:
                 "source_line_start": candidate.line_start,
                 "source_line_end": candidate.line_end,
                 "current_tex": candidate.text,
+                "formalizations": formalizations,
             },
         },
     }
@@ -53,6 +99,7 @@ def request_from_inventory_item(item: dict[str, Any], repo_root: Path) -> dict[s
             "inventory item does not include source_text; rerun semantic_artifact_inventory.py "
             "with --include-source-text or pass a routed scope directly"
         )
+    formalizations = extract_formalization_records(source_text, item["label"])
     return {
         "schema_version": REQUEST_SCHEMA,
         "label": item["label"],
@@ -73,6 +120,7 @@ def request_from_inventory_item(item: dict[str, Any], repo_root: Path) -> dict[s
                 "source_line_start": item["source_line_start"],
                 "source_line_end": item["source_line_end"],
                 "current_tex": source_text,
+                "formalizations": formalizations,
             },
         },
     }

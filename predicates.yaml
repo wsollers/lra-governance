@@ -8578,6 +8578,24 @@ predicates:
     description: >
       Volume II predicate or assertion named GeneralRecursiveFunction.
 
+  - id: pred:stage-dependent-recursion-solution
+    name: StageDependentRecursionSolution
+    kind: predicate
+    category: volume_ii
+    arguments:
+      - name: X
+        role: object
+      - name: C
+        role: context
+    returns: truth_value
+    ambient_argument: C
+    polymorphic: true
+    surface_forms:
+      - StageDependentRecursionSolution
+    description: >
+      Volume II predicate for a function satisfying the base and successor
+      clauses of a stage-dependent recursion on a Peano system.
+
   - id: pred:greatest-common-divisor
     name: GreatestCommonDivisor
     kind: predicate
@@ -8702,34 +8720,47 @@ predicates:
     kind: predicate
     category: volume_ii
     arguments:
-      - name: X
-        role: object
-      - name: C
-        role: context
+      - name: f
+        role: function
+      - name: peano_system
+        role: structure
+      - name: W
+        role: set
+      - name: c
+        role: value
+      - name: g
+        role: function
     returns: truth_value
-    ambient_argument: C
     polymorphic: true
     surface_forms:
       - IteratorFunction
     description: >
-      Volume II predicate or assertion named IteratorFunction.
+      The function f is the iterator function along the supplied Peano
+      system, with codomain or value set W, base value c, and step map g.
 
   - id: pred:iterator-generated-function
     name: IteratorGeneratedFunction
     kind: predicate
     category: volume_ii
     arguments:
-      - name: X
-        role: object
-      - name: C
-        role: context
+      - name: f
+        role: function
+      - name: peano_system
+        role: structure
+      - name: W
+        role: set
+      - name: c
+        role: value
+      - name: g
+        role: function
     returns: truth_value
-    ambient_argument: C
     polymorphic: true
     surface_forms:
       - IteratorGeneratedFunction
     description: >
-      Volume II predicate or assertion named IteratorGeneratedFunction.
+      The function f is the unique iterator-generated function along the
+      supplied Peano system, with codomain or value set W, base value c, and
+      step map g.
 
   - id: pred:left-absorbing-element
     name: LeftAbsorbingElement

@@ -45,6 +45,40 @@ def write_fake_volume(root: Path) -> Path:
     return volume
 
 
+def write_fake_volume_with_lean_record(root: Path) -> Path:
+    volume = root / "lra-volume-ii"
+    target = volume / "volume-ii" / "book-order" / "bounds"
+    target.mkdir(parents=True)
+    (volume / "volume-ii-book-order.tex").write_text(
+        r"\input{volume-ii/book-order/bounds/index}" + "\n",
+        encoding="utf-8",
+    )
+    (target / "index.tex").write_text(
+        r"\chapter{Bounds}" + "\n" + r"\input{volume-ii/book-order/bounds/routed}" + "\n",
+        encoding="utf-8",
+    )
+    (target / "routed.tex").write_text(
+        "\n".join(
+            [
+                r"\begin{theorem}[Order]\label{thm:order}Ordered.\end{theorem}",
+                r"\begin{formalizationrecord}{Lean 4 Verification Record}",
+                r"\FormalizationSource{Internal source}",
+                r"\Formalizes{thm:order}",
+                r"\textbf{Lean module:} \texttt{LRA.VolumeII.Order}.\par",
+                r"\LeanDeclaration{order\_theorem}",
+                r"\textbf{Status:} checked against \texttt{lra-lean}.\par",
+                r"\begin{leancode}",
+                r"theorem order_theorem : True := by trivial",
+                r"\end{leancode}",
+                r"\end{formalizationrecord}",
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    return volume
+
+
 class CreateSemanticValidationArtifactsTests(unittest.TestCase):
     def test_creates_prompt_request_for_missing_routed_package(self):
         with temp_dir() as root:
@@ -159,6 +193,42 @@ class CreateSemanticValidationArtifactsTests(unittest.TestCase):
         self.assertEqual(result_inventory.returncode, 0, result_inventory.stdout + result_inventory.stderr)
         self.assertEqual(result_create.returncode, 0, result_create.stdout + result_create.stderr)
         self.assertIn('"created_count": 1', result_create.stdout)
+
+    def test_generation_request_captures_lean_formalization_metadata(self):
+        with temp_dir() as root:
+            volume = write_fake_volume_with_lean_record(root)
+            output = root / "creation.json"
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(CREATOR),
+                    "--repos-root",
+                    str(root),
+                    "--volume",
+                    "ii",
+                    "--chapter",
+                    "bounds",
+                    "--format",
+                    "json",
+                    "--output",
+                    str(output),
+                ],
+                capture_output=True,
+                text=True,
+            )
+            request_path = volume / "volume-ii" / "book-order" / "bounds" / "thm-order" / "generation-request.json"
+            request = json.loads(request_path.read_text(encoding="utf-8"))
+
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        formalizations = request["llm_packet"]["source"]["formalizations"]
+        self.assertEqual(len(formalizations), 1)
+        self.assertEqual(formalizations[0]["artifact_label"], "thm:order")
+        self.assertEqual(formalizations[0]["repository"], "lra-lean")
+        self.assertEqual(formalizations[0]["module"], "LRA.VolumeII.Order")
+        self.assertEqual(formalizations[0]["declaration"], "order_theorem")
+        self.assertEqual(formalizations[0]["status"], "checked")
+        self.assertEqual(formalizations[0]["environment"]["mathlib_policy"], "prohibited")
+        self.assertIn("theorem order_theorem", formalizations[0]["code"])
 
 
 if __name__ == "__main__":

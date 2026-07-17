@@ -28,6 +28,8 @@ CHECK_NAMES = (
     "assumptions_and_conclusion",
     "statement_shape",
     "theorem_equivalence_shape",
+    "ast_integrity",
+    "parser_witnesses",
     "quantifier_order",
     "witness_dependencies",
     "negation",
@@ -67,6 +69,13 @@ FORMAL_ENV_RE = re.compile(
     re.IGNORECASE,
 )
 LABEL_RE = re.compile(r"\\label\{(?P<label>[^{}]+)\}")
+RAW_LOGICAL_MARKER_RE = re.compile(
+    r"\\forall|\\exists|\\Longrightarrow|\\Longleftrightarrow|\\Rightarrow|\\iff"
+)
+PLACEHOLDER_DOMAIN_RE = re.compile(
+    r"\b(?:ambient|counterexample|theorem)\s+(?:context|data)\b",
+    re.IGNORECASE,
+)
 
 
 @dataclass
@@ -531,6 +540,30 @@ def negate_ast(node: Any) -> dict[str, Any]:
     return {"kind": "not", "operand": node}
 
 
+def normalize_atomic_relation_negations(node: Any) -> Any:
+    if isinstance(node, list):
+        return [normalize_atomic_relation_negations(item) for item in node]
+    if not isinstance(node, dict):
+        return node
+    if node.get("kind") == "not" and isinstance(node.get("operand"), dict):
+        operand = node["operand"]
+        if operand.get("kind") == "relation":
+            opposite = {
+                r"\in": r"\notin",
+                r"\notin": r"\in",
+                "=": r"\neq",
+                r"\neq": "=",
+                r"\ne": "=",
+                r"\leq": ">",
+                "<": r"\geq",
+                r"\geq": "<",
+                ">": r"\leq",
+            }.get(str(operand.get("relation") or ""))
+            if opposite:
+                return {**operand, "relation": opposite}
+    return {key: normalize_atomic_relation_negations(value) for key, value in node.items()}
+
+
 def unwrap_definition(statement_ast: Any) -> tuple[Any, Any] | tuple[None, None]:
     if isinstance(statement_ast, dict) and statement_ast.get("kind") == "iff":
         return statement_ast.get("left"), statement_ast.get("right")
@@ -950,6 +983,158 @@ def check_scope(data: dict[str, Any], result: LogicResult) -> None:
         result.set_check("binder_scope", "pass", "All variables are declared as parameters, context, or local binders.")
 
 
+def semantic_ast_roots(data: dict[str, Any]) -> list[tuple[str, Any]]:
+    forms = data.get("logical_forms") or {}
+    roots = [
+        ("statement.semantic_ast", (data.get("statement") or {}).get("semantic_ast")),
+        ("logical_forms.standard_quantified.ast", (forms.get("standard_quantified") or {}).get("ast")),
+    ]
+    predicate_reading = forms.get("predicate_reading")
+    if isinstance(predicate_reading, dict):
+        roots.append(("logical_forms.predicate_reading.ast", predicate_reading.get("ast")))
+    negation = forms.get("negation") or {}
+    for key in ("mechanical", "approved_normal_form"):
+        node = (negation.get(key) or {}).get("ast") if isinstance(negation.get(key), dict) else None
+        if node is not None:
+            roots.append((f"logical_forms.negation.{key}.ast", node))
+    return roots
+
+
+def check_ast_integrity(data: dict[str, Any], corrected_tex: str, result: LogicResult) -> None:
+    errors = 0
+
+    def add(code: str, message: str, field: str) -> None:
+        nonlocal errors
+        errors += 1
+        result.add(code, "error", message, field)
+
+    def visit(node: Any, path: str) -> None:
+        if not isinstance(node, dict):
+            return
+        kind = node.get("kind")
+        if kind == "raw_latex":
+            latex = str(node.get("latex") or "")
+            if RAW_LOGICAL_MARKER_RE.search(latex):
+                add(
+                    "RAW_LATEX_LOGICAL_BODY",
+                    "AST stores LaTeX containing logical connectives or quantifiers as raw_latex instead of parsing it structurally.",
+                    path,
+                )
+            return
+        if kind in {"forall", "exists", "exists_unique"}:
+            binder = node.get("binder") or {}
+            domain = binder.get("domain")
+            if isinstance(domain, dict) and domain.get("kind") == "raw_latex":
+                domain_latex = str(domain.get("latex") or "")
+                if PLACEHOLDER_DOMAIN_RE.search(domain_latex):
+                    add(
+                        "SYNTHETIC_BINDER_DOMAIN",
+                        "Quantifier binder uses a placeholder domain such as ambient context, counterexample context, or theorem data.",
+                        f"{path}.binder.domain",
+                    )
+            symbol = str(binder.get("symbol") or "")
+            if symbol == "w" and isinstance(domain, dict) and PLACEHOLDER_DOMAIN_RE.search(str(domain.get("latex") or "")):
+                add(
+                    "SYNTHETIC_NEGATION_WITNESS",
+                    "Negation AST invents a generic witness binder instead of negating the source formula.",
+                    f"{path}.binder",
+                )
+        for key, value in node.items():
+            if key == "kind":
+                continue
+            if isinstance(value, dict):
+                visit(value, f"{path}.{key}")
+            elif isinstance(value, list):
+                for index, child in enumerate(value):
+                    visit(child, f"{path}.{key}[{index}]")
+
+    for root_path, root in semantic_ast_roots(data):
+        visit(root, root_path)
+
+    forms = data.get("logical_forms") or {}
+    predicate_reading = forms.get("predicate_reading")
+    predicate_block_present = bool(
+        re.search(r"\\begin\{remark\*\}\[Predicate reading\]", corrected_tex)
+        and r"\operatorname" in corrected_tex
+    )
+    if predicate_block_present and (
+        not isinstance(predicate_reading, dict) or predicate_reading.get("ast") is None
+    ):
+        add(
+            "PREDICATE_READING_AST_MISSING",
+            "Corrected TeX contains a predicate-reading block, but the semantic artifact has no predicate-reading AST.",
+            "logical_forms.predicate_reading.ast",
+        )
+
+    if errors:
+        result.set_check("ast_integrity", "fail", "Semantic AST contains placeholder or unparsed logical structure.")
+    else:
+        result.set_check("ast_integrity", "pass", "Semantic AST does not contain known placeholder domains or raw logical bodies.")
+
+
+def check_parser_witnesses(data: dict[str, Any], result: LogicResult) -> None:
+    forms = data.get("logical_forms") or {}
+    errors = 0
+
+    def add(code: str, message: str, field: str) -> None:
+        nonlocal errors
+        errors += 1
+        result.add(code, "error", message, field)
+
+    for key in ("standard_quantified", "predicate_reading"):
+        block = forms.get(key)
+        if not isinstance(block, dict) or not block.get("latex"):
+            continue
+        witnesses = block.get("parser_witnesses")
+        if not isinstance(witnesses, dict):
+            result.add(
+                "PARSER_WITNESS_MISSING",
+                "warning",
+                f"{key} has LaTeX but no parser_witnesses block.",
+                f"logical_forms.{key}.parser_witnesses",
+            )
+            continue
+        hand = witnesses.get("hand_parser") if isinstance(witnesses.get("hand_parser"), dict) else {}
+        lark = witnesses.get("lark_parser") if isinstance(witnesses.get("lark_parser"), dict) else {}
+        if not hand.get("available") or not lark.get("available"):
+            add(
+                "PARSER_WITNESS_UNAVAILABLE",
+                f"{key} parser witnesses are incomplete.",
+                f"logical_forms.{key}.parser_witnesses",
+            )
+            continue
+        if not witnesses.get("parsers_agree"):
+            add(
+                "PARSER_WITNESS_DISAGREEMENT",
+                f"{key} hand parser and Lark parser disagree.",
+                f"logical_forms.{key}.parser_witnesses",
+            )
+        ast = block.get("ast")
+        hand_ast = hand.get("ast")
+        if ast is not None and hand_ast is not None and not ast_equal(ast, hand_ast):
+            add(
+                "PARSER_WITNESS_AVAILABLE_BUT_ARTIFACT_AST_STALE",
+                f"{key} artifact AST does not match the hand-parser witness.",
+                f"logical_forms.{key}.ast",
+            )
+
+    standard = forms.get("standard_quantified") if isinstance(forms.get("standard_quantified"), dict) else {}
+    statement_ast = (data.get("statement") or {}).get("semantic_ast")
+    standard_ast = standard.get("ast")
+    if statement_ast is not None and standard_ast is not None and not ast_equal(statement_ast, standard_ast):
+        result.add(
+            "ORIGINAL_AND_STANDARD_AST_DISAGREE",
+            "warning",
+            "statement.semantic_ast and standard_quantified.ast are not the same normalized statement.",
+            "statement.semantic_ast",
+        )
+
+    if errors:
+        result.set_check("parser_witnesses", "fail", "Parser witnesses are missing, unavailable, stale, or disagree.")
+    else:
+        result.set_check("parser_witnesses", "pass", "Available parser witnesses agree with artifact AST fields.")
+
+
 def check_statement_shape(data: dict[str, Any], corrected_tex: str, result: LogicResult) -> None:
     identity = data.get("identity") or {}
     statement = data.get("statement") or {}
@@ -1095,26 +1280,26 @@ def check_negation(data: dict[str, Any], result: LogicResult) -> None:
 
     expected = None
     _, definiens = unwrap_definition(statement_ast)
-    theorem_like = identity_kind in {"theorem", "lemma", "proposition", "corollary"}
-    if theorem_like and isinstance(statement_ast, dict):
+    statement_like = identity_kind in {"axiom", "theorem", "lemma", "proposition", "corollary"}
+    if statement_like and isinstance(statement_ast, dict):
         expected = {"kind": "not", "operand": statement_ast}
     elif definiens is not None:
         expected = negate_ast(definiens)
-    if expected is not None and (ast_equal(mechanical, expected) or ast_contains_equivalent(mechanical, expected)):
-        if theorem_like:
+    if expected is not None and ast_equal(mechanical, expected):
+        if statement_like:
             result.set_check("negation", "pass", "Mechanical negation matches the deterministic negation of the theorem statement.")
         else:
             result.set_check("negation", "pass", "Mechanical negation matches the deterministic negation of the definition body.")
     elif expected is not None and approved is not None:
         definitions = collect_definition_unfoldings(statement_ast)
         unfolded_mechanical = unfold_once(mechanical, definitions)
-        theorem_normal = negate_ast(statement_ast) if theorem_like else None
+        theorem_normal = negate_ast(statement_ast) if statement_like else None
         if (
             ast_equal(approved, unfolded_mechanical)
             or ast_contains_equivalent(approved, unfolded_mechanical)
             or (theorem_normal is not None and (ast_equal(approved, theorem_normal) or ast_contains_equivalent(approved, theorem_normal)))
         ):
-            if theorem_like:
+            if statement_like:
                 result.set_check("negation", "pass", "Approved normal form matches deterministic theorem-negation normalization.")
             else:
                 result.set_check("negation", "pass", "Approved normal form matches deterministic unfolding of the mechanical negation.")
@@ -1126,6 +1311,29 @@ def check_negation(data: dict[str, Any], result: LogicResult) -> None:
                 "Expected shape derived from statement AST: " + logic_shape(expected),
                 "logical_forms.negation",
             )
+    elif expected is not None:
+        result.set_check("negation", "fail", "Provided negation does not match the deterministic negation.")
+        result.add(
+            "NEGATION_DERIVATION_MISMATCH",
+            "error",
+            "Expected shape derived from statement AST: " + logic_shape(expected),
+            "logical_forms.negation",
+        )
+    elif isinstance(mechanical, dict) and mechanical.get("kind") == "not" and ast_equal(mechanical.get("operand"), statement_ast):
+        pushed = negate_ast(mechanical["operand"])
+        normalized_pushed = normalize_atomic_relation_negations(pushed)
+        if approved is None or ast_equal(approved, pushed) or ast_equal(approved, normalized_pushed):
+            result.set_check("negation", "pass", "Mechanical negation wraps the statement AST; approved normal form records the pushed negation.")
+        else:
+            result.set_check("negation", "fail", "Approved normal form does not match the pushed mechanical negation.")
+            result.add(
+                "NEGATION_DERIVATION_MISMATCH",
+                "error",
+                "Expected pushed normal form: " + logic_shape(pushed),
+                "logical_forms.negation.approved_normal_form.ast",
+            )
+    elif isinstance(mechanical, dict) and mechanical.get("kind") == "not" and isinstance(mechanical.get("operand"), dict) and mechanical["operand"].get("kind") in {"predicate", "relation"}:
+        result.set_check("negation", "pass", "Mechanical negation preserves the atomic predicate or relation being denied.")
     elif ast_contains_kind(mechanical, "exists") and ast_contains_kind(mechanical, "not"):
         result.set_check("negation", "pass", "Mechanical negation keeps the negated comparison explicit.")
     else:
@@ -1290,6 +1498,8 @@ def validate(data: dict[str, Any], corrected_tex: str) -> LogicResult:
     result.set_check("order_strength", "pass", "Order-strength changes are mediated by normalization assumptions.")
 
     check_scope(data, result)
+    check_ast_integrity(data, corrected_tex, result)
+    check_parser_witnesses(data, result)
     check_statement_shape(data, corrected_tex, result)
     check_negation(data, result)
     check_predicates(data, result)

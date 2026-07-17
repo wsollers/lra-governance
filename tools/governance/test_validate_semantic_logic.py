@@ -41,7 +41,7 @@ def real_upper_bound_artifact() -> dict:
             "right": {"kind": "variable", "binder_id": "u"},
         },
     }
-    return {
+    return add_parser_witnesses({
         "identity": {"label": "def:real-upper-bound", "kind": "definition"},
         "context": [{"id": "ctx_real_order", "kind": "ambient_structure", "name": "ordered reals"}],
         "parameters": [
@@ -118,7 +118,21 @@ def real_upper_bound_artifact() -> dict:
             "applicability_failures": [{"id": "outside_declared_scope"}],
             "statement_failures": [{"id": "counterexample_above_candidate"}],
         },
-    }
+    })
+
+
+def add_parser_witnesses(data: dict) -> dict:
+    forms = data["logical_forms"]
+    for key in ("standard_quantified", "predicate_reading"):
+        block = forms[key]
+        ast = block["ast"]
+        block["parser_witnesses"] = {
+            "original_latex": block["latex"],
+            "hand_parser": {"available": True, "ast": ast},
+            "lark_parser": {"available": True, "ast": ast},
+            "parsers_agree": True,
+        }
+    return data
 
 
 CORRECTED_TEX = r"""
@@ -171,6 +185,250 @@ class SemanticLogicValidationTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertIn('"result": "pass"', result.stdout)
 
+    def test_accepts_iterator_function_signature_with_tuple_or_structure_argument(self):
+        def iterator_artifact(peano_argument: dict, label: str, latex_argument: str) -> dict:
+            latex = rf"\operatorname{{IteratorFunction}}(f,{latex_argument},W,c,g)."
+            predicate = {
+                "kind": "predicate",
+                "predicate_id": "pred:iterator-function",
+                "arguments": [
+                    {"kind": "variable", "binder_id": "f"},
+                    peano_argument,
+                    {"kind": "variable", "binder_id": "W"},
+                    {"kind": "variable", "binder_id": "c"},
+                    {"kind": "variable", "binder_id": "g"},
+                ],
+            }
+            return add_parser_witnesses({
+                "identity": {"label": label, "kind": "theorem"},
+                "parameters": [
+                    {"id": "f", "symbol": "f"},
+                    {"id": "P", "symbol": "P"},
+                    {"id": "S", "symbol": "S"},
+                    {"id": "W", "symbol": "W"},
+                    {"id": "c", "symbol": "c"},
+                    {"id": "g", "symbol": "g"},
+                    {"id": "peano", "symbol": r"\mathcal P"},
+                ],
+                "statement": {
+                    "canonical_latex": latex,
+                    "semantic_ast": predicate,
+                },
+                "logical_forms": {
+                    "standard_quantified": {
+                        "latex": latex,
+                        "ast": predicate,
+                    },
+                    "predicate_reading": {
+                        "latex": latex,
+                        "ast": predicate,
+                    },
+                    "negation": {
+                        "mechanical": {
+                            "latex": rf"\neg{latex}",
+                            "ast": {"kind": "not", "operand": predicate},
+                        },
+                        "approved_normal_form": {
+                            "latex": rf"\neg{latex}",
+                            "ast": {"kind": "not", "operand": predicate},
+                        },
+                    },
+                    "contrapositive": None,
+                },
+                "failure_analysis": {
+                    "applicability_failures": [{"id": "outside_iterator_context"}],
+                    "statement_failures": [{"id": "not_iterator_function"}],
+                },
+            })
+
+        tuple_argument = {
+            "kind": "tuple",
+            "elements": [
+                {"kind": "variable", "binder_id": "P"},
+                {"kind": "variable", "binder_id": "S"},
+                {"kind": "constant", "name": "1"},
+            ],
+        }
+        structure_argument = {"kind": "variable", "binder_id": "peano"}
+
+        for artifact in (
+            iterator_artifact(tuple_argument, "thm:iterator-function-tuple-test", "(P,S,1)"),
+            iterator_artifact(structure_argument, "thm:iterator-function-structure-test", r"\mathcal P"),
+        ):
+            with self.subTest(label=artifact["identity"]["label"]):
+                latex = artifact["statement"]["canonical_latex"]
+                negation_latex = (artifact["logical_forms"]["negation"]["mechanical"]["latex"])
+                result = self.run_validator_with_tex(
+                    artifact,
+                    rf"\begin{{theorem}} {latex} Failure modes: {negation_latex} \end{{theorem}}",
+                )
+                self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+                self.assertIn('"result": "pass"', result.stdout)
+
+    def test_accepts_atomic_predicate_negation_for_definitions(self):
+        predicate = {
+            "kind": "predicate",
+            "predicate_id": "pred:iterator-generated-function",
+            "arguments": [
+                {"kind": "variable", "binder_id": "f"},
+                {
+                    "kind": "tuple",
+                    "elements": [
+                        {"kind": "variable", "binder_id": "P"},
+                        {"kind": "variable", "binder_id": "S"},
+                        {"kind": "constant", "name": "1"},
+                    ],
+                },
+                {"kind": "variable", "binder_id": "W"},
+                {"kind": "variable", "binder_id": "c"},
+                {"kind": "variable", "binder_id": "g"},
+            ],
+        }
+        data = add_parser_witnesses({
+            "identity": {"label": "def:iterator-generated-function-test", "kind": "definition"},
+            "parameters": [
+                {"id": "f", "symbol": "f"},
+                {"id": "P", "symbol": "P"},
+                {"id": "S", "symbol": "S"},
+                {"id": "W", "symbol": "W"},
+                {"id": "c", "symbol": "c"},
+                {"id": "g", "symbol": "g"},
+            ],
+            "statement": {
+                "canonical_latex": r"\operatorname{IteratorGeneratedFunction}(f,(P,S,1),W,c,g).",
+                "semantic_ast": predicate,
+            },
+            "logical_forms": {
+                "standard_quantified": {
+                    "latex": r"\operatorname{IteratorGeneratedFunction}(f,(P,S,1),W,c,g).",
+                    "ast": predicate,
+                },
+                "predicate_reading": {
+                    "latex": r"\operatorname{IteratorGeneratedFunction}(f,(P,S,1),W,c,g).",
+                    "ast": predicate,
+                },
+                "negation": {
+                    "mechanical": {
+                        "latex": r"\neg\operatorname{IteratorGeneratedFunction}(f,(P,S,1),W,c,g).",
+                        "ast": {"kind": "not", "operand": predicate},
+                    },
+                    "approved_normal_form": {
+                        "latex": r"\neg\operatorname{IteratorGeneratedFunction}(f,(P,S,1),W,c,g).",
+                        "ast": {"kind": "not", "operand": predicate},
+                    },
+                },
+                "contrapositive": None,
+            },
+            "failure_analysis": {
+                "applicability_failures": [{"id": "outside_iterator_context"}],
+                "statement_failures": [{"id": "not_iterator_generated_function"}],
+            },
+        })
+
+        result = self.run_validator_with_tex(
+            data,
+            r"""
+\begin{definition}
+\operatorname{IteratorGeneratedFunction}(f,(P,S,1),W,c,g).
+Failure modes:
+\[
+\neg\operatorname{IteratorGeneratedFunction}(f,(P,S,1),W,c,g).
+\]
+\end{definition}
+""",
+        )
+
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn('"result": "pass"', result.stdout)
+
+    def test_accepts_wrapped_mechanical_negation_with_pushed_normal_form_for_definitions(self):
+        statement = {
+            "kind": "forall",
+            "binder": {
+                "binder_id": "n",
+                "symbol": "n",
+                "domain": {"kind": "variable", "binder_id": "A"},
+            },
+            "restriction": None,
+            "body": {
+                "kind": "relation",
+                "relation": r"\in",
+                "left": {
+                    "kind": "application",
+                    "function": "S",
+                    "arguments": [{"kind": "variable", "binder_id": "n"}],
+                },
+                "right": {"kind": "variable", "binder_id": "A"},
+            },
+        }
+        data = add_parser_witnesses({
+            "identity": {"label": "def:successor-closed-subset-test", "kind": "definition"},
+            "parameters": [
+                {"id": "A", "symbol": "A"},
+                {"id": "S", "symbol": "S"},
+            ],
+            "statement": {
+                "canonical_latex": r"\forall n\in A,\ S(n)\in A.",
+                "semantic_ast": statement,
+            },
+            "logical_forms": {
+                "standard_quantified": {
+                    "latex": r"\forall n\in A,\ S(n)\in A.",
+                    "ast": statement,
+                },
+                "predicate_reading": {
+                    "latex": r"\forall n\in A,\ S(n)\in A.",
+                    "ast": statement,
+                },
+                "negation": {
+                    "mechanical": {
+                        "latex": r"\neg\left(\forall n\in A,\ S(n)\in A\right).",
+                        "ast": {"kind": "not", "operand": statement},
+                    },
+                    "approved_normal_form": {
+                        "latex": r"\exists n\in A,\ S(n)\notin A.",
+                        "ast": {
+                            "kind": "exists",
+                            "binder": statement["binder"],
+                            "restriction": None,
+                            "body": {
+                                "kind": "relation",
+                                "relation": r"\notin",
+                                "left": statement["body"]["left"],
+                                "right": statement["body"]["right"],
+                            },
+                        },
+                    },
+                },
+                "contrapositive": None,
+            },
+            "failure_analysis": {
+                "applicability_failures": [],
+                "statement_failures": [{"id": "successor_escapes"}],
+            },
+        })
+
+        result = self.run_validator_with_tex(
+            data,
+            r"""
+\begin{definition}
+\[
+\forall n\in A,\ S(n)\in A.
+\]
+Failure modes:
+\[
+\neg\left(\forall n\in A,\ S(n)\in A\right).
+\]
+\[
+\exists n\in A,\ S(n)\notin A.
+\]
+\end{definition}
+""",
+        )
+
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn('"result": "pass"', result.stdout)
+
     def test_accepts_llm_payload_with_embedded_artifact_yaml_and_tex(self):
         with temp_dir() as temp:
             root = Path(temp)
@@ -199,6 +457,95 @@ class SemanticLogicValidationTests(unittest.TestCase):
             )
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertIn('"result": "pass"', result.stdout)
+
+    def test_rejects_placeholder_ast_shapes_from_provider_output(self):
+        data = real_upper_bound_artifact()
+        data["identity"] = {"label": "ax:peano-successor-closure", "kind": "axiom"}
+        raw_quantified = {
+            "kind": "raw_latex",
+            "latex": r"\forall n\in P\;(n\in P\Longrightarrow S(n)\in P).",
+        }
+        data["statement"] = {
+            "canonical_latex": r"For every \(n\in P\), \(S(n)\in P\).",
+            "semantic_ast": raw_quantified,
+        }
+        data["logical_forms"]["standard_quantified"] = {
+            "latex": r"\forall n\in P,\ S(n)\in P.",
+            "ast": {
+                "kind": "forall",
+                "binder": {
+                    "binder_id": "f_1",
+                    "symbol": "f_1",
+                    "domain": {"kind": "raw_latex", "latex": "ambient context"},
+                },
+                "restriction": None,
+                "body": raw_quantified,
+            },
+        }
+        data["logical_forms"].pop("predicate_reading", None)
+        data["logical_forms"]["negation"] = {
+            "mechanical": {
+                "latex": r"\exists n\in P,\ S(n)\notin P.",
+                "ast": {
+                    "kind": "exists",
+                    "binder": {
+                        "binder_id": "w",
+                        "symbol": "w",
+                        "domain": {"kind": "raw_latex", "latex": "counterexample context"},
+                    },
+                    "restriction": None,
+                    "body": {"kind": "raw_latex", "latex": r"S(w)\notin P"},
+                },
+            },
+            "approved_normal_form": None,
+            "normalization_requires": [],
+        }
+        corrected_tex = r"""
+\begin{axiom}[Closure Under Successor]
+\[
+\forall n\in P,\ S(n)\in P.
+\]
+\end{axiom}
+\begin{remark*}[Predicate reading]
+\[
+\operatorname{SuccessorClosedIn}(S,P).
+\]
+\end{remark*}
+"""
+        result = self.run_validator_with_tex(data, corrected_tex)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("RAW_LATEX_LOGICAL_BODY", result.stdout)
+        self.assertIn("SYNTHETIC_BINDER_DOMAIN", result.stdout)
+        self.assertIn("SYNTHETIC_NEGATION_WITNESS", result.stdout)
+        self.assertIn("PREDICATE_READING_AST_MISSING", result.stdout)
+
+    def test_rejects_missing_parser_witness_for_parsed_support_block(self):
+        data = real_upper_bound_artifact()
+        data["logical_forms"]["standard_quantified"].pop("parser_witnesses", None)
+        result = self.run_validator(data)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn("PARSER_WITNESS_MISSING", result.stdout)
+
+    def test_rejects_stale_artifact_ast_when_parser_witness_disagrees(self):
+        data = real_upper_bound_artifact()
+        witness_ast = data["logical_forms"]["standard_quantified"]["ast"]
+        data["logical_forms"]["standard_quantified"]["parser_witnesses"] = {
+            "original_latex": data["logical_forms"]["standard_quantified"]["latex"],
+            "hand_parser": {"available": True, "ast": witness_ast},
+            "lark_parser": {"available": True, "ast": witness_ast},
+            "parsers_agree": True,
+        }
+        predicate_ast = data["logical_forms"]["predicate_reading"]["ast"]
+        data["logical_forms"]["predicate_reading"]["parser_witnesses"] = {
+            "original_latex": data["logical_forms"]["predicate_reading"]["latex"],
+            "hand_parser": {"available": True, "ast": predicate_ast},
+            "lark_parser": {"available": True, "ast": predicate_ast},
+            "parsers_agree": True,
+        }
+        data["logical_forms"]["standard_quantified"]["ast"] = {"kind": "raw_latex", "latex": "P"}
+        result = self.run_validator(data)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("PARSER_WITNESS_AVAILABLE_BUT_ARTIFACT_AST_STALE", result.stdout)
 
     def test_rejects_label_resolution_without_specified_volume(self):
         with temp_dir() as temp:
@@ -387,6 +734,44 @@ class SemanticLogicValidationTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("NEGATION_DERIVATION_MISMATCH", result.stdout)
 
+    def test_rejects_invented_existential_negation_for_atomic_statement(self):
+        data = real_upper_bound_artifact()
+        atom = {
+            "kind": "relation",
+            "relation": r"\in",
+            "left": {"kind": "variable", "binder_id": "one"},
+            "right": {"kind": "variable", "binder_id": "P"},
+        }
+        data["identity"] = {"label": "ax:base-in-set", "kind": "axiom"}
+        data["parameters"] = [{"id": "one", "symbol": "1"}, {"id": "P", "symbol": "P"}]
+        data["context"] = []
+        data["statement"] = {"canonical_latex": r"1\in P.", "semantic_ast": atom}
+        data["logical_forms"]["standard_quantified"] = {"latex": r"1\in P.", "ast": atom}
+        data["logical_forms"]["predicate_reading"] = {
+            "latex": r"\operatorname{BaseInSet}(1,P).",
+            "ast": {"kind": "predicate", "predicate_id": "pred:base-in-set", "arguments": [{"kind": "variable", "binder_id": "one"}, {"kind": "variable", "binder_id": "P"}]},
+        }
+        data["logical_forms"]["negation"] = {
+            "mechanical": {
+                "latex": r"\exists n\in P,\ 1\notin P.",
+                "ast": {
+                    "kind": "exists",
+                    "binder": {
+                        "binder_id": "n",
+                        "symbol": "n",
+                        "domain": {"kind": "variable", "binder_id": "P"},
+                    },
+                    "restriction": None,
+                    "body": {"kind": "not", "operand": atom},
+                },
+            },
+            "approved_normal_form": None,
+            "normalization_requires": [],
+        }
+        result = self.run_validator_with_tex(data, r"\begin{axiom}\(1\in P\).\end{axiom}")
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("NEGATION_DERIVATION_MISMATCH", result.stdout)
+
     def test_rejects_quantified_latex_without_ast_binders(self):
         data = real_upper_bound_artifact()
         data["identity"] = {"label": "thm:darboux", "kind": "theorem"}
@@ -463,13 +848,8 @@ class SemanticLogicValidationTests(unittest.TestCase):
         }
         data["logical_forms"]["negation"] = {
             "mechanical": {
-                "latex": r"\exists d\;\neg((E\Longleftrightarrow N)\land(N\Longleftrightarrow S)).",
-                "ast": {
-                    "kind": "exists",
-                    "binder": {"binder_id": "d", "symbol": "d", "domain": {"kind": "raw_latex", "latex": "theorem data"}},
-                    "restriction": None,
-                    "body": {"kind": "not", "operand": ast},
-                },
+                "latex": r"\neg((E\Longleftrightarrow N)\land(N\Longleftrightarrow S)).",
+                "ast": {"kind": "not", "operand": ast},
             },
             "approved_normal_form": None,
             "normalization_requires": [],
