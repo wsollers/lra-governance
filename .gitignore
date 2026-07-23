@@ -99,6 +99,7 @@ temp/
 *.bak
 *.zip
 .tmp.driveupload/
+**/.tmp.driveupload/
 
 # IDE / editor
 .vscode/

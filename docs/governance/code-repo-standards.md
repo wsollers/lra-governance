@@ -59,6 +59,17 @@ A C++ repo may use root `src/` plus root `tests/`, or project-local
 belong under `include/`. Build products, generated IDE trees, scratch outputs,
 and transient runtime state are never architecture.
 
+## Git Hygiene
+
+Local Google Drive upload scratch directories named `.tmp.driveupload` are
+machine-local transfer artifacts, not project source. They must be ignored at
+any depth inside a governed repository using `.gitignore` rules that cover both
+root-level and nested occurrences.
+
+If a `.tmp.driveupload` directory is ever accidentally tracked, remove it from
+Git, commit the ignore rule, and recreate the local scratch directory only after
+the repository no longer tracks it.
+
 ## Style
 
 Code should match the existing LRA engineering style:
