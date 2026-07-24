@@ -16,7 +16,7 @@ from typing import Any
 
 import yaml
 
-from semantic_latex_ast import SemanticLatexParseError, negate_ast, parse_formula
+from semantic_latex_ast import SemanticLatexParseError, negate_ast, parse_formula, symbol_aliases
 from semantic_lark_logic_parser import SemanticLarkParseError, parse_formula as parse_formula_lark
 
 
@@ -25,12 +25,26 @@ REMARK_RE = re.compile(
     r"\\begin\{remark\*\}\[(?P<title>[^\]]+)\](?P<body>.*?)\\end\{remark\*\}",
     re.S,
 )
+PLACEHOLDER_DOMAIN_RE = re.compile(
+    r"\b(?:ambient context|counterexample context|theorem data|SYNTHETIC_BINDER_DOMAIN)\b",
+    re.I,
+)
 
 
 def display_body(latex: str) -> str:
     text = latex.strip()
-    match = DISPLAY_RE.search(text)
-    return match.group("body").strip() if match else text
+    matches = list(DISPLAY_RE.finditer(text))
+    if not matches:
+        return text
+
+    def score(candidate: str) -> tuple[int, int]:
+        quantifiers = len(re.findall(r"\\(?:forall|exists!|exists)\b", candidate))
+        connectives = len(re.findall(r"\\(?:Longleftrightarrow|Longrightarrow|land|lor)\b", candidate))
+        predicates = len(re.findall(r"\\operatorname\{", candidate))
+        return (quantifiers * 20 + connectives * 5 + predicates, len(candidate))
+
+    bodies = [match.group("body").strip() for match in matches]
+    return max(bodies, key=score)
 
 
 def remark_display(corrected_tex: str, title_fragment: str) -> str | None:
@@ -50,6 +64,20 @@ def parse_or_keep(latex: str) -> dict[str, Any] | None:
         return parse_formula(display_body(latex))
     except Exception:
         return None
+
+
+def contains_synthetic_binder_domain(node: Any) -> bool:
+    if isinstance(node, dict):
+        if node.get("kind") in {"forall", "exists", "exists_unique"}:
+            binder = node.get("binder") if isinstance(node.get("binder"), dict) else {}
+            domain = binder.get("domain")
+            if isinstance(domain, dict) and domain.get("kind") == "raw_latex":
+                if PLACEHOLDER_DOMAIN_RE.search(str(domain.get("latex") or "")):
+                    return True
+        return any(contains_synthetic_binder_domain(value) for value in node.values())
+    if isinstance(node, list):
+        return any(contains_synthetic_binder_domain(item) for item in node)
+    return False
 
 
 def parser_witnesses(latex: str) -> dict[str, Any]:
@@ -107,16 +135,18 @@ def collect_free_symbols(node: Any, bound: set[str] | None = None) -> set[str]:
 
 def ensure_parameters(data: dict[str, Any], asts: list[dict[str, Any]]) -> None:
     existing = {
-        str(item.get("id"))
+        alias
         for item in data.get("parameters", []) or []
         if isinstance(item, dict) and item.get("id")
+        for alias in symbol_aliases(str(item.get("id")))
     }
     parameters = data.setdefault("parameters", [])
     for symbol in sorted(set().union(*(collect_free_symbols(ast) for ast in asts))):
-        if symbol in existing:
+        aliases = symbol_aliases(symbol)
+        if aliases & existing:
             continue
         parameters.append({"id": symbol, "symbol": symbol})
-        existing.add(symbol)
+        existing.update(aliases)
 
 
 def augment_artifact(data: dict[str, Any], corrected_tex: str) -> dict[str, Any]:
@@ -144,6 +174,20 @@ def augment_artifact(data: dict[str, Any], corrected_tex: str) -> dict[str, Any]
             "ast": negate_ast(standard_ast),
         }
         negation.setdefault("normalization_requires", [])
+    else:
+        if standard_latex:
+            standard["parser_witnesses"] = parser_witnesses(standard_latex)
+        if contains_synthetic_binder_domain(standard.get("ast")):
+            standard.pop("ast", None)
+        statement = updated.setdefault("statement", {})
+        if contains_synthetic_binder_domain(statement.get("semantic_ast")):
+            statement.pop("semantic_ast", None)
+        negation = forms.get("negation")
+        if isinstance(negation, dict):
+            for key in ("mechanical", "approved_normal_form"):
+                block = negation.get(key)
+                if isinstance(block, dict) and contains_synthetic_binder_domain(block.get("ast")):
+                    block.pop("ast", None)
 
     predicate_latex = None
     existing_predicate = forms.get("predicate_reading")

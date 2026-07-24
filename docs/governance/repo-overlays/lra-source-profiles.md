@@ -37,6 +37,8 @@ This overlay applies to `lra-source-profiles`.
 Agents working in this repo may use its project-local tools to:
 
 - scan configured reading roots and copy PDFs into local working folders,
+- apply `docs/governance/source-indexing-policy.yaml` when recursively
+  discovering indexable PDFs,
 - classify candidate sources into proposed categories,
 - maintain `volumes/<volume>/<chapter>/source-index.yaml` metadata,
 - write approved selections to `active-sources.yaml`,
@@ -60,6 +62,10 @@ Do not delete original files, overwrite existing source files silently, or
 invent bibliographic data. Uncertain metadata must remain marked for review
 with confidence and notes.
 
+Recursive source-index scans must honor the canonical source indexing policy in
+`docs/governance/source-indexing-policy.yaml` by default. Excluded library-only
+roots may be indexed only by an explicit local override.
+
 Local copied PDFs and generated scratch artifacts should remain untracked unless
 a task explicitly promotes a specific artifact to reviewed source material.
 
@@ -82,6 +88,8 @@ required follow-up rather than applying those changes from this repo.
 Load these governance documents for source-profile work:
 
 - `docs/governance/repo-overlays/lra-source-profiles.md`;
+- `docs/governance/source-indexing-policy.md` when scanning or indexing the
+  external reading library;
 - `docs/architecture/repository-layout.md`;
 - `docs/architecture/multi-repo-sync.md`;
 - `docs/architecture/knowledge-pipeline.md` only when active-profile exports

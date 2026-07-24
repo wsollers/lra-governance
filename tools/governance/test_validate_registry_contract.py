@@ -2,8 +2,10 @@ from __future__ import annotations
 
 import subprocess
 import sys
-import tempfile
+import shutil
 import unittest
+import uuid
+from contextlib import contextmanager
 from pathlib import Path
 
 import yaml
@@ -11,6 +13,18 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[2]
 VALIDATOR = ROOT / "tools" / "governance" / "validate_registry_contract.py"
+TEMP_ROOT = ROOT / ".test-tmp" / "registry-contract"
+
+
+@contextmanager
+def temporary_directory():
+    TEMP_ROOT.mkdir(parents=True, exist_ok=True)
+    path = TEMP_ROOT / f"case-{uuid.uuid4().hex}"
+    path.mkdir(parents=True)
+    try:
+        yield str(path)
+    finally:
+        shutil.rmtree(path, ignore_errors=True)
 
 
 def write_registry(root: Path, *, predicate: dict, structure: dict) -> None:
@@ -33,7 +47,7 @@ class RegistryContractValidationTests(unittest.TestCase):
         )
 
     def test_accepts_valid_registry_contract(self):
-        with tempfile.TemporaryDirectory() as temp:
+        with temporary_directory() as temp:
             root = Path(temp)
             write_registry(
                 root,
@@ -77,7 +91,7 @@ class RegistryContractValidationTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
     def test_rejects_position_and_carried_context_mismatches(self):
-        with tempfile.TemporaryDirectory() as temp:
+        with temporary_directory() as temp:
             root = Path(temp)
             write_registry(
                 root,
@@ -124,6 +138,70 @@ class RegistryContractValidationTests(unittest.TestCase):
             text=True,
         )
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+    def test_live_notation_registers_number_systems_and_ordered_variants(self):
+        data = yaml.safe_load((ROOT / "notation.yaml").read_text(encoding="utf-8"))
+        by_symbol = {
+            item["symbol"]: item
+            for item in data.get("notation", [])
+            if isinstance(item, dict) and item.get("category") == "number_system"
+        }
+
+        expected = {
+            r"\mathbb{N}",
+            r"\mathbb{Z}",
+            r"\mathbb{Q}",
+            r"\mathbb{R}",
+            r"\mathbb{C}",
+            r"\mathbb{N}_{>0}",
+            r"\mathbb{N}_{\ge 0}",
+            r"\mathbb{Z}_{>0}",
+            r"\mathbb{Z}_{\ge 0}",
+            r"\mathbb{Z}_{<0}",
+            r"\mathbb{Z}_{\le 0}",
+            r"\mathbb{Q}_{>0}",
+            r"\mathbb{Q}_{\ge 0}",
+            r"\mathbb{Q}_{<0}",
+            r"\mathbb{Q}_{\le 0}",
+            r"\mathbb{R}_{>0}",
+            r"\mathbb{R}_{\ge 0}",
+            r"\mathbb{R}_{<0}",
+            r"\mathbb{R}_{\le 0}",
+        }
+
+        self.assertEqual(set(by_symbol) & expected, expected)
+        self.assertNotIn(r"\mathbb{C}_{>0}", by_symbol)
+        self.assertNotIn(r"\mathbb{C}_{\ge 0}", by_symbol)
+
+    def test_live_registries_mark_synthetic_test_entries(self):
+        predicates = yaml.safe_load((ROOT / "predicates.yaml").read_text(encoding="utf-8")).get("predicates", [])
+        structures = yaml.safe_load((ROOT / "structures.yaml").read_text(encoding="utf-8")).get("structures", [])
+        notation = yaml.safe_load((ROOT / "notation.yaml").read_text(encoding="utf-8")).get("notation", [])
+
+        test_predicates = [
+            item for item in predicates
+            if isinstance(item, dict) and str(item.get("id", "")).startswith("pred:test-predicate-")
+        ]
+        test_relations = [
+            item for item in predicates
+            if isinstance(item, dict) and str(item.get("id", "")).startswith("pred:test-relation-")
+        ]
+        test_structures = [
+            item for item in structures
+            if isinstance(item, dict) and str(item.get("id", "")).startswith("struct:test-structure-")
+        ]
+        test_notation = [
+            item for item in notation
+            if isinstance(item, dict) and item.get("testing") is True and isinstance(item.get("test_symbol"), dict)
+        ]
+
+        self.assertEqual(len(test_predicates), 28)
+        self.assertEqual(len(test_relations), 12)
+        self.assertEqual(len(test_structures), 6)
+        self.assertEqual(len(test_notation), 73)
+        self.assertTrue(all(item.get("testing") is True for item in test_predicates))
+        self.assertTrue(all(item.get("testing") is True for item in test_relations))
+        self.assertTrue(all(item.get("testing") is True for item in test_structures))
 
 
 if __name__ == "__main__":

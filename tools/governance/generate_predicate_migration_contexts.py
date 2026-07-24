@@ -201,6 +201,8 @@ def _signatures() -> dict[str, str]:
     for filename, key, kind in (("predicates.yaml", "predicates", "predicate"), ("structures.yaml", "structures", "structure")):
         data = yaml.safe_load((root / filename).read_text(encoding="utf-8")) or {}
         for item in data.get(key, []) or []:
+            if not isinstance(item, dict) or item.get("testing") is True:
+                continue
             name = item.get("name")
             args = item.get("arguments") or []
             if not name:

@@ -1610,6 +1610,52 @@ class ValidateVolumeTests(unittest.TestCase):
         self.assertEqual([finding.code for finding in findings], ["unregistered_operatorname"])
         self.assertIn("UnknownLocalPredicate", findings[0].message)
 
+    def test_operator_metadata_accepts_testing_registry_entries_as_registered(self):
+        volume = make_volume()
+        note = volume / "integers" / "notes" / "order" / "notes-order.tex"
+        note.write_text(
+            "\n".join(
+                [
+                    r"\begin{remark*}[Predicate reading]",
+                    r"\[",
+                    r"\operatorname{TestPredicate01}(x,y).",
+                    r"\]",
+                    r"\end{remark*}",
+                    "",
+                ]
+            ),
+            encoding="utf-8",
+        )
+
+        self.assertEqual(validate_with_inventory(operator_metadata, volume), [])
+
+    def test_predicate_reading_signatures_uses_testing_registry_entries(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{definitionbox}{Definition (Testing Predicate Reading)}",
+                    r"\begin{definition}[Testing Predicate Reading]",
+                    r"\label{def:testing-predicate-reading}",
+                    r"A testing predicate reading exercises registered test vocabulary.",
+                    r"\end{definition}",
+                    r"\end{definitionbox}",
+                    r"\begin{remark*}[Predicate reading]",
+                    r"\[",
+                    r"\operatorname{TestPredicate01}(x,y)\quad\text{and}\quad\operatorname{TestPredicate01}(x).",
+                    r"\]",
+                    r"\end{remark*}",
+                    "",
+                ]
+            ),
+        )
+
+        findings = validate_with_inventory(predicate_reading_signatures, volume)
+
+        self.assertEqual([item.code for item in findings], ["predicate_reading_signature_arity"])
+        self.assertIn("TestPredicate01", findings[0].message)
+
     def test_predicate_reading_signatures_flags_ambientless_sequence_predicates(self):
         volume = make_volume()
         write(
@@ -1815,6 +1861,28 @@ class ValidateVolumeTests(unittest.TestCase):
 
         self.assertEqual([finding.code for finding in findings], ["predicate_operator_in_formal_statement"])
         self.assertIn("PointwiseRelation", findings[0].message)
+
+    def test_formal_predicate_leakage_uses_testing_registry_entries(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{propositionbox}{Proposition (Testing Predicate Name)}",
+                    r"\begin{proposition}[Testing Predicate Name]",
+                    r"\label{prop:testing-predicate-name}",
+                    r"If \(\operatorname{TestPredicate01}(x,y)\), then \(x=y\).",
+                    r"\end{proposition}",
+                    r"\end{propositionbox}",
+                    "",
+                ]
+            ),
+        )
+
+        findings = validate_with_inventory(formal_predicate_leakage, volume)
+
+        self.assertEqual([finding.code for finding in findings], ["predicate_operator_in_formal_statement"])
+        self.assertIn("TestPredicate01", findings[0].message)
 
     def test_formal_predicate_leakage_allows_registered_operator_notation_in_formal_statement(self):
         volume = make_volume()

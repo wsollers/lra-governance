@@ -265,6 +265,202 @@ class SemanticLogicValidationTests(unittest.TestCase):
                 self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
                 self.assertIn('"result": "pass"', result.stdout)
 
+    def test_accepts_peano_strong_induction_principle_signature(self):
+        latex = r"\operatorname{StrongInductionPrinciple}(P,<,\varphi)."
+        predicate = {
+            "kind": "predicate",
+            "predicate_id": "pred:strong-induction-principle",
+            "name": "StrongInductionPrinciple",
+            "arguments": [
+                {"kind": "variable", "binder_id": "P"},
+                {"kind": "variable", "binder_id": "<"},
+                {"kind": "variable", "binder_id": "varphi"},
+            ],
+        }
+        data = add_parser_witnesses({
+            "identity": {"label": "thm:strong-induction-principle-test", "kind": "theorem"},
+            "parameters": [
+                {"id": "P", "symbol": "P", "role": "carrier"},
+                {"id": "<", "symbol": "<", "role": "relation"},
+                {"id": "varphi", "symbol": r"\varphi", "role": "predicate"},
+            ],
+            "statement": {"canonical_latex": latex, "semantic_ast": predicate},
+            "logical_forms": {
+                "standard_quantified": {"latex": latex, "ast": predicate},
+                "predicate_reading": {"latex": latex, "ast": predicate},
+                "negation": {
+                    "mechanical": {"latex": rf"\neg{latex}", "ast": {"kind": "not", "operand": predicate}},
+                    "approved_normal_form": {"latex": rf"\neg{latex}", "ast": {"kind": "not", "operand": predicate}},
+                },
+                "contrapositive": None,
+            },
+            "failure_analysis": {
+                "applicability_failures": [{"id": "outside_peano_context"}],
+                "statement_failures": [{"id": "not_strong_induction_principle"}],
+            },
+        })
+
+        result = self.run_validator_with_tex(
+            data,
+            rf"\begin{{theorem}} {latex} \begin{{remark*}}[Failure modes]\(\neg{latex}\)\end{{remark*}}\end{{theorem}}",
+        )
+
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn('"result": "pass"', result.stdout)
+
+    def test_accepts_total_on_domain_signature(self):
+        latex = r"\operatorname{TotalOnDomain}(R,A,B)."
+        predicate = {
+            "kind": "predicate",
+            "predicate_id": "pred:total-on-domain",
+            "name": "TotalOnDomain",
+            "arguments": [
+                {"kind": "variable", "binder_id": "R"},
+                {"kind": "variable", "binder_id": "A"},
+                {"kind": "variable", "binder_id": "B"},
+            ],
+        }
+        data = add_parser_witnesses({
+            "identity": {"label": "lem:left-total-relation-test", "kind": "lemma"},
+            "parameters": [
+                {"id": "R", "symbol": "R", "role": "relation"},
+                {"id": "A", "symbol": "A", "role": "domain"},
+                {"id": "B", "symbol": "B", "role": "codomain"},
+            ],
+            "statement": {"canonical_latex": latex, "semantic_ast": predicate},
+            "logical_forms": {
+                "standard_quantified": {"latex": latex, "ast": predicate},
+                "predicate_reading": {"latex": latex, "ast": predicate},
+                "negation": {
+                    "mechanical": {"latex": rf"\neg{latex}", "ast": {"kind": "not", "operand": predicate}},
+                    "approved_normal_form": {"latex": rf"\neg{latex}", "ast": {"kind": "not", "operand": predicate}},
+                },
+                "contrapositive": None,
+            },
+            "failure_analysis": {
+                "applicability_failures": [{"id": "outside_relation_context"}],
+                "statement_failures": [{"id": "not_total_on_domain"}],
+            },
+        })
+
+        result = self.run_validator_with_tex(
+            data,
+            rf"\begin{{lemma}} {latex} \begin{{remark*}}[Failure modes]\(\neg{latex}\)\end{{remark*}}\end{{lemma}}",
+        )
+
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn('"result": "pass"', result.stdout)
+
+    def test_accepts_stage_dependent_recursion_solution_signature(self):
+        latex = r"\operatorname{StageDependentRecursionSolution}(f,(P,S,1),W,c,\Phi)."
+        predicate = {
+            "kind": "predicate",
+            "predicate_id": "pred:stage-dependent-recursion-solution",
+            "name": "StageDependentRecursionSolution",
+            "arguments": [
+                {"kind": "variable", "binder_id": "f"},
+                {
+                    "kind": "tuple",
+                    "elements": [
+                        {"kind": "variable", "binder_id": "P"},
+                        {"kind": "variable", "binder_id": "S"},
+                        {"kind": "constant", "name": "1"},
+                    ],
+                },
+                {"kind": "variable", "binder_id": "W"},
+                {"kind": "variable", "binder_id": "c"},
+                {"kind": "variable", "binder_id": "Phi"},
+            ],
+        }
+        data = add_parser_witnesses({
+            "identity": {"label": "def:stage-dependent-recursion-solution-test", "kind": "definition"},
+            "parameters": [
+                {"id": "f", "symbol": "f", "role": "function"},
+                {"id": "P", "symbol": "P"},
+                {"id": "S", "symbol": "S"},
+                {"id": "W", "symbol": "W", "role": "codomain"},
+                {"id": "c", "symbol": "c", "role": "point"},
+                {"id": "Phi", "symbol": r"\Phi", "role": "function"},
+            ],
+            "statement": {"canonical_latex": latex, "semantic_ast": predicate},
+            "logical_forms": {
+                "standard_quantified": {"latex": latex, "ast": predicate},
+                "predicate_reading": {"latex": latex, "ast": predicate},
+                "negation": {
+                    "mechanical": {"latex": rf"\neg{latex}", "ast": {"kind": "not", "operand": predicate}},
+                    "approved_normal_form": {"latex": rf"\neg{latex}", "ast": {"kind": "not", "operand": predicate}},
+                },
+                "contrapositive": None,
+            },
+            "failure_analysis": {
+                "applicability_failures": [{"id": "outside_stage_dependent_context"}],
+                "statement_failures": [{"id": "not_stage_dependent_recursion_solution"}],
+            },
+        })
+
+        result = self.run_validator_with_tex(
+            data,
+            rf"\begin{{definition}} {latex} Failure modes: \(\neg{latex}\) \end{{definition}}",
+        )
+
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn('"result": "pass"', result.stdout)
+
+    def test_resolves_latex_symbol_aliases_in_declared_context(self):
+        latex = r"\operatorname{StageDependentRecursionSolution}(f,(P,S,1),W,c,\Phi)."
+        predicate = {
+            "kind": "predicate",
+            "predicate_id": "pred:stage-dependent-recursion-solution",
+            "name": "StageDependentRecursionSolution",
+            "arguments": [
+                {"kind": "variable", "binder_id": "f"},
+                {
+                    "kind": "tuple",
+                    "elements": [
+                        {"kind": "variable", "binder_id": "P"},
+                        {"kind": "variable", "binder_id": "S"},
+                        {"kind": "constant", "name": "1"},
+                    ],
+                },
+                {"kind": "variable", "binder_id": "W"},
+                {"kind": "variable", "binder_id": "c"},
+                {"kind": "variable", "binder_id": "Phi"},
+            ],
+        }
+        data = add_parser_witnesses({
+            "identity": {"label": "def:stage-dependent-recursion-solution-alias-test", "kind": "definition"},
+            "parameters": [
+                {"id": "f", "symbol": "f", "role": "function"},
+                {"id": "P", "symbol": "P"},
+                {"id": "S", "symbol": "S"},
+                {"id": "W", "symbol": "W", "role": "codomain"},
+                {"id": "c", "symbol": "c", "role": "point"},
+                {"id": r"\Phi", "symbol": r"\Phi", "role": "function"},
+            ],
+            "statement": {"canonical_latex": latex, "semantic_ast": predicate},
+            "logical_forms": {
+                "standard_quantified": {"latex": latex, "ast": predicate},
+                "predicate_reading": {"latex": latex, "ast": predicate},
+                "negation": {
+                    "mechanical": {"latex": rf"\neg{latex}", "ast": {"kind": "not", "operand": predicate}},
+                    "approved_normal_form": {"latex": rf"\neg{latex}", "ast": {"kind": "not", "operand": predicate}},
+                },
+                "contrapositive": None,
+            },
+            "failure_analysis": {
+                "applicability_failures": [{"id": "outside_stage_dependent_context"}],
+                "statement_failures": [{"id": "not_stage_dependent_recursion_solution"}],
+            },
+        })
+
+        result = self.run_validator_with_tex(
+            data,
+            rf"\begin{{definition}} {latex} Failure modes: \(\neg{latex}\) \end{{definition}}",
+        )
+
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn('"result": "pass"', result.stdout)
+
     def test_accepts_atomic_predicate_negation_for_definitions(self):
         predicate = {
             "kind": "predicate",
@@ -421,6 +617,73 @@ Failure modes:
 \]
 \[
 \exists n\in A,\ S(n)\notin A.
+\]
+\end{definition}
+""",
+        )
+
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn('"result": "pass"', result.stdout)
+
+    def test_accepts_direct_mechanical_negation_of_definition_equivalence(self):
+        predicate = {
+            "kind": "predicate",
+            "predicate_id": "pred:presburger-arithmetic",
+            "name": "PresburgerArithmetic",
+            "arguments": [{"kind": "variable", "binder_id": "T"}],
+        }
+        definiens = {
+            "kind": "relation",
+            "relation": "=",
+            "left": {"kind": "variable", "binder_id": "T"},
+            "right": {"kind": "raw_latex", "latex": r"\{ varphi COLON varphi \text{ is a sentence} \}"},
+        }
+        statement = {"kind": "iff", "left": predicate, "right": definiens}
+        data = add_parser_witnesses({
+            "identity": {"label": "def:presburger-arithmetic-test", "kind": "definition"},
+            "parameters": [{"id": "T", "symbol": "T"}],
+            "statement": {
+                "canonical_latex": r"\operatorname{PresburgerArithmetic}(T)\Longleftrightarrow T=\{\varphi:\varphi\text{ is a sentence}\}.",
+                "semantic_ast": statement,
+            },
+            "logical_forms": {
+                "standard_quantified": {
+                    "latex": r"\operatorname{PresburgerArithmetic}(T)\Longleftrightarrow T=\{\varphi:\varphi\text{ is a sentence}\}.",
+                    "ast": statement,
+                },
+                "predicate_reading": {
+                    "latex": r"\operatorname{PresburgerArithmetic}(T).",
+                    "ast": predicate,
+                },
+                "negation": {
+                    "mechanical": {
+                        "latex": r"\neg\left(\operatorname{PresburgerArithmetic}(T)\Longleftrightarrow T=\{\varphi:\varphi\text{ is a sentence}\}\right).",
+                        "ast": {"kind": "not", "operand": statement},
+                    },
+                    "approved_normal_form": {
+                        "latex": None,
+                        "ast": {"kind": "not", "operand": statement},
+                    },
+                    "normalization_requires": [],
+                },
+                "contrapositive": None,
+            },
+            "failure_analysis": {
+                "applicability_failures": [],
+                "statement_failures": [{"id": "presburger_arithmetic_equivalence_fails"}],
+            },
+        })
+
+        result = self.run_validator_with_tex(
+            data,
+            r"""
+\begin{definition}
+\[
+\operatorname{PresburgerArithmetic}(T)\Longleftrightarrow T=\{\varphi:\varphi\text{ is a sentence}\}.
+\]
+Failure modes:
+\[
+\neg\left(\operatorname{PresburgerArithmetic}(T)\Longleftrightarrow T=\{\varphi:\varphi\text{ is a sentence}\}\right).
 \]
 \end{definition}
 """,
@@ -707,6 +970,88 @@ Failure modes:
         result = self.run_validator(data)
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("DEFINITIONAL_BICONDITIONAL_OMITTED_FROM_AST", result.stdout)
+        self.assertIn("STANDARD_FORM_LATEX_AST_MISMATCH", result.stdout)
+
+    def test_accepts_quantified_standard_equivalence_body(self):
+        data = real_upper_bound_artifact()
+        equivalence = {
+            "kind": "forall",
+            "binder": {
+                "binder_id": "x",
+                "symbol": "x",
+                "domain": {"kind": "variable", "binder_id": "P"},
+            },
+            "restriction": None,
+            "body": {
+                "kind": "iff",
+                "left": {"kind": "relation", "relation": "=", "left": {"kind": "variable", "binder_id": "x"}, "right": {"kind": "constant", "name": "1"}},
+                "right": {"kind": "not", "operand": {"kind": "exists", "binder": {"binder_id": "u", "symbol": "u", "domain": {"kind": "variable", "binder_id": "P"}}, "restriction": None, "body": {"kind": "relation", "relation": "=", "left": {"kind": "application", "function": "S", "arguments": [{"kind": "variable", "binder_id": "u"}]}, "right": {"kind": "variable", "binder_id": "x"}}}},
+            },
+        }
+        latex = r"\forall x\in P,\ x=1\Longleftrightarrow\neg\exists u\in P,\ S(u)=x."
+        data["identity"] = {"label": "cor:quantified-equivalence-test", "kind": "corollary"}
+        data["parameters"] = [{"id": "P", "symbol": "P"}, {"id": "S", "symbol": "S"}]
+        data["statement"]["canonical_latex"] = latex
+        data["statement"]["semantic_ast"] = equivalence
+        data["logical_forms"]["standard_quantified"] = {"latex": latex, "ast": equivalence}
+        data["logical_forms"]["predicate_reading"] = {"latex": latex, "ast": equivalence}
+        data = add_parser_witnesses(data)
+        data["logical_forms"]["negation"]["mechanical"]["ast"] = {"kind": "not", "operand": equivalence}
+        data["logical_forms"]["negation"]["approved_normal_form"]["ast"] = {"kind": "not", "operand": equivalence}
+
+        result = self.run_validator(data)
+        self.assertNotIn("STANDARD_FORM_LATEX_AST_MISMATCH", result.stdout)
+
+    def test_accepts_standard_implication_with_internal_equivalence_hypothesis(self):
+        data = real_upper_bound_artifact()
+        internal_equivalence = {
+            "kind": "implies",
+            "left": {
+                "kind": "forall",
+                "binder": {
+                    "binder_id": "k",
+                    "symbol": "k",
+                    "domain": {"kind": "variable", "binder_id": "P"},
+                },
+                "restriction": None,
+                "body": {
+                    "kind": "iff",
+                    "left": {"kind": "relation", "relation": "<", "left": {"kind": "variable", "binder_id": "k"}, "right": {"kind": "application", "function": "S", "arguments": [{"kind": "variable", "binder_id": "n"}]}},
+                    "right": {"kind": "relation", "relation": "=", "left": {"kind": "variable", "binder_id": "k"}, "right": {"kind": "variable", "binder_id": "n"}},
+                },
+            },
+            "right": {"kind": "forall", "binder": {"binder_id": "n", "symbol": "n", "domain": {"kind": "variable", "binder_id": "P"}}, "restriction": None, "body": {"kind": "application", "function": "varphi", "arguments": [{"kind": "variable", "binder_id": "n"}]}},
+        }
+        latex = r"(\forall k\in P,\ k<S(n)\Longleftrightarrow k=n)\Longrightarrow\forall n\in P,\ \varphi(n)."
+        data["identity"] = {"label": "thm:internal-equivalence-test", "kind": "theorem"}
+        data["parameters"] = [{"id": "P", "symbol": "P"}, {"id": "S", "symbol": "S"}, {"id": "n", "symbol": "n"}, {"id": "varphi", "symbol": r"\varphi"}]
+        data["statement"]["canonical_latex"] = latex
+        data["statement"]["semantic_ast"] = internal_equivalence
+        data["logical_forms"]["standard_quantified"] = {"latex": latex, "ast": internal_equivalence}
+        data["logical_forms"]["predicate_reading"] = {"latex": latex, "ast": internal_equivalence}
+        data = add_parser_witnesses(data)
+        data["logical_forms"]["negation"]["mechanical"]["ast"] = {"kind": "not", "operand": internal_equivalence}
+        data["logical_forms"]["negation"]["approved_normal_form"]["ast"] = {"kind": "not", "operand": internal_equivalence}
+
+        result = self.run_validator(data)
+        self.assertNotIn("STANDARD_FORM_LATEX_AST_MISMATCH", result.stdout)
+
+    def test_rejects_standard_equivalence_latex_without_any_iff_ast_node(self):
+        data = real_upper_bound_artifact()
+        atom = {"kind": "relation", "relation": "=", "left": {"kind": "variable", "binder_id": "x"}, "right": {"kind": "constant", "name": "1"}}
+        latex = r"\forall x\in P,\ x=1\Longleftrightarrow P(x)."
+        data["identity"] = {"label": "cor:missing-equivalence-ast-test", "kind": "corollary"}
+        data["parameters"] = [{"id": "P", "symbol": "P"}]
+        data["statement"]["canonical_latex"] = latex
+        data["statement"]["semantic_ast"] = atom
+        data["logical_forms"]["standard_quantified"] = {"latex": latex, "ast": atom}
+        data["logical_forms"]["predicate_reading"] = {"latex": latex, "ast": atom}
+        data = add_parser_witnesses(data)
+        data["logical_forms"]["negation"]["mechanical"]["ast"] = {"kind": "not", "operand": atom}
+        data["logical_forms"]["negation"]["approved_normal_form"]["ast"] = {"kind": "not", "operand": atom}
+
+        result = self.run_validator(data)
+        self.assertNotEqual(result.returncode, 0)
         self.assertIn("STANDARD_FORM_LATEX_AST_MISMATCH", result.stdout)
 
     def test_rejects_strict_normalization_without_order_dependency(self):

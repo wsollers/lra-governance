@@ -8,6 +8,8 @@ import uuid
 from contextlib import contextmanager
 from pathlib import Path
 
+import yaml
+
 
 ROOT = Path(__file__).resolve().parents[2]
 CREATOR = ROOT / "tools" / "governance" / "create_semantic_validation_artifacts.py"
@@ -114,6 +116,65 @@ class CreateSemanticValidationArtifactsTests(unittest.TestCase):
         self.assertFalse((volume / "volume-i" / "book-order" / "bounds" / "def-unrouted").exists())
         request = json.loads((package / "generation-request.json").read_text(encoding="utf-8"))
         self.assertEqual(request["llm_packet"]["source"]["current_tex"].count("def:routed"), 1)
+
+    def test_materialize_local_writes_draft_artifact_package(self):
+        with temp_dir() as root:
+            volume = root / "lra-volume-i"
+            target = volume / "volume-i" / "book-order" / "bounds"
+            target.mkdir(parents=True)
+            (volume / "volume-i-book-order.tex").write_text(
+                r"\input{volume-i/book-order/bounds/routed}" + "\n",
+                encoding="utf-8",
+            )
+            (target / "routed.tex").write_text(
+                "\n".join(
+                    [
+                        r"\begin{definition}[Upper Bound]\label{def:upper-bound}",
+                        r"\[",
+                        r"\forall a\in A\;(a\leq b).",
+                        r"\]",
+                        r"\end{definition}",
+                    ]
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            output = root / "creation.json"
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(CREATOR),
+                    "--repos-root",
+                    str(root),
+                    "--volume",
+                    "i",
+                    "--chapter",
+                    "bounds",
+                    "--materialize-local",
+                    "--format",
+                    "json",
+                    "--output",
+                    str(output),
+                ],
+                capture_output=True,
+                text=True,
+            )
+            payload = json.loads(output.read_text(encoding="utf-8"))
+            package = target / "def-upper-bound"
+            artifact = package / "artifact.yaml"
+            corrected = package / "corrected.tex"
+
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(payload["created_count"], 1)
+        self.assertEqual(payload["materialized_count"], 1)
+        self.assertTrue(artifact.exists())
+        self.assertTrue(corrected.exists())
+        data = yaml.safe_load(artifact.read_text(encoding="utf-8"))
+        self.assertEqual(data["identity"]["status"], "local_draft")
+        self.assertEqual(data["logical_forms"]["standard_quantified"]["ast"]["kind"], "forall")
+        self.assertTrue(data["logical_forms"]["standard_quantified"]["parser_witnesses"]["hand_parser"]["available"])
+        self.assertTrue(data["logical_forms"]["standard_quantified"]["parser_witnesses"]["lark_parser"]["available"])
+        self.assertIn(r"\begin{definition}", corrected.read_text(encoding="utf-8"))
 
     def test_inventory_creation_requires_source_text(self):
         with temp_dir() as root:

@@ -3763,3 +3763,99 @@ structures:
       - IEEE binary128 format
     description: >
       Named IEEE 754 binary128 interchange format object.
+
+  - id: struct:test-structure-1
+    name: TestStructure01
+    kind: structure
+    category: synthetic_test_structure
+    testing: true
+    constructor: '\mathcal{T}_{1}'
+    arguments: []
+    carrier_argument: null
+    structural_arguments: []
+    surface_forms:
+      - TestStructure01
+      - '\mathcal{T}_{1}'
+      - '\mathcalT_1'
+    description: >
+      Registered synthetic structure symbol TestStructure01 used by parser validation campaigns.
+
+  - id: struct:test-structure-2
+    name: TestStructure02
+    kind: structure
+    category: synthetic_test_structure
+    testing: true
+    constructor: '\mathcal{T}_{2}'
+    arguments: []
+    carrier_argument: null
+    structural_arguments: []
+    surface_forms:
+      - TestStructure02
+      - '\mathcal{T}_{2}'
+      - '\mathcalT_2'
+    description: >
+      Registered synthetic structure symbol TestStructure02 used by parser validation campaigns.
+
+  - id: struct:test-structure-3
+    name: TestStructure03
+    kind: structure
+    category: synthetic_test_structure
+    testing: true
+    constructor: '\mathcal{T}_{3}'
+    arguments: []
+    carrier_argument: null
+    structural_arguments: []
+    surface_forms:
+      - TestStructure03
+      - '\mathcal{T}_{3}'
+      - '\mathcalT_3'
+    description: >
+      Registered synthetic structure symbol TestStructure03 used by parser validation campaigns.
+
+  - id: struct:test-structure-4
+    name: TestStructure04
+    kind: structure
+    category: synthetic_test_structure
+    testing: true
+    constructor: '\mathcal{T}_{4}'
+    arguments: []
+    carrier_argument: null
+    structural_arguments: []
+    surface_forms:
+      - TestStructure04
+      - '\mathcal{T}_{4}'
+      - '\mathcalT_4'
+    description: >
+      Registered synthetic structure symbol TestStructure04 used by parser validation campaigns.
+
+  - id: struct:test-structure-5
+    name: TestStructure05
+    kind: structure
+    category: synthetic_test_structure
+    testing: true
+    constructor: '\mathcal{T}_{5}'
+    arguments: []
+    carrier_argument: null
+    structural_arguments: []
+    surface_forms:
+      - TestStructure05
+      - '\mathcal{T}_{5}'
+      - '\mathcalT_5'
+    description: >
+      Registered synthetic structure symbol TestStructure05 used by parser validation campaigns.
+
+  - id: struct:test-structure-6
+    name: TestStructure06
+    kind: structure
+    category: synthetic_test_structure
+    testing: true
+    constructor: '\mathcal{T}_{6}'
+    arguments: []
+    carrier_argument: null
+    structural_arguments: []
+    surface_forms:
+      - TestStructure06
+      - '\mathcal{T}_{6}'
+      - '\mathcalT_6'
+    description: >
+      Registered synthetic structure symbol TestStructure06 used by parser validation campaigns.

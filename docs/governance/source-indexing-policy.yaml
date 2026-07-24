@@ -1,0 +1,35 @@
+schema: lra-source-indexing-policy-v1
+library_root:
+  host_default: D:\Readings
+  container_default: /readings
+  sources_root: Sources
+index_root:
+  host_default: D:\Readings\indexes\lra
+  container_default: /readings/indexes/lra
+recursive_scan:
+  indexable_roots:
+    - Sources/Algebra
+    - Sources/Analysis
+    - Sources/Applied
+    - Sources/Computer Science
+    - Sources/Differential Equations
+    - Sources/Foundations
+    - Sources/Geometry
+    - Sources/Measure Theory
+    - Sources/Number Theory
+    - Sources/Numerical Analysis
+    - Sources/Physics
+    - Sources/Topology
+  library_only_roots:
+    - Sources/Calculus
+    - Sources/History
+  housekeeping_dir_names:
+    - _duplicates
+    - duplicates
+    - _hold
+    - Hold
+    - indexes
+    - lra-source-profiles
+  always_indexable_dir_names:
+    - processed
+  explicit_override_flag: --ignore-index-policy

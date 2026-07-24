@@ -675,12 +675,46 @@
               ]
             },
             {
+              "chapter": "measurable-spaces",
+              "notes": [
+                "definitions"
+              ]
+            },
+            {
               "chapter": "measure-spaces",
-              "notes": []
+              "notes": [
+                "definitions"
+              ]
+            },
+            {
+              "chapter": "vector-spaces",
+              "notes": [
+                "definitions"
+              ]
             },
             {
               "chapter": "normed-linear-spaces",
-              "notes": []
+              "notes": [
+                "definitions"
+              ]
+            },
+            {
+              "chapter": "banach-spaces",
+              "notes": [
+                "definitions"
+              ]
+            },
+            {
+              "chapter": "inner-product-spaces",
+              "notes": [
+                "definitions"
+              ]
+            },
+            {
+              "chapter": "hilbert-spaces",
+              "notes": [
+                "definitions"
+              ]
             }
           ],
           "frontmatter_mathematician": "Constantin Caratheodory",
@@ -914,7 +948,11 @@
             {
               "chapter": "model-theory",
               "notes": [
-                "l-structures"
+                "l-structures",
+                "terms",
+                "formulas",
+                "definability",
+                "substructures-and-quantifiers"
               ]
             }
           ],
@@ -936,11 +974,17 @@
           "expected_toc": [
             {
               "chapter": "proof-theory",
-              "notes": []
+              "notes": [
+                "sequent-calculus-lk"
+              ]
             },
             {
               "chapter": "formal-verification",
-              "notes": []
+              "notes": [
+                "general-formalization",
+                "formalization-without-mathlib",
+                "metric-spaces-with-mathlib"
+              ]
             }
           ],
           "frontmatter_mathematician": "Gerhard Gentzen",

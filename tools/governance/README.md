@@ -24,6 +24,10 @@ Available and planned tools:
   packets.
 - `generate_stub.py` - deterministic scaffold for canonical stub chapters and
   topic-paired stub sections.
+- `test_tex_generator/` - deterministic synthetic TeX universe generator used
+  to calibrate semantic AST parsing against known canonical formula ASTs.
+- `validate_test_tex_generator_ast.py` - compares generated TeX displays
+  against expected governed ASTs with both semantic parsers.
 - `generate_agent_wrappers.py`
 - `merge_repo_overlays.py`
 - `report_wrapper_drift.py` - read-only comparison tool for generated wrapper
@@ -126,6 +130,20 @@ Outputs are written under ignored `migration-reports/` by default.
 ```powershell
 python tools\governance\generate_predicate_migration_contexts.py --volume F:\repos\lra-volume-iii --chapter bounding
 ```
+
+## Semantic AST Test Universe
+
+Generate synthetic TeX cases with known canonical ASTs, then compare those ASTs
+against the hand parser and Lark parser:
+
+```powershell
+python -m tools.governance.test_tex_generator.cli --config tools\governance\fixtures\test_tex_generator\deep-quantifiers.yaml --state build\semantic-audit\test-tex-generator\deep-generator-state.json --output build\semantic-audit\test-tex-generator\deep-generated-tests.yaml --coverage-report build\semantic-audit\test-tex-generator\deep-coverage-report.json --registry-output build\semantic-audit\test-tex-generator\deep-synthetic-registry.json --count 500
+python tools\governance\validate_test_tex_generator_ast.py --cases build\semantic-audit\test-tex-generator\deep-generated-tests.yaml --output build\semantic-audit\test-tex-generator\deep-parser-roundtrip-report.json
+```
+
+See `docs/workflows/semantic-ast-test-universe.md` for the full workflow and
+`docs/workflows/semantic-ast-test-universe-handoff-prompt.md` for a continuation
+prompt.
 
 ## Stub Generation
 

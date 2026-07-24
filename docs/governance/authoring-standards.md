@@ -48,6 +48,14 @@ Each active chapter notes router, `notes/index.tex`, routes topic indexes in
 dependency order. It does not introduce a numbered `\section{...}` for the
 chapter title; the chapter router already owns the `\chapter{...}` heading.
 
+Author notes by section-scale topic folders, not as flat chapter-level note
+files. A new topic must live at `notes/<topic>/`, with
+`notes/<topic>/index.tex` as the rendered topic router and body files beneath
+that same topic folder. Do not place active note bodies directly under a
+chapter's `notes/` directory. Flat note bodies under `notes/` are legacy
+migration material or layout failures, not an acceptable destination for new
+content.
+
 Each active topic router, `notes/<topic>/index.tex`, begins rendered content
 with exactly one non-starred `\section{<Topic Display Title>}`. Topic routers
 must not use `\section*{...}` for the topic title.

@@ -20,6 +20,7 @@ import yaml
 
 from create_semantic_validation_artifacts import build_generation_request, create_requests
 from semantic_artifact_inventory import artifact_package_for, routed_formals
+from semantic_latex_ast import binder_id as latex_binder_id, symbol_aliases
 
 
 CHECK_NAMES = (
@@ -468,7 +469,7 @@ def canonical_ast(node: Any, env: dict[str, str] | None = None, counter: list[in
     if kind == "variable":
         binder_id = str(node.get("binder_id") or "")
         copy = dict(node)
-        copy["binder_id"] = env.get(binder_id, binder_id)
+        copy["binder_id"] = env.get(binder_id, latex_binder_id(binder_id))
         return {key: canonical_ast(value, env, counter) for key, value in sorted(copy.items())}
     if kind in {"forall", "exists", "exists_unique"}:
         binder = dict(node.get("binder") or {})
@@ -477,7 +478,8 @@ def canonical_ast(node: Any, env: dict[str, str] | None = None, counter: list[in
         counter[0] += 1
         new_env = dict(env)
         if old_id:
-            new_env[old_id] = canonical_id
+            for alias in symbol_aliases(old_id):
+                new_env[alias] = canonical_id
         binder["binder_id"] = canonical_id
         # Binder symbols are presentation choices. A negated formula often
         # renames \varepsilon to \varepsilon_0, and alpha-equivalence should
@@ -489,6 +491,10 @@ def canonical_ast(node: Any, env: dict[str, str] | None = None, counter: list[in
             key: canonical_ast(value, new_env if key in {"restriction", "body"} else env, counter)
             for key, value in sorted(copy.items())
         }
+    if kind == "application" and node.get("function"):
+        copy = dict(node)
+        copy["function"] = latex_binder_id(str(copy["function"]))
+        return {key: canonical_ast(value, env, counter) for key, value in sorted(copy.items())}
     return {key: canonical_ast(value, env, counter) for key, value in sorted(node.items())}
 
 
@@ -800,8 +806,19 @@ def declared_metadata(data: dict[str, Any]) -> dict[str, dict[str, Any]]:
     for section in ("context", "parameters"):
         for item in data.get(section, []) or []:
             if isinstance(item, dict) and item.get("id"):
-                metadata[str(item["id"])] = item
+                for alias in symbol_aliases(str(item["id"])):
+                    metadata.setdefault(alias, item)
+                if item.get("symbol"):
+                    for alias in symbol_aliases(str(item["symbol"])):
+                        metadata.setdefault(alias, item)
     return metadata
+
+
+def declared_lookup(metadata: dict[str, dict[str, Any]], symbol: str) -> dict[str, Any]:
+    for alias in symbol_aliases(symbol):
+        if alias in metadata:
+            return metadata[alias]
+    return {}
 
 
 def ambient_carrier_candidates(
@@ -813,7 +830,7 @@ def ambient_carrier_candidates(
     candidates = [ambient]
     target = ambient
     if isinstance(ambient, dict) and ambient.get("kind") == "variable":
-        declared = metadata.get(str(ambient.get("binder_id") or ""), {})
+        declared = declared_lookup(metadata, str(ambient.get("binder_id") or ""))
         target = declared.get("ast") or declared.get("construction_ast") or ambient
         if isinstance(declared.get("ast"), dict):
             candidates.append(declared["ast"])
@@ -856,7 +873,7 @@ def validate_signature_call(
         if not isinstance(arg, dict) or arg.get("kind") != "variable":
             continue
         binder_id = str(arg.get("binder_id") or "")
-        declared = metadata.get(binder_id, {})
+        declared = declared_lookup(metadata, binder_id)
         actual_role = str(declared.get("role") or "")
         expected_role = str(spec.get("role") or "")
         if actual_role and not roles_compatible(expected_role, actual_role):
@@ -900,7 +917,7 @@ def validate_domain_convention(
     if not isinstance(function_arg, dict) or function_arg.get("kind") != "variable":
         return errors
     function_id = str(function_arg.get("binder_id") or "")
-    declared = metadata.get(function_id, {})
+    declared = declared_lookup(metadata, function_id)
     carried_domain = function_domain_from_type(declared.get("type"), str(declared.get("symbol") or function_id))
     if carried_domain is None:
         errors.append(
@@ -920,7 +937,9 @@ def declared_binders(data: dict[str, Any]) -> set[str]:
     for section in ("context", "parameters"):
         for item in data.get(section, []) or []:
             if isinstance(item, dict) and item.get("id"):
-                declared.add(str(item["id"]))
+                declared.update(symbol_aliases(str(item["id"])))
+                if item.get("symbol"):
+                    declared.update(symbol_aliases(str(item["symbol"])))
     return declared
 
 
@@ -1201,16 +1220,20 @@ def check_statement_shape(data: dict[str, Any], corrected_tex: str, result: Logi
         )
     theorem_like = identity.get("kind") in {"theorem", "lemma", "proposition", "corollary"}
     standard_equivalence_count = equivalence_operator_count(standard_latex)
-    if standard_wants_iff and not (theorem_like and standard_equivalence_count >= 2) and ast_kind(standard_ast) != "iff":
+    if (
+        standard_wants_iff
+        and not ast_contains_kind(standard_ast, "iff")
+        and not (theorem_like and standard_equivalence_count >= 2 and is_conjunction_of_iff_pairs(standard_ast))
+    ):
         result.add(
             "STANDARD_FORM_LATEX_AST_MISMATCH",
             "error",
-            "Standard quantified LaTeX asserts an equivalence, but its AST is not an iff node.",
+            "Standard quantified LaTeX asserts an equivalence, but its AST does not expose an iff node.",
             "logical_forms.standard_quantified.ast",
         )
     standard_shape_ok = (
         not standard_wants_iff
-        or ast_kind(standard_ast) == "iff"
+        or ast_contains_kind(standard_ast, "iff")
         or (theorem_like and standard_equivalence_count >= 2 and is_conjunction_of_iff_pairs(standard_ast))
     )
     if tex_has_equivalence and wants_iff and ast_kind(statement_ast) == "iff" and standard_shape_ok:
@@ -1278,6 +1301,28 @@ def check_negation(data: dict[str, Any], result: LogicResult) -> None:
         result.add("MISSING_MECHANICAL_NEGATION", "warning", "Mechanical negation is absent.", "logical_forms.negation.mechanical")
         return
 
+    if isinstance(mechanical, dict) and mechanical.get("kind") == "not" and ast_equal(mechanical.get("operand"), statement_ast):
+        pushed = negate_ast(statement_ast)
+        normalized_pushed = normalize_atomic_relation_negations(pushed)
+        if (
+            approved is None
+            or ast_equal(approved, mechanical)
+            or ast_equal(approved, pushed)
+            or ast_equal(approved, normalized_pushed)
+            or ast_contains_equivalent(approved, pushed)
+            or ast_contains_equivalent(approved, normalized_pushed)
+        ):
+            result.set_check("negation", "pass", "Mechanical negation wraps the full statement AST; approved normal form is direct or pushed.")
+        else:
+            result.set_check("negation", "fail", "Approved normal form does not match the direct or pushed mechanical negation.")
+            result.add(
+                "NEGATION_DERIVATION_MISMATCH",
+                "error",
+                "Expected direct mechanical negation or pushed normal form: " + logic_shape(pushed),
+                "logical_forms.negation.approved_normal_form.ast",
+            )
+        return
+
     expected = None
     _, definiens = unwrap_definition(statement_ast)
     statement_like = identity_kind in {"axiom", "theorem", "lemma", "proposition", "corollary"}
@@ -1319,19 +1364,6 @@ def check_negation(data: dict[str, Any], result: LogicResult) -> None:
             "Expected shape derived from statement AST: " + logic_shape(expected),
             "logical_forms.negation",
         )
-    elif isinstance(mechanical, dict) and mechanical.get("kind") == "not" and ast_equal(mechanical.get("operand"), statement_ast):
-        pushed = negate_ast(mechanical["operand"])
-        normalized_pushed = normalize_atomic_relation_negations(pushed)
-        if approved is None or ast_equal(approved, pushed) or ast_equal(approved, normalized_pushed):
-            result.set_check("negation", "pass", "Mechanical negation wraps the statement AST; approved normal form records the pushed negation.")
-        else:
-            result.set_check("negation", "fail", "Approved normal form does not match the pushed mechanical negation.")
-            result.add(
-                "NEGATION_DERIVATION_MISMATCH",
-                "error",
-                "Expected pushed normal form: " + logic_shape(pushed),
-                "logical_forms.negation.approved_normal_form.ast",
-            )
     elif isinstance(mechanical, dict) and mechanical.get("kind") == "not" and isinstance(mechanical.get("operand"), dict) and mechanical["operand"].get("kind") in {"predicate", "relation"}:
         result.set_check("negation", "pass", "Mechanical negation preserves the atomic predicate or relation being denied.")
     elif ast_contains_kind(mechanical, "exists") and ast_contains_kind(mechanical, "not"):

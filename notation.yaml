@@ -6,10 +6,78 @@ notation:
     symbol: '\mathbb{N}'
     category: number_system
     description: Natural numbers.
+  - id: not:integers
+    symbol: '\mathbb{Z}'
+    category: number_system
+    description: Integers.
+  - id: not:rational-numbers
+    symbol: '\mathbb{Q}'
+    category: number_system
+    description: Rational numbers.
   - id: not:real-numbers
     symbol: '\mathbb{R}'
     category: number_system
     description: Real numbers.
+  - id: not:complex-numbers
+    symbol: '\mathbb{C}'
+    category: number_system
+    description: Complex numbers.
+  - id: not:positive-natural-numbers
+    symbol: '\mathbb{N}_{>0}'
+    category: number_system
+    description: Positive natural numbers.
+  - id: not:nonnegative-natural-numbers
+    symbol: '\mathbb{N}_{\ge 0}'
+    category: number_system
+    description: Nonnegative natural numbers.
+  - id: not:positive-integers
+    symbol: '\mathbb{Z}_{>0}'
+    category: number_system
+    description: Positive integers.
+  - id: not:nonnegative-integers
+    symbol: '\mathbb{Z}_{\ge 0}'
+    category: number_system
+    description: Nonnegative integers.
+  - id: not:negative-integers
+    symbol: '\mathbb{Z}_{<0}'
+    category: number_system
+    description: Negative integers.
+  - id: not:nonpositive-integers
+    symbol: '\mathbb{Z}_{\le 0}'
+    category: number_system
+    description: Nonpositive integers.
+  - id: not:positive-rational-numbers
+    symbol: '\mathbb{Q}_{>0}'
+    category: number_system
+    description: Positive rational numbers.
+  - id: not:nonnegative-rational-numbers
+    symbol: '\mathbb{Q}_{\ge 0}'
+    category: number_system
+    description: Nonnegative rational numbers.
+  - id: not:negative-rational-numbers
+    symbol: '\mathbb{Q}_{<0}'
+    category: number_system
+    description: Negative rational numbers.
+  - id: not:nonpositive-rational-numbers
+    symbol: '\mathbb{Q}_{\le 0}'
+    category: number_system
+    description: Nonpositive rational numbers.
+  - id: not:positive-real-numbers
+    symbol: '\mathbb{R}_{>0}'
+    category: number_system
+    description: Positive real numbers.
+  - id: not:nonnegative-real-numbers
+    symbol: '\mathbb{R}_{\ge 0}'
+    category: number_system
+    description: Nonnegative real numbers.
+  - id: not:negative-real-numbers
+    symbol: '\mathbb{R}_{<0}'
+    category: number_system
+    description: Negative real numbers.
+  - id: not:nonpositive-real-numbers
+    symbol: '\mathbb{R}_{\le 0}'
+    category: number_system
+    description: Nonpositive real numbers.
   - id: not:carrier
     symbol: '\operatorname{Carrier}'
     category: structural_operator
@@ -352,6 +420,30 @@ notation:
     symbol: '\exists'
     category: quantifier
     description: Existential quantifier.
+  - id: not:logical-negation
+    symbol: '\neg'
+    category: connective
+    description: Logical negation connective.
+    notation_role:
+      role: logical_negation
+      parser_connective: true
+      preferred_context: displayed_formal_logic
+  - id: not:logical-conjunction
+    symbol: '\land'
+    category: connective
+    description: Logical conjunction connective.
+    notation_role:
+      role: logical_conjunction
+      parser_connective: true
+      preferred_context: displayed_formal_logic
+  - id: not:logical-disjunction
+    symbol: '\lor'
+    category: connective
+    description: Logical disjunction connective.
+    notation_role:
+      role: logical_disjunction
+      parser_connective: true
+      preferred_context: displayed_formal_logic
   - id: not:if-and-only-if
     symbol: '\Longleftrightarrow'
     category: connective
@@ -364,6 +456,14 @@ notation:
     symbol: '\Rightarrow'
     category: connective
     description: Implication connective.
+    notation_role:
+      role: logical_implication
+      parser_connective: true
+      preferred_context: compact_or_inline_logic
+  - id: not:compact-implies
+    symbol: '\rightarrow'
+    category: connective
+    description: Compact implication connective for inline or formula-object contexts.
     notation_role:
       role: logical_implication
       parser_connective: true
@@ -384,6 +484,38 @@ notation:
       role: logical_equivalence
       parser_connective: true
       preferred_context: compact_or_inline_logic
+  - id: not:compact-iff
+    symbol: '\leftrightarrow'
+    category: connective
+    description: Compact biconditional connective for inline or formula-object contexts.
+    notation_role:
+      role: logical_equivalence
+      parser_connective: true
+      preferred_context: compact_or_inline_logic
+  - id: not:semantic-satisfaction
+    symbol: '\models'
+    category: relation_notation
+    description: Semantic satisfaction relation.
+    notation_role:
+      role: semantic_satisfaction
+      parser_connective: true
+      preferred_context: semantic_logic
+  - id: not:syntactic-derivability
+    symbol: '\vdash'
+    category: relation_notation
+    description: Syntactic derivability relation.
+    notation_role:
+      role: syntactic_derivability
+      parser_connective: true
+      preferred_context: proof_theory
+  - id: not:formula-object-equivalence
+    symbol: '\equiv'
+    category: relation_notation
+    description: Formula-object equivalence relation.
+    notation_role:
+      role: formula_object_equivalence
+      parser_connective: true
+      preferred_context: formula_object_equivalence
   - id: not:function-type-arrow
     symbol: '\to'
     category: function_notation
@@ -520,6 +652,863 @@ notation:
     category: numerical_analysis_operator
     description: Fraction-field accessor for an IEEE binary datum.
 
+  - id: not:test-type01
+    name: TestType01
+    symbol: 'TestType01'
+    category: synthetic_test_type
+    testing: true
+    test_symbol:
+      id: TestType01
+      category: type
+      value_type: type
+    description: Registered synthetic type symbol TestType01 used by parser validation campaigns.
+  - id: not:test-type02
+    name: TestType02
+    symbol: 'TestType02'
+    category: synthetic_test_type
+    testing: true
+    test_symbol:
+      id: TestType02
+      category: type
+      value_type: type
+    description: Registered synthetic type symbol TestType02 used by parser validation campaigns.
+  - id: not:test-type03
+    name: TestType03
+    symbol: 'TestType03'
+    category: synthetic_test_type
+    testing: true
+    test_symbol:
+      id: TestType03
+      category: type
+      value_type: type
+    description: Registered synthetic type symbol TestType03 used by parser validation campaigns.
+  - id: not:test-type04
+    name: TestType04
+    symbol: 'TestType04'
+    category: synthetic_test_type
+    testing: true
+    test_symbol:
+      id: TestType04
+      category: type
+      value_type: type
+    description: Registered synthetic type symbol TestType04 used by parser validation campaigns.
+  - id: not:test-type05
+    name: TestType05
+    symbol: 'TestType05'
+    category: synthetic_test_type
+    testing: true
+    test_symbol:
+      id: TestType05
+      category: type
+      value_type: type
+    description: Registered synthetic type symbol TestType05 used by parser validation campaigns.
+  - id: not:test-type06
+    name: TestType06
+    symbol: 'TestType06'
+    category: synthetic_test_type
+    testing: true
+    test_symbol:
+      id: TestType06
+      category: type
+      value_type: type
+    description: Registered synthetic type symbol TestType06 used by parser validation campaigns.
+  - id: not:test-type07
+    name: TestType07
+    symbol: 'TestType07'
+    category: synthetic_test_type
+    testing: true
+    test_symbol:
+      id: TestType07
+      category: type
+      value_type: type
+    description: Registered synthetic type symbol TestType07 used by parser validation campaigns.
+  - id: not:test-type08
+    name: TestType08
+    symbol: 'TestType08'
+    category: synthetic_test_type
+    testing: true
+    test_symbol:
+      id: TestType08
+      category: type
+      value_type: type
+    description: Registered synthetic type symbol TestType08 used by parser validation campaigns.
+  - id: not:test-ambient01
+    name: TestAmbient01
+    symbol: 'A_{1}'
+    category: synthetic_test_ambient
+    testing: true
+    test_symbol:
+      id: TestAmbient01
+      category: ambient
+      value_type: ambient
+      metadata:
+        element_type: element
+    description: Registered synthetic ambient symbol TestAmbient01 used by parser validation campaigns.
+  - id: not:test-ambient02
+    name: TestAmbient02
+    symbol: 'A_{2}'
+    category: synthetic_test_ambient
+    testing: true
+    test_symbol:
+      id: TestAmbient02
+      category: ambient
+      value_type: ambient
+      metadata:
+        element_type: element
+    description: Registered synthetic ambient symbol TestAmbient02 used by parser validation campaigns.
+  - id: not:test-ambient03
+    name: TestAmbient03
+    symbol: 'A_{3}'
+    category: synthetic_test_ambient
+    testing: true
+    test_symbol:
+      id: TestAmbient03
+      category: ambient
+      value_type: ambient
+      metadata:
+        element_type: element
+    description: Registered synthetic ambient symbol TestAmbient03 used by parser validation campaigns.
+  - id: not:test-ambient04
+    name: TestAmbient04
+    symbol: 'A_{4}'
+    category: synthetic_test_ambient
+    testing: true
+    test_symbol:
+      id: TestAmbient04
+      category: ambient
+      value_type: ambient
+      metadata:
+        element_type: element
+    description: Registered synthetic ambient symbol TestAmbient04 used by parser validation campaigns.
+  - id: not:test-ambient05
+    name: TestAmbient05
+    symbol: 'A_{5}'
+    category: synthetic_test_ambient
+    testing: true
+    test_symbol:
+      id: TestAmbient05
+      category: ambient
+      value_type: ambient
+      metadata:
+        element_type: element
+    description: Registered synthetic ambient symbol TestAmbient05 used by parser validation campaigns.
+  - id: not:test-ambient06
+    name: TestAmbient06
+    symbol: 'A_{6}'
+    category: synthetic_test_ambient
+    testing: true
+    test_symbol:
+      id: TestAmbient06
+      category: ambient
+      value_type: ambient
+      metadata:
+        element_type: element
+    description: Registered synthetic ambient symbol TestAmbient06 used by parser validation campaigns.
+  - id: not:test-numbersystem01
+    name: TestNumberSystem01
+    symbol: '\mathbb{T}_{1}'
+    category: synthetic_test_number_system
+    testing: true
+    test_symbol:
+      id: TestNumberSystem01
+      category: number_system
+      value_type: number_system
+      metadata:
+        element_type: number
+    description: Registered synthetic number_system symbol TestNumberSystem01 used by parser validation campaigns.
+  - id: not:test-numbersystem02
+    name: TestNumberSystem02
+    symbol: '\mathbb{T}_{2}'
+    category: synthetic_test_number_system
+    testing: true
+    test_symbol:
+      id: TestNumberSystem02
+      category: number_system
+      value_type: number_system
+      metadata:
+        element_type: number
+    description: Registered synthetic number_system symbol TestNumberSystem02 used by parser validation campaigns.
+  - id: not:test-numbersystem03
+    name: TestNumberSystem03
+    symbol: '\mathbb{T}_{3}'
+    category: synthetic_test_number_system
+    testing: true
+    test_symbol:
+      id: TestNumberSystem03
+      category: number_system
+      value_type: number_system
+      metadata:
+        element_type: number
+    description: Registered synthetic number_system symbol TestNumberSystem03 used by parser validation campaigns.
+  - id: not:test-element01
+    name: TestElement01
+    symbol: 'x_{1}'
+    category: synthetic_test_element
+    testing: true
+    test_symbol:
+      id: TestElement01
+      category: element
+      value_type: element
+    description: Registered synthetic element symbol TestElement01 used by parser validation campaigns.
+  - id: not:test-element02
+    name: TestElement02
+    symbol: 'x_{2}'
+    category: synthetic_test_element
+    testing: true
+    test_symbol:
+      id: TestElement02
+      category: element
+      value_type: element
+    description: Registered synthetic element symbol TestElement02 used by parser validation campaigns.
+  - id: not:test-element03
+    name: TestElement03
+    symbol: 'x_{3}'
+    category: synthetic_test_element
+    testing: true
+    test_symbol:
+      id: TestElement03
+      category: element
+      value_type: element
+    description: Registered synthetic element symbol TestElement03 used by parser validation campaigns.
+  - id: not:test-element04
+    name: TestElement04
+    symbol: 'x_{4}'
+    category: synthetic_test_element
+    testing: true
+    test_symbol:
+      id: TestElement04
+      category: element
+      value_type: element
+    description: Registered synthetic element symbol TestElement04 used by parser validation campaigns.
+  - id: not:test-element05
+    name: TestElement05
+    symbol: 'x_{5}'
+    category: synthetic_test_element
+    testing: true
+    test_symbol:
+      id: TestElement05
+      category: element
+      value_type: element
+    description: Registered synthetic element symbol TestElement05 used by parser validation campaigns.
+  - id: not:test-element06
+    name: TestElement06
+    symbol: 'x_{6}'
+    category: synthetic_test_element
+    testing: true
+    test_symbol:
+      id: TestElement06
+      category: element
+      value_type: element
+    description: Registered synthetic element symbol TestElement06 used by parser validation campaigns.
+  - id: not:test-element07
+    name: TestElement07
+    symbol: 'x_{7}'
+    category: synthetic_test_element
+    testing: true
+    test_symbol:
+      id: TestElement07
+      category: element
+      value_type: element
+    description: Registered synthetic element symbol TestElement07 used by parser validation campaigns.
+  - id: not:test-element08
+    name: TestElement08
+    symbol: 'x_{8}'
+    category: synthetic_test_element
+    testing: true
+    test_symbol:
+      id: TestElement08
+      category: element
+      value_type: element
+    description: Registered synthetic element symbol TestElement08 used by parser validation campaigns.
+  - id: not:test-element09
+    name: TestElement09
+    symbol: 'x_{9}'
+    category: synthetic_test_element
+    testing: true
+    test_symbol:
+      id: TestElement09
+      category: element
+      value_type: element
+    description: Registered synthetic element symbol TestElement09 used by parser validation campaigns.
+  - id: not:test-element10
+    name: TestElement10
+    symbol: 'x_{10}'
+    category: synthetic_test_element
+    testing: true
+    test_symbol:
+      id: TestElement10
+      category: element
+      value_type: element
+    description: Registered synthetic element symbol TestElement10 used by parser validation campaigns.
+  - id: not:test-element11
+    name: TestElement11
+    symbol: 'x_{11}'
+    category: synthetic_test_element
+    testing: true
+    test_symbol:
+      id: TestElement11
+      category: element
+      value_type: element
+    description: Registered synthetic element symbol TestElement11 used by parser validation campaigns.
+  - id: not:test-element12
+    name: TestElement12
+    symbol: 'x_{12}'
+    category: synthetic_test_element
+    testing: true
+    test_symbol:
+      id: TestElement12
+      category: element
+      value_type: element
+    description: Registered synthetic element symbol TestElement12 used by parser validation campaigns.
+  - id: not:test-element13
+    name: TestElement13
+    symbol: 'x_{13}'
+    category: synthetic_test_element
+    testing: true
+    test_symbol:
+      id: TestElement13
+      category: element
+      value_type: element
+    description: Registered synthetic element symbol TestElement13 used by parser validation campaigns.
+  - id: not:test-element14
+    name: TestElement14
+    symbol: 'x_{14}'
+    category: synthetic_test_element
+    testing: true
+    test_symbol:
+      id: TestElement14
+      category: element
+      value_type: element
+    description: Registered synthetic element symbol TestElement14 used by parser validation campaigns.
+  - id: not:test-element15
+    name: TestElement15
+    symbol: 'x_{15}'
+    category: synthetic_test_element
+    testing: true
+    test_symbol:
+      id: TestElement15
+      category: element
+      value_type: element
+    description: Registered synthetic element symbol TestElement15 used by parser validation campaigns.
+  - id: not:test-element16
+    name: TestElement16
+    symbol: 'x_{16}'
+    category: synthetic_test_element
+    testing: true
+    test_symbol:
+      id: TestElement16
+      category: element
+      value_type: element
+    description: Registered synthetic element symbol TestElement16 used by parser validation campaigns.
+  - id: not:test-element17
+    name: TestElement17
+    symbol: 'x_{17}'
+    category: synthetic_test_element
+    testing: true
+    test_symbol:
+      id: TestElement17
+      category: element
+      value_type: element
+    description: Registered synthetic element symbol TestElement17 used by parser validation campaigns.
+  - id: not:test-element18
+    name: TestElement18
+    symbol: 'x_{18}'
+    category: synthetic_test_element
+    testing: true
+    test_symbol:
+      id: TestElement18
+      category: element
+      value_type: element
+    description: Registered synthetic element symbol TestElement18 used by parser validation campaigns.
+  - id: not:test-set01
+    name: TestSet01
+    symbol: 'S_{1}'
+    category: synthetic_test_set
+    testing: true
+    test_symbol:
+      id: TestSet01
+      category: set
+      value_type: set
+    description: Registered synthetic set symbol TestSet01 used by parser validation campaigns.
+  - id: not:test-set02
+    name: TestSet02
+    symbol: 'S_{2}'
+    category: synthetic_test_set
+    testing: true
+    test_symbol:
+      id: TestSet02
+      category: set
+      value_type: set
+    description: Registered synthetic set symbol TestSet02 used by parser validation campaigns.
+  - id: not:test-set03
+    name: TestSet03
+    symbol: 'S_{3}'
+    category: synthetic_test_set
+    testing: true
+    test_symbol:
+      id: TestSet03
+      category: set
+      value_type: set
+    description: Registered synthetic set symbol TestSet03 used by parser validation campaigns.
+  - id: not:test-set04
+    name: TestSet04
+    symbol: 'S_{4}'
+    category: synthetic_test_set
+    testing: true
+    test_symbol:
+      id: TestSet04
+      category: set
+      value_type: set
+    description: Registered synthetic set symbol TestSet04 used by parser validation campaigns.
+  - id: not:test-set05
+    name: TestSet05
+    symbol: 'S_{5}'
+    category: synthetic_test_set
+    testing: true
+    test_symbol:
+      id: TestSet05
+      category: set
+      value_type: set
+    description: Registered synthetic set symbol TestSet05 used by parser validation campaigns.
+  - id: not:test-set06
+    name: TestSet06
+    symbol: 'S_{6}'
+    category: synthetic_test_set
+    testing: true
+    test_symbol:
+      id: TestSet06
+      category: set
+      value_type: set
+    description: Registered synthetic set symbol TestSet06 used by parser validation campaigns.
+  - id: not:test-function01
+    name: TestFunction01
+    symbol: 'f_{1}'
+    category: synthetic_test_function
+    testing: true
+    test_symbol:
+      id: TestFunction01
+      category: function
+      value_type: function
+      arity: 1
+      argument_types:
+      - element
+      return_type: ambient
+    description: Registered synthetic function symbol TestFunction01 used by parser validation campaigns.
+  - id: not:test-function02
+    name: TestFunction02
+    symbol: 'f_{2}'
+    category: synthetic_test_function
+    testing: true
+    test_symbol:
+      id: TestFunction02
+      category: function
+      value_type: function
+      arity: 2
+      argument_types:
+      - element
+      - element
+      return_type: number
+    description: Registered synthetic function symbol TestFunction02 used by parser validation campaigns.
+  - id: not:test-function03
+    name: TestFunction03
+    symbol: 'f_{3}'
+    category: synthetic_test_function
+    testing: true
+    test_symbol:
+      id: TestFunction03
+      category: function
+      value_type: function
+      arity: 3
+      argument_types:
+      - element
+      - element
+      - element
+      return_type: set
+    description: Registered synthetic function symbol TestFunction03 used by parser validation campaigns.
+  - id: not:test-function04
+    name: TestFunction04
+    symbol: 'f_{4}'
+    category: synthetic_test_function
+    testing: true
+    test_symbol:
+      id: TestFunction04
+      category: function
+      value_type: function
+      arity: 0
+      return_type: structure
+    description: Registered synthetic function symbol TestFunction04 used by parser validation campaigns.
+  - id: not:test-function05
+    name: TestFunction05
+    symbol: 'f_{5}'
+    category: synthetic_test_function
+    testing: true
+    test_symbol:
+      id: TestFunction05
+      category: function
+      value_type: function
+      arity: 1
+      argument_types:
+      - element
+      return_type: function
+    description: Registered synthetic function symbol TestFunction05 used by parser validation campaigns.
+  - id: not:test-function06
+    name: TestFunction06
+    symbol: 'f_{6}'
+    category: synthetic_test_function
+    testing: true
+    test_symbol:
+      id: TestFunction06
+      category: function
+      value_type: function
+      arity: 2
+      argument_types:
+      - element
+      - element
+      return_type: element
+    description: Registered synthetic function symbol TestFunction06 used by parser validation campaigns.
+  - id: not:test-function07
+    name: TestFunction07
+    symbol: 'f_{7}'
+    category: synthetic_test_function
+    testing: true
+    test_symbol:
+      id: TestFunction07
+      category: function
+      value_type: function
+      arity: 3
+      argument_types:
+      - element
+      - element
+      - element
+      return_type: ambient
+    description: Registered synthetic function symbol TestFunction07 used by parser validation campaigns.
+  - id: not:test-function08
+    name: TestFunction08
+    symbol: 'f_{8}'
+    category: synthetic_test_function
+    testing: true
+    test_symbol:
+      id: TestFunction08
+      category: function
+      value_type: function
+      arity: 0
+      return_type: number
+    description: Registered synthetic function symbol TestFunction08 used by parser validation campaigns.
+  - id: not:test-function09
+    name: TestFunction09
+    symbol: 'f_{9}'
+    category: synthetic_test_function
+    testing: true
+    test_symbol:
+      id: TestFunction09
+      category: function
+      value_type: function
+      arity: 1
+      argument_types:
+      - element
+      return_type: set
+    description: Registered synthetic function symbol TestFunction09 used by parser validation campaigns.
+  - id: not:test-function10
+    name: TestFunction10
+    symbol: 'f_{10}'
+    category: synthetic_test_function
+    testing: true
+    test_symbol:
+      id: TestFunction10
+      category: function
+      value_type: function
+      arity: 2
+      argument_types:
+      - element
+      - element
+      return_type: structure
+    description: Registered synthetic function symbol TestFunction10 used by parser validation campaigns.
+  - id: not:test-function11
+    name: TestFunction11
+    symbol: 'f_{11}'
+    category: synthetic_test_function
+    testing: true
+    test_symbol:
+      id: TestFunction11
+      category: function
+      value_type: function
+      arity: 3
+      argument_types:
+      - element
+      - element
+      - element
+      return_type: function
+    description: Registered synthetic function symbol TestFunction11 used by parser validation campaigns.
+  - id: not:test-function12
+    name: TestFunction12
+    symbol: 'f_{12}'
+    category: synthetic_test_function
+    testing: true
+    test_symbol:
+      id: TestFunction12
+      category: function
+      value_type: function
+      arity: 0
+      return_type: element
+    description: Registered synthetic function symbol TestFunction12 used by parser validation campaigns.
+  - id: not:test-function13
+    name: TestFunction13
+    symbol: 'f_{13}'
+    category: synthetic_test_function
+    testing: true
+    test_symbol:
+      id: TestFunction13
+      category: function
+      value_type: function
+      arity: 1
+      argument_types:
+      - element
+      return_type: ambient
+    description: Registered synthetic function symbol TestFunction13 used by parser validation campaigns.
+  - id: not:test-function14
+    name: TestFunction14
+    symbol: 'f_{14}'
+    category: synthetic_test_function
+    testing: true
+    test_symbol:
+      id: TestFunction14
+      category: function
+      value_type: function
+      arity: 2
+      argument_types:
+      - element
+      - element
+      return_type: number
+    description: Registered synthetic function symbol TestFunction14 used by parser validation campaigns.
+  - id: not:test-function15
+    name: TestFunction15
+    symbol: 'f_{15}'
+    category: synthetic_test_function
+    testing: true
+    test_symbol:
+      id: TestFunction15
+      category: function
+      value_type: function
+      arity: 3
+      argument_types:
+      - element
+      - element
+      - element
+      return_type: set
+    description: Registered synthetic function symbol TestFunction15 used by parser validation campaigns.
+  - id: not:test-function16
+    name: TestFunction16
+    symbol: 'f_{16}'
+    category: synthetic_test_function
+    testing: true
+    test_symbol:
+      id: TestFunction16
+      category: function
+      value_type: function
+      arity: 0
+      return_type: structure
+    description: Registered synthetic function symbol TestFunction16 used by parser validation campaigns.
+  - id: not:test-operation01
+    name: TestOperation01
+    symbol: '\star_{1}'
+    category: synthetic_test_operation
+    testing: true
+    test_symbol:
+      id: TestOperation01
+      category: operation
+      value_type: function
+      arity: 2
+      argument_types:
+      - number
+      - number
+      return_type: number
+    description: Registered synthetic operation symbol TestOperation01 used by parser validation campaigns.
+  - id: not:test-operation02
+    name: TestOperation02
+    symbol: '\star_{2}'
+    category: synthetic_test_operation
+    testing: true
+    test_symbol:
+      id: TestOperation02
+      category: operation
+      value_type: function
+      arity: 3
+      argument_types:
+      - element
+      - element
+      - element
+      return_type: element
+    description: Registered synthetic operation symbol TestOperation02 used by parser validation campaigns.
+  - id: not:test-operation03
+    name: TestOperation03
+    symbol: '\star_{3}'
+    category: synthetic_test_operation
+    testing: true
+    test_symbol:
+      id: TestOperation03
+      category: operation
+      value_type: function
+      arity: 1
+      argument_types:
+      - number
+      return_type: number
+    description: Registered synthetic operation symbol TestOperation03 used by parser validation campaigns.
+  - id: not:test-operation04
+    name: TestOperation04
+    symbol: '\star_{4}'
+    category: synthetic_test_operation
+    testing: true
+    test_symbol:
+      id: TestOperation04
+      category: operation
+      value_type: function
+      arity: 2
+      argument_types:
+      - element
+      - element
+      return_type: element
+    description: Registered synthetic operation symbol TestOperation04 used by parser validation campaigns.
+  - id: not:test-operation05
+    name: TestOperation05
+    symbol: '\star_{5}'
+    category: synthetic_test_operation
+    testing: true
+    test_symbol:
+      id: TestOperation05
+      category: operation
+      value_type: function
+      arity: 3
+      argument_types:
+      - number
+      - number
+      - number
+      return_type: number
+    description: Registered synthetic operation symbol TestOperation05 used by parser validation campaigns.
+  - id: not:test-operation06
+    name: TestOperation06
+    symbol: '\star_{6}'
+    category: synthetic_test_operation
+    testing: true
+    test_symbol:
+      id: TestOperation06
+      category: operation
+      value_type: function
+      arity: 1
+      argument_types:
+      - element
+      return_type: element
+    description: Registered synthetic operation symbol TestOperation06 used by parser validation campaigns.
+  - id: not:test-operation07
+    name: TestOperation07
+    symbol: '\star_{7}'
+    category: synthetic_test_operation
+    testing: true
+    test_symbol:
+      id: TestOperation07
+      category: operation
+      value_type: function
+      arity: 2
+      argument_types:
+      - number
+      - number
+      return_type: number
+    description: Registered synthetic operation symbol TestOperation07 used by parser validation campaigns.
+  - id: not:test-operation08
+    name: TestOperation08
+    symbol: '\star_{8}'
+    category: synthetic_test_operation
+    testing: true
+    test_symbol:
+      id: TestOperation08
+      category: operation
+      value_type: function
+      arity: 3
+      argument_types:
+      - element
+      - element
+      - element
+      return_type: element
+    description: Registered synthetic operation symbol TestOperation08 used by parser validation campaigns.
+  - id: not:test-constant01
+    name: TestConstant01
+    symbol: 'c_{1}'
+    category: synthetic_test_constant
+    testing: true
+    test_symbol:
+      id: TestConstant01
+      category: constant
+      value_type: element
+    description: Registered synthetic constant symbol TestConstant01 used by parser validation campaigns.
+  - id: not:test-constant02
+    name: TestConstant02
+    symbol: 'c_{2}'
+    category: synthetic_test_constant
+    testing: true
+    test_symbol:
+      id: TestConstant02
+      category: constant
+      value_type: number
+    description: Registered synthetic constant symbol TestConstant02 used by parser validation campaigns.
+  - id: not:test-constant03
+    name: TestConstant03
+    symbol: 'c_{3}'
+    category: synthetic_test_constant
+    testing: true
+    test_symbol:
+      id: TestConstant03
+      category: constant
+      value_type: structure
+    description: Registered synthetic constant symbol TestConstant03 used by parser validation campaigns.
+  - id: not:test-constant04
+    name: TestConstant04
+    symbol: 'c_{4}'
+    category: synthetic_test_constant
+    testing: true
+    test_symbol:
+      id: TestConstant04
+      category: constant
+      value_type: element
+    description: Registered synthetic constant symbol TestConstant04 used by parser validation campaigns.
+  - id: not:test-constant05
+    name: TestConstant05
+    symbol: 'c_{5}'
+    category: synthetic_test_constant
+    testing: true
+    test_symbol:
+      id: TestConstant05
+      category: constant
+      value_type: number
+    description: Registered synthetic constant symbol TestConstant05 used by parser validation campaigns.
+  - id: not:test-constant06
+    name: TestConstant06
+    symbol: 'c_{6}'
+    category: synthetic_test_constant
+    testing: true
+    test_symbol:
+      id: TestConstant06
+      category: constant
+      value_type: structure
+    description: Registered synthetic constant symbol TestConstant06 used by parser validation campaigns.
+  - id: not:test-constant07
+    name: TestConstant07
+    symbol: 'c_{7}'
+    category: synthetic_test_constant
+    testing: true
+    test_symbol:
+      id: TestConstant07
+      category: constant
+      value_type: element
+    description: Registered synthetic constant symbol TestConstant07 used by parser validation campaigns.
+  - id: not:test-constant08
+    name: TestConstant08
+    symbol: 'c_{8}'
+    category: synthetic_test_constant
+    testing: true
+    test_symbol:
+      id: TestConstant08
+      category: constant
+      value_type: number
+    description: Registered synthetic constant symbol TestConstant08 used by parser validation campaigns.
 operator_bridges:
   - id: bridge:sup-equals-negative-inf
     description: >

@@ -72,6 +72,11 @@ The file is the topic router. It may contain comments, the topic's rendered
 `\section{...}` heading, and `\input` lines only. It must not contain
 placeholder prose, formal content, labels, or proof material.
 
+Section-scale notes must be foldered by topic from the start. Do not create
+`notes/<topic>.tex` or other flat note bodies directly under `notes/` as an
+intermediate convenience. Create `notes/<topic>/index.tex` first, then route
+any supplied body content through files inside `notes/<topic>/`.
+
 Do not add definitions, theorems, examples, dependencies, topic lists, or
 labels unless they are already supplied by a canonical registry or by the task.
 

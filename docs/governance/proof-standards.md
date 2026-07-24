@@ -1,5 +1,14 @@
 # Proof Standards
 
+## Proof Authoring Boundary
+
+Proofs are user-owned unless a task explicitly asks an agent to help write,
+complete, repair, or formalize them. This applies to handwritten proof
+attempts, TeX proof bodies, Lean proof terms and tactic scripts, and any other
+proof-bearing artifact. Agents may create compile-safe proof stubs, theorem
+statements, routing metadata, and extraction-visible links, but must leave proof
+bodies as stubs unless the user specifically requests proof authoring help.
+
 The enforced shape authority is `constitution/schema/file-schema.yaml`
 (`proof_file.required_layers_in_order`), checked by
 `tools/governance/validate_volume.py`. This document is the human-readable

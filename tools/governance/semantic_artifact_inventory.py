@@ -27,10 +27,7 @@ FORMAL_ENV_RE = re.compile(
     r"(?:\[(?P<title>[^\]]+)\])?",
     re.IGNORECASE,
 )
-FORMAL_BEGIN_OR_BOX_RE = re.compile(
-    r"\\begin\{(?:definition|axiom|theorem|lemma|proposition|corollary)(?:box)?\}",
-    re.IGNORECASE,
-)
+FORMAL_END_RE = re.compile(r"\\end\{(?P<env>definition|axiom|theorem|lemma|proposition|corollary)\}", re.IGNORECASE)
 FORMAL_PREFIX_RE = re.compile(r"^(def|ax|thm|lem|prop|cor):")
 LABEL_RE = re.compile(r"\\label\{(?P<label>[^{}]+)\}")
 LRA_META_RE = re.compile(r"(?P<key>series|volume|book|chapter)\s*=\s*\{(?P<value>[^{}]+)\}")
@@ -175,15 +172,18 @@ def file_context(path: Path, volume_source: Path) -> tuple[str | None, str | Non
 
 def formal_blocks_in_file(path: Path, book_root: Path, volume_source: Path) -> list[RoutedFormal]:
     text = read_text(path)
-    starts = list(FORMAL_BEGIN_OR_BOX_RE.finditer(text))
+    starts = list(FORMAL_ENV_RE.finditer(text))
     book, chapter, section = file_context(path, volume_source)
     blocks: list[RoutedFormal] = []
-    for index, start in enumerate(starts):
-        next_start = starts[index + 1].start() if index + 1 < len(starts) else len(text)
-        block = text[start.start() : next_start]
-        env_match = FORMAL_ENV_RE.search(block)
+    for start in starts:
+        env_match = start
+        end_match = FORMAL_END_RE.search(text, start.end())
+        if not end_match or end_match.group("env").lower() != env_match.group("env").lower():
+            continue
+        block_end = end_match.end()
+        block = text[start.start() : block_end]
         label_match = LABEL_RE.search(block)
-        if not env_match or not label_match:
+        if not label_match:
             continue
         label = label_match.group("label")
         if not FORMAL_PREFIX_RE.match(label):
@@ -195,7 +195,7 @@ def formal_blocks_in_file(path: Path, book_root: Path, volume_source: Path) -> l
                 title=env_match.group("title"),
                 source_file=path,
                 line_start=line_for_offset(text, start.start()),
-                line_end=line_for_offset(text, next_start),
+                line_end=line_for_offset(text, block_end),
                 text=block,
                 book_root=book_root,
                 book=book,

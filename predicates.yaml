@@ -8583,12 +8583,17 @@ predicates:
     kind: predicate
     category: volume_ii
     arguments:
-      - name: X
-        role: object
-      - name: C
-        role: context
+      - name: f
+        role: function
+      - name: peano_system
+        role: structure
+      - name: W
+        role: codomain
+      - name: c
+        role: initial_value
+      - name: Phi
+        role: transition_function
     returns: truth_value
-    ambient_argument: C
     polymorphic: true
     surface_forms:
       - StageDependentRecursionSolution
@@ -8937,12 +8942,13 @@ predicates:
     kind: predicate
     category: volume_ii
     arguments:
-      - name: X
-        role: object
-      - name: C
-        role: context
+      - name: P
+        role: carrier
+      - name: order
+        role: relation
+      - name: phi
+        role: predicate
     returns: truth_value
-    ambient_argument: C
     polymorphic: true
     surface_forms:
       - StrongInductionPrinciple
@@ -9110,3 +9116,797 @@ predicates:
       The IEEE binary datum x in format F has encoding class C. Standard
       classes include normal, subnormal, infinity, and NaN; these are class
       objects rather than separate predicate names.
+
+  - id: pred:test-predicate-1
+    name: TestPredicate01
+    kind: predicate
+    category: synthetic_test_predicate
+    testing: true
+    arguments:
+      - name: arg1_element
+        role: element
+      - name: arg2_element
+        role: element
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestPredicate01
+      - P_{1}
+      - P_1
+    description: >
+      Registered synthetic predicate symbol TestPredicate01 used by parser validation campaigns.
+
+  - id: pred:test-predicate-2
+    name: TestPredicate02
+    kind: predicate
+    category: synthetic_test_predicate
+    testing: true
+    arguments: []
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestPredicate02
+      - P_{2}
+      - P_2
+    description: >
+      Registered synthetic predicate symbol TestPredicate02 used by parser validation campaigns.
+
+  - id: pred:test-predicate-3
+    name: TestPredicate03
+    kind: predicate
+    category: synthetic_test_predicate
+    testing: true
+    arguments: []
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestPredicate03
+      - P_{3}
+      - P_3
+    description: >
+      Registered synthetic predicate symbol TestPredicate03 used by parser validation campaigns.
+
+  - id: pred:test-predicate-4
+    name: TestPredicate04
+    kind: predicate
+    category: synthetic_test_predicate
+    testing: true
+    arguments:
+      - name: arg1_element
+        role: element
+      - name: arg2_element
+        role: element
+      - name: arg3_element
+        role: element
+      - name: arg4_element
+        role: element
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestPredicate04
+      - P_{4}
+      - P_4
+    description: >
+      Registered synthetic predicate symbol TestPredicate04 used by parser validation campaigns.
+
+  - id: pred:test-predicate-5
+    name: TestPredicate05
+    kind: predicate
+    category: synthetic_test_predicate
+    testing: true
+    arguments:
+      - name: arg1_element
+        role: element
+      - name: arg2_element
+        role: element
+      - name: arg3_element
+        role: element
+      - name: arg4_element
+        role: element
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestPredicate05
+      - P_{5}
+      - P_5
+    description: >
+      Registered synthetic predicate symbol TestPredicate05 used by parser validation campaigns.
+
+  - id: pred:test-predicate-6
+    name: TestPredicate06
+    kind: predicate
+    category: synthetic_test_predicate
+    testing: true
+    arguments: []
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestPredicate06
+      - P_{6}
+      - P_6
+    description: >
+      Registered synthetic predicate symbol TestPredicate06 used by parser validation campaigns.
+
+  - id: pred:test-predicate-7
+    name: TestPredicate07
+    kind: predicate
+    category: synthetic_test_predicate
+    testing: true
+    arguments: []
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestPredicate07
+      - P_{7}
+      - P_7
+    description: >
+      Registered synthetic predicate symbol TestPredicate07 used by parser validation campaigns.
+
+  - id: pred:test-predicate-8
+    name: TestPredicate08
+    kind: predicate
+    category: synthetic_test_predicate
+    testing: true
+    arguments:
+      - name: arg1_element
+        role: element
+      - name: arg2_element
+        role: element
+      - name: arg3_element
+        role: element
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestPredicate08
+      - P_{8}
+      - P_8
+    description: >
+      Registered synthetic predicate symbol TestPredicate08 used by parser validation campaigns.
+
+  - id: pred:test-predicate-9
+    name: TestPredicate09
+    kind: predicate
+    category: synthetic_test_predicate
+    testing: true
+    arguments:
+      - name: arg1_element
+        role: element
+      - name: arg2_element
+        role: element
+      - name: arg3_element
+        role: element
+      - name: arg4_element
+        role: element
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestPredicate09
+      - P_{9}
+      - P_9
+    description: >
+      Registered synthetic predicate symbol TestPredicate09 used by parser validation campaigns.
+
+  - id: pred:test-predicate-10
+    name: TestPredicate10
+    kind: predicate
+    category: synthetic_test_predicate
+    testing: true
+    arguments:
+      - name: arg1_element
+        role: element
+      - name: arg2_element
+        role: element
+      - name: arg3_element
+        role: element
+      - name: arg4_element
+        role: element
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestPredicate10
+      - P_{10}
+      - P_10
+    description: >
+      Registered synthetic predicate symbol TestPredicate10 used by parser validation campaigns.
+
+  - id: pred:test-predicate-11
+    name: TestPredicate11
+    kind: predicate
+    category: synthetic_test_predicate
+    testing: true
+    arguments:
+      - name: arg1_element
+        role: element
+      - name: arg2_element
+        role: element
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestPredicate11
+      - P_{11}
+      - P_11
+    description: >
+      Registered synthetic predicate symbol TestPredicate11 used by parser validation campaigns.
+
+  - id: pred:test-predicate-12
+    name: TestPredicate12
+    kind: predicate
+    category: synthetic_test_predicate
+    testing: true
+    arguments:
+      - name: arg1_element
+        role: element
+      - name: arg2_element
+        role: element
+      - name: arg3_element
+        role: element
+      - name: arg4_element
+        role: element
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestPredicate12
+      - P_{12}
+      - P_12
+    description: >
+      Registered synthetic predicate symbol TestPredicate12 used by parser validation campaigns.
+
+  - id: pred:test-predicate-13
+    name: TestPredicate13
+    kind: predicate
+    category: synthetic_test_predicate
+    testing: true
+    arguments: []
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestPredicate13
+      - P_{13}
+      - P_13
+    description: >
+      Registered synthetic predicate symbol TestPredicate13 used by parser validation campaigns.
+
+  - id: pred:test-predicate-14
+    name: TestPredicate14
+    kind: predicate
+    category: synthetic_test_predicate
+    testing: true
+    arguments:
+      - name: arg1_element
+        role: element
+      - name: arg2_element
+        role: element
+      - name: arg3_element
+        role: element
+      - name: arg4_element
+        role: element
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestPredicate14
+      - P_{14}
+      - P_14
+    description: >
+      Registered synthetic predicate symbol TestPredicate14 used by parser validation campaigns.
+
+  - id: pred:test-predicate-15
+    name: TestPredicate15
+    kind: predicate
+    category: synthetic_test_predicate
+    testing: true
+    arguments:
+      - name: arg1_element
+        role: element
+      - name: arg2_element
+        role: element
+      - name: arg3_element
+        role: element
+      - name: arg4_element
+        role: element
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestPredicate15
+      - P_{15}
+      - P_15
+    description: >
+      Registered synthetic predicate symbol TestPredicate15 used by parser validation campaigns.
+
+  - id: pred:test-predicate-16
+    name: TestPredicate16
+    kind: predicate
+    category: synthetic_test_predicate
+    testing: true
+    arguments:
+      - name: arg1_element
+        role: element
+      - name: arg2_element
+        role: element
+      - name: arg3_element
+        role: element
+      - name: arg4_element
+        role: element
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestPredicate16
+      - P_{16}
+      - P_16
+    description: >
+      Registered synthetic predicate symbol TestPredicate16 used by parser validation campaigns.
+
+  - id: pred:test-predicate-17
+    name: TestPredicate17
+    kind: predicate
+    category: synthetic_test_predicate
+    testing: true
+    arguments:
+      - name: arg1_element
+        role: element
+      - name: arg2_element
+        role: element
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestPredicate17
+      - P_{17}
+      - P_17
+    description: >
+      Registered synthetic predicate symbol TestPredicate17 used by parser validation campaigns.
+
+  - id: pred:test-predicate-18
+    name: TestPredicate18
+    kind: predicate
+    category: synthetic_test_predicate
+    testing: true
+    arguments:
+      - name: arg1_element
+        role: element
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestPredicate18
+      - P_{18}
+      - P_18
+    description: >
+      Registered synthetic predicate symbol TestPredicate18 used by parser validation campaigns.
+
+  - id: pred:test-predicate-19
+    name: TestPredicate19
+    kind: predicate
+    category: synthetic_test_predicate
+    testing: true
+    arguments:
+      - name: arg1_element
+        role: element
+      - name: arg2_element
+        role: element
+      - name: arg3_element
+        role: element
+      - name: arg4_element
+        role: element
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestPredicate19
+      - P_{19}
+      - P_19
+    description: >
+      Registered synthetic predicate symbol TestPredicate19 used by parser validation campaigns.
+
+  - id: pred:test-predicate-20
+    name: TestPredicate20
+    kind: predicate
+    category: synthetic_test_predicate
+    testing: true
+    arguments: []
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestPredicate20
+      - P_{20}
+      - P_20
+    description: >
+      Registered synthetic predicate symbol TestPredicate20 used by parser validation campaigns.
+
+  - id: pred:test-predicate-21
+    name: TestPredicate21
+    kind: predicate
+    category: synthetic_test_predicate
+    testing: true
+    arguments:
+      - name: arg1_element
+        role: element
+      - name: arg2_element
+        role: element
+      - name: arg3_element
+        role: element
+      - name: arg4_element
+        role: element
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestPredicate21
+      - P_{21}
+      - P_21
+    description: >
+      Registered synthetic predicate symbol TestPredicate21 used by parser validation campaigns.
+
+  - id: pred:test-predicate-22
+    name: TestPredicate22
+    kind: predicate
+    category: synthetic_test_predicate
+    testing: true
+    arguments:
+      - name: arg1_element
+        role: element
+      - name: arg2_element
+        role: element
+      - name: arg3_element
+        role: element
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestPredicate22
+      - P_{22}
+      - P_22
+    description: >
+      Registered synthetic predicate symbol TestPredicate22 used by parser validation campaigns.
+
+  - id: pred:test-predicate-23
+    name: TestPredicate23
+    kind: predicate
+    category: synthetic_test_predicate
+    testing: true
+    arguments:
+      - name: arg1_element
+        role: element
+      - name: arg2_element
+        role: element
+      - name: arg3_element
+        role: element
+      - name: arg4_element
+        role: element
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestPredicate23
+      - P_{23}
+      - P_23
+    description: >
+      Registered synthetic predicate symbol TestPredicate23 used by parser validation campaigns.
+
+  - id: pred:test-predicate-24
+    name: TestPredicate24
+    kind: predicate
+    category: synthetic_test_predicate
+    testing: true
+    arguments: []
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestPredicate24
+      - P_{24}
+      - P_24
+    description: >
+      Registered synthetic predicate symbol TestPredicate24 used by parser validation campaigns.
+
+  - id: pred:test-predicate-25
+    name: TestPredicate25
+    kind: predicate
+    category: synthetic_test_predicate
+    testing: true
+    arguments: []
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestPredicate25
+      - P_{25}
+      - P_25
+    description: >
+      Registered synthetic predicate symbol TestPredicate25 used by parser validation campaigns.
+
+  - id: pred:test-predicate-26
+    name: TestPredicate26
+    kind: predicate
+    category: synthetic_test_predicate
+    testing: true
+    arguments:
+      - name: arg1_element
+        role: element
+      - name: arg2_element
+        role: element
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestPredicate26
+      - P_{26}
+      - P_26
+    description: >
+      Registered synthetic predicate symbol TestPredicate26 used by parser validation campaigns.
+
+  - id: pred:test-predicate-27
+    name: TestPredicate27
+    kind: predicate
+    category: synthetic_test_predicate
+    testing: true
+    arguments:
+      - name: arg1_element
+        role: element
+      - name: arg2_element
+        role: element
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestPredicate27
+      - P_{27}
+      - P_27
+    description: >
+      Registered synthetic predicate symbol TestPredicate27 used by parser validation campaigns.
+
+  - id: pred:test-predicate-28
+    name: TestPredicate28
+    kind: predicate
+    category: synthetic_test_predicate
+    testing: true
+    arguments:
+      - name: arg1_element
+        role: element
+      - name: arg2_element
+        role: element
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestPredicate28
+      - P_{28}
+      - P_28
+    description: >
+      Registered synthetic predicate symbol TestPredicate28 used by parser validation campaigns.
+
+  - id: pred:test-relation-1
+    name: TestRelation01
+    kind: predicate
+    category: synthetic_test_relation
+    testing: true
+    arguments:
+      - name: arg1_element
+        role: element
+      - name: arg2_element
+        role: element
+      - name: arg3_element
+        role: element
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestRelation01
+      - R_{1}
+      - R_1
+    description: >
+      Registered synthetic relation symbol TestRelation01 used by parser validation campaigns.
+
+  - id: pred:test-relation-2
+    name: TestRelation02
+    kind: predicate
+    category: synthetic_test_relation
+    testing: true
+    arguments:
+      - name: arg1_element
+        role: element
+      - name: arg2_element
+        role: element
+      - name: arg3_element
+        role: element
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestRelation02
+      - R_{2}
+      - R_2
+    description: >
+      Registered synthetic relation symbol TestRelation02 used by parser validation campaigns.
+
+  - id: pred:test-relation-3
+    name: TestRelation03
+    kind: predicate
+    category: synthetic_test_relation
+    testing: true
+    arguments:
+      - name: arg1_element
+        role: element
+      - name: arg2_element
+        role: element
+      - name: arg3_element
+        role: element
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestRelation03
+      - R_{3}
+      - R_3
+    description: >
+      Registered synthetic relation symbol TestRelation03 used by parser validation campaigns.
+
+  - id: pred:test-relation-4
+    name: TestRelation04
+    kind: predicate
+    category: synthetic_test_relation
+    testing: true
+    arguments:
+      - name: arg1_element
+        role: element
+      - name: arg2_element
+        role: element
+      - name: arg3_element
+        role: element
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestRelation04
+      - R_{4}
+      - R_4
+    description: >
+      Registered synthetic relation symbol TestRelation04 used by parser validation campaigns.
+
+  - id: pred:test-relation-5
+    name: TestRelation05
+    kind: predicate
+    category: synthetic_test_relation
+    testing: true
+    arguments:
+      - name: arg1_element
+        role: element
+      - name: arg2_element
+        role: element
+      - name: arg3_element
+        role: element
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestRelation05
+      - R_{5}
+      - R_5
+    description: >
+      Registered synthetic relation symbol TestRelation05 used by parser validation campaigns.
+
+  - id: pred:test-relation-6
+    name: TestRelation06
+    kind: predicate
+    category: synthetic_test_relation
+    testing: true
+    arguments:
+      - name: arg1_element
+        role: element
+      - name: arg2_element
+        role: element
+      - name: arg3_element
+        role: element
+      - name: arg4_element
+        role: element
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestRelation06
+      - R_{6}
+      - R_6
+    description: >
+      Registered synthetic relation symbol TestRelation06 used by parser validation campaigns.
+
+  - id: pred:test-relation-7
+    name: TestRelation07
+    kind: predicate
+    category: synthetic_test_relation
+    testing: true
+    arguments:
+      - name: arg1_element
+        role: element
+      - name: arg2_element
+        role: element
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestRelation07
+      - R_{7}
+      - R_7
+    description: >
+      Registered synthetic relation symbol TestRelation07 used by parser validation campaigns.
+
+  - id: pred:test-relation-8
+    name: TestRelation08
+    kind: predicate
+    category: synthetic_test_relation
+    testing: true
+    arguments:
+      - name: arg1_element
+        role: element
+      - name: arg2_element
+        role: element
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestRelation08
+      - R_{8}
+      - R_8
+    description: >
+      Registered synthetic relation symbol TestRelation08 used by parser validation campaigns.
+
+  - id: pred:test-relation-9
+    name: TestRelation09
+    kind: predicate
+    category: synthetic_test_relation
+    testing: true
+    arguments:
+      - name: arg1_element
+        role: element
+      - name: arg2_element
+        role: element
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestRelation09
+      - R_{9}
+      - R_9
+    description: >
+      Registered synthetic relation symbol TestRelation09 used by parser validation campaigns.
+
+  - id: pred:test-relation-10
+    name: TestRelation10
+    kind: predicate
+    category: synthetic_test_relation
+    testing: true
+    arguments:
+      - name: arg1_element
+        role: element
+      - name: arg2_element
+        role: element
+      - name: arg3_element
+        role: element
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestRelation10
+      - R_{10}
+      - R_10
+    description: >
+      Registered synthetic relation symbol TestRelation10 used by parser validation campaigns.
+
+  - id: pred:test-relation-11
+    name: TestRelation11
+    kind: predicate
+    category: synthetic_test_relation
+    testing: true
+    arguments:
+      - name: arg1_element
+        role: element
+      - name: arg2_element
+        role: element
+      - name: arg3_element
+        role: element
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestRelation11
+      - R_{11}
+      - R_11
+    description: >
+      Registered synthetic relation symbol TestRelation11 used by parser validation campaigns.
+
+  - id: pred:test-relation-12
+    name: TestRelation12
+    kind: predicate
+    category: synthetic_test_relation
+    testing: true
+    arguments:
+      - name: arg1_element
+        role: element
+      - name: arg2_element
+        role: element
+      - name: arg3_element
+        role: element
+    returns: truth_value
+    polymorphic: true
+    surface_forms:
+      - TestRelation12
+      - R_{12}
+      - R_12
+    description: >
+      Registered synthetic relation symbol TestRelation12 used by parser validation campaigns.

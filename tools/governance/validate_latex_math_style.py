@@ -36,6 +36,12 @@ class NotationRoles:
     set_builder_separator: frozenset[str]
     logical_implication: frozenset[str]
     logical_equivalence: frozenset[str]
+    logical_negation: frozenset[str]
+    logical_conjunction: frozenset[str]
+    logical_disjunction: frozenset[str]
+    semantic_satisfaction: frozenset[str]
+    syntactic_derivability: frozenset[str]
+    formula_object_equivalence: frozenset[str]
 
 
 def load_notation_roles(governance_root: Path = GOVERNANCE_ROOT) -> NotationRoles:
@@ -47,6 +53,12 @@ def load_notation_roles(governance_root: Path = GOVERNANCE_ROOT) -> NotationRole
         "set_builder_separator": set(),
         "logical_implication": set(),
         "logical_equivalence": set(),
+        "logical_negation": set(),
+        "logical_conjunction": set(),
+        "logical_disjunction": set(),
+        "semantic_satisfaction": set(),
+        "syntactic_derivability": set(),
+        "formula_object_equivalence": set(),
     }
     for item in data.get("notation", []) or []:
         if not isinstance(item, dict):
@@ -66,6 +78,12 @@ def load_notation_roles(governance_root: Path = GOVERNANCE_ROOT) -> NotationRole
         set_builder_separator=frozenset(by_role["set_builder_separator"]),
         logical_implication=frozenset(by_role["logical_implication"]),
         logical_equivalence=frozenset(by_role["logical_equivalence"]),
+        logical_negation=frozenset(by_role["logical_negation"]),
+        logical_conjunction=frozenset(by_role["logical_conjunction"]),
+        logical_disjunction=frozenset(by_role["logical_disjunction"]),
+        semantic_satisfaction=frozenset(by_role["semantic_satisfaction"]),
+        syntactic_derivability=frozenset(by_role["syntactic_derivability"]),
+        formula_object_equivalence=frozenset(by_role["formula_object_equivalence"]),
     )
 
 

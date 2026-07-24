@@ -1,0 +1,22 @@
+count: 100
+seed: 1
+strategy: least-covered
+max_formula_depth: 4
+max_quantifier_depth: 3
+max_discourse_steps: 4
+predicate_arities: [0, 1, 2, 3, 4]
+function_arities: [0, 1, 2, 3]
+connectives: [not, and, or, implies, iff]
+quantifiers: [forall, exists, exists_unique]
+discourse_forms:
+  - formula
+  - let-suppose-then
+  - let-assume-therefore
+  - given-it-follows
+renderers:
+  - house
+  - fully-parenthesized
+  - text-connectives
+  - expanded-quantifiers
+argument_modes: [homogeneous, heterogeneous]
+required_features: {}

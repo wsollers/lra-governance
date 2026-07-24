@@ -43,6 +43,7 @@ owned work, but they do not fork or weaken the global rules.
 - `model-view-standards.md`
 - `build-render-standards.md`
 - `book-addition-standards.md`
+- `source-indexing-policy.md`
 - `volume-structure.md`
 - `decoration-audit-standards.md`
 - `repo-overlays/`

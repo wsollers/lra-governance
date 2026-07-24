@@ -15,6 +15,7 @@ from typing import Any
 
 import yaml
 
+from semantic_artifact_ast_support import display_body, parser_witnesses
 from semantic_artifact_inventory import artifact_package_for, routed_formals
 
 
@@ -69,6 +70,34 @@ def parser_table(block: dict[str, Any]) -> str:
         f"- Parsers agree: `{witnesses.get('parsers_agree')}`",
     ]
     return "\n".join(lines) + "\n"
+
+
+def routed_display_parser_block(candidate_text: str) -> list[str]:
+    routed_display = display_body(candidate_text)
+    witnesses = parser_witnesses(routed_display)
+    hand = witnesses.get("hand_parser") if isinstance(witnesses.get("hand_parser"), dict) else {}
+    lark = witnesses.get("lark_parser") if isinstance(witnesses.get("lark_parser"), dict) else {}
+    return [
+        "### Routed Display TeX",
+        "",
+        fenced(routed_display, "tex"),
+        "### Routed Display Parser Witness",
+        "",
+        "\n".join(
+            [
+                f"- Hand parser available: `{hand.get('available')}`",
+                f"- Lark parser available: `{lark.get('available')}`",
+                f"- Parsers agree: `{witnesses.get('parsers_agree')}`",
+            ]
+        )
+        + "\n",
+        "### Routed Hand Parser AST",
+        "",
+        fenced(hand.get("ast") or hand.get("error"), "yaml" if hand.get("ast") else "text"),
+        "### Routed Lark Parser AST",
+        "",
+        fenced(lark.get("ast") or lark.get("error"), "yaml" if lark.get("ast") else "text"),
+    ]
 
 
 def render_label(repo_root: Path, candidate: Any, scope_by_label: dict[str, dict[str, Any]]) -> str:
@@ -136,6 +165,8 @@ def render_label(repo_root: Path, candidate: Any, scope_by_label: dict[str, dict
         fenced(approved.get("latex"), "tex"),
         fenced(approved.get("ast"), "yaml"),
     ]
+    if not artifact_path.exists():
+        lines.extend(routed_display_parser_block(candidate.text))
     if corrected_path.exists():
         lines.extend(["### Materialized Corrected TeX", "", fenced(corrected_path.read_text(encoding="utf-8"), "tex")])
     return "\n".join(lines).rstrip() + "\n"
@@ -169,9 +200,6 @@ def main() -> int:
         "",
     ]
     for candidate in selected:
-        package = artifact_package_for(candidate, repo_root)
-        if not (repo_root / package["artifact"]).exists():
-            continue
         lines.append(render_label(repo_root, candidate, scope))
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")

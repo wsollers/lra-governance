@@ -82,6 +82,13 @@ chapter and must fail validation.
 `notes/index.tex` is the chapter notes router. It contains comments and topic
 `\input` lines only; it does not render a numbered chapter-title section.
 
+Chapter notes are organized by topic folders. Active mathematical or
+expository note bodies must not be written as flat files directly under
+`notes/`. Each section-scale topic lives under `notes/{topic}/`, is routed
+through `notes/{topic}/index.tex`, and is then reached from the chapter
+`notes/index.tex` router. This is a structural rule, not a style preference:
+`notes/` is a router directory, not a dumping ground for unrelated note files.
+
 Topic index files under `notes/{topic}/` are rendered topic routers. They
 contain comments, exactly one non-starred `\section{<Topic Display Title>}`, an
 optional Toolkit box, and body `\input` lines only. The topic router owns the
