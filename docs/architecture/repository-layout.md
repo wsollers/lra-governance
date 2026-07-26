@@ -19,6 +19,7 @@ content sync; the "ownership" column below is authority, not a copy direction.
 | `lra-pdf-extractor` | PDF/source ingestion, bibliography extraction and normalization, candidate extraction, review workflow, staged outputs. Independent tool repo; reviewable candidates only. |
 | `lra-reading-categorizer` | Human-in-the-loop UI, taxonomy, queue state, review exports, and managed reading-folder scaffold for categorizing a local mathematical PDF collection. Independent collection-management repo. |
 | `lra-source-profiles` | Dynamic source profiles, candidate classification, active source indexes, attachment exports, source review workflow. Independent profile/staging repo; reviewed artifacts only. |
+| `lra-sources` | Optional private source catalog and pointer index. It may record where raw readings, generated indexes, topic source indexes, and active source-profile checkouts live; it must not contain raw PDFs or full extracted source text. |
 | `lra-volumes-output` | Published digital and print PDFs from independent volume builds. |
 
 `Learning-Real-Analysis`, the former assembled monorepo, is retired. There is no
@@ -32,6 +33,12 @@ governance rules.
 `lra-source-profiles` is a source selection and profile staging tool. It does
 not own final LRA note content, final bibliography shards, canonical YAML,
 theorem explorer internals, or governance rules.
+
+`lra-sources`, when present as a private repo, is a lookup catalog only. It may
+help agents and tools find `lra-source-profiles`, `D:\Readings`, generated
+topic indexes, and omnibus indexes across machines. It does not replace
+`lra-source-profiles` as the reviewed source-profile owner and must not store
+raw source PDFs or full generated text extracts.
 
 `lra-reading-categorizer` is a local collection-management UI for assigning
 PDFs to the approved reading taxonomy. It does not own source-profile manifests,

@@ -19,12 +19,42 @@ explicit override for deliberate one-off indexing.
 quality signals, and page-level evidence. It should not decide whether a book
 belongs in the LRA source corpus.
 
+An optional private `lra-sources` catalog repo may own cross-machine pointer
+metadata: where the reviewed source-profile checkout lives, where the local raw
+reading library lives, where generated indexes live, and which topic/omnibus
+index should be consulted first. It must not own raw PDFs, full extracted book
+text, final notes, bibliography shards, canonical YAML, or governance rules.
+
 ## Current Reading Library
 
 The default host reading library is `D:\Readings`, with source PDFs organized
 under `D:\Readings\Sources`. Generated indexes belong under
 `D:\Readings\indexes\lra` so they stay outside Git and inside the backed-up
 reading hierarchy.
+
+## Source Catalog Resolution
+
+When a task needs primary-source evidence, agents should resolve source lookup
+locations in this order:
+
+1. Use an explicit task path or environment variable when supplied:
+   `LRA_SOURCES_ROOT` for the optional private catalog repo,
+   `LRA_SOURCE_PROFILES_ROOT` for `lra-source-profiles`, or
+   `LRA_READINGS_ROOT` for the host reading library.
+2. If an adjacent private `../lra-sources` checkout exists, read its overarching
+   catalog index first. The catalog should point to the active
+   `lra-source-profiles` checkout, raw reading-library root, generated index
+   root, topic source indexes, volume aggregates, and omnibus indexes.
+3. If no `lra-sources` catalog is available, use a sibling
+   `../lra-source-profiles` checkout and the default `D:\Readings` /
+   `D:\Readings\indexes\lra` locations.
+4. If neither the catalog nor source-profile/index roots resolve, stop and
+   report that primary-source lookup cannot be certified.
+
+The optional catalog is a pointer layer, not a source-data layer. It may contain
+small manifests, source IDs, hashes, path templates, profile names, and index
+locations. Do not store raw PDFs or full generated Markdown/OCR text in that
+repo.
 
 ## Primary Source Lookup
 
@@ -38,6 +68,8 @@ or definitions, do not guess source wording from memory or web snippets. Look
 up primary-source evidence through the reviewed topic indexes and the generated
 search indexes:
 
+- an optional private catalog in `[external:lra-sources]`, when present, to
+  resolve the active source-profile checkout and generated index roots;
 - topic and chapter source indexes in
   `[external:lra-source-profiles] volumes/<volume>/<topic...>/source-index.yaml`;
 - volume aggregate source indexes in

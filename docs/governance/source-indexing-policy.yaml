@@ -6,6 +6,24 @@ library_root:
 index_root:
   host_default: D:\Readings\indexes\lra
   container_default: /readings/indexes/lra
+optional_catalog:
+  repo_name: lra-sources
+  env_var: LRA_SOURCES_ROOT
+  sibling_default: ../lra-sources
+  role: pointer_catalog_only
+  must_not_store:
+    - raw_pdfs
+    - full_ocr_text
+    - full_extracted_markdown
+    - final_volume_notes
+    - bibliography_shards
+    - canonical_yaml
+    - theorem_explorer_generated_data
+source_profiles:
+  env_var: LRA_SOURCE_PROFILES_ROOT
+  sibling_default: ../lra-source-profiles
+readings_root:
+  env_var: LRA_READINGS_ROOT
 recursive_scan:
   indexable_roots:
     - Sources/Algebra

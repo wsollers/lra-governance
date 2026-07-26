@@ -29,6 +29,10 @@ volume-to-monorepo content sync.
 - `lra-source-profiles` is an independent profile/staging repo and is not a
   source of direct sync into notes, bibliography shards, canonical YAML, or
   theorem-explorer data.
+- `lra-sources`, when present, is an optional private catalog repo for source
+  lookup pointers. It is not a raw source archive and is not a source of direct
+  sync into notes, bibliography shards, canonical YAML, source-profile records,
+  extractor outputs, or theorem-explorer data.
 
 ## Governance Resolution
 
@@ -62,6 +66,22 @@ occur through reviewable PRs in the owning repo.
 
 Generated agent wrappers for this repo, if needed, must delegate to
 `lra-governance` instead of copying governance implementations.
+
+## lra-sources
+
+`lra-sources` is an optional private catalog layer. It may provide an
+overarching index that points to the active `lra-source-profiles` checkout, the
+host reading-library root, generated source-index roots, topic source indexes,
+volume aggregate indexes, and omnibus indexes.
+
+It must not store raw PDFs, full OCR output, full extracted Markdown book text,
+final volume notes, bibliography shards, canonical YAML, or generated theorem
+explorer data. Treat it as routing metadata for source lookup, not as a
+canonical mathematical or bibliographic content owner.
+
+When `lra-sources` is absent, tools and agents should fall back to
+`lra-source-profiles` and the configured readings/index roots described in
+`docs/governance/source-indexing-policy.md`.
 
 ## lra-reading-categorizer
 
