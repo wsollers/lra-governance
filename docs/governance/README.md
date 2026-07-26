@@ -17,6 +17,12 @@ Future generators will combine:
 Repo overlays are additive. They refine the global rules for a repository's
 owned work, but they do not fork or weaken the global rules.
 
+Lean formalization takes place in `lra-lean`. From any LRA repository, requests
+to find Lean-formalized proofs, checked Lean declarations, or Lean
+proof-completion status for a topic should be routed to the sibling or external
+`lra-lean` checkout and its `LRA/` modules. Volume repositories may carry source
+prose and verification links, but they do not own Lean proof source.
+
 ## Modules
 
 - `agent-instruction-policy.md`

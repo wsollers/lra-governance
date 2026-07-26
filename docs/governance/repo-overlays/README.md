@@ -8,6 +8,8 @@ They must not become divergent forks of global rules.
 Specialist rule placement:
 
 - Lean-specific proof implementation rules belong only in `lra-lean.md`.
+- Lean formalization takes place in `lra-lean`; look there for Lean-formalized
+  proofs and checked Lean declarations, not in volume repositories.
 - C++ / Vulkan / simulation rules belong only in `lra-nurbs.md`.
 - Numerical-analysis / benchmark / plotting rules belong only in
   `lra-numerical-analysis.md`.

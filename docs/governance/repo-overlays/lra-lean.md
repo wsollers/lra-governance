@@ -2,6 +2,12 @@
 
 Repo overlay for Lean formalization.
 
+Formalization takes place in `lra-lean`. When looking for Lean-formalized
+proofs, checked Lean declarations, or Lean proof-completion work, inspect the
+`lra-lean` repository and its `LRA/` modules first; volume repositories may
+carry source prose and verification links, but they do not own Lean proof
+source.
+
 Owned concerns:
 
 - Lean-specific proof architecture,
