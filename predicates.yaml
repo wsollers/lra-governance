@@ -417,6 +417,26 @@ predicates:
     description: >
       The function d is a pseudo-metric on the carrier set X.
 
+  - id: pred:is-pointlike
+    name: IsPointlike
+    kind: predicate
+    category: topology
+    arguments:
+      - name: u
+        role: function
+      - name: X
+        role: metric_space
+    returns: truth_value
+    ambient_argument: X
+    polymorphic: true
+    surface_forms:
+      - pointlike
+      - is pointlike
+      - pointlike function
+    description: >
+      The function u satisfies the pointlike inequalities with respect to the
+      metric-space context X.
+
   - id: pred:is-norm
     name: IsNorm
     kind: predicate
