@@ -13,7 +13,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
 
-from merge_repo_overlays import repo_names
+from merge_repo_overlays import overlay_for_repo, repo_names
 
 
 WRAPPER_FILES = [
@@ -98,6 +98,7 @@ def classify(
     downstream_path: Path,
     preview_data: bytes | None,
     downstream_data: bytes | None,
+    repo: str,
 ) -> str:
     if not repo_path.exists() or not repo_path.is_dir():
         return "downstream_repo_missing"
@@ -107,6 +108,23 @@ def classify(
         return "missing_downstream"
     if preview_data == downstream_data:
         return "identical"
+    if pointer_errors(repo, downstream_data.decode("utf-8", errors="replace")):
+        return "different"
+    return "pointer_valid"
+
+
+def pointer_errors(repo: str, text: str) -> list[str]:
+    overlay = f"docs/governance/repo-overlays/{overlay_for_repo(repo)}"
+    checks = [
+        ("generated pointer header", "GENERATED POINTER WRAPPER" in text),
+        ("repo pointer", f"Repository: `{repo}`" in text),
+        ("task-router pointer", "Canonical task router: `docs/agent-task-index.md`" in text),
+        ("overlay pointer", f"Canonical repo overlay: `{overlay}`" in text),
+        ("environment resolution", "`LRA_GOVERNANCE_ROOT`" in text),
+        ("sibling resolution", "sibling `../lra-governance`" in text),
+        ("no embedded repo overlay body", "## Repo Overlay" not in text),
+    ]
+    return [name for name, ok in checks if not ok]
     return "different"
 
 
@@ -116,7 +134,9 @@ def make_record(root: Path, preview_root: Path, repo: str, wrapper_file: str) ->
     downstream_path = repo_path / wrapper_file
     preview_data = read_bytes_if_file(preview_path)
     downstream_data = read_bytes_if_file(downstream_path)
-    status = classify(repo_path, preview_path, downstream_path, preview_data, downstream_data)
+    downstream_text = downstream_data.decode("utf-8", errors="replace") if downstream_data else ""
+    errors = pointer_errors(repo, downstream_text) if downstream_data is not None else []
+    status = classify(repo_path, preview_path, downstream_path, preview_data, downstream_data, repo)
     added, removed = diff_stat(preview_data, downstream_data)
     return {
         "repo": repo,
@@ -132,6 +152,8 @@ def make_record(root: Path, preview_root: Path, repo: str, wrapper_file: str) ->
         "downstream_lines": line_count_bytes(downstream_data or b""),
         "added_lines": added,
         "removed_lines": removed,
+        "pointer_valid": not errors if downstream_data is not None else False,
+        "pointer_errors": "; ".join(errors),
     }
 
 
@@ -152,6 +174,8 @@ def write_csv(path: Path, records: list[dict[str, Any]]) -> None:
         "downstream_bytes",
         "added_lines",
         "removed_lines",
+        "pointer_valid",
+        "pointer_errors",
     ]
     with path.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=fields)
@@ -166,14 +190,22 @@ def write_markdown(path: Path, data: dict[str, Any]) -> None:
     missing_by_repo: dict[str, list[str]] = defaultdict(list)
     different_by_repo: dict[str, list[str]] = defaultdict(list)
     identical_files: list[str] = []
+    pointer_valid_files: list[str] = []
+    invalid_by_repo: dict[str, list[str]] = defaultdict(list)
     for record in records:
         key = f"{record['repo']}/{record['file']}"
         if record["status"] in {"missing_downstream", "downstream_repo_missing"}:
             missing_by_repo[record["repo"]].append(record["file"])
         elif record["status"] == "different":
             different_by_repo[record["repo"]].append(record["file"])
+            if record.get("pointer_errors"):
+                invalid_by_repo[record["repo"]].append(
+                    f"{record['file']} ({record['pointer_errors']})"
+                )
         elif record["status"] == "identical":
             identical_files.append(key)
+        elif record["status"] == "pointer_valid":
+            pointer_valid_files.append(key)
 
     lines = [
         "# Wrapper Drift Report",
@@ -189,6 +221,7 @@ def write_markdown(path: Path, data: dict[str, Any]) -> None:
         "missing_downstream",
         "identical",
         "different",
+        "pointer_valid",
         "missing_preview",
         "downstream_repo_missing",
     ]:
@@ -208,9 +241,23 @@ def write_markdown(path: Path, data: dict[str, Any]) -> None:
     else:
         lines.append("- None.")
 
+    lines.extend(["", "## Pointer Metadata Errors", ""])
+    if invalid_by_repo:
+        for repo, files in sorted(invalid_by_repo.items()):
+            lines.append(f"- `{repo}`: {', '.join(f'`{file}`' for file in files)}")
+    else:
+        lines.append("- None.")
+
     lines.extend(["", "## Files Identical", ""])
     if identical_files:
         for filename in identical_files:
+            lines.append(f"- `{filename}`")
+    else:
+        lines.append("- None.")
+
+    lines.extend(["", "## Files With Valid Pointer Metadata", ""])
+    if pointer_valid_files:
+        for filename in pointer_valid_files:
             lines.append(f"- `{filename}`")
     else:
         lines.append("- None.")
@@ -224,13 +271,13 @@ def write_markdown(path: Path, data: dict[str, Any]) -> None:
     )
     if status_counts.get("different") or status_counts.get("missing_downstream"):
         lines.append(
-            "- Review drift results before designing any controlled downstream write or sync mode."
+            "- Review pointer errors before designing any controlled downstream write or sync mode."
         )
         lines.append("- Treat missing downstream wrappers as expected until write mode exists.")
     elif status_counts.get("missing_preview") or status_counts.get("downstream_repo_missing"):
         lines.append("- Fix missing preview or repository setup before planning write mode.")
     else:
-        lines.append("- No wrapper drift found; continue with write-mode design review.")
+        lines.append("- No wrapper pointer drift found.")
 
     lines.extend(
         [

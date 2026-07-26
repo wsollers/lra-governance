@@ -2,12 +2,16 @@
 
 # Copilot Instructions
 
-Keep this file concise. Point to canonical docs and generated repo instructions
-rather than embedding large governance manuals.
+This repository uses canonical LRA governance by pointer, not by copied rules.
 
-{{ GLOBAL_AGENT_RULES }}
+Repository: `{{ REPO_NAME }}`
+Canonical task router: `docs/agent-task-index.md`
+Canonical repo overlay: `{{ OVERLAY_PATH }}`
 
-{{ REPO_OVERLAY }}
+{{ GOVERNANCE_RESOLUTION }}
 
-{{ PROVIDER_NOTES }}
+Follow `AGENTS.md` in this repository as the local pointer wrapper. Do not
+treat this file as a local source of truth.
+
+Provider note: {{ PROVIDER_NOTES }}
 

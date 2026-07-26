@@ -12,8 +12,11 @@ The generated-file and local-edit rules live in
 The generation formula is:
 
 ```text
-global governance docs + repo overlay + provider wrapper format
+repo name + task-router pointer + repo-overlay pointer + provider wrapper format
 ```
+
+Generated wrappers are thin delegates. They must not copy canonical governance
+docs or repo overlay bodies into downstream repositories.
 
 Generated downstream files are not canonical.
 
@@ -22,8 +25,9 @@ Generated downstream files are not canonical.
 Before any write:
 
 1. Generate wrapper previews under a report directory.
-2. Validate preview headers, overlay routing, and specialist-rule boundaries.
-3. Run wrapper drift reporting against downstream repos.
+2. Validate preview headers, overlay pointers, resolution rules, and
+   specialist-rule boundaries.
+3. Run wrapper pointer-drift reporting against downstream repos.
 4. Review the planned create, replace, identical, and blocked statuses.
 
 Preview and drift outputs are local reports and should not be committed unless
@@ -46,5 +50,5 @@ shared docs into downstream repos.
 
 Downstream generated wrappers should be committed through reviewable PRs or
 controlled commits after inspection. Reviewers should check the generated-file
-header, source repo, overlay routing, absence of secrets, and absence of
-unrelated positive specialist guidance.
+header, source repo, task-router pointer, overlay pointer, absence of secrets,
+and absence of embedded governance or overlay bodies.

@@ -26,6 +26,35 @@ under `D:\Readings\Sources`. Generated indexes belong under
 `D:\Readings\indexes\lra` so they stay outside Git and inside the backed-up
 reading hierarchy.
 
+## Primary Source Lookup
+
+Primary mathematical source material is located in the external reading library
+under `D:\Readings` (`D:/Readings` in slash-form paths). The source PDFs live
+under `D:\Readings\Sources`; generated lookup artifacts live under
+`D:\Readings\indexes\lra`.
+
+When adding, normalizing, auditing, or cross-checking theorem-like statements
+or definitions, do not guess source wording from memory or web snippets. Look
+up primary-source evidence through the reviewed topic indexes and the generated
+search indexes:
+
+- topic and chapter source indexes in
+  `[external:lra-source-profiles] volumes/<volume>/<topic...>/source-index.yaml`;
+- volume aggregate source indexes in
+  `[external:lra-source-profiles] volumes/<volume>/_sources/source-index.yaml`;
+- generated searchable volume caches under
+  `D:\Readings\indexes\lra\volumes\<volume>\_sources\`;
+- the global omnibus source and theorem indexes under
+  `D:\Readings\indexes\lra\omnibus\`.
+
+Use the topic index first when the target volume and topic are known, because
+it records the curated local source selection for that subject. Use the omnibus
+index when the topic is uncertain, the topic index is sparse, or alternate
+terminology may appear in sources assigned elsewhere. For definitions and
+theorem-like statements, search both the structured theorem indexes and the
+Markdown/codesearch cache, then read the surrounding extracted source text
+before treating a hit as evidence.
+
 ## Identity Model
 
 The SHA-256 hash of the PDF bytes is the stable source-object identity. File

@@ -2,9 +2,17 @@
 
 # Agent Instructions
 
-{{ GLOBAL_AGENT_RULES }}
+This repository uses canonical LRA governance by pointer, not by copied rules.
 
-{{ REPO_OVERLAY }}
+Repository: `{{ REPO_NAME }}`
+Canonical task router: `docs/agent-task-index.md`
+Canonical repo overlay: `{{ OVERLAY_PATH }}`
 
-{{ PROVIDER_NOTES }}
+{{ GOVERNANCE_RESOLUTION }}
+
+When working here, read the canonical task router, then load exactly the
+smallest relevant governance docs and the canonical repo overlay. Do not treat
+this wrapper as a local source of truth.
+
+Provider note: {{ PROVIDER_NOTES }}
 

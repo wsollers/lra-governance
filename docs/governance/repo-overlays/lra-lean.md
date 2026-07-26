@@ -43,6 +43,17 @@ proof structure legible enough for a maintainer to match it back to the source
 mathematics. Prefer small named lemmas and explicit local structure over dense
 anonymous tactic blocks when the proof has reusable mathematical content.
 
+When adding source-aligned declarations, model definitions and theorem
+statements first. Do not complete Lean proof bodies unless the user explicitly
+requests proofs. Use a compiling placeholder proof such as `sorry` for accepted
+statements whose proof work has not been requested.
+
+For proof-photo memorialization, do not turn a photographed handwritten proof
+into a completed Lean proof as part of the memorialization task. Record or
+reference the corresponding Lean statement, and leave the proof body as an
+accepted placeholder unless the user starts a separate Lean proof-completion
+task.
+
 File and module organization should mirror the formal subject matter. New
 modules belong under the appropriate `LRA/Volume*/...` tree, imported through
 the relevant volume root, and exposed through stable names that make downstream

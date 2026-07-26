@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
-"""Generate preview agent wrappers from governance docs and repo overlays."""
+"""Generate preview agent wrappers that delegate to canonical governance."""
 
 from __future__ import annotations
 
 import argparse
-import subprocess
 import sys
 from pathlib import Path
 
-from merge_repo_overlays import load_overlay, overlay_for_repo, repo_names
+from merge_repo_overlays import overlay_for_repo, repo_names
 
 
 TEMPLATE_OUTPUTS = {
@@ -34,57 +33,37 @@ def governance_root() -> Path:
     return Path(__file__).resolve().parents[2]
 
 
-def git_commit(root: Path) -> str:
-    try:
-        result = subprocess.run(
-            ["git", "rev-parse", "HEAD"],
-            cwd=root,
-            check=True,
-            capture_output=True,
-            text=True,
-        )
-    except (OSError, subprocess.CalledProcessError):
-        return "unknown"
-    return result.stdout.strip()
-
-
-def generated_header(overlay_name: str, commit: str) -> str:
+def generated_header(overlay_name: str) -> str:
     return f"""<!--
-GENERATED FILE — DO NOT EDIT BY HAND.
+GENERATED POINTER WRAPPER — DO NOT EDIT BY HAND.
 
 Source repo: wsollers/lra-governance
-Source commit: {commit}
-Generated from:
-- docs/governance/...
-- docs/architecture/...
-- docs/governance/repo-overlays/{overlay_name}
+Canonical overlay: docs/governance/repo-overlays/{overlay_name}
 
 Regenerate from lra-governance.
 Emergency downstream edits must be ported upstream before regeneration.
 -->"""
 
 
-def global_rules() -> str:
-    return """## Global Agent Rules
+def governance_resolution() -> str:
+    return """Resolve canonical governance in this order:
 
-- Treat generated instruction files as derived artifacts.
-- Follow the owning repository boundary for every task.
-- Do not include secrets, credentials, tokens, or machine-local private values.
-- Do not modify mathematical content during governance or wrapper-generation tasks.
-- Do not touch the retired `Learning-Real-Analysis` monorepo.
-- Keep context small: use governance docs as targeted references, not preload material.
-- Open only the workflow, standard, schema, or overlay needed for the current task.
-- Port emergency downstream instruction repairs back to `lra-governance`."""
+1. `LRA_GOVERNANCE_ROOT`;
+2. sibling `../lra-governance`;
+3. an explicit `lra-governance` checkout supplied by the build image or task.
+
+If canonical governance cannot be resolved, stop and report that
+`lra-governance` is not present."""
 
 
 def provider_notes(template_name: str) -> str:
     if template_name == "AGENTS.md.j2":
-        return "## Provider Notes\n\nCodex reads this file as the local agent entrypoint."
+        return "Codex reads this file as the local entrypoint, then follows canonical governance."
     if template_name == "CLAUDE.md.j2":
-        return "## Provider Notes\n\nClaude should use this wrapper as a pointer to the generated repo instructions."
+        return "Claude should import or follow `AGENTS.md`, then follow canonical governance."
     if template_name == "GEMINI.md.j2":
-        return "## Provider Notes\n\nGemini should follow this wrapper and the generated repo overlay."
-    return "## Provider Notes\n\nKeep provider-specific guidance concise and defer durable policy to governance docs."
+        return "Gemini should follow this pointer wrapper and canonical governance."
+    return "Keep provider-specific guidance concise and defer durable policy to canonical governance."
 
 
 def render_template(template: str, values: dict[str, str]) -> str:
@@ -94,18 +73,18 @@ def render_template(template: str, values: dict[str, str]) -> str:
     return rendered
 
 
-def write_preview(root: Path, repo: str, out_dir: Path, commit: str) -> list[Path]:
+def write_preview(root: Path, repo: str, out_dir: Path) -> list[Path]:
     overlay_name = overlay_for_repo(repo)
-    overlay_text = load_overlay(repo, root)
     template_dir = root / "tools" / "governance" / "templates"
     written: list[Path] = []
 
     for template_name, relative_output in TEMPLATE_OUTPUTS.items():
         template_text = (template_dir / template_name).read_text(encoding="utf-8")
         values = {
-            "GENERATED_HEADER": generated_header(overlay_name, commit),
-            "GLOBAL_AGENT_RULES": global_rules(),
-            "REPO_OVERLAY": "## Repo Overlay\n\n" + overlay_text.strip(),
+            "GENERATED_HEADER": generated_header(overlay_name),
+            "REPO_NAME": repo,
+            "OVERLAY_PATH": f"docs/governance/repo-overlays/{overlay_name}",
+            "GOVERNANCE_RESOLUTION": governance_resolution(),
             "PROVIDER_NOTES": provider_notes(template_name),
         }
         rendered = render_template(template_text, values)
@@ -121,7 +100,6 @@ def main(argv: list[str] | None = None) -> int:
     root = governance_root()
     out_dir = Path(args.out).expanduser().resolve(strict=False)
     selected_repos = args.repo or repo_names()
-    commit = git_commit(root)
 
     if root not in out_dir.parents and out_dir != root:
         print(f"fatal: preview output must be under governance repo: {out_dir}", file=sys.stderr)
@@ -129,7 +107,7 @@ def main(argv: list[str] | None = None) -> int:
 
     written: list[Path] = []
     for repo in selected_repos:
-        written.extend(write_preview(root, repo, out_dir, commit))
+        written.extend(write_preview(root, repo, out_dir))
 
     print(f"preview generated: {len(written)} files under {out_dir}")
     print("downstream repos were not modified")

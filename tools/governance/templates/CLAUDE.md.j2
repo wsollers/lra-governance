@@ -4,12 +4,16 @@
 
 @AGENTS.md
 
-If import semantics are unavailable, use the generated `AGENTS.md` content for
-the same repository as the canonical local instruction body.
+This repository uses canonical LRA governance by pointer, not by copied rules.
 
-{{ GLOBAL_AGENT_RULES }}
+Repository: `{{ REPO_NAME }}`
+Canonical task router: `docs/agent-task-index.md`
+Canonical repo overlay: `{{ OVERLAY_PATH }}`
 
-{{ REPO_OVERLAY }}
+{{ GOVERNANCE_RESOLUTION }}
 
-{{ PROVIDER_NOTES }}
+If import semantics are unavailable, follow `AGENTS.md` in this repository as
+the local pointer wrapper. Do not treat this file as a local source of truth.
+
+Provider note: {{ PROVIDER_NOTES }}
 

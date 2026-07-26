@@ -39,9 +39,10 @@ Volume-class overlays now include:
 - `lra-volume.md`
 - `lra-volume-ii.md`
 
-Each generated downstream wrapper should combine the global rules with exactly
-the matching overlay. Overlays should link to local README or workflow files
-for operational details instead of copying large local technical manuals.
+Each generated downstream wrapper should point to exactly the matching overlay.
+Wrappers must not embed global rules or overlay bodies. Overlays should link to
+local README or workflow files for operational details instead of copying large
+local technical manuals.
 
 ## Specialist Repo Routing Matrix
 

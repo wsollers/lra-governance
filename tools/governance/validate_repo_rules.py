@@ -7,7 +7,7 @@ import argparse
 import sys
 from pathlib import Path
 
-from merge_repo_overlays import REPO_OVERLAY_MAP, overlay_path, repo_names
+from merge_repo_overlays import REPO_OVERLAY_MAP, overlay_for_repo, overlay_path, repo_names
 
 
 REQUIRED_SOURCE_DOCS = [
@@ -133,6 +133,7 @@ def validate_sources(root: Path, errors: list[str]) -> None:
 
 def validate_preview(preview: Path, errors: list[str]) -> None:
     for repo in repo_names():
+        overlay = f"docs/governance/repo-overlays/{overlay_for_repo(repo)}"
         for relative in PREVIEW_FILES:
             path = preview / repo / relative
             require(path.exists(), f"missing preview file: {path}", errors)
@@ -140,8 +141,29 @@ def validate_preview(preview: Path, errors: list[str]) -> None:
                 continue
             text = path.read_text(encoding="utf-8")
             require(
-                "GENERATED FILE — DO NOT EDIT BY HAND" in text,
+                "GENERATED POINTER WRAPPER" in text,
                 f"missing generated header in: {path}",
+                errors,
+            )
+            require(f"Repository: `{repo}`" in text, f"missing repo pointer in: {path}", errors)
+            require(
+                "Canonical task router: `docs/agent-task-index.md`" in text,
+                f"missing task-router pointer in: {path}",
+                errors,
+            )
+            require(
+                f"Canonical repo overlay: `{overlay}`" in text,
+                f"missing overlay pointer in: {path}",
+                errors,
+            )
+            require(
+                "`LRA_GOVERNANCE_ROOT`" in text and "sibling `../lra-governance`" in text,
+                f"missing governance resolution rule in: {path}",
+                errors,
+            )
+            require(
+                "## Repo Overlay" not in text,
+                f"preview embeds repo overlay body instead of pointer: {path}",
                 errors,
             )
             if repo in VOLUME_REPOS:
