@@ -399,6 +399,18 @@ def label_index(universe: Universe) -> dict[str, list[Node]]:
     return by_label
 
 
+def reachable_formal_label_anchors(root: Path) -> set[str]:
+    labels: set[str] = set()
+    for path in active_tex_files(root):
+        raw = path.read_text(encoding="utf-8", errors="replace")
+        text = strip_comments(raw)
+        labels.update(
+            label for label in LABEL_RE.findall(text)
+            if label.split(":", 1)[0] in FORMAL_PREFIXES
+        )
+    return labels
+
+
 def next_boundary(text: str, start: int) -> int:
     formal = BEGIN_FORMAL_RE.search(text, start)
     section = SECTION_RE.search(text, start)
@@ -598,6 +610,7 @@ def append_dependency_edges(
 
 def extract_edges_from_universe(root: Path, universe: Universe, universe_ref: str = "") -> EdgeReport:
     by_label = label_index(universe)
+    formal_label_anchors = reachable_formal_label_anchors(root)
     repo = root.name
     issues: list[Issue] = []
     edges: list[Edge] = []
@@ -702,7 +715,7 @@ def extract_edges_from_universe(root: Path, universe: Universe, universe_ref: st
             source_matches = by_label.get(source, [])
             source_id = source_matches[0].id if len(source_matches) == 1 else None
             line = line_at(text, proof_for.start())
-            if len(source_matches) == 0:
+            if len(source_matches) == 0 and source not in formal_label_anchors:
                 issues.append(Issue("error", "missing_proof_target", f"Proof targets unknown formal label {source}.", repo, rel(path, root), line, source))
             elif len(source_matches) > 1:
                 issues.append(Issue("error", "ambiguous_proof_target", f"Proof target {source} has multiple global matches.", repo, rel(path, root), line, source))
