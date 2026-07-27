@@ -154,7 +154,7 @@ def main() -> int:
     checks = [
         check_repo(governance, "main", require_even=True),
         check_repo(knowledge_explorer, "main", require_even=True),
-        check_repo(proof_vault, "master", require_even=True),
+        check_repo(proof_vault, "main", require_even=True),
     ]
     checks.extend(check_repo(repo, "main", require_even=True) for repo in volume_repos(repos_root))
 
