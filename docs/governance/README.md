@@ -41,6 +41,7 @@ prose and verification links, but they do not own Lean proof source.
 - `latex-math-style.md`
 - `predicate-standards.md`
 - `atomic-artifact-standards.md`
+- `active-content-promotion-gate.md`
 - `file-splitting-standards.md`
 - `refactoring-standards.md`
 - `stub-chapter-standards.md`
@@ -68,3 +69,4 @@ this directory or in `docs/architecture/`, `docs/governance/repo-overlays/`, or
 Global rules apply to every repository unless an additive repo overlay narrows
 the operational context. Overlays may add repository-specific validation,
 build, or ownership rules, but they must not contradict the global rules.
+

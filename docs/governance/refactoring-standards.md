@@ -15,6 +15,12 @@ Do not invent mathematical content during structural refactors. If a refactor
 reveals a missing theorem, predicate, dependency, or proof obligation, report
 it rather than silently filling it.
 
+Active mathematical content must satisfy `active-content-promotion-gate.md` before
+it is routed into the build. Planned routers and empty topic stubs may exist as
+architecture; substantive notes, theorem batches, proof bodies, and Lean
+crosswalk metadata must wait until the Lean-first and hand-proof promotion
+requirements are met.
+
 ## Stub Chapters
 
 When a governance rebuild needs planned chapter locations before content
@@ -41,3 +47,4 @@ proof-vault sync or mobile memorialization workflow uses those routes.
 Route metadata is path-sensitive. `theorem_id` remains stable, but
 `theorem_tex`, `proof_tex`, and derived route artifacts must reflect the new
 leaf repo paths.
+

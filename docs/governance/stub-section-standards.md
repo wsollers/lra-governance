@@ -12,6 +12,8 @@ location of a topic before mathematical content is migrated.
 A section stub is architecture, not content. It must not invent mathematical
 material.
 
+Promotion from stub architecture to active mathematical content is governed by `active-content-promotion-gate.md`.
+
 ## Invocation Pattern
 
 Typical instructions may be:
@@ -267,3 +269,4 @@ proofs/
 ```
 
 and all parent index files should be updated automatically.
+

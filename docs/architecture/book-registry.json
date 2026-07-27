@@ -631,21 +631,7 @@
           "expected_toc": [
             {
               "chapter": "algebras-of-sets",
-              "notes": [
-                "from-sets-to-systems-of-sets",
-                "operations-on-families-of-sets",
-                "closure-under-operations",
-                "generated-systems-of-sets",
-                "semirings-and-rings-of-sets",
-                "algebras-of-sets",
-                "sigma-algebras",
-                "boolean-viewpoint",
-                "borel-generation",
-                "transport-of-set-systems",
-                "working-with-set-systems",
-                "hierarchy-of-set-systems",
-                "summary-and-forward-use"
-              ]
+              "notes": []
             },
             {
               "chapter": "mathematical-spaces",
@@ -657,11 +643,13 @@
             {
               "chapter": "metric-spaces",
               "notes": [
-                "definitions",
-                "metrics",
-                "examples-of-metric-spaces",
+                "metrics-and-metric-spaces",
+                "metric-subspaces-and-superspaces",
+                "metric-isometries",
+                "distances-and-diameter",
                 "balls-and-bounded-sets",
                 "open-and-closed-sets",
+                "closures-boundaries-and-bounded-sets",
                 "limit-points-and-isolated-points",
                 "sequential-convergence"
               ]
@@ -669,9 +657,7 @@
             {
               "chapter": "topological-spaces",
               "notes": [
-                "definitions",
-                "topological-space-subsets",
-                "basis"
+                "topologies-and-topological-spaces"
               ]
             },
             {

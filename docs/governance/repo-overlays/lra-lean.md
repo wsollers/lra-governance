@@ -49,6 +49,13 @@ proof structure legible enough for a maintainer to match it back to the source
 mathematics. Prefer small named lemmas and explicit local structure over dense
 anonymous tactic blocks when the proof has reusable mathematical content.
 
+In `lra-lean`, source-facing mathematical declarations should preserve the
+project's prose-style names. Prefer PascalCase theorem and predicate names such
+as `IsUpperBound`, `IsSupremum`, and `MaximumIsSupremum` when those declarations
+mirror named concepts from the volumes. Use snake_case only for local helpers,
+implementation details, or declarations that intentionally follow an imported
+library's naming convention.
+
 When adding source-aligned declarations, model definitions and theorem
 statements first. Do not complete Lean proof bodies unless the user explicitly
 requests proofs. Use a compiling placeholder proof such as `sorry` for accepted

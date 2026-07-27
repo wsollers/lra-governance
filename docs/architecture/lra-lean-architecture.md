@@ -49,6 +49,9 @@ Agent-facing Lean implementation standards live in
 `docs/governance/repo-overlays/lra-lean.md`. This architecture document records
 ownership, layout, and import boundaries.
 
-Volume II must remain Mathlib-free. Mathlib imports are not allowed in
-`LRA/VolumeII/**`; future higher-volume work may opt into Mathlib only when the
-volume library and overlay explicitly allow it.
+Volume II construction modules must remain Mathlib-free. Mathlib imports are
+allowed only in explicit switch or interoperability modules under
+`LRA/VolumeII/Switches/**`; Peano systems, number-system constructions, and
+their proofs must import switch interfaces rather than Mathlib directly. Future
+higher-volume work may opt into Mathlib only when the volume library and
+overlay explicitly allow it.

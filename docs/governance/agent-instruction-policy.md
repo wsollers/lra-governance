@@ -71,6 +71,23 @@ machine-local secrets.
 Downstream generated files must not become local sources of truth. Emergency
 local repairs must be ported back to `lra-governance`.
 
+## User Todo Issue Rule
+
+When the user asks an agent to create, add, record, or remember a todo, the
+agent must create a GitHub issue in the current repository unless the user
+explicitly names another repository or asks for a different tracking system.
+
+The issue title should be concise and action-oriented. The issue body should
+preserve the user's requested todo, include any relevant repository context, and
+note that the issue was created from a user todo request. Apply existing repo
+labels only when their meaning is clear.
+
+This rule does not apply to the agent's private execution plan, transient
+checklists, or requests to add literal `TODO` comments in source files. If the
+current repository has no GitHub remote, GitHub is unavailable, or issue
+creation fails, the agent must report the blocker and provide the issue title
+and body that would have been created.
+
 ## Local Edit Rule
 
 Generated files are local wrappers or instructions, not synced governance
