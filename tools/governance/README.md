@@ -151,8 +151,9 @@ Run from `lra-governance` against the target leaf volume repository. Generate
 stubs with the deterministic scaffold first, then validate the target volume.
 
 ```powershell
-python tools\governance\generate_stub.py chapter --volume-root F:\repos\lra-volume-ii\volume-ii --subject ordered-fields --title "Ordered Fields" --section "Order"
-python tools\governance\generate_stub.py section --chapter-root F:\repos\lra-volume-ii\volume-ii\ordered-fields --section "Completion Fields"
+python tools\governance\generate_stub.py chapter --book-root F:\repos\lra-volume-iii\volume-iii\book-analysis-i --subject completeness --title "Completeness" --section "Completeness"
+python tools\governance\generate_stub.py section --chapter-root F:\repos\lra-volume-iii\volume-iii\book-analysis-i\completeness --section "Completion Fields"
+python tools\governance\generate_stub.py promote-topic --source-chapter-root F:\repos\lra-volume-iii\volume-iii\book-analysis-i\bounding --topic completeness --destination-chapter completeness --title "Completeness" --update-registry
 ```
 
 Use `--section` repeatedly or pass a semicolon-separated `--sections` list when

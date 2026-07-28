@@ -8,6 +8,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 from generators.chapter_stub import stub_chapter
+from generators.promote_topic import promote_topic_to_chapter
 from generators.section_stub import stub_section
 import dependency_graph
 from core.file_inventory import files_to_validate
@@ -3824,6 +3825,28 @@ class ValidateVolumeTests(unittest.TestCase):
         for name, validator in VALIDATORS:
             self.assertEqual(validate_with_inventory(validator, volume), [], name)
 
+    def test_chapter_generator_accepts_modern_book_root(self):
+        if TMP.exists():
+            shutil.rmtree(TMP)
+        volume = TMP / "lra-volume-test" / "volume-iii"
+        book = volume / "book-analysis-i"
+        write(volume / "index.tex", r"\input{volume-iii/book-analysis-i/index}" "\n")
+        write(book / "index.tex", "")
+
+        stub_chapter(book, "completeness", "Completeness", [], [], include_capstone=False)
+
+        chapter_yaml = (book / "completeness" / "chapter.yaml").read_text(encoding="utf-8")
+        book_router = (book / "index.tex").read_text(encoding="utf-8")
+        chapter_router = (book / "completeness" / "index.tex").read_text(encoding="utf-8")
+
+        self.assertIn("volume: volume-iii", chapter_yaml)
+        self.assertIn("book: book-analysis-i", chapter_yaml)
+        self.assertIn("path: volume-iii/book-analysis-i/completeness", chapter_yaml)
+        self.assertIn(r"\input{volume-iii/book-analysis-i/completeness/index}", book_router)
+        self.assertNotIn(r"\input{completeness/index}", book_router)
+        self.assertIn(r"\input{volume-iii/book-analysis-i/completeness/notes/index}", chapter_router)
+        self.assertNotIn(r"\section*{Capstone}", chapter_router)
+
     def test_volume_shape_ignores_canonical_chapter_not_routed_from_volume_index(self):
         volume = make_volume()
         chapter = volume / "orphaned"
@@ -3895,6 +3918,60 @@ class ValidateVolumeTests(unittest.TestCase):
         self.assertEqual(validate_with_inventory(volume_shape, volume), [])
         for name, validator in VALIDATORS:
             self.assertEqual(validate_with_inventory(validator, volume), [], name)
+
+    def test_promote_topic_to_chapter_moves_existing_topic_without_placeholder_section(self):
+        if TMP.exists():
+            shutil.rmtree(TMP)
+        volume = TMP / "lra-volume-test" / "volume-iii"
+        book = volume / "book-analysis-i"
+        source = book / "bounding"
+        write(volume / "index.tex", r"\input{volume-iii/book-analysis-i/index}" "\n")
+        write(book / "index.tex", r"\input{volume-iii/book-analysis-i/bounding/index}" "\n")
+        write(source / "index.tex", r"\input{volume-iii/book-analysis-i/bounding/notes/index}" "\n")
+        write(
+            source / "notes" / "index.tex",
+            r"\input{volume-iii/book-analysis-i/bounding/notes/bounds-extremals/index}" "\n"
+            r"\input{volume-iii/book-analysis-i/bounding/notes/completeness/index}" "\n",
+        )
+        write(
+            source / "proofs" / "index.tex",
+            r"\input{volume-iii/book-analysis-i/bounding/proofs/completeness/index}" "\n",
+        )
+        write(
+            source / "notes" / "completeness" / "index.tex",
+            r"\section{Completeness}" "\n"
+            r"\input{volume-iii/book-analysis-i/bounding/notes/completeness/notes-axiom}" "\n",
+        )
+        write(source / "notes" / "completeness" / "notes-axiom.tex", "Existing content.\n")
+        write(
+            source / "proofs" / "completeness" / "index.tex",
+            r"\input{volume-iii/book-analysis-i/bounding/proofs/completeness/prf-axiom}" "\n",
+        )
+        write(source / "proofs" / "completeness" / "prf-axiom.tex", "Existing proof.\n")
+
+        result = promote_topic_to_chapter(source, "completeness", "completeness", "Completeness")
+
+        destination = book / "completeness"
+        self.assertFalse((source / "notes" / "completeness").exists())
+        self.assertTrue((destination / "notes" / "completeness" / "notes-axiom.tex").exists())
+        self.assertFalse((destination / "notes" / "axiom-of-completeness").exists())
+        self.assertFalse((destination / "proofs" / "exercises").exists())
+        self.assertNotIn(
+            r"\input{volume-iii/book-analysis-i/bounding/notes/completeness/index}",
+            (source / "notes" / "index.tex").read_text(encoding="utf-8"),
+        )
+        self.assertIn(
+            r"\input{volume-iii/book-analysis-i/completeness/notes/completeness/index}",
+            (destination / "notes" / "index.tex").read_text(encoding="utf-8"),
+        )
+        self.assertIn(
+            r"\input{volume-iii/book-analysis-i/completeness/notes/completeness/notes-axiom}",
+            (destination / "notes" / "completeness" / "index.tex").read_text(encoding="utf-8"),
+        )
+        self.assertEqual(
+            result["registry_patch"]["insert_chapter"],
+            {"chapter": "completeness", "notes": ["completeness"]},
+        )
 
     def test_validators_reject_legacy_chapter_capstone_gate(self):
         volume = make_volume()

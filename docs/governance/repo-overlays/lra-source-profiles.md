@@ -9,10 +9,15 @@ This overlay applies to `lra-source-profiles`.
 - dynamic source profiles for Learning Real Analysis,
 - candidate mathematical source classification,
 - proposed category placement,
+- reviewable folder-to-volume mappings used to seed volume source candidates,
+- volume-level source workbench profiles with ordered enabled selections,
 - volume/chapter source indexes,
+- chapter-level source selection overrides when a topic needs a narrower or
+  different stack than the volume workbench,
 - reusable named source profiles,
 - active source selections,
 - stable active-profile exports for project attachment slots,
+- Chrome/PDF tab launch order derived from active enabled source selections,
 - cached Markdown extracts derived from reviewed source metadata,
 - conservative PDF import, scan, move, and review workflows,
 - source manifest validation and profile audit workflows.
@@ -40,6 +45,13 @@ Agents working in this repo may use its project-local tools to:
 - apply `docs/governance/source-indexing-policy.yaml` when recursively
   discovering indexable PDFs,
 - classify candidate sources into proposed categories,
+- maintain auditable folder-to-volume maps that seed candidate source stacks
+  without moving or deleting original PDFs,
+- maintain volume-level workbench profiles whose enabled sources are ordered by
+  reviewed preference for study, authoring preparation, attachment export, and
+  Chrome tab launch,
+- maintain chapter-level overrides only where the volume workbench is too broad
+  or misses topic-specific sources,
 - maintain `volumes/<volume>/<chapter>/source-index.yaml` metadata,
 - write approved selections to `active-sources.yaml`,
 - maintain `misplaced-sources.yaml` and the misplaced review queue,

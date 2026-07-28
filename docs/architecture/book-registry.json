@@ -443,7 +443,12 @@
               "chapter": "bounding",
               "notes": [
                 "bounds-extremals",
-                "bounds-algebra",
+                "bounds-algebra"
+              ]
+            },
+            {
+              "chapter": "completeness",
+              "notes": [
                 "completeness"
               ]
             },

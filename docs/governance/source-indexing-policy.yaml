@@ -22,6 +22,22 @@ optional_catalog:
 source_profiles:
   env_var: LRA_SOURCE_PROFILES_ROOT
   sibling_default: ../lra-source-profiles
+  volume_workbench_profiles:
+    owner: lra-source-profiles
+    default_scope: volume
+    optional_override_scope: chapter
+    folder_to_volume_maps: reviewable_source_profile_metadata
+    selected_source_identity_fields:
+      - source_id
+      - sha256
+      - object_id
+    workflow_fields:
+      - enabled
+      - preferred_rank
+      - slot_order
+      - role
+      - notes
+    launch_order: enabled_sources_by_preferred_rank_or_slot_order
 readings_root:
   env_var: LRA_READINGS_ROOT
 recursive_scan:

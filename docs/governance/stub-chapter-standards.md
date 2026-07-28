@@ -61,20 +61,35 @@ The machine-readable authority for volume, chapter, and topic layout is
 Use the deterministic generator before hand-authoring a stub chapter:
 
 ```powershell
-python tools\governance\generate_stub.py chapter --volume-root .\volume-ii --subject <chapter-slug> --title "<Chapter Display Title>" --section "<Section Title>"
+python tools\governance\generate_stub.py chapter --book-root .\volume-iii\book-analysis-i --subject <chapter-slug> --title "<Chapter Display Title>" --section "<Section Title>"
 ```
 
 From a checkout without the volume-local wrapper, call the canonical tool
 through the sibling governance repo:
 
 ```powershell
-python ..\lra-governance\tools\governance\generate_stub.py chapter --volume-root .\volume-ii --subject <chapter-slug> --title "<Chapter Display Title>"
+python ..\lra-governance\tools\governance\generate_stub.py chapter --book-root .\volume-iii\book-analysis-i --subject <chapter-slug> --title "<Chapter Display Title>"
 ```
 
 Use repeated `--section` arguments or a semicolon-separated `--sections` list
 when creating initial section stubs with the chapter. Hand-copy the skeleton
 below only when the generator is unavailable, and report that fallback
 explicitly.
+
+Use `--volume-root` only for older layouts where chapters live directly under a
+`volume-*` root. When a modern `volume-*/book-*` path is supplied, the generator
+infers both the volume and book metadata and writes canonical full-path router
+inputs.
+
+To promote an existing topic into a chapter without generating a placeholder
+topic or capstone, use the first-class promotion command:
+
+```powershell
+python tools\governance\generate_stub.py promote-topic --source-chapter-root .\volume-iii\book-analysis-i\bounding --topic completeness --destination-chapter completeness --title "Completeness" --update-registry
+```
+
+Omit `--update-registry` to receive the exact required
+`docs/architecture/book-registry.json` patch instead of applying it.
 
 ## Canonical Stub-Chapter Skeleton
 
@@ -159,11 +174,12 @@ If no global or repo-local schema exists, match the shape nearby chapters use:
 subject: <chapter-slug>
 display_title: <Chapter Display Title>
 volume: volume-<n>
+book: book-<slug>
+path: volume-<n>/book-<slug>/<chapter-slug>
 status: planned
 dependencies:
   prior: ''
   next: ''
-path: volume-<n>/<chapter-slug>
 environments: []
 proof_files: []
 ```

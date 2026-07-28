@@ -87,6 +87,36 @@ theorem-like statements, search both the structured theorem indexes and the
 Markdown/codesearch cache, then read the surrounding extracted source text
 before treating a hit as evidence.
 
+## Volume Source Workbench Profiles
+
+`lra-source-profiles` may maintain volume-level source workbench profiles for
+human study and authoring preparation. A volume workbench is the default
+preferred source stack for a whole LRA volume; chapter-level source selections
+may inherit from or override it when a topic needs a narrower source set.
+
+Volume workbench profiles should be machine-readable and auditable. Each
+selected source entry should reference the stable source identity (`source_id`
+and, when available, `sha256` or `object_id`) and may record local workflow
+metadata such as:
+
+- whether the source is enabled for the current workbench;
+- an ordered rank or slot order for preferred-source sorting and Chrome tab
+  launch order;
+- a review role such as `primary`, `secondary`, `reference`, or `historical`;
+- notes explaining local preference, exclusion, or chapter-specific use.
+
+Folder-to-volume mappings are source-profile metadata, not governance facts.
+They may seed candidate volume workbenches from reading-library folder
+hierarchies, but they must remain reviewable and must not replace source
+identity, bibliographic review, or the curated topic and volume source indexes.
+Changing a folder-to-volume map must not move, delete, or overwrite original
+PDFs.
+
+Chrome tab launchers and attachment-slot exports should consume the enabled
+ordered workbench selection. Disabled sources may remain in the profile as
+reviewed candidates, but they should not open as active working tabs unless a
+tool explicitly requests all candidates.
+
 ## Identity Model
 
 The SHA-256 hash of the PDF bytes is the stable source-object identity. File

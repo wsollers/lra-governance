@@ -72,12 +72,22 @@ modules belong under the appropriate `LRA/Volume*/...` tree, imported through
 the relevant volume root, and exposed through stable names that make downstream
 verification and explorer extraction straightforward.
 
+Keep examples and tests separate. Source-facing example modules may live under
+`LRA/Volume*/...` when they are readable mathematical examples that a maintainer
+might browse alongside the formal interface. Build-regression checks, API smoke
+tests, and unit-test-style assertions belong under a top-level `test/` source
+tree and should be built through a test Lake target rather than imported by
+production volume roots. Prefer `example : ... := by ...` checks over
+interactive/debug commands such as `#check` or `#print`.
+
 ## Layout Overlay
 
 Follow the canonical architecture layout:
 
 - Lean source belongs under `LRA/Volume*/...`.
 - Active volume roots belong at `LRA/Volume*.lean`.
+- Lean test source belongs under `test/`, with Lake test targets separated from
+  the production volume libraries.
 - Lake library declarations belong in `lakefile.lean`.
 - Lean validation and extraction helpers belong under `scripts/`.
 - Docker and wrapper build entrypoints stay at the repo root.

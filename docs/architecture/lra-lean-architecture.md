@@ -15,6 +15,7 @@ Dockerfile             reproducible Linux Lean environment
 Makefile               Docker-first Unix build wrapper
 build.ps1              Docker-first Windows build wrapper
 scripts/               Lean validation and extraction helpers
+test/                  Lean smoke and regression test modules
 LRA/                   Lean source modules
   VolumeI.lean         Volume I library root
   VolumeII.lean        Volume II library root
@@ -30,6 +31,8 @@ architecture and should remain untracked.
 Lean modules are organized by volume and mathematical subject. A volume root
 imports the modules that belong to that active library. New volume libraries
 must be declared in `lakefile.lean` before CI is extended to build them.
+Build-regression and smoke-test modules live under `test/` and are built through
+test-specific Lake targets, not production volume roots.
 
 Volume II is built around abstract Peano systems before concrete models:
 

@@ -44,6 +44,16 @@ Resolution order used by the local wrapper scripts:
 2. a sibling `../lra-governance` / `../lra-common` checkout;
 3. the path baked into the build Docker image.
 
+For Codex desktop tasks spawned outside the shared multi-repo checkout, such as
+worktrees under `C:\Users\<user>\.codex`, the sibling lookup will not find
+`F:\repos\lra-governance`. Set durable Windows user or machine environment
+variables instead, then restart Codex so newly spawned tasks inherit them:
+
+```powershell
+[Environment]::SetEnvironmentVariable('LRA_GOVERNANCE_ROOT','F:\repos\lra-governance','User')
+[Environment]::SetEnvironmentVariable('LRA_COMMON_ROOT','F:\repos\lra-common','User')
+```
+
 If none resolve, the wrappers **hard-error** with an actionable setup message
 instead of silently degrading. There are no local synced copies to fall back
 on.
