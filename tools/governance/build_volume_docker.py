@@ -23,6 +23,11 @@ DEFAULT_LATEX_ARGS = [
     "-synctex=1",
     "-shell-escape",
 ]
+HARD_LATEX_ERROR_RE = re.compile(
+    r"(^!|LaTeX Error:|Emergency stop|Fatal error|Undefined control sequence|"
+    r"Missing \$ inserted|File `[^']+' not found)",
+    re.IGNORECASE | re.MULTILINE,
+)
 
 
 def run(cmd: list[str], cwd: Path | None = None, env: dict[str, str] | None = None) -> None:
@@ -172,6 +177,18 @@ def built_pdf_for(volume_root: Path, tex_root: Path) -> Path:
     return volume_root / "build" / f"{tex_root.stem}.pdf"
 
 
+def built_log_for(volume_root: Path, tex_root: Path) -> Path:
+    return volume_root / "build" / f"{tex_root.stem}.log"
+
+
+def latex_failure_is_nonfatal(volume_root: Path, tex_root: Path) -> bool:
+    pdf = built_pdf_for(volume_root, tex_root)
+    log = built_log_for(volume_root, tex_root)
+    if not pdf.exists() or not log.exists():
+        return False
+    return HARD_LATEX_ERROR_RE.search(log.read_text(encoding="utf-8", errors="replace")) is None
+
+
 def copy_outputs(volume_root: Path, tex_roots: list[Path], output_dir: Path | None) -> None:
     if output_dir is None:
         return
@@ -251,7 +268,12 @@ def main(argv: list[str] | None = None) -> int:
     for tex_root in build_roots:
         if args.clean:
             docker_run(volume_root, common_root, gov_root, args.image, edition, args.paper, clean_args_for(volume_root, tex_root))
-        docker_run(volume_root, common_root, gov_root, args.image, edition, args.paper, latex_args_for(volume_root, args.latex_command, tex_root))
+        try:
+            docker_run(volume_root, common_root, gov_root, args.image, edition, args.paper, latex_args_for(volume_root, args.latex_command, tex_root))
+        except SystemExit:
+            if not latex_failure_is_nonfatal(volume_root, tex_root):
+                raise
+            print(f"warning: latexmk returned nonzero for {tex_argument(volume_root, tex_root)}, but a PDF was produced and no hard TeX error was found")
     copy_outputs(volume_root, build_roots, args.output_dir)
     return 0
 

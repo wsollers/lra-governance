@@ -55,26 +55,27 @@ def build_book_roots(args: argparse.Namespace, volume: dict, edition: str) -> No
     roman = str(volume["roman"])
     volume_repo = args.repos_root / f"lra-volume-{roman}"
     output_dir = args.output_dir / edition / "books"
-    cmd = [
-        sys.executable,
-        str(Path(__file__).resolve().parent / "build_volume_docker.py"),
-        "--root",
-        str(volume_repo),
-        "--common-root",
-        str(args.common_root),
-        "--skip-validate",
-        "--skip-image-build",
-        "--edition",
-        edition,
-        "--output-dir",
-        str(output_dir),
-    ]
     for book in sorted(volume.get("books", []), key=lambda item: int(item.get("order", 0))):
         tex_root = str(book.get("tex_root") or "")
         if not tex_root:
             raise SystemExit(f"missing book tex_root in registry entry: {book!r}")
-        cmd.extend(["--tex-root", tex_root])
-    run(cmd, args.repos_root)
+        cmd = [
+            sys.executable,
+            str(Path(__file__).resolve().parent / "build_volume_docker.py"),
+            "--root",
+            str(volume_repo),
+            "--common-root",
+            str(args.common_root),
+            "--skip-validate",
+            "--skip-image-build",
+            "--edition",
+            edition,
+            "--tex-root",
+            tex_root,
+            "--output-dir",
+            str(output_dir),
+        ]
+        run(cmd, args.repos_root)
 
 
 def main(argv: list[str] | None = None) -> int:
