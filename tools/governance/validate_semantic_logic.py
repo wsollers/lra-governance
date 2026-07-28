@@ -165,6 +165,13 @@ class FormalCandidate:
         }
 
 
+@dataclass(frozen=True)
+class FailureModeObligation:
+    key: str
+    label: str
+    tokens: tuple[str, ...]
+
+
 def load_mapping(path: Path) -> dict[str, Any]:
     data = yaml.safe_load(path.read_text(encoding="utf-8"))
     if not isinstance(data, dict):
@@ -614,6 +621,173 @@ def logic_shape(node: Any) -> str:
         elif isinstance(value, list):
             children.append(f"{key}=[{','.join(logic_shape(item) for item in value)}]")
     return f"{kind}({';'.join(children)})"
+
+
+def normalized_text(value: Any) -> str:
+    return re.sub(r"[^a-z0-9]+", " ", str(value).lower()).strip()
+
+
+def ast_failure_tokens(node: Any) -> tuple[str, ...]:
+    tokens: list[str] = []
+    if isinstance(node, dict):
+        kind = str(node.get("kind") or "")
+        if kind == "predicate":
+            predicate_id = str(node.get("predicate_id") or node.get("name") or "")
+            if predicate_id:
+                tokens.extend(part for part in re.split(r"[^A-Za-z0-9]+", predicate_id) if part and part != "pred")
+        elif kind == "relation":
+            relation = str(node.get("relation") or "")
+            relation_words = {
+                r"\leq": ("leq", "less", "above", "bound", "relation"),
+                r"\geq": ("geq", "greater", "below", "bound", "relation"),
+                "<": ("less", "strict", "relation"),
+                ">": ("greater", "strict", "relation"),
+                r"\in": ("in", "membership", "relation"),
+                r"\notin": ("notin", "membership", "relation"),
+                "=": ("equals", "equality", "relation"),
+            }
+            tokens.extend(relation_words.get(relation, ("relation",)))
+        elif kind == "raw_latex":
+            tokens.extend(part for part in re.split(r"[^A-Za-z0-9]+", str(node.get("latex") or "")) if len(part) > 1)
+        for child in walk_ast(node):
+            if child is node or not isinstance(child, dict):
+                continue
+            if child.get("kind") == "predicate":
+                tokens.extend(ast_failure_tokens(child))
+            elif child.get("kind") == "relation":
+                tokens.extend(ast_failure_tokens(child))
+    return tuple(dict.fromkeys(token.lower() for token in tokens if token))
+
+
+def infer_failure_mode_obligations(node: Any) -> tuple[list[FailureModeObligation], str | None]:
+    if not isinstance(node, dict):
+        return [], "Negation AST is not structured enough to infer failure-mode branches."
+    if ast_contains_kind(node, "raw_latex"):
+        return [], "Negation AST contains raw_latex, so failure-mode branches require reviewer confirmation."
+
+    def obligation(key: str, label: str, tokens: Iterable[str]) -> FailureModeObligation:
+        return FailureModeObligation(key, label, tuple(dict.fromkeys(token.lower() for token in tokens if token)))
+
+    def atomic_failure(atomic: Any, prefix: str = "atomic") -> FailureModeObligation | None:
+        if not isinstance(atomic, dict):
+            return None
+        tokens = ast_failure_tokens(atomic)
+        if not tokens and atomic.get("kind") not in {"predicate", "relation", "membership", "equals"}:
+            return None
+        key = f"{prefix}:{logic_shape(atomic)}"
+        return obligation(key, "atomic predicate/relation failure", ("atomic", "predicate", "relation", "failure", *tokens))
+
+    kind = str(node.get("kind") or "")
+    if kind == "not":
+        operand = node.get("operand")
+        if not isinstance(operand, dict):
+            return [], "Negation AST has an unstructured operand."
+        operand_kind = str(operand.get("kind") or "")
+        if operand_kind == "forall":
+            return [obligation("existential_counterexample", "existential counterexample", ("exists", "existential", "counterexample", "witness", *ast_failure_tokens(operand.get("body"))))], None
+        if operand_kind == "exists":
+            return [obligation("universal_failure", "universal failure", ("forall", "universal", "all", "every", "no", "none", *ast_failure_tokens(operand.get("body"))))], None
+        if operand_kind == "and":
+            left = atomic_failure(operand.get("left"), "left")
+            right = atomic_failure(operand.get("right"), "right")
+            branches = [
+                item
+                for item in (
+                    left or obligation("left_failure", "left conjunct fails", ("left", "first", "conjunct", "fails", *ast_failure_tokens(operand.get("left")))),
+                    right or obligation("right_failure", "right conjunct fails", ("right", "second", "conjunct", "fails", *ast_failure_tokens(operand.get("right")))),
+                )
+                if item is not None
+            ]
+            return branches, None
+        if operand_kind == "implies":
+            return [obligation("failed_implication", "hypothesis holds and conclusion fails", ("hypothesis", "assumption", "antecedent", "holds", "conclusion", "consequent", "fails", *ast_failure_tokens(operand.get("left")), *ast_failure_tokens(operand.get("right"))))], None
+        atomic = atomic_failure(operand)
+        if atomic is not None:
+            return [atomic], None
+        return [], f"Cannot infer failure-mode branches for negated {operand_kind or 'unknown'} AST."
+    if kind == "exists":
+        return [obligation("existential_counterexample", "existential counterexample", ("exists", "existential", "counterexample", "witness", *ast_failure_tokens(node.get("body"))))], None
+    if kind == "forall":
+        return [obligation("universal_failure", "universal failure", ("forall", "universal", "all", "every", "no", "none", *ast_failure_tokens(node.get("body"))))], None
+    if kind == "or":
+        left = node.get("left")
+        right = node.get("right")
+        branches = []
+        for prefix, branch, ordinal in (("left", left, ("left", "first")), ("right", right, ("right", "second"))):
+            if isinstance(branch, dict) and branch.get("kind") == "not":
+                atomic = atomic_failure(branch.get("operand"), prefix)
+                branches.append(atomic or obligation(f"{prefix}_failure", f"{prefix} branch fails", (*ordinal, "branch", "fails", *ast_failure_tokens(branch.get("operand")))))
+            else:
+                branches.append(obligation(f"{prefix}_branch", f"{prefix} negation branch", (*ordinal, "branch", "failure", *ast_failure_tokens(branch))))
+        return branches, None
+    if kind == "and":
+        left = node.get("left")
+        right = node.get("right")
+        if isinstance(right, dict) and right.get("kind") == "not":
+            return [obligation("failed_implication", "hypothesis holds and conclusion fails", ("hypothesis", "assumption", "antecedent", "holds", "conclusion", "consequent", "fails", *ast_failure_tokens(left), *ast_failure_tokens(right.get("operand"))))], None
+        if isinstance(left, dict) and left.get("kind") == "not":
+            return [obligation("failed_implication", "hypothesis holds and conclusion fails", ("hypothesis", "assumption", "antecedent", "holds", "conclusion", "consequent", "fails", *ast_failure_tokens(right), *ast_failure_tokens(left.get("operand"))))], None
+        return [], "Conjunctive negation normal form is not an obvious failed implication."
+    atomic = atomic_failure(node)
+    if atomic is not None:
+        return [atomic], None
+    return [], f"Cannot infer failure-mode branches for {kind or 'unknown'} AST."
+
+
+def failure_branch_texts_from_artifact(statement_failures: list[Any]) -> list[str]:
+    texts: list[str] = []
+    for item in statement_failures:
+        if isinstance(item, dict):
+            texts.append(" ".join(str(value) for value in item.values() if value is not None))
+        else:
+            texts.append(str(item))
+    return texts
+
+
+def failure_branch_texts_from_tex(corrected_tex: str) -> list[str]:
+    texts: list[str] = []
+    for block in re.finditer(
+        r"\\begin\{remark\*\}\[Failure modes\](?P<body>[\s\S]*?)\\end\{remark\*\}",
+        corrected_tex,
+        re.IGNORECASE,
+    ):
+        body = block.group("body")
+        for item in re.finditer(r"\\item\[(?P<title>[^\]]+)\](?P<body>[\s\S]*?)(?=\\item\[|\\end\{description\}|$)", body):
+            title = item.group("title").strip()
+            if title.lower().rstrip(".") == "exposition":
+                continue
+            texts.append(f"{title} {item.group('body')}")
+    return texts
+
+
+def branch_matches_obligation(text: str, obligation: FailureModeObligation) -> bool:
+    normalized = normalized_text(text)
+    if not normalized:
+        return False
+    key = obligation.key
+    if key == "existential_counterexample":
+        return any(term in normalized for term in ("counterexample", "witness", "exist", "fails for some"))
+    if key == "universal_failure":
+        return any(term in normalized for term in ("universal", "forall", "every", "all", "no ", "none"))
+    if key == "failed_implication":
+        has_hypothesis = any(term in normalized for term in ("hypothesis", "assumption", "antecedent", "holds"))
+        has_conclusion = any(term in normalized for term in ("conclusion", "consequent", "fails", "failure"))
+        return has_hypothesis and has_conclusion
+    token_hits = sum(1 for token in obligation.tokens if token and token in normalized)
+    return token_hits >= 1 and any(term in normalized for term in ("fail", "not", "neg", "counterexample", "relation", "predicate"))
+
+
+def obligation_matches(texts: list[str], obligation: FailureModeObligation) -> bool:
+    return any(branch_matches_obligation(text, obligation) for text in texts)
+
+
+def branch_grounded(text: str, obligations: list[FailureModeObligation]) -> bool:
+    return any(branch_matches_obligation(text, obligation) for obligation in obligations)
+
+
+def mentions_exhaustive_failure_modes(texts: list[str]) -> bool:
+    normalized = normalized_text(" ".join(texts))
+    return any(term in normalized for term in ("exhaustive", "all possible failure modes", "only failure modes", "complete list"))
 
 
 def predicate_nodes(node: Any) -> list[dict[str, Any]]:
@@ -1445,7 +1619,7 @@ def check_predicates(data: dict[str, Any], result: LogicResult) -> None:
         result.set_check("predicate_signatures", "pass", "Known predicate and structure AST nodes match registry signatures.")
 
 
-def check_applicability_and_failure_modes(data: dict[str, Any], result: LogicResult) -> None:
+def check_applicability_and_failure_modes(data: dict[str, Any], corrected_tex: str, result: LogicResult) -> None:
     assumptions = data.get("assumptions") or []
     failure = data.get("failure_analysis") or {}
     applicability = failure.get("applicability_failures") or []
@@ -1466,8 +1640,91 @@ def check_applicability_and_failure_modes(data: dict[str, Any], result: LogicRes
     if not statement_failures:
         result.set_check("failure_modes", "warning", "No statement failure modes are recorded.")
         result.add("MISSING_STATEMENT_FAILURES", "warning", "No statement failure modes are recorded.", "failure_analysis.statement_failures")
+        return
+
+    forms = data.get("logical_forms") or {}
+    negation = forms.get("negation") or {}
+    approved = (negation.get("approved_normal_form") or {}).get("ast") if isinstance(negation.get("approved_normal_form"), dict) else None
+    mechanical = (negation.get("mechanical") or {}).get("ast") if isinstance(negation.get("mechanical"), dict) else None
+    negation_ast = approved if approved is not None else mechanical
+    obligations, cannot_infer = infer_failure_mode_obligations(negation_ast)
+    artifact_texts = failure_branch_texts_from_artifact(statement_failures)
+    tex_texts = failure_branch_texts_from_tex(corrected_tex)
+    has_structured_tex_failure_block = bool(re.search(r"\\begin\{remark\*\}\[Failure modes\]", corrected_tex, re.IGNORECASE))
+
+    if cannot_infer:
+        result.set_check("failure_modes", "warning", cannot_infer)
+        result.add(
+            "FAILURE_MODE_BRANCH_MISSING",
+            "warning",
+            cannot_infer,
+            "logical_forms.negation.approved_normal_form.ast",
+        )
+        return
+
+    missing_artifact = [obligation for obligation in obligations if not obligation_matches(artifact_texts, obligation)]
+    missing_tex = [
+        obligation
+        for obligation in obligations
+        if has_structured_tex_failure_block and not obligation_matches(tex_texts, obligation)
+    ]
+    ungrounded_artifact = [text for text in artifact_texts if obligations and not branch_grounded(text, obligations)]
+    ungrounded_tex = [
+        text
+        for text in tex_texts
+        if obligations and not branch_grounded(text, obligations)
+    ]
+
+    for obligation in missing_artifact:
+        result.add(
+            "FAILURE_MODE_BRANCH_MISSING",
+            "warning",
+            f"failure_analysis.statement_failures does not record the inferred branch: {obligation.label}.",
+            "failure_analysis.statement_failures",
+        )
+    for obligation in missing_tex:
+        result.add(
+            "FAILURE_MODE_BRANCH_MISSING",
+            "warning",
+            f"Corrected TeX Failure modes block does not record the inferred branch: {obligation.label}.",
+            "corrected_tex",
+        )
+    for text in ungrounded_artifact:
+        result.add(
+            "FAILURE_MODE_BRANCH_NOT_GROUNDED_IN_NEGATION",
+            "warning",
+            f"Statement failure branch is not grounded in the inferred negation branches: {text[:120]}",
+            "failure_analysis.statement_failures",
+        )
+    for text in ungrounded_tex:
+        result.add(
+            "FAILURE_MODE_BRANCH_NOT_GROUNDED_IN_NEGATION",
+            "warning",
+            f"TeX Failure modes branch is not grounded in the inferred negation branches: {text[:120]}",
+            "corrected_tex",
+        )
+    if mentions_exhaustive_failure_modes(artifact_texts + tex_texts):
+        result.add(
+            "FAILURE_MODE_BRANCH_OVERCLAIMS_EXHAUSTIVE",
+            "warning",
+            "Failure mode wording claims exhaustiveness; the semantic validator only checks obvious branches from the negation AST.",
+            "failure_analysis.statement_failures",
+        )
+    if has_structured_tex_failure_block:
+        artifact_keys = {obligation.key for obligation in obligations if obligation_matches(artifact_texts, obligation)}
+        tex_keys = {obligation.key for obligation in obligations if obligation_matches(tex_texts, obligation)}
+        if artifact_keys != tex_keys:
+            result.add(
+                "FAILURE_MODE_TEX_ARTIFACT_MISMATCH",
+                "warning",
+                "Artifact statement_failures and corrected TeX Failure modes branches do not cover the same inferred negation branches.",
+                "corrected_tex",
+            )
+
+    if any(finding.code.startswith("FAILURE_MODE_") for finding in result.findings):
+        result.set_check("failure_modes", "warning", "Statement failure modes need branch-level review against the negation AST.")
     else:
-        result.set_check("failure_modes", "pass", "Statement-level failure modes are recorded.")
+        result.set_check("failure_modes", "pass", "Statement-level failure modes match the obvious negation branch obligations.")
 
 
 def check_yaml_tex_equivalence(data: dict[str, Any], corrected_tex: str, result: LogicResult) -> None:
@@ -1535,7 +1792,7 @@ def validate(data: dict[str, Any], corrected_tex: str) -> LogicResult:
     check_statement_shape(data, corrected_tex, result)
     check_negation(data, result)
     check_predicates(data, result)
-    check_applicability_and_failure_modes(data, result)
+    check_applicability_and_failure_modes(data, corrected_tex, result)
     check_yaml_tex_equivalence(data, corrected_tex, result)
     return result
 

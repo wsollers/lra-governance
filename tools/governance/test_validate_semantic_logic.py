@@ -180,6 +180,73 @@ class SemanticLogicValidationTests(unittest.TestCase):
                 text=True,
             )
 
+    def implication_failure_artifact(self) -> dict:
+        hypothesis = {"kind": "predicate", "predicate_id": "pred:hypothesis", "arguments": []}
+        conclusion = {"kind": "predicate", "predicate_id": "pred:conclusion", "arguments": []}
+        implication = {"kind": "implies", "left": hypothesis, "right": conclusion}
+        return add_parser_witnesses({
+            "identity": {"label": "thm:implication-failure-branches", "kind": "theorem"},
+            "context": [],
+            "parameters": [],
+            "assumptions": [],
+            "statement": {"canonical_latex": r"H\Rightarrow C.", "semantic_ast": implication},
+            "logical_forms": {
+                "standard_quantified": {"latex": r"H\Rightarrow C.", "ast": implication},
+                "predicate_reading": {"latex": r"H\Rightarrow C.", "ast": implication},
+                "negation": {
+                    "mechanical": {"latex": r"\neg(H\Rightarrow C).", "ast": {"kind": "not", "operand": implication}},
+                    "approved_normal_form": {
+                        "latex": r"H\land\neg C.",
+                        "ast": {"kind": "and", "left": hypothesis, "right": {"kind": "not", "operand": conclusion}},
+                    },
+                    "normalization_requires": [],
+                },
+                "contrapositive": None,
+            },
+            "failure_analysis": {
+                "applicability_failures": [],
+                "statement_failures": [{"id": "hypothesis_holds_and_conclusion_fails"}],
+            },
+        })
+
+    def test_warns_when_failure_mode_branch_missing_from_artifact(self):
+        data = self.implication_failure_artifact()
+        data["failure_analysis"]["statement_failures"] = [{"id": "conclusion_fails"}]
+
+        result = self.run_validator_with_tex(data, r"\begin{theorem} \(H\Rightarrow C\). Failure modes: \(H\land\neg C\). \end{theorem}")
+
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn("FAILURE_MODE_BRANCH_MISSING", result.stdout)
+
+    def test_warns_when_failure_mode_branch_not_grounded_and_overclaims(self):
+        data = real_upper_bound_artifact()
+        data["failure_analysis"]["statement_failures"] = [{"id": "complete_exhaustive_catalog_of_unrelated_failure"}]
+
+        result = self.run_validator(data)
+
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn("FAILURE_MODE_BRANCH_NOT_GROUNDED_IN_NEGATION", result.stdout)
+        self.assertIn("FAILURE_MODE_BRANCH_OVERCLAIMS_EXHAUSTIVE", result.stdout)
+
+    def test_warns_when_failure_mode_tex_and_artifact_branches_differ(self):
+        data = self.implication_failure_artifact()
+        corrected_tex = r"""
+\begin{theorem}
+\(H\Rightarrow C\).
+\begin{remark*}[Failure modes]
+\begin{description}
+\item[Exposition.] The negation is \(H\land\neg C\).
+\item[Conclusion fails.] The conclusion fails.
+\end{description}
+\end{remark*}
+\end{theorem}
+"""
+
+        result = self.run_validator_with_tex(data, corrected_tex)
+
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn("FAILURE_MODE_TEX_ARTIFACT_MISMATCH", result.stdout)
+
     def test_accepts_explicit_definition_iff_ast(self):
         result = self.run_validator(real_upper_bound_artifact())
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
