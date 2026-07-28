@@ -118,7 +118,12 @@ jobs:
           python lra-governance/tools/governance/build_series_volume_book_outputs.py \
             --repos-root "$GITHUB_WORKSPACE" \
             --common-root lra-common \
-            --output-dir pdf-output
+            --output-dir pdf-output \
+            --edition digital \
+            --edition print \
+            --edition reference \
+            --level volumes \
+            --level books
 
       - name: Verify combined PDFs
         run: |

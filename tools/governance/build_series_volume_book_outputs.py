@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build volume-level and book-level PDFs for the whole LRA series."""
+"""Build book-level and volume-level PDFs for the LRA series."""
 
 from __future__ import annotations
 
@@ -12,6 +12,7 @@ from pathlib import Path
 
 ROMANS = ("i", "ii", "iii", "iv", "v", "vi", "vii", "viii")
 EDITIONS = ("digital", "print", "reference")
+LEVELS = ("books", "volumes")
 
 
 def run(cmd: list[str], cwd: Path | None = None) -> None:
@@ -77,11 +78,22 @@ def build_book_roots(args: argparse.Namespace, volume: dict, edition: str) -> No
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Build all series volume and book PDFs.")
+    parser = argparse.ArgumentParser(description="Build series book and volume PDFs.")
     parser.add_argument("--repos-root", type=Path, required=True)
     parser.add_argument("--common-root", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, default=Path("pdf-output"))
-    parser.add_argument("--edition", action="append", choices=EDITIONS)
+    parser.add_argument(
+        "--edition",
+        action="append",
+        choices=EDITIONS,
+        help="edition to build; repeatable. Defaults to digital only.",
+    )
+    parser.add_argument(
+        "--level",
+        action="append",
+        choices=LEVELS,
+        help="output granularity to build; repeatable. Defaults to books only.",
+    )
     parser.add_argument("--volume", action="append", choices=ROMANS)
     args = parser.parse_args(argv)
 
@@ -89,7 +101,8 @@ def main(argv: list[str] | None = None) -> int:
     args.common_root = args.common_root.expanduser().resolve()
     args.output_dir = args.output_dir.expanduser().resolve()
 
-    requested_editions = tuple(args.edition or EDITIONS)
+    requested_editions = tuple(args.edition or ("digital",))
+    requested_levels = set(args.level or ("books",))
     requested_volumes = set(args.volume or ROMANS)
     volumes = [
         volume
@@ -100,8 +113,10 @@ def main(argv: list[str] | None = None) -> int:
 
     for edition in requested_editions:
         for volume in volumes:
-            build_volume_roots(args, volume, edition)
-            build_book_roots(args, volume, edition)
+            if "volumes" in requested_levels:
+                build_volume_roots(args, volume, edition)
+            if "books" in requested_levels:
+                build_book_roots(args, volume, edition)
     return 0
 
 
