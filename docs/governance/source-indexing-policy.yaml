@@ -38,6 +38,56 @@ source_profiles:
       - role
       - notes
     launch_order: enabled_sources_by_preferred_rank_or_slot_order
+internal_object_indexes:
+  role: lean_tex_verification_lookup
+  canonical_tool: tools/governance/index_internal_objects.py
+  schema_version: lra.internal-object-index/1.0
+  primary_surfaces:
+    - tex_source
+    - lean_source
+  render_surfaces:
+    - pdf_page_map
+  render_surface_role: downstream_page_and_visual_evidence
+  default_output_location: ignored_build_or_external_index_root
+  commit_policy:
+    full_generated_indexes: do_not_commit_by_default
+    curated_crosswalks: may_commit_after_review
+  tex:
+    require_bracketed_display_name: true
+    formalization_tag:
+      macro: LeanFormalizes
+      arguments:
+        - tex_label
+        - repo
+        - module
+        - declaration
+        - status
+      allowed_statuses:
+        - checked
+        - statement
+        - pending
+        - incomplete
+      missing_target_action: create_lra_lean_followup_task
+    indexed_kinds:
+      - definition
+      - theorem
+      - lemma
+      - proposition
+      - corollary
+      - axiom
+    default_artifact_source: source
+    skip_dirs:
+      - _to_delete
+      - build
+  lean:
+    indexed_kinds:
+      - def
+      - theorem
+      - lemma
+      - axiom
+      - structure
+      - class
+      - inductive
 readings_root:
   env_var: LRA_READINGS_ROOT
 recursive_scan:

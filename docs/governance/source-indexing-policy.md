@@ -144,6 +144,49 @@ Ordinary staging folders named `processed` remain indexable.
 An explicit tool override may index excluded roots for a deliberate local test,
 but that override does not change the canonical policy.
 
+## Internal TeX and Lean Indexes
+
+LRA-authored TeX and Lean files are internal source surfaces for verification
+work. For Lean <-> TeX linking, tools should index TeX source and Lean source
+directly before consulting rendered PDFs.
+
+The canonical deterministic indexer is
+`tools/governance/index_internal_objects.py`. It emits source-style records for
+TeX definition/theorem-like environments and Lean declarations with stable
+object identifiers, file paths, line hints, labels or declaration names,
+statement text, and volume/chapter/topic metadata when those can be inferred
+from paths.
+
+Every TeX definition, axiom, theorem, lemma, proposition, and corollary
+environment must have a bracketed display name, for example
+`\begin{definition}[Natural Logarithm]` or
+`\begin{proposition}[Fundamental Logarithmic Limit]`. The rendered box title
+and the numbered environment title should agree in mathematical name so the
+index has a stable human-facing key.
+
+Reviewed TeX-to-Lean links should be recorded immediately after the TeX formal
+artifact with:
+
+```tex
+\LeanFormalizes{<tex-label>}{lra-lean}{<Lean.module>}{<LeanDeclaration>}{<status>}
+```
+
+The allowed statuses are `checked`, `statement`, `pending`, and `incomplete`.
+When a new TeX definition or theorem-like artifact has no Lean declaration yet,
+create an explicit `lra-lean` follow-up task to add the declaration or record
+why it is intentionally absent; do not leave the TeX artifact silently
+untracked.
+
+PDF outputs are render artifacts. They may provide page-number or visual QA
+evidence after a TeX object is identified, but they should not be the primary
+object-discovery surface because labels, environment structure, and source
+lineage are more reliable in TeX.
+
+Generated internal indexes belong under ignored build or external index
+locations unless a small curated crosswalk is intentionally reviewed and
+committed. Do not commit full rendered PDFs, full generated TeX object indexes,
+or machine-local absolute index paths as canonical governance data.
+
 ## Docker Search Workflow
 
 Use the `lra-source-indexer:latest` image from `lra-source-profiles` for

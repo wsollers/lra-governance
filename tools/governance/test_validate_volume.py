@@ -18,7 +18,7 @@ from core import volume as volume_core
 from validate_volume import VALIDATORS, _filter_findings_for_inventory
 from core.validator_runner import run_validator
 from core.finding import finding
-from validators import block_discipline, book_toc, capstones, chapter_router, dedication_page, dependency_blocks, dependency_graphs, figure_fragments, formal_decoration, formal_predicate_leakage, formal_reading_required, frontmatter_standard, input_resolution, interpretation_blocks, labels, latex_integrity, lean_formalizations, math_boxes, notes_structure, operator_metadata, predicate_reading_constructions, predicate_reading_signatures, print_edition_routing, proof_coverage, proof_file_contract, proof_layout, proof_order, proof_routing, proof_stub_state, reference_voice, source_variants, structural_chrome, structural_positions, unicode_tex, volume_shape
+from validators import block_discipline, book_toc, capstones, chapter_router, dedication_page, dependency_blocks, dependency_graphs, figure_fragments, formal_decoration, formal_names, formal_predicate_leakage, formal_reading_required, frontmatter_standard, input_resolution, interpretation_blocks, labels, latex_integrity, lean_formalizations, math_boxes, notes_structure, operator_metadata, predicate_reading_constructions, predicate_reading_signatures, print_edition_routing, proof_coverage, proof_file_contract, proof_layout, proof_order, proof_routing, proof_stub_state, reference_voice, source_variants, structural_chrome, structural_positions, unicode_tex, volume_shape
 
 
 HERE = Path(__file__).resolve().parent
@@ -3435,6 +3435,26 @@ class ValidateVolumeTests(unittest.TestCase):
         )
 
         self.assertEqual(validate_with_inventory(lean_formalizations, volume), [])
+
+    def test_formal_names_validator_accepts_named_formal_environments(self):
+        volume = make_volume()
+
+        self.assertEqual(validate_with_inventory(formal_names, volume), [])
+
+    def test_formal_names_validator_rejects_unnamed_formal_environment(self):
+        volume = make_volume()
+        notes = volume / "integers" / "notes" / "order" / "notes-order.tex"
+        notes.write_text(
+            notes.read_text(encoding="utf-8").replace(
+                r"\begin{proposition}[Order]",
+                r"\begin{proposition}",
+            ),
+            encoding="utf-8",
+        )
+
+        codes = {finding.code for finding in validate_with_inventory(formal_names, volume)}
+
+        self.assertIn("formal_environment_missing_name", codes)
 
     def test_lean_formalization_validator_rejects_malformed_macro(self):
         volume = make_volume()

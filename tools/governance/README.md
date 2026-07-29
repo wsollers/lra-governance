@@ -22,6 +22,14 @@ Available and planned tools:
 - `generate_predicate_migration_contexts.py` - read-only generator for
   predicate/dependency migration issue reports and per-formal-item context
   packets.
+- `index_internal_objects.py` - read-only source-style indexer for internal
+  volume TeX objects and Lean declarations, used to seed Lean <-> TeX
+  verification and linking.
+- `plan_lean_tex_formalizations.py` - conservative planner/applicator for
+  reviewed `\LeanFormalizes` tags from an internal object index.
+- `validators/formal_names.py` - integrated volume validator requiring
+  bracketed display names on all definition, axiom, and theorem-like
+  environments.
 - `generate_stub.py` - deterministic scaffold for canonical stub chapters and
   topic-paired stub sections.
 - `test_tex_generator/` - deterministic synthetic TeX universe generator used
@@ -129,6 +137,56 @@ Outputs are written under ignored `migration-reports/` by default.
 
 ```powershell
 python tools\governance\generate_predicate_migration_contexts.py --volume F:\repos\lra-volume-iii --chapter bounding
+```
+
+## Internal Object Index
+
+Generate a source-style lookup index for LRA TeX and Lean objects before
+Lean <-> TeX verification passes. TeX source and Lean source are the canonical
+lookup surfaces; PDF page maps may be joined later as render evidence.
+
+```powershell
+python tools\governance\index_internal_objects.py `
+  --tex-root F:\repos\lra-volume-iii `
+  --lean-root F:\repos\lra-lean `
+  --include-match-report `
+  --output build\internal-object-index.yaml
+```
+
+The index emits `lra.internal-object-index/1.0` records for TeX definitions,
+axioms, theorems, lemmas, propositions, and corollaries plus Lean `def`,
+`theorem`, `lemma`, `axiom`, `structure`, `class`, and `inductive`
+declarations. Prefer the default `--tex-artifact-source source` so artifact
+directories with both `source.tex` and `corrected.tex` do not create duplicate
+records.
+
+With `--include-match-report`, the same payload includes candidate Lean matches,
+TeX objects that already carry `\LeanFormalizes`, TeX objects without a Lean
+candidate, and Lean declarations not yet referenced by any TeX formalization
+tag. Use that report to populate reviewed `\LeanFormalizes{label}{repo}{module}{declaration}{status}`
+entries in TeX.
+
+Build a conservative exact-match plan:
+
+```powershell
+python tools\governance\plan_lean_tex_formalizations.py `
+  --index build\internal-object-index.yaml `
+  --output build\lean-tex-formalization-plan.yaml `
+  --status pending
+```
+
+The planner requires a TeX label, skips proof-side starred restatements, uses
+production Lean paths under `LRA/` by default, and chooses one preferred TeX
+attachment target per label. Review the generated YAML before applying; exact
+title matches can still be semantically broad for names such as "Model" or
+"Subtraction." Apply only a reviewed plan:
+
+```powershell
+python tools\governance\plan_lean_tex_formalizations.py `
+  --index build\internal-object-index.yaml `
+  --output build\lean-tex-formalization-plan-applied.yaml `
+  --status pending `
+  --apply
 ```
 
 ## Semantic AST Test Universe
