@@ -56,10 +56,26 @@ mirror named concepts from the volumes. Use snake_case only for local helpers,
 implementation details, or declarations that intentionally follow an imported
 library's naming convention.
 
+LRA-authored public declarations must not use snake_case. Any declaration that
+can be referenced by `\LeanFormalizes`, imported by another LRA module as part
+of a mathematical interface, or read as a volume-facing definition/theorem must
+use prose-style PascalCase. Snake_case is permitted only for genuinely local
+proof helpers, private/internal implementation details, legacy declarations
+quarantined under an explicit `Old` namespace, or compatibility names required
+by an imported library convention. Do not attach TeX metadata to snake_case
+helpers; attach it to the canonical PascalCase declaration in the proper module.
+
 When adding source-aligned declarations, model definitions and theorem
 statements first. Do not complete Lean proof bodies unless the user explicitly
 requests proofs. Use a compiling placeholder proof such as `sorry` for accepted
 statements whose proof work has not been requested.
+
+Do not create new axiom artifacts unless the user explicitly instructs you to add
+a new axiom. When a source already contains an axiom environment, attach
+Lean metadata to that existing artifact; do not create a duplicate TeX
+axiom box, and do not promote a definition, predicate, or theorem to a
+Lean `axiom` merely to make metadata placement convenient. If the source
+kind is unclear, stop and ask before adding or reclassifying axioms.
 
 For proof-photo memorialization, do not turn a photographed handwritten proof
 into a completed Lean proof as part of the memorialization task. Record or
@@ -71,6 +87,26 @@ File and module organization should mirror the formal subject matter. New
 modules belong under the appropriate `LRA/Volume*/...` tree, imported through
 the relevant volume root, and exposed through stable names that make downstream
 verification and explorer extraction straightforward.
+
+Generic structural material belongs at its earliest mathematical home, not
+under the first later volume that happens to use it. Volume II must not
+introduce namespaces such as `LRA.VolumeII.Foundations.IdentityElements`,
+`LRA.VolumeII.Foundations.IdentityEquality`, or
+`LRA.VolumeII.Foundations.OrderRelations` for generic equality, substitution,
+relation predicates, order predicates, identity elements, absorbing elements,
+operation laws, or algebra laws. Put equality and substitution declarations
+under `LRA.VolumeI.Identity`; put binary relation predicates under
+`LRA.VolumeI.Relations`; put order laws under `LRA.VolumeI.Relations.Order`;
+put operation laws and identity-element laws under `LRA.VolumeI.Operations`;
+reserve `LRA.VolumeI.Structures` for bundled structures such as magma,
+semigroup, monoid, group, ring, and field; and let later volumes import the
+Volume I module.
+
+Do not introduce stacked namespace declarations that spell a module path one
+component at a time, such as `namespace LRA`, then `namespace VolumeII`, then
+`namespace Foundations`, then `namespace IdentityElements`. Use a single dotted
+namespace declaration such as `namespace LRA.VolumeI.Identity` or
+`namespace LRA.VolumeI.Relations.Order`.
 
 Keep examples and tests separate. Source-facing example modules may live under
 `LRA/Volume*/...` when they are readable mathematical examples that a maintainer
