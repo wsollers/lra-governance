@@ -39,6 +39,15 @@ stay separated from math and simulation kernels, and reusable abstractions
 should have a clear caller before they are promoted. Names should describe the
 domain concept or service responsibility rather than implementation mechanics.
 
+Never break encapsulation or straddle established design isolation points to
+complete a requested change. If an implementation appears to require engine
+code to own app-specific behavior, rendering/platform code to absorb domain
+logic, math/simulation kernels to depend on UI or renderer services, or any
+other boundary-crossing shortcut, stop and ask for design discussion before
+editing. Keep `Engine` focused on reusable orchestration; put scene-specific
+teaching, demonstration, simulation, and geometry behavior behind explicit
+app/domain abstractions.
+
 Keep the C++ Core Guidelines in mind, especially around ownership, lifetime,
 copy/move behavior, slicing, and explicit contracts. The local clang-tidy
 configuration already checks selected `cppcoreguidelines-*` rules; do not work
