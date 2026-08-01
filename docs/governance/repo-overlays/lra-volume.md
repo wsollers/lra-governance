@@ -52,6 +52,26 @@ To build one book root, pass it explicitly:
 python ..\lra-governance\tools\governance\build_volume_docker.py --root . --common-root ..\lra-common --edition digital --paper letter --tex-root volume-i-set-theory.tex --output-dir build\digital-letter
 ```
 
+## Lean/TeX Lookup Index
+
+Volume repos own TeX source artifacts, not Lean source. When a task adds,
+deletes, moves, or revises a TeX `definition`, `axiom`, `theorem`, `lemma`,
+`proposition`, or `corollary`, refresh the governed internal object index with
+the delta updater so the object is discoverable by label and display name:
+
+```powershell
+python ..\lra-governance\tools\governance\update_internal_object_index.py `
+  --tex-root . `
+  --lean-root ..\lra-lean `
+  --output D:\Readings\indexes\lra\internal\<volume>-lean-tex-index.yaml `
+  --include-match-report
+```
+
+Use `--full` for a self-healing rebuild when roots, parser behavior, or index
+health are uncertain. Generated internal indexes and delta state files belong
+under ignored build or external index locations; do not commit them to volume
+repos unless a small curated crosswalk has been explicitly reviewed.
+
 ## Stub Chapters
 
 Volume chapter stubs follow the global `stub-chapter-standards.md` standard.

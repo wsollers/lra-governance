@@ -157,6 +157,19 @@ object identifiers, file paths, line hints, labels or declaration names,
 statement text, and volume/chapter/topic metadata when those can be inferred
 from paths.
 
+For ordinary edit loops, use
+`tools/governance/update_internal_object_index.py`. The updater preserves the
+full indexer as the parsing authority while adding a delta state file: it hashes
+current TeX/Lean source files, re-indexes changed files, removes records for
+deleted files, and merges unchanged records from the previous index. Use
+`--full` when roots, parser behavior, or index health are in doubt.
+
+The delta workflow is documented in
+`docs/workflows/internal-object-index-delta.md`. After adding or revising a TeX
+formal artifact or Lean declaration, rerun the updater before relying on lookup
+results. A newly added TeX definition should be searchable by label or display
+name in the generated internal object index.
+
 Every TeX definition, axiom, theorem, lemma, proposition, and corollary
 environment must have a bracketed display name, for example
 `\begin{definition}[Natural Logarithm]` or
@@ -185,7 +198,8 @@ lineage are more reliable in TeX.
 Generated internal indexes belong under ignored build or external index
 locations unless a small curated crosswalk is intentionally reviewed and
 committed. Do not commit full rendered PDFs, full generated TeX object indexes,
-or machine-local absolute index paths as canonical governance data.
+delta state files, or machine-local absolute index paths as canonical
+governance data.
 
 ## Docker Search Workflow
 

@@ -338,51 +338,57 @@ def tex_files(root: Path, artifact_source: str) -> list[Path]:
     return sorted(files)
 
 
+def index_tex_file(path: Path, root: Path) -> list[InternalObject]:
+    records: list[InternalObject] = []
+    text = read_text(path)
+    path_meta = infer_volume_path_metadata(path, root)
+    relative = relpath(path, root)
+    for match in TEX_BEGIN_RE.finditer(text):
+        kind = match.group("kind")
+        end = find_matching_tex_end(text, kind, match.end())
+        if not end:
+            continue
+        raw_block = text[match.start() : end.end()]
+        label_match = LABEL_RE.search(raw_block)
+        title = compact_text(match.group("title") or "")
+        label = label_match.group("label") if label_match else None
+        starred = bool(match.group("star"))
+        if "YOUR_LABEL" in (label or "") or "TITLE GOES HERE" in title:
+            continue
+        line = line_number_at(text, match.start())
+        end_line = line_number_at(text, end.end())
+        name = title or label or f"{path.stem}:{line}"
+        object_id = f"tex:{label}" if label else f"tex:{relative}:{line}"
+        statement = compact_text(raw_block)
+        formalizes = lean_formalizes_in_window(text, end.end(), trailing_window_end(text, end.end()))
+        records.append(
+            InternalObject(
+                object_id=object_id,
+                source_family="tex",
+                kind=kind,
+                name=name,
+                repo_root=str(root),
+                path=relative,
+                line=line,
+                end_line=end_line,
+                label=label,
+                volume=path_meta["volume"],
+                book=path_meta["book"],
+                chapter=path_meta["chapter"],
+                topic=path_meta["topic"],
+                section_path=section_context_before(text, match.start()),
+                statement=statement,
+                search_text=" ".join(item for item in [kind, name, label or "", statement] if item),
+                metadata={"artifact_file": path.name, "starred": starred, "lean_formalizes": formalizes},
+            )
+        )
+    return records
+
+
 def index_tex_root(root: Path, artifact_source: str) -> list[InternalObject]:
     records: list[InternalObject] = []
     for path in tex_files(root, artifact_source):
-        text = read_text(path)
-        path_meta = infer_volume_path_metadata(path, root)
-        relative = relpath(path, root)
-        for match in TEX_BEGIN_RE.finditer(text):
-            kind = match.group("kind")
-            end = find_matching_tex_end(text, kind, match.end())
-            if not end:
-                continue
-            raw_block = text[match.start() : end.end()]
-            label_match = LABEL_RE.search(raw_block)
-            title = compact_text(match.group("title") or "")
-            label = label_match.group("label") if label_match else None
-            starred = bool(match.group("star"))
-            if "YOUR_LABEL" in (label or "") or "TITLE GOES HERE" in title:
-                continue
-            line = line_number_at(text, match.start())
-            end_line = line_number_at(text, end.end())
-            name = title or label or f"{path.stem}:{line}"
-            object_id = f"tex:{label}" if label else f"tex:{relative}:{line}"
-            statement = compact_text(raw_block)
-            formalizes = lean_formalizes_in_window(text, end.end(), trailing_window_end(text, end.end()))
-            records.append(
-                InternalObject(
-                    object_id=object_id,
-                    source_family="tex",
-                    kind=kind,
-                    name=name,
-                    repo_root=str(root),
-                    path=relative,
-                    line=line,
-                    end_line=end_line,
-                    label=label,
-                    volume=path_meta["volume"],
-                    book=path_meta["book"],
-                    chapter=path_meta["chapter"],
-                    topic=path_meta["topic"],
-                    section_path=section_context_before(text, match.start()),
-                    statement=statement,
-                    search_text=" ".join(item for item in [kind, name, label or "", statement] if item),
-                    metadata={"artifact_file": path.name, "starred": starred, "lean_formalizes": formalizes},
-                )
-            )
+        records.extend(index_tex_file(path, root))
     return records
 
 
@@ -477,52 +483,62 @@ def update_namespace_stack(line: str, stack: list[str]) -> None:
         del stack[-len(parts) :]
 
 
+def lean_files(root: Path) -> list[Path]:
+    return sorted(item for item in root.rglob("*.lean") if not should_skip(item))
+
+
+def index_lean_file(path: Path, root: Path) -> list[InternalObject]:
+    records: list[InternalObject] = []
+    text = read_text(path)
+    lines = text.splitlines()
+    namespace_stack: list[str] = []
+    module = lean_module_name(path, root)
+    relative = relpath(path, root)
+    for idx, line in enumerate(lines):
+        match = LEAN_DECL_RE.match(line)
+        if match and match.group("kind") in LEAN_DECL_KINDS:
+            kind = match.group("kind")
+            name = match.group("name")
+            end_idx = declaration_extent(lines, idx)
+            statement = declaration_statement(lines, idx, end_idx)
+            comment = leading_comment(lines, idx)
+            comment_title = lean_comment_title(comment)
+            declaration = ".".join([*namespace_stack, name]) if namespace_stack else name
+            qualified_name = lean_object_qualified_name(module, declaration)
+            path_meta = infer_volume_path_metadata(path, root)
+            records.append(
+                InternalObject(
+                    object_id=f"lean:{qualified_name}",
+                    source_family="lean",
+                    kind=kind,
+                    name=name,
+                    repo_root=str(root),
+                    path=relative,
+                    line=idx + 1,
+                    end_line=end_idx,
+                    declaration=declaration,
+                    module=module,
+                    volume=path_meta["volume"],
+                    book=path_meta["book"],
+                    chapter=path_meta["chapter"],
+                    statement=statement,
+                    search_text=" ".join([kind, declaration, module, statement, comment]),
+                    metadata={
+                        "namespace": list(namespace_stack),
+                        "leading_comment": comment,
+                        "leading_comment_role": comment_title.get("role"),
+                        "leading_comment_name": comment_title.get("name"),
+                    },
+                )
+            )
+        update_namespace_stack(line, namespace_stack)
+    return records
+
+
 def index_lean_root(root: Path) -> list[InternalObject]:
     records: list[InternalObject] = []
-    for path in sorted(item for item in root.rglob("*.lean") if not should_skip(item)):
-        text = read_text(path)
-        lines = text.splitlines()
-        namespace_stack: list[str] = []
-        module = lean_module_name(path, root)
-        relative = relpath(path, root)
-        for idx, line in enumerate(lines):
-            match = LEAN_DECL_RE.match(line)
-            if match and match.group("kind") in LEAN_DECL_KINDS:
-                kind = match.group("kind")
-                name = match.group("name")
-                end_idx = declaration_extent(lines, idx)
-                statement = declaration_statement(lines, idx, end_idx)
-                comment = leading_comment(lines, idx)
-                comment_title = lean_comment_title(comment)
-                declaration = ".".join([*namespace_stack, name]) if namespace_stack else name
-                qualified_name = lean_object_qualified_name(module, declaration)
-                path_meta = infer_volume_path_metadata(path, root)
-                records.append(
-                    InternalObject(
-                        object_id=f"lean:{qualified_name}",
-                        source_family="lean",
-                        kind=kind,
-                        name=name,
-                        repo_root=str(root),
-                        path=relative,
-                        line=idx + 1,
-                        end_line=end_idx,
-                        declaration=declaration,
-                        module=module,
-                        volume=path_meta["volume"],
-                        book=path_meta["book"],
-                        chapter=path_meta["chapter"],
-                        statement=statement,
-                        search_text=" ".join([kind, declaration, module, statement, comment]),
-                        metadata={
-                            "namespace": list(namespace_stack),
-                            "leading_comment": comment,
-                            "leading_comment_role": comment_title.get("role"),
-                            "leading_comment_name": comment_title.get("name"),
-                        },
-                    )
-                )
-            update_namespace_stack(line, namespace_stack)
+    for path in lean_files(root):
+        records.extend(index_lean_file(path, root))
     return records
 
 

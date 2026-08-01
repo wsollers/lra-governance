@@ -41,7 +41,10 @@ source_profiles:
 internal_object_indexes:
   role: lean_tex_verification_lookup
   canonical_tool: tools/governance/index_internal_objects.py
+  delta_tool: tools/governance/update_internal_object_index.py
+  workflow: docs/workflows/internal-object-index-delta.md
   schema_version: lra.internal-object-index/1.0
+  delta_state_schema_version: lra.internal-object-index-state/1.0
   primary_surfaces:
     - tex_source
     - lean_source
@@ -49,8 +52,21 @@ internal_object_indexes:
     - pdf_page_map
   render_surface_role: downstream_page_and_visual_evidence
   default_output_location: ignored_build_or_external_index_root
+  refresh_policy:
+    ordinary_edit_loop: run_delta_tool
+    force_full_rebuild_flag: --full
+    trigger_events:
+      - tex_formal_artifact_added_or_changed
+      - tex_formal_artifact_deleted_or_moved
+      - lean_declaration_added_or_changed
+      - lean_declaration_deleted_or_moved
+      - leanformalizes_link_added_or_changed
+    pass_volume_repo_root_as_tex_root: true
+    pass_lra_lean_root_as_lean_root: true
+    nested_tex_roots_supported: false
   commit_policy:
     full_generated_indexes: do_not_commit_by_default
+    delta_state_files: do_not_commit_by_default
     curated_crosswalks: may_commit_after_review
   tex:
     require_bracketed_display_name: true

@@ -147,6 +147,28 @@ Local Windows validation should prefer `.\build.ps1 docker-build` followed by
 `lean-toolchain` is installed locally. When adding a Lean volume, add its
 `lean_lib` to `lakefile.lean` before extending CI to build it.
 
+## Lean/TeX Lookup Index
+
+When adding, deleting, moving, or revising source-facing Lean declarations,
+refresh the governed internal object index after the Lean build gate that is
+appropriate for the task. The index refresh is not a substitute for Lake; it is
+the lookup surface that lets volume TeX artifacts and Lean declarations stay
+discoverable together.
+
+```powershell
+python ..\lra-governance\tools\governance\update_internal_object_index.py `
+  --tex-root ..\lra-volume-iii `
+  --lean-root . `
+  --output D:\Readings\indexes\lra\internal\volume-iii-lean-tex-index.yaml `
+  --include-match-report
+```
+
+Repeat `--tex-root` for every volume whose TeX objects should be compared
+against the Lean root, or use a volume-scoped output for focused work. Use
+`--full` when the index state is missing, stale, or suspicious. Generated index
+and state files belong in ignored build or external index locations unless a
+small curated crosswalk is intentionally reviewed and committed elsewhere.
+
 ## Volume II Verification Map
 
 For Volume II formalization work, each declaration that mirrors a volume
