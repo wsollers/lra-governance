@@ -49,6 +49,18 @@ proof structure legible enough for a maintainer to match it back to the source
 mathematics. Prefer small named lemmas and explicit local structure over dense
 anonymous tactic blocks when the proof has reusable mathematical content.
 
+Public mathematical declarations should have a doc comment that makes the Lean
+shape searchable in ordinary mathematical English. For theorem-like
+declarations, use a two-leg comment when the proof naturally proceeds by
+extensionality, iff-introduction, constructors, or similar decompositions: first
+state the theorem in its displayed Lean direction, then add an "equivalently" or
+"memberwise" sentence describing the elementwise, iff, or constructor-level
+shape used by the proof. For definition-like declarations, first name the
+object being defined, then state its membership/evaluation/field condition when
+that is the way users will search for it. Keep these comments mathematical, not
+tactic-oriented: mention "for every element `x`, ..." rather than "after
+`intro x`"; mention "iff" or "equivalently" rather than "after `constructor`".
+
 In `lra-lean`, source-facing mathematical declarations should preserve the
 project's prose-style names. Prefer PascalCase theorem and predicate names such
 as `IsUpperBound`, `IsSupremum`, and `MaximumIsSupremum` when those declarations
