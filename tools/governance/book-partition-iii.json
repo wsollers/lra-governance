@@ -12,7 +12,17 @@
     },
     {
       "name": "book-integration",
-      "chapters": ["riemann-integration"]
+      "chapters": [
+        "partitions",
+        "cauchy-integral",
+        "riemann-integral",
+        "darboux-integral",
+        "measure-zero",
+        "riemann-stieltjes",
+        "henstock-kurzweil",
+        "mcshane-integral",
+        "comparative-summary"
+      ]
     }
   ]
 }

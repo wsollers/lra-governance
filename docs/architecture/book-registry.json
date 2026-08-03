@@ -593,16 +593,56 @@
           "book_dir": "volume-iii/book-integration",
           "expected_toc": [
             {
-              "chapter": "riemann-integration",
+              "chapter": "partitions",
               "notes": [
-                "partitions",
-                "cauchy-integral",
-                "riemann-integral",
-                "darboux-integral",
-                "measure-zero",
-                "riemann-stieltjes",
-                "henstock-kurzweil",
-                "mcshane-integral",
+                "partitions"
+              ]
+            },
+            {
+              "chapter": "cauchy-integral",
+              "notes": [
+                "cauchy-integral"
+              ]
+            },
+            {
+              "chapter": "riemann-integral",
+              "notes": [
+                "riemann-integral"
+              ]
+            },
+            {
+              "chapter": "darboux-integral",
+              "notes": [
+                "darboux-integral"
+              ]
+            },
+            {
+              "chapter": "measure-zero",
+              "notes": [
+                "measure-zero"
+              ]
+            },
+            {
+              "chapter": "riemann-stieltjes",
+              "notes": [
+                "riemann-stieltjes"
+              ]
+            },
+            {
+              "chapter": "henstock-kurzweil",
+              "notes": [
+                "henstock-kurzweil"
+              ]
+            },
+            {
+              "chapter": "mcshane-integral",
+              "notes": [
+                "mcshane-integral"
+              ]
+            },
+            {
+              "chapter": "comparative-summary",
+              "notes": [
                 "comparative-summary"
               ]
             }
