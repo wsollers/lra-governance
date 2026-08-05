@@ -1,0 +1,31 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "LRA: validate volume",
+      "type": "shell",
+      "command": "python3 /lra-governance/scripts/build_volume.py --root . --validate-only",
+      "problemMatcher": []
+    },
+    {
+      "label": "LRA: build default TeX root",
+      "type": "shell",
+      "command": "latexmk -lualatex -interaction=nonstopmode -file-line-error -synctex=1 -shell-escape ${input:texRoot}",
+      "problemMatcher": []
+    },
+    {
+      "label": "LRA: clean default TeX root",
+      "type": "shell",
+      "command": "latexmk -C ${input:texRoot}",
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "texRoot",
+      "type": "promptString",
+      "description": "TeX root to build",
+      "default": "volume-iii.tex"
+    }
+  ]
+}

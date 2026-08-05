@@ -84,6 +84,62 @@ end LRA.VolumeIII.Analysis
     assert declarations["NestedIntervalTheorem"]["kind"] == "theorem"
     assert "IsNestedInterval I -> True" in declarations["NestedIntervalTheorem"]["statement"]
     assert declarations["NestedIntervalTheorem"]["metadata"]["leading_comment"] == ""
+    assert declarations["NestedIntervalTheorem"]["metadata"]["has_sorry"] is False
+    assert declarations["NestedIntervalTheorem"]["metadata"]["sorry_lines"] == []
+    assert declarations["NestedIntervalTheorem"]["metadata"]["verification_status"] == "checked"
+
+
+def test_indexes_lean_sorry_status_per_declaration(tmp_path: Path) -> None:
+    root = tmp_path / "lra-lean"
+    source = root / "LRA" / "VolumeIII" / "Analysis" / "Completeness.lean"
+    source.parent.mkdir(parents=True)
+    source.write_text(
+        """
+namespace LRA.VolumeIII.Analysis
+
+theorem ProvenTheorem : True := by
+  trivial
+
+theorem IncompleteTheorem : True := by
+  sorry
+
+end LRA.VolumeIII.Analysis
+""",
+        encoding="utf-8",
+    )
+
+    payload = build_index(tex_roots=[], lean_roots=[root], artifact_source="source")
+
+    declarations = {record["name"]: record for record in payload["objects"]}
+    assert declarations["ProvenTheorem"]["metadata"]["has_sorry"] is False
+    assert declarations["ProvenTheorem"]["metadata"]["verification_status"] == "checked"
+    assert declarations["IncompleteTheorem"]["metadata"]["has_sorry"] is True
+    assert declarations["IncompleteTheorem"]["metadata"]["sorry_lines"] == [8]
+    assert declarations["IncompleteTheorem"]["metadata"]["verification_status"] == "incomplete"
+
+
+def test_indexes_lean_sorry_status_ignores_comments_and_strings(tmp_path: Path) -> None:
+    root = tmp_path / "lra-lean"
+    source = root / "LRA" / "VolumeIII" / "Analysis" / "Completeness.lean"
+    source.parent.mkdir(parents=True)
+    source.write_text(
+        '''
+namespace LRA.VolumeIII.Analysis
+
+/- This declaration mentions sorry in a comment. -/
+def SorryWordInComment : String := "sorry in a string"
+
+end LRA.VolumeIII.Analysis
+''',
+        encoding="utf-8",
+    )
+
+    payload = build_index(tex_roots=[], lean_roots=[root], artifact_source="source")
+
+    record = payload["objects"][0]
+    assert record["metadata"]["has_sorry"] is False
+    assert record["metadata"]["sorry_lines"] == []
+    assert record["metadata"]["verification_status"] == "checked"
 
 
 def test_indexes_definition_like_lean_declarations_with_modifiers(tmp_path: Path) -> None:

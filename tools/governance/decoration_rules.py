@@ -517,7 +517,20 @@ def structural_roadmap_purge(text: str, info: FileInfo, ctx: Context):
 # ============================================================
 _FORMAL_BOX_ENVS = {"definitionbox","definitionalbox","axiombox","theorembox","lemmabox","propositionbox","corollarybox"}
 _STARRED_RESTATEMENT_ENVS = {"theorem*","lemma*","proposition*","corollary*"}
-_ALLOWED_NOTE_TOP_ENVS = _FORMAL_BOX_ENVS | {
+_STRUCTURE_CARD_ENVS = {
+    "lrachaptercard",
+    "lratopiccard",
+    "lraaxiomavatarcard",
+    "lracategoricalshadowcard",
+    "lracategoricalcard",
+    "lrauniversalsignaturecard",
+    "lraprimitiveinterfacecard",
+    "lraproofpatterncard",
+    "lrasignaturetable",
+    "lraproofpatterntable",
+    "lraproofechotable",
+}
+_ALLOWED_NOTE_TOP_ENVS = _FORMAL_BOX_ENVS | _STRUCTURE_CARD_ENVS | {
     "remark*","example*","exposition","dependencies","tcolorbox","toolkitbox","modelbox",
     "signaturebox","topicbox","figure","longtable","tabular","tabularx","itemize",
     "enumerate","description","quote","center","tikzpicture","lra-not-visible",

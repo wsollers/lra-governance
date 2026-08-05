@@ -77,6 +77,22 @@ Use the shared TikZ keys instead of hand-rolled local styles:
 - `atlas dot` for feature points;
 - `atlas label` for compact mathematical labels.
 
+For categorical renderings and structural-memory diagrams, use the shared
+categorical keys from `lra-common`:
+
+- `lra categorical diagram` on the `tikzpicture`;
+- `lra cat native object` for given inputs or ambient objects;
+- `lra cat left object` and `lra cat right object` for parallel construction
+  paths;
+- `lra cat result object` for the shared result, quotient, classifier, limit,
+  colimit, or canonical target;
+- `lra cat arrow` for ordinary maps or inclusions;
+- `lra cat left arrow` and `lra cat right arrow` for the two highlighted paths;
+- `lra cat result arrow` for convergence into the shared result;
+- `lra cat universal arrow` for unique maps supplied by universal properties;
+- `lra cat label` for compact arrow labels;
+- `lra cat note` for short diagram-level memory hooks.
+
 Example figure source file:
 
 ```latex
@@ -90,6 +106,65 @@ Example figure source file:
   \node[atlas label,below] at (2,-0.05){$c$};
 \end{tikzpicture}
 ```
+
+## Categorical Renderings
+
+Categorical diagrams in the learning volumes are structural memory devices, not
+decorative illustrations. Use them when a topic has a reusable interface:
+subobjects, joins/meets, images/preimages, quotient maps, pullbacks,
+pushforwards, adjunctions, products, coproducts, limits, colimits, or canonical
+factorizations.
+
+A categorical rendering should make the following visible:
+
+| Requirement | Practice |
+| --- | --- |
+| One object per box | Each box names exactly one object, operation result, quotient, classifier, or universal target. |
+| Native logic inside boxes | When an object is defined by a condition, put the defining condition below the object name in smaller type. |
+| Arrows have mathematical roles | Arrows represent inclusions, maps, injections, projections, quotient maps, substitutions, factor maps, or universal maps. |
+| Labels teach, not decorate | Label only arrows whose role is not visually obvious or whose label is the memory hook. |
+| Hasse-style layouts first | Prefer top inputs, middle constructions, and a lower shared result. Avoid crossing arrows. |
+| Color encodes structure | Neutral boxes are given/native objects; left and right construction paths use the shared left/right styles; shared results use the result style; universal maps use dashed universal arrows. |
+| The theorem is the commuting claim | The caption or nearby prose should state what commutes, factors, or agrees. |
+
+Use `\LraCatObject{...}{...}` for a box with a mathematical object name and a
+mathematical logic line. Use `\LraCatObjectText{...}{...}` when the second line
+is short prose, and `\LraCatObjectPlain{...}` when no second line is needed.
+
+Example dedicated figure source file:
+
+```latex
+\begin{tikzpicture}[lra categorical diagram]
+  \node[lra cat native object] (A) at (0,2)
+    {\LraCatObject{A}{\{x:x\in A\}}};
+  \node[lra cat native object] (B) at (3,2)
+    {\LraCatObject{B}{\{x:x\in B\}}};
+  \node[lra cat native object] (C) at (6,2)
+    {\LraCatObject{C}{\{x:x\in C\}}};
+
+  \node[lra cat left object] (AB) at (1.5,0.6)
+    {\LraCatObject{A\cup B}{\{x:x\in A\lor x\in B\}}};
+  \node[lra cat right object] (BC) at (4.5,0.6)
+    {\LraCatObject{B\cup C}{\{x:x\in B\lor x\in C\}}};
+  \node[lra cat result object] (ABC) at (3,-0.9)
+    {\LraCatObject{A\cup B\cup C}{\{x:x\in A\lor x\in B\lor x\in C\}}};
+
+  \draw[lra cat left arrow] (A) -- node[lra cat label,above left]{group \(A,B\)} (AB);
+  \draw[lra cat left arrow] (B) -- (AB);
+  \draw[lra cat right arrow] (B) -- (BC);
+  \draw[lra cat right arrow] (C) -- node[lra cat label,above right]{group \(B,C\)} (BC);
+  \draw[lra cat result arrow] (AB) -- (ABC);
+  \draw[lra cat result arrow] (BC) -- (ABC);
+
+  \node[lra cat note] at (3,-1.75)
+    {both paths land on the same membership condition};
+\end{tikzpicture}
+```
+
+The source file still follows the atomic figure rule: it contains only the
+`tikzpicture`. Put the surrounding card, caption, label, and explanatory prose
+at the inclusion point. For example, a note may place `\input{figure-union-assoc}`
+inside an `lracategoricalcard`, but the figure source itself remains standalone.
 
 ## Glow Curves
 

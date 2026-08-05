@@ -170,6 +170,33 @@ formal artifact or Lean declaration, rerun the updater before relying on lookup
 results. A newly added TeX definition should be searchable by label or display
 name in the generated internal object index.
 
+Full-text source lookup is available for active Lean and LaTeX work. Use
+ordinary code search, such as `rg`, for raw repository text; use the governed
+ranked object search when looking for theorem-like or definition-like objects
+by rough name, statement wording, synonym, typo, or mathematical phrase. The
+object search consumes the generated internal object index and scores phrase,
+token, synonym, LaTeX-symbol, and character n-gram overlap across TeX and Lean
+records.
+
+Example:
+
+```powershell
+python F:\repos\lra-governance\tools\governance\search_internal_object_index.py `
+  --index D:\Readings\indexes\lra\internal\all-volumes-lean-tex-index.yaml `
+  --source-family tex `
+  --limit 8 `
+  "supremum sum at most sum suprema"
+```
+
+Use `--source-family lean` to search Lean declarations, omit
+`--source-family` to search both Lean and TeX records, and use `--format json`
+when another tool or agent will consume the results. Search-quality feedback
+from proof memorialization and verification tasks should be recorded under the
+root `feedback/` folder, including the proof or object sought, the query used,
+top results, whether they were suitable, and any better query terms discovered.
+This feedback can drive later improvements such as a dedicated skill, a
+long-lived search index, or stronger mathematical query expansion.
+
 Every TeX definition, axiom, theorem, lemma, proposition, and corollary
 environment must have a bracketed display name, for example
 `\begin{definition}[Natural Logarithm]` or

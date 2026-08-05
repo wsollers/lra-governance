@@ -11,7 +11,20 @@ from core.file_inventory import validator_files
 FORMAL_ENVS = {"definition", "axiom", "theorem", "lemma", "proposition", "corollary"}
 FORMAL_BOX_ENVS = {"definitionbox", "definitionalbox", "axiombox", "theorembox", "lemmabox", "propositionbox", "corollarybox"}
 STARRED_RESTATEMENT_ENVS = {"theorem*", "lemma*", "proposition*", "corollary*"}
-ALLOWED_NOTE_TOP_ENVS = FORMAL_ENVS | FORMAL_BOX_ENVS | {
+STRUCTURE_CARD_ENVS = {
+    "lrachaptercard",
+    "lratopiccard",
+    "lraaxiomavatarcard",
+    "lracategoricalshadowcard",
+    "lracategoricalcard",
+    "lrauniversalsignaturecard",
+    "lraprimitiveinterfacecard",
+    "lraproofpatterncard",
+    "lrasignaturetable",
+    "lraproofpatterntable",
+    "lraproofechotable",
+}
+ALLOWED_NOTE_TOP_ENVS = FORMAL_ENVS | FORMAL_BOX_ENVS | STRUCTURE_CARD_ENVS | {
     "remark*",
     "example*",
     "exposition",

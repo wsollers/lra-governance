@@ -66,7 +66,7 @@ def resolve_common_root(volume_root: Path, explicit: Path | None, checkout_dir: 
         if resolved in seen:
             continue
         seen.add(resolved)
-        if (resolved / "common" / "volume-preamble.tex").exists() and (resolved / "docker" / "Dockerfile").exists():
+        if (resolved / "common" / "volume-preamble.tex").exists():
             return resolved
 
     if checkout_dir is None:
@@ -262,7 +262,8 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     if not args.skip_image_build:
-        run(["docker", "build", "-t", args.image, "-f", str(common_root / "docker" / "Dockerfile"), str(common_root / "docker")])
+        dockerfile = gov_root / "docker" / "lra-tex-dev" / "Dockerfile"
+        run(["docker", "build", "-t", args.image, "-f", str(dockerfile), str(dockerfile.parent)])
 
     build_roots = reference_roots_for(volume_root, gov_root, tex_roots) if edition == "reference" else tex_roots
     for tex_root in build_roots:

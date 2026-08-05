@@ -25,6 +25,12 @@ Available and planned tools:
 - `index_internal_objects.py` - read-only source-style indexer for internal
   volume TeX objects and Lean declarations, used to seed Lean <-> TeX
   verification and linking.
+- `index_cpp_objects.py` - read-only source-style indexer for C/C++ objects in
+  specialist code repositories such as `lra-nurbs` and
+  `lra-numerical-analysis`.
+- `search_internal_object_index.py` - read-only ranked search over an internal
+  object index, with phrase, token, synonym, and character n-gram scoring for
+  rough TeX/Lean/C++ lookup.
 - `plan_lean_tex_formalizations.py` - conservative planner/applicator for
   reviewed `\LeanFormalizes` tags from an internal object index.
 - `validators/formal_names.py` - integrated volume validator requiring
@@ -32,6 +38,12 @@ Available and planned tools:
   environments.
 - `generate_stub.py` - deterministic scaffold for canonical stub chapters and
   topic-paired stub sections.
+- `install_volume_devcontainer.py` - dry-run-first installer for the small
+  VS Code Dev Container shim used by `lra-volume-*` repositories. The shared
+  TeX image stays in `lra-governance/docker/lra-tex-dev/`.
+- `set_latex_root_comments.py` - dry-run-first updater for `% !TEX root = ...`
+  comments in volume source files so LaTeX Workshop opens the correct book PDF
+  when editing nested files.
 - `test_tex_generator/` - deterministic synthetic TeX universe generator used
   to calibrate semantic AST parsing against known canonical formula ASTs.
 - `validate_test_tex_generator_ast.py` - compares generated TeX displays
@@ -159,6 +171,10 @@ axioms, theorems, lemmas, propositions, and corollaries plus Lean `def`,
 declarations. Prefer the default `--tex-artifact-source source` so artifact
 directories with both `source.tex` and `corrected.tex` do not create duplicate
 records.
+Lean records include proof-completeness metadata under `metadata.has_sorry`,
+`metadata.sorry_lines`, and `metadata.verification_status`; declarations with
+no source-level `sorry` are marked `checked`, and declarations containing
+`sorry` are marked `incomplete`.
 
 With `--include-match-report`, the same payload includes candidate Lean matches,
 TeX objects that already carry `\LeanFormalizes`, TeX objects without a Lean
@@ -187,6 +203,32 @@ python tools\governance\plan_lean_tex_formalizations.py `
   --output build\lean-tex-formalization-plan-applied.yaml `
   --status pending `
   --apply
+```
+
+Search the generated index with ranked fuzzy lookup when the exact label or
+name is unknown:
+
+```powershell
+python tools\governance\search_internal_object_index.py `
+  --index D:\Readings\indexes\lra\internal\all-volumes-lean-tex-index.yaml `
+  --source-family tex `
+  --limit 8 `
+  "suprema of a sum"
+```
+
+Index C/C++ source objects for specialist code repos and search the result:
+
+```powershell
+python tools\governance\index_cpp_objects.py `
+  --cpp-root F:\repos\lra-nurbs `
+  --cpp-root F:\repos\lra-numerical-analysis `
+  --output D:\Readings\indexes\lra\internal\lra-cpp-object-index.yaml
+
+python tools\governance\search_internal_object_index.py `
+  --index D:\Readings\indexes\lra\internal\lra-cpp-object-index.yaml `
+  --source-family cpp `
+  --limit 8 `
+  "surface mesh cache"
 ```
 
 ## Semantic AST Test Universe

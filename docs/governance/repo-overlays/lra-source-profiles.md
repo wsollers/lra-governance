@@ -59,13 +59,23 @@ Agents working in this repo may use its project-local tools to:
 - export active profiles into stable `active-profile/sourceNN.md` slots,
 - export named profiles into the same stable attachment-slot shape,
 - import new PDFs with optional known Google Drive URLs,
-- generate or refresh per-source Markdown cache files.
+- generate or refresh per-source Markdown cache files,
+- recover a source table of contents from existing text extraction, PDF
+  frontmatter/evidence packets, or OCR-backed extraction when the source has a
+  missing or stale TOC record.
 
 These abilities are staging and review abilities. They do not authorize direct
 writes into volume notes, final bibliography shards, canonical YAML, or theorem
 explorer generated data.
 
 ## Safety Rules
+
+No source should ever remain outside the source tree. Raw source files that are
+scanned, acquired, imported, or discovered under the reading-library root must
+be brought under the normal `Sources/` tree as soon as their subject placement
+can be determined. Temporary out-of-tree staging is allowed only while the
+placement is genuinely unknown, and the follow-up review queue must preserve
+the obligation to move the source into `Sources/`.
 
 Original PDFs outside the repository, including configured reading roots such
 as `D:\readings`, must not be modified.

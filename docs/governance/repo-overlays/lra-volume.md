@@ -46,6 +46,25 @@ python ..\lra-governance\tools\governance\build_volume_docker.py --root . --comm
 python ..\lra-governance\tools\governance\build_volume_docker.py --root . --common-root ..\lra-common --edition reference --paper letter --output-dir build\reference-letter
 ```
 
+For local editing, use the governance-owned TeX devcontainer workflow. It
+keeps one full TeX Live image in `lra-governance` and installs only a small
+`.devcontainer/` shim in each volume repository:
+
+```powershell
+python ..\lra-governance\tools\governance\install_volume_devcontainer.py --root . --write
+```
+
+See `docs/workflows/local-tex-devcontainer.md` for the VS Code and LaTeX
+Workshop workflow.
+
+After moving active `.tex` files between books or adding new active source
+files, refresh and check LaTeX Workshop root comments:
+
+```powershell
+python ..\lra-governance\tools\governance\set_latex_root_comments.py --root . --write
+python ..\lra-governance\tools\governance\set_latex_root_comments.py --root . --check
+```
+
 To build one book root, pass it explicitly:
 
 ```powershell

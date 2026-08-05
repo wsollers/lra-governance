@@ -44,6 +44,12 @@
               ]
             },
             {
+              "chapter": "axiomatic-equality",
+              "notes": [
+                "logic-with-equality"
+              ]
+            },
+            {
               "chapter": "predicate-logic",
               "notes": [
                 "model",
@@ -140,6 +146,12 @@
               "notes": [
                 "order",
                 "zorn"
+              ]
+            },
+            {
+              "chapter": "lattices",
+              "notes": [
+                "lattices"
               ]
             },
             {
@@ -405,6 +417,24 @@
           "frontmatter_mathematician": "Karl Weierstrass",
           "mathematician_lifespan": "1815-1897",
           "image_path": "images/weierstrass.png",
+          "frontmatter_status": "proposed"
+        },
+        {
+          "order": 3,
+          "slug": "arithmetic",
+          "title": "Arithmetic",
+          "tex_root": "volume-ii-arithmetic.tex",
+          "legacy_roots": [],
+          "book_dir": "volume-ii/book-arithmetic",
+          "expected_toc": [
+            {
+              "chapter": "numbers",
+              "notes": []
+            }
+          ],
+          "frontmatter_mathematician": "Carl Friedrich Gauss",
+          "mathematician_lifespan": "1777-1855",
+          "image_path": "images/gauss.png",
           "frontmatter_status": "proposed"
         }
       ],

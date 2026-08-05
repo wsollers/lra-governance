@@ -423,6 +423,68 @@ def declaration_statement(lines: list[str], start_idx: int, end_idx: int) -> str
     return re.sub(r"\s+", " ", chunk[:stop]).strip()
 
 
+def strip_lean_comments_and_strings(text: str) -> str:
+    result: list[str] = []
+    idx = 0
+    block_depth = 0
+    in_string = False
+    while idx < len(text):
+        char = text[idx]
+        nxt = text[idx + 1] if idx + 1 < len(text) else ""
+        if block_depth:
+            if char == "/" and nxt == "-":
+                block_depth += 1
+                result.extend("  ")
+                idx += 2
+                continue
+            if char == "-" and nxt == "/":
+                block_depth -= 1
+                result.extend("  ")
+                idx += 2
+                continue
+            result.append("\n" if char == "\n" else " ")
+            idx += 1
+            continue
+        if in_string:
+            if char == "\\" and nxt:
+                result.extend("  ")
+                idx += 2
+                continue
+            if char == '"':
+                in_string = False
+            result.append("\n" if char == "\n" else " ")
+            idx += 1
+            continue
+        if char == "/" and nxt == "-":
+            block_depth = 1
+            result.extend("  ")
+            idx += 2
+            continue
+        if char == "-" and nxt == "-":
+            while idx < len(text) and text[idx] != "\n":
+                result.append(" ")
+                idx += 1
+            continue
+        if char == '"':
+            in_string = True
+            result.append(" ")
+            idx += 1
+            continue
+        result.append(char)
+        idx += 1
+    return "".join(result)
+
+
+def lean_sorry_lines(lines: list[str], start_idx: int, end_idx: int) -> list[int]:
+    chunk = "\n".join(lines[start_idx:end_idx])
+    clean = strip_lean_comments_and_strings(chunk)
+    sorry_lines: list[int] = []
+    for offset, line in enumerate(clean.splitlines(), start=start_idx + 1):
+        if re.search(r"\bsorry\b", line):
+            sorry_lines.append(offset)
+    return sorry_lines
+
+
 def compact_lean_comment(text: str) -> str:
     text = re.sub(r"^/-!?", "", text.strip())
     text = re.sub(r"-/$", "", text.strip())
@@ -506,6 +568,7 @@ def index_lean_file(path: Path, root: Path) -> list[InternalObject]:
             declaration = ".".join([*namespace_stack, name]) if namespace_stack else name
             qualified_name = lean_object_qualified_name(module, declaration)
             path_meta = infer_volume_path_metadata(path, root)
+            sorry_lines = lean_sorry_lines(lines, idx, end_idx)
             records.append(
                 InternalObject(
                     object_id=f"lean:{qualified_name}",
@@ -528,6 +591,9 @@ def index_lean_file(path: Path, root: Path) -> list[InternalObject]:
                         "leading_comment": comment,
                         "leading_comment_role": comment_title.get("role"),
                         "leading_comment_name": comment_title.get("name"),
+                        "has_sorry": bool(sorry_lines),
+                        "sorry_lines": sorry_lines,
+                        "verification_status": "incomplete" if sorry_lines else "checked",
                     },
                 )
             )
