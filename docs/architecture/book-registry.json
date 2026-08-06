@@ -410,7 +410,8 @@
             {
               "chapter": "numbers-summary",
               "notes": [
-                "number-systems-summary"
+                "number-systems-summary",
+                "constructible-numbers"
               ]
             }
           ],
@@ -1165,6 +1166,18 @@
           ],
           "book_dir": "volume-viii/book-applied-methods",
           "expected_toc": [
+            {
+              "chapter": "basic-mathematics",
+              "notes": [
+                "algebra-and-number",
+                "synthetic-euclidean-geometry",
+                "functions-and-graphs",
+                "coordinate-and-vector-geometry",
+                "trigonometry",
+                "analytic-geometry",
+                "linear-methods"
+              ]
+            },
             {
               "chapter": "computational-calculus",
               "notes": [
