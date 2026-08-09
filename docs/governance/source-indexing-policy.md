@@ -95,6 +95,13 @@ cache views, and enriches results with source metadata. Raw codesearch remains
 the fallback for exact strings, regex patterns, notation variants, and manual
 inspection.
 
+Source search should support both global and constrained scopes. Global search
+queries the whole generated omnibus corpus. Constrained search may filter by an
+explicit author substring, an explicit source ID allow-list, a named profile, a
+volume workbench profile, a chapter/topic `source-index.yaml`, or another
+curated source-list YAML. By default, source-list constraints should consider
+enabled rows only; disabled rows require an explicit override.
+
 ## Volume Source Workbench Profiles
 
 `lra-source-profiles` may maintain volume-level source workbench profiles for
@@ -261,9 +268,28 @@ powershell -ExecutionPolicy Bypass -File scripts\omnibus_search.ps1 `
   -Query "diameter"
 ```
 
-`omnibus_topic_search.ps1` queries the generated omnibus theorem index first
-and falls back to local codesearch when available. Use `--format json` when a
-tool or agent will consume the ranked results.
+`omnibus_topic_search.ps1` queries the generated omnibus SQLite FTS5 index when
+available, falls back to the theorem JSON/YAML index, and then falls back to
+local codesearch when available. Use `--format json` when a tool or agent will
+consume the ranked results.
+
+Use scoped topic search when a result should come from reviewed source stacks:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\omnibus_topic_search.ps1 `
+  -Query "lipschitz continuity" `
+  -Author "Terence Tao"
+
+powershell -ExecutionPolicy Bypass -File scripts\omnibus_topic_search.ps1 `
+  -Query "uniform convergence of a sequence of functions" `
+  -Volume volume-iii `
+  -Book book-analysis-i `
+  -Chapter real-analysis
+
+powershell -ExecutionPolicy Bypass -File scripts\omnibus_topic_search.ps1 `
+  -Query "compactness" `
+  -Profile general-profile
+```
 
 `omnibus_search.ps1` is the raw regex/string lookup tool. It mounts
 `D:\Readings` read-only and sets `CSEARCHINDEX` to
