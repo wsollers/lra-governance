@@ -87,6 +87,14 @@ theorem-like statements, search both the structured theorem indexes and the
 Markdown/codesearch cache, then read the surrounding extracted source text
 before treating a hit as evidence.
 
+For open-ended concept queries, use ranked omnibus topic search before raw
+codesearch. The ranked search layer strips natural-language filler such as
+"theorems related to", scores exact phrase and token overlap across theorem
+kind, title, snippet, source title, and volume fields, deduplicates repeated
+cache views, and enriches results with source metadata. Raw codesearch remains
+the fallback for exact strings, regex patterns, notation variants, and manual
+inspection.
+
 ## Volume Source Workbench Profiles
 
 `lra-source-profiles` may maintain volume-level source workbench profiles for
@@ -246,18 +254,27 @@ powershell -ExecutionPolicy Bypass -File scripts\source_indexer.ps1 `
 Search the generated corpus with:
 
 ```powershell
+powershell -ExecutionPolicy Bypass -File scripts\omnibus_topic_search.ps1 `
+  -Query "theorems related to Lipschitz continuity"
+
 powershell -ExecutionPolicy Bypass -File scripts\omnibus_search.ps1 `
   -Query "diameter"
 ```
 
-`omnibus_search.ps1` mounts `D:\Readings` read-only and sets `CSEARCHINDEX` to
-`/readings/indexes/lra/omnibus/codesearch/csearchindex`. Search output points
-to generated Markdown cache files under
+`omnibus_topic_search.ps1` queries the generated omnibus theorem index first
+and falls back to local codesearch when available. Use `--format json` when a
+tool or agent will consume the ranked results.
+
+`omnibus_search.ps1` is the raw regex/string lookup tool. It mounts
+`D:\Readings` read-only and sets `CSEARCHINDEX` to
+`/readings/indexes/lra/omnibus/codesearch/csearchindex`. Its output points to
+generated Markdown cache files under
 `D:\Readings\indexes\lra\volumes\<volume>\_sources\markdown\`.
 
 For definitions, search both the formal noun phrase and common variants:
 
 ```powershell
+powershell -ExecutionPolicy Bypass -File scripts\omnibus_topic_search.ps1 -Query "definition of diameter"
 powershell -ExecutionPolicy Bypass -File scripts\omnibus_search.ps1 -Query "Definition.*diameter"
 powershell -ExecutionPolicy Bypass -File scripts\omnibus_search.ps1 -Query "diameter of a set"
 powershell -ExecutionPolicy Bypass -File scripts\omnibus_search.ps1 -Query "bounded set"
@@ -267,6 +284,7 @@ For theorem-like material, search by statement term, theorem name, and nearby
 mathematical action:
 
 ```powershell
+powershell -ExecutionPolicy Bypass -File scripts\omnibus_topic_search.ps1 -Query "theorems related to compactness"
 powershell -ExecutionPolicy Bypass -File scripts\omnibus_search.ps1 -Query "Theorem.*compact"
 powershell -ExecutionPolicy Bypass -File scripts\omnibus_search.ps1 -Query "Heine Borel"
 powershell -ExecutionPolicy Bypass -File scripts\omnibus_search.ps1 -Query "finite subcover"

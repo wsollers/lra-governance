@@ -82,6 +82,9 @@ Do not run LaTeX volume render checks as substitutes for governance tests.
             "Python tooling repo. Use the repo-local README plus configured success gates; "
             "do not infer ownership from whether local helpers live under scripts/, tools/, or src/.",
             None),
+        "latex_artifact": (
+            "Standalone LaTeX source/PDF artifact repo. Use the canonical repo overlay for Docker build commands and PDF expectations.",
+            None),
         "governance": (
             "Canonical governance source for authoring standards, schemas, capabilities, validators, and generated repo overlays.",
             None),

@@ -43,6 +43,16 @@ validation. It may use a configured local vision/OCR provider such as
 Ollama/Qwen, falling back to Tesseract when configured or needed. Raw mobile
 images must never be committed.
 
+When automated OCR is poor but the agent can read the image, use a reviewed
+AI-assisted transcription as the OCR evidence input instead of committing
+garbled OCR. Pass the transcription to the pipeline or text-preparation command
+with `--ocr-text-file`; the attempt metadata must record the source as
+AI-assisted OCR (for example `ocr_selected_engine: ai-assisted` and
+`text_source: canonical-proof-with-ai-assisted-ocr` when polished text is
+reconstructed from the accepted canonical proof). The transcription should
+remain source-faithful to the photo; canonical proof improvements still belong
+in the proof file and reviewed Markdown/TeX artifacts, not in the OCR artifact.
+
 ## Validation Commands
 
 From `lra-proof-vault`, validate vault metadata with:

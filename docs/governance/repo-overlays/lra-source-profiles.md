@@ -60,6 +60,8 @@ Agents working in this repo may use its project-local tools to:
 - export named profiles into the same stable attachment-slot shape,
 - import new PDFs with optional known Google Drive URLs,
 - generate or refresh per-source Markdown cache files,
+- query the generated omnibus theorem and Markdown indexes with ranked topic
+  search before falling back to raw codesearch,
 - recover a source table of contents from existing text extraction, PDF
   frontmatter/evidence packets, or OCR-backed extraction when the source has a
   missing or stale TOC record.

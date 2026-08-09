@@ -20,6 +20,7 @@ REPO_OVERLAY_MAP: dict[str, str] = {
     "lra-lean": "lra-lean.md",
     "lra-nurbs": "lra-nurbs.md",
     "lra-knowledge-explorer": "lra-knowledge-explorer.md",
+    "lra-exercises": "lra-exercises.md",
     "lra-numerical-analysis": "lra-numerical-analysis.md",
     "lra-pdf-extractor": "lra-pdf-extractor.md",
     "lra-proof-vault": "lra-proof-vault.md",

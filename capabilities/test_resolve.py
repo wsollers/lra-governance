@@ -118,6 +118,16 @@ def test_reading_categorizer_build_routes_to_build_repo():
     expect("lra-reading-categorizer", "validate repo", "build-repo")
 
 
+def test_exercises_build_routes_to_build_repo():
+    expect("lra-exercises", "build pdf", "build-repo")
+
+
+def test_statement_does_not_leak_into_exercises():
+    got = route("lra-exercises", "append the theorem")
+    assert got.startswith("FATAL:"), f"expected non-resolution in exercises, got {got!r}"
+    assert "no capability matches" in got, f"expected kind-rejection, got {got!r}"
+
+
 def test_definition_does_not_leak_into_pdf_extractor():
     got = route("lra-pdf-extractor", "define X")
     assert got.startswith("FATAL:"), f"expected non-resolution in pdf extractor, got {got!r}"

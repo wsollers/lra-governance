@@ -51,8 +51,13 @@ keeps one full TeX Live image in `lra-governance` and installs only a small
 `.devcontainer/` shim in each volume repository:
 
 ```powershell
+python ..\lra-governance\tools\governance\edit_latex.py
 python ..\lra-governance\tools\governance\install_volume_devcontainer.py --root . --write
 ```
+
+When a user says `edit latex` in `lra-volume-i` through `lra-volume-viii`,
+resolve that as a request to run the launcher for the current volume, or pass
+`--volume <roman-or-number>` from a sibling `lra-governance` checkout.
 
 See `docs/workflows/local-tex-devcontainer.md` for the VS Code and LaTeX
 Workshop workflow.

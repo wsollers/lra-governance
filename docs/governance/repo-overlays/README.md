@@ -19,6 +19,8 @@ Specialist rule placement:
   reading-folder placement rules belong only in `lra-reading-categorizer.md`.
 - Source-profile selection, source classification, active-profile export, and
   project attachment staging rules belong only in `lra-source-profiles.md`.
+- Standalone exercise/workbook source and PDF build rules belong only in
+  `lra-exercises.md`.
 - Volume repos receive only volume-content guidance, except where a named
   volume overlay records cross-repository metadata contracts.
 - Digital/print edition behavior and breadcrumb/footer chrome are global volume
@@ -35,6 +37,7 @@ Specialist overlays now include:
 - `lra-reading-categorizer.md`
 - `lra-proof-vault.md`
 - `lra-source-profiles.md`
+- `lra-exercises.md`
 
 Volume-class overlays now include:
 
@@ -59,6 +62,7 @@ integration boundary.
 | `lra-reading-categorizer` | `docs/governance/repo-overlays/lra-reading-categorizer.md` | `docs/governance/code-repo-standards.md`, `docs/architecture/repository-layout.md`, `docs/architecture/multi-repo-sync.md`, `docs/governance/repo-overlays/lra-source-profiles.md` only for imported queue data | `[external:lra-reading-categorizer] README.md`, `taxonomy/subjects.yaml`, local tests | `python -m pytest tests` |
 | `lra-lean` | `docs/governance/repo-overlays/lra-lean.md` | `docs/architecture/lra-lean-architecture.md`, `docs/architecture/semantic-artifact-record.md` when mapping Lean declarations to semantic artifacts | `[external:lra-lean] README.md`, nearest Lean module | `.\build.ps1 docker-build`, `.\build.ps1 build-all` on Windows; Docker/Lake gates from the overlay otherwise |
 | `lra-knowledge-explorer` | `docs/governance/repo-overlays/lra-knowledge-explorer.md` | `docs/architecture/knowledge-pipeline.md`, `docs/architecture/theorem-explorer-pipeline.md`, `docs/workflows/knowledge-extraction.md`, `docs/governance/extraction-standards.md` | `[external:lra-knowledge-explorer] README.md`, `PIPELINE.md` | `python -m pytest tests`; extraction smoke commands only when graph output changes |
+| `lra-exercises` | `docs/governance/repo-overlays/lra-exercises.md` | `docs/architecture/repository-layout.md` | worksheet/workbook source folder containing the target `.tex` file | Docker `latexmk` build using `docker/lra-exercises-latex/Dockerfile` |
 
 Generated capability overlays under `capabilities/overlays/` are resolver
 summaries derived from `capabilities/overlays-config.yaml`. They must include

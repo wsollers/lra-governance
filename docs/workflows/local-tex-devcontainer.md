@@ -10,10 +10,35 @@ The intended workflow is:
 1. Keep `lra-governance`, `lra-common`, and the target `lra-volume-*` checkout
    as sibling repositories.
 2. Install a generated `.devcontainer/` shim into the target volume repo.
-3. Open the volume repo in VS Code and run `Dev Containers: Reopen in
-   Container`.
+3. Open the volume repo in VS Code's Dev Containers environment.
 4. Use VS Code and LaTeX Workshop for source editing, PDF preview, and SyncTeX.
    Project build scripts may remain the canonical build entrypoint.
+
+When the user says `edit latex` while working in `lra-volume-i` through
+`lra-volume-viii`, launch this governed local editing path. From
+`lra-governance`, target a sibling volume by number:
+
+```powershell
+python tools\governance\edit_latex.py --volume iii
+python tools\governance\edit_latex.py --volume 3
+```
+
+From inside a volume repository or one of its subdirectories, the root is
+inferred:
+
+```powershell
+python ..\lra-governance\tools\governance\edit_latex.py
+```
+
+The launcher refreshes the generated `.devcontainer/` shim and opens VS Code
+with a `vscode-remote://dev-container...` folder URI. If the Dev Containers URI
+path is unavailable on a machine, use:
+
+```powershell
+python tools\governance\edit_latex.py --volume iii --launch-mode plain-code
+```
+
+Then run `Dev Containers: Reopen in Container` from VS Code.
 
 Generate the shim from `lra-governance`:
 

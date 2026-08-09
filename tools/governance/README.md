@@ -41,6 +41,10 @@ Available and planned tools:
 - `install_volume_devcontainer.py` - dry-run-first installer for the small
   VS Code Dev Container shim used by `lra-volume-*` repositories. The shared
   TeX image stays in `lra-governance/docker/lra-tex-dev/`.
+- `edit_latex.py` - launcher for the governed volume TeX editing environment.
+  It refreshes the `.devcontainer/` shim and opens the selected
+  `lra-volume-i` through `lra-volume-viii` repository in VS Code's Dev
+  Containers flow.
 - `set_latex_root_comments.py` - dry-run-first updater for `% !TEX root = ...`
   comments in volume source files so LaTeX Workshop opens the correct book PDF
   when editing nested files.

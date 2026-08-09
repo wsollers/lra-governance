@@ -19,6 +19,7 @@ content sync; the "ownership" column below is authority, not a copy direction.
 | `lra-pdf-extractor` | PDF/source ingestion, bibliography extraction and normalization, candidate extraction, review workflow, staged outputs. Independent tool repo; reviewable candidates only. |
 | `lra-reading-categorizer` | Human-in-the-loop UI, taxonomy, queue state, review exports, and managed reading-folder scaffold for categorizing a local mathematical PDF collection. Independent collection-management repo. |
 | `lra-source-profiles` | Dynamic source profiles, candidate classification, active source indexes, attachment exports, source review workflow. Independent profile/staging repo; reviewed artifacts only. |
+| `lra-exercises` | Standalone exercise sheets, drill sheets, workbooks, and generated PDFs. Independent from volume content unless a separate volume task imports material. |
 | `lra-sources` | Optional private source catalog and pointer index. It may record where raw readings, generated indexes, topic source indexes, and active source-profile checkouts live; it must not contain raw PDFs or full extracted source text. |
 | `lra-volumes-output` | Published digital and print PDFs from independent volume builds. |
 
@@ -44,6 +45,10 @@ raw source PDFs or full generated text extracts.
 PDFs to the approved reading taxonomy. It does not own source-profile manifests,
 extractor outputs, final LRA note content, final bibliography shards, canonical
 YAML, theorem explorer internals, or governance rules.
+
+`lra-exercises` owns standalone exercise PDFs and their `.tex` sources. Its
+Docker LaTeX build runtime is governed in `lra-governance`, but the exercise
+repo itself owns the student-facing source and generated PDF artifacts.
 
 ## Governance And Common Resolution
 

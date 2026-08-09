@@ -203,7 +203,10 @@ memorialization workflow must satisfy these governance-level requirements:
    sanitization, OCR, Markdown/TeX artifact generation, metadata updates, and
    validation.
 3. OCR output is evidence, not authoritative proof content. Preserve OCR
-   mistakes in the OCR artifact rather than silently correcting them.
+   mistakes in the OCR artifact rather than silently correcting them. If
+   automated OCR is unusable but an agent can read the image, a reviewed
+   AI-assisted transcription may be supplied as the OCR artifact with
+   metadata that clearly identifies it as AI-assisted.
 4. Mathematics is verified against the image and theorem route before an
    attempt is marked accepted.
 5. Route-style proof-vault metadata records OCR paths, display artifact paths,
@@ -310,6 +313,14 @@ usable text, the OCR artifact must say so explicitly, and the metadata should
 use `text_source: canonical-proof-with-empty-ocr`. When OCR is unavailable
 entirely, the OCR artifact must say so explicitly, and the metadata should use
 `text_source: canonical-proof-reconstruction` rather than claiming OCR.
+
+When a reviewed AI-assisted transcription is supplied through
+`--ocr-text-file`, the OCR artifact should contain that source-faithful
+transcription and the metadata must identify the source, for example
+`ocr_selected_engine: ai-assisted`, `ocr_selected_profile: ai-assisted`, and
+`ocr_quality_status: reviewed`. If polished Markdown/TeX are reconstructed from
+the accepted canonical proof while using this transcription as OCR evidence,
+use `text_source: canonical-proof-with-ai-assisted-ocr`.
 
 OCR quality metadata should record the selected OCR engine, selected profile or
 model, selected Tesseract page-segmentation mode when applicable, attempt
