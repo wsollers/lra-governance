@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import base64
 import json
 import re
 import sys
@@ -256,6 +257,10 @@ def proof_status_source(text: str) -> str:
     return "todo_stub_skipped" if re.search(r"\bTODO:", text) else "completed"
 
 
+def b64(text: str) -> str:
+    return base64.b64encode(text.encode("utf-8")).decode("ascii")
+
+
 def collect_proof_files(repos_root: Path, routes: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
     proofs: dict[str, dict[str, Any]] = {}
     for repo_root in sorted(repos_root.glob("lra-volume-*")):
@@ -277,6 +282,7 @@ def collect_proof_files(repos_root: Path, routes: list[dict[str, Any]]) -> dict[
                 "has_proof_file": True,
                 "proof_source": proof_source,
                 "proof_sketch_source": proof_status_source(text),
+                "proof_raw_latex_b64": b64(text),
             }
     return proofs
 
@@ -615,6 +621,7 @@ def build_export(run_dir: Path, repos_root: Path, version: dict[str, Any], regis
             "has_proof_file": bool(proof_info.get("has_proof_file")),
             "proof_source": str(proof_info.get("proof_source") or ""),
             "proof_sketch_source": str(proof_info.get("proof_sketch_source") or ""),
+            "proof_raw_latex_b64": str(proof_info.get("proof_raw_latex_b64") or ""),
             "depends_on_ids": deps,
             "used_by_ids": users,
             "proof_depends_on_ids": proof_deps,
