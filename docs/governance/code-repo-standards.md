@@ -91,3 +91,32 @@ For Python, keep importable logic separate from operator entrypoints. Use
 standard-library parsing and structured data APIs where available. Avoid
 side-effect-heavy imports, hidden network calls, and unreviewed mutation of
 files outside the owning repo.
+
+## Lean Hover Documentation
+
+Public mathematical Lean declarations must make their formal content visible
+in editor hover text. Each declaration doc comment must first explain the
+mathematics in ordinary prose and then include a `Logical form:` section with a
+fenced `lean` block showing the proposition, defining equation, evaluation
+rule, membership condition, or structure contract that the declaration
+encodes. This is especially important for definitions whose displayed type is
+only `Prop`, because Lean hover normally shows the declaration signature but
+not its unfolded body.
+
+Use this shape:
+
+````lean
+/--
+`Predicate argument` means that the stated mathematical condition holds.
+
+Logical form:
+
+```lean
+∀ element : Carrier, Predicate element ↔ condition element
+```
+-/
+````
+
+The fenced block must contain readable Lean mathematics, not proof tactics or
+an implementation transcript. Keep it synchronized with the declaration when
+the formal statement changes.

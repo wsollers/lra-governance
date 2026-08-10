@@ -61,6 +61,34 @@ that is the way users will search for it. Keep these comments mathematical, not
 tactic-oriented: mention "for every element `x`, ..." rather than "after
 `intro x`"; mention "iff" or "equivalently" rather than "after `constructor`".
 
+Every LRA-authored public mathematical declaration must also expose its formal
+content directly in editor hover text. After the prose explanation, add a
+`Logical form:` section containing a fenced `lean` block with the declaration's
+proposition, defining equation, evaluation rule, membership condition, or
+structure contract. Definitions returning `Prop` must show their unfolded
+logical body rather than only repeating a signature such as
+`Predicate arguments : Prop`. The fenced block must remain readable
+mathematics: do not include proof tactics, proof-state narration, or an
+implementation transcript. Keep the displayed logical form synchronized with
+the declaration whenever its statement changes.
+
+For example:
+
+````lean
+/--
+`ExistsAndUnique property` means that some set satisfies `property`, and every
+other set satisfying `property` is equal to that witness.
+
+Logical form:
+
+```lean
+∃ witness : Set,
+  property witness ∧
+  ∀ other : Set, property other → other = witness
+```
+-/
+````
+
 In `lra-lean`, source-facing mathematical declarations should preserve the
 project's prose-style names. Prefer PascalCase theorem and predicate names such
 as `IsUpperBound`, `IsSupremum`, and `MaximumIsSupremum` when those declarations
