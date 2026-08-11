@@ -18,7 +18,7 @@ GOV = R._gov_root(Path(__file__).resolve().parent)
 def route(repo: str, task: str) -> str:
     """Return the resolved capability id, or 'FATAL:<msg>' if resolution fails."""
     try:
-        return R.resolve(GOV, repo, task, {}).capability_id
+        return R.resolve(GOV, repo, task, {}).route_id
     except (ValueError, FileNotFoundError) as e:
         return f"FATAL:{e}"
 
@@ -70,12 +70,9 @@ def test_single_artifact_calibration_still_routes_separately():
 
 
 # --- a definition task in a non-volume kind must NOT select a volume authoring
-#     capability. With overlays materialized, lra-lean resolves its kind and rejects
-#     the task because no lean capability matches it (strict kind-rejection). ---
+#     route. It falls back to the repo's lean route instead. ---
 def test_define_does_not_leak_into_lean():
-    got = route("lra-lean", "define X")
-    assert got.startswith("FATAL:"), f"expected non-resolution in lean, got {got!r}"
-    assert "no capability matches" in got, f"expected kind-rejection, got {got!r}"
+    expect("lra-lean", "define X", "author-lean-theorem")
 
 
 def test_lean_routes_to_lean_capability():
@@ -106,6 +103,18 @@ def test_governance_validate_routes_to_build_repo():
     expect("lra-governance", "validate repo", "build-repo")
 
 
+def test_source_lookup_routes_from_volume():
+    expect("lra-volume-iii", "look up this theorem in sources", "lookup-lra")
+
+
+def test_code_lookup_routes_from_lean():
+    expect("lra-lean", "search our code for least upper bound", "lookup-lra")
+
+
+def test_definition_lookup_beats_author_definition_trigger():
+    expect("lra-volume-iii", "look up definition of compactness", "lookup-lra")
+
+
 def test_pdf_extractor_build_routes_to_build_repo():
     expect("lra-pdf-extractor", "validate repo", "build-repo")
 
@@ -123,27 +132,19 @@ def test_exercises_build_routes_to_build_repo():
 
 
 def test_statement_does_not_leak_into_exercises():
-    got = route("lra-exercises", "append the theorem")
-    assert got.startswith("FATAL:"), f"expected non-resolution in exercises, got {got!r}"
-    assert "no capability matches" in got, f"expected kind-rejection, got {got!r}"
+    expect("lra-exercises", "append the theorem", "work-lra-exercises")
 
 
 def test_definition_does_not_leak_into_pdf_extractor():
-    got = route("lra-pdf-extractor", "define X")
-    assert got.startswith("FATAL:"), f"expected non-resolution in pdf extractor, got {got!r}"
-    assert "no capability matches" in got, f"expected kind-rejection, got {got!r}"
+    expect("lra-pdf-extractor", "define X", "work-pdf-extractor")
 
 
 def test_statement_does_not_leak_into_reading_categorizer():
-    got = route("lra-reading-categorizer", "append the theorem")
-    assert got.startswith("FATAL:"), f"expected non-resolution in reading categorizer, got {got!r}"
-    assert "no capability matches" in got, f"expected kind-rejection, got {got!r}"
+    expect("lra-reading-categorizer", "append the theorem", "work-reading-categorizer")
 
 
 def test_statement_does_not_leak_into_source_profiles():
-    got = route("lra-source-profiles", "append the theorem")
-    assert got.startswith("FATAL:"), f"expected non-resolution in source profiles, got {got!r}"
-    assert "no capability matches" in got, f"expected kind-rejection, got {got!r}"
+    expect("lra-source-profiles", "append the theorem", "work-source-profiles")
 
 
 if __name__ == "__main__":

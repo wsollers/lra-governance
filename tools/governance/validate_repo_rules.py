@@ -146,9 +146,11 @@ def validate_preview(preview: Path, errors: list[str]) -> None:
                 errors,
             )
             require(f"Repository: `{repo}`" in text, f"missing repo pointer in: {path}", errors)
+            require("Canonical route resolver:" in text, f"missing route resolver in: {path}", errors)
+            require(f"--repo {repo} --task" in text, f"resolver is not repo-bound in: {path}", errors)
             require(
-                "Canonical task router: `docs/agent-task-index.md`" in text,
-                f"missing task-router pointer in: {path}",
+                "Human route index (lazy reference only)" in text,
+                f"human task index is not marked lazy in: {path}",
                 errors,
             )
             require(

@@ -5,6 +5,7 @@ from pathlib import Path
 import yaml
 
 from tools.governance.update_internal_object_index import main
+from tools.governance.internal_object_sqlite import metadata
 
 
 def write_source(path: Path, body: str) -> None:
@@ -53,6 +54,7 @@ A function is a single-valued relation.
     first = run_update(tmp_path, tex_root, full=True)
     assert first["counts"] == {"objects": 1, "tex": 1, "lean": 0}
     assert first["delta"]["mode"] == "full"
+    assert metadata(tmp_path / "sqlite" / "tex-search.sqlite")["object_count"] == "1"
 
     write_source(
         source,
@@ -82,3 +84,4 @@ The image collects all values attained on the set.
     third = run_update(tmp_path, tex_root)
     assert third["counts"] == {"objects": 0, "tex": 0, "lean": 0}
     assert third["delta"]["files"]["deleted"] == 1
+    assert metadata(tmp_path / "sqlite" / "tex-search.sqlite")["object_count"] == "0"

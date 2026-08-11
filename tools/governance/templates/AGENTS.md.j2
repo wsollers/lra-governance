@@ -5,14 +5,16 @@
 This repository uses canonical LRA governance by pointer, not by copied rules.
 
 Repository: `{{ REPO_NAME }}`
-Canonical task router: `docs/agent-task-index.md`
 Canonical repo overlay: `{{ OVERLAY_PATH }}`
+Canonical route resolver:
+`python <governance-root>/capabilities/resolve.py --repo {{ REPO_NAME }} --task "<user task>" --root <repo-root>`
+Human route index (lazy reference only): `docs/agent-task-index.md`
 
 {{ GOVERNANCE_RESOLUTION }}
 
-When working here, read the canonical task router, then load exactly the
-smallest relevant governance docs and the canonical repo overlay. Do not treat
-this wrapper as a local source of truth.
+After resolving canonical governance, run the route resolver. Load its eager
+packet only; follow lazy references, tools, schemas, and examples on demand.
+Do not treat this wrapper as a local source of truth.
 
 Provider note: {{ PROVIDER_NOTES }}
 

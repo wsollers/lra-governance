@@ -1,15 +1,14 @@
 # LRA Agent Entrypoint
 
 You are an automated agent working inside an LRA repository. Keep the context
-small: route to one capability, do the action, and run its success gates.
+small: resolve one route, do the action, and run its success gates.
 
 ## How to work
 
 1. Identify the repo you are in (e.g. `lra-volume-i`) and the task you were given.
-2. Use `capabilities/manifest.yaml` through `capabilities/resolve.py` when possible.
-   `capabilities/index.md` is the human view.
-3. Load exactly one repo overlay and exactly one capability. Load only the files named
-   by that capability plus one nearby example when authoring LaTeX.
+2. Run `capabilities/resolve.py --repo <repo> --task "<task>" --root <repo-root>`.
+3. Load the returned eager packet only. Lazy references, executable tools,
+   schemas/data, and examples stay out of context until the task requires them.
 4. Perform the capability action.
 5. Run every listed success gate. If a gate fails, fix the artifact or the capability
    and run the gate again. Do not report success on a failing or skipped gate.
@@ -18,6 +17,9 @@ small: route to one capability, do the action, and run its success gates.
 
 - Use canonical names and notation from the registries when a capability asks for them.
   If the needed entry is missing, stop and report the missing registry entry.
+- For requests to find a theorem, definition, source passage, TeX/Lean object,
+  C++ object, or canonical term, use the `lookup-lra` capability before loading
+  large registries/indexes or scanning repositories broadly.
 - Keep generated shape separate from mathematical substance. Do not restate formulas,
   axioms, or signatures that already live in canonical files or labeled artifacts.
 - Do not edit synced downstream copies or generated files when the canonical source is
@@ -30,14 +32,16 @@ small: route to one capability, do the action, and run its success gates.
   `lra-lean` checkout and search its `LRA/` modules first. Volume repositories
   may carry source prose and verification links, but they do not own Lean proof
   source.
-- Do not preload architecture or workflow docs. Use repo search and nearby files first;
-  open docs only when the capability, overlay, and local examples do not answer the
-  concrete question.
+- Do not preload architecture, workflow, tool source, schemas, examples, the
+  generated task index, or registry bodies. Follow the resolver's typed pointers
+  only when a concrete need arises.
 
 ## Pointers
 
 - Machine manifest: `capabilities/manifest.yaml`
-- Human index: `capabilities/index.md`
+- Resolver: `capabilities/resolve.py`
+- Generated human index: `docs/agent-task-index.md`
+- Context audit: `tools/governance/audit_governance_context.py`
 - Escalation references: `capabilities/reference-index.md`
 - Repo overlays: `capabilities/overlays/`
 - Capability docs: `capabilities/<capability>/capability.md`

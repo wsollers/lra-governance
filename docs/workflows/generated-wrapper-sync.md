@@ -12,11 +12,12 @@ The generated-file and local-edit rules live in
 The generation formula is:
 
 ```text
-repo name + task-router pointer + repo-overlay pointer + provider wrapper format
+repo name + resolver command + repo-overlay pointer + provider wrapper format
 ```
 
 Generated wrappers are thin delegates. They must not copy canonical governance
-docs or repo overlay bodies into downstream repositories.
+docs or repo overlay bodies into downstream repositories, and must not instruct
+agents to preload the generated human task index.
 
 Generated downstream files are not canonical.
 
@@ -50,5 +51,5 @@ shared docs into downstream repos.
 
 Downstream generated wrappers should be committed through reviewable PRs or
 controlled commits after inspection. Reviewers should check the generated-file
-header, source repo, task-router pointer, overlay pointer, absence of secrets,
+header, source repo, resolver command, overlay pointer, absence of secrets,
 and absence of embedded governance or overlay bodies.

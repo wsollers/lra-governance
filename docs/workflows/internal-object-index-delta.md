@@ -2,7 +2,8 @@
 
 Use this workflow after adding, deleting, moving, or editing LRA-authored TeX
 formal artifacts or Lean source declarations. It keeps the governed Lean/TeX
-lookup index current without forcing a full parse on every edit.
+lookup records and their independent SQLite databases current without forcing a
+full parse on every edit.
 
 ## Scope
 
@@ -55,7 +56,9 @@ The updater writes:
 - the internal object index at `--output`;
 - a delta state file next to it by default, named `<output>.state.yaml`;
 - a `delta` report inside the index payload with changed, unchanged, and
-  deleted file counts.
+  deleted file counts;
+- `tex-search.sqlite` and/or `lean-search.sqlite` under an adjacent `sqlite`
+  directory, unless `--sqlite-dir` selects another location.
 
 Generated full indexes and state files belong in ignored build or external
 index locations unless a small curated crosswalk is intentionally reviewed and
@@ -67,9 +70,10 @@ After adding a TeX definition or theorem-like object, rerun the updater and
 verify the object is discoverable by label or name:
 
 ```powershell
-Select-String `
-  -Path D:\Readings\indexes\lra\internal\volume-iii-lean-tex-index.yaml `
-  -Pattern "def:your-label"
+python F:\repos\lra-governance\tools\governance\search_internal_object_index.py `
+  --index D:\Readings\indexes\lra\internal\sqlite\tex-search.sqlite `
+  --source-family tex `
+  "def:your-label"
 ```
 
 For stable lookup, every TeX object should have a bracketed display name and a

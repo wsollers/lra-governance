@@ -102,6 +102,20 @@ volume workbench profile, a chapter/topic `source-index.yaml`, or another
 curated source-list YAML. By default, source-list constraints should consider
 enabled rows only; disabled rows require an explicit override.
 
+For agent lookup spanning primary sources and LRA-authored material, use the
+governance facade instead of loading or invoking each index separately:
+
+```powershell
+python F:\repos\lra-governance\tools\governance\lra_lookup.py "least upper bound"
+python F:\repos\lra-governance\tools\governance\lra_lookup.py "compactness" --scope sources --volume volume-iii
+```
+
+`lra_lookup.py` resolves the catalog pointers above, delegates the primary
+source lane to `lra-source-profiles/scripts/search_omnibus.py`, and joins only
+compact result records from the internal TeX/Lean/C++ and canonical-vocabulary
+indexes. It is a query facade, not a new index owner. Use the specialist tools
+below for index construction, raw codesearch, or detailed maintenance.
+
 ## Volume Source Workbench Profiles
 
 `lra-source-profiles` may maintain volume-level source workbench profiles for
@@ -172,12 +186,26 @@ object identifiers, file paths, line hints, labels or declaration names,
 statement text, and volume/chapter/topic metadata when those can be inferred
 from paths.
 
+Runtime discovery uses three independent SQLite FTS5 databases under the
+configured LRA index root:
+
+- `internal/sqlite/tex-search.sqlite`;
+- `internal/sqlite/lean-search.sqlite`;
+- `internal/sqlite/cpp-search.sqlite`.
+
+TeX, Lean, and C/C++ are separate refresh units. The YAML/JSON object payloads
+remain useful as deterministic interchange, match-report, and repair artifacts,
+but agents must not load them for ordinary lookup.
+
 For ordinary edit loops, use
 `tools/governance/update_internal_object_index.py`. The updater preserves the
 full indexer as the parsing authority while adding a delta state file: it hashes
 current TeX/Lean source files, re-indexes changed files, removes records for
 deleted files, and merges unchanged records from the previous index. Use
-`--full` when roots, parser behavior, or index health are in doubt.
+`--full` when roots, parser behavior, or index health are in doubt. Unless
+`--no-sqlite` is explicit, every full or delta run atomically rebuilds the
+SQLite database for each family present in the payload. C/C++ indexing follows
+the same rule in `tools/governance/index_cpp_objects.py`.
 
 The delta workflow is documented in
 `docs/workflows/internal-object-index-delta.md`. After adding or revising a TeX
@@ -189,23 +217,23 @@ Full-text source lookup is available for active Lean and LaTeX work. Use
 ordinary code search, such as `rg`, for raw repository text; use the governed
 ranked object search when looking for theorem-like or definition-like objects
 by rough name, statement wording, synonym, typo, or mathematical phrase. The
-object search consumes the generated internal object index and scores phrase,
-token, synonym, LaTeX-symbol, and character n-gram overlap across TeX and Lean
-records.
+object search queries SQLite candidates and scores phrase, token, synonym,
+LaTeX-symbol, and character n-gram overlap without loading the generated object
+payload into agent context.
 
 Example:
 
 ```powershell
 python F:\repos\lra-governance\tools\governance\search_internal_object_index.py `
-  --index D:\Readings\indexes\lra\internal\all-volumes-lean-tex-index.yaml `
+  --index D:\Readings\indexes\lra\internal\sqlite\tex-search.sqlite `
   --source-family tex `
   --limit 8 `
   "supremum sum at most sum suprema"
 ```
 
-Use `--source-family lean` to search Lean declarations, omit
-`--source-family` to search both Lean and TeX records, and use `--format json`
-when another tool or agent will consume the results. Search-quality feedback
+Point `--index` at `lean-search.sqlite` or `cpp-search.sqlite` for those
+families, and use `--format json` when another tool or agent will consume the
+results. Search-quality feedback
 from proof memorialization and verification tasks should be recorded under the
 root `feedback/` folder, including the proof or object sought, the query used,
 top results, whether they were suitable, and any better query terms discovered.

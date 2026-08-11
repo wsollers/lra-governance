@@ -7,13 +7,16 @@
 This repository uses canonical LRA governance by pointer, not by copied rules.
 
 Repository: `{{ REPO_NAME }}`
-Canonical task router: `docs/agent-task-index.md`
 Canonical repo overlay: `{{ OVERLAY_PATH }}`
+Canonical route resolver:
+`python <governance-root>/capabilities/resolve.py --repo {{ REPO_NAME }} --task "<user task>" --root <repo-root>`
+Human route index (lazy reference only): `docs/agent-task-index.md`
 
 {{ GOVERNANCE_RESOLUTION }}
 
 If import semantics are unavailable, follow `AGENTS.md` in this repository as
-the local pointer wrapper. Do not treat this file as a local source of truth.
+the local pointer wrapper, then run the resolver. Do not treat this file as a
+local source of truth.
 
 Provider note: {{ PROVIDER_NOTES }}
 

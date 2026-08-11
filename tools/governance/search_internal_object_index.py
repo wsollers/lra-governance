@@ -13,6 +13,11 @@ from typing import Any
 
 import yaml
 
+try:
+    from internal_object_sqlite import query_candidates
+except ModuleNotFoundError:
+    from tools.governance.internal_object_sqlite import query_candidates
+
 
 WORD_RE = re.compile(r"[A-Za-z0-9]+")
 LATEX_TOKEN_REPLACEMENTS = (
@@ -262,6 +267,45 @@ def search_records(
     return results[:limit]
 
 
+def search_sqlite(
+    index: Path,
+    query: str,
+    *,
+    source_family: str | None = None,
+    kind: str | None = None,
+    volume: str | None = None,
+    limit: int = 10,
+    fields: tuple[str, ...] = DEFAULT_FIELDS,
+) -> list[dict[str, Any]]:
+    terms = sorted(expand_tokens(tokenize(query)))
+    candidates = query_candidates(
+        index,
+        terms,
+        source_family=source_family,
+        kind=kind,
+        volume=volume,
+        limit=max(300, limit * 50),
+    )
+    results = []
+    for candidate in candidates:
+        score = record_score(candidate, query, fields)
+        if score <= 0:
+            continue
+        item = dict(candidate)
+        item["_score"] = round(score, 4)
+        results.append(item)
+    results.sort(
+        key=lambda item: (
+            -float(item["_score"]),
+            float(item.get("_fts_rank") or 0),
+            str(item.get("source_family") or ""),
+            str(item.get("path") or ""),
+            int(item.get("line") or 0),
+        )
+    )
+    return results[:limit]
+
+
 def output_json(results: list[dict[str, Any]]) -> None:
     print(json.dumps(results, indent=2, ensure_ascii=False))
 
@@ -279,7 +323,7 @@ def output_text(results: list[dict[str, Any]]) -> None:
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--index", type=Path, required=True, help="Internal object index JSON/YAML.")
+    parser.add_argument("--index", type=Path, required=True, help="Internal object SQLite, JSON, or YAML index.")
     parser.add_argument("query", help="Search query, e.g. 'suprema of a sum'.")
     parser.add_argument("--source-family", choices=["tex", "lean", "cpp"])
     parser.add_argument(
@@ -311,15 +355,25 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
-    payload = load_payload(args.index)
-    results = search_records(
-        payload["objects"],
-        args.query,
-        source_family=args.source_family,
-        kind=args.kind,
-        volume=args.volume,
-        limit=args.limit,
-    )
+    if args.index.suffix.lower() in {".sqlite", ".db"}:
+        results = search_sqlite(
+            args.index,
+            args.query,
+            source_family=args.source_family,
+            kind=args.kind,
+            volume=args.volume,
+            limit=args.limit,
+        )
+    else:
+        payload = load_payload(args.index)
+        results = search_records(
+            payload["objects"],
+            args.query,
+            source_family=args.source_family,
+            kind=args.kind,
+            volume=args.volume,
+            limit=args.limit,
+        )
     if args.format == "json":
         output_json(results)
     else:

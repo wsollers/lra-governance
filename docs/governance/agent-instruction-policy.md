@@ -28,7 +28,7 @@ Agent-specific files are generated artifacts:
 
 Generated agent files must be thin pointer wrappers that identify:
 
-1. the canonical task router,
+1. the canonical route resolver command,
 2. exactly one appropriate repo overlay or repo-family overlay,
 3. the canonical governance resolution order,
 4. provider-specific wrapper formatting.
@@ -36,10 +36,12 @@ Generated agent files must be thin pointer wrappers that identify:
 Generation formula:
 
 ```text
-repo name + task router pointer + repo overlay pointer + provider wrapper = generated instruction file
+repo name + resolver command + repo overlay pointer + provider wrapper = generated instruction file
 ```
 
 Generated wrappers must not embed global governance docs or repo overlay bodies.
+They may point to the generated human task index as a lazy reference, but must
+not instruct agents to preload it.
 Governance updates belong in `lra-governance`, not in downstream generated
 snapshots.
 

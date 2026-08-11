@@ -12,6 +12,11 @@ from typing import Any
 
 import yaml
 
+try:
+    from internal_object_sqlite import build_family_databases
+except ModuleNotFoundError:
+    from tools.governance.internal_object_sqlite import build_family_databases
+
 
 CPP_EXTENSIONS = {".c", ".cc", ".cpp", ".cxx", ".h", ".hh", ".hpp", ".hxx", ".ixx"}
 SKIP_DIR_NAMES = {
@@ -254,6 +259,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--cpp-root", type=Path, action="append", default=[], help="C/C++ repo root to scan. May repeat.")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--format", choices=["yaml", "json"], default="yaml")
+    parser.add_argument("--sqlite-dir", type=Path, help="Directory for the C/C++ SQLite index. Defaults to <output-dir>/sqlite.")
+    parser.add_argument("--no-sqlite", action="store_true", help="Do not build the SQLite index.")
     return parser
 
 
@@ -263,6 +270,12 @@ def main() -> int:
         raise SystemExit("at least one --cpp-root is required")
     payload = build_index(args.cpp_root)
     write_payload(payload, args.output, args.format)
+    if not args.no_sqlite:
+        sqlite_dir = args.sqlite_dir or args.output.parent / "sqlite"
+        result = build_family_databases(
+            payload["objects"], families=("cpp",), sqlite_dir=sqlite_dir, source_path=args.output
+        )[0]
+        print(f"cpp SQLite index written: objects={result['objects']} database={result['database']}")
     counts = payload["counts"]
     print(f"cpp object index written: objects={counts['objects']} files={counts['files']} output={args.output}")
     return 0

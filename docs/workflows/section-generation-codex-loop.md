@@ -21,24 +21,14 @@ prompt deletion.
 
 Before writing the Codex prompt, refresh the relevant rules.
 
-Required rule sources:
+1. Follow the target repo `AGENTS.md` pointer wrapper.
+2. Run the canonical resolver for the target repository and this section task.
+3. Load only its eager packet and inspect one nearby topic example.
+4. Open a returned lazy reference or query a returned schema only when a
+   concrete planning or validation question requires it.
 
-1. Target repo `AGENTS.md`.
-2. `lra-governance/AGENTS.md` when available.
-3. `docs/agent-task-index.md`.
-4. The relevant repo overlay, especially
-   `docs/governance/repo-overlays/lra-volume.md` for leaf volume repos.
-5. Task-specific governance docs:
-   - `docs/governance/atomic-artifact-standards.md`;
-   - `docs/governance/dependency-standards.md`;
-   - `docs/governance/proof-standards.md`;
-   - `docs/governance/notation-standards.md`;
-   - `docs/governance/extraction-standards.md` when dependency or knowledge
-     routes matter.
-6. Relevant schema files:
-   - `constitution/schema/block-registry.yaml`;
-   - `constitution/schema/artifact-matrix.yaml`;
-   - `constitution/schema/file-schema.yaml`.
+Do not preload the generated task index, the route manifest, tool source,
+schema bodies, or all task-specific standards into the disposable prompt.
 
 ## Phase 3: Codex Prompt Creation
 

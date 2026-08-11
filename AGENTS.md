@@ -10,7 +10,15 @@ build image.
 docs, repo overlays, prompts, schemas, governance tools, generators, the
 canonical YAML vocabulary, and integration policy.
 
-Detailed rules live under:
+Resolve each task first:
+
+```text
+python <governance-root>/capabilities/resolve.py --repo <repo> --task "<user task>" --root <repo-root>
+```
+
+The resolver returns a bounded eager packet plus lazy references, executable
+tools, schemas, and examples. `docs/agent-task-index.md` is a generated human
+view and must not be preloaded. Detailed rules live under:
 
 - `docs/agent-task-index.md`
 - `docs/governance/`
@@ -19,9 +27,9 @@ Detailed rules live under:
 - `constitution/schema/`
 - `tools/governance/`
 
-When working from a local multi-repo checkout such as `F:\repos`, use
-`docs/agent-task-index.md` to choose the smallest relevant set of canonical
-governance files. Do not read every downstream copy just because it exists.
+When working from a local multi-repo checkout such as `F:\repos`, run the
+resolver to choose the smallest relevant set of canonical governance files.
+Do not read every downstream copy just because it exists.
 
 When working inside an isolated repository checkout without an adjacent
 `lra-governance`, resolve governance through `LRA_GOVERNANCE_ROOT`, an explicit

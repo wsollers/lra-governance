@@ -1,124 +1,558 @@
-version: 2
-# Capability manifest consumed by resolve.py. Each capability declares `applies_to`
-# (repo kinds). The resolver maps repo -> kind via overlays-config.yaml and only matches
-# capabilities applicable to that kind. Triggers matched whole-word, longest-match wins.
-# {root}/{chapter}/{canonical}/{target} are substituted by the resolver.
-capabilities:
-  - id: build-repo
+version: 3
+# Single source of truth for agent task routing. docs/agent-task-index.md is a
+# generated human view of this file. Only eager_instructions enter the initial
+# context packet; every other class is a pointer or command. token_budget covers
+# the generated/root wrapper plus the resolver's eager packet.
+token_estimator: unicode_chars_div_4_ceil
+default_token_budget: 6000
+
+routes:
+  - id: lookup-lra
+    title: Look up LRA source, code, or vocabulary
     applies_to: [volume, lean, cpp, library, vault, python_tool, latex_artifact, governance]
-    triggers: ["dispatch workflow", "dispatch workflows", "monitor workflow", "monitor workflows",
-               "github action", "github actions", "build repo", "build repository",
-               "validate repo", "validate repository", "check repo", "check repository",
-               "run ci", "ci", "build", "validate"]
-    reads:
-      - capabilities/build-repo/capability.md
-      - capabilities/reference-index.md
-      - capabilities/build-repo/build_repo.py
-    verify:
-      - "python capabilities/build-repo/build_repo.py --root {root}"
+    triggers: ["lookup lra", "search lra", "source lookup", "search source index", "search lra sources", "look up theorem", "look up this theorem", "lookup this theorem", "look up definition", "look up this definition", "search our code", "search indexed code", "search lean and tex"]
+    eager_instructions: [capabilities/lookup-lra/capability.md]
+    lazy_references: [docs/governance/source-indexing-policy.md, docs/workflows/internal-object-index-delta.md]
+    tools: [tools/governance/lra_lookup.py, tools/governance/vocabulary.py]
+    schemas: [docs/governance/source-indexing-policy.yaml]
+    examples: [capabilities/lookup-lra/capability.md]
+    outputs: [ranked source, TeX, Lean, C++, and vocabulary hits]
+    verify: ["python {canonical}/tools/governance/lra_lookup.py --status"]
+    token_budget: 3000
+
+  - id: build-repo
+    title: Build or validate a repository
+    applies_to: [volume, lean, cpp, library, vault, python_tool, latex_artifact, governance]
+    triggers: ["dispatch workflow", "dispatch workflows", "monitor workflow", "monitor workflows", "github action", "github actions", "build repo", "build repository", "validate repo", "validate repository", "check repo", "check repository", "run ci", "build", "validate"]
+    eager_instructions: [capabilities/build-repo/capability.md]
+    lazy_references: [capabilities/reference-index.md]
+    tools: [capabilities/build-repo/build_repo.py]
+    schemas: []
+    examples: []
+    outputs: [build and validation report]
+    verify: ["python {canonical}/capabilities/build-repo/build_repo.py --root {root}"]
+    token_budget: 3500
+
   - id: audit-semantic-topic
+    title: Audit semantic artifacts for a topic
     applies_to: [volume]
-    triggers: ["lra audit topic", "audit semantic topic", "topic semantic audit",
-               "validate topic artifacts", "audit topic artifacts"]
-    reads:
-      - capabilities/audit-semantic-topic/capability.md
-      - docs/workflows/topic-semantic-audit-loop.md
-      - docs/workflows/external-gpt-reviewer.md
-      - docs/workflows/semantic-artifact-calibration.md
-      - docs/architecture/semantic-artifact-record.md
-      - constitution/prompts/audit-topic-semantic-artifacts-external.md
-      - constitution/prompts/calibrate-semantic-artifact.md
-      - constitution/prompts/validate-semantic-artifact-logic.md
-      - constitution/schema/semantic-artifact.schema.json
-      - constitution/schema/semantic-artifact-package.schema.json
-      - constitution/schema/semantic-artifact-support.schema.json
-      - constitution/schema/external-review-receipt.schema.json
-      - constitution/schema/artifact-audit-validation.schema.json
-      - constitution/schema/topic-semantic-audit.schema.json
-      - tools/governance/invoke_external_gpt_reviewer.py
-      - tools/governance/validate_external_reviewer_evidence.py
-      - tools/governance/validate_semantic_artifact.py
-      - tools/governance/validate_topic_semantic_audit.py
-    verify:
-      - "python tools/governance/validate_topic_semantic_audit.py {target} --repo-root {root} --governance-root {canonical} --strict"
-      - "python tools/governance/validate_external_reviewer_evidence.py --topic-manifest {target} --repo-root {root} --verify-live"
+    triggers: ["lra audit topic", "audit semantic topic", "topic semantic audit", "validate topic artifacts", "audit topic artifacts"]
+    eager_instructions: [capabilities/audit-semantic-topic/capability.md]
+    lazy_references: [docs/workflows/topic-semantic-audit-loop.md, docs/workflows/external-gpt-reviewer.md, docs/workflows/semantic-artifact-calibration.md, docs/architecture/semantic-artifact-record.md]
+    tools: [tools/governance/invoke_external_gpt_reviewer.py, tools/governance/validate_external_reviewer_evidence.py, tools/governance/validate_semantic_artifact.py, tools/governance/validate_topic_semantic_audit.py]
+    schemas: [constitution/schema/semantic-artifact.schema.json, constitution/schema/semantic-artifact-package.schema.json, constitution/schema/semantic-artifact-support.schema.json, constitution/schema/external-review-receipt.schema.json, constitution/schema/artifact-audit-validation.schema.json, constitution/schema/topic-semantic-audit.schema.json]
+    examples: [constitution/prompts/audit-topic-semantic-artifacts-external.md, constitution/prompts/calibrate-semantic-artifact.md, constitution/prompts/validate-semantic-artifact-logic.md]
+    outputs: [topic semantic audit manifest and reviewer evidence]
+    verify: ["python {canonical}/tools/governance/validate_topic_semantic_audit.py {target} --repo-root {root} --governance-root {canonical} --strict", "python {canonical}/tools/governance/validate_external_reviewer_evidence.py --topic-manifest {target} --repo-root {root} --verify-live"]
+    token_budget: 4000
+
   - id: calibrate-semantic-artifact
+    title: Calibrate a semantic artifact
     applies_to: [volume]
-    triggers: ["calibrate semantic artifact", "semantic artifact", "review semantic artifact",
-               "artifact yaml", "calibrate definition", "calibrate theorem"]
-    reads:
-      - capabilities/calibrate-semantic-artifact/capability.md
-      - docs/workflows/semantic-artifact-calibration.md
-      - docs/workflows/external-gpt-reviewer.md
-      - docs/architecture/semantic-artifact-record.md
-      - constitution/prompts/calibrate-semantic-artifact.md
-      - constitution/schema/semantic-artifact.schema.json
-      - constitution/schema/semantic-artifact-package.schema.json
-      - constitution/schema/semantic-artifact-support.schema.json
-      - constitution/schema/external-review-receipt.schema.json
-      - tools/governance/invoke_external_gpt_reviewer.py
-      - tools/governance/validate_external_reviewer_evidence.py
-      - tools/governance/validate_semantic_artifact.py
-    verify:
-      - "python tools/governance/validate_semantic_artifact.py --artifact {target} --governance-root {canonical} --strict"
+    triggers: ["calibrate semantic artifact", "semantic artifact", "review semantic artifact", "artifact yaml", "calibrate definition", "calibrate theorem"]
+    eager_instructions: [capabilities/calibrate-semantic-artifact/capability.md]
+    lazy_references: [docs/workflows/semantic-artifact-calibration.md, docs/workflows/external-gpt-reviewer.md, docs/architecture/semantic-artifact-record.md]
+    tools: [tools/governance/invoke_external_gpt_reviewer.py, tools/governance/validate_external_reviewer_evidence.py, tools/governance/validate_semantic_artifact.py]
+    schemas: [constitution/schema/semantic-artifact.schema.json, constitution/schema/semantic-artifact-package.schema.json, constitution/schema/semantic-artifact-support.schema.json, constitution/schema/external-review-receipt.schema.json]
+    examples: [constitution/prompts/calibrate-semantic-artifact.md]
+    outputs: [calibrated semantic artifact and reviewer evidence]
+    verify: ["python {canonical}/tools/governance/validate_semantic_artifact.py --artifact {target} --governance-root {canonical} --strict"]
+    token_budget: 3500
+
   - id: author-statement
+    title: Add a theorem with proof stub
     applies_to: [volume]
-    triggers: ["author statement", "generate the latex", "append the", "the theorem",
-               "the lemma", "the proposition", "the corollary", "the axiom",
-               "theorem", "lemma", "proposition", "corollary", "axiom"]
-    reads:
-      - capabilities/author-statement/capability.md
-      - capabilities/reference-index.md
-      - capabilities/author-statement/proof_stub.py
-    verify:
-      - "python tools/governance/validate_decoration.py --root {root} --chapter {chapter} --canonical-dir {canonical}"
-      - "python tools/governance/audit_proof_layout.py --root {root} --chapter {chapter} --strict"
-      - "cd {root} && python ../lra-governance/scripts/build_volume.py --root ."
+    triggers: ["author statement", "generate the latex", "add theorem", "proof stub", "the theorem", "the lemma", "the proposition", "the corollary", "the axiom", "theorem", "lemma", "proposition", "corollary", "axiom"]
+    eager_instructions: [capabilities/author-statement/capability.md]
+    lazy_references: [capabilities/reference-index.md, docs/workflows/add-theorem-with-proof-stub.md, docs/governance/active-content-promotion-gate.md, docs/governance/proof-standards.md, docs/governance/dependency-standards.md, docs/architecture/local-semantic-logic-verifier.md, docs/governance/source-indexing-policy.md]
+    tools: [capabilities/author-statement/proof_stub.py, tools/governance/validate_volume.py, tools/governance/audit_proof_layout.py, tools/governance/validate_semantic_artifact.py, tools/governance/validate_semantic_logic.py, tools/governance/compare_semantic_ast_extractors.py, tools/governance/update_internal_object_index.py]
+    schemas: [constitution/schema/file-schema.yaml, constitution/schema/artifact-matrix.yaml]
+    examples: [nearby:statement-and-proof]
+    outputs: [named statement, canonical proof stub, semantic evidence, lookup index delta]
+    verify: ["python {canonical}/tools/governance/validate_volume.py {root} --fail-on-errors", "python {canonical}/tools/governance/audit_proof_layout.py --root {root} --chapter {chapter} --strict"]
+    token_budget: 5000
+
   - id: author-definition
+    title: Add a definition
     applies_to: [volume]
-    triggers: ["author definition", "generate the definition", "the definition",
-               "write the def", "define ", "definition"]
-    reads:
-      - capabilities/author-definition/capability.md
-      - capabilities/reference-index.md
-      - capabilities/author-definition/verify.py
-    verify:
-      - "python tools/governance/validate_decoration.py --root {root} --chapter {chapter} --canonical-dir {canonical}"
-      - "python capabilities/author-definition/verify.py --target {target} --kind definition --predicates {canonical}/predicates.yaml"
-      - "cd {root} && python ../lra-governance/scripts/build_volume.py --root ."
+    triggers: ["author definition", "generate the definition", "add definition", "the definition", "write the def", "define ", "definition"]
+    eager_instructions: [capabilities/author-definition/capability.md]
+    lazy_references: [capabilities/reference-index.md, docs/governance/active-content-promotion-gate.md, docs/governance/authoring-standards.md, docs/governance/atomic-artifact-standards.md, docs/governance/notation-standards.md, docs/governance/latex-math-style.md, docs/governance/dependency-standards.md, docs/architecture/local-semantic-logic-verifier.md, docs/workflows/internal-object-index-delta.md]
+    tools: [capabilities/author-definition/verify.py, tools/governance/validate_volume.py, tools/governance/validate_latex_math_style.py, tools/governance/validate_semantic_artifact.py, tools/governance/validate_semantic_logic.py, tools/governance/compare_semantic_ast_extractors.py, tools/governance/update_internal_object_index.py]
+    schemas: [constitution/schema/artifact-matrix.yaml, constitution/schema/block-registry.yaml]
+    examples: [nearby:definition]
+    outputs: [named definition, semantic evidence, lookup index delta]
+    verify: ["python {canonical}/capabilities/author-definition/verify.py --target {target} --kind definition --predicates {canonical}/predicates.yaml", "python {canonical}/tools/governance/validate_volume.py {root} --fail-on-errors"]
+    token_budget: 5000
+
+  - id: generate-chapter-artifacts
+    title: Generate chapter artifacts from payload
+    applies_to: [volume]
+    triggers: ["generate chapter artifacts", "artifact payload", "import artifact payload"]
+    eager_instructions: [docs/workflows/artifact-payload-generation.md]
+    lazy_references: [docs/governance/atomic-artifact-standards.md, docs/governance/notation-standards.md, docs/governance/dependency-standards.md, docs/workflows/proof-layout-audit.md]
+    tools: [external:volume/tools/import_artifact_payload.py, external:volume/tools/chapter_artifact.py]
+    schemas: [predicates.yaml, notation.yaml, relations.yaml]
+    examples: [nearby:chapter-payload]
+    outputs: [payload, registries, LaTeX blocks, proof stubs, chapter manifest]
+    verify: ["Run importer dry-run, artifact validation, proof-layout audit, and volume build."]
+    token_budget: 6000
+
+  - id: generate-section-codex-loop
+    title: Generate a section through the Codex loop
+    applies_to: [volume]
+    triggers: ["generate section", "codex loop", "section generation"]
+    eager_instructions: [docs/workflows/section-generation-codex-loop.md]
+    lazy_references: [docs/governance/active-content-promotion-gate.md, docs/governance/atomic-artifact-standards.md, docs/governance/dependency-standards.md, docs/governance/proof-standards.md, docs/governance/notation-standards.md, docs/governance/stub-chapter-standards.md, docs/governance/stub-section-standards.md]
+    tools: [tools/governance/validate_volume.py, tools/governance/generate_stub.py]
+    schemas: [constitution/schema/block-registry.yaml, constitution/schema/artifact-matrix.yaml, constitution/schema/file-schema.yaml]
+    examples: [nearby:topic-layout]
+    outputs: [topic notes, proof stubs, indexes, deleted disposable prompt]
+    verify: ["python {canonical}/tools/governance/validate_volume.py {root} --fail-on-errors"]
+    token_budget: 6000
+
+  - id: validate-volume-house-rules
+    title: Validate volume house rules
+    applies_to: [volume]
+    triggers: ["volume house rules", "validate volume", "volume validation"]
+    eager_instructions: [capabilities/validate-volume/capability.md]
+    lazy_references: [docs/governance/authoring-standards.md, docs/governance/dependency-standards.md, docs/governance/proof-standards.md, docs/governance/exercise-vault-standards.md, docs/workflows/proof-layout-audit.md]
+    tools: [tools/governance/validate_volume.py]
+    schemas: [constitution/schema/block-registry.yaml, constitution/schema/artifact-matrix.yaml, constitution/schema/file-schema.yaml]
+    examples: [nearby:chapter]
+    outputs: [integrated compliance report]
+    verify: ["python {canonical}/tools/governance/validate_volume.py {root} --fail-on-errors"]
+    token_budget: 3500
+
+  - id: add-tikz-figure
+    title: Add or revise a TikZ figure
+    applies_to: [volume, library]
+    triggers: ["tikz figure", "revise figure", "add figure"]
+    eager_instructions: [docs/governance/tikz-style-guide.md]
+    lazy_references: [docs/governance/atomic-artifact-standards.md, docs/architecture/latex-build-and-rendering.md]
+    tools: [tools/governance/validate_volume.py]
+    schemas: [constitution/schema/file-schema.yaml]
+    examples: [nearby:rendered-figure, external:lra-common/common/figures-macros.tex]
+    outputs: [dedicated figure source and inclusion block]
+    verify: ["python {canonical}/tools/governance/validate_volume.py {root} --fail-on-errors"]
+    token_budget: 6000
+
+  - id: local-tex-devcontainer
+    title: Edit LaTeX locally in a volume devcontainer
+    applies_to: [volume]
+    triggers: ["latex devcontainer", "tex devcontainer", "edit latex locally"]
+    eager_instructions: [docs/workflows/local-tex-devcontainer.md]
+    lazy_references: [docs/governance/repo-overlays/lra-volume.md]
+    tools: [tools/governance/edit_latex.py, tools/governance/install_volume_devcontainer.py, tools/governance/set_latex_root_comments.py]
+    schemas: []
+    examples: []
+    outputs: [refreshed devcontainer shim]
+    verify: ["Run the launcher and confirm the Dev Containers flow opens."]
+    token_budget: 5000
+
+  - id: populate-proof-stub
+    title: Add a proof or populate an existing proof stub
+    applies_to: [volume]
+    triggers: ["populate proof stub", "add proof", "write proof", "fill proof stub"]
+    eager_instructions: [docs/workflows/populate-proof-stub.md]
+    lazy_references: [docs/governance/active-content-promotion-gate.md, docs/governance/proof-standards.md, docs/governance/dependency-standards.md, docs/architecture/local-semantic-logic-verifier.md]
+    tools: [tools/governance/validate_volume.py, tools/governance/audit_proof_layout.py, tools/governance/validate_semantic_artifact.py]
+    schemas: [constitution/schema/file-schema.yaml]
+    examples: [nearby:populated-proof]
+    outputs: [proof populated in place and semantic evidence when needed]
+    verify: ["python {canonical}/tools/governance/validate_volume.py {root} --fail-on-errors", "python {canonical}/tools/governance/audit_proof_layout.py --root {root} --strict"]
+    token_budget: 6000
+
+  - id: migrate-proof-stubs
+    title: Validate or migrate proof stubs
+    applies_to: [volume]
+    triggers: ["migrate proof stubs", "validate proof stubs", "proof stub invariant"]
+    eager_instructions: [docs/workflows/proof-stub-invariant-migration.md]
+    lazy_references: [docs/workflows/proof-layout-audit.md, docs/governance/proof-standards.md, docs/governance/refactoring-standards.md]
+    tools: [tools/governance/validate_volume.py, tools/governance/audit_proof_layout.py]
+    schemas: [constitution/schema/file-schema.yaml]
+    examples: [nearby:proof-stub]
+    outputs: [compliance report or targeted stub edits]
+    verify: ["python {canonical}/tools/governance/audit_proof_layout.py --root {root} --strict"]
+    token_budget: 6000
+
+  - id: audit-proof-layout
+    title: Audit proof layout
+    applies_to: [volume]
+    triggers: ["audit proof layout", "proof layout audit"]
+    eager_instructions: [docs/workflows/proof-layout-audit.md]
+    lazy_references: [docs/governance/proof-standards.md]
+    tools: [tools/governance/audit_proof_layout.py]
+    schemas: [constitution/schema/file-schema.yaml]
+    examples: [nearby:proof]
+    outputs: [proof-layout report]
+    verify: ["python {canonical}/tools/governance/audit_proof_layout.py --root {root} --format json"]
+    token_budget: 5000
+
+  - id: theorem-routes
+    title: Generate or validate theorem routes
+    applies_to: [volume, vault, python_tool]
+    triggers: ["theorem routes", "generate routes", "validate routes"]
+    eager_instructions: [docs/workflows/knowledge-extraction.md]
+    lazy_references: [docs/governance/extraction-standards.md, docs/governance/dependency-standards.md, docs/architecture/knowledge-pipeline.md, docs/architecture/theorem-explorer-pipeline.md]
+    tools: [tools/governance/validate_volume.py, tools/governance/core/file_inventory.py, external:target-extractor]
+    schemas: [constitution/schema/file-schema.yaml, constitution/schema/block-registry.yaml, constitution/schema/artifact-matrix.yaml, external:target-route-schema]
+    examples: [nearby:theorem-route]
+    outputs: [theorem routes and route diff]
+    verify: ["Run route generation, validate-only mode, and integrated volume validation."]
+    token_budget: 5000
+
+  - id: refactor-chapter
+    title: Refactor a chapter
+    applies_to: [volume]
+    triggers: ["refactor chapter", "reorganize chapter"]
+    eager_instructions: [docs/governance/refactoring-standards.md]
+    lazy_references: [docs/governance/volume-structure.md, docs/workflows/volume-cleanup.md, docs/governance/file-splitting-standards.md]
+    tools: [tools/governance/audit_volume_layout.py, tools/governance/audit_proof_layout.py]
+    schemas: [constitution/schema/file-schema.yaml]
+    examples: [nearby:chapter-layout]
+    outputs: [moved files, updated indexes and route metadata]
+    verify: ["Run layout audits, route regeneration, and volume build."]
+    token_budget: 6000
+
+  - id: refactor-volume-layout
+    title: Refactor volume folders or source layout
+    applies_to: [volume]
+    triggers: ["refactor volume", "volume folders", "source layout", "volume layout migration"]
+    eager_instructions: [docs/workflows/volume-layout-audit.md]
+    lazy_references: [docs/governance/refactoring-standards.md, docs/governance/volume-structure.md, docs/governance/file-splitting-standards.md]
+    tools: [tools/governance/audit_volume_layout.py, tools/governance/audit_proof_layout.py]
+    schemas: [constitution/schema/file-schema.yaml, docs/governance/volume-structure.schema.json]
+    examples: [nearby:volume-layout]
+    outputs: [topic-mirrored layout, routers, route metadata, migration report]
+    verify: ["Run volume layout audit with --refactor-mode, then --strict."]
+    token_budget: 6000
+
   - id: author-stub-chapter
+    title: Create a stub chapter
     applies_to: [volume]
     triggers: ["stub a chapter", "stub chapter", "scaffold a chapter", "scaffold chapter", "new chapter"]
-    reads:
-      - capabilities/author-stub-chapter/capability.md
-      - capabilities/reference-index.md
-      - capabilities/author-stub-chapter/stub_chapter.py
-    verify:
-      - "python tools/governance/validate_volume.py {root} --fail-on-errors"
-      - "cd {root} && python ../lra-governance/scripts/build_volume.py --root ."
+    eager_instructions: [capabilities/author-stub-chapter/capability.md]
+    lazy_references: [capabilities/reference-index.md, docs/governance/stub-chapter-standards.md, docs/governance/volume-structure.md]
+    tools: [capabilities/author-stub-chapter/stub_chapter.py, tools/governance/generate_stub.py, tools/governance/audit_volume_layout.py]
+    schemas: [constitution/schema/file-schema.yaml]
+    examples: [nearby:stub-chapter]
+    outputs: [chapter skeleton, metadata, notes and proofs routers]
+    verify: ["python {canonical}/tools/governance/validate_volume.py {root} --fail-on-errors"]
+    token_budget: 4500
+
   - id: author-stub-section
+    title: Create a stub section
     applies_to: [volume]
     triggers: ["stub a section", "stub section", "scaffold a section", "new section"]
-    reads:
-      - capabilities/author-stub-section/capability.md
-      - capabilities/reference-index.md
-      - capabilities/author-stub-section/stub_section.py
-    verify:
-      - "python tools/governance/validate_volume.py {root} --fail-on-errors"
-      - "cd {root} && python ../lra-governance/scripts/build_volume.py --root ."
+    eager_instructions: [capabilities/author-stub-section/capability.md]
+    lazy_references: [capabilities/reference-index.md, docs/governance/stub-section-standards.md, docs/governance/volume-structure.md]
+    tools: [capabilities/author-stub-section/stub_section.py, tools/governance/generate_stub.py, tools/governance/audit_volume_layout.py]
+    schemas: [constitution/schema/file-schema.yaml]
+    examples: [nearby:stub-section]
+    outputs: [paired notes and proofs topic folders and routers]
+    verify: ["python {canonical}/tools/governance/validate_volume.py {root} --fail-on-errors"]
+    token_budget: 4500
+
+  - id: memorialize-exercises
+    title: Memorialize exercise artifacts
+    applies_to: [volume, latex_artifact]
+    triggers: ["memorialize exercise", "exercise artifacts", "exercise ledger"]
+    eager_instructions: [docs/workflows/exercise-vault-memorialization.md]
+    lazy_references: [docs/governance/exercise-vault-standards.md, docs/governance/refactoring-standards.md]
+    tools: [external:yaml-parser, external:volume-build]
+    schemas: [external:exercise-ledger.yaml]
+    examples: [nearby:exercise-set]
+    outputs: [source photo, TeX exercise set, ledger and reports]
+    verify: ["Parse ledger, check duplicate IDs and routes, then build."]
+    token_budget: 5000
+
+  - id: extract-knowledge
+    title: Extract knowledge
+    applies_to: [volume, python_tool]
+    triggers: ["extract knowledge", "knowledge extraction"]
+    eager_instructions: [docs/workflows/knowledge-extraction.md]
+    lazy_references: [docs/governance/extraction-standards.md, docs/governance/dependency-standards.md, docs/architecture/knowledge-pipeline.md]
+    tools: [tools/governance/core/file_inventory.py, external:target-extractor]
+    schemas: [constitution/schema/file-schema.yaml, constitution/schema/block-registry.yaml, constitution/schema/artifact-matrix.yaml, external:target-route-schema]
+    examples: [nearby:extracted-artifact]
+    outputs: [knowledge and route artifacts]
+    verify: ["Run extractor validation, schema parse, and route validation."]
+    token_budget: 5000
+
+  - id: update-vocabulary
+    title: Update predicates, structures, relations, or notation
+    applies_to: [governance]
+    triggers: ["update predicates", "update structures", "update relations", "update notation", "canonical vocabulary", "vocabulary entry"]
+    eager_instructions: [docs/architecture/canonical-yaml.md]
+    lazy_references: [docs/governance/notation-standards.md, docs/governance/latex-math-style.md, docs/governance/predicate-standards.md, docs/governance/dependency-standards.md]
+    tools: [tools/governance/vocabulary.py, tools/governance/validate_latex_math_style.py]
+    schemas: [predicates.yaml, structures.yaml, notation.yaml, relations.yaml]
+    examples: ["nearby:query existing entries with vocabulary.py before opening a registry"]
+    outputs: [canonical YAML delta and refreshed disposable index]
+    verify: ["python {canonical}/tools/governance/vocabulary.py validate"]
+    token_budget: 6000
+
+  - id: generate-governance-wrappers
+    title: Generate local governance wrappers
+    applies_to: [governance]
+    triggers: ["generate wrappers", "governance wrappers", "wrapper sync", "agent wrappers"]
+    eager_instructions: [docs/workflows/generated-wrapper-sync.md]
+    lazy_references: [docs/governance/agent-instruction-policy.md, docs/governance/repo-overlays/README.md, docs/architecture/generated-file-policy.md]
+    tools: [tools/governance/generate_agent_wrappers.py, tools/governance/report_wrapper_drift.py, tools/governance/validate_repo_rules.py]
+    schemas: [capabilities/overlays-config.yaml]
+    examples: [tools/governance/templates/AGENTS.md.j2]
+    outputs: [generated wrapper previews]
+    verify: ["Run wrapper drift report and repo-rule validation."]
+    token_budget: 5000
+
+  - id: edit-shared-latex
+    title: Edit shared LaTeX infrastructure
+    applies_to: [library]
+    default: true
+    triggers: ["shared latex", "latex infrastructure", "common macros", "edit macro"]
+    eager_instructions: [docs/governance/repo-overlays/lra-common.md]
+    lazy_references: [docs/architecture/repository-layout.md, docs/governance/notation-standards.md, docs/governance/decoration-box-standards.md]
+    tools: [external:target-build]
+    schemas: []
+    examples: [external:lra-common/common]
+    outputs: [shared macro or package changes]
+    verify: ["Compile affected target volumes or a focused smoke build."]
+    token_budget: 5000
+
   - id: author-lean-theorem
+    title: Work in lra-lean
     applies_to: [lean]
-    triggers: ["formalize", "lean theorem", "add lean", "formalise"]
-    reads:
-      - capabilities/author-lean-theorem/capability.md
-      - capabilities/reference-index.md
-    verify:
-      - "Run the repo overlay success gates."
+    default: true
+    triggers: ["formalize", "lean theorem", "add lean", "formalise", "work in lra-lean", "lean"]
+    eager_instructions: [capabilities/author-lean-theorem/capability.md]
+    lazy_references: [capabilities/reference-index.md, docs/governance/repo-overlays/lra-lean.md, docs/architecture/lra-lean-architecture.md, docs/architecture/semantic-artifact-record.md]
+    tools: [external:lra-lean/build.ps1, external:lake]
+    schemas: []
+    examples: [external:lra-lean/LRA]
+    outputs: [Lean declarations, modules, and verification metadata]
+    verify: ["Run the lra-lean overlay success gates."]
+    token_budget: 4500
+
+  - id: prepare-lean-tex-lookup
+    title: Prepare Lean and TeX verification lookup
+    applies_to: [lean, volume, governance]
+    triggers: ["lean tex lookup", "lean verification lookup", "tex verification lookup", "lean crosswalk"]
+    eager_instructions: [docs/workflows/internal-object-index-delta.md]
+    lazy_references: [docs/governance/source-indexing-policy.md, docs/governance/repo-overlays/lra-lean.md, docs/architecture/lra-lean-architecture.md, docs/governance/repo-overlays/lra-volume.md]
+    tools: [tools/governance/update_internal_object_index.py, tools/governance/index_internal_objects.py, tools/governance/search_internal_object_index.py]
+    schemas: [docs/governance/source-indexing-policy.yaml]
+    examples: [nearby:lean-declaration, nearby:tex-label]
+    outputs: [internal object index, delta state, reviewed crosswalk candidates]
+    verify: ["Generate the delta or full index and query each changed stable object."]
+    token_budget: 6000
+
+  - id: work-knowledge-explorer
+    title: Work in lra-knowledge-explorer
+    applies_to: [python_tool]
+    repos: [lra-knowledge-explorer]
+    default: true
+    triggers: ["knowledge explorer", "explorer ui", "graph data"]
+    eager_instructions: [docs/governance/repo-overlays/lra-knowledge-explorer.md]
+    lazy_references: [docs/governance/code-repo-standards.md, docs/governance/extraction-standards.md, docs/architecture/knowledge-pipeline.md, docs/architecture/theorem-explorer-pipeline.md, docs/architecture/local-semantic-logic-verifier.md, docs/workflows/knowledge-extraction.md]
+    tools: [tools/governance/validate_code_repo_layout.py, external:lra-knowledge-explorer/python-pytest]
+    schemas: [external:lra-knowledge-explorer/local-schemas]
+    examples: [external:lra-knowledge-explorer/README.md]
+    outputs: [extractor, UI, graph, or verification display changes]
+    verify: ["python -m pytest tests"]
+    token_budget: 5000
+
+  - id: work-pdf-extractor
+    title: Work in lra-pdf-extractor
+    applies_to: [python_tool]
+    repos: [lra-pdf-extractor]
+    default: true
+    triggers: ["pdf extractor", "pdf ingestion", "candidate extraction"]
+    eager_instructions: [docs/governance/repo-overlays/lra-pdf-extractor.md]
+    lazy_references: [docs/governance/code-repo-standards.md, docs/governance/authoring-standards.md, docs/architecture/repository-layout.md, docs/architecture/knowledge-pipeline.md, docs/architecture/multi-repo-sync.md]
+    tools: [tools/governance/validate_code_repo_layout.py, external:lra-pdf-extractor/python-pytest]
+    schemas: [external:lra-pdf-extractor/staged-output-schemas]
+    examples: [external:lra-pdf-extractor/README.md]
+    outputs: [ingestion tooling and staged review outputs]
+    verify: ["python -m pytest tests"]
+    token_budget: 5000
+
+  - id: work-reading-categorizer
+    title: Work in lra-reading-categorizer
+    applies_to: [python_tool]
+    repos: [lra-reading-categorizer]
+    default: true
+    triggers: ["reading categorizer", "categorization ui", "reading taxonomy"]
+    eager_instructions: [docs/governance/repo-overlays/lra-reading-categorizer.md]
+    lazy_references: [docs/governance/code-repo-standards.md, docs/governance/repo-overlays/lra-pdf-extractor.md, docs/governance/repo-overlays/lra-source-profiles.md, docs/architecture/repository-layout.md, docs/architecture/multi-repo-sync.md]
+    tools: [tools/governance/validate_code_repo_layout.py, external:lra-reading-categorizer/python-tests]
+    schemas: [external:lra-reading-categorizer/taxonomy/subjects.yaml]
+    examples: [external:lra-reading-categorizer/README.md]
+    outputs: [UI, taxonomy, queue, and review export changes]
+    verify: ["python -m unittest discover -s tests"]
+    token_budget: 5000
+
+  - id: work-source-profiles
+    title: Work in lra-source-profiles
+    applies_to: [python_tool]
+    repos: [lra-source-profiles]
+    default: true
+    triggers: ["source profiles", "source index", "active sources", "ingest source"]
+    eager_instructions: [docs/governance/repo-overlays/lra-source-profiles.md]
+    lazy_references: [docs/governance/code-repo-standards.md, docs/governance/source-indexing-policy.md, docs/governance/repo-overlays/lra-pdf-extractor.md, docs/architecture/repository-layout.md, docs/architecture/knowledge-pipeline.md, docs/architecture/multi-repo-sync.md]
+    tools: [tools/governance/validate_code_repo_layout.py, external:lra-source-profiles/scripts/validate_source_indexes.py]
+    schemas: [docs/governance/source-indexing-policy.yaml, external:lra-source-profiles/source-index.yaml]
+    examples: [external:lra-source-profiles/README.md]
+    outputs: [source profile metadata, indexes, active exports, review queues]
+    verify: ["python scripts/validate_source_indexes.py", "python -m pytest tests"]
+    token_budget: 5000
+
+  - id: work-lra-exercises
+    title: Work in lra-exercises
+    applies_to: [latex_artifact]
+    repos: [lra-exercises]
+    default: true
+    triggers: ["lra exercises", "exercise sheet", "workbook"]
+    eager_instructions: [docs/governance/repo-overlays/lra-exercises.md]
+    lazy_references: [docs/architecture/repository-layout.md]
+    tools: [external:docker-latexmk, external:chktex]
+    schemas: []
+    examples: [external:lra-exercises/nearby-source]
+    outputs: [standalone exercise source and PDF]
+    verify: ["Run the Docker PDF build for every changed TeX source."]
+    token_budget: 5000
+
+  - id: work-leaf-volume
+    title: Work in a leaf volume repository
+    applies_to: [volume]
+    default: true
+    triggers: ["work in volume", "leaf volume", "volume repo"]
+    eager_instructions: [docs/governance/repo-overlays/lra-volume.md]
+    lazy_references: [docs/architecture/volume-architecture.md, docs/workflows/artifact-payload-generation.md, docs/workflows/local-tex-devcontainer.md]
+    tools: [tools/governance/validate_volume.py, external:volume-build]
+    schemas: [constitution/schema/file-schema.yaml]
+    examples: [nearby:changed-artifact]
+    outputs: [task-specific leaf artifacts]
+    verify: ["Run the leaf build wrapper and task-specific validators."]
+    token_budget: 5000
+
+  - id: memorialize-handwritten-proof
+    title: Memorialize handwritten proof artifacts
+    applies_to: [vault]
+    default: true
+    triggers: ["handwritten proof", "proof vault", "memorialize proof", "proof photo"]
+    eager_instructions: [docs/governance/repo-overlays/lra-proof-vault.md]
+    lazy_references: [docs/governance/handwritten-proof-vault-standards.md, external:lra-proof-vault/AGENTS.md, external:lra-proof-vault/README.md]
+    tools: [external:lra-proof-vault/scripts/vault_photo_pipeline.py, external:lra-proof-vault/scripts/apply_leaf_backlinks.py, external:lra-proof-vault/scripts/validate_vault.py]
+    schemas: [external:lra-proof-vault/routing/theorem-routes.json]
+    examples: [nearby:vault-artifact]
+    outputs: [sanitized image, OCR, displays, metadata, accepted backlinks]
+    verify: ["Run the vault validator and volume proof/volume validators when canonical content changes."]
+    token_budget: 5000
+
+  - id: audit-decoration-boxes
+    title: Audit decoration boxes
+    applies_to: [volume, library, governance]
+    triggers: ["audit decoration", "decoration boxes", "box audit"]
+    eager_instructions: [docs/workflows/decoration-audit.md]
+    lazy_references: [docs/governance/decoration-audit-standards.md, docs/governance/decoration-box-standards.md]
+    tools: [tools/governance/audit_latex_decoration.py]
+    schemas: [constitution/schema/block-registry.yaml, constitution/schema/artifact-matrix.yaml]
+    examples: [nearby:decorated-block]
+    outputs: [decoration inventory and audit report]
+    verify: ["Run the decoration and statement audits when available."]
+    token_budget: 5000
+
+  - id: add-bibliography
+    title: Add bibliography entries
+    applies_to: [volume, latex_artifact]
+    triggers: ["bibliography entry", "add bibliography", "add citation", "bibtex"]
+    eager_instructions: [docs/workflows/bibliography-entry.md]
+    lazy_references: [docs/governance/authoring-standards.md]
+    tools: [external:bibliography-build]
+    schemas: [external:target-bibliography-layout]
+    examples: [nearby:bibliography]
+    outputs: [BibTeX entries or bibliography shards]
+    verify: ["Parse with BibTeX or biber, or run the target build."]
+    token_budget: 4000
+
+  - id: audit-governance
+    title: Audit governance
+    applies_to: [governance]
+    default: true
+    triggers: ["audit governance", "governance review", "governance bloat", "tokenally light", "context audit"]
+    eager_instructions: [docs/workflows/governance-audit.md]
+    lazy_references: [docs/reports/governance-bloat-audit.md, docs/agent-task-index.md]
+    tools: [tools/governance/audit_governance_context.py, tools/governance/validate_volume.py]
+    schemas: [capabilities/manifest.yaml, constitution/schema, constitution/schemas]
+    examples: []
+    outputs: [governance audit report or consolidation plan]
+    verify: ["python {canonical}/tools/governance/audit_governance_context.py"]
+    token_budget: 5000
+
+  - id: shrink-constitution
+    title: Shrink the constitution or move architecture facts
+    applies_to: [governance]
+    triggers: ["shrink constitution", "move architecture facts", "constitution bloat"]
+    eager_instructions: [docs/workflows/governance-audit.md]
+    lazy_references: [docs/reports/governance-bloat-audit.md, docs/agent-task-index.md, constitution/master.md, docs/architecture/repository-layout.md, docs/architecture/multi-repo-sync.md]
+    tools: [tools/governance/validate_volume.py, external:path-sanity-check]
+    schemas: [capabilities/manifest.yaml, constitution/schema]
+    examples: []
+    outputs: [mechanical move plan or pointer edits]
+    verify: ["Confirm no authority loss and no new duplicate documents."]
+    token_budget: 5000
+
+  - id: reduce-workflow-duplication
+    title: Reduce workflow duplication
+    applies_to: [governance]
+    triggers: ["workflow duplication", "deduplicate workflow", "reduce workflow"]
+    eager_instructions: [docs/workflows/governance-audit.md]
+    lazy_references: [docs/reports/governance-bloat-audit.md, docs/agent-task-index.md, nearby:target-workflow, nearby:canonical-standard]
+    tools: [tools/governance/validate_volume.py, external:repeated-phrase-scan]
+    schemas: [capabilities/manifest.yaml, constitution/schema]
+    examples: [nearby:workflow]
+    outputs: [shortened workflow with pointers]
+    verify: ["Confirm the workflow retains steps, outputs, and validation."]
+    token_budget: 5000
+
+  - id: prompts-consume-schema
+    title: Make prompts consume schema
+    applies_to: [governance]
+    triggers: ["prompts consume schema", "prompt schema", "schema driven prompt"]
+    eager_instructions: [docs/workflows/governance-audit.md]
+    lazy_references: [docs/reports/governance-bloat-audit.md, docs/agent-task-index.md, nearby:target-prompt]
+    tools: [tools/governance/validate_volume.py, external:prompt-schema-reference-check]
+    schemas: [capabilities/manifest.yaml, constitution/schema, constitution/schema/block-registry.yaml, constitution/schema/artifact-matrix.yaml, constitution/schema/file-schema.yaml]
+    examples: [nearby:prompt-builder]
+    outputs: [prompt with schema pointers]
+    verify: ["Confirm the prompt still names required inputs and its output contract."]
+    token_budget: 5000
+
   - id: cpp-build-task
+    title: Work in a C++ numerical repository
     applies_to: [cpp]
-    triggers: ["do task", "task", "implement", "build task"]
-    reads:
-      - capabilities/cpp-build-task/capability.md
-      - capabilities/reference-index.md
-    verify:
-      - "Run the repo overlay success gates."
+    default: true
+    triggers: ["do task", "implement", "build task", "c++", "cpp"]
+    eager_instructions: [capabilities/cpp-build-task/capability.md]
+    lazy_references: [capabilities/reference-index.md, docs/governance/code-repo-standards.md]
+    tools: [external:repo-success-gates]
+    schemas: []
+    examples: [nearby:test-and-implementation]
+    outputs: [task-specific C++ source and tests]
+    verify: ["Run the repo overlay success gates."]
+    token_budget: 4500
+
+prompt_routes:
+  - {title: Generate a proof, prompt: constitution/prompts/generate-proof.md, schemas: [constitution/schema/file-schema.yaml], verify: [proof layout audit]}
+  - {title: Generate a theorem statement, prompt: constitution/prompts/generate-statement.md, schemas: [constitution/schema/block-registry.yaml, constitution/schema/artifact-matrix.yaml], verify: [statement audit]}
+  - {title: Generate a stub chapter, prompt: constitution/prompts/generate-stub-chapter.md, schemas: [constitution/schema/file-schema.yaml], verify: [volume layout audit]}
+  - {title: Generate a stub volume, prompt: constitution/prompts/generate-stub-volume.md, schemas: [constitution/schema/file-schema.yaml], verify: [volume layout audit]}
+  - {title: Generate a capstone, prompt: constitution/prompts/generate-capstone.md, schemas: [constitution/schema/file-schema.yaml, constitution/schema/artifact-matrix.yaml], verify: [volume build]}
+  - {title: Generate breadcrumbs, prompt: constitution/prompts/generate-breadcrumb.md, schemas: [constitution/schema/file-schema.yaml], verify: [path and layout check]}
+  - {title: Audit a proof, prompt: constitution/prompts/audit-proof.md, schemas: [constitution/schema/file-schema.yaml, constitution/schemas/audit-report.json], verify: [proof layout audit]}
+  - {title: Audit a statement, prompt: constitution/prompts/audit-statement.md, schemas: [constitution/schema/block-registry.yaml, constitution/schema/artifact-matrix.yaml, constitution/schemas/audit-report.json], verify: [statement audit]}
+  - {title: Audit a stub, prompt: constitution/prompts/audit-stub.md, schemas: [constitution/schema/file-schema.yaml, constitution/schemas/audit-report.json], verify: [volume layout audit]}
+  - {title: Audit chapter symbols, prompt: constitution/prompts/audit-chapter-symbols.md, schemas: [notation.yaml, predicates.yaml, relations.yaml], verify: [vocabulary and symbol audit]}
+  - {title: Fix logical block gaps, prompt: constitution/prompts/fix-logical-block-gaps.md, schemas: [constitution/schema/block-registry.yaml, constitution/schema/artifact-matrix.yaml], verify: [statement audit]}
+  - {title: Plan toolkits, prompt: constitution/prompts/plan-toolkits.md, schemas: [constitution/schema/block-registry.yaml, constitution/schema/artifact-matrix.yaml], verify: [toolkit and decoration audit]}

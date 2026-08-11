@@ -263,7 +263,7 @@ def route_record(record: TaskRecord, gov_root: Path, resolver: Any) -> RoutedTas
             error=str(exc),
         )
 
-    capability = resolution.capability_id
+    capability = resolution.route_id
     return RoutedTask(
         prompt=record.prompt,
         repo=record.repo,

@@ -40,6 +40,11 @@ except ModuleNotFoundError:
         tex_files,
     )
 
+try:
+    from internal_object_sqlite import build_family_databases
+except ModuleNotFoundError:
+    from tools.governance.internal_object_sqlite import build_family_databases
+
 
 STATE_SCHEMA = "lra.internal-object-index-state/1.0"
 DELTA_SCHEMA = "lra.internal-object-index-delta/1.0"
@@ -235,6 +240,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--full", action="store_true", help="Force a full rebuild and refresh the delta state.")
     parser.add_argument("--include-match-report", action="store_true", help="Include Lean <-> TeX candidate matches and missing-link counts.")
     parser.add_argument("--candidate-limit", type=int, default=5)
+    parser.add_argument("--sqlite-dir", type=Path, help="Directory for separate TeX and Lean SQLite indexes. Defaults to <output-dir>/sqlite.")
+    parser.add_argument("--no-sqlite", action="store_true", help="Do not build SQLite indexes.")
     return parser.parse_args()
 
 
@@ -257,6 +264,17 @@ def main() -> int:
         payload["match_report"] = build_match_report(payload, limit=args.candidate_limit)
     write_text_atomic(args.output, serialize_payload(payload, args.format))
     write_state(args.state, args, current_files)
+    if not args.no_sqlite:
+        sqlite_dir = args.sqlite_dir or args.output.parent / "sqlite"
+        families = []
+        if args.tex_root:
+            families.append("tex")
+        if args.lean_root:
+            families.append("lean")
+        for result in build_family_databases(
+            payload["objects"], families=families, sqlite_dir=sqlite_dir, source_path=args.output
+        ):
+            print(f"{result['family']} SQLite index written: objects={result['objects']} database={result['database']}")
     delta = payload["delta"]["files"]
     print(
         "internal object index updated: "

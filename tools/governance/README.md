@@ -11,6 +11,11 @@ required check.
 
 Available and planned tools:
 
+- `audit_governance_context.py` - validates the authoritative route manifest,
+  generated human task index, typed resource classes, wrapper resolver
+  pointers, default-route uniqueness, local resource paths, and per-route
+  governance-context budgets (including the worst provider-wrapper chain)
+  using `ceil(unicode characters / 4)`.
 - `audit_latex_decoration.py` - inventory-only scanner for volume theorem and
   definition decoration compliance.
 - `audit_proof_layout.py` - deterministic scanner for proof file layout,
@@ -28,9 +33,13 @@ Available and planned tools:
 - `index_cpp_objects.py` - read-only source-style indexer for C/C++ objects in
   specialist code repositories such as `lra-nurbs` and
   `lra-numerical-analysis`.
+- `internal_object_sqlite.py` - atomic builder and query layer for the separate
+  TeX, Lean, and C/C++ SQLite FTS5 databases.
 - `search_internal_object_index.py` - read-only ranked search over an internal
   object index, with phrase, token, synonym, and character n-gram scoring for
   rough TeX/Lean/C++ lookup.
+- `lra_lookup.py` - one compact lookup facade over the source-profile omnibus
+  search, internal TeX/Lean/C++ object indexes, and canonical vocabulary index.
 - `vocabulary.py` - builds and queries a disposable SQLite/FTS index of the
   canonical predicate, structure, notation, and relation registries so agents
   can load one compact result instead of all four YAML files.
@@ -75,6 +84,26 @@ Future tools must support dry-run operation before writing downstream files.
 They must refuse to touch the retired `Learning-Real-Analysis` monorepo and
 must not print secret values.
 
+## Route Resolution And Context Audit
+
+Resolve one repository/task packet without loading the manifest or human index
+into agent context:
+
+```powershell
+python capabilities\resolve.py --repo lra-volume-iii --task "add a theorem" --root ..\lra-volume-iii
+python capabilities\resolve.py --repo lra-volume-iii --task "look up this theorem" --json
+```
+
+Regenerate or check the human view, then enforce resource classification,
+wrapper pointers, transitive eager references, and route budgets:
+
+```powershell
+python capabilities\generate_task_index.py
+python capabilities\generate_task_index.py --check
+python tools\governance\audit_governance_context.py
+python tools\governance\audit_governance_context.py --json
+```
+
 ## Canonical Vocabulary Lookup
 
 Build explicitly, or let any query rebuild a missing or stale index:
@@ -97,6 +126,24 @@ python tools\governance\vocabulary.py add predicate candidate.yaml --write
 
 See `docs/architecture/canonical-yaml.md` for index resolution and authority
 rules.
+
+## Unified LRA Lookup
+
+Search primary reading sources, LRA-authored TeX, Lean declarations, C++
+objects, and canonical vocabulary without loading their indexes into context:
+
+```powershell
+python tools\governance\lra_lookup.py --status
+python tools\governance\lra_lookup.py "least upper bound"
+python tools\governance\lra_lookup.py "Heine Borel" --scope sources --scope tex
+python tools\governance\lra_lookup.py "compactness" --scope sources --volume volume-iii
+python tools\governance\lra_lookup.py "interval enclosure" --scope cpp
+```
+
+The tool reads the active `lra-sources/index.yaml` pointer when present,
+delegates primary-source ranking to `lra-source-profiles`, and returns compact
+lane-specific records. It does not copy source text or make generated indexes
+canonical. See `capabilities/lookup-lra/capability.md` for agent rules.
 
 ## Proof Layout Audit
 
@@ -235,12 +282,12 @@ python tools\governance\plan_lean_tex_formalizations.py `
   --apply
 ```
 
-Search the generated index with ranked fuzzy lookup when the exact label or
-name is unknown:
+Search the generated SQLite database with ranked fuzzy lookup when the exact
+label or name is unknown. The YAML object payload is not loaded at query time:
 
 ```powershell
 python tools\governance\search_internal_object_index.py `
-  --index D:\Readings\indexes\lra\internal\all-volumes-lean-tex-index.yaml `
+  --index D:\Readings\indexes\lra\internal\sqlite\tex-search.sqlite `
   --source-family tex `
   --limit 8 `
   "suprema of a sum"
@@ -255,10 +302,20 @@ python tools\governance\index_cpp_objects.py `
   --output D:\Readings\indexes\lra\internal\lra-cpp-object-index.yaml
 
 python tools\governance\search_internal_object_index.py `
-  --index D:\Readings\indexes\lra\internal\lra-cpp-object-index.yaml `
+  --index D:\Readings\indexes\lra\internal\sqlite\cpp-search.sqlite `
   --source-family cpp `
   --limit 8 `
   "surface mesh cache"
+```
+
+The TeX/Lean full and delta indexers and the C/C++ indexer build their relevant
+SQLite database by default. Use the host-level refresh command in
+`lra-source-profiles` to refresh any family independently or all four search
+surfaces together:
+
+```powershell
+python F:\repos\lra-source-profiles\scripts\refresh_lra_indexes.py --scope tex
+python F:\repos\lra-source-profiles\scripts\refresh_lra_indexes.py --scope all
 ```
 
 ## Semantic AST Test Universe

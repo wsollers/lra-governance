@@ -3,6 +3,17 @@
 Use this file only after loading one capability and one repo overlay. Open the
 smallest referenced document that answers the concrete question.
 
+## Indexed LRA Lookup
+
+For `lookup-lra`:
+
+- Source authority and index ownership: `docs/governance/source-indexing-policy.md`
+- Canonical vocabulary authority: `docs/architecture/canonical-yaml.md`
+- Internal index refresh: `docs/workflows/internal-object-index-delta.md`
+
+Run the lookup tool before opening these references. Open only the reference
+needed to interpret, refresh, or validate the returned lane.
+
 ## Volume Statement Authoring
 
 For `author-statement`:

@@ -18,6 +18,11 @@ from typing import Any, Iterable
 
 import yaml
 
+try:
+    from internal_object_sqlite import build_family_databases
+except ModuleNotFoundError:
+    from tools.governance.internal_object_sqlite import build_family_databases
+
 
 FORMAL_TEX_ENVS = {
     "definition",
@@ -918,6 +923,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--format", choices=("yaml", "json", "jsonl"), default="yaml")
     parser.add_argument("--include-match-report", action="store_true", help="Include Lean <-> TeX candidate matches and missing-link counts.")
     parser.add_argument("--candidate-limit", type=int, default=5)
+    parser.add_argument("--sqlite-dir", type=Path, help="Directory for separate TeX and Lean SQLite indexes. Defaults to <output-dir>/sqlite.")
+    parser.add_argument("--no-sqlite", action="store_true", help="Do not build SQLite indexes.")
     return parser.parse_args()
 
 
@@ -944,6 +951,17 @@ def main() -> int:
         args.output.write_text(text, encoding="utf-8")
     else:
         print(text, end="")
+    sqlite_dir = args.sqlite_dir or (args.output.parent / "sqlite" if args.output else None)
+    if sqlite_dir is not None and not args.no_sqlite:
+        families = []
+        if args.tex_root:
+            families.append("tex")
+        if args.lean_root:
+            families.append("lean")
+        for result in build_family_databases(
+            payload["objects"], families=families, sqlite_dir=sqlite_dir, source_path=args.output
+        ):
+            print(f"{result['family']} SQLite index written: objects={result['objects']} database={result['database']}")
     return 0
 
 

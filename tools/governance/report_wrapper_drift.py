@@ -118,7 +118,9 @@ def pointer_errors(repo: str, text: str) -> list[str]:
     checks = [
         ("generated pointer header", "GENERATED POINTER WRAPPER" in text),
         ("repo pointer", f"Repository: `{repo}`" in text),
-        ("task-router pointer", "Canonical task router: `docs/agent-task-index.md`" in text),
+        ("route-resolver pointer", "Canonical route resolver:" in text),
+        ("repo-bound resolver command", f"--repo {repo} --task" in text),
+        ("human index is lazy", "Human route index (lazy reference only)" in text),
         ("overlay pointer", f"Canonical repo overlay: `{overlay}`" in text),
         ("environment resolution", "`LRA_GOVERNANCE_ROOT`" in text),
         ("sibling resolution", "sibling `../lra-governance`" in text),
