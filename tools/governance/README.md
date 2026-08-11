@@ -31,6 +31,9 @@ Available and planned tools:
 - `search_internal_object_index.py` - read-only ranked search over an internal
   object index, with phrase, token, synonym, and character n-gram scoring for
   rough TeX/Lean/C++ lookup.
+- `vocabulary.py` - builds and queries a disposable SQLite/FTS index of the
+  canonical predicate, structure, notation, and relation registries so agents
+  can load one compact result instead of all four YAML files.
 - `plan_lean_tex_formalizations.py` - conservative planner/applicator for
   reviewed `\LeanFormalizes` tags from an internal object index.
 - `validators/formal_names.py` - integrated volume validator requiring
@@ -71,6 +74,29 @@ Available and planned tools:
 Future tools must support dry-run operation before writing downstream files.
 They must refuse to touch the retired `Learning-Real-Analysis` monorepo and
 must not print secret values.
+
+## Canonical Vocabulary Lookup
+
+Build explicitly, or let any query rebuild a missing or stale index:
+
+```powershell
+python tools\governance\vocabulary.py reindex
+python tools\governance\vocabulary.py exists UpperBound --kind predicate
+python tools\governance\vocabulary.py get pred:upper-bound
+python tools\governance\vocabulary.py search "least upper bound" --limit 5
+python tools\governance\vocabulary.py validate
+```
+
+An addition is dry-run by default; pass `--write` only after reviewing the
+single-entry candidate YAML:
+
+```powershell
+python tools\governance\vocabulary.py add predicate candidate.yaml
+python tools\governance\vocabulary.py add predicate candidate.yaml --write
+```
+
+See `docs/architecture/canonical-yaml.md` for index resolution and authority
+rules.
 
 ## Proof Layout Audit
 

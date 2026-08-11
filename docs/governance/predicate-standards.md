@@ -11,6 +11,12 @@ The canonical predicate registry is `predicates.yaml` at the root of
 structure constructors and must not define local substitutes for missing
 canonical vocabulary.
 
+For existence checks and record retrieval, query
+`tools/governance/vocabulary.py` as described in
+`docs/architecture/canonical-yaml.md`; do not place the complete predicate and
+structure registries in agent context. Load a full canonical YAML file only
+when the task requires a registry-wide audit or coordinated edit.
+
 If a predicate is needed but absent from `predicates.yaml`, record a missing
 predicate need instead of inventing an ad hoc name in a notes file, proof file,
 prompt output, or extraction artifact. If an ambient object such as an ordered
