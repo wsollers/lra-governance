@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lra.local/schemas/capability-manifest.schema.json",
+  "title": "LRA capability manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "packet_version",
+    "entrypoint",
+    "token_estimator",
+    "default_token_budget",
+    "routes",
+    "prompt_routes"
+  ],
+  "properties": {
+    "version": {"type": "integer", "const": 4},
+    "packet_version": {"type": "integer", "minimum": 1},
+    "entrypoint": {"$ref": "#/$defs/localPath"},
+    "token_estimator": {"const": "unicode_chars_div_4_ceil"},
+    "default_token_budget": {"type": "integer", "minimum": 1},
+    "routes": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/route"}
+    },
+    "prompt_routes": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/promptRoute"}
+    }
+  },
+  "$defs": {
+    "nonemptyString": {"type": "string", "minLength": 1},
+    "stringList": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/nonemptyString"}
+    },
+    "localPath": {
+      "type": "string",
+      "minLength": 1,
+      "not": {"pattern": "^(?:external|nearby):"}
+    },
+    "route": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "applies_to",
+        "triggers",
+        "eager_instructions",
+        "lazy_references",
+        "tools",
+        "schemas",
+        "examples",
+        "outputs",
+        "verify",
+        "token_budget"
+      ],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+        "title": {"$ref": "#/$defs/nonemptyString"},
+        "applies_to": {"$ref": "#/$defs/stringList"},
+        "repos": {"$ref": "#/$defs/stringList"},
+        "default": {"type": "boolean"},
+        "triggers": {"$ref": "#/$defs/stringList"},
+        "eager_instructions": {"$ref": "#/$defs/stringList"},
+        "lazy_references": {"$ref": "#/$defs/stringList"},
+        "tools": {"$ref": "#/$defs/stringList"},
+        "schemas": {"$ref": "#/$defs/stringList"},
+        "examples": {"$ref": "#/$defs/stringList"},
+        "outputs": {"$ref": "#/$defs/stringList"},
+        "verify": {"$ref": "#/$defs/stringList"},
+        "token_budget": {"type": "integer", "minimum": 1}
+      }
+    },
+    "promptRoute": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "prompt", "schemas", "verify"],
+      "properties": {
+        "title": {"$ref": "#/$defs/nonemptyString"},
+        "prompt": {"$ref": "#/$defs/localPath"},
+        "schemas": {"$ref": "#/$defs/stringList"},
+        "verify": {"$ref": "#/$defs/stringList"}
+      }
+    }
+  }
+}

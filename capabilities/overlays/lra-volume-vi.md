@@ -14,7 +14,5 @@ Local conventions:
 - Volume success requires governance validation and a successful independent
   volume/book build.
 
-Applicable capabilities: author-statement, author-stub-chapter, author-stub-section.
-
 Overlay-specific verifier args: none beyond the capability default.
 Pass `--canonical-dir <path-to-lra-governance>` to `validate_decoration.py` to enable formal-reading triggers.

@@ -91,7 +91,7 @@ def canonical_source(name: str) -> str:
 def matrix_row(artifact_type: str) -> dict[str, str]:
     """
     Returns the requirement mapping for a single artifact type.
-    e.g. matrix_row("def") → {"toolkit_box": "R", "box": "R", "proof_link": "N", ...}
+    e.g. matrix_row("def") -> {"environment_label": "R", "box": "C", ...}
     """
     matrix = artifact_matrix()
     row = {}

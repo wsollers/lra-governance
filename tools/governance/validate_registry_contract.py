@@ -18,6 +18,20 @@ from typing import Any
 import yaml
 
 
+ARGUMENT_TYPES = {
+    "ambient",
+    "formula",
+    "function",
+    "object",
+    "operator",
+    "relation",
+    "scalar",
+    "set",
+    "structure",
+}
+RETURN_TYPES = ARGUMENT_TYPES | {"truth_value"}
+
+
 @dataclass
 class RegistryResult:
     errors: list[str] = field(default_factory=list)
@@ -59,10 +73,15 @@ def validate_arguments(entry: dict[str, Any], label: str, result: RegistryResult
             continue
         name = str(arg.get("name") or "")
         role = str(arg.get("role") or "")
+        argument_type = str(arg.get("type") or "")
         if not name:
             result.errors.append(f"{label}: argument {index} is missing name")
         if not role:
             result.errors.append(f"{label}: argument {index} ({name or '?'}) is missing role")
+        if argument_type and argument_type not in ARGUMENT_TYPES:
+            result.errors.append(
+                f"{label}: argument {index} ({name or '?'}) has unknown type {argument_type!r}"
+            )
         if name in seen:
             result.errors.append(f"{label}: duplicate argument name {name!r}")
         if name:
@@ -171,10 +190,29 @@ def validate_structures(root: Path, result: RegistryResult) -> None:
         validate_carried_context(entry, label, names, result)
 
 
+def validate_typed_notation(root: Path, result: RegistryResult) -> None:
+    data = load_yaml(root / "notation.yaml")
+    notation = data.get("notation")
+    if not isinstance(notation, list):
+        result.errors.append("notation.yaml: notation must be a list")
+        return
+    for entry in notation:
+        if not isinstance(entry, dict) or "arguments" not in entry:
+            continue
+        notation_id = str(entry.get("id") or "<missing notation id>")
+        validate_arguments(entry, notation_id, result)
+        return_type = str(entry.get("returns") or "")
+        if not return_type:
+            result.errors.append(f"{notation_id}: callable notation with arguments is missing returns")
+        elif return_type not in RETURN_TYPES:
+            result.errors.append(f"{notation_id}: unknown return type {return_type!r}")
+
+
 def validate_registry(root: Path) -> RegistryResult:
     result = RegistryResult()
     validate_predicates(root, result)
     validate_structures(root, result)
+    validate_typed_notation(root, result)
     return result
 
 

@@ -22,14 +22,6 @@
 
 matrix:
 
-  toolkit_box:
-    def:  R
-    thm:  R
-    lem:  R
-    prop: R
-    cor:  R
-    ax:   R
-
   environment_label:
     def:  R
     thm:  R

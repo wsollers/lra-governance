@@ -77,6 +77,15 @@ Predicate-reading blocks must use the argument signatures registered in
 registered number of arguments, and a structure constructor must be introduced
 with its registered constructor form.
 
+The ordered `arguments` list is the arity authority. Each argument has a
+semantic `role` and may add a coarse machine type such as `function`, `set`,
+`ambient`, `scalar`, `relation`, or `structure`. Validators reject explicit
+category inversions when a typed argument is recognizable without mathematical
+inference. For example, an ambient expression such as `\mathbb{R}` cannot fill
+a `scalar` Lipschitz-constant position. Unknown symbolic variables remain a
+matter for typed semantic-artifact validation rather than guesswork from their
+letter names.
+
 Surface forms that describe equivalent presentations of a concept are not
 automatically new canonical predicates. For example, a source may discuss
 epsilon--delta, neighbourhood, and sequential formulations of the derivative.
@@ -274,7 +283,8 @@ They must preserve:
 - arity, by the length of the ordered `arguments` list;
 - argument position, by YAML list order, optionally mirrored by a matching
   `position` field;
-- argument role/type intent, by each argument's `role`;
+- argument role intent, by each argument's `role`, and an optional coarse
+  machine `type` when literal category checking is required;
 - predicate return type, by `returns`;
 - structure assembly data, by `carrier_argument`, `structural_arguments`, and
   `carried_context` where applicable.

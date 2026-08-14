@@ -1,47 +1,39 @@
-# LRA Agent Entrypoint
+# LRA Agent Execution Contract
 
-You are an automated agent working inside an LRA repository. Keep the context
-small: resolve one route, do the action, and run its success gates.
+This file applies after the resolver selects a task route. The manifest owns
+routing; this file defines behavior shared by every route.
 
-## How to work
+## Execute
 
-1. Identify the repo you are in (e.g. `lra-volume-i`) and the task you were given.
-2. Run `capabilities/resolve.py --repo <repo> --task "<task>" --root <repo-root>`.
-3. Load the returned eager packet only. Lazy references, executable tools,
-   schemas/data, and examples stay out of context until the task requires them.
-4. Perform the capability action.
-5. Run every listed success gate. If a gate fails, fix the artifact or the capability
-   and run the gate again. Do not report success on a failing or skipped gate.
+1. Work within the user's request, resolved repository, and selected route.
+2. Load the eager instruction files in the returned order.
+3. Treat lazy references, tools, schemas, examples, and generated indexes as
+   pointers. Open or run only what a concrete step requires.
+4. Perform the capability action. Re-resolve if the task materially changes.
+5. Run every returned verification command. Report success only when all
+   required gates pass; identify any skipped or failing gate explicitly.
 
-## Global Rules
+## Respect Authority
 
-- Use canonical names and notation from the registries when a capability asks for them.
-  If the needed entry is missing, stop and report the missing registry entry.
-- For requests to find a theorem, definition, source passage, TeX/Lean object,
-  C++ object, or canonical term, use the `lookup-lra` capability before loading
-  large registries/indexes or scanning repositories broadly.
-- Keep generated shape separate from mathematical substance. Do not restate formulas,
-  axioms, or signatures that already live in canonical files or labeled artifacts.
-- Do not edit synced downstream copies or generated files when the canonical source is
-  available.
-- For structural tasks, move or route existing content; do not rewrite mathematics.
-- For mechanics tasks, do not change mathematical content.
-- Lean formalization takes place in `lra-lean`. From any LRA repository, when
-  asked to look up Lean-formalized proofs, checked Lean declarations, or Lean
-  proof-completion status for a topic, resolve the sibling or external
-  `lra-lean` checkout and search its `LRA/` modules first. Volume repositories
-  may carry source prose and verification links, but they do not own Lean proof
-  source.
-- Do not preload architecture, workflow, tool source, schemas, examples, the
-  generated task index, or registry bodies. Follow the resolver's typed pointers
-  only when a concrete need arises.
+- Edit the canonical owner, not a generated artifact or downstream delegate.
+  If ownership is unclear, follow the smallest relevant reference pointer
+  before editing.
+- Query canonical registries through the routed lookup or vocabulary tool. Do
+  not invent names, notation, relations, labels, structures, or dependencies.
+  Report a missing canonical entry.
+- Preserve mathematical substance during structural, mechanical, migration,
+  build, and governance work. Change mathematics only when the user explicitly
+  requests mathematical authoring or correction through an applicable route.
+- Keep generated structure separate from authored substance. Do not duplicate
+  canonical formulas, signatures, policies, or routing tables in generated
+  files.
 
-## Pointers
+## Stop
 
-- Machine manifest: `capabilities/manifest.yaml`
-- Resolver: `capabilities/resolve.py`
-- Generated human index: `docs/agent-task-index.md`
-- Context audit: `tools/governance/audit_governance_context.py`
-- Escalation references: `capabilities/reference-index.md`
-- Repo overlays: `capabilities/overlays/`
-- Capability docs: `capabilities/<capability>/capability.md`
+Stop and report the blocking condition when:
+
+- governance, a required canonical source, or a required registry is missing;
+- resolution is unknown, ambiguous, invalid, or over budget;
+- instructions conflict or ownership remains ambiguous;
+- completion requires work outside the user's authorized scope; or
+- a required verification gate still fails after safe in-scope correction.

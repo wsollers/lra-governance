@@ -1630,6 +1630,45 @@ class ValidateVolumeTests(unittest.TestCase):
 
         self.assertEqual(validate_with_inventory(operator_metadata, volume), [])
 
+    def test_operator_metadata_validates_typed_notation_arity(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{remark*}[Exposition]",
+                    r"The real part is \(\operatorname{Re}(z,w)\).",
+                    r"\end{remark*}",
+                    "",
+                ]
+            ),
+        )
+
+        findings = validate_with_inventory(operator_metadata, volume)
+
+        self.assertEqual([item.code for item in findings], ["operator_signature_arity"])
+        self.assertIn("expects 1", findings[0].message)
+
+    def test_operator_metadata_rejects_explicit_operator_argument_type_inversion(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{remark*}[Exposition]",
+                    r"The malformed real-part call is \(\operatorname{Re}(\mathbb{R})\).",
+                    r"\end{remark*}",
+                    "",
+                ]
+            ),
+        )
+
+        findings = validate_with_inventory(operator_metadata, volume)
+
+        self.assertEqual([item.code for item in findings], ["operator_signature_type"])
+        self.assertEqual(findings[0].severity, "error")
+        self.assertIn("expects scalar", findings[0].message)
+
     def test_predicate_reading_signatures_uses_testing_registry_entries(self):
         volume = make_volume()
         write(
@@ -1726,6 +1765,34 @@ class ValidateVolumeTests(unittest.TestCase):
         )
         self.assertIn("ConvergesTo", findings[0].message)
         self.assertIn("IsCauchy", findings[1].message)
+
+    def test_predicate_reading_signatures_rejects_lipschitz_constant_type_substitution(self):
+        volume = make_volume()
+        write(
+            volume / "integers" / "notes" / "order" / "notes-extra.tex",
+            "\n".join(
+                [
+                    r"\begin{definition}[Lipschitz Condition]",
+                    r"\label{def:lipschitz-condition}",
+                    r"Let (A\subseteq\mathbb R), (f:A\to\mathbb R), and (K>0).",
+                    r"\end{definition}",
+                    r"\begin{remark*}[Predicate reading]",
+                    r"\[",
+                    r"f\colon A\to\mathbb{R},\\",
+                    r"\operatorname{IsLipschitz}(f,A,\mathbb{R},\mathbb{R},\mathbb{R})",
+                    r"\Longleftrightarrow \forall x,u\in A\; |f(x)-f(u)|\leq K|x-u|.",
+                    r"\]",
+                    r"\end{remark*}",
+                    "",
+                ]
+            ),
+        )
+
+        findings = validate_with_inventory(predicate_reading_signatures, volume)
+
+        self.assertEqual([item.code for item in findings], ["predicate_reading_signature_type"])
+        self.assertEqual(findings[0].severity, "error")
+        self.assertIn("argument 5 (C) expects scalar", findings[0].message)
 
     def test_predicate_reading_signatures_accepts_explicit_ambient_setup(self):
         volume = make_volume()

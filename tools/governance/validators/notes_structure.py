@@ -159,7 +159,7 @@ def _check_topic_router_only(volume_root: Path, index: Path, included: set[Path]
             findings.append(
                 finding(
                     "notes_topic_index_contains_rendered_content",
-                    "notes/{topic}/index.tex may contain comments, exactly one non-starred \\section{...}, nested non-starred \\subsection{...} headings, an optional toolkit box, and input lines only.",
+                    "notes/{topic}/index.tex may contain comments, exactly one non-starred \\section{...}, the governed Toolkit box when required, nested non-starred \\subsection{...} headings, and input lines only.",
                     index,
                     volume_root,
                     line_no,

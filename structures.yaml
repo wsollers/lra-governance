@@ -3334,22 +3334,6 @@ structures:
     description: >
       Volume II structure or data object named OrderedFieldLaws.
 
-  - id: struct:peano-system
-    name: PeanoSystem
-    kind: structure
-    category: volume_ii
-    constructor: '\mathsf{PeanoSystem}'
-    arguments:
-      - name: X
-        role: object
-    carrier_argument: null
-    structural_arguments:
-      - X
-    surface_forms:
-      - PeanoSystem
-    description: >
-      Volume II structure or data object named PeanoSystem.
-
   - id: struct:positive-cone
     name: PositiveCone
     kind: structure

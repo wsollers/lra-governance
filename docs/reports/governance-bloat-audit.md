@@ -145,7 +145,7 @@ Largest files by estimated token weight:
 | File | Chars | Words | Est. tokens |
 | --- | ---: | ---: | ---: |
 | `constitution/prompts/fix-logical-block-gaps.md` | 20,259 | 2,236 | 5,065 |
-| `constitution/prompts/generate-statement.md` | 15,804 | 2,115 | 3,951 |
+| retired statement-generation prompt | 15,804 | 2,115 | retired in favor of typed payload rendering |
 | `constitution/master.md` | 15,225 | 2,112 | 3,806 |
 | `docs/governance/model-standards.md` | 12,547 | 1,672 | 3,137 |
 | `constitution/prompts/audit-statement.md` | 10,350 | 1,461 | 2,588 |
@@ -297,7 +297,7 @@ Locations:
 - `docs/governance/decoration-audit-standards.md`
 - `docs/governance/atomic-artifact-standards.md`
 - `constitution/prompts/audit-statement.md`
-- `constitution/prompts/generate-statement.md`
+- the retired statement-generation prompt (superseded by typed payload rendering)
 
 Canonical home:
 
@@ -396,7 +396,7 @@ Prefer extending or migrating these before creating an unrelated
 | `\LRAProofFor{...}` proof association | `proof-standards.md`, workflows | Existing proof-file schema or new proof rule data | enforced in leaf validators | `validate_leaf_proofs.py` |
 | Proof body section requirements | `proof-standards.md`, `file-schema.yaml` | Existing proof-file schema | enforced in leaf validators | `validate_leaf_proofs.py` |
 | Box eligibility rules | `block-registry.yaml`, `decoration-box-standards.md` | Existing block registry trigger fields | auditable | statement/decoration audit |
-| One-toolkit-box-per-section | `block-registry.yaml`, `decoration-box-standards.md` | Existing block registry plus toolkit audit config | auditable | `constitution/auditor/audits/toolkits.py` |
+| One Toolkit per routed formal-bearing topic | `constitution/master.md`, `authoring-standards.md` | Deterministic routed-topic inventory | enforced | `tools/governance/validators/toolkit_coverage.py` |
 | Breadcrumb placement | `constitution/master.md`, `file-schema.yaml` | Existing file schema, possibly split into `breadcrumb-rules` | auditable | stub audit |
 | Stub chapter required markers | `stub-chapter-standards.md`, `file-schema.yaml` | Existing file schema | auditable | stub audit |
 | Stub section required markers | `stub-section-standards.md` | Add structured section-stub schema | documented/auditable | future stub-section validator |

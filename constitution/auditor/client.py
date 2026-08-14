@@ -255,27 +255,6 @@ def assemble_audit_system_prompt(
     return "\n".join(parts)
 
 
-def assemble_symbol_audit_system_prompt(
-    base_prompt: str,
-    *,
-    predicates_yaml: str,
-    structures_yaml: str,
-    notation_yaml: str,
-    relations_yaml: str,
-) -> str:
-    """
-    Assembles the system prompt for a symbol audit call.
-    Injects all canonical source files.
-    """
-    return (
-        f"{base_prompt}\n\n"
-        f"## predicates.yaml\n\n```yaml\n{predicates_yaml}\n```\n\n"
-        f"## structures.yaml\n\n```yaml\n{structures_yaml}\n```\n\n"
-        f"## notation.yaml\n\n```yaml\n{notation_yaml}\n```\n\n"
-        f"## relations.yaml\n\n```yaml\n{relations_yaml}\n```"
-    )
-
-
 def assemble_generate_system_prompt(
     base_prompt: str,
     *,

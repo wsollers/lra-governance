@@ -1,5 +1,5 @@
 # Block Registry
-# Every possible logical block in a theorem-like or definition environment.
+# Every possible logical block owned by a theorem-like or definition artifact.
 # This is the single source of truth for block identity, trigger conditions,
 # and parent dependencies.
 #
@@ -16,21 +16,6 @@
 #   notes:        clarifying remarks for the auditor or generator
 
 blocks:
-
-  - id: toolkit_box
-    display: Toolkit Box
-    environment: tcolorbox (gray, section top)
-    requirement: R
-    parent: null
-    trigger: null
-    proof_usage: null
-    notes: >
-      Exactly one toolkit box per section. Names the concept family, lists the
-      atomic notions that follow, provides structural orientation. Must enumerate
-      exactly the atomic items that follow. Toolkit quick-reference tables have
-      exactly two columns headed Name and Meaning; the first column carries the
-      linked item name and the second gives the short orientation. Not a formal
-      definition or theorem.
 
   - id: environment_label
     display: Environment + Label

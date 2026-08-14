@@ -1,11 +1,15 @@
-"""
-generators/stub_volume.py
-Generates files for a volume stub. Returns dict of {filename: content}.
-Does not write to disk.
-"""
+"""Deterministic volume-stub generator retained at the legacy import path."""
+from __future__ import annotations
 
-import yaml
-from auditor import client, config, loader
+import sys
+from pathlib import Path
+
+
+TOOLS = Path(__file__).resolve().parents[3] / "tools" / "governance"
+if str(TOOLS) not in sys.path:
+    sys.path.insert(0, str(TOOLS))
+
+from generators.volume_stub import render_volume_stub  # noqa: E402
 
 
 def generate_stub_volume(
@@ -14,77 +18,33 @@ def generate_stub_volume(
     volume_scope: str,
     chapter_registry: list[dict],
     frontispiece_mathematician: str | None = None,
+    frontispiece_years: str | None = None,
+    frontispiece_image: str | None = None,
 ) -> dict[str, str]:
-    """
-    Args:
-        volume_identifier:    e.g. "volume-iii".
-        volume_display_title: e.g. "Analysis and Topology".
-        volume_scope:         Prose description of the volume's mathematical territory.
-        chapter_registry:     Ordered list of {"subject": ..., "display_title": ...}.
-        frontispiece_mathematician:
-            Optional mathematician name or surname for a shared frontispiece image.
-
-    Returns:
-        Dict mapping relative file paths to file contents.
-    """
-    base_prompt   = loader.prompt("generate_stub_volume")
-    registry_yaml = yaml.dump(chapter_registry, default_flow_style=False, allow_unicode=True)
-    frontispiece  = _frontispiece_context(frontispiece_mathematician)
-
-    user = (
-        f"## Volume Identifier\n\n{volume_identifier}\n\n"
-        f"## Volume Display Title\n\n{volume_display_title}\n\n"
-        f"## Volume Scope\n\n{volume_scope}\n\n"
-        f"## Chapter Registry\n\n```yaml\n{registry_yaml}\n```\n\n"
-        f"## Frontispiece Mathematician\n\n{frontispiece}"
+    frontispiece = None
+    supplied = (
+        frontispiece_mathematician,
+        frontispiece_years,
+        frontispiece_image,
     )
-
-    raw = client.call(base_prompt, user, expect_json=False)
-    return _parse_file_blocks(raw)
-
-
-def _frontispiece_context(mathematician: str | None) -> str:
-    if not mathematician:
-        return "None supplied."
-
-    lastname = _ascii_lastname(mathematician)
-    image = f"images/{lastname}.png"
-    exists = (config.REPO_ROOT / image).exists()
-    status = "exists" if exists else "missing"
-    return (
-        f"Requested mathematician: {mathematician}\n"
-        f"Expected shared image path: {image}\n"
-        f"Image status under governance root: {status}\n"
-        "If missing, generate the image according to the Frontispiece Rule "
-        "before finalizing the stub."
+    if any(supplied):
+        if not all(supplied):
+            raise ValueError(
+                "frontispiece requires mathematician, years, and image; "
+                "the stub generator does not infer biographical facts"
+            )
+        frontispiece = {
+            "mathematician": frontispiece_mathematician,
+            "years": frontispiece_years,
+            "image": frontispiece_image,
+        }
+    return render_volume_stub(
+        volume_identifier,
+        volume_display_title,
+        volume_scope,
+        chapter_registry,
+        frontispiece=frontispiece,
     )
 
 
-def _ascii_lastname(name: str) -> str:
-    import re
-    import unicodedata
-
-    normalized = unicodedata.normalize("NFKD", name)
-    ascii_name = normalized.encode("ascii", "ignore").decode("ascii")
-    tokens = re.findall(r"[A-Za-z]+", ascii_name)
-    return tokens[-1].lower() if tokens else "frontispiece"
-
-
-def _parse_file_blocks(raw: str) -> dict[str, str]:
-    import re
-    files: dict[str, str] = {}
-
-    pattern = re.compile(
-        r"###\s+File:\s+(.+?)\n+```(?:latex|yaml|tex)?\n(.*?)```",
-        re.DOTALL,
-    )
-
-    for match in pattern.finditer(raw):
-        filename = match.group(1).strip()
-        content  = match.group(2)
-        files[filename] = content
-
-    if not files:
-        files["_raw_output"] = raw
-
-    return files
+__all__ = ["generate_stub_volume", "render_volume_stub"]

@@ -33,7 +33,10 @@ def build_governance_test_image(image: str = DEFAULT_GOVERNANCE_TEST_IMAGE) -> N
     require_docker()
     root = governance_root()
     docker_dir = root / "docker" / "governance-test"
-    run(["docker", "build", "-t", image, "-f", str(docker_dir / "Dockerfile"), str(docker_dir)], cwd=root)
+    run(
+        ["docker", "build", "-t", image, "-f", str(docker_dir / "Dockerfile"), str(root)],
+        cwd=root,
+    )
 
 
 def mounted_results_dir(path: Path | None, default_name: str) -> Path:

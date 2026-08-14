@@ -11,8 +11,11 @@ if str(HERE) not in sys.path:
     sys.path.insert(0, str(HERE))
 
 from generators.chapter_stub import stub_chapter
+from generators.capstone_stub import render_capstone_stub
+from generators.proof_stub import render_proof_stub
 from generators.promote_topic import promote_topic_to_chapter
 from generators.section_stub import stub_section
+from generators.volume_stub import render_volume_stub
 
 
 def _section_titles(args: argparse.Namespace) -> list[str]:
@@ -27,6 +30,50 @@ def _load_registry(path: str | None) -> list[dict]:
     if not path:
         return []
     return json.loads(Path(path).read_text(encoding="utf-8"))
+
+
+def _dependencies(values: list[str] | None) -> list[tuple[str, str]]:
+    result: list[tuple[str, str]] = []
+    for value in values or []:
+        if "=" not in value:
+            raise ValueError("dependencies must use LABEL=DISPLAY format")
+        label, display = (part.strip() for part in value.split("=", 1))
+        if not label or not display:
+            raise ValueError("dependencies must use LABEL=DISPLAY format")
+        result.append((label, display))
+    return result
+
+
+def _emit_text(content: str, output: str | None) -> None:
+    if output:
+        path = Path(output)
+        if path.exists():
+            raise FileExistsError(f"refusing to overwrite existing file: {path}")
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(content, encoding="utf-8")
+        print(f"created: {path}")
+    else:
+        print(content, end="")
+
+
+def _emit_files(files: dict[str, str], repo_root: str | None, write: bool, as_json: bool) -> None:
+    if as_json:
+        print(json.dumps(files, indent=2, sort_keys=True))
+    else:
+        for filename, content in files.items():
+            print(f"### File: {filename}\n\n{content}")
+    if not write:
+        return
+    if not repo_root:
+        raise ValueError("--repo-root is required with --write")
+    root = Path(repo_root)
+    for filename, content in files.items():
+        path = root / filename
+        if path.exists():
+            raise FileExistsError(f"refusing to overwrite existing file: {path}")
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(content, encoding="utf-8")
+        print(f"created: {path}")
 
 
 def _print_result(result: dict, as_json: bool) -> None:
@@ -80,6 +127,53 @@ def _cmd_section(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_proof(args: argparse.Namespace) -> int:
+    statement = Path(args.statement_file).read_text(encoding="utf-8")
+    content = render_proof_stub(
+        args.kind,
+        args.slug,
+        args.title,
+        statement,
+        _dependencies(args.dependency),
+        statement_label=args.statement_label,
+        proof_label=args.proof_label,
+    )
+    _emit_text(content, args.out)
+    return 0
+
+
+def _cmd_capstone(args: argparse.Namespace) -> int:
+    content = render_capstone_stub(
+        args.subject,
+        args.title,
+        _dependencies(args.dependency),
+    )
+    _emit_text(content, args.out)
+    return 0
+
+
+def _cmd_volume(args: argparse.Namespace) -> int:
+    frontispiece = None
+    supplied = (args.mathematician, args.mathematician_years, args.mathematician_image)
+    if any(supplied):
+        if not all(supplied):
+            raise ValueError("frontispiece requires --mathematician, --mathematician-years, and --mathematician-image")
+        frontispiece = {
+            "mathematician": args.mathematician,
+            "years": args.mathematician_years,
+            "image": args.mathematician_image,
+        }
+    files = render_volume_stub(
+        args.volume,
+        args.title,
+        args.scope,
+        _load_registry(args.registry),
+        frontispiece=frontispiece,
+    )
+    _emit_files(files, args.repo_root, args.write, args.json)
+    return 0
+
+
 def _cmd_promote_topic(args: argparse.Namespace) -> int:
     result = promote_topic_to_chapter(
         Path(args.source_chapter_root),
@@ -95,7 +189,7 @@ def _cmd_promote_topic(args: argparse.Namespace) -> int:
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Scaffold canonical LRA stub chapters or sections.")
+    parser = argparse.ArgumentParser(description="Render canonical LRA stubs from explicit inputs.")
     parser.add_argument("--json", action="store_true", help="print machine-readable output")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
@@ -120,6 +214,36 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     section.add_argument("--section", action="append", help="section title; repeat or separate multiple titles with ';'")
     section.add_argument("--sections", default="", help="section titles in order, ';'-separated")
     section.set_defaults(func=_cmd_section)
+
+    proof = subparsers.add_parser("proof", help="render a canonical proof stub")
+    proof.add_argument("--kind", required=True, choices=["theorem", "lemma", "proposition", "corollary"])
+    proof.add_argument("--slug", required=True)
+    proof.add_argument("--title", required=True)
+    proof.add_argument("--statement-file", required=True, help="file containing only the statement body")
+    proof.add_argument("--statement-label", help="explicit theorem-like label; otherwise derived from kind and slug")
+    proof.add_argument("--proof-label", help="explicit prf: label; otherwise derived from slug")
+    proof.add_argument("--dependency", action="append", default=[], help="LABEL=DISPLAY; repeat as needed")
+    proof.add_argument("--out", help="write to a new file instead of stdout")
+    proof.set_defaults(func=_cmd_proof)
+
+    capstone = subparsers.add_parser("capstone", help="render a canonical capstone stub")
+    capstone.add_argument("--subject", required=True)
+    capstone.add_argument("--title", required=True)
+    capstone.add_argument("--dependency", action="append", default=[], help="LABEL=DISPLAY; repeat as needed")
+    capstone.add_argument("--out", help="write to a new file instead of stdout")
+    capstone.set_defaults(func=_cmd_capstone)
+
+    volume = subparsers.add_parser("volume", help="render a canonical volume stub")
+    volume.add_argument("--volume", required=True, help="volume identifier, such as volume-iii")
+    volume.add_argument("--title", required=True)
+    volume.add_argument("--scope", required=True)
+    volume.add_argument("--registry", required=True, help="JSON list of chapter subject/display_title records")
+    volume.add_argument("--mathematician", help="exact frontispiece name")
+    volume.add_argument("--mathematician-years", help="exact birth-death years")
+    volume.add_argument("--mathematician-image", help="existing images/<name>.png path")
+    volume.add_argument("--write", action="store_true")
+    volume.add_argument("--repo-root", help="target repository root, required with --write")
+    volume.set_defaults(func=_cmd_volume)
 
     promote = subparsers.add_parser("promote-topic", help="promote an existing topic folder into its own chapter")
     promote.add_argument("--source-chapter-root", required=True, help="path to the chapter that currently owns the topic")

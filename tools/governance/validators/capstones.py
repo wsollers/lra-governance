@@ -28,6 +28,26 @@ def validate(volume_root: Path, files) -> list[Finding]:
 
 def _validate_capstone_file(volume_root: Path, chapter: Path, capstone: Path, findings: list[Finding]) -> None:
     text = read_text(capstone)
+    _validate_capstone_text(volume_root, chapter, capstone, text, findings)
+
+
+def validate_text(text: str, *, chapter_subject: str) -> list[Finding]:
+    """Validate generated capstone source before it is written to a volume."""
+    root = Path(".")
+    chapter = root / chapter_subject
+    capstone = chapter / "proofs" / "exercises" / f"capstone-{chapter_subject}.tex"
+    findings: list[Finding] = []
+    _validate_capstone_text(root, chapter, capstone, text, findings)
+    return findings
+
+
+def _validate_capstone_text(
+    volume_root: Path,
+    chapter: Path,
+    capstone: Path,
+    text: str,
+    findings: list[Finding],
+) -> None:
     for token, code in [
         ("\\phantomsection", "missing_capstone_phantomsection"),
         (f"\\label{{cap:{chapter.name}}}", "missing_capstone_label"),

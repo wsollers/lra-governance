@@ -6,6 +6,7 @@ from pathlib import Path
 
 import yaml
 
+from core.registry_calls import iter_registry_calls, validate_registry_call
 from core.file_inventory import validator_files
 from core.finding import Finding, finding
 from core.tex import line_at, read_stripped_text
@@ -13,13 +14,20 @@ from core.tex import line_at, read_stripped_text
 
 OPERATORNAME_RE = re.compile(r"\\operatorname\{([^}]+)\}")
 OPERATOR_SURFACE_FORM_RE = re.compile(r"^[A-Za-z][A-Za-z0-9]*$")
+PREDICATE_READING_RE = re.compile(
+    r"\\begin\{remark\*\}\[(?:Predicate reading|Negation predicate reading|Contrapositive predicate reading)\]"
+    r"[\s\S]*?\\end\{remark\*\}",
+    re.IGNORECASE,
+)
 
 
 def validate(volume_root: Path, files) -> list[Finding]:
     findings: list[Finding] = []
-    known_names = _known_operator_names()
+    known_entries = _known_operator_entries()
+    known_names = frozenset(known_entries)
     for tex in validator_files(volume_root, files):
         text = read_stripped_text(tex)
+        predicate_reading_spans = [match.span() for match in PREDICATE_READING_RE.finditer(text)]
         for match in OPERATORNAME_RE.finditer(text):
             name = match.group(1).strip()
             if not name or name in known_names:
@@ -33,13 +41,32 @@ def validate(volume_root: Path, files) -> list[Finding]:
                     line_at(text, match.start()),
                 )
             )
+        for call in iter_registry_calls(text):
+            if any(start <= call.start < end for start, end in predicate_reading_spans):
+                continue
+            entry = known_entries.get(call.name)
+            if entry is None:
+                continue
+            for issue in validate_registry_call(call, entry):
+                findings.append(
+                    finding(
+                        "operator_signature_arity"
+                        if issue.code == "registry_call_arity"
+                        else "operator_signature_type",
+                        issue.message + ".",
+                        tex,
+                        volume_root,
+                        line_at(text, call.start),
+                        severity="review" if issue.code == "registry_call_arity" else "error",
+                    )
+                )
     return findings
 
 
 @lru_cache(maxsize=1)
-def _known_operator_names() -> frozenset[str]:
+def _known_operator_entries() -> dict[str, dict]:
     root = Path(__file__).resolve().parents[3]
-    names: set[str] = set()
+    entries: dict[str, dict] = {}
 
     for filename, key in (
         ("predicates.yaml", "predicates"),
@@ -48,7 +75,8 @@ def _known_operator_names() -> frozenset[str]:
     ):
         data = _load_yaml(root / filename)
         for item in data.get(key, []) or []:
-            names.update(_operator_names_from_item(item))
+            for name in _operator_names_from_item(item):
+                entries[name] = item
 
     data = _load_yaml(root / "notation.yaml")
     for item in data.get("notation", []) or []:
@@ -56,9 +84,9 @@ def _known_operator_names() -> frozenset[str]:
             continue
         symbol = str(item.get("symbol") or "")
         for match in OPERATORNAME_RE.finditer(symbol):
-            names.add(match.group(1).strip())
+            entries[match.group(1).strip()] = item
 
-    return frozenset(names)
+    return entries
 
 
 def _operator_names_from_item(item) -> set[str]:

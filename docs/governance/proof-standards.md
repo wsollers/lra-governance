@@ -91,11 +91,13 @@ The only difference is content: a stub keeps TODO-safe placeholders in the
 restatement, both proof bodies, the proof-structure remark, and the dependency
 block, and both proof bodies must still be present.
 
-## Canonical Proof-Stub Template
+## Proof-Stub Reference Shape
 
-Copy this verbatim and substitute only the angle-bracketed parts. It is a real,
-validator-passing stub shape and is the source of truth for "generate a proof
-stub" tasks.
+This is the human-readable reference shape. Generate new stubs through
+`tools/governance/generators/proof_stub.py`; its explicit inputs are the
+statement kind, slug, title, statement body, statement label, proof label, and
+dependency records. `constitution/schema/file-schema.yaml` remains the validity
+authority. Do not hand-expand this template in an automated workflow.
 
 ```latex
 \newpage

@@ -90,10 +90,11 @@ through `notes/{topic}/index.tex`, and is then reached from the chapter
 `notes/` is a router directory, not a dumping ground for unrelated note files.
 
 Topic index files under `notes/{topic}/` are rendered topic routers. They
-contain comments, exactly one non-starred `\section{<Topic Display Title>}`, an
-optional Toolkit box, and body `\input` lines only. The topic router owns the
-topic section heading; body files may use `\subsection{...}` for nested local
-topics.
+contain comments, exactly one non-starred `\section{<Topic Display Title>}`,
+exactly one Toolkit box when routed body files contain formal items, and body
+`\input` lines only. Planned empty stubs and topics without formal items may
+omit the Toolkit. The topic router owns the topic section heading; body files
+may use `\subsection{...}` for nested local topics.
 
 Topic index files under `proofs/{topic}/` are router-only: comments and input
 lines only. Proof topic routers do not render sectioning headings.

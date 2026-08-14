@@ -5,14 +5,17 @@ There is no monorepo.
 
 ## Required Steps
 
-1. Add the theorem-like statement in the appropriate `notes/**/*.tex` file.
-2. Give every top-level `theorem`, `proposition`, `lemma`, and `corollary` a
-   stable source label.
-3. Create the matching proof stub in the leaf repo `proofs/**/*.tex` tree.
-4. Build the stub by copying the canonical proof-stub template in
-   `docs/governance/proof-standards.md` verbatim and substituting only the
-   theorem root, restatement, and dependency links. The shape is enforced by
-   `constitution/schema/file-schema.yaml`; do not improvise it.
+1. Author a typed theorem-family artifact under the `author-mathematics`
+   capability. Preserve its theorem, lemma, proposition, or corollary subtype,
+   give it a stable source label, and set `proof_stub: true`.
+2. Validate the payload against
+   `constitution/schemas/mathematical-content.schema.json` and render the
+   statement plus optional proof-stub post-step with
+   `tools/governance/generators/mathematical_tex.py`.
+3. Write the rendered statement to the appropriate `notes/**/*.tex` file and
+   the matching proof stub to the leaf repo `proofs/**/*.tex` tree.
+4. The renderer delegates the stub shape to the canonical deterministic
+   proof-stub renderer. Do not hand-expand or improvise it.
 5. The proof restatement must be copied from the theorem-like statement. If a
    later validator finds a mismatch while the proof remains a TODO stub,
    overwrite the proof restatement from the theorem source and preserve the

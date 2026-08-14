@@ -27,6 +27,7 @@ def cmd_audit_statement(args: argparse.Namespace) -> None:
         label=args.label,
         artifact_type=args.type,
         chapter=args.chapter or Path(args.file).parent.parent.name,
+        semantic_review=not args.structural_only,
     )
 
 
@@ -35,6 +36,7 @@ def cmd_audit_proof(args: argparse.Namespace) -> None:
     audit_proof(
         proof_path=Path(args.file),
         chapter=args.chapter or Path(args.file).parent.parent.parent.name,
+        semantic_review=not args.structural_only,
     )
 
 
@@ -65,10 +67,12 @@ def cmd_audit_chapter(args: argparse.Namespace) -> None:
 
 def cmd_audit_toolkits(args: argparse.Namespace) -> None:
     from auditor.audits.toolkits import audit_toolkits
-    audit_toolkits(
+    report = audit_toolkits(
         chapter_path=Path(args.path),
         plan_path=Path(args.plan) if args.plan else None,
     )
+    if getattr(args, "fail_on_findings", False) and report.get("findings"):
+        raise SystemExit(2)
 
 
 def cmd_audit_box_colors(args: argparse.Namespace) -> None:
@@ -125,13 +129,11 @@ def cmd_patch_generated_batch(args: argparse.Namespace) -> None:
     result = run_generated_batch(
         plan_path=Path(args.plan),
         apply=args.apply,
-        generate_missing=args.generate_missing,
         out_dir=Path(args.out_dir) if args.out_dir else None,
     )
     print(format_batch_result(result))
     failed_statuses = {
         "ERROR",
-        "GENERATION_ERROR",
         "MISSING_GENERATED",
         "VALIDATION_FAIL",
         "PATCH_FAIL",
@@ -251,34 +253,6 @@ def cmd_trueup_chapter(args: argparse.Namespace) -> None:
         )
 
 
-def cmd_generate_statement(args: argparse.Namespace) -> None:
-    from auditor.generators.statement import generate_statement
-    from auditor.validators.generated_block import (
-        format_generated_validation_report,
-        validate_generated_block,
-    )
-    registry = _load_chapter_registry_from_volume(args.volume) if args.volume else None
-
-    latex = generate_statement(
-        artifact_type=args.type,
-        content_description=args.subject,
-        chapter_subject=args.chapter,
-        chapter_registry=registry,
-        label=args.label,
-    )
-    _print_and_optionally_write(latex, args)
-    if args.validate:
-        report = validate_generated_block(
-            latex,
-            artifact_type=args.type,
-            expected_label=args.label,
-        )
-        print()
-        print(format_generated_validation_report(report))
-        if report["result"] != "PASS":
-            sys.exit(2)
-
-
 def cmd_validate_generated(args: argparse.Namespace) -> None:
     from auditor.report import write_report
     from auditor.validators.generated_block import (
@@ -324,23 +298,6 @@ def cmd_validate_ontology(args: argparse.Namespace) -> None:
         sys.exit(2)
 
 
-def cmd_generate_proof(args: argparse.Namespace) -> None:
-    from auditor.generators.proof import generate_proof
-
-    statement = ""
-    if args.statement_file:
-        statement = Path(args.statement_file).read_text(encoding="utf-8")
-
-    latex = generate_proof(
-        theorem_label=args.label,
-        theorem_name=args.name or args.label,
-        theorem_statement=statement,
-        mode=args.mode,
-        proof_content=args.proof_content or "",
-    )
-    _print_and_optionally_write(latex, args)
-
-
 def cmd_generate_proof_stubs(args: argparse.Namespace) -> None:
     if args.overwrite:
         raise SystemExit("proof-stubs uses the canonical no-overwrite generator; --overwrite is retired.")
@@ -383,6 +340,8 @@ def cmd_generate_stub_volume(args: argparse.Namespace) -> None:
         volume_scope=args.scope or "",
         chapter_registry=registry,
         frontispiece_mathematician=getattr(args, "mathematician", None),
+        frontispiece_years=getattr(args, "mathematician_years", None),
+        frontispiece_image=getattr(args, "mathematician_image", None),
     )
     _print_generated_files(files, args)
 
@@ -401,10 +360,12 @@ def cmd_generate_breadcrumb(args: argparse.Namespace) -> None:
 
 
 def cmd_generate_capstone(args: argparse.Namespace) -> None:
-    from auditor.generators.capstone import generate_capstone
+    from auditor.generators.capstone import extract_chapter_source_records, generate_capstone
 
     registry = _load_chapter_registry_from_volume(args.volume)
-    environments = _load_chapter_environments(Path(args.chapter_path))
+    chapter_path = Path(args.chapter_path)
+    environments = _load_chapter_environments(chapter_path)
+    sources = extract_chapter_source_records(chapter_path) if args.mode == "full" else None
 
     latex = generate_capstone(
         chapter_subject=args.subject,
@@ -412,6 +373,10 @@ def cmd_generate_capstone(args: argparse.Namespace) -> None:
         chapter_registry=registry,
         chapter_environments=environments,
         mode=args.mode,
+        dependencies=_parse_dependencies(getattr(args, "dependency", [])),
+        state_dependencies=_parse_dependencies(getattr(args, "state_dependency", [])),
+        proof_dependencies=_parse_dependencies(getattr(args, "proof_dependency", [])),
+        chapter_source_records=sources,
     )
     _print_and_optionally_write(latex, args)
 
@@ -459,6 +424,18 @@ def _load_chapter_environments(chapter_path: Path) -> list[dict]:
     return []
 
 
+def _parse_dependencies(values: list[str] | None) -> list[tuple[str, str]]:
+    dependencies: list[tuple[str, str]] = []
+    for value in values or []:
+        if "=" not in value:
+            raise ValueError("dependencies must use LABEL=DISPLAY format")
+        label, display = (part.strip() for part in value.split("=", 1))
+        if not label or not display:
+            raise ValueError("dependencies must use LABEL=DISPLAY format")
+        dependencies.append((label, display))
+    return dependencies
+
+
 def _print_and_optionally_write(content: str, args: argparse.Namespace) -> None:
     print(content)
     if getattr(args, "out", None):
@@ -473,10 +450,9 @@ def _print_generated_files(files: dict[str, str], args: argparse.Namespace) -> N
 
     if getattr(args, "write", False):
         for filename, content in files.items():
-            if filename == "_raw_output":
-                print("WARNING: could not parse file structure from model output.")
-                continue
-            out_path = Path(filename)
+            out_path = config.REPO_ROOT / filename
+            if out_path.exists():
+                raise FileExistsError(f"refusing to overwrite generated file: {out_path}")
             out_path.parent.mkdir(parents=True, exist_ok=True)
             out_path.write_text(content, encoding="utf-8")
             print(f"Written: {out_path}")
@@ -522,12 +498,22 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--type",  required=True,
                    choices=["def", "thm", "lem", "prop", "cor", "ax"])
     p.add_argument("--chapter", help="Chapter subject name (inferred from path if omitted)")
+    p.add_argument(
+        "--structural-only",
+        action="store_true",
+        help="Run deterministic local structure checks without a model semantic review.",
+    )
     p.set_defaults(func=cmd_audit_statement)
 
     # audit proof
     p = audit_sub.add_parser("proof", help="Audit a proof file")
     p.add_argument("file",      help="Path to the proof .tex file")
     p.add_argument("--chapter", help="Chapter subject name (inferred from path if omitted)")
+    p.add_argument(
+        "--structural-only",
+        action="store_true",
+        help="Run deterministic twelve-layer checks without a model mathematical review.",
+    )
     p.set_defaults(func=cmd_audit_proof)
 
     # audit stub
@@ -536,7 +522,7 @@ def build_parser() -> argparse.ArgumentParser:
     p.set_defaults(func=cmd_audit_stub)
 
     # audit symbols
-    p = audit_sub.add_parser("symbols", help="Audit predicate/notation/relation usage")
+    p = audit_sub.add_parser("symbols", help="Audit registered chapter symbols deterministically")
     p.add_argument("path", help="Path to the chapter directory")
     p.set_defaults(func=cmd_audit_symbols)
 
@@ -553,6 +539,7 @@ def build_parser() -> argparse.ArgumentParser:
     p = audit_sub.add_parser("toolkits", help="Deterministically audit section-level toolkit placement")
     p.add_argument("path", help="Path to the chapter directory")
     p.add_argument("--plan", help="Path to an approved toolkit-plan JSON file")
+    p.add_argument("--fail-on-findings", action="store_true")
     p.set_defaults(func=cmd_audit_toolkits)
 
     # audit box colors
@@ -564,7 +551,7 @@ def build_parser() -> argparse.ArgumentParser:
     plan = sub.add_parser("plan", help="Planning operations")
     plan_sub = plan.add_subparsers(dest="plan_target", required=True)
 
-    p = plan_sub.add_parser("toolkits", help="Ask AI to propose section-level toolkit groupings")
+    p = plan_sub.add_parser("toolkits", help="Build one deterministic toolkit plan row per formal-bearing topic")
     p.add_argument("path", help="Path to the chapter directory")
     p.set_defaults(func=cmd_plan_toolkits)
 
@@ -586,9 +573,8 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--apply", action="store_true", help="Apply the generated replacement to live source")
     p.set_defaults(func=cmd_patch_generated)
 
-    p = patch_sub.add_parser("generated-batch", help="Batch generate/validate/patch generated statement blocks")
+    p = patch_sub.add_parser("generated-batch", help="Batch validate/patch deterministically rendered statement blocks")
     p.add_argument("plan", help="Path to JSON/YAML batch plan")
-    p.add_argument("--generate-missing", action="store_true", help="Generate missing output files using AI")
     p.add_argument("--out-dir", help="Batch output directory for generated files, diffs, and summaries")
     p.add_argument("--apply", action="store_true", help="Apply validated generated replacements to live source")
     p.set_defaults(func=cmd_patch_generated_batch)
@@ -649,30 +635,6 @@ def build_parser() -> argparse.ArgumentParser:
     gen = sub.add_parser("generate", help="Generation operations")
     gen_sub = gen.add_subparsers(dest="gen_target", required=True)
 
-    # generate statement
-    p = gen_sub.add_parser("statement", help="Generate a statement environment block")
-    p.add_argument("--type",    required=True,
-                   choices=["def", "thm", "lem", "prop", "cor", "ax"])
-    p.add_argument("--subject", required=True, help="Mathematical content description")
-    p.add_argument("--chapter", required=True, help="Chapter subject name")
-    p.add_argument("--volume",  help="Volume path for chapter registry context")
-    p.add_argument("--label",   help="Canonical label to use for the generated environment")
-    p.add_argument("--out",     help="Write output to this file path")
-    p.add_argument("--validate", action="store_true", help="Run deterministic generated-block validation after generation")
-    p.set_defaults(func=cmd_generate_statement)
-
-    # generate proof
-    p = gen_sub.add_parser("proof", help="Generate a proof file")
-    p.add_argument("--label",          required=True, help="Theorem label e.g. thm:cauchy-criterion")
-    p.add_argument("--name",           help="Theorem display name")
-    p.add_argument("--statement-file", dest="statement_file",
-                   help="Path to file containing the theorem statement LaTeX")
-    p.add_argument("--mode",           default="stub", choices=["stub", "full"])
-    p.add_argument("--proof-content",  dest="proof_content",
-                   help="Draft proof content (for full mode)")
-    p.add_argument("--out",            help="Write output to this file path")
-    p.set_defaults(func=cmd_generate_proof)
-
     # generate proof-stubs
     p = gen_sub.add_parser("proof-stubs", help="Generate missing chapter proof stub files")
     p.add_argument("path", help="Path to the chapter directory")
@@ -701,7 +663,11 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--registry-file", dest="registry_file",
                    help="Path to YAML file containing chapter registry")
     p.add_argument("--mathematician",
-                   help="Optional frontispiece mathematician, e.g. Gauss")
+                   help="Exact frontispiece mathematician name")
+    p.add_argument("--mathematician-years", dest="mathematician_years",
+                   help="Exact frontispiece birth-death years")
+    p.add_argument("--mathematician-image", dest="mathematician_image",
+                   help="Existing images/<name>.png path")
     p.add_argument("--write",         action="store_true", help="Write files to disk")
     p.set_defaults(func=cmd_generate_stub_volume)
 
@@ -722,6 +688,12 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--chapter-path",  dest="chapter_path", required=True,
                    help="Path to chapter directory (for loading environments)")
     p.add_argument("--mode",          default="stub", choices=["stub", "full"])
+    p.add_argument("--dependency", action="append", default=[],
+                   help="Stub dependency as LABEL=DISPLAY; repeat as needed")
+    p.add_argument("--state-dependency", action="append", default=[],
+                   help="Full-mode dependency needed to state the capstone, as LABEL=DISPLAY")
+    p.add_argument("--proof-dependency", action="append", default=[],
+                   help="Full-mode dependency needed to prove the capstone, as LABEL=DISPLAY")
     p.add_argument("--out",           help="Write output to this file path")
     p.set_defaults(func=cmd_generate_capstone)
 
@@ -745,9 +717,17 @@ def main() -> None:
         parser.error("one of {audit,plan,patch,validate,index,scan,trueup,generate} is required unless -test is supplied")
 
     generate_target = getattr(args, "gen_target", "")
-    require_ai = args.test or (args.command == "generate" and generate_target != "proof-stubs") or (
-        args.command == "audit" and getattr(args, "audit_target", "") not in {"toolkits"}
-    ) or args.command == "plan"
+    deterministic_generate = generate_target in {
+        "proof-stubs", "stub-chapter", "stub-volume", "breadcrumb"
+    } or (generate_target == "capstone" and getattr(args, "mode", "") == "stub")
+    deterministic_plan = args.command == "plan" and getattr(args, "plan_target", "") == "toolkits"
+    audit_target = getattr(args, "audit_target", "")
+    deterministic_audit = audit_target in {"stub", "symbols", "toolkits"} or (
+        audit_target in {"statement", "proof"} and getattr(args, "structural_only", False)
+    )
+    require_ai = args.test or (args.command == "generate" and not deterministic_generate) or (
+        args.command == "audit" and not deterministic_audit
+    ) or (args.command == "plan" and not deterministic_plan)
     errors = validate_config(ai_provider=args.ai, require_ai=require_ai)
     hard_errors = [e for e in errors if not e.startswith("WARNING")]
     warnings    = [e for e in errors if e.startswith("WARNING")]

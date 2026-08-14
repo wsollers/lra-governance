@@ -9,7 +9,7 @@ chapter: bounding
 items:
   - label: def:lower-bound
     type: def
-    subject: "Lower bound of a subset..."
+    payload: scripts/tmp/payloads/lower-bound.yaml
     generated: scripts/tmp/prompt-runs/lower-bound-definition-generated.tex
 """
 
@@ -23,7 +23,6 @@ from typing import Any
 import yaml
 
 from auditor import config
-from auditor.generators.statement import generate_statement
 from auditor.patchers.generated import (
     GeneratedPatchResult,
     format_generated_patch_result,
@@ -54,7 +53,6 @@ def run_generated_batch(
     plan_path: Path,
     *,
     apply: bool = False,
-    generate_missing: bool = False,
     out_dir: Path | None = None,
 ) -> BatchResult:
     plan_path = plan_path.resolve()
@@ -65,8 +63,6 @@ def run_generated_batch(
     if not chapter_path.is_absolute():
         chapter_path = config.REPO_ROOT / chapter_path
 
-    chapter = plan.get("chapter") or chapter_path.name
-    volume = plan.get("volume")
     items = plan.get("items") or []
     if not isinstance(items, list) or not items:
         raise ValueError("Batch plan must provide a nonempty items list.")
@@ -103,12 +99,9 @@ def run_generated_batch(
         result = _process_item(
             item,
             chapter_path=chapter_path,
-            chapter=chapter,
-            volume=volume,
             generated_dir=generated_dir,
             patch_dir=patch_dir,
             apply=apply,
-            generate_missing=generate_missing,
         )
         results.items.append(result)
         write_report(format_batch_result(results), target_dir / "summary.md")
@@ -141,16 +134,12 @@ def _process_item(
     item: dict[str, Any],
     *,
     chapter_path: Path,
-    chapter: str,
-    volume: str | None,
     generated_dir: Path,
     patch_dir: Path,
     apply: bool,
-    generate_missing: bool,
 ) -> BatchItemResult:
     label = item.get("label")
     artifact_type = item.get("type")
-    subject = item.get("subject")
     if not label:
         return BatchItemResult(label="<missing>", status="ERROR", message="Item is missing label.")
     if not artifact_type:
@@ -158,66 +147,18 @@ def _process_item(
 
     generated_path = _generated_path(item, generated_dir, label)
     if not generated_path.exists():
-        if not generate_missing:
-            return BatchItemResult(
-                label=label,
-                status="MISSING_GENERATED",
-                generated_path=generated_path,
-                message="Generated file is missing; rerun with --generate-missing.",
-            )
-        if not subject:
-            return BatchItemResult(
-                label=label,
-                status="ERROR",
-                generated_path=generated_path,
-                message="Cannot generate missing file because item has no subject.",
-            )
-        try:
-            latex = generate_statement(
-                artifact_type=artifact_type,
-                content_description=subject,
-                chapter_subject=chapter,
-                chapter_registry=_load_chapter_registry(volume) if volume else None,
-                label=label,
-            )
-        except Exception as exc:
-            return BatchItemResult(
-                label=label,
-                status="GENERATION_ERROR",
-                generated_path=generated_path,
-                message=str(exc),
-            )
-        generated_path.parent.mkdir(parents=True, exist_ok=True)
-        generated_path.write_text(latex, encoding="utf-8")
+        return BatchItemResult(
+            label=label,
+            status="MISSING_GENERATED",
+            generated_path=generated_path,
+            message="Generated file is missing; author the typed payload and run the renderer command in commands.md.",
+        )
 
     validation = validate_generated_file(
         generated_path,
         artifact_type=artifact_type,
         expected_label=label,
     )
-    if validation["result"] != "PASS" and generate_missing and subject:
-        try:
-            latex = _regenerate_after_validation_failure(
-                artifact_type=artifact_type,
-                subject=subject,
-                chapter=chapter,
-                volume=volume,
-                label=label,
-                validation=validation,
-            )
-        except Exception as exc:
-            return BatchItemResult(
-                label=label,
-                status="GENERATION_ERROR",
-                generated_path=generated_path,
-                message=f"Retry generation failed: {exc}",
-            )
-        generated_path.write_text(latex, encoding="utf-8")
-        validation = validate_generated_file(
-            generated_path,
-            artifact_type=artifact_type,
-            expected_label=label,
-        )
     if validation["result"] != "PASS":
         return BatchItemResult(
             label=label,
@@ -256,38 +197,6 @@ def _process_item(
     )
 
 
-def _regenerate_after_validation_failure(
-    *,
-    artifact_type: str,
-    subject: str,
-    chapter: str,
-    volume: str | None,
-    label: str,
-    validation: dict[str, Any],
-) -> str:
-    issues = "; ".join(
-        f"{finding.get('code')}: {finding.get('message')}"
-        for finding in validation.get("findings", [])
-    )
-    repair_subject = (
-        f"{subject}\n\n"
-        "The previous generated block failed deterministic validation. "
-        "Regenerate the entire block from scratch and fix every issue below. "
-        "Use plain ASCII punctuation in prose. Use canonical Predicate reading "
-        "blocks with \\operatorname{...}; do not use undefined predicate macros "
-        "such as \\UpperBound, \\LowerBound, \\Supremum, or \\Infimum. Include all "
-        "required support blocks, especially structured Failure modes blocks.\n\n"
-        f"Validation issues: {issues}"
-    )
-    return generate_statement(
-        artifact_type=artifact_type,
-        content_description=repair_subject,
-        chapter_subject=chapter,
-        chapter_registry=_load_chapter_registry(volume) if volume else None,
-        label=label,
-    )
-
-
 def _load_plan(plan_path: Path) -> dict[str, Any]:
     text = plan_path.read_text(encoding="utf-8")
     if plan_path.suffix.lower() == ".json":
@@ -305,16 +214,6 @@ def _generated_path(item: dict[str, Any], generated_dir: Path, label: str) -> Pa
 
 def _safe(label: str) -> str:
     return label.replace(":", "-").replace("/", "-").replace("\\", "-")
-
-
-def _load_chapter_registry(volume: str | None) -> list[dict]:
-    if not volume:
-        return []
-    volume_yaml = config.REPO_ROOT / volume / "chapter.yaml"
-    if not volume_yaml.exists():
-        return []
-    data = yaml.safe_load(volume_yaml.read_text(encoding="utf-8")) or {}
-    return data.get("chapters", [])
 
 
 def _batch_result_json(result: BatchResult) -> str:
@@ -343,27 +242,21 @@ def _write_command_list(
     target_dir: Path,
     generated_dir: Path,
 ) -> None:
-    chapter = plan.get("chapter") or ""
-    volume = plan.get("volume") or ""
     lines = [
         "# Generated Batch Commands",
         "",
-        "## Generate Missing Files One At A Time",
+        "## Render Authored Payloads One At A Time",
         "",
     ]
     for item in plan.get("items") or []:
         label = item.get("label")
-        artifact_type = item.get("type")
-        subject = item.get("subject")
-        if not label or not artifact_type or not subject:
+        payload = item.get("payload")
+        if not label or not payload:
             continue
         out_path = _generated_path(item, generated_dir, label)
         command = (
-            "python -m constitution.auditor --repoDir F:\\repos\\Learning-Real-Analysis "
-            f"-ai codex generate statement --type {artifact_type} "
-            f"--chapter {chapter} --volume {volume} --label {label} "
-            f"--subject \"{_escape_powershell_double_quoted(subject)}\" "
-            f"--out {out_path} --validate"
+            "python tools/governance/generators/mathematical_tex.py "
+            f"--payload {payload} --output {out_path}"
         )
         lines += [f"### `{label}`", "", "```powershell", command, "```", ""]
 
@@ -380,15 +273,5 @@ def _write_command_list(
         f"python -m constitution.auditor patch generated-batch {plan_path} --apply",
         "```",
         "",
-        "## Batch Generate Missing And Dry Run",
-        "",
-        "```powershell",
-        f"python -m constitution.auditor --repoDir F:\\repos\\Learning-Real-Analysis -ai codex patch generated-batch {plan_path} --generate-missing",
-        "```",
-        "",
     ]
     write_report("\n".join(lines), target_dir / "commands.md")
-
-
-def _escape_powershell_double_quoted(text: str) -> str:
-    return text.replace("`", "``").replace('"', '`"').replace("$", "`$")

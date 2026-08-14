@@ -6,11 +6,10 @@ Audits a single theorem-like environment and its following remark* blocks.
 import re
 from pathlib import Path
 
-import yaml
-
 from auditor import client, loader
-from auditor.config import ENV_TO_TYPE, THEOREM_LIKE_ENVS
-from auditor.report import save_audit_report
+from auditor.config import THEOREM_LIKE_ENVS
+from auditor.report import audit_report_from_checks, merge_audit_reports, save_audit_report
+from auditor.validators.generated_block import validate_statement_block
 
 
 # ---------------------------------------------------------------------------
@@ -23,6 +22,12 @@ _REMARK_BLOCK = re.compile(
     r"\\begin\{remark\*\}.*?\\end\{remark\*\}",
     re.DOTALL,
 )
+_DEPENDENCIES_BLOCK = re.compile(
+    r"\\begin\{dependencies\}.*?\\end\{dependencies\}",
+    re.DOTALL,
+)
+_NO_LOCAL_DEPENDENCIES = re.compile(r"\\NoLocalDependencies\b")
+_DEFINITIONAL_ROOT = re.compile(r"\\DefinitionalRoot\b")
 
 
 def _extract_environment_and_remarks(
@@ -71,26 +76,36 @@ def _extract_environment_and_remarks(
     block_start, block_end = box_start, box_end
     env_block = tex[block_start:block_end]
 
-    # Collect immediately following remark* blocks
+    # Collect immediately following support blocks. Dependencies use their own
+    # environment (or a silent marker), so limiting this to remark* silently
+    # hid the canonical dependency record from the audit prompt.
     rest = tex[block_end:]
-    remarks = []
+    support_blocks = []
 
     # Walk through rest; collect contiguous remark* blocks, allowing blank
     # lines and ordinary comment separators between support remarks.
     pos = 0
     while pos < len(rest):
         pos = _skip_whitespace_and_comments(rest, pos)
-        rm = _REMARK_BLOCK.match(rest, pos)
-        if rm:
-            remarks.append(rm.group(0))
-            pos = rm.end()
+        for pattern in (
+            _REMARK_BLOCK,
+            _DEPENDENCIES_BLOCK,
+            _NO_LOCAL_DEPENDENCIES,
+            _DEFINITIONAL_ROOT,
+        ):
+            match = pattern.match(rest, pos)
+            if match:
+                support_blocks.append(match.group(0))
+                pos = match.end()
+                break
+        else:
+            if pos < len(rest):
+                break
             continue
-        if pos < len(rest):
-            break
 
     combined = env_block
-    if remarks:
-        combined += "\n\n" + "\n\n".join(remarks)
+    if support_blocks:
+        combined += "\n\n" + "\n\n".join(support_blocks)
 
     return combined
 
@@ -145,11 +160,137 @@ def _expand_to_enclosing_display_box(tex: str, start: int, end: int) -> tuple[in
 # Public API
 # ---------------------------------------------------------------------------
 
+_SEMANTIC_CHECK_REQUIREMENTS = {
+    "semantic_atomicity": "R",
+    "statement_quantified_equivalence": "R",
+    "predicate_reading_equivalence": "C",
+    "negation_correctness": "C",
+    "failure_mode_correctness": "C",
+    "contrapositive_correctness": "C",
+    "interpretation_fidelity": "R",
+}
+
+def _deterministic_structure_report(
+    block: str,
+    *,
+    label: str,
+    artifact_type: str,
+) -> dict:
+    """Convert the local statement-block validator into the shared report form."""
+    validation = validate_statement_block(
+        block,
+        artifact_type=artifact_type,
+        expected_label=label,
+    )
+    checks = []
+    for finding in validation["findings"]:
+        status = "FAIL" if finding["severity"] == "FAIL" else "NONCOMPLIANT"
+        message = finding["message"]
+        if finding.get("evidence"):
+            message += f" Evidence: {finding['evidence']}"
+        checks.append(
+            {
+                "block_id": finding["code"],
+                "requirement": "R",
+                "status": status,
+                "finding": message,
+            }
+        )
+    if not checks:
+        checks.append(
+            {
+                "block_id": "deterministic_statement_structure",
+                "requirement": "R",
+                "status": "PASS",
+                "finding": "",
+            }
+        )
+    return audit_report_from_checks(
+        checks,
+        audit_type="statement",
+        artifact_type=artifact_type,
+        label=label,
+    )
+
+
+def _semantic_judgment_report(
+    payload: dict,
+    *,
+    label: str,
+    artifact_type: str,
+) -> dict:
+    """Validate the compact model response and convert it to an audit report."""
+    judgments = payload.get("judgments")
+    if not isinstance(judgments, list):
+        raise RuntimeError("Semantic statement review must return a judgments array.")
+
+    by_id: dict[str, dict] = {}
+    received_ids: list[str] = []
+    for judgment in judgments:
+        if not isinstance(judgment, dict):
+            raise RuntimeError("Each semantic statement judgment must be an object.")
+        check_id = judgment.get("check_id")
+        if check_id not in _SEMANTIC_CHECK_REQUIREMENTS:
+            raise RuntimeError(f"Unknown semantic statement check id: {check_id!r}")
+        if check_id in by_id:
+            raise RuntimeError(f"Duplicate semantic statement check id: {check_id}")
+        status = judgment.get("status")
+        if status not in {"PASS", "FAIL", "NOT_APPLICABLE"}:
+            raise RuntimeError(
+                f"Semantic statement check {check_id} has invalid status: {status!r}"
+            )
+        if status == "NOT_APPLICABLE" and _SEMANTIC_CHECK_REQUIREMENTS[check_id] != "C":
+            raise RuntimeError(f"Required semantic statement check {check_id} cannot be NOT_APPLICABLE.")
+        finding = judgment.get("finding", "")
+        if not isinstance(finding, str):
+            raise RuntimeError(f"Semantic statement check {check_id} finding must be a string.")
+        if status == "FAIL" and not finding.strip():
+            raise RuntimeError(f"Failing semantic statement check {check_id} requires a finding.")
+        by_id[check_id] = judgment
+        received_ids.append(check_id)
+
+    missing = set(_SEMANTIC_CHECK_REQUIREMENTS) - set(by_id)
+    if missing:
+        raise RuntimeError(
+            "Semantic statement review omitted required checks: " + ", ".join(sorted(missing))
+        )
+    expected_ids = list(_SEMANTIC_CHECK_REQUIREMENTS)
+    if received_ids != expected_ids:
+        raise RuntimeError("Semantic statement review returned checks out of canonical order.")
+
+    checks = []
+    for check_id, requirement in _SEMANTIC_CHECK_REQUIREMENTS.items():
+        judgment = by_id[check_id]
+        model_status = judgment["status"]
+        if requirement == "C":
+            status = {
+                "PASS": "CONDITIONAL_MET",
+                "FAIL": "CONDITIONAL_VIOLATION",
+                "NOT_APPLICABLE": "CONDITIONAL_UNMET",
+            }[model_status]
+        else:
+            status = model_status
+        checks.append(
+            {
+                "block_id": check_id,
+                "requirement": requirement,
+                "status": status,
+                "finding": judgment.get("finding", "").strip(),
+            }
+        )
+    return audit_report_from_checks(
+        checks,
+        audit_type="statement",
+        artifact_type=artifact_type,
+        label=label,
+    )
+
 def audit_statement(
     tex_path: Path,
     label: str,
     artifact_type: str,
     chapter: str,
+    semantic_review: bool = True,
     print_report: bool = True,
     output_dir: Path | None = None,
     filename_prefix: str = "",
@@ -175,44 +316,27 @@ def audit_statement(
             f"Verify the label exists and the file is correct."
         )
 
-    # Build prompt components
-    base_prompt    = loader.prompt("audit_statement")
-    registry       = loader.block_registry()
-    matrix_row     = loader.matrix_row(artifact_type)
-    registry.pop("toolkit_box", None)
-    matrix_row.pop("toolkit_box", None)
-
-    registry_yaml  = yaml.dump(
-        {"blocks": list(registry.values())},
-        default_flow_style=False,
-        allow_unicode=True,
-    )
-    matrix_yaml    = yaml.dump(
-        matrix_row,
-        default_flow_style=False,
-        allow_unicode=True,
-    )
-
-    system = client.assemble_audit_system_prompt(
-        base_prompt,
-        block_registry_yaml=registry_yaml,
-        artifact_matrix_row=matrix_yaml,
+    report = _deterministic_structure_report(
+        block,
+        label=label,
         artifact_type=artifact_type,
     )
+    if semantic_review:
+        system = loader.prompt("audit_statement")
+        user = (
+            f"## Statement Artifact\n\n"
+            f"Artifact type: {artifact_type}\n"
+            f"Label: {label}\n\n"
+            f"```latex\n{block}\n```"
+        )
+        payload = client.call(system, user, expect_json=True, validate_report=False)
+        semantic = _semantic_judgment_report(
+            payload,
+            label=label,
+            artifact_type=artifact_type,
+        )
+        report = merge_audit_reports(report, semantic)
 
-    user = (
-        f"## LaTeX Block to Audit\n\n"
-        f"```latex\n{block}\n```\n\n"
-        f"Artifact type: {artifact_type}\n"
-        f"Label: {label}"
-    )
-
-    report = client.call(system, user, expect_json=True, validate_report=False)
-
-    # Ensure fixed metadata is set correctly before schema validation.
-    report.setdefault("audit_type", "statement")
-    report["label"] = label
-    report["artifact_type"] = artifact_type
     client.validate_audit_report(report)
 
     report["_report_path"] = str(

@@ -20,6 +20,24 @@ def validate(volume_root: Path, files) -> list[Finding]:
 
 def _validate_file(volume_root: Path, path: Path, findings: list[Finding]) -> None:
     text = strip_latex_comments(read_text(path))
+    _validate_text(volume_root, path, text, findings)
+
+
+def validate_text(text: str, *, virtual_path: Path | None = None) -> list[Finding]:
+    """Validate environment and display-math balance in generated TeX."""
+    root = Path(".")
+    path = virtual_path or Path("generated.tex")
+    findings: list[Finding] = []
+    _validate_text(root, path, strip_latex_comments(text), findings)
+    return findings
+
+
+def _validate_text(
+    volume_root: Path,
+    path: Path,
+    text: str,
+    findings: list[Finding],
+) -> None:
     stack: list[tuple[str, int]] = []
     for match in BEGIN_END_RE.finditer(text):
         kind, env = match.group(1), match.group(2)

@@ -89,12 +89,31 @@ def _generated_index_is_current(manifest: dict) -> bool:
 
 def audit() -> dict:
     manifest_path = ROOT / "capabilities" / "manifest.yaml"
-    manifest = yaml.safe_load(_load_text(manifest_path))
     errors: list[str] = []
     warnings: list[str] = []
 
-    if manifest.get("version") != 3:
-        errors.append("manifest version must be 3")
+    sys.path.insert(0, str(ROOT / "capabilities"))
+    try:
+        from resolve import _load_manifest
+
+        manifest = _load_manifest(ROOT)
+    except (OSError, ValueError) as exc:
+        return {
+            "ok": False,
+            "estimator": "ceil(unicode_characters / 4)",
+            "route_count": 0,
+            "prompt_route_count": 0,
+            "local_resource_count": 0,
+            "max_context": None,
+            "contexts": [],
+            "warnings": [],
+            "errors": [str(exc)],
+        }
+    finally:
+        sys.path.pop(0)
+
+    if manifest.get("version") != 4:
+        errors.append("manifest version must be 4")
     if manifest.get("token_estimator") != "unicode_chars_div_4_ceil":
         errors.append("token_estimator must be unicode_chars_div_4_ceil")
 
@@ -163,7 +182,7 @@ def audit() -> dict:
     repo_records = config.get("repos", [])
     contexts: list[dict] = []
     defaults: dict[tuple[str, str], list[str]] = {}
-    core_path = ROOT / "capabilities" / "ENTRYPOINT.md"
+    core_path = ROOT / str(manifest["entrypoint"])
     core_tokens = estimate_tokens(_load_text(core_path))
 
     for route in routes:

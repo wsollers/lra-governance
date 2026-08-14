@@ -28,7 +28,7 @@ def _router_layers(lines: list[tuple[int, str]]) -> list[tuple[int, str]]:
     while index < len(lines):
         line_no, line = lines[index]
         if BREADCRUMB_LINE_RE.fullmatch(line):
-            layers.append((line_no, "breadcrumb"))
+            layers.append((line_no, "legacy_breadcrumb"))
             index += 1
             continue
         if LRAMETA_BEGIN_RE.fullmatch(line):
@@ -49,61 +49,82 @@ def _router_layers(lines: list[tuple[int, str]]) -> list[tuple[int, str]]:
     return layers
 
 
-def validate(volume_root: Path, files) -> list[Finding]:
+def validate_chapter_router(
+    volume_root: Path,
+    chapter: Path,
+    *,
+    severity: str = "warning",
+    allow_legacy_breadcrumb: bool = True,
+) -> list[Finding]:
+    """Validate one chapter router against the canonical skeleton."""
     findings: list[Finding] = []
-    for chapter in routed_chapter_roots(volume_root):
-        index = chapter / "index.tex"
-        if not index.exists():
-            continue
-        root = latex_input_path(index).removesuffix("/index")
-        required_prefix = [
-            ("chapter", CHAPTER_LINE_RE, "non-starred \\chapter{...}"),
-            ("label", LABEL_LINE_RE, "\\label{chap:...} or \\label{ch:...}"),
-            ("breadcrumb", re.compile(r"^breadcrumb$"), "\\breadcrumb{...}{...}{...}{...} or \\lrameta{...} followed by \\LraBreadcrumb"),
-            ("notes_input", re.compile(rf"\\input\{{{re.escape(root)}/notes/index\}}$"), f"\\input{{{root}/notes/index}}"),
-            ("exclude_begin", re.compile(r"\\LRAExcludeFromPrintEditionBegin$"), "\\LRAExcludeFromPrintEditionBegin"),
-            ("proofs_heading", re.compile(r"\\section\*\{Proofs\}$"), "\\section*{Proofs}"),
-            ("proofs_input", re.compile(rf"\\input\{{{re.escape(root)}/proofs/index\}}$"), f"\\input{{{root}/proofs/index}}"),
-        ]
-        optional_capstone = [
-            ("capstone_heading", re.compile(r"\\section\*\{Capstone\}$"), "\\section*{Capstone}"),
-            ("capstone_input", re.compile(rf"\\input\{{{re.escape(root)}/proofs/exercises/index\}}$"), f"\\input{{{root}/proofs/exercises/index}}"),
-        ]
-        exclude_end = [
-            ("exclude_end", re.compile(r"\\LRAExcludeFromPrintEditionEnd$"), "\\LRAExcludeFromPrintEditionEnd"),
-        ]
-        lines = list(_significant_lines(index.read_text(encoding="utf-8", errors="replace")))
-        layers = _router_layers(lines)
-        expected_without_capstone = required_prefix + exclude_end
-        expected_with_capstone = required_prefix + optional_capstone + exclude_end
-        if len(layers) == len(expected_with_capstone):
-            expected = expected_with_capstone
-        elif len(layers) == len(expected_without_capstone):
-            expected = expected_without_capstone
-        else:
-            detail = "; ".join(pattern for _, _, pattern in expected_with_capstone) + " (capstone lines optional)"
-            line = layers[min(len(layers), len(expected_with_capstone))][0] if len(layers) > len(expected_with_capstone) else 0
+    index = chapter / "index.tex"
+    if not index.exists():
+        return findings
+    root = latex_input_path(index).removesuffix("/index")
+    required_prefix = [
+        ("chapter", CHAPTER_LINE_RE, "non-starred \\chapter{...}"),
+        ("label", LABEL_LINE_RE, "\\label{chap:...} or \\label{ch:...}"),
+        (
+            "breadcrumb",
+            re.compile(r"^(?:breadcrumb|legacy_breadcrumb)$" if allow_legacy_breadcrumb else r"^breadcrumb$"),
+            (
+                "\\breadcrumb{...}{...}{...}{...} or \\lrameta{...} followed by \\LraBreadcrumb"
+                if allow_legacy_breadcrumb
+                else "\\lrameta{...} followed by \\LraBreadcrumb"
+            ),
+        ),
+        ("notes_input", re.compile(rf"\\input\{{{re.escape(root)}/notes/index\}}$"), f"\\input{{{root}/notes/index}}"),
+        ("exclude_begin", re.compile(r"\\LRAExcludeFromPrintEditionBegin$"), "\\LRAExcludeFromPrintEditionBegin"),
+        ("proofs_heading", re.compile(r"\\section\*\{Proofs\}$"), "\\section*{Proofs}"),
+        ("proofs_input", re.compile(rf"\\input\{{{re.escape(root)}/proofs/index\}}$"), f"\\input{{{root}/proofs/index}}"),
+    ]
+    optional_capstone = [
+        ("capstone_heading", re.compile(r"\\section\*\{Capstone\}$"), "\\section*{Capstone}"),
+        ("capstone_input", re.compile(rf"\\input\{{{re.escape(root)}/proofs/exercises/index\}}$"), f"\\input{{{root}/proofs/exercises/index}}"),
+    ]
+    exclude_end = [
+        ("exclude_end", re.compile(r"\\LRAExcludeFromPrintEditionEnd$"), "\\LRAExcludeFromPrintEditionEnd"),
+    ]
+    lines = list(_significant_lines(index.read_text(encoding="utf-8", errors="replace")))
+    layers = _router_layers(lines)
+    expected_without_capstone = required_prefix + exclude_end
+    expected_with_capstone = required_prefix + optional_capstone + exclude_end
+    if len(layers) == len(expected_with_capstone):
+        expected = expected_with_capstone
+    elif len(layers) == len(expected_without_capstone):
+        expected = expected_without_capstone
+    else:
+        detail = "; ".join(pattern for _, _, pattern in expected_with_capstone) + " (capstone lines optional)"
+        line = layers[min(len(layers), len(expected_with_capstone))][0] if len(layers) > len(expected_with_capstone) else 0
+        findings.append(
+            finding(
+                "chapter_router_shape",
+                f"Chapter router must contain exactly this skeleton, with no extra rendered content: {detail}.",
+                index,
+                volume_root,
+                line,
+                severity,
+            )
+        )
+        return findings
+    for (line_no, line), (name, pattern, expected_text) in zip(layers, expected):
+        if not pattern.fullmatch(line):
             findings.append(
                 finding(
                     "chapter_router_shape",
-                    f"Chapter router must contain exactly this skeleton, with no extra rendered content: {detail}.",
+                    f"Chapter router layer {name} should be {expected_text}.",
                     index,
                     volume_root,
-                    line,
-                    "warning",
+                    line_no,
+                    severity,
                 )
             )
-            continue
-        for (line_no, line), (name, pattern, expected_text) in zip(layers, expected):
-            if not pattern.fullmatch(line):
-                findings.append(
-                    finding(
-                        "chapter_router_shape",
-                        f"Chapter router layer {name} should be {expected_text}.",
-                        index,
-                        volume_root,
-                        line_no,
-                        "warning",
-                    )
-                )
+    return findings
+
+
+def validate(volume_root: Path, files) -> list[Finding]:
+    findings: list[Finding] = []
+    for chapter in routed_chapter_roots(volume_root):
+        findings.extend(validate_chapter_router(volume_root, chapter))
     return findings

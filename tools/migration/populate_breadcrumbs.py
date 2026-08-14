@@ -9,8 +9,7 @@ first chapter's prior is "Start Studying" and the overall last chapter's next is
 
   Order  = chapter \input order within each volume index, volumes in arg order.
   Titles = each chapter.yaml `display_title`.
-  Render = canonical render_breadcrumb (constitution/auditor/generators/
-           breadcrumb_deterministic.py) -- single source of truth.
+  Render = canonical tools/governance/generators/breadcrumb.py renderer.
 
 Re-runnable: insert a chapter (add its \input to a volume index) and re-run. For
 each chapter index.tex: REPLACE an existing \breadcrumb{...} (fixes stale ones),
@@ -26,8 +25,8 @@ import argparse, re, sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-sys.path.insert(0, str(HERE.parent.parent / "constitution" / "auditor" / "generators"))
-from breadcrumb_deterministic import render_breadcrumb
+sys.path.insert(0, str(HERE.parent / "governance"))
+from generators.breadcrumb import render_breadcrumb
 
 START_SENTINEL = {"subject": "__start__", "display_title": "Start Studying"}
 END_SENTINEL   = {"subject": "__end__",   "display_title": "Torus Renders"}

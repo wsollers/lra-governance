@@ -1,4 +1,4 @@
-FROM python:3.12-slim
+FROM python:3.12.13-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
@@ -10,8 +10,9 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends bash git ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
-COPY requirements.txt /tmp/lra-governance-test-requirements.txt
-RUN python -m pip install --no-cache-dir -r /tmp/lra-governance-test-requirements.txt
+COPY requirements.lock /tmp/lra-governance-requirements.lock
+RUN python -m pip install --no-cache-dir --require-hashes \
+    -r /tmp/lra-governance-requirements.lock
 
 # NLTK is used only as a deterministic prose-cue extractor in the semantic AST
 # ensemble.  Preload the small tokenizer/tagger corpora so validation runs do

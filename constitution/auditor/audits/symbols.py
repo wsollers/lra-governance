@@ -1,40 +1,26 @@
-"""
-audits/symbols.py
-Audits a chapter for predicate, structure, notation, and relation consistency
-against the canonical source files.
+"""Deterministically audit chapter symbol usage against canonical registries."""
 
-Returns markdown (not JSON) — this audit has a different output contract.
-"""
-
+import sys
 from pathlib import Path
 
-from auditor import client, loader
+from auditor import config
 from auditor.report import save_symbol_audit_report
 
 
+TOOLS_ROOT = Path(__file__).resolve().parents[3] / "tools" / "governance"
+if str(TOOLS_ROOT) not in sys.path:
+    sys.path.insert(0, str(TOOLS_ROOT))
+
+from audit_chapter_symbols import (  # noqa: E402
+    audit_chapter_symbols,
+    collect_chapter_tex,
+    format_symbol_audit_markdown,
+)
+
+
 def _collect_chapter_tex(chapter_path: Path) -> str:
-    """
-    Concatenates all non-index .tex files in the chapter's notes/ and proofs/
-    directories into a single string for analysis.
-    """
-    chapter_root = chapter_path.resolve()
-    parts: list[str] = []
-
-    for subdir in ("notes", "proofs/notes", "proofs/exercises"):
-        d = chapter_root / subdir
-        if not d.exists():
-            continue
-        for tex_file in sorted(d.rglob("*.tex")):
-            if tex_file.name == "index.tex":
-                continue
-            rel = tex_file.relative_to(chapter_root)
-            try:
-                content = tex_file.read_text(encoding="utf-8")
-                parts.append(f"%% === FILE: {rel} ===\n{content}")
-            except Exception as e:
-                parts.append(f"%% WARNING: Could not read {rel}: {e}")
-
-    return "\n\n".join(parts)
+    """Compatibility wrapper for callers that need the concatenated view."""
+    return collect_chapter_tex(chapter_path)
 
 
 def audit_symbols(
@@ -47,31 +33,13 @@ def audit_symbols(
         A markdown string containing the audit report.
         The report is also written to disk and printed to terminal.
     """
-    chapter = chapter_path.resolve().name
-
-    chapter_tex    = _collect_chapter_tex(chapter_path)
-    base_prompt    = loader.prompt("audit_symbols")
-    predicates_yaml = loader.canonical_source("predicates")
-    structures_yaml = loader.canonical_source("structures")
-    notation_yaml   = loader.canonical_source("notation")
-    relations_yaml  = loader.canonical_source("relations")
-
-    system = client.assemble_symbol_audit_system_prompt(
-        base_prompt,
-        predicates_yaml=predicates_yaml,
-        structures_yaml=structures_yaml,
-        notation_yaml=notation_yaml,
-        relations_yaml=relations_yaml,
+    chapter_path = Path(chapter_path).resolve()
+    chapter = chapter_path.name
+    result = audit_chapter_symbols(
+        chapter_path,
+        governance_root=config.REPO_ROOT,
     )
-
-    user = (
-        f"## Chapter: {chapter}\n\n"
-        f"## Chapter Content\n\n"
-        f"```latex\n{chapter_tex}\n```"
-    )
-
-    # Symbol audit returns markdown, not JSON
-    markdown = client.call(system, user, expect_json=False)
+    markdown = format_symbol_audit_markdown(result)
 
     save_symbol_audit_report(markdown, chapter)
 

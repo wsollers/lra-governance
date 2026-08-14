@@ -36,6 +36,7 @@ def write_registry(root: Path, *, predicate: dict, structure: dict) -> None:
         yaml.safe_dump({"structures": [structure]}, sort_keys=False),
         encoding="utf-8",
     )
+    (root / "notation.yaml").write_text("notation: []\n", encoding="utf-8")
 
 
 class RegistryContractValidationTests(unittest.TestCase):
@@ -130,6 +131,38 @@ class RegistryContractValidationTests(unittest.TestCase):
         self.assertIn("references unknown argument 'missing'", result.stdout)
         self.assertIn("carrier_argument 'B' is not an argument", result.stdout)
         self.assertIn("structural_argument 'C' is not an argument", result.stdout)
+
+    def test_rejects_unknown_argument_type(self):
+        with temporary_directory() as temp:
+            root = Path(temp)
+            write_registry(
+                root,
+                predicate={
+                    "id": "pred:bad-type",
+                    "name": "BadType",
+                    "kind": "predicate",
+                    "category": "logic",
+                    "arguments": [{"name": "x", "role": "object", "type": "banana"}],
+                    "returns": "truth_value",
+                    "description": "Bad typed predicate.",
+                },
+                structure={
+                    "id": "struct:test",
+                    "name": "TestStructure",
+                    "kind": "structure",
+                    "category": "logic",
+                    "constructor": r"\mathsf{TestStructure}",
+                    "arguments": [],
+                    "carrier_argument": None,
+                    "structural_arguments": [],
+                    "description": "Test structure.",
+                },
+            )
+
+            result = self.run_validator(root)
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("unknown type 'banana'", result.stdout)
 
     def test_live_registry_satisfies_contract(self):
         result = subprocess.run(

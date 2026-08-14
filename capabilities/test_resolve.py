@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 """Regression tests for (repo, task) -> capability routing in resolve.py.
 
-Locks the author-definition / author-statement partition (G1): definitions must
-route to author-definition (which authors a Definition + runs the definition
-verifier), NOT to author-statement (which emits a provable proof stub). Also
-guards cross-kind isolation. Run: python test_resolve.py
+Locks consolidated typed mathematical authoring, separate full-proof authoring,
+and cross-kind isolation. Run: python test_resolve.py
 """
 from __future__ import annotations
+import contextlib
+import copy
+import io
+import json
 import sys
 from pathlib import Path
 
@@ -28,36 +30,85 @@ def expect(repo, task, cap):
     assert got == cap, f"route({repo!r}, {task!r}) = {got!r}, expected {cap!r}"
 
 
-# --- definitions route to author-definition (the G1 fix) ---
-def test_define_routes_to_author_definition():
-    expect("lra-volume-i", "define X", "author-definition")
+# --- ordinary mathematical kinds share one typed authoring route ---
+def test_define_routes_to_author_mathematics():
+    expect("lra-volume-i", "define X", "author-mathematics")
 
 
-def test_generate_the_definition_routes_to_author_definition():
-    expect("lra-volume-i", "generate the definition for continuity", "author-definition")
+def test_generate_the_definition_routes_to_author_mathematics():
+    expect("lra-volume-i", "generate the definition for continuity", "author-mathematics")
 
 
-def test_write_the_def_routes_to_author_definition():
-    expect("lra-volume-i", "write the def for a Cauchy sequence", "author-definition")
+def test_write_the_definition_routes_to_author_mathematics():
+    expect("lra-volume-i", "write the definition for a Cauchy sequence", "author-mathematics")
 
 
-def test_append_the_definition_routes_to_author_definition():
-    # authoring a definition, not a provable statement
-    expect("lra-volume-i", "append the definition", "author-definition")
+def test_append_the_definition_routes_to_author_mathematics():
+    expect("lra-volume-i", "append the definition", "author-mathematics")
 
 
-# --- provable kinds STILL route to author-statement (not broken by the carve-out) ---
-def test_append_the_lemma_routes_to_author_statement():
-    expect("lra-volume-i", "append the lemma", "author-statement")
+def test_append_the_lemma_routes_to_author_mathematics():
+    expect("lra-volume-i", "append the lemma", "author-mathematics")
 
 
-def test_the_theorem_routes_to_author_statement():
-    expect("lra-volume-i", "author statement for the theorem", "author-statement")
+def test_the_theorem_routes_to_author_mathematics():
+    expect("lra-volume-i", "author statement for the theorem", "author-mathematics")
 
 
-def test_the_axiom_stays_with_author_statement():
-    # axiom is non-provable but ruled to stay with author-statement (not author-definition)
-    expect("lra-volume-i", "the axiom of completeness", "author-statement")
+def test_generate_theorem_statement_routes_to_author_mathematics():
+    expect("lra-volume-i", "generate a theorem statement", "author-mathematics")
+
+
+def test_generate_full_proof_routes_to_full_proof_capability():
+    expect("lra-volume-i", "generate full proof", "author-full-proof")
+
+
+def test_generate_theorem_full_proof_does_not_route_to_statement_authoring():
+    expect("lra-volume-i", "generate a theorem full proof", "author-full-proof")
+
+
+def test_populate_theorem_stub_routes_only_to_full_proof_capability():
+    expect(
+        "lra-volume-i",
+        "populate a deterministic theorem proof stub with a full proof",
+        "author-full-proof",
+    )
+
+
+def test_create_theorem_stub_routes_to_mathematics_capability():
+    expect("lra-volume-i", "create a theorem proof stub", "author-mathematics")
+
+
+def test_generate_full_capstone_routes_to_author_capstone():
+    expect("lra-volume-i", "generate full capstone", "author-capstone")
+
+
+def test_stub_volume_routes_to_deterministic_volume_capability():
+    expect("lra-governance", "scaffold a volume", "author-stub-volume")
+
+
+def test_stub_chapter_routes_to_deterministic_chapter_capability():
+    expect("lra-volume-i", "stub a chapter", "author-stub-chapter")
+
+
+def test_the_axiom_routes_to_author_mathematics():
+    expect("lra-volume-i", "the axiom of completeness", "author-mathematics")
+
+
+def test_example_routes_to_author_mathematics():
+    expect("lra-volume-i", "generate an example of a convergent sequence", "author-mathematics")
+
+
+def test_exposition_routes_to_author_mathematics():
+    expect("lra-volume-i", "write motivation for compactness", "author-mathematics")
+
+
+def test_model_theory_routes_to_author_mathematics_with_lazy_specialization():
+    expect("lra-volume-viii", "author mathematics for a first-order structure", "author-mathematics")
+
+
+def test_model_theory_subject_phrase_routes_to_author_mathematics():
+    expect("lra-volume-vii", "author model theory L-structure mathematics", "author-mathematics")
 
 
 # --- semantic audit routing ---
@@ -67,6 +118,26 @@ def test_lra_audit_topic_routes_to_topic_semantic_audit():
 
 def test_single_artifact_calibration_still_routes_separately():
     expect("lra-volume-iii", "calibrate semantic artifact", "calibrate-semantic-artifact")
+
+
+def test_chapter_symbol_audit_routes_to_deterministic_scanner():
+    expect("lra-volume-iii", "audit chapter symbols", "audit-chapter-symbols")
+
+
+def test_statement_audit_routes_to_deterministic_preflight_capability():
+    expect("lra-volume-iii", "audit a statement", "audit-statement")
+
+
+def test_proof_audit_routes_to_deterministic_twelve_layer_capability():
+    expect("lra-volume-iii", "audit a proof", "audit-proof")
+
+
+def test_proof_layout_audit_remains_the_more_specific_route():
+    expect("lra-volume-iii", "audit proof layout", "audit-proof-layout")
+
+
+def test_toolkit_planning_routes_to_deterministic_planner():
+    expect("lra-volume-iii", "plan toolkits", "plan-toolkits")
 
 
 # --- a definition task in a non-volume kind must NOT select a volume authoring
@@ -111,7 +182,7 @@ def test_code_lookup_routes_from_lean():
     expect("lra-lean", "search our code for least upper bound", "lookup-lra")
 
 
-def test_definition_lookup_beats_author_definition_trigger():
+def test_definition_lookup_beats_author_mathematics_trigger():
     expect("lra-volume-iii", "look up definition of compactness", "lookup-lra")
 
 
@@ -145,6 +216,190 @@ def test_statement_does_not_leak_into_reading_categorizer():
 
 def test_statement_does_not_leak_into_source_profiles():
     expect("lra-source-profiles", "append the theorem", "work-source-profiles")
+
+
+# --- resolver contract and migration safety ---
+def test_unknown_repository_fails_closed():
+    got = route("lra-not-registered", "build repo")
+    assert got.startswith("FATAL:unknown repository"), got
+
+
+def test_repository_root_path_resolves_to_registered_name():
+    resolved = R.resolve(GOV, str(GOV), "audit governance", {"root": str(GOV)})
+    assert resolved.repo == "lra-governance"
+    assert resolved.route_id == "audit-governance"
+
+
+def test_windows_repository_path_resolves_by_final_directory_name():
+    resolved = R.resolve(
+        GOV,
+        "F:\\repos\\lra-lean\\",
+        "formalize an upper-bound pilot",
+        {"root": r"F:\repos\lra-lean"},
+    )
+    assert resolved.repo == "lra-lean"
+    assert resolved.route_id == "author-lean-theorem"
+
+
+def test_dot_repository_reference_uses_root_identity():
+    resolved = R.resolve(GOV, ".", "audit governance", {"root": str(GOV)})
+    assert resolved.repo == "lra-governance"
+    assert resolved.route_id == "audit-governance"
+
+
+def test_resolution_reports_match_and_measured_context():
+    resolved = R.resolve(GOV, "lra-governance", "audit governance", {})
+    assert resolved.repo_kind == "governance"
+    assert resolved.match_type == "trigger"
+    assert resolved.matched_trigger == "Audit governance"
+    assert 0 < resolved.estimated_tokens <= resolved.token_budget
+    assert resolved.manifest_version == 4
+    assert resolved.packet_version == 1
+
+
+def test_manifest_selects_canonical_execution_contract():
+    resolved = R.resolve(GOV, "lra-governance", "audit governance", {})
+    assert resolved.core == GOV / "capabilities" / "ENTRYPOINT.md"
+    assert resolved.core.read_text(encoding="utf-8").startswith(
+        "# LRA Agent Execution Contract"
+    )
+    assert R._load_manifest(GOV)["entrypoint"] == "capabilities/ENTRYPOINT.md"
+
+
+def test_json_output_is_a_versioned_packet():
+    output = io.StringIO()
+    with contextlib.redirect_stdout(output):
+        code = R.main(
+            [
+                "--repo",
+                "lra-governance",
+                "--task",
+                "audit governance",
+                "--root",
+                str(GOV),
+                "--json",
+            ]
+        )
+    assert code == 0
+    packet = json.loads(output.getvalue())
+    assert packet["packet_version"] == 1
+    assert packet["manifest_version"] == 4
+    assert packet["route"] == "audit-governance"
+    assert packet["estimated_tokens"] <= packet["token_budget"]
+    assert packet["headroom"] == packet["token_budget"] - packet["estimated_tokens"]
+
+
+def test_emit_mode_outputs_only_eager_files():
+    output = io.StringIO()
+    with contextlib.redirect_stdout(output):
+        code = R.main(
+            [
+                "--repo",
+                "lra-governance",
+                "--task",
+                "audit governance",
+                "--root",
+                str(GOV),
+                "--emit",
+            ]
+        )
+    text = output.getvalue()
+    assert code == 0
+    assert text.startswith("----- capabilities/ENTRYPOINT.md -----")
+    assert "repo:         " not in text
+
+
+def test_manifest_schema_rejects_unknown_fields():
+    manifest = copy.deepcopy(R._load_manifest(GOV))
+    manifest["unexpected"] = True
+    schema = GOV / "constitution" / "schemas" / "capability-manifest.schema.json"
+    try:
+        R._validate_json(manifest, schema, "test manifest")
+    except ValueError as exc:
+        assert "Additional properties are not allowed" in str(exc)
+    else:
+        raise AssertionError("manifest schema accepted an unknown field")
+
+
+def test_prompt_routes_use_executable_verification_commands():
+    manifest = R._load_manifest(GOV)
+    for prompt_route in manifest["prompt_routes"]:
+        assert prompt_route["verify"], prompt_route["title"]
+        for command in prompt_route["verify"]:
+            R._validate_executable_verify(prompt_route["title"], command)
+
+
+def test_prompt_route_rejects_descriptive_verification_phrase():
+    manifest = copy.deepcopy(R._load_manifest(GOV))
+    manifest["prompt_routes"] = [
+        {
+            "title": "Synthetic legacy prompt route",
+            "prompt": "constitution/prompts/generate-capstone.md",
+            "schemas": ["constitution/schema/file-schema.yaml"],
+            "verify": ["proof layout audit"],
+        }
+    ]
+    try:
+        R._validate_manifest_semantics(GOV, manifest)
+    except ValueError as exc:
+        assert "verification must be an executable command" in str(exc)
+    else:
+        raise AssertionError("prompt route accepted a descriptive verification phrase")
+
+
+def test_one_time_logical_block_migration_is_not_a_prompt_route():
+    manifest = R._load_manifest(GOV)
+    prompts = {route["prompt"] for route in manifest["prompt_routes"]}
+    titles = {route["title"] for route in manifest["prompt_routes"]}
+    assert "constitution/prompts/fix-logical-block-gaps.md" not in prompts
+    assert "Fix logical block gaps" not in titles
+
+
+def test_statement_semantic_prompt_is_lazy_under_capability_route():
+    manifest = R._load_manifest(GOV)
+    prompt_routes = {route["prompt"] for route in manifest["prompt_routes"]}
+    statement_route = next(route for route in manifest["routes"] if route["id"] == "audit-statement")
+    assert "constitution/prompts/audit-statement.md" not in prompt_routes
+    assert "constitution/prompts/audit-statement.md" in statement_route["lazy_references"]
+
+
+def test_proof_semantic_prompt_is_lazy_under_capability_route():
+    manifest = R._load_manifest(GOV)
+    prompt_routes = {route["prompt"] for route in manifest["prompt_routes"]}
+    proof_route = next(route for route in manifest["routes"] if route["id"] == "audit-proof")
+    assert "constitution/prompts/audit-proof.md" not in prompt_routes
+    assert "constitution/prompts/audit-proof.md" in proof_route["lazy_references"]
+
+
+def test_mathematical_authoring_uses_typed_schema_without_generation_prompt():
+    manifest = R._load_manifest(GOV)
+    prompt_routes = {route["prompt"] for route in manifest["prompt_routes"]}
+    author_route = next(route for route in manifest["routes"] if route["id"] == "author-mathematics")
+    assert "constitution/prompts/generate-statement.md" not in prompt_routes
+    assert "constitution/prompts/generate-statement.md" not in author_route["lazy_references"]
+    assert "constitution/schemas/mathematical-content.schema.json" in author_route["schemas"]
+    assert "tools/governance/generators/mathematical_tex.py" in author_route["tools"]
+
+
+def test_full_proof_route_uses_typed_renderer_without_generation_prompt():
+    manifest = R._load_manifest(GOV)
+    prompt_routes = {route["prompt"] for route in manifest["prompt_routes"]}
+    author_route = next(route for route in manifest["routes"] if route["id"] == "author-full-proof")
+    assert "constitution/prompts/generate-proof.md" not in prompt_routes
+    assert "constitution/prompts/generate-proof.md" not in author_route["lazy_references"]
+    assert "tools/governance/generators/proof_stub.py" not in author_route["tools"]
+
+
+def test_full_capstone_prompt_is_lazy_under_authoring_capability():
+    manifest = R._load_manifest(GOV)
+    prompt_routes = {route["prompt"] for route in manifest["prompt_routes"]}
+    author_route = next(route for route in manifest["routes"] if route["id"] == "author-capstone")
+    assert "constitution/prompts/generate-capstone.md" not in prompt_routes
+    assert "constitution/prompts/generate-capstone.md" in author_route["lazy_references"]
+
+
+def test_permanent_prompt_route_inventory_is_empty():
+    assert R._load_manifest(GOV)["prompt_routes"] == []
 
 
 if __name__ == "__main__":

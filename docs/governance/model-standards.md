@@ -65,10 +65,10 @@ is used.
 
 ## 3. Structural Toolkit Standard
 
-Model-theoretic and signature-heavy chapters may begin with a compact toolkit
-that lists the local structural vocabulary, symbols, and links to definitions.
-Use exactly one toolkit box at the front of a section when a toolkit is
-requested or locally required.
+Model-theoretic and signature-heavy formal-bearing topics use the same required
+section Toolkit as other active topics. The Toolkit lists the local structural
+vocabulary, symbols, and links to definitions. Planned empty or nonformal
+topics follow the general omission rule in `authoring-standards.md`.
 
 Structural toolkits should use the shared `toolkitbox` macro. Local files must
 not hand-roll gray toolkit `tcolorbox` styling when `toolkitbox` is available.

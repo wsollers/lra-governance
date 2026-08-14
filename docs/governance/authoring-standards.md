@@ -60,9 +60,11 @@ Each active topic router, `notes/<topic>/index.tex`, begins rendered content
 with exactly one non-starred `\section{<Topic Display Title>}`. Topic routers
 must not use `\section*{...}` for the topic title.
 
-Immediately after the topic section heading, the topic router may contain
-exactly one gray Toolkit box. The Toolkit orients the topic's vocabulary and
-formal payload; it is not repeated in topic body files.
+Immediately after the topic section heading, a routed topic with formal items
+contains exactly one gray Toolkit box covering its formal labels in source
+order. Planned empty stubs and topics without formal items may omit it. The
+Toolkit orients the topic's vocabulary and formal payload; it is not repeated
+in topic body files.
 
 Quick-reference tables inside a Toolkit put navigation links on the leading
 concept or row-label cell. Do not use a separate trailing `Detail` or

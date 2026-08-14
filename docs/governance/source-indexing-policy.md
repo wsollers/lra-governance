@@ -108,13 +108,27 @@ governance facade instead of loading or invoking each index separately:
 ```powershell
 python F:\repos\lra-governance\tools\governance\lra_lookup.py "least upper bound"
 python F:\repos\lra-governance\tools\governance\lra_lookup.py "compactness" --scope sources --volume volume-iii
+python F:\repos\lra-governance\tools\governance\lra_lookup.py "derivative def from zorich" --scope sources
+python F:\repos\lra-governance\tools\governance\lra_lookup.py "tao sigma algebra" --scope sources
 ```
 
 `lra_lookup.py` resolves the catalog pointers above, delegates the primary
 source lane to `lra-source-profiles/scripts/search_omnibus.py`, and joins only
 compact result records from the internal TeX/Lean/C++ and canonical-vocabulary
-indexes. It is a query facade, not a new index owner. Use the specialist tools
-below for index construction, raw codesearch, or detailed maintenance.
+indexes. It is a query facade, not a new index owner.
+
+The source lane must search strictly first. If a strict source query returns no
+hits, the facade should retry bounded loose variants by default before agents
+fall back to manual PDF extraction. Loose retries may remove prompt filler,
+expand short intent terms such as `def`, apply reviewed typo aliases, and infer
+weak author hints from phrases such as `from zorich`, `tao sigma algebra`, or
+possessive author forms. Loose hits must carry enough metadata, such as the
+matched query and inferred author filter, for an agent to inspect the
+surrounding source text before relying on them. Use `--no-loose-sources` only
+when the task specifically needs strict zero-hit evidence.
+
+Use the specialist tools below for index construction, raw codesearch, or
+detailed maintenance.
 
 ## Volume Source Workbench Profiles
 

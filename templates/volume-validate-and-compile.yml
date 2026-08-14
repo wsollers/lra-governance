@@ -37,10 +37,10 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
+          python-version: '3.12.13'
 
       - name: Install validator dependencies
-        run: python -m pip install pyyaml
+        run: python -m pip install --require-hashes -r lra-governance/requirements.lock
 
       - name: Run governance validator
         working-directory: volume

@@ -4,7 +4,7 @@
 Chains after identify_missing_proofs.py (imports its find_missing + helpers, so
 the two agree by construction). For each obligation with status 'missing' it:
   - transplants the theorem title + statement + dependency block from the notes,
-  - emits the full 11-layer stub (both proof bodies TODO, blank Proof structure),
+  - emits the full 12-layer stub (both proof bodies TODO, blank Proof structure),
     matching tools/governance/audit_proof_layout.py -> compliant_stub,
   - writes proofs/{topic}/prf-{root}.tex,
   - wires it into proofs/{topic}/index.tex (creating that index + wiring it into
@@ -17,38 +17,14 @@ Never overwrites an existing proof file.
 from __future__ import annotations
 import argparse, re
 from pathlib import Path
+import sys
 import identify_missing_proofs as idp
 
-STUB_TEMPLATE = r"""\newpage
-\phantomsection
-\label{prf:%%ROOT%%}
-\LRAProofFor{%%THMLABEL%%}
+GOVERNANCE_TOOLS = Path(__file__).resolve().parents[1] / "governance"
+if str(GOVERNANCE_TOOLS) not in sys.path:
+    sys.path.insert(0, str(GOVERNANCE_TOOLS))
 
-\begin{remark*}[Return]
-\hyperref[%%THMLABEL%%]{Return to Theorem}
-\end{remark*}
-
-\begin{%%RESTATEMENT_ENV%%}[%%SAFE_TITLE%%]
-%%STATEMENT%%
-\end{%%RESTATEMENT_ENV%%}
-
-\begin{proof}[Professional Standard Proof]
-\LRAProofBodyStart
-TODO: professional standard proof for %%ROOT%%.
-\end{proof}
-
-\begin{proof}[Detailed Learning Proof]
-\LRAProofBodyStart
-TODO: detailed learning proof for %%ROOT%%.
-\end{proof}
-
-\begin{remark*}[Proof structure]
-\end{remark*}
-
-%%DEPS%%
-
-\clearpage
-"""
+from generators.proof_stub import render_proof_stub  # noqa: E402
 
 DEFAULT_DEPS = (r"\begin{dependencies}" "\n"
                 r"\begin{itemize}" "\n"
@@ -56,12 +32,7 @@ DEFAULT_DEPS = (r"\begin{dependencies}" "\n"
                 r"\end{itemize}" "\n"
                 r"\end{dependencies}")
 
-RESTATEMENT_ENV_BY_PREFIX = {
-    "thm": "theorem*",
-    "lem": "lemma*",
-    "prop": "proposition*",
-    "cor": "corollary*",
-}
+KIND_BY_PREFIX = {"thm": "theorem", "lem": "lemma", "prop": "proposition", "cor": "corollary"}
 
 def extract_payload(notes_path: Path, thm_label: str):
     """Return (title, statement_body, deps_block_or_None) for the theorem labelled thm_label."""
@@ -108,15 +79,17 @@ def build_stub(root, thm_label, title, statement, deps):
     safe_title = safe_optional_title(title, root.replace("-", " ").title())
     statement = statement or "TODO: restate the theorem."
     deps = deps or DEFAULT_DEPS
-    restatement_env = RESTATEMENT_ENV_BY_PREFIX.get(thm_label.split(":", 1)[0], "theorem*")
-    return (STUB_TEMPLATE
-            .replace("%%THMLABEL%%", thm_label)
-            .replace("%%ROOT%%", root)
-            .replace("%%RESTATEMENT_ENV%%", restatement_env)
-            .replace("%%TITLE%%", title)
-            .replace("%%SAFE_TITLE%%", safe_title)
-            .replace("%%STATEMENT%%", statement)
-            .replace("%%DEPS%%", deps))
+    kind = KIND_BY_PREFIX.get(thm_label.split(":", 1)[0])
+    if kind is None:
+        raise ValueError(f"unsupported theorem-like label: {thm_label}")
+    return render_proof_stub(
+        kind,
+        root,
+        safe_title,
+        statement,
+        statement_label=thm_label,
+        dependency_block=deps,
+    )
 
 def detect_nl(*texts):
     for t in texts:

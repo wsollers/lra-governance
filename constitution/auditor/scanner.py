@@ -258,7 +258,7 @@ def scan_chapter(chapter_path: Path) -> ScanResult:
 
     Walks:
     - notes/**/*.tex  for theorem-like environments
-    - proofs/notes/*.tex  for proof files
+    - proofs/{topic}/**/*.tex for proof files (excluding exercises)
     """
     chapter_root = chapter_path.resolve()
     subject = chapter_root.name
@@ -278,10 +278,12 @@ def scan_chapter(chapter_path: Path) -> ScanResult:
         result.warnings.append(f"notes/ directory not found in {chapter_root}")
 
     # --- Scan proof files ---
-    proofs_notes_dir = chapter_root / "proofs" / "notes"
-    if proofs_notes_dir.exists():
-        for tex_file in sorted(proofs_notes_dir.glob("*.tex")):
+    proofs_dir = chapter_root / "proofs"
+    if proofs_dir.exists():
+        for tex_file in sorted(proofs_dir.rglob("*.tex")):
             if tex_file.name == "index.tex":
+                continue
+            if "exercises" in tex_file.relative_to(proofs_dir).parts:
                 continue
             entry, warnings = _scan_proof_file(tex_file, chapter_root)
             result.warnings.extend(warnings)
@@ -289,7 +291,7 @@ def scan_chapter(chapter_path: Path) -> ScanResult:
                 result.proof_files.append(entry)
     else:
         result.warnings.append(
-            f"proofs/notes/ directory not found in {chapter_root}"
+            f"proofs/ directory not found in {chapter_root}"
         )
 
     # Resolve proof_file links on environment entries

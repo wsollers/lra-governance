@@ -32,8 +32,8 @@ REPO_FIELDS = ("repo", "project", "projectName", "project_name", "repository")
 
 CAPABILITY_FAMILIES = {
     "build-repo": "build",
-    "author-statement": "generation",
-    "author-definition": "generation",
+    "author-mathematics": "generation",
+    "author-full-proof": "generation",
     "author-stub-chapter": "generation",
     "author-stub-section": "generation",
     "author-lean-theorem": "generation",

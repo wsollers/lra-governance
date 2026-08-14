@@ -74,14 +74,6 @@ def set_repo_root(repo_dir: str | Path | None = None) -> Path:
     PROMPTS = {
         "audit_statement": PROMPTS_DIR / "audit-statement.md",
         "audit_proof": PROMPTS_DIR / "audit-proof.md",
-        "audit_stub": PROMPTS_DIR / "audit-stub.md",
-        "audit_symbols": PROMPTS_DIR / "audit-chapter-symbols.md",
-        "plan_toolkits": PROMPTS_DIR / "plan-toolkits.md",
-        "generate_statement": PROMPTS_DIR / "generate-statement.md",
-        "generate_proof": PROMPTS_DIR / "generate-proof.md",
-        "generate_stub_chapter": PROMPTS_DIR / "generate-stub-chapter.md",
-        "generate_stub_volume": PROMPTS_DIR / "generate-stub-volume.md",
-        "generate_breadcrumb": PROMPTS_DIR / "generate-breadcrumb.md",
         "generate_capstone": PROMPTS_DIR / "generate-capstone.md",
     }
 

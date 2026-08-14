@@ -47,8 +47,8 @@ examples are insufficient.
 
 | Capability | Reference status |
 |---|---|
-| `author-statement` | Covered through `Volume Statement Authoring` references. |
-| `author-definition` | Covered through `Volume Definition Authoring` references. |
+| `author-mathematics` | Covered through `Typed Mathematical Authoring` references. |
+| `author-full-proof` | Covered through the full-proof workflow and proof standards. |
 | `author-stub-chapter` | Covered through `Chapter And Section Scaffolding` references. |
 | `author-stub-section` | Covered through `Chapter And Section Scaffolding` references. |
 | `author-lean-theorem` | Covered through `Lean Work` references. |

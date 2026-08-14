@@ -13,12 +13,14 @@ from core.preprocess import preprocess_tex_files
 from core.reporting import print_report, write_json_report
 from core.validator_runner import default_file_inventory, run_validator
 from core.volume import routed_chapter_roots, resolve_volume
-from validators import block_discipline, book_toc, caption_hygiene, capstones, chapter_router, dedication_page, dependency_blocks, dependency_graphs, figure_fragments, formal_decoration, formal_names, formal_predicate_leakage, formal_reading_required, frontmatter_standard, input_resolution, interpretation_blocks, labels, latex_integrity, lean_formalizations, math_boxes, notes_structure, operator_metadata, pdf_string_headings, predicate_reading_constructions, predicate_reading_signatures, print_edition_routing, proof_coverage, proof_file_contract, proof_layout, proof_order, proof_routing, proof_stub_state, reference_voice, source_variants, structural_chrome, structural_positions, unicode_tex, volume_shape
+from validators import block_discipline, book_toc, caption_hygiene, capstones, chapter_router, chapter_stub, dedication_page, dependency_blocks, dependency_graphs, figure_fragments, formal_decoration, formal_names, formal_predicate_leakage, formal_reading_required, frontmatter_standard, input_resolution, interpretation_blocks, labels, latex_integrity, lean_formalizations, math_boxes, notes_structure, operator_metadata, pdf_string_headings, planned_volume_stub, predicate_reading_constructions, predicate_reading_signatures, print_edition_routing, proof_coverage, proof_file_contract, proof_layout, proof_order, proof_routing, proof_stub_state, reference_voice, source_variants, structural_chrome, structural_positions, toolkit_coverage, unicode_tex, volume_shape
 
 
 VALIDATORS = [
+    ("planned_volume_stub", planned_volume_stub),
     ("volume_shape", volume_shape),
     ("chapter_router", chapter_router),
+    ("chapter_stub", chapter_stub),
     ("input_resolution", input_resolution),
     ("book_toc", book_toc),
     ("frontmatter_standard", frontmatter_standard),
@@ -31,6 +33,7 @@ VALIDATORS = [
     ("proof_order", proof_order),
     ("proof_stub_state", proof_stub_state),
     ("notes_structure", notes_structure),
+    ("toolkit_coverage", toolkit_coverage),
     ("structural_chrome", structural_chrome),
     ("structural_positions", structural_positions),
     ("block_discipline", block_discipline),
@@ -167,7 +170,9 @@ def _filter_findings_for_inventory(findings, volume_root: Path, inventory: list[
     return kept
 
 
-def _validators_for_scope(book_scope: str | None):
+def _validators_for_scope(book_scope: str | None, volume_root: Path):
+    if not book_scope and planned_volume_stub.applies_to(volume_root):
+        return [("planned_volume_stub", planned_volume_stub)]
     if not book_scope:
         return VALIDATORS
     return [(name, validator) for name, validator in VALIDATORS if name in SCOPED_VALIDATOR_NAMES]
@@ -225,7 +230,7 @@ def main(argv=None) -> int:
             f"in {preprocessed.elapsed_seconds:.2f}s"
         )
     all_findings = []
-    validators = _validators_for_scope(book_scope)
+    validators = _validators_for_scope(book_scope, volume.root)
     for _name, validator in validators:
         all_findings.extend(run_validator(validator, volume.root, inventory))
 

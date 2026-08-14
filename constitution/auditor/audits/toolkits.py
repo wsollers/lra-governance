@@ -16,11 +16,20 @@ from typing import Any
 
 import yaml
 
-from auditor import client, config, loader
 from auditor.report import _human_timestamp, report_path, write_report
 
+import sys
 
-_SECTION = re.compile(r"\\(section|subsection|subsubsection)\*?\{([^{}]*)\}")
+
+TOOLS_ROOT = Path(__file__).resolve().parents[3] / "tools" / "governance"
+if str(TOOLS_ROOT) not in sys.path:
+    sys.path.insert(0, str(TOOLS_ROOT))
+
+from core.file_inventory import input_paths  # noqa: E402
+from core.volume import VOLUME_RE  # noqa: E402
+
+
+_TOPIC_SECTION_START = re.compile(r"\\section(?![A-Za-z*])(?:\[[^\]]*\])?\{")
 _ENV_OPEN = re.compile(
     r"\\begin\{(definition|theorem|lemma|proposition|corollary|axiom)\}"
     r"(?:\[([^\]]*)\])?",
@@ -29,6 +38,8 @@ _ENV_OPEN = re.compile(
 _LABEL = re.compile(r"\\label\{([a-z]+:[a-z0-9\-]+)\}")
 _TCOLORBOX_OPEN = re.compile(r"\\begin\{tcolorbox\}(?:\[([^\]]*)\])?", re.IGNORECASE)
 _TCOLORBOX_END = re.compile(r"\\end\{tcolorbox\}", re.IGNORECASE)
+_TOOLKITBOX_OPEN = re.compile(r"\\begin\{toolkitbox\}\{", re.IGNORECASE)
+_TOOLKITBOX_END = re.compile(r"\\end\{toolkitbox\}", re.IGNORECASE)
 
 
 @dataclass
@@ -61,18 +72,37 @@ def _line_number(text: str, offset: int) -> int:
     return text.count("\n", 0, offset) + 1
 
 
-def _section_ranges(text: str) -> list[tuple[str, int, int, int]]:
-    matches = list(_SECTION.finditer(text))
-    if not matches:
-        return [("File", 0, len(text), 1)]
+def _balanced_group_end(text: str, start: int) -> int | None:
+    if start >= len(text) or text[start] != "{":
+        return None
+    depth = 0
+    escaped = False
+    for position in range(start, len(text)):
+        char = text[position]
+        if escaped:
+            escaped = False
+            continue
+        if char == "\\":
+            escaped = True
+            continue
+        if char == "{":
+            depth += 1
+        elif char == "}":
+            depth -= 1
+            if depth == 0:
+                return position + 1
+    return None
 
-    ranges: list[tuple[str, int, int, int]] = []
-    for index, match in enumerate(matches):
-        title = match.group(2).strip() or "Untitled"
-        start = match.start()
-        end = matches[index + 1].start() if index + 1 < len(matches) else len(text)
-        ranges.append((title, start, end, _line_number(text, start)))
-    return ranges
+
+def _topic_sections(text: str) -> list[tuple[str, int]]:
+    sections: list[tuple[str, int]] = []
+    for match in _TOPIC_SECTION_START.finditer(text):
+        title_start = match.end() - 1
+        title_end = _balanced_group_end(text, title_start)
+        if title_end is None:
+            continue
+        sections.append((text[title_start + 1 : title_end - 1].strip(), match.start()))
+    return sections
 
 
 def _find_formal_items(section_text: str, section_start: int, full_text: str) -> list[FormalItem]:
@@ -106,6 +136,29 @@ def _find_formal_items(section_text: str, section_start: int, full_text: str) ->
 
 def _find_toolkit_boxes(section_text: str, section_start: int, full_text: str) -> list[ToolkitBox]:
     boxes: list[ToolkitBox] = []
+    for match in _TOOLKITBOX_OPEN.finditer(section_text):
+        title_start = match.end() - 1
+        title_end = _balanced_group_end(section_text, title_start)
+        if title_end is None:
+            continue
+        end_match = _TOOLKITBOX_END.search(section_text, title_end)
+        if not end_match:
+            continue
+        box_text = section_text[match.start() : end_match.end()]
+        labels = sorted(
+            set(
+                _LABEL.findall(box_text)
+                + re.findall(r"\\hyperref\[([a-z]+:[a-z0-9\-]+)\]", box_text)
+            )
+        )
+        boxes.append(
+            ToolkitBox(
+                line=_line_number(full_text, section_start + match.start()),
+                title=section_text[title_start + 1 : title_end - 1].strip() or "Toolkit",
+                labels_mentioned=labels,
+                excerpt=" ".join(box_text.split())[:300],
+            )
+        )
     for match in _TCOLORBOX_OPEN.finditer(section_text):
         end_match = _TCOLORBOX_END.search(section_text, match.end())
         if not end_match:
@@ -129,6 +182,55 @@ def _find_toolkit_boxes(section_text: str, section_start: int, full_text: str) -
     return boxes
 
 
+def _volume_root(chapter_root: Path) -> Path:
+    for parent in chapter_root.resolve().parents:
+        if VOLUME_RE.fullmatch(parent.name):
+            return parent
+    return chapter_root.resolve().parent
+
+
+def _routed_topic_indexes(chapter_root: Path) -> list[Path]:
+    notes_index = chapter_root / "notes" / "index.tex"
+    if not notes_index.is_file():
+        raise FileNotFoundError(f"notes/index.tex not found at {notes_index}")
+    volume_root = _volume_root(chapter_root)
+    notes_root = notes_index.parent.resolve()
+    indexes = []
+    for target in input_paths(notes_index, volume_root):
+        try:
+            relative = target.relative_to(notes_root)
+        except ValueError:
+            continue
+        if target.name == "index.tex" and len(relative.parts) == 2:
+            indexes.append(target.resolve())
+    return sorted(set(indexes))
+
+
+def _routed_topic_files(topic_index: Path, volume_root: Path) -> list[Path]:
+    topic_root = topic_index.parent.resolve()
+    visited: set[Path] = set()
+    ordered: list[Path] = []
+
+    def visit(path: Path) -> None:
+        path = path.resolve()
+        if path in visited:
+            return
+        try:
+            path.relative_to(topic_root)
+        except ValueError:
+            return
+        if not path.is_file():
+            return
+        visited.add(path)
+        ordered.append(path)
+        for child in input_paths(path, volume_root):
+            visit(child)
+
+    for path in input_paths(topic_index, volume_root):
+        visit(path)
+    return ordered
+
+
 def inventory_chapter_toolkits(chapter_path: Path) -> list[SectionInventory]:
     chapter_root = chapter_path.resolve()
     yaml_path = chapter_root / "chapter.yaml"
@@ -136,30 +238,42 @@ def inventory_chapter_toolkits(chapter_path: Path) -> list[SectionInventory]:
         raise FileNotFoundError(f"chapter.yaml not found at {yaml_path}")
 
     chapter_yaml = yaml.safe_load(yaml_path.read_text(encoding="utf-8")) or {}
-    files = sorted({entry["file"] for entry in chapter_yaml.get("environments", [])})
+    if not isinstance(chapter_yaml, dict):
+        raise ValueError(f"chapter.yaml must be a mapping: {yaml_path}")
 
     inventories: list[SectionInventory] = []
-    for rel_file in files:
-        tex_path = chapter_root / rel_file
-        if not tex_path.exists():
-            continue
-        text = tex_path.read_text(encoding="utf-8")
-        for section_title, start, end, line in _section_ranges(text):
-            section_text = text[start:end]
-            formal_items = _find_formal_items(section_text, start, text)
-            toolkit_boxes = _find_toolkit_boxes(section_text, start, text)
-            if not formal_items and not toolkit_boxes:
-                continue
-            inventories.append(
-                SectionInventory(
-                    file=rel_file,
-                    section=section_title,
-                    start_line=line,
-                    end_line=_line_number(text, end),
-                    formal_items=formal_items,
-                    existing_toolkit_boxes=toolkit_boxes,
-                )
+    volume_root = _volume_root(chapter_root)
+    for topic_index in _routed_topic_indexes(chapter_root):
+        router_text = topic_index.read_text(encoding="utf-8")
+        sections = _topic_sections(router_text)
+        if len(sections) != 1:
+            relative = topic_index.relative_to(chapter_root).as_posix()
+            raise ValueError(
+                f"{relative} must contain exactly one non-starred \\section{{...}}."
             )
+        section_title, start = sections[0]
+        section_title = section_title or "Untitled"
+        end = len(router_text)
+        line = _line_number(router_text, start)
+        formal_items: list[FormalItem] = []
+        for body in _routed_topic_files(topic_index, volume_root):
+            if body == topic_index:
+                continue
+            text = body.read_text(encoding="utf-8")
+            formal_items.extend(_find_formal_items(text, 0, text))
+        toolkit_boxes = _find_toolkit_boxes(router_text[start:end], start, router_text)
+        if not formal_items and not toolkit_boxes:
+            continue
+        inventories.append(
+            SectionInventory(
+                file=topic_index.relative_to(chapter_root).as_posix(),
+                section=section_title,
+                start_line=line,
+                end_line=_line_number(router_text, end),
+                formal_items=formal_items,
+                existing_toolkit_boxes=toolkit_boxes,
+            )
+        )
     return inventories
 
 
@@ -192,21 +306,131 @@ def _write_markdown_report(content: str, chapter: str, operation: str) -> Path:
     return path
 
 
+def build_toolkit_plan(chapter: str, inventories: list[SectionInventory]) -> dict[str, Any]:
+    """Build one deterministic plan row per routed formal-bearing topic."""
+    toolkits = []
+    for section in inventories:
+        if not section.formal_items:
+            continue
+        topic = Path(section.file).parent.name
+        toolkits.append(
+            {
+                "toolkit_id": f"toolkit:{topic}",
+                "title": f"Toolkit: {section.section}",
+                "file": section.file,
+                "section": section.section,
+                "placement_before": section.formal_items[0].label,
+                "covers": [item.label for item in section.formal_items],
+                "purpose": "Orient the formal items in this section.",
+                "status": "existing" if len(section.existing_toolkit_boxes) == 1 else "missing",
+            }
+        )
+    return {"chapter": chapter, "toolkits": toolkits, "notes": []}
+
+
+def validate_toolkit_plan(
+    plan: dict[str, Any],
+    chapter: str,
+    inventories: list[SectionInventory],
+) -> list[str]:
+    """Validate plan topology and coverage against the live routed inventory."""
+    errors: list[str] = []
+    if not isinstance(plan, dict):
+        return ["Toolkit plan must be a JSON object."]
+    if plan.get("chapter") != chapter:
+        errors.append(f"Plan chapter must be {chapter!r}.")
+    rows = plan.get("toolkits")
+    if not isinstance(rows, list):
+        return errors + ["Plan toolkits must be a list."]
+
+    expected = build_toolkit_plan(chapter, inventories)
+    expected_map = {
+        (row["file"], row["section"]): row for row in expected["toolkits"]
+    }
+    actual_map: dict[tuple[str, str], dict[str, Any]] = {}
+    for position, row in enumerate(rows, 1):
+        if not isinstance(row, dict):
+            errors.append(f"Toolkit plan row {position} must be an object.")
+            continue
+        key = (str(row.get("file") or ""), str(row.get("section") or ""))
+        if key in actual_map:
+            errors.append(f"Duplicate toolkit plan row for {key[0]} / {key[1]}.")
+            continue
+        actual_map[key] = row
+
+    for key, expected_row in expected_map.items():
+        row = actual_map.get(key)
+        if row is None:
+            errors.append(f"Missing toolkit plan row for {key[0]} / {key[1]}.")
+            continue
+        for field_name in ("placement_before", "covers", "status"):
+            if row.get(field_name) != expected_row[field_name]:
+                errors.append(
+                    f"Toolkit plan {key[0]} / {key[1]} has invalid {field_name}; "
+                    f"expected {expected_row[field_name]!r}."
+                )
+        toolkit_id = row.get("toolkit_id")
+        if not isinstance(toolkit_id, str) or not re.fullmatch(r"toolkit:[a-z0-9]+(?:-[a-z0-9]+)*", toolkit_id):
+            errors.append(f"Toolkit plan {key[0]} / {key[1]} has an invalid toolkit_id.")
+        for field_name in ("title", "purpose"):
+            if not isinstance(row.get(field_name), str) or not row[field_name].strip():
+                errors.append(f"Toolkit plan {key[0]} / {key[1]} requires {field_name}.")
+
+    for key in actual_map.keys() - expected_map.keys():
+        errors.append(f"Toolkit plan targets non-formal or unknown section {key[0]} / {key[1]}.")
+    notes = plan.get("notes", [])
+    if not isinstance(notes, list) or any(not isinstance(note, str) for note in notes):
+        errors.append("Plan notes must be a list of strings.")
+    return errors
+
+
+def inventory_findings(inventories: list[SectionInventory]) -> list[dict[str, Any]]:
+    """Return deterministic Toolkit presence, uniqueness, and coverage findings."""
+    findings: list[dict[str, Any]] = []
+    for section in inventories:
+        if not section.formal_items:
+            continue
+        boxes = section.existing_toolkit_boxes
+        if not boxes:
+            findings.append({
+                "status": "MISSING",
+                "type": "section_without_toolkit",
+                "file": section.file,
+                "section": section.section,
+                "first_formal_label": section.formal_items[0].label,
+                "message": "Routed formal-bearing topic has no Toolkit box in its section router.",
+            })
+            continue
+        if len(boxes) > 1:
+            findings.append({
+                "status": "FAIL",
+                "type": "multiple_section_toolkits",
+                "file": section.file,
+                "section": section.section,
+                "message": "Section router must contain exactly one Toolkit box.",
+            })
+            continue
+        expected_labels = [item.label for item in section.formal_items]
+        missing_labels = [
+            label for label in expected_labels if label not in boxes[0].labels_mentioned
+        ]
+        if missing_labels:
+            findings.append({
+                "status": "FAIL",
+                "type": "toolkit_missing_coverage",
+                "file": section.file,
+                "section": section.section,
+                "covers": missing_labels,
+                "message": "Toolkit does not link every routed formal label in its topic.",
+            })
+    return findings
+
+
 def plan_toolkits(chapter_path: Path) -> dict[str, Any]:
     chapter_root = chapter_path.resolve()
     chapter = chapter_root.name
     inventories = inventory_chapter_toolkits(chapter_root)
-    payload = _inventory_payload(chapter, inventories)
-
-    system = loader.prompt("plan_toolkits")
-    user = (
-        "## Chapter Toolkit Inventory\n\n"
-        "```json\n"
-        f"{json.dumps(payload, indent=2, ensure_ascii=False)}\n"
-        "```"
-    )
-    plan = client.call(system, user, expect_json=True, validate_report=False)
-    plan.setdefault("chapter", chapter)
+    plan = build_toolkit_plan(chapter, inventories)
 
     json_path = _write_json_report(plan, chapter, "toolkit-plan")
     md_path = _write_markdown_report(format_toolkit_plan_markdown(plan), chapter, "toolkit-plan")
@@ -250,12 +474,6 @@ def format_toolkit_plan_markdown(plan: dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
-def _latest_plan_path(chapter: str) -> Path | None:
-    reports_dir = config.REPORTS_DIR / chapter
-    plans = sorted(reports_dir.glob("*_toolkit-plan_*.json"), key=lambda path: path.stat().st_mtime, reverse=True)
-    return plans[0] if plans else None
-
-
 def audit_toolkits(chapter_path: Path, plan_path: Path | None = None) -> dict[str, Any]:
     chapter_root = chapter_path.resolve()
     chapter = chapter_root.name
@@ -265,64 +483,19 @@ def audit_toolkits(chapter_path: Path, plan_path: Path | None = None) -> dict[st
     plan: dict[str, Any] | None = None
     if plan_path:
         plan = json.loads(plan_path.read_text(encoding="utf-8"))
-    else:
-        latest = _latest_plan_path(chapter)
-        if latest:
-            plan = json.loads(latest.read_text(encoding="utf-8"))
 
     findings: list[dict[str, Any]] = []
-    section_map = {(section.file, section.section): section for section in inventories}
-
-    if plan:
-        for toolkit in plan.get("toolkits", []):
-            file = toolkit.get("file", "")
-            section_name = toolkit.get("section", "")
-            placement_before = toolkit.get("placement_before", "")
-            section = section_map.get((file, section_name))
-            if not section:
-                findings.append({
+    if plan is not None:
+        for message in validate_toolkit_plan(plan, chapter, inventories):
+            findings.append(
+                {
                     "status": "FAIL",
-                    "type": "missing_section",
-                    "toolkit_id": toolkit.get("toolkit_id", ""),
-                    "message": f"Planned toolkit section not found: {file} / {section_name}",
-                })
-                continue
+                    "type": "invalid_toolkit_plan",
+                    "message": message,
+                }
+            )
 
-            first_item = next((item for item in section.formal_items if item.label == placement_before), None)
-            before_line = first_item.line if first_item else None
-            prior_boxes = [
-                box for box in section.existing_toolkit_boxes
-                if before_line is None or box.line < before_line
-            ]
-            if toolkit.get("status") == "existing" and not prior_boxes:
-                findings.append({
-                    "status": "FAIL",
-                    "type": "missing_existing_toolkit",
-                    "toolkit_id": toolkit.get("toolkit_id", ""),
-                    "message": f"Plan says existing, but no toolkit-like box appears before {placement_before}.",
-                })
-            elif toolkit.get("status") == "missing":
-                findings.append({
-                    "status": "MISSING",
-                    "type": "planned_toolkit_missing",
-                    "toolkit_id": toolkit.get("toolkit_id", ""),
-                    "file": file,
-                    "section": section_name,
-                    "placement_before": placement_before,
-                    "covers": toolkit.get("covers", []),
-                    "message": "Toolkit is planned but not yet present in source.",
-                })
-    else:
-        for section in inventories:
-            if section.formal_items and not section.existing_toolkit_boxes:
-                findings.append({
-                    "status": "MISSING",
-                    "type": "section_without_toolkit",
-                    "file": section.file,
-                    "section": section.section,
-                    "first_formal_label": section.formal_items[0].label,
-                    "message": "Section contains formal items but no toolkit-like box.",
-                })
+    findings.extend(inventory_findings(inventories))
 
     report = {
         "chapter": chapter,
@@ -331,7 +504,11 @@ def audit_toolkits(chapter_path: Path, plan_path: Path | None = None) -> dict[st
         "summary": {
             "sections_scanned": len(inventories),
             "findings": len(findings),
-            "planned_toolkits": len(plan.get("toolkits", [])) if plan else 0,
+            "planned_toolkits": (
+                len(plan.get("toolkits", []))
+                if isinstance(plan, dict) and isinstance(plan.get("toolkits"), list)
+                else 0
+            ),
         },
         "findings": findings,
         "inventory": inventory,

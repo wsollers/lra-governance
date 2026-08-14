@@ -1456,14 +1456,19 @@ predicates:
     arguments:
       - name: f
         role: function
+        type: function
       - name: Locus
         role: locus
+        type: set
       - name: X
         role: source_ambient
+        type: ambient
       - name: Y
         role: target_ambient
+        type: ambient
       - name: C
         role: lipschitz_constant
+        type: scalar
     returns: truth_value
     ambient_argument: Y
     carried_context:
@@ -1502,16 +1507,22 @@ predicates:
     arguments:
       - name: f
         role: function
+        type: function
       - name: Locus
         role: locus
+        type: set
       - name: X
         role: source_ambient
+        type: ambient
       - name: Y
         role: target_ambient
+        type: ambient
       - name: c
         role: lower_lipschitz_constant
+        type: scalar
       - name: C
         role: upper_lipschitz_constant
+        type: scalar
     returns: truth_value
     ambient_argument: Y
     carried_context:
@@ -1546,6 +1557,41 @@ predicates:
     description: >
       The function f satisfies two-sided Lipschitz bounds with constants c and
       C on the indicated locus.
+
+  - id: pred:peano-system
+    name: PeanoSystem
+    kind: predicate
+    category: discrete_algebra
+    arguments:
+      - name: P
+        role: carrier
+        type: set
+      - name: S
+        role: successor_function
+        type: function
+      - name: e
+        role: base_element
+        type: object
+    returns: truth_value
+    carried_context:
+      - kind: carrier
+        source: argument
+        argument: P
+        exposes_as: carrier
+      - kind: operation
+        source: argument
+        argument: S
+        exposes_as: successor_function
+      - kind: base_element
+        source: argument
+        argument: e
+        exposes_as: base_element
+    surface_forms:
+      - Peano system
+      - peano system
+    description: >
+      The carrier P, successor function S, and distinguished base element e
+      satisfy the Peano-system axioms.
 
   - id: pred:is-discontinuous
     name: IsDiscontinuous

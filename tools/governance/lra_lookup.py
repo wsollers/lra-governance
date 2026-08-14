@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import subprocess
 import sys
 from dataclasses import dataclass
@@ -44,6 +45,12 @@ class LookupLocations:
 
 class LookupError(RuntimeError):
     pass
+
+
+@dataclass(frozen=True)
+class SourceLooseAttempt:
+    query: str
+    authors: tuple[str, ...] = ()
 
 
 def _load_mapping(path: Path) -> dict[str, Any]:
@@ -218,6 +225,220 @@ def search_sources(
     }
 
 
+_COMMON_SOURCE_AUTHOR_HINTS = {
+    "abbot",
+    "abbott",
+    "apostol",
+    "bartle",
+    "bruckner",
+    "bruckners",
+    "folland",
+    "lebl",
+    "munkres",
+    "pugh",
+    "royden",
+    "rudin",
+    "searcoid",
+    "spivak",
+    "tao",
+    "zorich",
+}
+_AUTHOR_ALIASES = {
+    "abbot": ("abbot", "abbott"),
+    "bruckners": ("bruckners", "bruckner"),
+}
+_SPELLING_VARIANTS = {
+    "def": "definition",
+    "defs": "definition",
+    "definitions": "definition",
+    "guage": "gauge",
+}
+_INTENT_PHRASES = (
+    "which authors have",
+    "which author has",
+    "definitions of",
+    "definition of",
+    "compare",
+    "related to",
+    "information about",
+    "info about",
+    "info for",
+)
+_FILLER_TOKENS = {"a", "an", "and", "for", "from", "in", "of", "on", "the", "with"}
+
+
+def _source_explicit_constraints(args: argparse.Namespace) -> bool:
+    return any(
+        (
+            args.source_id,
+            args.source_list,
+            args.profile,
+            args.book,
+            args.chapter,
+        )
+    )
+
+
+def _tokenize_query(text: str) -> list[str]:
+    return re.findall(r"[A-Za-z][A-Za-z0-9'’-]*", text.lower())
+
+
+def _clean_author_hint(value: str) -> str:
+    value = value.lower().strip("'’")
+    if value.endswith("'s") or value.endswith("’s"):
+        value = value[:-2]
+    if value.endswith("s") and value in _AUTHOR_ALIASES:
+        return _AUTHOR_ALIASES[value][-1]
+    return value
+
+
+def _expand_author_hint(value: str) -> tuple[str, ...]:
+    value = _clean_author_hint(value)
+    return _AUTHOR_ALIASES.get(value, (value,))
+
+
+def _extract_author_hints(query: str) -> list[str]:
+    hints: list[str] = []
+    for match in re.finditer(r"\b(?:from|by|with)\s+([A-Za-z][A-Za-z0-9'’-]*)", query, re.IGNORECASE):
+        hints.extend(_expand_author_hint(match.group(1)))
+    for match in re.finditer(r"\b([A-Za-z][A-Za-z0-9'’-]*)(?:'s|’s)\b", query, re.IGNORECASE):
+        hints.extend(_expand_author_hint(match.group(1)))
+
+    tokens = _tokenize_query(query)
+    if tokens and tokens[0] in _COMMON_SOURCE_AUTHOR_HINTS:
+        hints.extend(_expand_author_hint(tokens[0]))
+
+    seen: set[str] = set()
+    unique: list[str] = []
+    for hint in hints:
+        if hint and hint not in seen:
+            seen.add(hint)
+            unique.append(hint)
+    return unique
+
+
+def _clean_loose_query(query: str) -> str:
+    text = query.lower()
+    text = re.sub(r"\b([A-Za-z][A-Za-z0-9'’-]*)(?:'s|’s)\b", " ", text)
+    text = re.sub(r"\b(?:from|by|with)\s+[A-Za-z][A-Za-z0-9'’-]*\b", " ", text)
+    for phrase in _INTENT_PHRASES:
+        text = text.replace(phrase, " ")
+    tokens = []
+    for token in _tokenize_query(text):
+        token = _SPELLING_VARIANTS.get(token, token)
+        if token not in _FILLER_TOKENS:
+            tokens.append(token)
+    if len(tokens) > 1 and tokens[0] in _COMMON_SOURCE_AUTHOR_HINTS:
+        tokens = tokens[1:]
+    return " ".join(tokens)
+
+
+def _dedupe_attempts(attempts: list[SourceLooseAttempt]) -> list[SourceLooseAttempt]:
+    deduped: list[SourceLooseAttempt] = []
+    seen: set[tuple[str, tuple[str, ...]]] = set()
+    for attempt in attempts:
+        key = (attempt.query, attempt.authors)
+        if attempt.query and key not in seen:
+            seen.add(key)
+            deduped.append(attempt)
+    return deduped
+
+
+def plan_loose_source_attempts(
+    query: str, args: argparse.Namespace
+) -> list[SourceLooseAttempt]:
+    if _source_explicit_constraints(args):
+        return []
+
+    cleaned = _clean_loose_query(query)
+    if not cleaned or cleaned == query.lower().strip():
+        return []
+
+    authors = list(args.author) or _extract_author_hints(query)
+    attempts: list[SourceLooseAttempt] = []
+    for author in authors:
+        attempts.append(SourceLooseAttempt(cleaned, (author,)))
+    attempts.append(SourceLooseAttempt(cleaned))
+    return _dedupe_attempts(attempts)[:6]
+
+
+def _clone_source_args(
+    args: argparse.Namespace, *, authors: tuple[str, ...]
+) -> argparse.Namespace:
+    cloned = argparse.Namespace(**vars(args))
+    cloned.author = list(authors)
+    return cloned
+
+
+def _source_hit_key(hit: dict[str, Any]) -> tuple[Any, ...]:
+    return (
+        hit.get("source_id"),
+        hit.get("kind"),
+        hit.get("number"),
+        hit.get("title"),
+        hit.get("path"),
+        hit.get("line"),
+    )
+
+
+def enrich_with_loose_source_results(
+    locations: LookupLocations,
+    source_results: dict[str, Any],
+    args: argparse.Namespace,
+    *,
+    limit: int,
+) -> list[str]:
+    if source_results.get("hits") or not getattr(args, "loose_sources", True):
+        return []
+
+    warnings: list[str] = []
+    attempts_summary: list[dict[str, Any]] = []
+    merged_hits: list[dict[str, Any]] = []
+    seen: set[tuple[Any, ...]] = set()
+
+    for attempt in plan_loose_source_attempts(args.query, args):
+        attempt_args = _clone_source_args(args, authors=attempt.authors)
+        try:
+            attempt_results = search_sources(
+                locations, attempt.query, limit=limit, args=attempt_args
+            )
+        except (LookupError, OSError, subprocess.SubprocessError) as exc:
+            warnings.append(f"sources loose retry {attempt.query!r}: {exc}")
+            continue
+        hits = attempt_results.get("hits") or []
+        attempts_summary.append(
+            {
+                "query": attempt.query,
+                "authors": list(attempt.authors),
+                "hit_count": len(hits),
+            }
+        )
+        for hit in hits:
+            key = _source_hit_key(hit)
+            if key in seen:
+                continue
+            seen.add(key)
+            annotated = dict(hit)
+            annotated["matched_query"] = attempt.query
+            if attempt.authors:
+                annotated["matched_author_filter"] = list(attempt.authors)
+            merged_hits.append(annotated)
+            if len(merged_hits) >= limit:
+                break
+        if len(merged_hits) >= limit:
+            break
+
+    if attempts_summary:
+        source_results["loose_attempts"] = attempts_summary
+    if merged_hits:
+        source_results["hits"] = merged_hits
+        warnings.append(
+            "sources: strict query returned 0 hits; loose retry returned "
+            f"{len(merged_hits)} hit(s)"
+        )
+    return warnings
+
+
 def _internal_module():
     try:
         import search_internal_object_index as module
@@ -300,9 +521,22 @@ def lookup(args: argparse.Namespace, locations: LookupLocations) -> dict[str, An
     payload: dict[str, Any] = {"query": args.query, "results": {}, "warnings": []}
     if "sources" in scopes:
         try:
-            payload["results"]["sources"] = search_sources(
+            source_results = search_sources(
                 locations, args.query, limit=args.limit, args=args
             )
+            payload["results"]["sources"] = source_results
+            payload["warnings"].extend(
+                enrich_with_loose_source_results(
+                    locations, source_results, args, limit=args.limit
+                )
+            )
+            if args.author and not source_results.get("hits"):
+                authors = ", ".join(args.author)
+                payload["warnings"].append(
+                    "sources: 0 hits with --author filter(s) "
+                    f"{authors!r}; retry sources without --author, then constrain by "
+                    "--source-id or a reviewed source list if needed"
+                )
         except (LookupError, OSError, subprocess.SubprocessError) as exc:
             payload["warnings"].append(f"sources: {exc}")
 
@@ -365,6 +599,13 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--book")
     parser.add_argument("--chapter")
     parser.add_argument("--include-disabled", action="store_true")
+    parser.add_argument(
+        "--no-loose-sources",
+        dest="loose_sources",
+        action="store_false",
+        default=True,
+        help="Disable automatic loose source retries after a zero-hit strict source query.",
+    )
     return parser
 
 

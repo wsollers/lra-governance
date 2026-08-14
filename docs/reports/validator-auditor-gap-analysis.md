@@ -1,6 +1,6 @@
 # Validator/Auditor Gap Analysis
 
-Date: 2026-06-12
+Updated: 2026-08-12
 
 ## Scope
 
@@ -37,9 +37,8 @@ judgment-heavy checks:
 - mathematical correctness of negations, contrapositives, and quantified forms;
 - atomicity of definitions and theorem-like statements;
 - canonical notation consistency beyond simple predicate/name scans;
-- full symbol-audit reporting against predicates, structures, notation, and relations;
+- semantic notation equivalence beyond exact registry spellings;
 - audit-report output parity for statement audits;
-- volume-stub parity;
 - proof body quality checks beyond layer/layout enforcement.
 
 Recommendation: install the capability path as the primary workflow, but keep
@@ -54,8 +53,6 @@ explicitly retired.
 |---|---:|---|
 | `audit-statement.md` | LLM structural and semantic statement audit | JSON audit report |
 | `audit-proof.md` | LLM proof-file layer and proof quality audit | JSON audit report |
-| `audit-stub.md` | LLM chapter/volume stub audit | JSON audit report |
-| `audit-chapter-symbols.md` | LLM chapter symbol consistency audit | Markdown report |
 
 ### Current Validators And Auditors
 
@@ -63,8 +60,8 @@ explicitly retired.
 |---|---:|---|
 | `constitution/auditor/audits/statement.py` | LLM-backed | Still calls `audit_statement` prompt. Not a deterministic replacement. |
 | `constitution/auditor/audits/proof.py` | Hybrid | TODO stubs are deterministic; full proof audit still calls prompt. |
-| `constitution/auditor/audits/stub.py` | LLM-backed | Still calls `audit_stub` prompt. |
-| `constitution/auditor/audits/symbols.py` | LLM-backed | Still calls `audit_symbols` prompt. |
+| `constitution/auditor/audits/stub.py` | Deterministic | Adapts canonical planned-chapter validator findings to the shared JSON audit-report contract. |
+| `constitution/auditor/audits/symbols.py` | Deterministic | Adapts the canonical chapter-symbol scanner to the existing Markdown report path. |
 | `constitution/auditor/validators/generated_block.py` | Deterministic | Good generated statement block preflight. Narrower than statement audit. |
 | `constitution/auditor/validators/ontology.py` | Deterministic | Validates canonical ontology files, not chapter usage parity. |
 | `tools/governance/validate_decoration.py` | Deterministic | Thin harness over decoration rules. Strong structural replacement for many statement checks. |
@@ -74,8 +71,8 @@ explicitly retired.
 | Retired chapter house-rule validator | Deterministic legacy | Removed after useful structural checks were folded into `validate_volume.py` modules or explicitly retired as stale/mutating behavior. |
 | `tools/governance/audit_volume_layout.py` | Deterministic legacy | Volume/chapter routing and layout validation. Useful as comparison/fallback until parity retirement. |
 | `tools/governance/test_parity_fixtures.py` | Deterministic test | Now includes `validate_volume.py` expected code coverage for the broken parity fixture. |
-| `capabilities/author-definition/verify.py` | Deterministic | Bound file verifier for generated definitions. Narrow. |
-| `capabilities/author-statement/proof_stub.py` | Deterministic generator | Generates proof stubs; not itself an auditor. |
+| `tools/governance/generators/mathematical_tex.py` | Deterministic validator/renderer | Validates typed mathematical payloads and renders canonical TeX without model calls. |
+| `tools/governance/generators/proof_stub.py` | Deterministic generator | Generates proof stubs as a separate optional post-step; not itself an auditor. |
 
 ## Gap Matrix
 
@@ -86,7 +83,7 @@ explicitly retired.
 | Environment label present, prefix, lowercase slug | Covered by `validate_volume.py` modules and generated-block validation. | Low. |
 | Box presence and house colors | Covered by generated-block validation and `validate_volume.py` modules. | Low for generated/current forms. Legacy wrapper variants should remain tested. |
 | Proof link from theorem-like statement | Covered by decoration rules and proof/coverage validators. | Low. |
-| Required decoration blocks present | Covered for key blocks by `validate_volume.py` modules and `author-definition/verify.py`. | Medium. Coverage is not full artifact-matrix parity for every optional/conditional/dependent block. |
+| Required decoration blocks present | Covered for rendered typed payloads and by `validate_volume.py` modules. | Medium. Coverage is not full artifact-matrix parity for every optional/conditional/dependent block. |
 | Decoration block order | Covered by `formal_decoration.py`; needs parity fixtures for all block-order cases. | Low/medium. |
 | Forbidden decoration blocks by artifact type | Covered by `formal_decoration.py`. | Low. |
 | Dependent block parent/child rules | Covered by `formal_decoration.py`; needs broader tests for each dependent pair. | Low/medium. |
@@ -95,9 +92,9 @@ explicitly retired.
 | Source crosswalk citation presence | Covered structurally by decoration validation where applicable. | Medium. Validator checks citation presence, not provenance semantics. |
 | Examples/non-examples do not introduce labels/formal statements | Covered by block discipline and formal decoration validators. | Low/medium. |
 | Predicate names not in formal bodies | Covered for `\operatorname` leakage and some known predicate forms. | Medium. It does not fully prove all predicate-language leakage. |
-| Predicate names registered in canonical source | Partly covered by `author-definition/verify.py` and ontology validator. | High. Chapter-wide usage parity still depends on symbol auditor prompt. |
-| Notation matches `notation.yaml` | Not fully covered. | High. Existing validators catch some style/shape issues, not full notation registry consistency. |
-| Relation names match `relations.yaml` | Not fully covered. | High. Ontology validates registry integrity, not chapter usage. |
+| Predicate names registered in canonical source | Covered for explicit `\operatorname{...}` uses by the deterministic chapter scanner. | Low. Prose-only predicate concepts are not inferred. |
+| Notation matches `notation.yaml` | Exact registered spellings are inventoried; broader style validators remain active. | Medium. Semantic equivalence is deliberately not inferred. |
+| Relation names match `relations.yaml` | Not applicable: this registry contains ontology edges, not TeX relation spellings. | The legacy check had no valid data contract. |
 | Correct negated quantified statement | Not deterministically covered. | High. Requires semantic logic or explicit structured source fields. |
 | Correct contrapositive | Not deterministically covered. | High. Requires semantic logic or structured hypothesis/conclusion representation. |
 | Quantifier variables all fixed/explicit | Not deterministically covered except some style triggers. | High. |
@@ -131,39 +128,38 @@ explicitly retired.
 
 | Legacy check | Current deterministic coverage | Gap |
 |---|---|---|
-| Chapter required paths | Covered by `validate_volume.py` shape/router modules and `audit_volume_layout.py`. | Low. |
-| Chapter router heading/label/breadcrumb/input order | Covered by `validate_volume.py` router modules and volume layout audit. | Low. |
+| Chapter required paths | Covered by `chapter_stub.py` and the integrated `validate_volume.py` registry. | Closed. |
+| Chapter router heading/label/breadcrumb/input order | Covered by the shared `chapter_router.py` single-chapter contract. | Closed. |
 | Notes/proofs topic routing | Covered. | Low. |
-| Capstone standard location/routing | Covered. | Low. |
-| Folder/file naming discipline | Covered for many chapter files. | Low/medium. |
-| Chapter registry membership | Covered. | Low. |
-| Volume stub `index.tex` scope/orientation | Partial. | Medium/high. Volume-level prose/orientation requirements are not clearly enforced. |
-| Volume `chapter.yaml` dependency order | Partial. | High. Presence/shape can be checked; dependency order is judgment unless registry encodes ordering authority. |
-| JSON audit-report schema output | Not deterministic. | Medium. |
+| Capstone standard location/routing | Covered, including the optional paired-path rule and router-only input. | Closed. |
+| Folder/file naming discipline | Canonical chapter slug and generated capstone filename are covered. | Closed for planned stubs. |
+| Chapter registry membership and neighbors | Covered when a registry is supplied to the focused audit. | Closed. |
+| Planned-volume `index.tex` scope and registry | Covered by `planned_volume_stub.py`. | Closed for deterministic generator output. |
+| Planned-volume manifest ordering | Covered by `planned_volume_stub.py` against the explicit ordered registry. | Closed. |
+| JSON audit-report schema output | Deterministic adapter preserves the shared report shape. | Closed. |
 
 ### Chapter Symbol Auditor Versus Validators
 
 | Legacy check | Current deterministic coverage | Gap |
 |---|---|---|
-| Registry YAML parses and internal references are valid | Covered by ontology validator. | Low. |
-| Predicate `\operatorname{...}` leakage into formal bodies | Partly covered by generated-block validation and formal decoration checks. | Medium. |
-| Missing predicate names in chapter usage | Partly covered for generated definitions. | High. No full deterministic chapter scanner against predicates.yaml parity. |
-| Predicate arity/form consistency | Not fully covered. | High. |
-| Missing notation items | Not fully covered. | High. |
-| Inconsistent notation conventions | Not fully covered. | High. |
-| Missing relation names | Not fully covered. | High. |
-| Inconsistent relation usage | Not fully covered. | High. |
-| Unused registry entries by chapter | Not covered deterministically. | Medium. Informational only, but useful. |
-| Markdown symbol-audit output | Still prompt-backed. | Medium. |
+| Registry YAML parses and required list shapes are valid | Covered by registry validators and scanner input validation. | Closed. |
+| Predicate `\operatorname{...}` leakage into formal bodies | Covered by `formal_predicate_leakage.py`. | Closed for registered predicate names. |
+| Unknown `\operatorname{...}` names | Covered by `operator_metadata.py`. | Closed. |
+| Predicate and structure command spelling | Covered by exact `\operatorname` / `\mathsf` classification. | Closed. |
+| Predicate-reading arity and ambient arguments | Covered by signature and construction validators. | Closed for machine-readable registry roles. |
+| Registered notation use | Exact literal registry spellings are inventoried. | Closed for exact spellings; semantic equivalence is explicitly out of scope. |
+| Arbitrary missing or inconsistent notation | Not inferred from mathematical prose or formulas. | Deliberately out of scope pending a structured notation grammar. |
+| Relation names in chapter formulas | `relations.yaml` stores ontology edges, not TeX relation spellings. | Invalid legacy contract; no relation-symbol claim is made. |
+| Unused registry entries by chapter | Deterministically reported as informational. | Closed. |
+| Markdown symbol-audit output | Deterministic report preserves the existing saved-report workflow. | Closed. |
 
 ## Cross-Cutting Gaps
 
 ### 1. Prompt-Backed Auditors Still Exist
 
-The `constitution/auditor/audits` modules still call the legacy prompt contracts
-for statement, full proof, stub, and symbol audits. That means the project has
-not yet replaced the auditors with validators. It has added deterministic
-validators beside them.
+The `constitution/auditor/audits` modules still call legacy prompt contracts for
+statement and full-proof audits. Stub and chapter-symbol audits now use tested
+deterministic validators and compatibility report adapters.
 
 ### 2. Output Shape Is Not Unified
 
@@ -235,14 +231,13 @@ as optional fallback:
 
 ### Not Safe To Remove Yet
 
-Keep the legacy prompt/auditor fallback for:
+Retain structured semantic or explicit human review for:
 
 - statement semantic correctness;
 - atomicity detection;
 - negation and contrapositive correctness;
-- full notation/predicate/relation chapter usage audit;
+- semantic notation equivalence beyond exact registry spellings;
 - proof body quality and logical milestone review;
-- volume-stub dependency-order and orientation review;
 - old audit-report JSON compatibility, if any downstream tooling consumes it.
 
 ## Recommended Closeout Plan
@@ -251,12 +246,13 @@ Keep the legacy prompt/auditor fallback for:
    that is validator-owned.
 2. Continue adding negative fixtures for lower-priority deterministic checks as
    they are declared validator-owned.
-3. Build or explicitly defer a deterministic chapter symbol scanner.
-4. Decide output compatibility: validator-native JSON or audit-report adapter.
-5. Mark semantic checks as either structured-data future work or retained
+3. Extend the deterministic chapter-symbol scanner only when registries expose
+   additional machine-readable notation or relation-symbol contracts.
+4. Preserve the audit-report adapter where downstream auditor workflows consume it.
+5. Mark remaining semantic checks as either structured-data future work or retained
    human/LLM review.
-6. Only then move `constitution/prompts/audit-*.md` to legacy/archive or remove
-   them.
+6. Remove each remaining audit prompt only after its live caller has a tested
+   deterministic or deliberately scoped judgment boundary.
 
 ## Bottom Line
 

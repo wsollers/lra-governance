@@ -4,7 +4,7 @@ Consolidated, skill-shaped replacement for the scattered standard + workflow + p
 ONE capability = ONE folder = trigger + procedure + bound verifier.
 
 ## Layout
-- `ENTRYPOINT.md`            canonical agent entrypoint (the only routing file edited by hand)
+- `ENTRYPOINT.md`            active canonical global instruction layer selected by `manifest.yaml`
 - `generate_entrypoints.py` emits full per-vendor copies (CLAUDE/AGENTS/GEMINI/copilot/cursor) — generated-full, CI-synced
 - `index.md`                capability manifest (task -> capability)
 - `overlays/<repo>.md`      per-repo overlay (the "you are working in lra-X" layer)
@@ -14,7 +14,7 @@ ONE capability = ONE folder = trigger + procedure + bound verifier.
 A generate capability is NOT complete until its bound verifier exits 0 on the written artifact.
 
 ## Adding the next capability
-1. Copy `author-definition/` as template.
+1. Copy a small existing capability directory as a structural template.
 2. Write `capability.md` (trigger, reads, procedure, bound verifier).
 3. Write/point `verify.py` (runs on a single target file; exits nonzero on violation).
 4. Add ONE row to `index.md`.
@@ -24,7 +24,14 @@ A generate capability is NOT complete until its bound verifier exits 0 on the wr
 ## Migration rule
 Port by MOVING text, not rewriting rules. A diff should be mostly moves.
 
-## Vendor entrypoints
-`generate_entrypoints.py` produces full copies of `ENTRYPOINT.md` under each vendor's expected
-filename (CLAUDE.md, AGENTS.md, GEMINI.md, .github/copilot-instructions.md, .cursor/rules/lra.mdc).
-These are GENERATED and CI-synced; never hand-edit them. Edit `ENTRYPOINT.md` and regenerate.
+## Entrypoint and vendor wrappers
+
+The root `AGENTS.md` is the repository bootstrap: it locates governance and
+runs `resolve.py`. The active global instruction layer is selected by the
+manifest's `entrypoint` field and is loaded by the resolver before one repo
+overlay and one route packet.
+
+Provider wrappers are generated pointer/bootstrap artifacts. They must not
+fork the global instruction layer or embed a second routing table. Edit the
+canonical bootstrap/template sources and regenerate; do not patch generated
+downstream wrappers by hand.

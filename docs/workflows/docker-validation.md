@@ -4,9 +4,40 @@
 governance tests and volume validation. The image is intentionally separate
 from the heavier TeX build image owned by `lra-common/docker`.
 
+## Canonical Python Runtime
+
+The canonical runtime definition lives only in `lra-governance`:
+
+- `.python-version` selects Python 3.12.13 as the reproducible baseline;
+- `pyproject.toml` owns direct dependencies and supported Python versions;
+- `requirements.lock` pins the complete governance environment with hashes;
+- `.venv/` is an ignored local environment and is never copied downstream.
+
+Create or refresh the local environment with:
+
+```powershell
+py -3.12 scripts\bootstrap_python.py
+```
+
+Python 3.13 remains a supported compatibility target. Docker and downstream
+validation use the canonical Python 3.12.13 baseline; core CI runs both 3.12.13
+and 3.13.9. Downstream repositories invoke this runtime through a governance
+checkout or the governance image; they do not carry copies of the governance
+project or lock files.
+
+Regenerate `requirements.lock` from `pyproject.toml` with a reviewed `uv`
+release and an explicit Python 3.12 target:
+
+```powershell
+uv pip compile pyproject.toml --extra test --extra validation --extra ai --python-version 3.12 --generate-hashes --output-file requirements.lock
+```
+
+Commit direct-dependency changes and the regenerated lock together.
+
 ## Image
 
-Build the governance test image from the governance repo:
+Build the governance test image from the governance repo. The repository root
+is the Docker build context so the image installs the canonical lock file:
 
 ```powershell
 python scripts\docker_build_governance_test.py

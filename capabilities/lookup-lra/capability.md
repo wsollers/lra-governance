@@ -19,6 +19,14 @@ authored TeX, Lean declarations, C++ objects, and canonical vocabulary. Use
 `--source-id`, `--source-list`, or `--profile` to constrain primary-source
 lookup. Run `--status` to inspect index availability.
 
+Primary-source lookup is strict first and loose by default. If the source lane
+returns no hits, `lra_lookup.py` automatically retries bounded looser forms of
+the query, such as normalizing `def` to `definition`, removing prompt filler,
+repairing reviewed typo aliases, and interpreting weak author hints like
+`from zorich` or `tao sigma algebra`. Inspect `loose_attempts`,
+`matched_query`, and `matched_author_filter` before relying on a loose hit.
+Pass `--no-loose-sources` only when a strict zero-hit result is required.
+
 ## Refresh
 
 When a lane is stale or unavailable, refresh one independent family or all

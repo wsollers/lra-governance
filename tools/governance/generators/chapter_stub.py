@@ -10,6 +10,7 @@ if __package__ in {None, ""}:
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from core.volume import VOLUME_RE, latex_input_path
+from generators.capstone_stub import render_capstone_stub
 from generators.section_stub import append_once, slugify, stub_section, write_new
 
 
@@ -156,41 +157,90 @@ def render_lrameta(volume_root: Path, subject: str, display_title: str, registry
     )
 
 
-def _capstone_stub(subject: str, display_title: str) -> str:
-    return (
-        "\\phantomsection\n"
-        f"\\label{{cap:{subject}}}\n\n"
-        "\\begin{tcolorbox}[\n"
-        "  colback=gray!6,\n"
-        "  colframe=gray!40,\n"
-        "  arc=2pt,\n"
-        "  left=8pt, right=8pt, top=6pt, bottom=6pt,\n"
-        "  title={\\small\\textbf{Capstone Theorem}},\n"
-        "  fonttitle=\\small\\bfseries\n"
-        "]\n"
-        "\\textbf{Theorem.}\n"
-        f"TODO: state the theorem-shaped capstone target for {display_title}.\n"
-        "\\end{tcolorbox}\n\n"
-        "\\begin{remark*}[Dependencies to state]\n"
-        "List only the prior labels needed to parse the capstone statement.\n"
-        "\\end{remark*}\n\n"
-        "\\begin{remark*}[Dependencies to prove]\n"
-        "List the prior labels needed to prove the capstone theorem.\n"
-        "\\end{remark*}\n\n"
-        "\\begin{remark*}[Dependency ceiling]\n"
-        "The capstone may use only results routed at or before this chapter.\n"
-        "\\end{remark*}\n\n"
-        "\\begin{dependencies}\n"
-        "\\begin{itemize}\n"
-        "  \\item TODO\n"
-        "\\end{itemize}\n"
-        "\\end{dependencies}\n\n"
-        "\\clearpage\n"
-    )
-
-
 def _yaml_quote(value: str) -> str:
     return json.dumps(value)
+
+
+def render_chapter_stub_files(
+    volume_root,
+    subject: str,
+    display_title: str,
+    registry: list[dict],
+    section_titles: list[str] | None = None,
+    metadata: dict[str, str] | None = None,
+    *,
+    include_capstone: bool = True,
+) -> dict[str, str]:
+    """Render the fixed chapter-level files without writing to disk."""
+    volume_root = Path(volume_root)
+    context = _root_context(volume_root)
+    if not registry:
+        registry = _registry_for_context(context)
+    section_titles = list(section_titles or [])
+    _prior_title, prior_subject, _next_title, next_subject = _neighbors(subject, registry)
+    breadcrumb = render_lrameta(volume_root, subject, display_title, registry, metadata)
+    chapter = volume_root / subject
+    chapter_route = latex_input_path(chapter / "index.tex").removesuffix("/index")
+    capstone_route = ""
+    if include_capstone:
+        capstone_route = (
+            "\n"
+            "\\section*{Capstone}\n"
+            f"\\input{{{chapter_route}/proofs/exercises/index}}\n"
+        )
+    index_tex = (
+        "% =========================================================\n"
+        f"% Chapter: {display_title}\n"
+        "% =========================================================\n"
+        f"\\chapter{{{display_title}}}\n"
+        f"\\label{{ch:{subject}}}\n\n"
+        f"{breadcrumb}\n\n"
+        f"\\input{{{chapter_route}/notes/index}}\n\n"
+        "\\LRAExcludeFromPrintEditionBegin\n"
+        "\\section*{Proofs}\n"
+        f"\\input{{{chapter_route}/proofs/index}}\n\n"
+        f"{capstone_route}"
+        "\\LRAExcludeFromPrintEditionEnd\n"
+    )
+    if section_titles:
+        sections = "sections:\n" + "".join(
+            f"  - subject: {slugify(title)}\n    display_title: \"{title}\"\n"
+            for title in section_titles
+        )
+    else:
+        sections = "sections: []\n"
+    book_line = f"book: {context.book}\n" if context.book else ""
+    chapter_yaml = (
+        f"subject: {subject}\n"
+        f"display_title: {_yaml_quote(display_title)}\n"
+        f"volume: {context.volume}\n"
+        f"{book_line}"
+        f"path: {latex_input_path(chapter)}\n"
+        f"status: planned\n{sections}dependencies:\n"
+        f"  prior: {_yaml_quote(prior_subject)}\n"
+        f"  next: {_yaml_quote(next_subject)}\n"
+    )
+    files = {
+        f"{subject}/index.tex": index_tex,
+        f"{subject}/chapter.yaml": chapter_yaml,
+        f"{subject}/notes/index.tex": (
+            f"% Notes index for chapter: {display_title}\n"
+            "% Topic routers are \\section + \\input here in dependency order.\n"
+        ),
+        f"{subject}/proofs/index.tex": (
+            f"% Proofs index for chapter: {display_title}\n"
+            "% Proof topics \\input here, matching notes sections in dependency order.\n"
+        ),
+    }
+    if include_capstone:
+        files[f"{subject}/proofs/exercises/index.tex"] = (
+            f"% Exercise proofs index for chapter: {display_title}\n"
+            f"\\input{{{chapter_route}/proofs/exercises/capstone-{subject}}}\n"
+        )
+        files[f"{subject}/proofs/exercises/capstone-{subject}.tex"] = (
+            render_capstone_stub(subject, display_title)
+        )
+    return files
 
 
 def stub_chapter(
@@ -216,68 +266,17 @@ def stub_chapter(
     if include_capstone:
         (chapter / "proofs" / "exercises").mkdir(parents=True, exist_ok=True)
 
-    _prior_title, prior_subject, _next_title, next_subject = _neighbors(subject, registry)
-    breadcrumb = render_lrameta(volume_root, subject, display_title, registry, metadata)
-    chapter_route = latex_input_path(chapter / "index.tex").removesuffix("/index")
-    capstone_route = ""
-    if include_capstone:
-        capstone_route = (
-            "\n"
-            "\\section*{Capstone}\n"
-            f"\\input{{{chapter_route}/proofs/exercises/index}}\n"
-        )
-    write_new(
-        chapter / "index.tex",
-        "% =========================================================\n"
-        f"% Chapter: {display_title}\n"
-        "% =========================================================\n"
-        f"\\chapter{{{display_title}}}\n"
-        f"\\label{{ch:{subject}}}\n\n"
-        f"{breadcrumb}\n\n"
-        f"\\input{{{chapter_route}/notes/index}}\n\n"
-        "\\LRAExcludeFromPrintEditionBegin\n"
-        "\\section*{Proofs}\n"
-        f"\\input{{{chapter_route}/proofs/index}}\n\n"
-        f"{capstone_route}"
-        "\\LRAExcludeFromPrintEditionEnd\n",
+    files = render_chapter_stub_files(
+        volume_root,
+        subject,
+        display_title,
+        registry,
+        section_titles,
+        metadata,
+        include_capstone=include_capstone,
     )
-
-    if section_titles:
-        sections = "sections:\n" + "".join(
-            f"  - subject: {slugify(title)}\n    display_title: \"{title}\"\n"
-            for title in section_titles
-        )
-    else:
-        sections = "sections: []\n"
-    book_line = f"book: {context.book}\n" if context.book else ""
-    write_new(
-        chapter / "chapter.yaml",
-        f"subject: {subject}\n"
-        f"display_title: {_yaml_quote(display_title)}\n"
-        f"volume: {context.volume}\n"
-        f"{book_line}"
-        f"path: {latex_input_path(chapter)}\n"
-        f"status: planned\n{sections}dependencies:\n  prior: {prior_subject}\n  next: {next_subject}\n",
-    )
-    write_new(
-        chapter / "notes" / "index.tex",
-        f"% Notes index for chapter: {display_title}\n"
-        "% Topic routers are \\section + \\input here in dependency order.\n",
-    )
-    write_new(
-        chapter / "proofs" / "index.tex",
-        f"% Proofs index for chapter: {display_title}\n% Proof topics \\input here, matching notes sections in dependency order.\n",
-    )
-    if include_capstone:
-        write_new(
-            chapter / "proofs" / "exercises" / "index.tex",
-            f"% Exercise proofs index for chapter: {display_title}\n"
-            f"\\input{{{chapter_route}/proofs/exercises/capstone-{subject}}}\n",
-        )
-        write_new(
-            chapter / "proofs" / "exercises" / f"capstone-{subject}.tex",
-            _capstone_stub(subject, display_title),
-        )
+    for relative_path, content in files.items():
+        write_new(volume_root / relative_path, content)
 
     for router in ("index.tex", "main.tex"):
         path = volume_root / router

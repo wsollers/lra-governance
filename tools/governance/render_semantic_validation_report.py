@@ -104,6 +104,19 @@ def extract_original_environment(source_text: str) -> str:
     return match.group(0).strip() if match else source_text.strip()
 
 
+def source_context_for_candidate(candidate: Any) -> str:
+    """Return one formal environment and its adjacent decoration segment."""
+    source_text = candidate.source_file.read_text(encoding="utf-8")
+    lines = source_text.splitlines(keepends=True)
+    start_line = max(int(candidate.line_start) - 1, 0)
+    end_line = max(int(candidate.line_end), start_line)
+    start_offset = sum(len(line) for line in lines[:start_line])
+    formal_end_offset = sum(len(line) for line in lines[:end_line])
+    next_formal = FORMAL_ENV_RE.search(source_text, formal_end_offset)
+    context_end = next_formal.start() if next_formal else len(source_text)
+    return source_text[start_offset:context_end].strip()
+
+
 def dependency_labels(dependency_tex: str | None) -> list[str]:
     if not dependency_tex:
         return []
@@ -187,7 +200,8 @@ def render_item(
 ) -> tuple[str, dict[str, Any]]:
     package = artifact_package_for(candidate, repo_root)
     package_dir = repo_root / package["directory"]
-    source_sections = extract_source_sections(candidate.text)
+    source_context = source_context_for_candidate(candidate)
+    source_sections = extract_source_sections(source_context)
     artifact_data = load_artifact(repo_root, package)
     artifact_fields = artifact_summary(artifact_data)
     llm_path = find_llm_payload(candidate.label, package_dir, llm_data_dir, explicit_payloads)
@@ -254,7 +268,7 @@ def render_item(
         fenced(extract_original_environment(candidate.text), "tex"),
         "## Original Routed Text",
         "",
-        fenced(candidate.text, "tex"),
+        fenced(source_context, "tex"),
         "## Source Decoration Data",
         "",
     ]

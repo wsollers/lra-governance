@@ -1,8 +1,8 @@
-"""
-Deterministic validation for generated statement blocks.
+"""Deterministic local validation for standalone statement blocks.
 
-These checks are intentionally local and conservative. They catch structural
-problems before generated LaTeX is patched into source files.
+The canonical implementation is shared by generated-block preflight and
+single-statement auditing. Repository-wide relationships remain the
+responsibility of the integrated volume validator.
 """
 
 from __future__ import annotations
@@ -29,6 +29,10 @@ _REMARK = re.compile(
     r"\\begin\{remark\*\}(?:\[([^\]]+)\])?(.*?)\\end\{remark\*\}",
     re.DOTALL,
 )
+_DEPENDENCIES_ENV = re.compile(
+    r"\\begin\{dependencies\}(.*?)\\end\{dependencies\}",
+    re.DOTALL,
+)
 _HYPERREF = re.compile(r"\\hyperref\[([^\]]+)\]")
 _RAW_STRUCTURE_QUANTIFIER = re.compile(r"\\forall\s*\([^)]*,[^)]*\)")
 _LINE_COMMENT = re.compile(r"(?<!\\)%.*$")
@@ -37,6 +41,7 @@ _BARE_PREDICATE_MACRO = re.compile(
     r"\\(UpperBound|LowerBound|Maximum|Minimum|Supremum|Infimum)\b"
 )
 _NO_LOCAL_DEPENDENCIES = re.compile(r"\\NoLocalDependencies\b")
+_DEFINITIONAL_ROOT = re.compile(r"\\DefinitionalRoot\b")
 
 
 _EXPECTED_BOX_COLORS = {
@@ -49,6 +54,15 @@ _EXPECTED_BOX_COLORS = {
 }
 
 _BOX_REQUIRED_TYPES = {"ax"}
+_PROOF_BEARING_TYPES = {"thm", "lem", "prop", "cor"}
+_EXPECTED_LABEL_PREFIX = {
+    "def": "def",
+    "thm": "thm",
+    "lem": "lem",
+    "prop": "prop",
+    "cor": "cor",
+    "ax": "ax",
+}
 
 _DEFINITION_REQUIRED_REMARKS = {
     "standard quantified statement",
@@ -72,7 +86,7 @@ class Finding:
         }
 
 
-def validate_generated_block(
+def validate_statement_block(
     tex: str,
     *,
     artifact_type: str | None = None,
@@ -130,8 +144,28 @@ def validate_generated_block(
             )
         )
 
+    if len(labels) == 1 and effective_type:
+        expected_prefix = _EXPECTED_LABEL_PREFIX.get(effective_type)
+        actual_prefix = labels[0].split(":", 1)[0] if ":" in labels[0] else ""
+        if expected_prefix and actual_prefix != expected_prefix:
+            findings.append(
+                Finding(
+                    "FAIL",
+                    "wrong_label_prefix",
+                    f"Statement type `{effective_type}` requires label prefix `{expected_prefix}:`.",
+                    labels[0],
+                )
+            )
+
     if effective_type:
         findings.extend(_validate_box(cleaned, effective_type))
+        findings.extend(
+            _validate_proof_navigation(
+                env_body,
+                effective_type,
+                labels[0] if len(labels) == 1 else expected_label,
+            )
+        )
 
     if env_body and r"\operatorname" in env_body:
         findings.append(
@@ -146,7 +180,7 @@ def validate_generated_block(
     if effective_type == "def":
         findings.extend(_validate_definition(cleaned, env_body))
 
-    findings.extend(_validate_required_logical_blocks(cleaned))
+    findings.extend(_validate_required_logical_blocks(cleaned, effective_type))
     findings.extend(_validate_common_latex(cleaned))
     findings.extend(_validate_dependencies(cleaned))
 
@@ -163,6 +197,20 @@ def validate_generated_block(
         "label": labels[0] if len(labels) == 1 else None,
         "findings": [finding.as_dict() for finding in findings],
     }
+
+
+def validate_generated_block(
+    tex: str,
+    *,
+    artifact_type: str | None = None,
+    expected_label: str | None = None,
+) -> dict[str, Any]:
+    """Compatibility entry point for generation callers."""
+    return validate_statement_block(
+        tex,
+        artifact_type=artifact_type,
+        expected_label=expected_label,
+    )
 
 
 def validate_generated_file(
@@ -301,7 +349,45 @@ def _validate_definition(tex: str, env_body: str) -> list[Finding]:
     return findings
 
 
-def _validate_required_logical_blocks(tex: str) -> list[Finding]:
+def _validate_proof_navigation(
+    env_body: str,
+    artifact_type: str,
+    label: str | None,
+) -> list[Finding]:
+    findings: list[Finding] = []
+    proof_targets = [target for target in _HYPERREF.findall(env_body) if target.startswith("prf:")]
+    if artifact_type in _PROOF_BEARING_TYPES:
+        expected = f"prf:{label.split(':', 1)[1]}" if label and ":" in label else None
+        if not proof_targets:
+            findings.append(
+                Finding(
+                    "FAIL",
+                    "missing_go_to_proof_link",
+                    "Proof-bearing statement must include its proof navigation link inside the formal environment.",
+                )
+            )
+        elif expected and expected not in proof_targets:
+            findings.append(
+                Finding(
+                    "FAIL",
+                    "wrong_go_to_proof_target",
+                    f"Proof navigation must target `{expected}`.",
+                    f"found={proof_targets}",
+                )
+            )
+    elif proof_targets:
+        findings.append(
+            Finding(
+                "FAIL",
+                "forbidden_go_to_proof_link",
+                f"Statement type `{artifact_type}` must not include proof navigation.",
+                f"found={proof_targets}",
+            )
+        )
+    return findings
+
+
+def _validate_required_logical_blocks(tex: str, artifact_type: str | None) -> list[Finding]:
     findings: list[Finding] = []
     remarks = [(_normalize_title(title), body) for title, body in _REMARK.findall(tex)]
     titles = _support_titles(tex)
@@ -321,6 +407,14 @@ def _validate_required_logical_blocks(tex: str) -> list[Finding]:
                 "Generated block must include an Interpretation remark.",
             )
         )
+    if "dependencies" not in titles:
+        findings.append(
+            Finding(
+                "FAIL",
+                "missing_dependencies",
+                "Statement block must include a dependencies declaration.",
+            )
+        )
     binder_count = sum(
         _count_quantified_binders(body)
         for title, body in remarks
@@ -333,6 +427,77 @@ def _validate_required_logical_blocks(tex: str) -> list[Finding]:
                 "missing_predicate_reading",
                 "Generated block has at least two quantified binders but no Predicate reading remark.",
                 f"binders={binder_count}",
+            )
+        )
+    if binder_count >= 2 and "negated quantified statement" not in titles:
+        findings.append(
+            Finding(
+                "FAIL",
+                "missing_negated_quantified_statement",
+                "A Standard quantified statement with at least two binders requires a Negated quantified statement.",
+                f"binders={binder_count}",
+            )
+        )
+    if "negation predicate reading" in titles and (
+        "negated quantified statement" not in titles or "predicate reading" not in titles
+    ):
+        findings.append(
+            Finding(
+                "FAIL",
+                "orphan_negation_predicate_reading",
+                "Negation predicate reading requires both the negated statement and Predicate reading.",
+            )
+        )
+    if (
+        "negated quantified statement" in titles
+        and "predicate reading" in titles
+        and "negation predicate reading" not in titles
+    ):
+        findings.append(
+            Finding(
+                "FAIL",
+                "missing_negation_predicate_reading",
+                "Negated quantified statement and Predicate reading require a Negation predicate reading.",
+            )
+        )
+    if "contrapositive predicate reading" in titles and (
+        "contrapositive quantified statement" not in titles or "predicate reading" not in titles
+    ):
+        findings.append(
+            Finding(
+                "FAIL",
+                "orphan_contrapositive_predicate_reading",
+                "Contrapositive predicate reading requires both the contrapositive statement and Predicate reading.",
+            )
+        )
+    if (
+        "contrapositive quantified statement" in titles
+        and "predicate reading" in titles
+        and "contrapositive predicate reading" not in titles
+    ):
+        findings.append(
+            Finding(
+                "FAIL",
+                "missing_contrapositive_predicate_reading",
+                "Contrapositive quantified statement and Predicate reading require a Contrapositive predicate reading.",
+            )
+        )
+    if artifact_type in {"def", "ax"} and (
+        {"contrapositive quantified statement", "contrapositive predicate reading"} & titles
+    ):
+        findings.append(
+            Finding(
+                "FAIL",
+                "forbidden_contrapositive_block",
+                f"Statement type `{artifact_type}` must not contain contrapositive support blocks.",
+            )
+        )
+    if artifact_type != "def" and ({"examples", "non-examples"} & titles):
+        findings.append(
+            Finding(
+                "FAIL",
+                "forbidden_definition_example_block",
+                "Examples and Non-Examples support blocks are reserved for definitions.",
             )
         )
     findings.extend(_validate_failure_modes(remarks, has_predicate_reading="predicate reading" in titles))
@@ -430,13 +595,14 @@ def _validate_common_latex(tex: str) -> list[Finding]:
 
 def _validate_dependencies(tex: str) -> list[Finding]:
     findings: list[Finding] = []
-    if _NO_LOCAL_DEPENDENCIES.search(tex):
+    if _NO_LOCAL_DEPENDENCIES.search(tex) or _DEFINITIONAL_ROOT.search(tex):
         return findings
 
     dependencies = [
         body for title, body in _REMARK.findall(tex)
         if _normalize_title(title) == "dependencies"
     ]
+    dependencies.extend(_DEPENDENCIES_ENV.findall(tex))
     if not dependencies:
         return findings
 
@@ -539,6 +705,8 @@ def _normalize_title(title: str | None) -> str:
 def _support_titles(tex: str) -> set[str]:
     titles = {_normalize_title(title) for title, _ in _REMARK.findall(tex)}
     if re.search(r"\\begin\{dependencies\}", tex):
+        titles.add("dependencies")
+    if _NO_LOCAL_DEPENDENCIES.search(tex) or _DEFINITIONAL_ROOT.search(tex):
         titles.add("dependencies")
     return titles
 

@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "AuditReport",
-  "description": "Shared response schema for all structural audit API calls. Returned by audit-statement, audit-proof, and audit-stub prompts.",
+  "description": "Shared report schema for structural audits, including deterministic and model-assisted audit paths.",
   "type": "object",
   "required": ["audit_type", "artifact_type", "label", "summary", "checks", "violations"],
   "properties": {
@@ -9,7 +9,7 @@
     "audit_type": {
       "type": "string",
       "enum": ["statement", "proof", "stub_chapter", "stub_volume"],
-      "description": "Which audit prompt produced this report."
+      "description": "Which audit operation produced this report."
     },
 
     "artifact_type": {
@@ -44,7 +44,7 @@
 
     "checks": {
       "type": "array",
-      "description": "One entry per block checked, in block-registry order.",
+      "description": "Ordered deterministic and, when requested, semantic checks performed by the audit operation.",
       "items": {
         "type": "object",
         "required": ["block_id", "requirement", "status", "finding"],
@@ -52,7 +52,7 @@
 
           "block_id": {
             "type": "string",
-            "description": "The block id from block-registry.yaml (e.g. standard_quantified_stmt)."
+            "description": "Stable identifier for a registry block, deterministic validator finding, or bounded semantic judgment."
           },
 
           "requirement": {

@@ -20,7 +20,7 @@ figures from volume files.
 - `constitution/master.md`
 - `constitution/schema/file-schema.yaml`
 - `constitution/prompts/audit-statement.md`
-- `constitution/prompts/generate-statement.md`
+- typed mathematical payload rendering (the former statement-generation prompt was retired)
 - `constitution/prompts/generate-stub-chapter.md`
 - `docs/architecture/latex-build-and-rendering.md`
 - `docs/governance/README.md`

@@ -1,55 +1,14 @@
-Generated downstream instruction files are not canonical, and there are no
-synced governance copies in downstream repos. The former one-way governance
-fan-out and volume-to-monorepo sync are retired; repos read `lra-governance` and
-`lra-common` directly from a sibling checkout, `LRA_GOVERNANCE_ROOT`, or the
-build image.
+# LRA Governance Bootstrap
 
-# lra-governance Agent Router
+This file locates task instructions; it does not define task policy.
 
-`lra-governance` is the source of truth for LRA governance docs, architecture
-docs, repo overlays, prompts, schemas, governance tools, generators, the
-canonical YAML vocabulary, and integration policy.
-
-Resolve each task first:
+Locate the canonical `lra-governance` checkout from the current repository, an
+adjacent sibling, `LRA_GOVERNANCE_ROOT`, or the build image. Then resolve the
+user's task before doing task work:
 
 ```text
 python <governance-root>/capabilities/resolve.py --repo <repo> --task "<user task>" --root <repo-root>
 ```
 
-The resolver returns a bounded eager packet plus lazy references, executable
-tools, schemas, and examples. `docs/agent-task-index.md` is a generated human
-view and must not be preloaded. Detailed rules live under:
-
-- `docs/agent-task-index.md`
-- `docs/governance/`
-- `docs/architecture/`
-- `docs/governance/repo-overlays/`
-- `constitution/schema/`
-- `tools/governance/`
-
-When working from a local multi-repo checkout such as `F:\repos`, run the
-resolver to choose the smallest relevant set of canonical governance files.
-Do not read every downstream copy just because it exists.
-
-When working inside an isolated repository checkout without an adjacent
-`lra-governance`, resolve governance through `LRA_GOVERNANCE_ROOT`, an explicit
-`lra-governance` checkout, or the build Docker image. There are no local synced
-governance copies to fall back on; if none resolves, stop and report that
-`lra-governance` is not present.
-
-Do not edit downstream generated instruction files by hand except for emergency
-repair; any emergency repair must be ported upstream into `lra-governance`.
-
-For agent wrapper generation, combine:
-
-1. global core rules,
-2. exactly one repo overlay or repo-family overlay,
-3. provider-specific wrapper formatting.
-
-Do not include secrets, credentials, tokens, or machine-local private values in
-generated files.
-
-Do not modify mathematical content during governance tasks. The canonical
-vocabulary (`predicates.yaml`, `structures.yaml`, `notation.yaml`,
-`relations.yaml`) lives in `lra-governance`; do not invent predicates,
-structure constructors, notation, relations, labels, or dependencies.
+If the command succeeds, follow its output. If governance cannot be located or
+the resolver exits unsuccessfully, stop and report the error.

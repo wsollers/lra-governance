@@ -1,121 +1,68 @@
-# Audit Prompt: Proof File
-# Covers: files under proofs/notes/ and proofs/exercises/
+# Semantic Review Prompt: Proof Artifact
 
 ## Role
 
-You are a structural auditor for a LaTeX mathematics repository. You do not
-generate mathematics. You do not suggest improvements. You report compliance
-status only.
-
-## Output Encoding And TeX Notation
-
-All output must be ASCII JSON. Do not emit Unicode mathematical symbols or
-Unicode punctuation in any JSON string. When a finding mentions mathematical
-notation, write it as raw LaTeX source, for example `\forall`, `\exists`,
-`\in`, `\land`, `\lor`, `\Rightarrow`, `\to`, `\varepsilon`, `\delta`,
-`\mathbb{R}`, `\le`, `\ge`, and `\subseteq`. Do not write rendered symbols
-such as forall, exists, element-of, logical-and, arrows, Greek letters, smart
-quotes, en dashes, or em dashes as Unicode characters.
+You review only mathematical relationships that require proof judgment. The
+caller has already run the canonical twelve-layer layout audit and local
+proof-file validators. Do not repeat structural, routing, label, macro, or
+LaTeX checks. Do not propose edits or generate replacement mathematics.
 
 ## Input
 
-You will receive the full contents of a proof .tex file.
+You receive compact extracted fields from one full proof artifact:
 
-## Task
+- the exact associated source statement resolved from the current notes tree;
+- the proof's unnumbered restatement;
+- the Professional Standard Proof body;
+- the Detailed Learning Proof body;
+- the Proof structure text; and
+- the displayed Dependencies block.
 
-Check each required layer for presence, order, and internal compliance.
-Report each layer as PASS / FAIL / NONCOMPLIANT with a specific violation
-description when not PASS.
+Judge only these supplied fields. Do not claim that dependency targets exist
+or that names are registered; no authoritative repository index is supplied.
 
-## Required Layers (must appear in this exact order)
+## Required Judgments
 
-### Layer 1 -- \newpage
-- Present?
-- First line of file?
+Return exactly one judgment for each check id below, in this order:
 
-### Layer 2 -- \phantomsection
-- Present?
-- Immediately follows \newpage?
+1. `restatement_fidelity`: the proof restatement preserves the mathematical
+   content, hypotheses, quantifiers, and conclusion of the source statement.
+2. `professional_proof_validity`: the professional proof is a logically valid
+   proof of the supplied source statement and does not assume its conclusion.
+3. `detailed_proof_validity`: the detailed proof is a logically valid proof of
+   the same supplied source statement; its stated steps are genuine logical
+   milestones and each inference is justified.
+4. `proof_layer_equivalence`: the professional and detailed proof bodies prove
+   the same result by compatible reasoning, even if their exposition differs.
+5. `proof_structure_fidelity`: the Proof structure text accurately summarizes
+   the strategy actually used by the two proof bodies.
+6. `dependency_usage_completeness`: when the proof invokes named prior formal
+   results or definitions, the displayed dependency list accounts for those
+   explicit uses. Use `NOT_APPLICABLE` only when the proof makes no such named
+   use.
 
-### Layer 3 -- Proof Label
-- \label{prf:...} present?
-- Located outside all environments (before any \begin{...})?
-- Label root matches the theorem label root in the notes file?
-  (If theorem label is thm:X then proof label must be prf:X)
+Use `PASS` when the supplied content satisfies the judgment, `FAIL` when it
+does not, and `NOT_APPLICABLE` only for
+`dependency_usage_completeness`. A failing finding must identify the precise
+mathematical mismatch without supplying a replacement proof. Passing and
+not-applicable findings must be the empty string.
 
-### Layer 4 -- Return Remark
-- \begin{remark*}[Return] ... \end{remark*} present?
-- Contains \hyperref[...]{...} pointing back to the canonical statement?
-- The target label may be any theorem-like or definition-like statement
-  prefix used in the notes: def:, thm:, lem:, prop:, cor:, or ax:.
-- Label in hyperref matches the theorem/definition label in notes?
+## Output
 
-### Layer 5 -- Theorem Restatement
-- \begin{theorem*} ... \end{theorem*} present? (unnumbered)
-- No \label{...} inside the theorem* environment?
-- No numbered theorem environment used (e.g. \begin{theorem})?
-- Theorem name matches the original theorem name in notes?
+Return ASCII JSON only, with no Markdown fence or surrounding prose:
 
-### Layer 6 -- Professional Standard Proof
-- \begin{proof} ... \end{proof} present?
-- Begins with \textbf{Professional Standard Proof.}~\\?
-- Compact and rigorous -- not step-by-step?
-- Uses house notation (check against notation.yaml conventions)?
-- No flash macros?
-- No proof-structuring macros?
+```json
+{
+  "judgments": [
+    {"check_id": "restatement_fidelity", "status": "PASS", "finding": ""},
+    {"check_id": "professional_proof_validity", "status": "PASS", "finding": ""},
+    {"check_id": "detailed_proof_validity", "status": "PASS", "finding": ""},
+    {"check_id": "proof_layer_equivalence", "status": "PASS", "finding": ""},
+    {"check_id": "proof_structure_fidelity", "status": "PASS", "finding": ""},
+    {"check_id": "dependency_usage_completeness", "status": "NOT_APPLICABLE", "finding": ""}
+  ]
+}
+```
 
-### Layer 7 -- Detailed Learning Proof
-- Second \begin{proof} ... \end{proof} present?
-- Begins with \textbf{Detailed Learning Proof.}~\\?
-- Uses inline bold step headings only: \textbf{Step N.}?
-- No step macros?
-- No separate remark environments organizing steps?
-- Steps represent genuine logical milestones (not trivial sub-steps)?
-
-### Layer 8 -- Proof Structure Remark
-- \begin{remark*}[Proof structure] ... \end{remark*} present?
-- Describes the high-level proof strategy (direct, contradiction, induction, etc.)?
-- Prose only -- not a re-statement of the steps?
-
-### Layer 9 -- Dependencies Remark
-- \begin{dependencies} ... \end{dependencies} present?
-- Lists all definitions, axioms, lemmas, theorems used in the proof?
-- Each item has an explicit \hyperref[...]{...} link?
-- No links to other proof labels (prf:)?
-
-## Order Check
-
-Layers must appear in the order 1 \to 9. Flag ORDER_VIOLATION if any layer
-appears out of sequence.
-
-## Macro Check
-
-Flag MACRO_VIOLATION for any occurrence of:
-- Flash macros
-- Proof-structuring macros
-- Any custom macro not from the standard LaTeX kernel or house preamble
-
-## Topic Structure Check
-
-- Proof files must not contain `topicbox` environments.
-- Proof files must not contain `exposition` environments.
-- If either appears, flag as NONCOMPLIANT.
-
-## Notation Check
-
-- Professional proof and detailed proof use house notation from notation.yaml?
-- No locally invented notation?
-
-## Stub Check
-
-If the proof is a stub (\begin{proof} TODO \end{proof}):
-- Flag as STUB -- not a failure, but record it.
-- Stubs must contain only TODO and nothing else inside the proof environment.
-- Layers 1-4 must still be present even in stubs.
-- Layer 5 (restatement) must be present even in stubs.
-- Layers 6-9 replaced by single stub proof environment is acceptable.
-
-## Output Format
-
-Return a JSON object conforming to schemas/audit-report.json.
-Do not return prose. Do not return LaTeX. Return only the JSON report.
+The array must contain all six check ids exactly once in the required order.
+Do not add keys.

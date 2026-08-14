@@ -1,4 +1,6 @@
-version: 3
+version: 4
+packet_version: 1
+entrypoint: capabilities/ENTRYPOINT.md
 # Single source of truth for agent task routing. docs/agent-task-index.md is a
 # generated human view of this file. Only eager_instructions enter the initial
 # context packet; every other class is a pointer or command. token_budget covers
@@ -59,31 +61,18 @@ routes:
     verify: ["python {canonical}/tools/governance/validate_semantic_artifact.py --artifact {target} --governance-root {canonical} --strict"]
     token_budget: 3500
 
-  - id: author-statement
-    title: Add a theorem with proof stub
+  - id: author-mathematics
+    title: Author typed mathematical content
     applies_to: [volume]
-    triggers: ["author statement", "generate the latex", "add theorem", "proof stub", "the theorem", "the lemma", "the proposition", "the corollary", "the axiom", "theorem", "lemma", "proposition", "corollary", "axiom"]
-    eager_instructions: [capabilities/author-statement/capability.md]
-    lazy_references: [capabilities/reference-index.md, docs/workflows/add-theorem-with-proof-stub.md, docs/governance/active-content-promotion-gate.md, docs/governance/proof-standards.md, docs/governance/dependency-standards.md, docs/architecture/local-semantic-logic-verifier.md, docs/governance/source-indexing-policy.md]
-    tools: [capabilities/author-statement/proof_stub.py, tools/governance/validate_volume.py, tools/governance/audit_proof_layout.py, tools/governance/validate_semantic_artifact.py, tools/governance/validate_semantic_logic.py, tools/governance/compare_semantic_ast_extractors.py, tools/governance/update_internal_object_index.py]
-    schemas: [constitution/schema/file-schema.yaml, constitution/schema/artifact-matrix.yaml]
-    examples: [nearby:statement-and-proof]
-    outputs: [named statement, canonical proof stub, semantic evidence, lookup index delta]
-    verify: ["python {canonical}/tools/governance/validate_volume.py {root} --fail-on-errors", "python {canonical}/tools/governance/audit_proof_layout.py --root {root} --chapter {chapter} --strict"]
-    token_budget: 5000
-
-  - id: author-definition
-    title: Add a definition
-    applies_to: [volume]
-    triggers: ["author definition", "generate the definition", "add definition", "the definition", "write the def", "define ", "definition"]
-    eager_instructions: [capabilities/author-definition/capability.md]
-    lazy_references: [capabilities/reference-index.md, docs/governance/active-content-promotion-gate.md, docs/governance/authoring-standards.md, docs/governance/atomic-artifact-standards.md, docs/governance/notation-standards.md, docs/governance/latex-math-style.md, docs/governance/dependency-standards.md, docs/architecture/local-semantic-logic-verifier.md, docs/workflows/internal-object-index-delta.md]
-    tools: [capabilities/author-definition/verify.py, tools/governance/validate_volume.py, tools/governance/validate_latex_math_style.py, tools/governance/validate_semantic_artifact.py, tools/governance/validate_semantic_logic.py, tools/governance/compare_semantic_ast_extractors.py, tools/governance/update_internal_object_index.py]
-    schemas: [constitution/schema/artifact-matrix.yaml, constitution/schema/block-registry.yaml]
-    examples: [nearby:definition]
-    outputs: [named definition, semantic evidence, lookup index delta]
-    verify: ["python {canonical}/capabilities/author-definition/verify.py --target {target} --kind definition --predicates {canonical}/predicates.yaml", "python {canonical}/tools/governance/validate_volume.py {root} --fail-on-errors"]
-    token_budget: 5000
+    triggers: ["author mathematics", "mathematical content", "source text into mathematics", "screenshot mathematics", "model theory", "universal algebra", "author statement", "generate the latex", "generate the definition", "generate definition", "add definition", "write the definition", "define ", "generate a theorem statement", "generate theorem", "add theorem", "generate lemma", "add lemma", "generate proposition", "add proposition", "generate corollary", "add corollary", "generate axiom", "add axiom", "generate proof stub", "create proof stub", "generate a theorem proof stub", "create a theorem proof stub", "generate a lemma proof stub", "create a lemma proof stub", "generate a proposition proof stub", "create a proposition proof stub", "generate a corollary proof stub", "create a corollary proof stub", "generate an example", "author example", "write exposition", "write motivation", "the definition", "the theorem", "the lemma", "the proposition", "the corollary", "the axiom"]
+    eager_instructions: [capabilities/author-mathematics/capability.md]
+    lazy_references: [capabilities/author-mathematics/model-theory-universal-algebra.md, capabilities/reference-index.md, docs/workflows/add-theorem-with-proof-stub.md, docs/governance/active-content-promotion-gate.md, docs/governance/authoring-standards.md, docs/governance/proof-standards.md, docs/governance/dependency-standards.md, docs/governance/notation-standards.md, docs/architecture/local-semantic-logic-verifier.md, docs/governance/source-indexing-policy.md]
+    tools: [tools/governance/generators/mathematical_tex.py, tools/governance/generators/proof_stub.py, tools/governance/lra_lookup.py, tools/governance/validate_volume.py, tools/governance/audit_proof_layout.py, tools/governance/validate_semantic_artifact.py, tools/governance/validate_semantic_logic.py, tools/governance/compare_semantic_ast_extractors.py, tools/governance/update_internal_object_index.py]
+    schemas: [constitution/schemas/mathematical-content.schema.json, constitution/schema/file-schema.yaml, constitution/schema/artifact-matrix.yaml, constitution/schema/block-registry.yaml, predicates.yaml, structures.yaml, notation.yaml, relations.yaml]
+    examples: [nearby:mathematical-artifact]
+    outputs: [typed mathematical payload, deterministic TeX artifacts, optional canonical proof stubs, semantic evidence, lookup index delta]
+    verify: ["python {canonical}/tools/governance/generators/mathematical_tex.py --payload {target} --check", "python {canonical}/tools/governance/validate_volume.py {root} --fail-on-errors"]
+    token_budget: 3500
 
   - id: generate-chapter-artifacts
     title: Generate chapter artifacts from payload
@@ -150,18 +139,18 @@ routes:
     verify: ["Run the launcher and confirm the Dev Containers flow opens."]
     token_budget: 5000
 
-  - id: populate-proof-stub
-    title: Add a proof or populate an existing proof stub
+  - id: author-full-proof
+    title: Author a full mathematical proof
     applies_to: [volume]
-    triggers: ["populate proof stub", "add proof", "write proof", "fill proof stub"]
-    eager_instructions: [docs/workflows/populate-proof-stub.md]
-    lazy_references: [docs/governance/active-content-promotion-gate.md, docs/governance/proof-standards.md, docs/governance/dependency-standards.md, docs/architecture/local-semantic-logic-verifier.md]
-    tools: [tools/governance/validate_volume.py, tools/governance/audit_proof_layout.py, tools/governance/validate_semantic_artifact.py]
-    schemas: [constitution/schema/file-schema.yaml]
+    triggers: ["generate full proof", "write full proof", "author full proof", "populate proof stub", "add proof", "write proof", "fill proof stub", "full proof"]
+    eager_instructions: [capabilities/author-full-proof/capability.md]
+    lazy_references: [docs/workflows/populate-proof-stub.md, docs/governance/active-content-promotion-gate.md, docs/governance/proof-standards.md, docs/governance/dependency-standards.md, docs/architecture/local-semantic-logic-verifier.md]
+    tools: [tools/governance/generators/mathematical_tex.py, tools/governance/validators/proof_file_contract.py, tools/governance/validate_volume.py, tools/governance/audit_proof_layout.py, tools/governance/validate_semantic_artifact.py]
+    schemas: [constitution/schemas/mathematical-content.schema.json, constitution/schema/file-schema.yaml]
     examples: [nearby:populated-proof]
-    outputs: [proof populated in place and semantic evidence when needed]
-    verify: ["python {canonical}/tools/governance/validate_volume.py {root} --fail-on-errors", "python {canonical}/tools/governance/audit_proof_layout.py --root {root} --strict"]
-    token_budget: 6000
+    outputs: [typed full-proof payload, deterministic proof TeX, semantic evidence]
+    verify: ["python {canonical}/tools/governance/generators/mathematical_tex.py --payload {target} --check", "python {canonical}/tools/governance/validate_volume.py {root} --fail-on-errors", "python {canonical}/tools/governance/audit_proof_layout.py --root {root} --strict"]
+    token_budget: 3500
 
   - id: migrate-proof-stubs
     title: Validate or migrate proof stubs
@@ -234,12 +223,38 @@ routes:
     triggers: ["stub a chapter", "stub chapter", "scaffold a chapter", "scaffold chapter", "new chapter"]
     eager_instructions: [capabilities/author-stub-chapter/capability.md]
     lazy_references: [capabilities/reference-index.md, docs/governance/stub-chapter-standards.md, docs/governance/volume-structure.md]
-    tools: [capabilities/author-stub-chapter/stub_chapter.py, tools/governance/generate_stub.py, tools/governance/audit_volume_layout.py]
+    tools: [tools/governance/generate_stub.py, tools/governance/generators/chapter_stub.py, tools/governance/audit_volume_layout.py]
     schemas: [constitution/schema/file-schema.yaml]
     examples: [nearby:stub-chapter]
     outputs: [chapter skeleton, metadata, notes and proofs routers]
     verify: ["python {canonical}/tools/governance/validate_volume.py {root} --fail-on-errors"]
     token_budget: 4500
+
+  - id: author-capstone
+    title: Author a full chapter capstone
+    applies_to: [volume]
+    triggers: ["generate full capstone", "write full capstone", "author full capstone", "full capstone", "chapter capstone"]
+    eager_instructions: []
+    lazy_references: [constitution/prompts/generate-capstone.md, docs/governance/volume-structure.md]
+    tools: [constitution/auditor/__main__.py, constitution/auditor/generators/capstone.py, tools/governance/validators/capstones.py, tools/governance/validators/latex_integrity.py, tools/governance/validate_volume.py]
+    schemas: [constitution/schema/file-schema.yaml]
+    examples: []
+    outputs: [validated theorem-shaped chapter capstone]
+    verify: ["python {canonical}/tools/governance/validate_volume.py {root} --fail-on-errors"]
+    token_budget: 2500
+
+  - id: author-stub-volume
+    title: Create a stub volume
+    applies_to: [governance, volume]
+    triggers: ["stub a volume", "stub volume", "scaffold a volume", "scaffold volume", "new volume"]
+    eager_instructions: [capabilities/author-stub-volume/capability.md]
+    lazy_references: [docs/governance/volume-structure.md]
+    tools: [tools/governance/generate_stub.py, tools/governance/generators/volume_stub.py, tools/governance/validate_volume.py, tools/governance/validators/planned_volume_stub.py]
+    schemas: [constitution/schema/file-schema.yaml]
+    examples: []
+    outputs: [volume shell and ordered chapter registry]
+    verify: ["python {canonical}/tools/governance/validate_volume.py {root} --fail-on-errors"]
+    token_budget: 3000
 
   - id: author-stub-section
     title: Create a stub section
@@ -247,7 +262,7 @@ routes:
     triggers: ["stub a section", "stub section", "scaffold a section", "new section"]
     eager_instructions: [capabilities/author-stub-section/capability.md]
     lazy_references: [capabilities/reference-index.md, docs/governance/stub-section-standards.md, docs/governance/volume-structure.md]
-    tools: [capabilities/author-stub-section/stub_section.py, tools/governance/generate_stub.py, tools/governance/audit_volume_layout.py]
+    tools: [tools/governance/generate_stub.py, tools/governance/generators/section_stub.py, tools/governance/audit_volume_layout.py]
     schemas: [constitution/schema/file-schema.yaml]
     examples: [nearby:stub-section]
     outputs: [paired notes and proofs topic folders and routers]
@@ -292,6 +307,58 @@ routes:
     outputs: [canonical YAML delta and refreshed disposable index]
     verify: ["python {canonical}/tools/governance/vocabulary.py validate"]
     token_budget: 6000
+
+  - id: audit-chapter-symbols
+    title: Audit chapter symbols deterministically
+    applies_to: [governance, volume]
+    triggers: ["audit chapter symbols", "audit symbols", "symbol audit", "notation audit"]
+    eager_instructions: []
+    lazy_references: [docs/governance/notation-standards.md, docs/governance/predicate-standards.md]
+    tools: [tools/governance/audit_chapter_symbols.py, tools/governance/validate_registry_contract.py]
+    schemas: [predicates.yaml, structures.yaml, notation.yaml, relations.yaml]
+    examples: []
+    outputs: [deterministic chapter symbol audit report]
+    verify: ["python {canonical}/tools/governance/validate_registry_contract.py", "python {canonical}/tools/governance/audit_chapter_symbols.py --chapter {chapter}"]
+    token_budget: 2000
+
+  - id: audit-statement
+    title: Audit a statement with deterministic structure checks
+    applies_to: [governance, volume]
+    triggers: ["audit a statement", "audit statement", "statement audit", "audit theorem statement", "audit definition statement"]
+    eager_instructions: []
+    lazy_references: [constitution/prompts/audit-statement.md, docs/governance/authoring-standards.md]
+    tools: [constitution/auditor/__main__.py, tools/governance/validate_volume.py]
+    schemas: [constitution/schemas/audit-report.json]
+    examples: []
+    outputs: [deterministic statement structure report and optional compact semantic review]
+    verify: ["python {canonical}/tools/governance/validate_volume.py {root} --fail-on-errors"]
+    token_budget: 2000
+
+  - id: audit-proof
+    title: Audit a proof with deterministic twelve-layer checks
+    applies_to: [governance, volume]
+    triggers: ["audit a proof", "audit proof", "proof audit", "audit proof file"]
+    eager_instructions: []
+    lazy_references: [constitution/prompts/audit-proof.md, docs/governance/proof-standards.md]
+    tools: [constitution/auditor/__main__.py, tools/governance/audit_proof_layout.py, tools/governance/validate_volume.py]
+    schemas: [constitution/schema/file-schema.yaml, constitution/schemas/audit-report.json]
+    examples: []
+    outputs: [deterministic twelve-layer proof report and optional compact mathematical review]
+    verify: ["python {canonical}/tools/governance/audit_proof_layout.py --root {root} --strict"]
+    token_budget: 2000
+
+  - id: plan-toolkits
+    title: Plan section toolkits deterministically
+    applies_to: [governance, volume]
+    triggers: ["plan toolkits", "plan toolkit", "toolkit plan", "audit toolkits"]
+    eager_instructions: []
+    lazy_references: [docs/governance/authoring-standards.md, docs/governance/volume-structure.md]
+    tools: [constitution/auditor/__main__.py, tools/governance/validate_volume.py]
+    schemas: []
+    examples: []
+    outputs: [deterministic toolkit plan and audit report]
+    verify: ["python {canonical}/constitution/auditor/__main__.py --repoDir {canonical} audit toolkits {chapter} --fail-on-findings", "python {canonical}/tools/governance/validate_volume.py {root} --fail-on-errors"]
+    token_budget: 2000
 
   - id: generate-governance-wrappers
     title: Generate local governance wrappers
@@ -543,16 +610,4 @@ routes:
     verify: ["Run the repo overlay success gates."]
     token_budget: 4500
 
-prompt_routes:
-  - {title: Generate a proof, prompt: constitution/prompts/generate-proof.md, schemas: [constitution/schema/file-schema.yaml], verify: [proof layout audit]}
-  - {title: Generate a theorem statement, prompt: constitution/prompts/generate-statement.md, schemas: [constitution/schema/block-registry.yaml, constitution/schema/artifact-matrix.yaml], verify: [statement audit]}
-  - {title: Generate a stub chapter, prompt: constitution/prompts/generate-stub-chapter.md, schemas: [constitution/schema/file-schema.yaml], verify: [volume layout audit]}
-  - {title: Generate a stub volume, prompt: constitution/prompts/generate-stub-volume.md, schemas: [constitution/schema/file-schema.yaml], verify: [volume layout audit]}
-  - {title: Generate a capstone, prompt: constitution/prompts/generate-capstone.md, schemas: [constitution/schema/file-schema.yaml, constitution/schema/artifact-matrix.yaml], verify: [volume build]}
-  - {title: Generate breadcrumbs, prompt: constitution/prompts/generate-breadcrumb.md, schemas: [constitution/schema/file-schema.yaml], verify: [path and layout check]}
-  - {title: Audit a proof, prompt: constitution/prompts/audit-proof.md, schemas: [constitution/schema/file-schema.yaml, constitution/schemas/audit-report.json], verify: [proof layout audit]}
-  - {title: Audit a statement, prompt: constitution/prompts/audit-statement.md, schemas: [constitution/schema/block-registry.yaml, constitution/schema/artifact-matrix.yaml, constitution/schemas/audit-report.json], verify: [statement audit]}
-  - {title: Audit a stub, prompt: constitution/prompts/audit-stub.md, schemas: [constitution/schema/file-schema.yaml, constitution/schemas/audit-report.json], verify: [volume layout audit]}
-  - {title: Audit chapter symbols, prompt: constitution/prompts/audit-chapter-symbols.md, schemas: [notation.yaml, predicates.yaml, relations.yaml], verify: [vocabulary and symbol audit]}
-  - {title: Fix logical block gaps, prompt: constitution/prompts/fix-logical-block-gaps.md, schemas: [constitution/schema/block-registry.yaml, constitution/schema/artifact-matrix.yaml], verify: [statement audit]}
-  - {title: Plan toolkits, prompt: constitution/prompts/plan-toolkits.md, schemas: [constitution/schema/block-registry.yaml, constitution/schema/artifact-matrix.yaml], verify: [toolkit and decoration audit]}
+prompt_routes: []

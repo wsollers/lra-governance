@@ -11,6 +11,96 @@ from pathlib import Path
 from auditor import config
 
 
+_SUMMARY_KEYS = {
+    "PASS": "passed",
+    "FAIL": "failed",
+    "NONCOMPLIANT": "noncompliant",
+    "CONDITIONAL_MET": "conditional_met",
+    "CONDITIONAL_UNMET": "conditional_unmet",
+    "CONDITIONAL_VIOLATION": "conditional_violation",
+    "DEPENDENT_MET": "dependent_met",
+    "DEPENDENT_UNMET": "dependent_unmet",
+    "DEPENDENT_VIOLATION": "dependent_violation",
+    "FORBIDDEN_VIOLATION": "forbidden_violation",
+}
+
+_NONVIOLATION_STATUSES = {
+    "PASS",
+    "CONDITIONAL_MET",
+    "CONDITIONAL_UNMET",
+    "DEPENDENT_MET",
+    "DEPENDENT_UNMET",
+    "STUB",
+}
+
+
+def summary_for_checks(checks: list[dict], *, stub: bool = False) -> dict:
+    """Build the shared audit summary deterministically from canonical statuses."""
+    summary = {
+        "total_checks": len(checks),
+        "passed": 0,
+        "failed": 0,
+        "noncompliant": 0,
+        "conditional_met": 0,
+        "conditional_unmet": 0,
+        "conditional_violation": 0,
+        "dependent_met": 0,
+        "dependent_unmet": 0,
+        "dependent_violation": 0,
+        "forbidden_violation": 0,
+        "stub": stub,
+    }
+    for check in checks:
+        key = _SUMMARY_KEYS.get(check["status"])
+        if key:
+            summary[key] += 1
+    return summary
+
+
+def audit_report_from_checks(
+    checks: list[dict],
+    *,
+    audit_type: str,
+    artifact_type: str,
+    label: str,
+    stub: bool = False,
+    special_flags: list[dict] | None = None,
+) -> dict:
+    """Build the shared report shape without delegating counts to a model."""
+    return {
+        "audit_type": audit_type,
+        "artifact_type": artifact_type,
+        "label": label,
+        "summary": summary_for_checks(checks, stub=stub),
+        "checks": checks,
+        "violations": [
+            {
+                "block_id": check["block_id"],
+                "status": check["status"],
+                "finding": check["finding"],
+            }
+            for check in checks
+            if check["status"] not in _NONVIOLATION_STATUSES
+        ],
+        "special_flags": list(special_flags or []),
+    }
+
+
+def merge_audit_reports(primary: dict, secondary: dict) -> dict:
+    """Merge check sets while preserving caller-owned audit metadata."""
+    return audit_report_from_checks(
+        [*primary["checks"], *secondary["checks"]],
+        audit_type=primary["audit_type"],
+        artifact_type=primary["artifact_type"],
+        label=primary["label"],
+        stub=primary.get("summary", {}).get("stub", False),
+        special_flags=[
+            *primary.get("special_flags", []),
+            *secondary.get("special_flags", []),
+        ],
+    )
+
+
 # ---------------------------------------------------------------------------
 # Timestamp
 # ---------------------------------------------------------------------------

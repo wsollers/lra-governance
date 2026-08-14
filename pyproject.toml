@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lra-governance-runtime"
+version = "0.1.0"
+description = "Canonical Python runtime for Learning Real Analysis governance tools"
+requires-python = ">=3.12,<3.14"
+dependencies = [
+  "jsonschema>=4.0",
+  "PyYAML>=6.0",
+]
+
+[project.optional-dependencies]
+test = [
+  "pytest>=8.0",
+]
+validation = [
+  "lark",
+  "latex2sympy2",
+  "nltk",
+  "pylatexenc",
+  "sympy",
+  "tree-sitter",
+  "tree-sitter-language-pack",
+]
+ai = [
+  "anthropic>=0.25.0",
+  "openai>=1.0.0",
+]
+
+[tool.setuptools]
+packages = []
+
+[tool.pytest.ini_options]
+testpaths = ["capabilities", "tools/governance"]

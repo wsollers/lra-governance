@@ -20,8 +20,8 @@ canonical capstone stub, optional section stubs, and routes the chapter from
 `index.tex` and `main.tex` when those routers exist.
 
 The chapter router uses the thin canonical shape: `\chapter`, chapter label,
-`\breadcrumb`, notes input, proof section, print-aware proofs input, capstone
-section, and print-aware capstone input.
+`\lrameta`/`\LraBreadcrumb`, notes input, proof section, print-aware proofs
+input, capstone section, and print-aware capstone input.
 
 ## Success Gates
 

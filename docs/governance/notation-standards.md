@@ -62,6 +62,19 @@ The template records notation shape only. It does not assert the mathematical
 object exists, expand the notation, or replace the corresponding structure and
 predicate entries in `structures.yaml` and `predicates.yaml`.
 
+## Callable Operator Contracts
+
+An entry whose `\operatorname{...}` symbol is used as a function may declare an
+ordered `arguments` list and `returns`. List length owns arity; each argument
+uses the same `name`, `role`, and optional coarse `type` fields as predicate
+arguments. This metadata belongs in `notation.yaml`, not in a second operator
+registry. The volume validator checks calls wherever they occur, and the typed
+mathematics renderer applies the same contract before emitting TeX.
+
+Do not infer mathematical facts from these contracts. They identify only
+representational errors such as the wrong number of operands or an explicit
+ambient object occupying a scalar slot.
+
 ## Standard Notation Normalizations
 
 Preserve mathematical meaning; normalize mathematical notation.

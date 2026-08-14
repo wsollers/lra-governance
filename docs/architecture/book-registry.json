@@ -719,7 +719,9 @@
             {
               "chapter": "metric-spaces",
               "notes": [
-                "metrics-and-metric-spaces",
+                "metrics",
+                "norms-induce-metrics",
+                "metric-spaces",
                 "metric-subspaces-and-superspaces",
                 "metric-isometries",
                 "distances-and-diameter",

@@ -1,0 +1,359 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lra.local/schemas/mathematical-content.schema.json",
+  "title": "LRA typed mathematical content payload",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "artifacts"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "request_context": {"$ref": "#/$defs/requestContext"},
+    "artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/artifact"}
+    }
+  },
+  "$defs": {
+    "requestContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["intake"],
+      "properties": {
+        "intake": {"enum": ["named_request", "pasted_text", "screenshot", "source_text"]},
+        "description": {"type": "string", "minLength": 1}
+      }
+    },
+    "segment": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "value"],
+          "properties": {
+            "type": {"const": "text"},
+            "value": {"type": "string", "minLength": 1}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "value"],
+          "properties": {
+            "type": {"const": "math"},
+            "value": {"type": "string", "minLength": 1}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "key"],
+          "properties": {
+            "type": {"const": "citation"},
+            "key": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9:_-]*$"},
+            "command": {"enum": ["citep", "citet"]}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "label", "display"],
+          "properties": {
+            "type": {"const": "reference"},
+            "label": {"type": "string", "pattern": "^(def|ax|thm|lem|prop|cor):[a-z0-9]+(?:-[a-z0-9]+)*$"},
+            "display": {"type": "string", "minLength": 1}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "value"],
+          "properties": {
+            "type": {"enum": ["emphasis", "strong", "code"]},
+            "value": {"type": "string", "minLength": 1}
+          }
+        }
+      ]
+    },
+    "richText": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["segments"],
+            "properties": {
+              "segments": {
+                "type": "array",
+                "minItems": 1,
+                "items": {"$ref": "#/$defs/segment"}
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["type", "value"],
+            "properties": {
+              "type": {"const": "display_math"},
+              "value": {"type": "string", "minLength": 1}
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["type", "items"],
+            "properties": {
+              "type": {"const": "description"},
+              "items": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["title", "body"],
+                  "properties": {
+                    "title": {"type": "string", "minLength": 1},
+                    "body": {"$ref": "#/$defs/richText"}
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "displayMath": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "supportBlock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "body"],
+      "properties": {
+        "type": {"type": "string", "pattern": "^[a-z]+(?:_[a-z]+)*$"},
+        "body": {"$ref": "#/$defs/richText"}
+      }
+    },
+    "dependency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "display"],
+      "properties": {
+        "label": {"type": "string", "pattern": "^(def|ax|thm|lem|prop|cor):[a-z0-9]+(?:-[a-z0-9]+)*$"},
+        "display": {"type": "string", "minLength": 1}
+      }
+    },
+    "dependencies": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "records"],
+      "properties": {
+        "mode": {"enum": ["explicit", "no-local", "definitional-root"]},
+        "records": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/dependency"}
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "attribution": {"type": "string", "minLength": 1},
+        "citation_key": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9:_-]*$"},
+        "context": {"type": "string", "minLength": 1}
+      },
+      "minProperties": 1
+    },
+    "uncertainty": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "note"],
+      "properties": {
+        "status": {"const": "uncertain"},
+        "note": {"type": "string", "minLength": 1}
+      }
+    },
+    "common": {
+      "type": "object",
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$"},
+        "kind": {"enum": ["axiom", "definition", "theorem", "example", "exposition", "proof"]},
+        "title": {"type": "string", "minLength": 1},
+        "output_path": {"type": "string", "pattern": "^(?![A-Za-z]:)(?![/\\\\])(?!.*(?:^|[/\\\\])\\.\\.(?:[/\\\\]|$)).+\\.tex$"},
+        "registry_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "pattern": "^(pred|struct|not|rel):[a-z0-9]+(?:-[a-z0-9]+)*$"}
+        },
+        "dependencies": {"$ref": "#/$defs/dependencies"},
+        "source": {"$ref": "#/$defs/source"},
+        "uncertainty": {"$ref": "#/$defs/uncertainty"}
+      }
+    },
+    "formalCommon": {
+      "allOf": [
+        {"$ref": "#/$defs/common"},
+        {
+          "type": "object",
+          "required": ["id", "kind", "title", "label", "standard_form", "interpretation", "dependencies"],
+          "properties": {
+            "label": {"type": "string", "pattern": "^(def|ax|thm|lem|prop|cor):[a-z0-9]+(?:-[a-z0-9]+)*$"},
+            "boxed": {"type": "boolean"},
+            "standard_form": {"$ref": "#/$defs/richText"},
+            "interpretation": {"$ref": "#/$defs/richText"},
+            "dependencies": {"$ref": "#/$defs/dependencies"},
+            "notation": {"$ref": "#/$defs/richText"},
+            "source_note": {"$ref": "#/$defs/richText"},
+            "exposition": {"$ref": "#/$defs/richText"},
+            "support_blocks": {
+              "type": "array",
+              "items": {"$ref": "#/$defs/supportBlock"}
+            }
+          }
+        }
+      ]
+    },
+    "axiom": {
+      "allOf": [
+        {"$ref": "#/$defs/formalCommon"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["statement"],
+          "properties": {
+            "id": true, "kind": {"const": "axiom"}, "title": true, "output_path": true,
+            "registry_ids": true, "source": true, "uncertainty": true, "label": true,
+            "boxed": true, "standard_form": true, "interpretation": true,
+            "dependencies": true, "notation": true, "source_note": true, "exposition": true,
+            "support_blocks": true,
+            "statement": {"$ref": "#/$defs/richText"}
+          }
+        }
+      ]
+    },
+    "definition": {
+      "allOf": [
+        {"$ref": "#/$defs/formalCommon"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["defined_term", "defining_condition"],
+          "properties": {
+            "id": true, "kind": {"const": "definition"}, "title": true, "output_path": true,
+            "registry_ids": true, "source": true, "uncertainty": true, "label": true,
+            "boxed": true, "standard_form": true, "interpretation": true,
+            "dependencies": true, "notation": true, "source_note": true, "exposition": true,
+            "support_blocks": true,
+            "defined_term": {"type": "string", "minLength": 1},
+            "defining_condition": {"$ref": "#/$defs/richText"}
+          }
+        }
+      ]
+    },
+    "theorem": {
+      "allOf": [
+        {"$ref": "#/$defs/formalCommon"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["subtype", "hypotheses", "conclusion"],
+          "properties": {
+            "id": true, "kind": {"const": "theorem"}, "title": true, "output_path": true,
+            "registry_ids": true, "source": true, "uncertainty": true, "label": true,
+            "boxed": true, "standard_form": true, "interpretation": true,
+            "dependencies": true, "notation": true, "source_note": true, "exposition": true,
+            "support_blocks": true,
+            "subtype": {"enum": ["theorem", "lemma", "proposition", "corollary"]},
+            "hypotheses": {
+              "type": "array",
+              "items": {"$ref": "#/$defs/richText"}
+            },
+            "conclusion": {"$ref": "#/$defs/richText"},
+            "proof_stub": {"type": "boolean"}
+          }
+        }
+      ]
+    },
+    "example": {
+      "allOf": [
+        {"$ref": "#/$defs/common"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "kind", "title", "setup"],
+          "properties": {
+            "id": true, "kind": {"const": "example"}, "title": true, "output_path": true,
+            "registry_ids": true, "dependencies": true, "source": true, "uncertainty": true,
+            "setup": {"$ref": "#/$defs/richText"},
+            "calculation": {"$ref": "#/$defs/displayMath"},
+            "explanation": {"$ref": "#/$defs/richText"}
+          }
+        }
+      ]
+    },
+    "exposition": {
+      "allOf": [
+        {"$ref": "#/$defs/common"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "kind", "subtype", "body"],
+          "properties": {
+            "id": true, "kind": {"const": "exposition"}, "title": true, "output_path": true,
+            "registry_ids": true, "dependencies": true, "source": true, "uncertainty": true,
+            "subtype": {"enum": ["motivation", "summary", "transition", "explanation"]},
+            "body": {"$ref": "#/$defs/richText"}
+          }
+        }
+      ]
+    },
+    "proofStep": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "body"],
+      "properties": {
+        "title": {"type": "string", "minLength": 1},
+        "body": {"$ref": "#/$defs/richText"}
+      }
+    },
+    "proof": {
+      "allOf": [
+        {"$ref": "#/$defs/common"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "kind", "title", "theorem_label", "theorem_subtype", "proof_label", "restatement", "professional_proof", "detailed_steps", "proof_structure", "dependencies"],
+          "properties": {
+            "id": true, "kind": {"const": "proof"}, "title": true, "output_path": true,
+            "registry_ids": true, "source": true, "uncertainty": true,
+            "theorem_label": {"type": "string", "pattern": "^(thm|lem|prop|cor):[a-z0-9]+(?:-[a-z0-9]+)*$"},
+            "theorem_subtype": {"enum": ["theorem", "lemma", "proposition", "corollary"]},
+            "proof_label": {"type": "string", "pattern": "^prf:[a-z0-9]+(?:-[a-z0-9]+)*$"},
+            "restatement": {"$ref": "#/$defs/richText"},
+            "professional_proof": {"$ref": "#/$defs/richText"},
+            "detailed_steps": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/proofStep"}},
+            "proof_structure": {"$ref": "#/$defs/richText"},
+            "dependencies": {"$ref": "#/$defs/dependencies"},
+            "proof_vault_url": {"type": "string", "minLength": 1}
+          }
+        }
+      ]
+    },
+    "artifact": {
+      "oneOf": [
+        {"$ref": "#/$defs/axiom"},
+        {"$ref": "#/$defs/definition"},
+        {"$ref": "#/$defs/theorem"},
+        {"$ref": "#/$defs/example"},
+        {"$ref": "#/$defs/exposition"},
+        {"$ref": "#/$defs/proof"}
+      ]
+    }
+  }
+}

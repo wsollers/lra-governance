@@ -11,7 +11,12 @@ for _parent in _here.parents:
         sys.path.insert(0, str(candidate))
         break
 
-from generators.chapter_stub import main, render_breadcrumb, stub_chapter  # noqa: E402,F401
+from generators.chapter_stub import (  # noqa: E402,F401
+    main,
+    render_chapter_stub_files,
+    render_lrameta,
+    stub_chapter,
+)
 
 
 if __name__ == "__main__":

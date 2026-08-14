@@ -21,17 +21,6 @@
           "boxed_nonformal_content",
           "inline_tikzpicture",
           "duplicate_label",
-          "unrouted_proofs_topic",
-          "partial_stub",
-          "label_inside_restatement",
-          "topicbox_or_exposition_in_proof",
-          "proof_dependency_target",
-          "invalid_proof_dependency_target",
-          "proof_not_in_topic_index",
-          "unknown_note_topic",
-          "unrouted_proof_topic_file",
-          "todo_outside_stub_layers",
-          "proof_stub_structure_not_blank",
           "proofs_index_routes_exercises"
         ],
         "decoration": [
@@ -43,9 +32,12 @@
           "proof_stub_structure_not_blank"
         ],
         "proof_layout": [
+          "label_inside_restatement",
+          "partial_proof_population",
           "partial_stub",
           "proof_dependency_target",
-          "proof_not_in_topic_index"
+          "proof_not_in_topic_index",
+          "unknown_note_topic"
         ],
         "volume_layout": []
       }

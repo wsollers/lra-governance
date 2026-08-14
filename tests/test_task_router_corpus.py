@@ -28,13 +28,13 @@ def test_router_corpus_routes_common_user_tasks(tmp_path: Path) -> None:
                 "repo": "lra-volume-i",
                 "prompt": "append the lemma for finite unions",
                 "expected_family": "generation",
-                "expected_capability": "author-statement",
+                "expected_capability": "author-mathematics",
             },
             {
                 "repo": "lra-volume-ii",
                 "prompt": "generate the definition of convergence",
                 "expected_family": "generation",
-                "expected_capability": "author-definition",
+                "expected_capability": "author-mathematics",
             },
             {
                 "repo": "lra-governance",
@@ -68,7 +68,7 @@ def test_router_corpus_routes_common_user_tasks(tmp_path: Path) -> None:
     assert report.capability_counts["build-repo"] == 2
 
 
-def test_router_corpus_keeps_unmatched_prompts_for_bucket_design(tmp_path: Path) -> None:
+def test_router_corpus_uses_governance_default_route(tmp_path: Path) -> None:
     corpus = tmp_path / "prompts.jsonl"
     write_jsonl(
         corpus,
@@ -85,8 +85,9 @@ def test_router_corpus_keeps_unmatched_prompts_for_bucket_design(tmp_path: Path)
     report = history.analyze(records, ROOT)
 
     assert report.total == 1
-    assert report.unmatched == 1
-    assert report.unmatched_tasks[0].family == "governance-audit"
+    assert report.routed == 1
+    assert report.unmatched == 0
+    assert report.tasks[0].capability == "audit-governance"
     assert not report.expectation_failures
 
 

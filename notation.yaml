@@ -81,10 +81,20 @@ notation:
   - id: not:carrier
     symbol: '\operatorname{Carrier}'
     category: structural_operator
+    arguments:
+      - name: object
+        role: ambient_or_structure
+        type: object
+    returns: set
     description: Carrier set of an ambient mathematical object.
   - id: not:domain
     symbol: '\operatorname{dom}'
     category: function_operator
+    arguments:
+      - name: mapping_or_relation
+        role: function_or_relation
+        type: object
+    returns: set
     description: Domain of a function or relation.
   - id: not:identity-function
     symbol: '\operatorname{id}'
@@ -98,16 +108,31 @@ notation:
   - id: not:interior-operator
     symbol: '\operatorname{int}'
     category: topology_operator
+    arguments:
+      - name: subset
+        role: subset
+        type: set
+    returns: set
     description: Interior operator on subsets of a topological space.
   - id: not:closure-operator
     name: Closure
     symbol: '\operatorname{Closure}'
     category: topology_operator
+    arguments:
+      - name: subset
+        role: subset
+        type: set
+    returns: set
     description: Closure operator on subsets of a metric or topological space.
   - id: not:diameter
     name: Diameter
     symbol: '\operatorname{diam}'
     category: metric_operator
+    arguments:
+      - name: subset
+        role: subset
+        type: set
+    returns: scalar
     description: Diameter of a subset of a metric space.
   - id: not:distance
     name: Distance
@@ -178,14 +203,29 @@ notation:
   - id: not:real-part
     symbol: '\operatorname{Re}'
     category: complex_operator
+    arguments:
+      - name: value
+        role: complex_value
+        type: scalar
+    returns: scalar
     description: Real part of a complex number.
   - id: not:imaginary-part
     symbol: '\operatorname{Im}'
     category: complex_operator
+    arguments:
+      - name: value
+        role: complex_value
+        type: scalar
+    returns: scalar
     description: Imaginary part of a complex number.
   - id: not:sign-function
     symbol: '\operatorname{sgn}'
     category: function_operator
+    arguments:
+      - name: value
+        role: real_value
+        type: scalar
+    returns: scalar
     description: Sign function.
   - id: not:natural-logarithm
     name: NaturalLogarithm

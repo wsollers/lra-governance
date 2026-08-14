@@ -1,106 +1,87 @@
-"""
-audits/stub.py
-Audits a chapter or volume stub for structural compliance.
-"""
+"""Deterministically audit a planned chapter stub."""
 
+import sys
 from pathlib import Path
 
-import yaml
-
-from auditor import client, loader
+from auditor import client
 from auditor.report import save_audit_report
 
 
-def _collect_stub_inputs(chapter_path: Path) -> dict:
-    """
-    Collects the directory listing and index.tex contents for a stub audit.
-    """
-    chapter_root = chapter_path.resolve()
+TOOLS_ROOT = Path(__file__).resolve().parents[3] / "tools" / "governance"
+if str(TOOLS_ROOT) not in sys.path:
+    sys.path.insert(0, str(TOOLS_ROOT))
 
-    # Directory listing (relative paths only)
-    all_files = sorted(
-        str(p.relative_to(chapter_root))
-        for p in chapter_root.rglob("*")
-        if p.is_file()
-    )
+from validators.chapter_stub import validate_chapter  # noqa: E402
 
-    # index.tex contents
-    index_path = chapter_root / "index.tex"
-    index_tex = (
-        index_path.read_text(encoding="utf-8")
-        if index_path.exists()
-        else "# index.tex NOT FOUND"
-    )
 
-    # chapter.yaml contents
-    chapter_yaml_path = chapter_root / "chapter.yaml"
-    chapter_yaml_text = (
-        chapter_yaml_path.read_text(encoding="utf-8")
-        if chapter_yaml_path.exists()
-        else "# chapter.yaml NOT FOUND"
-    )
-
-    return {
-        "subject": chapter_root.name,
-        "files": all_files,
-        "index_tex": index_tex,
-        "chapter_yaml": chapter_yaml_text,
+def _report_for_findings(chapter: str, findings) -> dict:
+    checks = []
+    for item in findings:
+        status = "FAIL" if item.severity == "error" else "NONCOMPLIANT"
+        location = item.path + (f":{item.line}" if item.line else "")
+        checks.append(
+            {
+                "block_id": item.code,
+                "requirement": "R",
+                "status": status,
+                "finding": f"{location}: {item.message}",
+            }
+        )
+    if not checks:
+        checks.append(
+            {
+                "block_id": "chapter_stub_contract",
+                "requirement": "R",
+                "status": "PASS",
+                "finding": "",
+            }
+        )
+    failed = sum(check["status"] == "FAIL" for check in checks)
+    noncompliant = sum(check["status"] == "NONCOMPLIANT" for check in checks)
+    report = {
+        "audit_type": "stub_chapter",
+        "artifact_type": "stub_chapter",
+        "label": chapter,
+        "summary": {
+            "total_checks": len(checks),
+            "passed": sum(check["status"] == "PASS" for check in checks),
+            "failed": failed,
+            "noncompliant": noncompliant,
+            "conditional_met": 0,
+            "conditional_unmet": 0,
+            "conditional_violation": 0,
+            "dependent_met": 0,
+            "dependent_unmet": 0,
+            "dependent_violation": 0,
+            "forbidden_violation": 0,
+            "stub": True,
+        },
+        "checks": checks,
+        "violations": [
+            {
+                "block_id": check["block_id"],
+                "status": check["status"],
+                "finding": check["finding"],
+            }
+            for check in checks
+            if check["status"] != "PASS"
+        ],
     }
+    client.validate_audit_report(report)
+    return report
 
 
 def audit_stub_chapter(
     chapter_path: Path,
-    chapter_registry: list[dict],
+    chapter_registry: list[dict] | None = None,
 ) -> dict:
-    """
-    Audits a chapter stub.
-
-    Args:
-        chapter_path:      Path to the chapter directory.
-        chapter_registry:  The volume's chapter registry as a list of dicts
-                           [{"subject": ..., "display_title": ...}, ...].
-
-    Returns:
-        The audit report dict.
-    """
-    inputs = _collect_stub_inputs(chapter_path)
-    chapter = inputs["subject"]
-
-    base_prompt   = loader.prompt("audit_stub")
-    file_schema   = loader.file_schema()
-
-    file_schema_yaml = yaml.dump(
-        file_schema,
-        default_flow_style=False,
-        allow_unicode=True,
+    """Audit a chapter stub without a model invocation."""
+    chapter_path = Path(chapter_path).resolve()
+    chapter = chapter_path.name
+    report = _report_for_findings(
+        chapter,
+        validate_chapter(chapter_path, chapter_registry=chapter_registry),
     )
-    registry_yaml = yaml.dump(
-        chapter_registry,
-        default_flow_style=False,
-        allow_unicode=True,
-    )
-
-    system = (
-        f"{base_prompt}\n\n"
-        f"## File Schema\n\n```yaml\n{file_schema_yaml}\n```\n\n"
-        f"## Chapter Registry\n\n```yaml\n{registry_yaml}\n```"
-    )
-
-    user = (
-        f"## Stub Type\n\nchapter\n\n"
-        f"## Chapter Subject\n\n{chapter}\n\n"
-        f"## Directory Listing\n\n"
-        + "\n".join(f"- {f}" for f in inputs["files"])
-        + f"\n\n## index.tex\n\n```latex\n{inputs['index_tex']}\n```\n\n"
-        f"## chapter.yaml\n\n```yaml\n{inputs['chapter_yaml']}\n```"
-    )
-
-    report = client.call(system, user, expect_json=True)
-
-    report.setdefault("audit_type", "stub_chapter")
-    report.setdefault("artifact_type", "stub_chapter")
-    report.setdefault("label", chapter)
-
-    save_audit_report(report, chapter, "audit-stub")
+    report["_report_path"] = str(save_audit_report(report, chapter, "audit-stub"))
 
     return report

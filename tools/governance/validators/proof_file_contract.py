@@ -16,13 +16,23 @@ RESTATEMENT_RE = re.compile(
     r"\\begin\{(?P<env>theorem|lemma|proposition|corollary)\*\}(?P<body>[\s\S]*?)\\end\{(?P=env)\*\}",
     re.IGNORECASE,
 )
-PROOF_BODY_RE = re.compile(r"\\begin\{proof\}(?:\[[^\]]*\])?(?P<body>[\s\S]*?)\\end\{proof\}", re.IGNORECASE)
+PROOF_BODY_RE = re.compile(
+    r"\\begin\{proof\}(?:\[(?P<title>[^\]]*)\])?(?P<body>[\s\S]*?)\\end\{proof\}",
+    re.IGNORECASE,
+)
 DEPENDENCIES_RE = re.compile(r"\\begin\{dependencies\}(?P<body>[\s\S]*?)\\end\{dependencies\}", re.IGNORECASE)
 RETURN_RE = re.compile(r"\\begin\{remark\*\}\[Return\](?P<body>[\s\S]*?)\\end\{remark\*\}", re.IGNORECASE)
 PROOF_STRUCTURE_RE = re.compile(r"\\begin\{remark\*\}\[Proof structure\][\s\S]*?\\end\{remark\*\}", re.IGNORECASE)
 PROFESSIONAL_RE = re.compile(r"Professional Standard Proof", re.IGNORECASE)
 DETAILED_RE = re.compile(r"Detailed (?:Learning|Instructional) Proof", re.IGNORECASE)
 TODO_RE = re.compile(r"\bTODO\b", re.IGNORECASE)
+PROOF_BODY_START_RE = re.compile(r"^\s*\\LRAProofBodyStart\b")
+FORBIDDEN_PROOF_ORGANIZER_RE = re.compile(
+    r"\\begin\{(?P<env>topicbox|exposition)\}",
+    re.IGNORECASE,
+)
+FORBIDDEN_STEP_MACRO_RE = re.compile(r"\\(?:ProofStep|Step|Flash[A-Za-z]*)\b")
+REMARK_ENV_RE = re.compile(r"\\begin\{remark\*?\}", re.IGNORECASE)
 FORMAL_PREFIXES = {"def", "ax", "thm", "lem", "prop", "cor"}
 RESTATEMENT_ENV_BY_PREFIX = {
     "thm": "theorem",
@@ -44,6 +54,38 @@ def validate(volume_root: Path, files) -> list[Finding]:
 
 def _validate_file(volume_root: Path, path: Path, findings: list[Finding]) -> None:
     text = strip_latex_comments(read_text(path))
+    _validate_text(volume_root, path, text, findings)
+
+
+def validate_text(
+    text: str,
+    *,
+    virtual_path: Path | None = None,
+) -> list[Finding]:
+    """Validate an in-memory proof file without repository routing checks."""
+    path = virtual_path or Path("proofs/generated/prf-generated.tex")
+    root = Path(".")
+    cleaned = strip_latex_comments(text)
+    findings: list[Finding] = []
+    _validate_text(root, path, cleaned, findings)
+
+    from audit_proof_layout import ProofAudit, validate_order
+
+    layout = ProofAudit(path=path.as_posix(), status="non_compliant")
+    validate_order(cleaned, layout)
+    findings.extend(
+        finding(item.code, item.message, path, root, severity=item.severity)
+        for item in layout.findings
+    )
+    return findings
+
+
+def _validate_text(
+    volume_root: Path,
+    path: Path,
+    text: str,
+    findings: list[Finding],
+) -> None:
     proof_for = PROOF_FOR_RE.search(text)
     proof_label = PROOF_LABEL_RE.search(text)
     first_env = re.search(r"\\begin\{", text)
@@ -70,6 +112,7 @@ def _validate_file(volume_root: Path, path: Path, findings: list[Finding]) -> No
 
     _check_restatement(volume_root, path, text, proof_for, findings)
     _check_proof_bodies(volume_root, path, text, findings)
+    _check_forbidden_structure(volume_root, path, text, findings)
     _check_proof_layers(volume_root, path, text, findings)
     _check_todo_placement(volume_root, path, text, findings)
     _check_return_navigation(volume_root, path, text, proof_for, findings)
@@ -115,8 +158,31 @@ def _check_restatement(volume_root: Path, path: Path, text: str, proof_for, find
 
 
 def _check_proof_bodies(volume_root: Path, path: Path, text: str, findings: list[Finding]) -> None:
-    for match in PROOF_BODY_RE.finditer(text):
-        if LABEL_RE.search(match.group("body")):
+    bodies = list(PROOF_BODY_RE.finditer(text))
+    governed_titles = {
+        "professional standard proof": 0,
+        "detailed learning proof": 0,
+        "detailed instructional proof": 0,
+    }
+    for match in bodies:
+        body = match.group("body")
+        title = (match.group("title") or "").strip().lower()
+        if title in governed_titles:
+            governed_titles[title] += 1
+            if not PROOF_BODY_START_RE.search(body):
+                layer_name = (
+                    "professional" if title == "professional standard proof" else "detailed"
+                )
+                findings.append(
+                    finding(
+                        f"missing_{layer_name}_proof_body_start",
+                        f"{match.group('title')} must begin with \\LRAProofBodyStart.",
+                        path,
+                        volume_root,
+                        _line_at(text, match.start()),
+                    )
+                )
+        if LABEL_RE.search(body):
             findings.append(
                 finding(
                     "label_inside_proof_environment",
@@ -126,6 +192,69 @@ def _check_proof_bodies(volume_root: Path, path: Path, text: str, findings: list
                     _line_at(text, match.start()),
                 )
             )
+        if title in {"detailed learning proof", "detailed instructional proof"}:
+            if FORBIDDEN_STEP_MACRO_RE.search(body):
+                findings.append(
+                    finding(
+                        "proof_step_macro",
+                        "Detailed proof must use inline \\textbf{Step N.} headings, not step or flash macros.",
+                        path,
+                        volume_root,
+                        _line_at(text, match.start()),
+                    )
+                )
+            if REMARK_ENV_RE.search(body):
+                findings.append(
+                    finding(
+                        "remark_organizer_inside_detailed_proof",
+                        "Detailed proof must not use remark environments to organize steps.",
+                        path,
+                        volume_root,
+                        _line_at(text, match.start()),
+                    )
+                )
+
+    professional_count = governed_titles["professional standard proof"]
+    detailed_count = (
+        governed_titles["detailed learning proof"]
+        + governed_titles["detailed instructional proof"]
+    )
+    if professional_count > 1:
+        findings.append(
+            finding(
+                "multiple_professional_proofs",
+                "Proof file must contain exactly one Professional Standard Proof layer.",
+                path,
+                volume_root,
+            )
+        )
+    if detailed_count > 1:
+        findings.append(
+            finding(
+                "multiple_detailed_proofs",
+                "Proof file must contain exactly one Detailed Learning Proof layer.",
+                path,
+                volume_root,
+            )
+        )
+
+
+def _check_forbidden_structure(
+    volume_root: Path,
+    path: Path,
+    text: str,
+    findings: list[Finding],
+) -> None:
+    for match in FORBIDDEN_PROOF_ORGANIZER_RE.finditer(text):
+        findings.append(
+            finding(
+                "forbidden_proof_organizer",
+                f"Proof files must not contain {match.group('env')} environments.",
+                path,
+                volume_root,
+                _line_at(text, match.start()),
+            )
+        )
 
 
 def _check_proof_layers(volume_root: Path, path: Path, text: str, findings: list[Finding]) -> None:

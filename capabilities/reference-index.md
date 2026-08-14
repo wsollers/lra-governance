@@ -14,9 +14,9 @@ For `lookup-lra`:
 Run the lookup tool before opening these references. Open only the reference
 needed to interpret, refresh, or validate the returned lane.
 
-## Volume Statement Authoring
+## Typed Mathematical Authoring
 
-For `author-statement`:
+For `author-mathematics`:
 
 - Decoration shape: `docs/governance/decoration-box-standards.md`
 - Dependency links and `\NoLocalDependencies`: `docs/governance/dependency-standards.md`
@@ -25,13 +25,6 @@ For `author-statement`:
 - Notation and canonical symbols: `docs/governance/notation-standards.md`
 - Add theorem workflow: `docs/workflows/add-theorem-with-proof-stub.md`
 - Proof layout validator usage: `docs/workflows/proof-layout-audit.md`
-
-## Volume Definition Authoring
-
-For `author-definition`:
-
-- Decoration shape: `docs/governance/decoration-box-standards.md`
-- Dependency links and `\NoLocalDependencies`: `docs/governance/dependency-standards.md`
 - Definition atomicity: `docs/governance/atomic-artifact-standards.md`
 - Predicate and notation discipline: `docs/governance/notation-standards.md`
 - Extraction-facing labels and identity: `docs/governance/extraction-standards.md`

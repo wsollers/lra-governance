@@ -113,12 +113,13 @@ for the section.
 - An active notes section router, `notes/<section>/index.tex`, must begin with
   a non-starred `\section{...}` heading. Sections are table-of-contents
   entries and must not use `\section*`.
-- The section heading is followed immediately by exactly one gray Toolkit box.
+- A routed section with formal items has exactly one gray Toolkit box
+  immediately after its heading. Planned empty stubs and sections without a
+  formal payload may omit the Toolkit until formal content is promoted.
   Toolkit boxes belong in the section router, not in routed subsection/topic
   body files.
-- The Toolkit is followed immediately by exactly one short `remark*` block
-  titled `Exposition`. This exposition introduces the mathematical role of the
-  section in reference voice and should be brief.
+- The section router routes body files after the Toolkit. Short section
+  exposition belongs in the routed body content and must use reference voice.
 - Routed subsection/topic body files use starred subsection headings by
   default, such as `\subsection*{...}`, so the table of contents remains a
   chapter-section spine rather than a full topic inventory.
