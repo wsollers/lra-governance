@@ -128,6 +128,27 @@ modules belong under the appropriate `LRA/Volume*/...` tree, imported through
 the relevant volume root, and exposed through stable names that make downstream
 verification and explorer extraction straightforward.
 
+For source-grounded concept work, use the concept-folder layout in
+`docs/architecture/lra-lean-architecture.md`. The normal shape is
+`LRA/Volume*/<Topic>/<Concept>/` with semantically named files such as
+`Definition.lean`, `Characterizations.lean`, `Theorems.lean`,
+`FailureModes.lean`, `Examples.lean`, `Relationships.lean`, and `All.lean`.
+Create only the files required by the reviewed concept package, but do not
+invent competing catch-all files for concept package content.
+
+Do not create a separate `Counterexamples.lean` file for concept packages.
+Counterexamples are part of failure-mode analysis. Put reviewed false variants,
+boundary failures, negations, and witness constructions in `FailureModes.lean`;
+each named failure-mode definition, predicate, or witness construction should be
+followed immediately by a theorem proving that it realizes the advertised
+failure. A failed tactic, abandoned proof state, or bare definition is not a
+mathematical counterexample.
+
+The `Logic` area is explicitly excluded from this topic/concept-folder rule.
+Foundational logical infrastructure may keep a layout suited to logic itself;
+do not force connectives, quantifiers, inference rules, equivalence principles,
+or proof tools into concept folders.
+
 Generic structural material belongs at its earliest mathematical home, not
 under the first later volume that happens to use it. Volume II must not
 introduce namespaces such as `LRA.VolumeII.Foundations.IdentityElements`,
