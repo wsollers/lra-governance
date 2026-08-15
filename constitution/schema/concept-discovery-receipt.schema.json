@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/wsollers/lra-governance/constitution/schema/concept-discovery-receipt.schema.json",
+  "title": "LRA Source-Grounded Concept Discovery Receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "receipt_id",
+    "concept",
+    "query",
+    "primary_source_lane",
+    "mathlib_lane",
+    "internal_lra_lane",
+    "unresolved_ambiguity"
+  ],
+  "properties": {
+    "schema_version": {"const": "lra.source-grounded-concept-discovery-receipt/0.1"},
+    "receipt_id": {"type": "string", "pattern": "^[a-z][a-z0-9]*(?:[-.][a-z0-9]+)*$"},
+    "concept": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["concept_id", "contract_revision", "display_name", "target_volume", "target_topic", "concept_folder"],
+      "properties": {
+        "concept_id": {"type": "string", "minLength": 1},
+        "contract_revision": {"type": "string", "minLength": 1},
+        "display_name": {"type": "string", "minLength": 1},
+        "target_volume": {"type": "string", "minLength": 1},
+        "target_topic": {"type": "string", "minLength": 1},
+        "concept_folder": {"type": "string", "minLength": 1}
+      }
+    },
+    "query": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["exact_phrase", "case_insensitive", "whitespace_tolerant_regex", "formal_labels"],
+      "properties": {
+        "exact_phrase": {"type": "string", "minLength": 1},
+        "case_insensitive": {"const": true},
+        "whitespace_tolerant_regex": {"type": "string", "minLength": 1},
+        "formal_labels": {
+          "type": "array",
+          "items": {"enum": ["Definition", "Theorem", "Lemma", "Proposition", "Corollary", "Exercise", "Example", "Counterexample"]}
+        }
+      }
+    },
+    "primary_source_lane": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile_or_source_list",
+        "profile_revision",
+        "minimum_independent_close_sources",
+        "minimum_satisfied",
+        "reviewed_exception",
+        "sources_searched",
+        "accepted_hits",
+        "rejected_false_positives",
+        "direct_pdf_fallbacks"
+      ],
+      "properties": {
+        "profile_or_source_list": {"type": "string", "minLength": 1},
+        "profile_revision": {"type": "string", "minLength": 1},
+        "minimum_independent_close_sources": {"const": 5},
+        "minimum_satisfied": {"type": "boolean"},
+        "reviewed_exception": {"type": ["object", "null"]},
+        "sources_searched": {"type": "array", "items": {"type": "string"}},
+        "accepted_hits": {"type": "array", "items": {"$ref": "#/$defs/source_hit"}},
+        "rejected_false_positives": {"type": "array", "items": {"$ref": "#/$defs/rejected_hit"}},
+        "direct_pdf_fallbacks": {"type": "array", "items": {"$ref": "#/$defs/direct_pdf_fallback"}}
+      }
+    },
+    "mathlib_lane": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["searched", "pinned_version_or_commit", "hits"],
+      "properties": {
+        "searched": {"type": "boolean"},
+        "pinned_version_or_commit": {"type": ["string", "null"]},
+        "hits": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["module", "declaration", "exact_signature", "source_locator", "relationship_to_candidate"],
+            "properties": {
+              "module": {"type": "string", "minLength": 1},
+              "declaration": {"type": "string", "minLength": 1},
+              "exact_signature": {"type": "string", "minLength": 1},
+              "source_locator": {"type": "string", "minLength": 1},
+              "relationship_to_candidate": {"type": "string", "minLength": 1}
+            }
+          }
+        }
+      }
+    },
+    "internal_lra_lane": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["searched", "role"],
+      "properties": {
+        "searched": {"const": false},
+        "role": {"const": "not_discovery_evidence"}
+      }
+    },
+    "unresolved_ambiguity": {"type": "array", "items": {"type": "string"}}
+  },
+  "$defs": {
+    "source_hit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_id",
+        "independent_source_key",
+        "kind",
+        "label",
+        "physical_page",
+        "section",
+        "index_line",
+        "locator",
+        "inspection_surface",
+        "extraction_quality",
+        "matched_text",
+        "supported_candidate_id"
+      ],
+      "properties": {
+        "source_id": {"type": "string", "minLength": 1},
+        "independent_source_key": {"type": "string", "minLength": 1},
+        "kind": {"type": "string", "minLength": 1},
+        "label": {"type": "string", "minLength": 1},
+        "physical_page": {"type": ["string", "integer"]},
+        "section": {"type": ["string", "null"]},
+        "index_line": {"type": "integer"},
+        "locator": {"type": "string", "minLength": 1},
+        "inspection_surface": {"enum": ["indexed_text", "direct_pdf"]},
+        "extraction_quality": {"enum": ["indexed_text", "direct_pdf", "ocr_reviewed"]},
+        "matched_text": {"type": "string", "minLength": 1},
+        "supported_candidate_id": {"type": "string", "minLength": 1}
+      }
+    },
+    "rejected_hit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "locator", "reason", "matched_text"],
+      "properties": {
+        "source_id": {"type": "string", "minLength": 1},
+        "locator": {"type": "string", "minLength": 1},
+        "reason": {"enum": ["no_formal_label_proximity", "proof_or_citation_context", "running_header", "alternate_meaning", "accidental_proximity"]},
+        "matched_text": {"type": "string", "minLength": 1}
+      }
+    },
+    "direct_pdf_fallback": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "reason", "result"],
+      "properties": {
+        "source_id": {"type": "string", "minLength": 1},
+        "reason": {"enum": ["empty_extraction", "damaged_extraction", "ambiguous_extraction"]},
+        "result": {"enum": ["accepted_hit", "no_hit", "unresolved"]}
+      }
+    }
+  }
+}

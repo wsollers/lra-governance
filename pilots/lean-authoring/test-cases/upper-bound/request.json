@@ -1,0 +1,19 @@
+{
+  "schema_version": "lra.lean-authoring-request/0.1",
+  "request_id": "volume-i.order-theory.bounds.upper-bound.002",
+  "source_request": "generate the definition of upper bound in volume 1 order theory. Leverage the volume 1 poset to provide the ordering relation. Include negations,examples, counter examples, variant forms inverse, converse, , contrapositive aif mathematically interesting",
+  "concept": {
+    "canonical_id": "order.upper-bound",
+    "display_name": "Upper Bound",
+    "artifact_kind": "definition"
+  },
+  "placement": {
+    "volume": "VolumeI",
+    "subject": "OrderTheory",
+    "topic": "Bounds"
+  },
+  "outputs": {
+    "latex": true,
+    "lean": true
+  }
+}

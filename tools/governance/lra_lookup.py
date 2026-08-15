@@ -588,6 +588,12 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("query", nargs="?", help="Theorem, definition, concept, label, or code phrase.")
     parser.add_argument("--status", action="store_true", help="Show resolved engines and index availability.")
+    parser.add_argument(
+        "--candidate-discovery-config",
+        type=Path,
+        help="Build a source-grounded concept discovery receipt from a reviewed source-index config.",
+    )
+    parser.add_argument("--output", type=Path, help="Write candidate-discovery JSON to this path.")
     parser.add_argument("--scope", action="append", choices=SCOPES, help="Search lane; repeat to combine. Default: all.")
     parser.add_argument("--limit", type=int, default=5, help="Maximum results per search lane.")
     parser.add_argument("--format", choices=("json", "text"), default="json")
@@ -611,6 +617,24 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
+    if args.candidate_discovery_config:
+        try:
+            from tools.governance import concept_candidate_discovery as discovery
+        except ModuleNotFoundError:
+            import concept_candidate_discovery as discovery
+        receipt = discovery.build_receipt(discovery.load_mapping(args.candidate_discovery_config))
+        errors = discovery.validate_receipt(receipt)
+        if errors:
+            print("candidate discovery: FAIL", file=sys.stderr)
+            for error in errors:
+                print(f"- {error}", file=sys.stderr)
+            return 1
+        text = json.dumps(receipt, indent=2, ensure_ascii=False) + "\n"
+        if args.output:
+            args.output.write_text(text, encoding="utf-8")
+        else:
+            print(text, end="")
+        return 0
     locations = resolve_locations()
     if args.status:
         status = status_payload(locations)

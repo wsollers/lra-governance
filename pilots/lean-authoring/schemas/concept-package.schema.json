@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lra.example/pilots/lean-authoring/concept-package.schema.json",
+  "title": "Experimental Lean concept-family package",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "package_id", "request_id", "concept", "decisions", "instances"],
+  "properties": {
+    "schema_version": {"const": "lra.lean-concept-package/0.1"},
+    "package_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9.-]+$"},
+    "request_id": {"type": "string", "minLength": 1},
+    "concept": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["canonical_id", "display_name", "family_status"],
+      "properties": {
+        "canonical_id": {"type": "string", "minLength": 1},
+        "display_name": {"type": "string", "minLength": 1},
+        "family_status": {"enum": ["proposed", "reviewed", "approved"]}
+      }
+    },
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["candidate", "status", "reason", "provenance"],
+        "properties": {
+          "candidate": {"type": "string", "minLength": 1},
+          "status": {"enum": ["selected", "deferred", "rejected", "not-applicable"]},
+          "reason": {"type": "string", "minLength": 1},
+          "provenance": {"enum": ["source-request", "author-selected", "lean-derived", "governance-default"]}
+        }
+      }
+    },
+    "instances": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["instance_id", "volume", "subject", "topic", "concept_folder", "namespace", "family_role", "module_files", "latex"],
+        "properties": {
+          "instance_id": {"type": "string", "minLength": 1},
+          "volume": {"pattern": "^Volume[IVX]+$"},
+          "subject": {"type": "string", "pattern": "^[A-Z][A-Za-z0-9]*$"},
+          "topic": {"type": "string", "pattern": "^[A-Z][A-Za-z0-9]*$"},
+          "concept_folder": {"type": "string", "pattern": "^[A-Z][A-Za-z0-9]*$"},
+          "namespace": {"type": "string", "pattern": "^LRA\\.Pilot\\."},
+          "family_role": {"enum": ["primary-generic", "carrier-specialization", "structure-specialization"]},
+          "relation_to_primary": {"enum": ["primary", "definitionally-equal", "checked-proof", "stub-statement", "author-selected-unverified"]},
+          "module_files": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["file_name", "imports", "preamble", "declarations"],
+              "properties": {
+                "file_name": {"pattern": "^[A-Z][A-Za-z0-9]*\\.lean$"},
+                "imports": {"type": "array", "items": {"type": "string", "pattern": "^[A-Z][A-Za-z0-9.]*$"}},
+                "preamble": {"type": "string"},
+                "declarations": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["name", "kind", "family_role", "proof_status", "publication_status", "source"],
+                    "properties": {
+                      "name": {"pattern": "^[A-Z][A-Za-z0-9]*$"},
+                      "kind": {"enum": ["axiom", "definition", "theorem", "example", "counterexample"]},
+                      "family_role": {"type": "string", "minLength": 1},
+                      "proof_status": {"enum": ["not-applicable", "stub-sorry", "checked"]},
+                      "publication_status": {"enum": ["unreviewed", "proposed", "approved", "not-for-publication"]},
+                      "source": {"type": "string", "minLength": 1}
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "latex": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["file_name", "source", "publication_status"],
+            "properties": {
+              "file_name": {"pattern": "^[a-z][a-z0-9-]*\\.tex$"},
+              "source": {"type": "string", "minLength": 1},
+              "publication_status": {"enum": ["unreviewed", "proposed", "approved", "not-for-publication"]}
+            }
+          }
+        }
+      }
+    }
+  }
+}

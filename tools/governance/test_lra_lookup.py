@@ -8,8 +8,16 @@ from unittest.mock import patch
 
 import yaml
 
+import sys
+
+HERE = Path(__file__).resolve().parent
+if str(HERE) not in sys.path:
+    sys.path.insert(0, str(HERE))
+
 import lra_lookup
 from internal_object_sqlite import build_database
+
+DISCOVERY_FIXTURE = Path(__file__).resolve().parents[2] / "constitution" / "schema" / "examples" / "concept-discovery" / "cauchy-sequence-discovery-input.json"
 
 
 def write_yaml(path: Path, payload: dict) -> None:
@@ -244,6 +252,21 @@ class LookupTests(unittest.TestCase):
         self.assertEqual(hit["matched_query"], "sigma algebra")
         self.assertEqual(hit["matched_author_filter"], ["tao"])
         self.assertTrue(any("loose retry returned" in item for item in payload["warnings"]))
+
+    def test_candidate_discovery_mode_uses_source_lane_without_internal_lra(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            output = Path(temp) / "receipt.json"
+            exit_code = lra_lookup.main([
+                "--candidate-discovery-config",
+                str(DISCOVERY_FIXTURE),
+                "--output",
+                str(output),
+            ])
+            payload = yaml.safe_load(output.read_text(encoding="utf-8"))
+
+        self.assertEqual(exit_code, 0)
+        self.assertFalse(payload["internal_lra_lane"]["searched"])
+        self.assertTrue(payload["primary_source_lane"]["minimum_satisfied"])
 
 
 if __name__ == "__main__":

@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lra.example/pilots/lean-authoring/request.schema.json",
+  "title": "Experimental Lean authoring request",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "request_id", "source_request", "concept", "placement", "outputs"],
+  "properties": {
+    "schema_version": {"const": "lra.lean-authoring-request/0.1"},
+    "request_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9.-]+$"},
+    "source_request": {"type": "string", "minLength": 1},
+    "concept": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["canonical_id", "display_name", "artifact_kind"],
+      "properties": {
+        "canonical_id": {"type": "string", "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$"},
+        "display_name": {"type": "string", "minLength": 1},
+        "artifact_kind": {"enum": ["axiom", "definition", "theorem"]}
+      }
+    },
+    "placement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["volume", "subject", "topic"],
+      "properties": {
+        "volume": {"pattern": "^Volume[IVX]+$"},
+        "subject": {"type": "string", "minLength": 1},
+        "topic": {"type": "string", "minLength": 1}
+      }
+    },
+    "outputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["latex", "lean"],
+      "properties": {
+        "latex": {"const": true},
+        "lean": {"const": true}
+      }
+    }
+  }
+}

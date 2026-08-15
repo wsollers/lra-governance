@@ -1,0 +1,96 @@
+{
+  "receipt_id": "receipt.cauchy-sequence.discovery",
+  "profile_or_source_list": "volume-iii-analysis-profile",
+  "profile_revision": "rev.cauchy.calibration",
+  "concept": {
+    "concept_id": "concept.cauchy-sequence",
+    "contract_revision": "rev.contract.cauchy.v1",
+    "display_name": "Cauchy sequence",
+    "target_volume": "lra-volume-iii",
+    "target_topic": "sequences",
+    "concept_folder": "cauchy-sequence"
+  },
+  "query": {
+    "exact_phrase": "Cauchy sequence",
+    "supported_candidate_id": "cand.cauchy-sequence.definition"
+  },
+  "primary_sources": [
+    {
+      "source_id": "SRC-ANALYSIS-001",
+      "independent_source_key": "book-a",
+      "extraction_quality": "indexed_text",
+      "lines": [
+        {"index": 10, "page": 31, "section": "Sequences", "locator": "SRC-ANALYSIS-001:p31:l10", "text": "Definition 2.1."},
+        {"index": 11, "page": 31, "section": "Sequences", "locator": "SRC-ANALYSIS-001:p31:l11", "text": "A sequence is called a Cauchy"},
+        {"index": 12, "page": 31, "section": "Sequences", "locator": "SRC-ANALYSIS-001:p31:l12", "text": "sequence if for every epsilon there is an index N."}
+      ]
+    },
+    {
+      "source_id": "SRC-ANALYSIS-002",
+      "independent_source_key": "book-b",
+      "extraction_quality": "indexed_text",
+      "lines": [
+        {"index": 4, "page": 44, "section": "Metric spaces", "locator": "SRC-ANALYSIS-002:p44:l4", "text": "Theorem 3.5 (Cauchy criterion)."},
+        {"index": 5, "page": 44, "section": "Metric spaces", "locator": "SRC-ANALYSIS-002:p44:l5", "text": "Every convergent Cauchy sequence has the stated limit property."}
+      ]
+    },
+    {
+      "source_id": "SRC-ANALYSIS-003",
+      "independent_source_key": "book-c",
+      "extraction_quality": "indexed_text",
+      "lines": [
+        {"index": 8, "page": 19, "section": "Completeness", "locator": "SRC-ANALYSIS-003:p19:l8", "text": "Lemma."},
+        {"index": 9, "page": 19, "section": "Completeness", "locator": "SRC-ANALYSIS-003:p19:l9", "text": "A Cauchy sequence in a complete metric space converges."}
+      ]
+    },
+    {
+      "source_id": "SRC-ANALYSIS-004",
+      "independent_source_key": "book-d",
+      "extraction_quality": "indexed_text",
+      "lines": [
+        {"index": 20, "page": 67, "section": "Sequences", "locator": "SRC-ANALYSIS-004:p67:l20", "text": "Running header: Cauchy sequence"},
+        {"index": 21, "page": 67, "section": "Sequences", "locator": "SRC-ANALYSIS-004:p67:l21", "text": "Proof. The Cauchy sequence mentioned above is used here."},
+        {"index": 25, "page": 68, "section": "Sequences", "locator": "SRC-ANALYSIS-004:p68:l25", "text": "Proposition 4.8."},
+        {"index": 26, "page": 68, "section": "Sequences", "locator": "SRC-ANALYSIS-004:p68:l26", "text": "A Cauchy sequence is bounded."}
+      ]
+    },
+    {
+      "source_id": "SRC-ANALYSIS-005",
+      "independent_source_key": "book-e",
+      "extraction_quality": "damaged_extraction",
+      "lines": [],
+      "direct_pdf_lines": [
+        {"index": 30, "page": 82, "section": "Completeness", "locator": "SRC-ANALYSIS-005:p82:visual-l30", "text": "Example 5.2."},
+        {"index": 31, "page": 82, "section": "Completeness", "locator": "SRC-ANALYSIS-005:p82:visual-l31", "text": "This Cauchy sequence is not convergent in the rational numbers."}
+      ]
+    },
+    {
+      "source_id": "SRC-ANALYSIS-006",
+      "independent_source_key": "book-f",
+      "extraction_quality": "indexed_text",
+      "lines": [
+        {"index": 40, "page": 101, "section": "Historical note", "locator": "SRC-ANALYSIS-006:p101:l40", "text": "The phrase Cauchy sequence occurs in the bibliography."}
+      ]
+    },
+    {
+      "source_id": "SRC-ANALYSIS-007",
+      "independent_source_key": "book-g",
+      "extraction_quality": "indexed_text",
+      "lines": [
+        {"index": 50, "page": 12, "section": "Completeness", "locator": "SRC-ANALYSIS-007:p12:l50", "text": "Definition."},
+        {"index": 51, "page": 12, "section": "Completeness", "locator": "SRC-ANALYSIS-007:p12:l51", "text": "A Cauchy sequence is one whose terms eventually become arbitrarily close."}
+      ]
+    }
+  ],
+  "mathlib_commit": "0123456789abcdef0123456789abcdef01234567",
+  "mathlib_hits": [
+    {
+      "module": "Mathlib.Topology.MetricSpace.Basic",
+      "declaration": "Metric.CauchySeq",
+      "exact_signature": "CauchySeq u := ∀ ε > 0, ∃ N, ∀ m n, N ≤ m → N ≤ n → dist (u m) (u n) < ε",
+      "source_locator": "Mathlib/Topology/MetricSpace/Basic.lean",
+      "relationship_to_candidate": "external API evidence for the metric-space formulation"
+    }
+  ],
+  "unresolved_ambiguity": []
+}

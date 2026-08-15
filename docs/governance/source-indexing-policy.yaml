@@ -38,6 +38,57 @@ source_profiles:
       - role
       - notes
     launch_order: enabled_sources_by_preferred_rank_or_slot_order
+concept_candidate_discovery:
+  receipt_schema: constitution/schema/concept-discovery-receipt.schema.json
+  deterministic_tool: tools/governance/concept_candidate_discovery.py
+  facade_tool: tools/governance/lra_lookup.py
+  facade_flag: --candidate-discovery-config
+  default_minimum_independent_close_sources: 5
+  primary_source_lane:
+    source_selection_order:
+      - configured_topic_profile
+      - configured_chapter_profile
+      - configured_volume_profile
+      - reviewed_source_list
+    search_identity: stable_source_id
+    exact_phrase:
+      case_insensitive: true
+      whitespace_and_ocr_line_break_tolerant: true
+      do_not_loosen_phrase_when_expanding_labels: true
+    formal_labels:
+      - Definition
+      - Theorem
+      - Lemma
+      - Proposition
+      - Corollary
+      - Exercise
+      - Example
+      - Counterexample
+    proximity:
+      same_physical_index_line: true
+      within_physical_index_lines: 2
+    direct_pdf_fallback_reasons:
+      - empty_extraction
+      - damaged_extraction
+      - ambiguous_extraction
+    false_positive_reasons:
+      - no_formal_label_proximity
+      - proof_or_citation_context
+      - running_header
+      - alternate_meaning
+      - accidental_proximity
+  mathlib_lane:
+    independent_from_primary_sources: true
+    required_fields:
+      - pinned_version_or_commit
+      - module
+      - declaration
+      - exact_signature
+      - source_locator
+      - relationship_to_candidate
+  internal_lra_lane:
+    discovery_evidence: false
+    role: integration_evidence_after_candidate_selection
 internal_object_indexes:
   role: lean_tex_verification_lookup
   canonical_tool: tools/governance/index_internal_objects.py

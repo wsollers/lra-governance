@@ -117,6 +117,24 @@ source lane to `lra-source-profiles/scripts/search_omnibus.py`, and joins only
 compact result records from the internal TeX/Lean/C++ and canonical-vocabulary
 indexes. It is a query facade, not a new index owner.
 
+For source-grounded concept-authoring discovery, the same facade may run the
+typed discovery protocol without searching internal LRA discovery lanes:
+
+```powershell
+python F:\repos\lra-governance\tools\governance\lra_lookup.py `
+  --candidate-discovery-config <reviewed-config.json> `
+  --output <discovery-receipt.json>
+```
+
+This mode consumes reviewed source-index or fixture-style records, applies the
+exact phrase, whitespace/OCR-line-break, formal-label proximity, false-positive
+rejection, direct-PDF fallback, and five-independent-primary-source rules, and
+emits a `lra.source-grounded-concept-discovery-receipt/0.1` receipt. The receipt
+keeps the primary-source lane, external Mathlib lane, and internal LRA
+integration lane separate. Internal LRA Lean and TeX are not searched as
+mathematical-discovery evidence by this mode; they remain later integration
+evidence only.
+
 The source lane must search strictly first. If a strict source query returns no
 hits, the facade should retry bounded loose variants by default before agents
 fall back to manual PDF extraction. Loose retries may remove prompt filler,

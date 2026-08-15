@@ -1,0 +1,168 @@
+{
+  "schema_version": "lra.source-grounded-concept-package/0.2",
+  "package_id": "pkg.upper-bound.stale",
+  "record_format": "json",
+  "authority": {
+    "schema_owner": "wsollers/lra-governance",
+    "concept_contract_owner": "wsollers/lra-volume-i:concepts/order/upper-bound/contract.json",
+    "vocabulary_authority": "existing LRA vocabulary and predicate registries",
+    "evidence_owner": "wsollers/lra-governance:concept-authoring/evidence",
+    "review_owner": "wsollers/lra-governance:concept-authoring/reviews",
+    "generation_owner": "wsollers/lra-governance:concept-authoring/generation"
+  },
+  "concept_contracts": [
+    {
+      "concept_id": "concept.upper-bound",
+      "display_name": {"state": "approved", "value": "Upper bound", "notes": null},
+      "normalized_definition": {"state": "approved", "value": "An element u is an upper bound of S when every s in S satisfies s <= u.", "notes": null},
+      "carrier_and_ambient_structures": {"state": "approved", "value": ["partially ordered set", "subset S"], "notes": null},
+      "notation_and_variable_roles": {"state": "approved", "value": {"S": "bounded subset", "u": "candidate bound"}, "notes": null},
+      "intended_lean_signature": {"state": "approved", "value": "IsUpperBound (S : Set alpha) (u : alpha) : Prop", "notes": null},
+      "learner_facing_terminology": {"state": "approved", "value": ["upper bound"], "notes": null},
+      "accepted_synonyms": {"state": "approved", "value": ["majorant"], "notes": null},
+      "excluded_meanings": {"state": "approved", "value": ["least upper bound"], "notes": null},
+      "primary_concept_owner": {"state": "approved", "value": "concept.upper-bound", "notes": null},
+      "related_concepts": {"state": "approved", "value": ["concept.least-upper-bound"], "notes": null},
+      "target": {
+        "volume": {"state": "approved", "value": "lra-volume-i", "notes": null},
+        "topic": {"state": "approved", "value": "order", "notes": null},
+        "concept_folder": {"state": "approved", "value": "upper-bound", "notes": null}
+      },
+      "contract_revision": "rev.contract.v1",
+      "contract_status": "approved",
+      "reviewer_attribution": [{"name": "Workflow reviewer", "role": "concept reviewer"}]
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "ev.source.upper-bound",
+      "lane": "primary_source",
+      "source_id": "SRC-ORDER-001",
+      "source_profile": "volume-i-order-profile@rev1",
+      "source_snapshot": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "mathlib_commit": null,
+      "mathlib_module": null,
+      "mathlib_declaration": null,
+      "exact_signature": null,
+      "locator": "p. 10",
+      "extraction_quality": "indexed_text",
+      "raw_excerpt_or_locator": "source-index://SRC-ORDER-001#p10",
+      "normalization_notes": null,
+      "supports_candidate_ids": ["cand.upper-bound.definition"],
+      "relationship_to_candidate": "primary-source definition",
+      "unresolved_ambiguity": null,
+      "supersedes": null
+    }
+  ],
+  "candidates": [
+    {
+      "candidate_id": "cand.upper-bound.definition",
+      "concept_id": "concept.upper-bound",
+      "contract_revision": "rev.contract.v1",
+      "current_revision_id": "rev.upper-bound.definition.v2",
+      "primary_concept_owner": "concept.upper-bound",
+      "related_concepts": [],
+      "revisions": [
+        {
+          "revision_id": "rev.upper-bound.definition.v1",
+          "normalized_statement": "u bounds S above.",
+          "artifact_kind": "definition",
+          "proposed_lean_name": "IsUpperBound",
+          "carrier_structure": "partially ordered set",
+          "hypotheses": [],
+          "evidence_refs": ["ev.source.upper-bound"],
+          "provenance_categories": ["primary_source"],
+          "normalization_performed": [],
+          "meaning_change_from_previous": false,
+          "mathematical_interest": "high",
+          "learner_value": "high",
+          "proposed_placement": "lra-volume-i/order/upper-bound",
+          "proof_expectation": "not_applicable",
+          "recommendation": "approve",
+          "unresolved_fields": []
+        },
+        {
+          "revision_id": "rev.upper-bound.definition.v2",
+          "normalized_statement": "u is the least upper bound of S.",
+          "artifact_kind": "definition",
+          "proposed_lean_name": "IsLeastUpperBound",
+          "carrier_structure": "partially ordered set",
+          "hypotheses": [],
+          "evidence_refs": ["ev.source.upper-bound"],
+          "provenance_categories": ["primary_source"],
+          "normalization_performed": ["changed meaning"],
+          "meaning_change_from_previous": true,
+          "mathematical_interest": "high",
+          "learner_value": "high",
+          "proposed_placement": "lra-volume-i/order/upper-bound",
+          "proof_expectation": "not_applicable",
+          "recommendation": "approve",
+          "unresolved_fields": []
+        }
+      ]
+    }
+  ],
+  "review_events": [
+    {
+      "event_id": "event.upper-bound.discovered",
+      "reviewer": {"name": "Discovery", "role": "tool"},
+      "timestamp": "2026-08-14T10:00:00Z",
+      "action": "discovered",
+      "rationale": "Found.",
+      "candidate_id": "cand.upper-bound.definition",
+      "affected_revision_id": "rev.upper-bound.definition.v1",
+      "previous_state": "none",
+      "resulting_state": "discovered",
+      "edited_revision_id": null,
+      "destination_concept_id": null
+    },
+    {
+      "event_id": "event.upper-bound.normalized",
+      "reviewer": {"name": "Normalizer", "role": "author"},
+      "timestamp": "2026-08-14T10:05:00Z",
+      "action": "normalized",
+      "rationale": "Normalized.",
+      "candidate_id": "cand.upper-bound.definition",
+      "affected_revision_id": "rev.upper-bound.definition.v1",
+      "previous_state": "discovered",
+      "resulting_state": "normalized",
+      "edited_revision_id": null,
+      "destination_concept_id": null
+    },
+    {
+      "event_id": "event.upper-bound.proposed",
+      "reviewer": {"name": "Normalizer", "role": "author"},
+      "timestamp": "2026-08-14T10:10:00Z",
+      "action": "proposed",
+      "rationale": "Ready.",
+      "candidate_id": "cand.upper-bound.definition",
+      "affected_revision_id": "rev.upper-bound.definition.v1",
+      "previous_state": "normalized",
+      "resulting_state": "proposed",
+      "edited_revision_id": null,
+      "destination_concept_id": null
+    },
+    {
+      "event_id": "event.upper-bound.approved",
+      "reviewer": {"name": "Reviewer", "role": "concept reviewer"},
+      "timestamp": "2026-08-14T10:15:00Z",
+      "action": "approved",
+      "rationale": "Approved old revision.",
+      "candidate_id": "cand.upper-bound.definition",
+      "affected_revision_id": "rev.upper-bound.definition.v1",
+      "previous_state": "proposed",
+      "resulting_state": "approved",
+      "edited_revision_id": null,
+      "destination_concept_id": null
+    }
+  ],
+  "generation_package": {
+    "generation_package_id": "genpkg.upper-bound.v1",
+    "tool_versions": {"validator": "lra-governance"},
+    "approved_candidate_revisions": [
+      {"candidate_id": "cand.upper-bound.definition", "revision_id": "rev.upper-bound.definition.v2"}
+    ],
+    "ordering": "stable-id-lexicographic"
+  },
+  "generation_receipts": []
+}
