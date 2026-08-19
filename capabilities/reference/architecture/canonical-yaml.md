@@ -29,10 +29,10 @@ monorepo.
 Agents should not load all four registries into context for ordinary lookup.
 Use `tools/governance/vocabulary.py` to query the generated SQLite index:
 
-```powershell
-python tools\governance\vocabulary.py exists UpperBound --kind predicate
-python tools\governance\vocabulary.py get pred:upper-bound
-python tools\governance\vocabulary.py search "least upper bound" --limit 5
+```sh
+python tools/governance/vocabulary.py exists UpperBound --kind predicate
+python tools/governance/vocabulary.py get pred:upper-bound
+python tools/governance/vocabulary.py search "least upper bound" --limit 5
 ```
 
 `exists` and `search` return compact summaries; `get` returns one complete YAML
@@ -50,9 +50,9 @@ fallback. This shares the external generated-index root without making
 To propose a registry addition without loading or rewriting the whole file,
 put exactly one entry in a YAML file and run:
 
-```powershell
-python tools\governance\vocabulary.py add predicate candidate.yaml
-python tools\governance\vocabulary.py add predicate candidate.yaml --write
+```sh
+python tools/governance/vocabulary.py add predicate candidate.yaml
+python tools/governance/vocabulary.py add predicate candidate.yaml --write
 ```
 
 The first command is a dry run. `--write` validates the current registries,

@@ -26,9 +26,9 @@ volume repository.
 For any user-supplied proof photo or image artifact, use the Docker photo
 pipeline by default:
 
-```powershell
+```sh
 docker build -t lra-proof-vault .
-docker run --rm -v F:\repos:/repos -w /repos/lra-proof-vault lra-proof-vault --root /repos/lra-proof-vault --repos-root /repos --file /repos/path/to/photo.jpg --theorem-id <stable-theorem-label>
+docker run --rm -v <repos-root>:/repos -w /repos/lra-proof-vault lra-proof-vault --root /repos/lra-proof-vault --repos-root /repos --file /repos/path/to/photo.jpg --theorem-id <stable-theorem-label>
 ```
 
 Do not run `scripts/memorialize_attempt.py` directly for photos unless Docker
@@ -50,9 +50,9 @@ proof file and reviewed Markdown/TeX artifacts, not in the OCR artifact.
 
 ## Success gates
 
-- `python scripts\validate_vault.py --root .`
+- `python scripts/validate_vault.py --root .`
 - when a reviewed-correct proof is used canonically and leaf backlinks are
-  required: `python scripts\validate_vault.py --root . --repos-root F:\repos --require-leaf-backlinks`
+  required: `python scripts/validate_vault.py --root . --repos-root <repos-root> --require-leaf-backlinks`
 
 For full photo workflow details use the local `README.md`; the cross-repo
 contract (privacy, sanitization, route metadata, backlinks) is the

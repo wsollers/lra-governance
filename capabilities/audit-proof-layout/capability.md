@@ -9,15 +9,15 @@ Machine-readable proof layout authority lives in
 Run the deterministic audit tool from `lra-governance`. When unsure, discover
 the available volume, chapter, and section targets first:
 
-```powershell
-python tools\governance\audit_proof_layout.py --root F:\repos\lra-volume-ii --list-targets
+```sh
+python tools/governance/audit_proof_layout.py --root <volume-root> --list-targets
 ```
 
 Use `--strict` when the target repo is expected to satisfy the current
 topic-mirrored proof architecture:
 
-```powershell
-python tools\governance\audit_proof_layout.py --root F:\repos\lra-volume-ii --chapter whole-numbers --strict
+```sh
+python tools/governance/audit_proof_layout.py --root <volume-root> --chapter whole-numbers --strict
 ```
 
 Use `--volume <volume-name>`, `--chapter <chapter-name>`, or
@@ -27,8 +27,8 @@ chapter notes to resolve theorem topics.
 
 Use JSON output for generated reports:
 
-```powershell
-python tools\governance\audit_proof_layout.py --root F:\repos\lra-volume-ii --format json
+```sh
+python tools/governance/audit_proof_layout.py --root <volume-root> --format json
 ```
 
 The audited rule set is the proof-file and proof-status portion of

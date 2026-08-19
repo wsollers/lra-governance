@@ -16,14 +16,14 @@ standalone LaTeX build hygiene for printable student-facing materials.
 Use the governance-owned Docker image for LaTeX builds and PDF generation.
 Build the image from `lra-governance`:
 
-```powershell
-docker build -t lra-exercises-latex -f docker\lra-exercises-latex\Dockerfile docker\lra-exercises-latex
+```sh
+docker build -t lra-exercises-latex -f docker/lra-exercises-latex\Dockerfile docker/lra-exercises-latex
 ```
 
 From `lra-exercises`, build a worksheet/workbook PDF by mounting the repo at
 `/workspace` and running `latexmk` in the source folder:
 
-```powershell
+```sh
 docker run --rm -v "${PWD}:/workspace" -w /workspace/<Source_Folder> lra-exercises-latex latexmk -lualatex -interaction=nonstopmode -file-line-error -synctex=1 <sheet>.tex
 ```
 

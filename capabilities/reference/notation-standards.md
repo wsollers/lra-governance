@@ -137,8 +137,8 @@ validator to understand it.
 The source-level house style is governed by `latex-math-style.md`. The focused
 validator is:
 
-```powershell
-python tools\governance\validate_latex_math_style.py --target <tex-file-or-directory>
+```sh
+python tools/governance/validate_latex_math_style.py --target <tex-file-or-directory>
 ```
 
 Use this validator when adding or revising notation-heavy definitions,

@@ -43,33 +43,20 @@ Python verifier.
 
 Use an external OpenAI review only when explicitly requested:
 
-```powershell
-python <governance-root>\tools\governance\invoke_external_gpt_reviewer.py logic `
-  --logic-reviewer external `
-  --input <run-dir>\logic-input.json `
-  --output <run-dir>\logic-validation.yaml `
-  --prompt <governance-root>\constitution\prompts\validate-semantic-artifact-logic.md `
-  --governance-root <governance-root>
+```sh
+python <governance-root>\tools/governance/invoke_external_gpt_reviewer.py logic --logic-reviewer external --input <run-dir>\logic-input.json --output <run-dir>\logic-validation.yaml --prompt <governance-root>\constitution/prompts\validate-semantic-artifact-logic.md --governance-root <governance-root>
 ```
 
 The local mode requires the generated artifact and corrected TeX:
 
-```powershell
-python <governance-root>\tools\governance\invoke_external_gpt_reviewer.py logic `
-  --input <run-dir>\logic-input.json `
-  --output <run-dir>\logic-validation.yaml `
-  --artifact <artifact-folder>\artifact.yaml `
-  --corrected-tex <artifact-folder>\corrected.tex `
-  --governance-root <governance-root>
+```sh
+python <governance-root>\tools/governance/invoke_external_gpt_reviewer.py logic --input <run-dir>\logic-input.json --output <run-dir>\logic-validation.yaml --artifact <artifact-folder>\artifact.yaml --corrected-tex <artifact-folder>\corrected.tex --governance-root <governance-root>
 ```
 
 The direct validator entrypoint is:
 
-```powershell
-python <governance-root>\tools\governance\validate_semantic_logic.py `
-  --artifact <artifact-folder>\artifact.yaml `
-  --corrected-tex <artifact-folder>\corrected.tex `
-  --output <run-dir>\logic-validation.yaml
+```sh
+python <governance-root>\tools/governance/validate_semantic_logic.py --artifact <artifact-folder>\artifact.yaml --corrected-tex <artifact-folder>\corrected.tex --output <run-dir>\logic-validation.yaml
 ```
 
 ## Metadata needed for deterministic validation
@@ -266,11 +253,8 @@ should return warnings or failures that identify the missing metadata.
 Before trusting the generated artifact AST, run independent source extractors and
 compare their facts against the semantic artifact:
 
-```powershell
-python <governance-root>\tools\governance\compare_semantic_ast_extractors.py `
-  --source-tex <artifact-source-snippet.tex> `
-  --artifact <artifact-folder>\artifact.yaml `
-  --output <run-dir>\ast-extractor-comparison.yaml
+```sh
+python <governance-root>\tools/governance/compare_semantic_ast_extractors.py --source-tex <artifact-source-snippet.tex> --artifact <artifact-folder>\artifact.yaml --output <run-dir>\ast-extractor-comparison.yaml
 ```
 
 `<artifact-source-snippet.tex>` is the exact source environment being added or

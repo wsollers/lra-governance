@@ -199,8 +199,8 @@ Use the notation normalizations in `notation-standards.md`. In particular:
 
 The focused style validator is:
 
-```powershell
-python tools\governance\validate_latex_math_style.py --target <tex-file-or-directory>
+```sh
+python tools/governance/validate_latex_math_style.py --target <tex-file-or-directory>
 ```
 
 It checks the source against the notation roles in `notation.yaml`, including

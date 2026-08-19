@@ -63,15 +63,15 @@ Stage 1 prepares repositories:
 
 Use the governance preflight command:
 
-```powershell
-python tools\governance\extraction_pipeline\preflight.py
+```sh
+python tools/governance/extraction_pipeline/preflight.py
 ```
 
 For local development immediately after intentional checkpoint commits, use
 `--allow-ahead` to allow clean repositories that have not yet been pushed:
 
-```powershell
-python tools\governance\extraction_pipeline\preflight.py --allow-ahead
+```sh
+python tools/governance/extraction_pipeline/preflight.py --allow-ahead
 ```
 
 Stage 2 generates data:
@@ -90,14 +90,14 @@ The first conservative Stage 2 command is read-only against the volume repos.
 It derives a chapter manifest from source, extracts dependency data, validates
 the graph, and writes ignored run artifacts:
 
-```powershell
-python tools\governance\extraction_pipeline\generate_data.py
+```sh
+python tools/governance/extraction_pipeline/generate_data.py
 ```
 
 To refresh proof-vault theorem routes after a volume/book/chapter refactor:
 
-```powershell
-python tools\governance\extraction_pipeline\generate_theorem_routes.py --repos-root F:\repos
+```sh
+python tools/governance/extraction_pipeline/generate_theorem_routes.py --repos-root <repos-root>
 ```
 
 Generated run artifacts live under `runs/extraction-*`. Raw logs and human
@@ -137,8 +137,8 @@ Stage 6 reports:
 
 Before changing the pipeline, archive the current comparison baseline with:
 
-```powershell
-python tools\governance\extraction_pipeline\archive_baseline.py
+```sh
+python tools/governance/extraction_pipeline/archive_baseline.py
 ```
 
 Committed baselines live under `baselines/extraction/`. Timestamped logs and

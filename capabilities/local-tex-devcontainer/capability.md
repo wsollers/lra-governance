@@ -18,50 +18,50 @@ When the user says `edit latex` while working in `lra-volume-i` through
 `lra-volume-viii`, launch this governed local editing path. From
 `lra-governance`, target a sibling volume by number:
 
-```powershell
-python tools\governance\edit_latex.py --volume iii
-python tools\governance\edit_latex.py --volume 3
+```sh
+python tools/governance/edit_latex.py --volume iii
+python tools/governance/edit_latex.py --volume 3
 ```
 
 From inside a volume repository or one of its subdirectories, the root is
 inferred:
 
-```powershell
-python ..\lra-governance\tools\governance\edit_latex.py
+```sh
+python ../lra-governance/tools/governance/edit_latex.py
 ```
 
 The launcher refreshes the generated `.devcontainer/` shim and opens VS Code
 with a `vscode-remote://dev-container...` folder URI. If the Dev Containers URI
 path is unavailable on a machine, use:
 
-```powershell
-python tools\governance\edit_latex.py --volume iii --launch-mode plain-code
+```sh
+python tools/governance/edit_latex.py --volume iii --launch-mode plain-code
 ```
 
 Then run `Dev Containers: Reopen in Container` from VS Code.
 
 Generate the shim from `lra-governance`:
 
-```powershell
-python tools\governance\install_volume_devcontainer.py --root F:\repos\lra-volume-iii --write
+```sh
+python tools/governance/install_volume_devcontainer.py --root ../lra-volume-iii --write
 ```
 
 Install into every sibling `lra-volume-*` checkout:
 
-```powershell
-python tools\governance\install_volume_devcontainer.py --workspace F:\repos --all-sibling-volumes --write
+```sh
+python tools/governance/install_volume_devcontainer.py --workspace <repos-root> --all-sibling-volumes --write
 ```
 
 Add or refresh book-root magic comments in active volume `.tex` files:
 
-```powershell
-python tools\governance\set_latex_root_comments.py --root F:\repos\lra-volume-iii --write
+```sh
+python tools/governance/set_latex_root_comments.py --root ../lra-volume-iii --write
 ```
 
 Check for missing or stale comments without modifying files:
 
-```powershell
-python tools\governance\set_latex_root_comments.py --root F:\repos\lra-volume-iii --check
+```sh
+python tools/governance/set_latex_root_comments.py --root ../lra-volume-iii --check
 ```
 
 `--check` exits nonzero when an active included `.tex` file is missing its

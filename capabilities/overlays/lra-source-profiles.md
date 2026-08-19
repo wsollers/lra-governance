@@ -78,7 +78,7 @@ Layout gate:
 
 ## Success gates
 
-- `python scripts\validate_source_indexes.py`
+- `python scripts/validate_source_indexes.py`
 - `python -m pytest tests`
 
 Use the local `README.md`, `workflows/`, source indexes, and scripts for

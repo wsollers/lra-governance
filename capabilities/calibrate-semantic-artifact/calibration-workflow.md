@@ -72,11 +72,8 @@ context, and exact commits.
 
 ## Reviewer invocation
 
-```powershell
-python <governance-root>\tools\governance\invoke_external_gpt_reviewer.py semantic `
-  --input <semantic-input.json> `
-  --output <label-root> `
-  --prompt <governance-root>\constitution\prompts\calibrate-semantic-artifact.md
+```sh
+python <governance-root>\tools/governance/invoke_external_gpt_reviewer.py semantic --input <semantic-input.json> --output <label-root> --prompt <governance-root>\constitution/prompts\calibrate-semantic-artifact.md
 ```
 
 The executor writes the package and `external-review-receipt.yaml`. Codex must not
@@ -131,118 +128,36 @@ not be applied to source.
 
 ## Validation
 
-```powershell
-python <governance-root>\tools\governance\validate_semantic_artifact.py `
-  --artifact <artifact.yaml> `
-  --package-dir <returned-package-directory> `
-  --governance-root <governance-root> `
-  --repos-root <repos-root> `
-  --strict
+```sh
+python <governance-root>\tools/governance/validate_semantic_artifact.py --artifact <artifact.yaml> --package-dir <returned-package-directory> --governance-root <governance-root> --repos-root <repos-root> --strict
 
-python <governance-root>\tools\governance\validate_external_reviewer_evidence.py `
-  --package <returned-package-directory>\package.yaml `
-  --verify-live
+python <governance-root>\tools/governance/validate_external_reviewer_evidence.py --package <returned-package-directory>\package.yaml --verify-live
 
-python <governance-root>\tools\governance\validate_semantic_logic.py `
-  --artifact <returned-package-directory>\artifact.yaml `
-  --corrected-tex <returned-package-directory>\corrected.tex `
-  --output <run-dir>\logic-validation.yaml
+python <governance-root>\tools/governance/validate_semantic_logic.py --artifact <returned-package-directory>\artifact.yaml --corrected-tex <returned-package-directory>\corrected.tex --output <run-dir>\logic-validation.yaml
 
-python <governance-root>\tools\governance\validate_semantic_logic.py `
-  --llm-data <reviewer-output.json> `
-  --output <run-dir>\logic-validation.yaml
+python <governance-root>\tools/governance/validate_semantic_logic.py --llm-data <reviewer-output.json> --output <run-dir>\logic-validation.yaml
 
-python <governance-root>\tools\governance\validate_semantic_scope.py `
-  --mode python `
-  --repos-root <repos-root> `
-  --volume <i-viii> `
-  --book <book-slug-or-root> `
-  --chapter <chapter-slug> `
-  --section <section-slug> `
-  --label <optional-def-or-thm-label> `
-  --output <run-dir>\semantic-scope-validation.yaml
+python <governance-root>\tools/governance/validate_semantic_scope.py --mode python --repos-root <repos-root> --volume <i-viii> --book <book-slug-or-root> --chapter <chapter-slug> --section <section-slug> --label <optional-def-or-thm-label> --output <run-dir>\semantic-scope-validation.yaml
 
-python <governance-root>\tools\governance\validate_semantic_scope.py `
-  --mode python-llm `
-  --repos-root <repos-root> `
-  --volume <i-viii> `
-  --book <book-slug-or-root> `
-  --chapter <chapter-slug> `
-  --section <section-slug> `
-  --label <optional-def-or-thm-label> `
-  --llm-data-dir <run-dir>\llm-payloads `
-  --output <run-dir>\semantic-scope-validation.yaml
+python <governance-root>\tools/governance/validate_semantic_scope.py --mode python-llm --repos-root <repos-root> --volume <i-viii> --book <book-slug-or-root> --chapter <chapter-slug> --section <section-slug> --label <optional-def-or-thm-label> --llm-data-dir <run-dir>\llm-payloads --output <run-dir>\semantic-scope-validation.yaml
 
-python <governance-root>\tools\governance\validate_semantic_label.py `
-  <def-or-thm-label> `
-  --repos-root <repos-root> `
-  --with-llm `
-  --output <run-dir>\semantic-label-validation.yaml
+python <governance-root>\tools/governance/validate_semantic_label.py <def-or-thm-label> --repos-root <repos-root> --with-llm --output <run-dir>\semantic-label-validation.yaml
 
-python <governance-root>\tools\governance\validate_semantic_logic.py `
-  --artifact <returned-package-directory>\artifact.yaml `
-  --repos-root <repos-root> `
-  --volume <i-viii> `
-  --target <volume-relative-chapter-or-topic> `
-  --label <def-or-thm-label> `
-  --output <run-dir>\logic-validation.yaml
+python <governance-root>\tools/governance/validate_semantic_logic.py --artifact <returned-package-directory>\artifact.yaml --repos-root <repos-root> --volume <i-viii> --target <volume-relative-chapter-or-topic> --label <def-or-thm-label> --output <run-dir>\logic-validation.yaml
 
-python <governance-root>\tools\governance\validate_semantic_logic.py `
-  --repos-root <repos-root> `
-  --volume <i-viii> `
-  --book <book-slug-or-root> `
-  --chapter <chapter-slug> `
-  --section <section-slug> `
-  --label <optional-def-or-thm-label> `
-  --output <run-dir>\logic-batch-validation.yaml
+python <governance-root>\tools/governance/validate_semantic_logic.py --repos-root <repos-root> --volume <i-viii> --book <book-slug-or-root> --chapter <chapter-slug> --section <section-slug> --label <optional-def-or-thm-label> --output <run-dir>\logic-batch-validation.yaml
 
-python <governance-root>\tools\governance\validate_latex_math_style.py `
-  --target <volume-repo>\<changed-tex-file-or-topic-directory>
+python <governance-root>\tools/governance/validate_latex_math_style.py --target <volume-repo>\<changed-tex-file-or-topic-directory>
 
-python <governance-root>\tools\governance\semantic_artifact_inventory.py `
-  --repos-root <repos-root> `
-  --volume <i-viii> `
-  --book <book-slug-or-root> `
-  --chapter <chapter-slug> `
-  --section <section-slug> `
-  --label <optional-def-or-thm-label> `
-  --output <run-dir>\semantic-artifact-inventory.yaml
+python <governance-root>\tools/governance/semantic_artifact_inventory.py --repos-root <repos-root> --volume <i-viii> --book <book-slug-or-root> --chapter <chapter-slug> --section <section-slug> --label <optional-def-or-thm-label> --output <run-dir>\semantic-artifact-inventory.yaml
 
-python <governance-root>\tools\governance\get_semantic_validation_targets.py `
-  --repos-root <repos-root> `
-  --volume <i-viii> `
-  --book <book-slug-or-root> `
-  --chapter <chapter-slug> `
-  --section <section-slug> `
-  --label <optional-def-or-thm-label> `
-  --include-source-text `
-  --output <run-dir>\semantic-validation-targets.yaml
+python <governance-root>\tools/governance/get_semantic_validation_targets.py --repos-root <repos-root> --volume <i-viii> --book <book-slug-or-root> --chapter <chapter-slug> --section <section-slug> --label <optional-def-or-thm-label> --include-source-text --output <run-dir>\semantic-validation-targets.yaml
 
-python <governance-root>\tools\governance\create_semantic_validation_artifacts.py `
-  --repos-root <repos-root> `
-  --volume <i-viii> `
-  --book <book-slug-or-root> `
-  --chapter <chapter-slug> `
-  --section <section-slug> `
-  --label <optional-def-or-thm-label> `
-  --output <run-dir>\semantic-artifact-creation.yaml
+python <governance-root>\tools/governance/create_semantic_validation_artifacts.py --repos-root <repos-root> --volume <i-viii> --book <book-slug-or-root> --chapter <chapter-slug> --section <section-slug> --label <optional-def-or-thm-label> --output <run-dir>\semantic-artifact-creation.yaml
 
-python <governance-root>\tools\governance\render_semantic_validation_report.py `
-  --repos-root <repos-root> `
-  --volume <i-viii> `
-  --book <book-slug-or-root> `
-  --chapter <chapter-slug> `
-  --section <optional-section-slug> `
-  --label <optional-def-or-thm-label> `
-  --scope-validation <run-dir>\semantic-scope-validation.yaml `
-  --llm-data-dir <run-dir>\llm-payloads `
-  --output-index <target-volume-root>\build\bounding-rpt.md `
-  --output-dir <target-volume-root>\build\bounding-rpt
+python <governance-root>\tools/governance/render_semantic_validation_report.py --repos-root <repos-root> --volume <i-viii> --book <book-slug-or-root> --chapter <chapter-slug> --section <optional-section-slug> --label <optional-def-or-thm-label> --scope-validation <run-dir>\semantic-scope-validation.yaml --llm-data-dir <run-dir>\llm-payloads --output-index <target-volume-root>\build/bounding-rpt.md --output-dir <target-volume-root>\build/bounding-rpt
 
-python <governance-root>\tools\governance\compare_semantic_ast_extractors.py `
-  --source-tex <run-dir>\artifact-source-snippet.tex `
-  --artifact <returned-package-directory>\artifact.yaml `
-  --output <run-dir>\ast-extractor-comparison.yaml
+python <governance-root>\tools/governance/compare_semantic_ast_extractors.py --source-tex <run-dir>\artifact-source-snippet.tex --artifact <returned-package-directory>\artifact.yaml --output <run-dir>\ast-extractor-comparison.yaml
 ```
 
 The first validator covers schema, atomic labels, registry IDs/arities, binder
@@ -320,33 +235,12 @@ The comparison is diagnostic. The AST validator remains the validation gate.
 
 For Volume III's bounding chapter, the default local run shape is:
 
-```powershell
-python tools\governance\semantic_artifact_inventory.py `
-  --repos-root F:\repos `
-  --volume iii `
-  --chapter bounding `
-  --include-source-text `
-  --format json `
-  --output F:\repos\lra-volume-iii\build\bounding-inventory.json
+```sh
+python tools/governance/semantic_artifact_inventory.py --repos-root <repos-root> --volume iii --chapter bounding --include-source-text --format json --output ../lra-volume-iii/build/bounding-inventory.json
 
-python tools\governance\validate_semantic_scope.py `
-  --mode python-llm `
-  --repos-root F:\repos `
-  --volume iii `
-  --chapter bounding `
-  --llm-data-dir F:\repos\lra-volume-iii\build\bounding-llm-payloads `
-  --allow-pending `
-  --format json `
-  --output F:\repos\lra-volume-iii\build\bounding-scope-validation.json
+python tools/governance/validate_semantic_scope.py --mode python-llm --repos-root <repos-root> --volume iii --chapter bounding --llm-data-dir ../lra-volume-iii/build/bounding-llm-payloads --allow-pending --format json --output ../lra-volume-iii/build/bounding-scope-validation.json
 
-python tools\governance\render_semantic_validation_report.py `
-  --repos-root F:\repos `
-  --volume iii `
-  --chapter bounding `
-  --scope-validation F:\repos\lra-volume-iii\build\bounding-scope-validation.json `
-  --llm-data-dir F:\repos\lra-volume-iii\build\bounding-llm-payloads `
-  --output-index F:\repos\lra-volume-iii\build\bounding-rpt.md `
-  --output-dir F:\repos\lra-volume-iii\build\bounding-rpt
+python tools/governance/render_semantic_validation_report.py --repos-root <repos-root> --volume iii --chapter bounding --scope-validation ../lra-volume-iii/build/bounding-scope-validation.json --llm-data-dir ../lra-volume-iii/build/bounding-llm-payloads --output-index ../lra-volume-iii/build/bounding-rpt.md --output-dir ../lra-volume-iii/build/bounding-rpt
 ```
 
 When Codex is the LLM source, create payloads from the generated request packets

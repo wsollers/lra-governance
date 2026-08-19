@@ -120,8 +120,8 @@ or style validator instead.
 
 For notation-heavy changes, run:
 
-```powershell
-python tools\governance\validate_latex_math_style.py --target <tex-file-or-directory>
+```sh
+python tools/governance/validate_latex_math_style.py --target <tex-file-or-directory>
 ```
 
 ## Semantic AST Gate

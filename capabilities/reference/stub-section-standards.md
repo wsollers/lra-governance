@@ -40,14 +40,14 @@ and idempotency rules.
 Use the deterministic generator before hand-authoring section stubs:
 
 ```powershell
-python tools\governance\generate_stub.py section --chapter-root .\volume-ii\<chapter-slug> --section "<Section Title>"
+python tools/governance/generate_stub.py section --chapter-root .\volume-ii\<chapter-slug> --section "<Section Title>"
 ```
 
 From a checkout without the volume-local wrapper, call the canonical tool
 through the sibling governance repo:
 
 ```powershell
-python ..\lra-governance\tools\governance\generate_stub.py section --chapter-root .\volume-ii\<chapter-slug> --section "<Section Title>"
+python ../lra-governance/tools/governance/generate_stub.py section --chapter-root .\volume-ii\<chapter-slug> --section "<Section Title>"
 ```
 
 Use repeated `--section` arguments or a semicolon-separated `--sections` list

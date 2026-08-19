@@ -30,9 +30,10 @@ Local conventions:
   shared implementation stays in `lra-common`.
 - Cross-volume references must not rely on an assembled monorepo build.
 
-Validate and build (from the volume root, with a sibling `lra-governance`):
-- `python ..\lra-governance\scripts\build_volume.py --root . --validate-only`
-- `python ..\lra-governance\tools\governance\build_volume_docker.py --root . --common-root ..\lra-common --edition <digital|print|reference> --paper <letter|sixbynine> --output-dir build\<edition>-<paper>`
+Validate and build (from the volume root, with a sibling `lra-governance`;
+forward-slash commands run unchanged in PowerShell and POSIX shells):
+- `python ../lra-governance/scripts/build_volume.py --root . --validate-only`
+- `python ../lra-governance/tools/governance/build_volume_docker.py --root . --common-root ../lra-common --edition <digital|print|reference> --paper <letter|sixbynine> --output-dir build/<edition>-<paper>`
   (discovers every canonical book root; add `--tex-root <book>.tex` for one book).
 - "edit latex" means the governance devcontainer launcher (route
   `local-tex-devcontainer`); never build volumes with raw `latexmk`.

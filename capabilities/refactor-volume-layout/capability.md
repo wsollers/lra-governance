@@ -11,15 +11,15 @@ The focused layout audit follows the broad layout contract in
 Run from `lra-governance` against a leaf repo, volume, chapter, or section.
 When unsure, discover the available targets first:
 
-```powershell
-python tools\governance\audit_volume_layout.py --root F:\repos\lra-volume-ii --list-targets
+```sh
+python tools/governance/audit_volume_layout.py --root <volume-root> --list-targets
 ```
 
 Use `--strict` when the target is expected to satisfy the current
 volume/chapter/topic architecture:
 
-```powershell
-python tools\governance\audit_volume_layout.py --root F:\repos\lra-volume-ii --chapter whole-numbers --strict
+```sh
+python tools/governance/audit_volume_layout.py --root <volume-root> --chapter whole-numbers --strict
 ```
 
 Use `--volume <volume-name>`, `--chapter <chapter-name>`, or
@@ -29,8 +29,8 @@ chapter-level invariants.
 
 Use JSON output for generated reports:
 
-```powershell
-python tools\governance\audit_volume_layout.py --root F:\repos\lra-volume-ii --format json
+```sh
+python tools/governance/audit_volume_layout.py --root <volume-root> --format json
 ```
 
 The audited rule set is the volume/chapter/topic layout portion of
@@ -45,9 +45,9 @@ If the audited refactor moved theorem source paths, proof source paths, or the
 topic folders containing them, regenerate and validate the leaf theorem-route
 artifacts before syncing to the proof vault:
 
-```powershell
-python scripts\generate_theorem_routes.py --root .
-python scripts\generate_theorem_routes.py --root . --validate-only
+```sh
+python scripts/generate_theorem_routes.py --root .
+python scripts/generate_theorem_routes.py --root . --validate-only
 ```
 
 The proof vault must consume the regenerated route snapshot rather than stale

@@ -61,14 +61,14 @@ The machine-readable authority for volume, chapter, and topic layout is
 Use the deterministic generator before hand-authoring a stub chapter:
 
 ```powershell
-python tools\governance\generate_stub.py chapter --book-root .\volume-iii\book-analysis-i --subject <chapter-slug> --title "<Chapter Display Title>" --section "<Section Title>"
+python tools/governance/generate_stub.py chapter --book-root .\volume-iii\book-analysis-i --subject <chapter-slug> --title "<Chapter Display Title>" --section "<Section Title>"
 ```
 
 From a checkout without the volume-local wrapper, call the canonical tool
 through the sibling governance repo:
 
 ```powershell
-python ..\lra-governance\tools\governance\generate_stub.py chapter --book-root .\volume-iii\book-analysis-i --subject <chapter-slug> --title "<Chapter Display Title>"
+python ../lra-governance/tools/governance/generate_stub.py chapter --book-root .\volume-iii\book-analysis-i --subject <chapter-slug> --title "<Chapter Display Title>"
 ```
 
 Use repeated `--section` arguments or a semicolon-separated `--sections` list
@@ -85,7 +85,7 @@ To promote an existing topic into a chapter without generating a placeholder
 topic or capstone, use the first-class promotion command:
 
 ```powershell
-python tools\governance\generate_stub.py promote-topic --source-chapter-root .\volume-iii\book-analysis-i\bounding --topic completeness --destination-chapter completeness --title "Completeness" --update-registry
+python tools/governance/generate_stub.py promote-topic --source-chapter-root .\volume-iii\book-analysis-i\bounding --topic completeness --destination-chapter completeness --title "Completeness" --update-registry
 ```
 
 Omit `--update-registry` to receive the exact required
@@ -239,8 +239,8 @@ conventions and only for actual chapter or section structure.
 After generating stub chapters, run the repo-local build or validation command.
 For LRA volume repos, the validation command is:
 
-```powershell
-python ..\lra-governance\scripts\build_volume.py --root . --validate-only
+```sh
+python ../lra-governance/scripts/build_volume.py --root . --validate-only
 ```
 
 unless local instructions say otherwise.

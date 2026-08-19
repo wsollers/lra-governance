@@ -12,6 +12,10 @@ routing; this file defines behavior shared by every route.
 4. Perform the capability action. Re-resolve if the task materially changes.
 5. Run every returned verification command. Report success only when all
    required gates pass; identify any skipped or failing gate explicitly.
+6. Command examples use forward-slash paths and run unchanged in PowerShell
+   and POSIX shells; commands naming `.ps1` helpers require Windows — in
+   another environment, report such a gate as blocked rather than
+   substituting an ad-hoc build.
 
 ## Respect Authority
 

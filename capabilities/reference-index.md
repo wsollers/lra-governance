@@ -29,6 +29,8 @@ For `author-mathematics`:
 - Definition atomicity: `capabilities/reference/atomic-artifact-standards.md`
 - Predicate and notation discipline: `capabilities/reference/notation-standards.md`
 - Extraction-facing labels and identity: `capabilities/reference/extraction-standards.md`
+- Structural presentations (signatures, languages, models, classification
+  cards, blueprints): `capabilities/reference/model-standards.md`
 
 ## Chapter And Section Scaffolding
 
@@ -61,6 +63,7 @@ For `cpp-build-task`:
 
 - Shared code layout and style: `capabilities/reference/code-repo-standards.md`
 - Build/render standards: `capabilities/reference/build-render-standards.md`
+- NURBS workspace architecture: `capabilities/reference/architecture/lra-nurbs-architecture.md`
 - Repository layout: `capabilities/reference/architecture/repository-layout.md`
 
 Prefer local source, tests, and repo build scripts before opening broader docs.
@@ -85,6 +88,18 @@ Open these only when the task crosses repository boundaries or generated-file
 ownership is unclear:
 
 - Multi-repo sync: `capabilities/reference/architecture/multi-repo-sync.md`
+- Workflow and data-flow map: `capabilities/reference/architecture/workflow-data-flow.md`
 - Generated-file policy: `capabilities/reference/architecture/generated-file-policy.md`
 - Generated wrapper sync: `capabilities/generate-governance-wrappers/capability.md`
 - Agent task index: `capabilities/task-index.md`
+
+## Volume Structure, Editions, And Front Matter
+
+For volume layout, build, and print/digital work:
+
+- Edition behavior (digital/print/reference): `capabilities/reference/digital-print-edition-standards.md`
+- Breadcrumb/footer chrome and placement: `capabilities/reference/breadcrumb-footer-standards.md`
+- Dedication pages: `capabilities/reference/architecture/dedication-page-standard.md`
+- Front matter and frontispieces: `capabilities/reference/architecture/frontmatter-and-frontispiece-standard.md`
+- Adding a book to a volume: `capabilities/reference/book-addition-standards.md`
+- Chapter capstone selection and layout: `capabilities/reference/capstone-exercise-standards.md`

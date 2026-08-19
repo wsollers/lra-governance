@@ -117,3 +117,11 @@ flowchart TB
 - Generated explorer data is derived from the volume source repos by the
   governance-orchestrated refresh; it is not hand-authored in volume
   repositories.
+
+## Views Of The Same Mathematics
+
+The project maintains several views of the same mathematics: LaTeX source,
+the rendered PDF/Overleaf view, logical block structure, the dependency
+graph, theorem explorer data, and audit reports. Changes to one layer must
+preserve the contracts used by the others. The structured contracts live in
+`constitution/schema/` and `constitution/schemas/`.

@@ -456,8 +456,8 @@ Before returning output, check:
 For newly generated note files or note directories, run the integrated volume
 validator:
 
-```powershell
-python tools\governance\validate_volume.py <target-repo> --fail-on-errors
+```sh
+python tools/governance/validate_volume.py <target-repo> --fail-on-errors
 ```
 
 Use the scoped audit tools only when a task needs a focused inventory or

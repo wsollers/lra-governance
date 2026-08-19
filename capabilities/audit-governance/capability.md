@@ -46,20 +46,20 @@ reasonably own the content.
 
 Run the checks that are available for the audit target. Typical checks include:
 
-```powershell
-python capabilities\generate_task_index.py --check
-python tools\governance\audit_governance_context.py
-python -m py_compile tools\governance\audit_proof_layout.py tools\governance\audit_volume_layout.py tools\governance\validate_volume.py
+```sh
+python capabilities/generate_task_index.py --check
+python tools/governance/audit_governance_context.py
+python -m py_compile tools/governance/audit_proof_layout.py tools/governance/audit_volume_layout.py tools/governance/validate_volume.py
 ```
 
 If schema files changed, also run the integrated validator against an affected
 leaf volume:
 
-```powershell
-python tools\governance\validate_volume.py <target-repo> --fail-on-errors
+```sh
+python tools/governance/validate_volume.py <target-repo> --fail-on-errors
 ```
 
-```powershell
+```sh
 python - <<'PY'
 from pathlib import Path
 import json

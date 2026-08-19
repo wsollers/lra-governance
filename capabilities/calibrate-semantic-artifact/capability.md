@@ -37,13 +37,8 @@ semantic YAML plus governed LaTeX.
 
 ## Success gates
 
-```powershell
-python tools\governance\validate_semantic_artifact.py `
-  --artifact <artifact.yaml> `
-  --package-dir <returned-package-directory> `
-  --governance-root <governance-root> `
-  --repos-root <repos-root> `
-  --strict
+```sh
+python tools/governance/validate_semantic_artifact.py --artifact <artifact.yaml> --package-dir <returned-package-directory> --governance-root <governance-root> --repos-root <repos-root> --strict
 ```
 
 Then run integrated volume validation and the target book build.

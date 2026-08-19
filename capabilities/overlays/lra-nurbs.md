@@ -5,7 +5,8 @@ Repo identity: NURBS / numerical geometry.
 C++ / Vulkan / geometry / simulation codebase: C++ and CMake build rules,
 Vulkan rendering, geometry and NURBS implementation, simulation and DDE
 implementation, and local validators/CI expectations. These rules apply only
-here and must not be injected into volume content instructions.
+here and must not be injected into volume content instructions. Workspace
+architecture: `capabilities/reference/architecture/lra-nurbs-architecture.md`.
 
 ## Implementation Standards
 

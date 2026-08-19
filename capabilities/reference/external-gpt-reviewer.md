@@ -85,13 +85,8 @@ mathematical blocker.
 
 ## Semantic review call
 
-```powershell
-python <governance-root>\tools\governance\invoke_external_gpt_reviewer.py semantic `
-  --input <run-dir>\semantic-input.json `
-  --output <artifact-folder> `
-  --prompt <governance-root>\constitution\prompts\calibrate-semantic-artifact.md `
-  --governance-root <governance-root> `
-  --repos-root <repos-root>
+```sh
+python <governance-root>\tools/governance/invoke_external_gpt_reviewer.py semantic --input <run-dir>\semantic-input.json --output <artifact-folder> --prompt <governance-root>\constitution/prompts\calibrate-semantic-artifact.md --governance-root <governance-root> --repos-root <repos-root>
 ```
 
 The executor requests strict structured output, stages the eight review files,
@@ -134,13 +129,8 @@ ignored diagnostics.
 After deterministic validation of temporarily applied TeX, use the local
 semantic logic verifier by default:
 
-```powershell
-python <governance-root>\tools\governance\invoke_external_gpt_reviewer.py logic `
-  --input <run-dir>\logic-input.json `
-  --output <run-dir>\logic-validation.yaml `
-  --artifact <artifact-folder>\artifact.yaml `
-  --corrected-tex <artifact-folder>\corrected.tex `
-  --governance-root <governance-root>
+```sh
+python <governance-root>\tools/governance/invoke_external_gpt_reviewer.py logic --input <run-dir>\logic-input.json --output <run-dir>\logic-validation.yaml --artifact <artifact-folder>\artifact.yaml --corrected-tex <artifact-folder>\corrected.tex --governance-root <governance-root>
 ```
 
 The local logic result is deterministic validation evidence, not external
@@ -148,13 +138,8 @@ review evidence, and it does not have a response ID.
 
 Use an external GPT-5.6 logic request only when explicitly requested:
 
-```powershell
-python <governance-root>\tools\governance\invoke_external_gpt_reviewer.py logic `
-  --logic-reviewer external `
-  --input <run-dir>\logic-input.json `
-  --output <run-dir>\logic-validation.yaml `
-  --prompt <governance-root>\constitution\prompts\validate-semantic-artifact-logic.md `
-  --governance-root <governance-root>
+```sh
+python <governance-root>\tools/governance/invoke_external_gpt_reviewer.py logic --logic-reviewer external --input <run-dir>\logic-input.json --output <run-dir>\logic-validation.yaml --prompt <governance-root>\constitution/prompts\validate-semantic-artifact-logic.md --governance-root <governance-root>
 ```
 
 When external logic review is used, the logic response uses the same automatic
@@ -165,34 +150,22 @@ semantic attempt. Codex copies the returned logic record without revising it.
 
 Before source application:
 
-```powershell
-python <governance-root>\tools\governance\validate_semantic_artifact.py `
-  --artifact <artifact-folder>\artifact.yaml `
-  --package-dir <artifact-folder> `
-  --governance-root <governance-root> `
-  --repos-root <repos-root> `
-  --strict
+```sh
+python <governance-root>\tools/governance/validate_semantic_artifact.py --artifact <artifact-folder>\artifact.yaml --package-dir <artifact-folder> --governance-root <governance-root> --repos-root <repos-root> --strict
 
-python <governance-root>\tools\governance\validate_external_reviewer_evidence.py `
-  --package <artifact-folder>\package.yaml `
-  --verify-live
+python <governance-root>\tools/governance/validate_external_reviewer_evidence.py --package <artifact-folder>\package.yaml --verify-live
 ```
 
 After external logic validation and source reversion:
 
-```powershell
-python <governance-root>\tools\governance\validate_external_reviewer_evidence.py `
-  --audit-record <artifact-folder>\audit-validation.yaml `
-  --verify-live
+```sh
+python <governance-root>\tools/governance/validate_external_reviewer_evidence.py --audit-record <artifact-folder>\audit-validation.yaml --verify-live
 ```
 
 At topic closeout:
 
-```powershell
-python <governance-root>\tools\governance\validate_external_reviewer_evidence.py `
-  --topic-manifest <topic>\semantic-topic-audit.yaml `
-  --repo-root <target-volume-root> `
-  --verify-live
+```sh
+python <governance-root>\tools/governance/validate_external_reviewer_evidence.py --topic-manifest <topic>\semantic-topic-audit.yaml --repo-root <target-volume-root> --verify-live
 ```
 
 Live verification retrieves each stored external response and checks response

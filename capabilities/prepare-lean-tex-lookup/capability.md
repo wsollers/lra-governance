@@ -19,14 +19,14 @@ for downstream page or visual QA after the source object has been identified.
 
 ## Command
 
+`<index-root>` is the machine's external index location (the Windows
+workstation uses `D:\Readings\indexes\lra\internal`); generated indexes and
+state files stay outside the repositories.
+
 Use the delta updater for ordinary edit loops:
 
-```powershell
-python F:\repos\lra-governance\tools\governance\update_internal_object_index.py `
-  --tex-root F:\repos\lra-volume-iii `
-  --lean-root F:\repos\lra-lean `
-  --output D:\Readings\indexes\lra\internal\volume-iii-lean-tex-index.yaml `
-  --include-match-report
+```sh
+python ../lra-governance/tools/governance/update_internal_object_index.py --tex-root ../lra-volume-iii --lean-root ../lra-lean --output <index-root>/volume-iii-lean-tex-index.yaml --include-match-report
 ```
 
 On the first run, or when the state file is absent, the command performs a full
@@ -36,13 +36,8 @@ records for deleted files, and merge unchanged records from the previous index.
 Force a self-healing rebuild when the index looks suspicious, parser behavior
 changed, or roots/options changed:
 
-```powershell
-python F:\repos\lra-governance\tools\governance\update_internal_object_index.py `
-  --tex-root F:\repos\lra-volume-iii `
-  --lean-root F:\repos\lra-lean `
-  --output D:\Readings\indexes\lra\internal\volume-iii-lean-tex-index.yaml `
-  --include-match-report `
-  --full
+```sh
+python ../lra-governance/tools/governance/update_internal_object_index.py --tex-root ../lra-volume-iii --lean-root ../lra-lean --output <index-root>/volume-iii-lean-tex-index.yaml --include-match-report --full
 ```
 
 Use one `--tex-root` per volume repo and one `--lean-root` for `lra-lean`.
@@ -69,11 +64,8 @@ committed.
 After adding a TeX definition or theorem-like object, rerun the updater and
 verify the object is discoverable by label or name:
 
-```powershell
-python F:\repos\lra-governance\tools\governance\search_internal_object_index.py `
-  --index D:\Readings\indexes\lra\internal\sqlite\tex-search.sqlite `
-  --source-family tex `
-  "def:your-label"
+```sh
+python ../lra-governance/tools/governance/search_internal_object_index.py --index <index-root>/sqlite/tex-search.sqlite --source-family tex "def:your-label"
 ```
 
 For stable lookup, every TeX object should have a bracketed display name and a

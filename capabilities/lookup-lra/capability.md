@@ -8,8 +8,8 @@ the indexes into agent context.
 
 ## Tool
 
-```powershell
-python <governance-root>\tools\governance\lra_lookup.py "<query>"
+```sh
+python <governance-root>\tools/governance/lra_lookup.py "<query>"
 ```
 
 The default searches separate result lanes for primary reading sources,
@@ -32,9 +32,9 @@ Pass `--no-loose-sources` only when a strict zero-hit result is required.
 When a lane is stale or unavailable, refresh one independent family or all
 families through the source-profile orchestrator:
 
-```powershell
-python <source-profiles-root>\scripts\refresh_lra_indexes.py --scope tex
-python <source-profiles-root>\scripts\refresh_lra_indexes.py --scope all
+```sh
+python <source-profiles-root>\scripts/refresh_lra_indexes.py --scope tex
+python <source-profiles-root>\scripts/refresh_lra_indexes.py --scope all
 ```
 
 Ordinary PDF ingestion refreshes the primary-source SQLite database
@@ -59,6 +59,6 @@ their family database after successful CUD processing.
 
 ## Success Gate
 
-```powershell
-python <governance-root>\tools\governance\lra_lookup.py --status
+```sh
+python <governance-root>\tools/governance/lra_lookup.py --status
 ```

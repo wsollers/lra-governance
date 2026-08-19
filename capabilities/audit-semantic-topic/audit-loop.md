@@ -56,27 +56,17 @@ A Codex thread, Codex subagent, custom Codex agent, second Codex pass, manually 
 1. Build an ignored-run JSON packet containing exactly one source environment, its support blocks, exact commits, minimal context, canonical vocabulary, and known proof/Lean/Mathlib/proof-vault candidates.
 2. Invoke external GPT-5.6 semantic review:
 
-   ```powershell
-   python <governance-root>\tools\governance\invoke_external_gpt_reviewer.py semantic `
-     --input <run-dir>\semantic-input.json `
-     --output <artifact-folder> `
-     --prompt <governance-root>\constitution\prompts\calibrate-semantic-artifact.md
+```sh
+   python <governance-root>\tools/governance/invoke_external_gpt_reviewer.py semantic --input <run-dir>\semantic-input.json --output <artifact-folder> --prompt <governance-root>\constitution/prompts\calibrate-semantic-artifact.md
    ```
 
 3. Codex must not rewrite, complete, or repair the returned package. A genuine blocked result requires an external response identifying a concrete compound artifact or unresolved mathematical ambiguity. Missing output or `REVIEW_PACKAGE_NOT_PRODUCED` is incomplete/infrastructure failure, not a terminal mathematical blocker.
 4. Validate the package and live external evidence before source application:
 
-   ```powershell
-   python <governance-root>\tools\governance\validate_semantic_artifact.py `
-     --artifact <artifact-folder>\artifact.yaml `
-     --package-dir <artifact-folder> `
-     --governance-root <governance-root> `
-     --repos-root <repos-root> `
-     --strict
+```sh
+   python <governance-root>\tools/governance/validate_semantic_artifact.py --artifact <artifact-folder>\artifact.yaml --package-dir <artifact-folder> --governance-root <governance-root> --repos-root <repos-root> --strict
 
-   python <governance-root>\tools\governance\validate_external_reviewer_evidence.py `
-     --package <artifact-folder>\package.yaml `
-     --verify-live
+   python <governance-root>\tools/governance/validate_external_reviewer_evidence.py --package <artifact-folder>\package.yaml --verify-live
    ```
 
 5. Commit only the external semantic package and receipt with `Record semantic review for <label>`.
@@ -88,22 +78,14 @@ A Codex thread, Codex subagent, custom Codex agent, second Codex pass, manually 
    exit codes, tested commit, and log paths.
 8. Build a separate logic packet and invoke the local semantic logic verifier:
 
-   ```powershell
-   python <governance-root>\tools\governance\invoke_external_gpt_reviewer.py logic `
-     --input <run-dir>\logic-input.json `
-     --output <run-dir>\logic-validation.yaml `
-     --artifact <artifact-folder>\artifact.yaml `
-     --corrected-tex <artifact-folder>\corrected.tex `
-     --governance-root <governance-root>
+```sh
+   python <governance-root>\tools/governance/invoke_external_gpt_reviewer.py logic --input <run-dir>\logic-input.json --output <run-dir>\logic-validation.yaml --artifact <artifact-folder>\artifact.yaml --corrected-tex <artifact-folder>\corrected.tex --governance-root <governance-root>
    ```
 
    Also compare independent source extractors against the artifact:
 
-   ```powershell
-   python <governance-root>\tools\governance\compare_semantic_ast_extractors.py `
-     --source-tex <run-dir>\artifact-source-snippet.tex `
-     --artifact <artifact-folder>\artifact.yaml `
-     --output <run-dir>\ast-extractor-comparison.yaml
+```sh
+   python <governance-root>\tools/governance/compare_semantic_ast_extractors.py --source-tex <run-dir>\artifact-source-snippet.tex --artifact <artifact-folder>\artifact.yaml --output <run-dir>\ast-extractor-comparison.yaml
    ```
 
    The local logic record and extractor comparison are deterministic evidence.
@@ -113,10 +95,8 @@ A Codex thread, Codex subagent, custom Codex agent, second Codex pass, manually 
 9. Revert exactly the temporary source commit with `git revert --no-edit <temporary_apply_commit>` and verify every changed source blob matches its pre-application hash.
 10. Write `audit-validation.yaml`, then live-verify external reviewer evidence:
 
-    ```powershell
-    python <governance-root>\tools\governance\validate_external_reviewer_evidence.py `
-      --audit-record <artifact-folder>\audit-validation.yaml `
-      --verify-live
+```sh
+    python <governance-root>\tools/governance/validate_external_reviewer_evidence.py --audit-record <artifact-folder>\audit-validation.yaml --verify-live
     ```
 
 11. Continue in source order. Never send multiple artifacts in one reviewer call or reuse a response ID.
@@ -130,11 +110,8 @@ After each item has an actual external semantic response and is truthfully `vali
 3. validate every package, audit record, and topic manifest;
 4. live-verify every external response:
 
-   ```powershell
-   python <governance-root>\tools\governance\validate_external_reviewer_evidence.py `
-     --topic-manifest <topic>\semantic-topic-audit.yaml `
-     --repo-root <target-volume-root> `
-     --verify-live
+```sh
+   python <governance-root>\tools/governance/validate_external_reviewer_evidence.py --topic-manifest <topic>\semantic-topic-audit.yaml --repo-root <target-volume-root> --verify-live
    ```
 
 5. commit `Record semantic validation for <topic>` and stop for user review.

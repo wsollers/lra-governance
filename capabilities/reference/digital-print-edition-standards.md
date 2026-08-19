@@ -69,10 +69,10 @@ For volume repos, the canonical Docker helper builds every canonical root,
 including the main volume root and individual book roots, unless a task
 explicitly asks for one root.
 
-```powershell
-python ..\lra-governance\tools\governance\build_volume_docker.py --root . --common-root ..\lra-common --edition digital --paper letter --output-dir build\digital-letter
-python ..\lra-governance\tools\governance\build_volume_docker.py --root . --common-root ..\lra-common --edition print --paper sixbynine --output-dir build\print-sixbynine
-python ..\lra-governance\tools\governance\build_volume_docker.py --root . --common-root ..\lra-common --edition reference --paper letter --output-dir build\reference-letter
+```sh
+python ../lra-governance/tools/governance/build_volume_docker.py --root . --common-root ../lra-common --edition digital --paper letter --output-dir build/digital-letter
+python ../lra-governance/tools/governance/build_volume_docker.py --root . --common-root ../lra-common --edition print --paper sixbynine --output-dir build/print-sixbynine
+python ../lra-governance/tools/governance/build_volume_docker.py --root . --common-root ../lra-common --edition reference --paper letter --output-dir build/reference-letter
 ```
 
 ## Implementation Boundary

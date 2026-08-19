@@ -15,8 +15,8 @@ The canonical runtime definition lives only in `lra-governance`:
 
 Create or refresh the local environment with:
 
-```powershell
-py -3.12 scripts\bootstrap_python.py
+```sh
+py -3.12 scripts/bootstrap_python.py
 ```
 
 Python 3.13 remains a supported compatibility target. Docker and downstream
@@ -28,7 +28,7 @@ project or lock files.
 Regenerate `requirements.lock` from `pyproject.toml` with a reviewed `uv`
 release and an explicit Python 3.12 target:
 
-```powershell
+```sh
 uv pip compile pyproject.toml --extra test --extra validation --extra ai --python-version 3.12 --generate-hashes --output-file requirements.lock
 ```
 
@@ -39,8 +39,8 @@ Commit direct-dependency changes and the regenerated lock together.
 Build the governance test image from the governance repo. The repository root
 is the Docker build context so the image installs the canonical lock file:
 
-```powershell
-python scripts\docker_build_governance_test.py
+```sh
+python scripts/docker_build_governance_test.py
 ```
 
 The default image tag is `lra-governance-test`. Override it with `--image`.
@@ -49,8 +49,8 @@ The default image tag is `lra-governance-test`. Override it with `--image`.
 
 Run deterministic governance tests in the container:
 
-```powershell
-python scripts\docker_test_governance.py --build
+```sh
+python scripts/docker_test_governance.py --build
 ```
 
 The script mounts:
@@ -61,8 +61,8 @@ The script mounts:
 By default it runs `python -m compileall constitution/auditor tools/governance`
 and `pytest tools/governance/test_*.py`. Pass pytest arguments after `--`:
 
-```powershell
-python scripts\docker_test_governance.py -- --maxfail=1 tools/governance/test_validate_volume.py
+```sh
+python scripts/docker_test_governance.py -- --maxfail=1 tools/governance/test_validate_volume.py
 ```
 
 ## Volume Validation
@@ -71,18 +71,18 @@ Validate a mounted volume repo and write the JSON report to a mounted results
 directory. The full text output is written to a log file in the same results
 directory, and the wrapper prints only the last 80 log lines.
 
-```powershell
-python scripts\docker_validate_volume.py --build --root ..\lra-volume-i
+```sh
+python scripts/docker_validate_volume.py --build --root ../lra-volume-i
 ```
 
 Useful options:
 
-```powershell
-python scripts\docker_validate_volume.py --root ..\lra-volume-i --results build\volume-i-validation
-python scripts\docker_validate_volume.py --root ..\lra-volume-i --json-name volume-i.json --log-name volume-i.log
-python scripts\docker_validate_volume.py --root ..\lra-volume-i --book book-sets
-python scripts\docker_validate_volume.py --root ..\lra-volume-i --chapter book-sets/functions
-python scripts\docker_validate_volume.py --root ..\lra-volume-i --fail-on-errors
+```sh
+python scripts/docker_validate_volume.py --root ../lra-volume-i --results build/volume-i-validation
+python scripts/docker_validate_volume.py --root ../lra-volume-i --json-name volume-i.json --log-name volume-i.log
+python scripts/docker_validate_volume.py --root ../lra-volume-i --book book-sets
+python scripts/docker_validate_volume.py --root ../lra-volume-i --chapter book-sets/functions
+python scripts/docker_validate_volume.py --root ../lra-volume-i --fail-on-errors
 ```
 
 `--book` is a true scoped validation gate. It limits the file inventory to the

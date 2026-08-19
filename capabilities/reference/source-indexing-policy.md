@@ -105,11 +105,11 @@ enabled rows only; disabled rows require an explicit override.
 For agent lookup spanning primary sources and LRA-authored material, use the
 governance facade instead of loading or invoking each index separately:
 
-```powershell
-python F:\repos\lra-governance\tools\governance\lra_lookup.py "least upper bound"
-python F:\repos\lra-governance\tools\governance\lra_lookup.py "compactness" --scope sources --volume volume-iii
-python F:\repos\lra-governance\tools\governance\lra_lookup.py "derivative def from zorich" --scope sources
-python F:\repos\lra-governance\tools\governance\lra_lookup.py "tao sigma algebra" --scope sources
+```sh
+python F:\repos\lra-governance\tools/governance/lra_lookup.py "least upper bound"
+python F:\repos\lra-governance\tools/governance/lra_lookup.py "compactness" --scope sources --volume volume-iii
+python F:\repos\lra-governance\tools/governance/lra_lookup.py "derivative def from zorich" --scope sources
+python F:\repos\lra-governance\tools/governance/lra_lookup.py "tao sigma algebra" --scope sources
 ```
 
 `lra_lookup.py` resolves the catalog pointers above, delegates the primary
@@ -120,10 +120,8 @@ indexes. It is a query facade, not a new index owner.
 For source-grounded concept-authoring discovery, the same facade may run the
 typed discovery protocol without searching internal LRA discovery lanes:
 
-```powershell
-python F:\repos\lra-governance\tools\governance\lra_lookup.py `
-  --candidate-discovery-config <reviewed-config.json> `
-  --output <discovery-receipt.json>
+```sh
+python F:\repos\lra-governance\tools/governance/lra_lookup.py --candidate-discovery-config <reviewed-config.json> --output <discovery-receipt.json>
 ```
 
 This mode consumes reviewed source-index or fixture-style records, applies the
@@ -255,12 +253,8 @@ payload into agent context.
 
 Example:
 
-```powershell
-python F:\repos\lra-governance\tools\governance\search_internal_object_index.py `
-  --index D:\Readings\indexes\lra\internal\sqlite\tex-search.sqlite `
-  --source-family tex `
-  --limit 8 `
-  "supremum sum at most sum suprema"
+```sh
+python F:\repos\lra-governance\tools/governance/search_internal_object_index.py --index D:\Readings\indexes\lra\internal\sqlite\tex-search.sqlite --source-family tex --limit 8 "supremum sum at most sum suprema"
 ```
 
 Point `--index` at `lean-search.sqlite` or `cpp-search.sqlite` for those
@@ -313,19 +307,15 @@ GitHub Actions runs.
 Refresh the omnibus index after adding, moving, or enriching sources:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts\source_indexer.ps1 `
-  -Command omnibus `
-  -ReadingsRoot D:\Readings
+powershell -ExecutionPolicy Bypass -File scripts/source_indexer.ps1 -Command omnibus -ReadingsRoot D:\Readings
 ```
 
 Search the generated corpus with:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts\omnibus_topic_search.ps1 `
-  -Query "theorems related to Lipschitz continuity"
+powershell -ExecutionPolicy Bypass -File scripts/omnibus_topic_search.ps1 -Query "theorems related to Lipschitz continuity"
 
-powershell -ExecutionPolicy Bypass -File scripts\omnibus_search.ps1 `
-  -Query "diameter"
+powershell -ExecutionPolicy Bypass -File scripts/omnibus_search.ps1 -Query "diameter"
 ```
 
 `omnibus_topic_search.ps1` queries the generated omnibus SQLite FTS5 index when
@@ -336,19 +326,11 @@ consume the ranked results.
 Use scoped topic search when a result should come from reviewed source stacks:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts\omnibus_topic_search.ps1 `
-  -Query "lipschitz continuity" `
-  -Author "Terence Tao"
+powershell -ExecutionPolicy Bypass -File scripts/omnibus_topic_search.ps1 -Query "lipschitz continuity" -Author "Terence Tao"
 
-powershell -ExecutionPolicy Bypass -File scripts\omnibus_topic_search.ps1 `
-  -Query "uniform convergence of a sequence of functions" `
-  -Volume volume-iii `
-  -Book book-analysis-i `
-  -Chapter real-analysis
+powershell -ExecutionPolicy Bypass -File scripts/omnibus_topic_search.ps1 -Query "uniform convergence of a sequence of functions" -Volume volume-iii -Book book-analysis-i -Chapter real-analysis
 
-powershell -ExecutionPolicy Bypass -File scripts\omnibus_topic_search.ps1 `
-  -Query "compactness" `
-  -Profile general-profile
+powershell -ExecutionPolicy Bypass -File scripts/omnibus_topic_search.ps1 -Query "compactness" -Profile general-profile
 ```
 
 `omnibus_search.ps1` is the raw regex/string lookup tool. It mounts
@@ -360,20 +342,20 @@ generated Markdown cache files under
 For definitions, search both the formal noun phrase and common variants:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts\omnibus_topic_search.ps1 -Query "definition of diameter"
-powershell -ExecutionPolicy Bypass -File scripts\omnibus_search.ps1 -Query "Definition.*diameter"
-powershell -ExecutionPolicy Bypass -File scripts\omnibus_search.ps1 -Query "diameter of a set"
-powershell -ExecutionPolicy Bypass -File scripts\omnibus_search.ps1 -Query "bounded set"
+powershell -ExecutionPolicy Bypass -File scripts/omnibus_topic_search.ps1 -Query "definition of diameter"
+powershell -ExecutionPolicy Bypass -File scripts/omnibus_search.ps1 -Query "Definition.*diameter"
+powershell -ExecutionPolicy Bypass -File scripts/omnibus_search.ps1 -Query "diameter of a set"
+powershell -ExecutionPolicy Bypass -File scripts/omnibus_search.ps1 -Query "bounded set"
 ```
 
 For theorem-like material, search by statement term, theorem name, and nearby
 mathematical action:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts\omnibus_topic_search.ps1 -Query "theorems related to compactness"
-powershell -ExecutionPolicy Bypass -File scripts\omnibus_search.ps1 -Query "Theorem.*compact"
-powershell -ExecutionPolicy Bypass -File scripts\omnibus_search.ps1 -Query "Heine Borel"
-powershell -ExecutionPolicy Bypass -File scripts\omnibus_search.ps1 -Query "finite subcover"
+powershell -ExecutionPolicy Bypass -File scripts/omnibus_topic_search.ps1 -Query "theorems related to compactness"
+powershell -ExecutionPolicy Bypass -File scripts/omnibus_search.ps1 -Query "Theorem.*compact"
+powershell -ExecutionPolicy Bypass -File scripts/omnibus_search.ps1 -Query "Heine Borel"
+powershell -ExecutionPolicy Bypass -File scripts/omnibus_search.ps1 -Query "finite subcover"
 ```
 
 When a first query is sparse, generate alternate terms before deciding that the

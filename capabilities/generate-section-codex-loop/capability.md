@@ -41,7 +41,7 @@ The prompt must specify:
 3. The exact file structure to create. For stub chapter or section scaffolding,
    instruct Codex to run `tools/governance/generate_stub.py` from the target
    repo when the wrapper exists, or the sibling
-   `..\lra-governance\tools\governance\generate_stub.py` fallback otherwise.
+   `../lra-governance/tools/governance/generate_stub.py` fallback otherwise.
    The skeletons in `capabilities/reference/stub-section-standards.md` and
    `capabilities/reference/stub-chapter-standards.md` are fallback/output contracts,
    not the primary generation method.
@@ -83,7 +83,7 @@ For each approved topic:
 8. Include the integrated volume validator for the generated topic's owning
    volume. A chapter-filtered report may be included while iterating, but the
    acceptance gate is the unfiltered full-volume command:
-   `python tools\governance\validate_volume.py <target-repo> --fail-on-errors`.
+   `python tools/governance/validate_volume.py <target-repo> --fail-on-errors`.
 9. If a task needs a focused report, use `audit_volume_layout.py` or
    `audit_proof_layout.py` in addition to the integrated validator.
 
