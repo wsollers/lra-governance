@@ -11,7 +11,11 @@ The canonical runtime definition lives only in `lra-governance`:
 - `.python-version` selects Python 3.12.13 as the reproducible baseline;
 - `pyproject.toml` owns direct dependencies and supported Python versions;
 - `requirements.lock` pins the complete governance environment with hashes;
-- `.venv/` is an ignored local environment and is never copied downstream.
+- `.venv/` is an ignored local environment and is never copied downstream;
+- `scripts/govpy.py` is the canonical launcher: it provisions `.venv` from
+  the lock on first use (or when the lock changes) and runs the requested
+  tool under it, falling back to the current interpreter with a warning on
+  unsupported interpreters.
 
 Create or refresh the local environment with:
 

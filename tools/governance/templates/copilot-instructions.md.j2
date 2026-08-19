@@ -7,7 +7,7 @@ This repository uses canonical LRA governance by pointer, not by copied rules.
 Repository: `{{ REPO_NAME }}`
 Canonical repo overlay: `{{ OVERLAY_PATH }}`
 Canonical route resolver:
-`python <governance-root>/capabilities/resolve.py --repo {{ REPO_NAME }} --task "<user task>" --root <repo-root>`
+`python <governance-root>/scripts/govpy.py capabilities/resolve.py --repo {{ REPO_NAME }} --task "<user task>" --root <repo-root>`
 Human route index (lazy reference only): `capabilities/task-index.md`
 
 {{ GOVERNANCE_RESOLUTION }}

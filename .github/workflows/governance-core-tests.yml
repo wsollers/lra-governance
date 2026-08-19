@@ -53,6 +53,7 @@ jobs:
           python -m py_compile \
             capabilities/resolve.py \
             scripts/bootstrap_python.py \
+            scripts/govpy.py \
             tools/governance/generate_stub.py \
             tools/governance/generators/proof_stub.py \
             tools/governance/generators/mathematical_tex.py \
@@ -124,6 +125,7 @@ jobs:
       - name: Test semantic artifact validators and transport
         run: |
           python -m unittest \
+            tools/governance/test_govpy.py \
             tools/governance/test_validate_semantic_artifact.py \
             tools/governance/test_validate_semantic_logic.py \
             tools/governance/test_compare_semantic_ast_extractors.py \

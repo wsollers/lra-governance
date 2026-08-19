@@ -53,6 +53,11 @@ def main(argv: list[str] | None = None) -> int:
         cwd=ROOT,
         check=True,
     )
+    import hashlib
+
+    (venv_dir / ".lock-sha256").write_text(
+        hashlib.sha256(lock.read_bytes()).hexdigest() + "\n", encoding="utf-8"
+    )
     print(f"governance Python environment ready: {python}")
     return 0
 

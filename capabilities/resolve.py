@@ -97,7 +97,8 @@ def _load_yaml_unique(path: Path) -> dict[str, Any]:
         import yaml
     except ImportError as exc:  # pragma: no cover - exercised by bootstrap failures
         raise ValueError(
-            "PyYAML is required; run scripts/bootstrap_python.py and use .venv Python"
+            "PyYAML is required; run this tool through scripts/govpy.py "
+            "(bootstraps the pinned .venv)"
         ) from exc
 
     class UniqueKeyLoader(yaml.SafeLoader):
@@ -135,7 +136,8 @@ def _validate_json(instance: dict[str, Any], schema_path: Path, label: str) -> N
         from jsonschema import Draft202012Validator
     except ImportError as exc:  # pragma: no cover - exercised by bootstrap failures
         raise ValueError(
-            "jsonschema is required; run scripts/bootstrap_python.py and use .venv Python"
+            "jsonschema is required; run this tool through scripts/govpy.py "
+            "(bootstraps the pinned .venv)"
         ) from exc
 
     schema = json.loads(schema_path.read_text(encoding="utf-8"))

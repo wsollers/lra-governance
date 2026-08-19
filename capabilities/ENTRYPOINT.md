@@ -16,6 +16,9 @@ routing; this file defines behavior shared by every route.
    and POSIX shells; commands naming `.ps1` helpers require Windows — in
    another environment, report such a gate as blocked rather than
    substituting an ad-hoc build.
+7. Run governance Python tools through `scripts/govpy.py` (it provisions the
+   pinned `.venv` from `requirements.lock` and falls back loudly when it
+   cannot). Do not pip-install governance dependencies ad hoc.
 
 ## Respect Authority
 

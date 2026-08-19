@@ -10,11 +10,14 @@ Owned concerns:
 - canonical YAML registries, schemas, and prompts,
 - standards, reports, and migration plans.
 
+Run governance Python tools through `python scripts/govpy.py <tool> ...`; it
+provisions the pinned `.venv` from `requirements.lock`.
+
 Success gates:
 
-- `python capabilities/test_resolve.py`
-- `python capabilities/generate_task_index.py --check`
-- `python tools/governance/audit_governance_context.py`
+- `python scripts/govpy.py capabilities/test_resolve.py`
+- `python scripts/govpy.py capabilities/generate_task_index.py --check`
+- `python scripts/govpy.py tools/governance/audit_governance_context.py`
 - run focused validator tests for changed validator code.
 
 Build and validation work in this repo should use the `build-repo` capability.

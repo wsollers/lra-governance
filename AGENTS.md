@@ -7,7 +7,7 @@ adjacent sibling, `LRA_GOVERNANCE_ROOT`, or the build image. Then resolve the
 user's task before doing task work:
 
 ```text
-python <governance-root>/capabilities/resolve.py --repo <repo> --task "<user task>" --root <repo-root>
+python <governance-root>/scripts/govpy.py capabilities/resolve.py --repo <repo> --task "<user task>" --root <repo-root>
 ```
 
 If the command succeeds, follow its output. If it prints a route catalog

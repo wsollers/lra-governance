@@ -92,4 +92,4 @@ Make every governance change here, in the smallest applicable document. Do not
 treat a downstream repo's generated wrappers or local overlay as a source of
 truth; those are generated or additive artifacts. Task routing is owned by
 `capabilities/manifest.yaml`; resolve a task with
-`python capabilities/resolve.py --repo <repo> --task "<task>" --root <repo-root>`.
+`python scripts/govpy.py capabilities/resolve.py --repo <repo> --task "<task>" --root <repo-root>`.

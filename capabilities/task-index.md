@@ -9,7 +9,7 @@ This is the human view of the authoritative route manifest. Agents should not
 preload this document. Resolve the current repository and task instead:
 
 ```text
-python <governance-root>/capabilities/resolve.py --repo <repo> --task "<user task>" --root <repo-root>
+python <governance-root>/scripts/govpy.py capabilities/resolve.py --repo <repo> --task "<user task>" --root <repo-root>
 ```
 
 The resolver loads only the global entrypoint, one repository overlay, and the

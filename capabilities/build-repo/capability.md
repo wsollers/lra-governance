@@ -27,6 +27,9 @@ or dispatch/monitor build workflows.
 
 ## Environment notes
 
+- Run governance Python tools through `scripts/govpy.py` so they execute in
+  the pinned `.venv` (`requirements.lock`); do not pip-install governance
+  dependencies ad hoc.
 - Gates that name PowerShell scripts require a Windows environment; the
   overlay lists a Docker alternative when one exists. If neither can run in
   the current environment, stop and report the blocking gate rather than
