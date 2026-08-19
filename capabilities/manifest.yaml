@@ -18,7 +18,7 @@ routes:
   - id: lookup-lra
     title: Look up LRA source, code, or vocabulary
     description: "Search indexed LRA sources, TeX artifacts, Lean declarations, C++ objects, and canonical vocabulary. Read-only lookup before authoring or citing; creates nothing."
-    applies_to: [volume, lean, cpp, library, vault, python_tool, latex_artifact, governance]
+    applies_to: [volume, lean, cpp, library, vault, python_tool, latex_artifact, catalog, web, governance]
     triggers: ["lookup lra", "search lra", "source lookup", "search source index", "search lra sources", "look up theorem", "look up this theorem", "lookup this theorem", "look up definition", "look up this definition", "search our code", "search indexed code", "search lean and tex"]
     eager_instructions: [capabilities/lookup-lra/capability.md]
     lazy_references: [capabilities/reference/source-indexing-policy.md, capabilities/prepare-lean-tex-lookup/capability.md]
@@ -32,7 +32,7 @@ routes:
   - id: build-repo
     title: Build or validate a repository
     description: "Build or validate the current repository by running its overlay's success gates in order and reporting each outcome. Use for any build, validate, check, or CI request."
-    applies_to: [volume, lean, cpp, library, vault, python_tool, latex_artifact, governance]
+    applies_to: [volume, lean, cpp, library, vault, python_tool, latex_artifact, catalog, web, governance]
     triggers: ["dispatch workflow", "dispatch workflows", "monitor workflow", "monitor workflows", "github action", "github actions", "build repo", "build repository", "validate repo", "validate repository", "check repo", "check repository", "run ci"]
     eager_instructions: [capabilities/build-repo/capability.md]
     lazy_references: [capabilities/reference-index.md]
@@ -588,6 +588,36 @@ routes:
     examples: []
     outputs: [governance audit report or consolidation plan]
     verify: ["python {canonical}/tools/governance/audit_governance_context.py"]
+    token_budget: 5000
+
+  - id: work-lra-sources
+    title: Work in lra-sources
+    description: "Maintain the private metadata-only source catalog: source records, hashes, path pointers, and topic/author/volume indexes. Never add raw PDFs or extracted text. Default route for that repo."
+    applies_to: [catalog]
+    default: true
+    triggers: []
+    eager_instructions: []
+    lazy_references: [capabilities/reference/architecture/repository-layout.md, capabilities/reference/source-indexing-policy.md]
+    tools: []
+    schemas: [constitution/schema/source-indexing-policy.yaml]
+    examples: [external:lra-sources/index.yaml]
+    outputs: [catalog records and index updates]
+    verify: ["Run the repo overlay success gates in order and report each outcome."]
+    token_budget: 5000
+
+  - id: work-lra-dashboard
+    title: Work in lra-dashboard
+    description: "Maintain the static validator-progress dashboard site: HTML/JS/CSS under public/ and its generated dashboard data. Issue export logic stays in lra-governance. Default route for that repo."
+    applies_to: [web]
+    default: true
+    triggers: []
+    eager_instructions: []
+    lazy_references: [capabilities/reference/architecture/repository-layout.md]
+    tools: [tools/governance/export_validator_issue_dashboard.py]
+    schemas: []
+    examples: [external:lra-dashboard/public/index.html]
+    outputs: [dashboard site and data updates]
+    verify: ["Run the repo overlay success gates in order and report each outcome."]
     token_budget: 5000
 
   - id: cpp-build-task

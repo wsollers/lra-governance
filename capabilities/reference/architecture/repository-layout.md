@@ -20,7 +20,8 @@ content sync; the "ownership" column below is authority, not a copy direction.
 | `lra-reading-categorizer` | Human-in-the-loop UI, taxonomy, queue state, review exports, and managed reading-folder scaffold for categorizing a local mathematical PDF collection. Independent collection-management repo. |
 | `lra-source-profiles` | Dynamic source profiles, candidate classification, active source indexes, attachment exports, source review workflow. Independent profile/staging repo; reviewed artifacts only. |
 | `lra-exercises` | Standalone exercise sheets, drill sheets, workbooks, and generated PDFs. Independent from volume content unless a separate volume task imports material. |
-| `lra-sources` | Optional private source catalog and pointer index. It may record where raw readings, generated indexes, topic source indexes, and active source-profile checkouts live; it must not contain raw PDFs or full extracted source text. |
+| `lra-sources` | Private metadata-only source catalog and pointer indexes: source IDs, bibliographic metadata, hashes, path pointers, and topic/author/volume indexes for acquired and scanned sources. Must not contain raw PDFs or full extracted source text. |
+| `lra-dashboard` | Static validator-progress dashboard (GitHub Pages). Reads generated `dashboard-data.json` built from `lra-validator` issues via governance's issue-export tool. |
 | `lra-volumes-output` | Published digital and print PDFs from independent volume builds. |
 
 `Learning-Real-Analysis`, the former assembled monorepo, is retired. There is no

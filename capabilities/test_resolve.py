@@ -233,6 +233,26 @@ def test_statement_does_not_leak_into_source_profiles():
     expect("lra-source-profiles", "append the theorem", "work-source-profiles")
 
 
+# --- catalog and web kinds ---
+def test_sources_catalog_default_route():
+    resolved = R.resolve(GOV, "lra-sources", "add the new halmos source record", {})
+    assert resolved.route_id == "work-lra-sources"
+    assert resolved.match_type == "default"
+
+
+def test_dashboard_web_default_route():
+    resolved = R.resolve(GOV, "lra-dashboard", "improve the progress charts", {})
+    assert resolved.route_id == "work-lra-dashboard"
+
+
+def test_sources_lookup_routes_to_lookup_capability():
+    expect("lra-sources", "lookup lra sources for tao", "lookup-lra")
+
+
+def test_dashboard_build_routes_to_build_repo():
+    expect("lra-dashboard", "validate repo", "build-repo")
+
+
 # --- resolver contract and migration safety ---
 def test_unknown_repository_fails_closed():
     got = route("lra-not-registered", "build repo")

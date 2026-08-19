@@ -105,3 +105,9 @@ repos:
   - repo: lra-exercises
     kind: latex_artifact
     title: "Standalone exercise sheets, workbooks, and generated PDFs"
+  - repo: lra-sources
+    kind: catalog
+    title: "Private source catalog and pointer indexes"
+  - repo: lra-dashboard
+    kind: web
+    title: "Validator progress dashboard (static site)"
