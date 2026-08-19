@@ -57,7 +57,7 @@ AUTHORITY_PATHS = (
     "notation.yaml",
     "relations.yaml",
     "docs/architecture/semantic-artifact-record.md",
-    "docs/workflows/semantic-artifact-calibration.md",
+    "capabilities/calibrate-semantic-artifact/calibration-workflow.md",
 )
 
 SEMANTIC_FILE_KEYS = {

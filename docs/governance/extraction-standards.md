@@ -282,4 +282,4 @@ expositions:
 
 The theorem explorer implementation is owned by `lra-knowledge-explorer`. The
 independent `lra-volume-*` repos are the LaTeX source, and the rebuild is
-orchestrated from `lra-governance` (see `docs/workflows/knowledge-extraction.md`).
+orchestrated from `lra-governance` (see `capabilities/extract-knowledge/capability.md`).

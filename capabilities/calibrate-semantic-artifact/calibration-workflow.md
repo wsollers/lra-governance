@@ -10,7 +10,7 @@ time before processing the corpus in batches. Source repositories are
 ## External reviewer requirement
 
 Review must be performed by the governed external transport in
-`docs/workflows/external-gpt-reviewer.md`. Codex prepares the input packet but may
+`capabilities/reference/external-gpt-reviewer.md`. Codex prepares the input packet but may
 not generate or self-certify the semantic package.
 
 Required call properties:
@@ -459,4 +459,4 @@ calibration artifacts.
 ## Reversible topic audit mode
 
 For topic-by-topic review that stores packages and evidence but leaves canonical
-TeX unchanged, use `docs/workflows/topic-semantic-audit-loop.md`.
+TeX unchanged, use `capabilities/audit-semantic-topic/audit-loop.md`.

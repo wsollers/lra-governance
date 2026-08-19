@@ -54,8 +54,8 @@ payloads; the scope validator does not make hidden API calls.
 
 ## Do
 
-1. Follow `docs/workflows/topic-semantic-audit-loop.md` and
-   `docs/workflows/external-gpt-reviewer.md`.
+1. Follow `capabilities/audit-semantic-topic/audit-loop.md` and
+   `capabilities/reference/external-gpt-reviewer.md`.
 2. Use `constitution/prompts/audit-topic-semantic-artifacts-external.md`.
 3. Enter plan mode before edits and pass external-review preflight.
 4. Inventory reachable primary formal environments in source order.

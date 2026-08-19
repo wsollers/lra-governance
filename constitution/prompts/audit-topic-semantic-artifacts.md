@@ -24,8 +24,8 @@ Do not use parallel reviewers.
 2. `lra-governance/AGENTS.md`;
 3. `docs/agent-task-index.md`;
 4. `capabilities/audit-semantic-topic/capability.md`;
-5. `docs/workflows/topic-semantic-audit-loop.md`;
-6. `docs/workflows/semantic-artifact-calibration.md`;
+5. `capabilities/audit-semantic-topic/audit-loop.md`;
+6. `capabilities/calibrate-semantic-artifact/calibration-workflow.md`;
 7. `docs/architecture/semantic-artifact-record.md`;
 8. semantic-artifact, artifact-audit-validation, and topic-audit schemas;
 9. the target volume overlay;

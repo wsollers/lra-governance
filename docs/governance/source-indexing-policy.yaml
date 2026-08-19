@@ -93,7 +93,7 @@ internal_object_indexes:
   role: lean_tex_verification_lookup
   canonical_tool: tools/governance/index_internal_objects.py
   delta_tool: tools/governance/update_internal_object_index.py
-  workflow: docs/workflows/internal-object-index-delta.md
+  workflow: capabilities/prepare-lean-tex-lookup/capability.md
   schema_version: lra.internal-object-index/1.0
   delta_state_schema_version: lra.internal-object-index-state/1.0
   primary_surfaces:

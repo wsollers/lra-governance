@@ -1,6 +1,6 @@
 # Theorem Explorer Pipeline
 
-Source: `REPOSITORY_STRUCTURE.md`, `docs/workflows/knowledge-extraction.md`, and `lra-knowledge-explorer/README.md`.
+Source: `REPOSITORY_STRUCTURE.md`, `capabilities/extract-knowledge/capability.md`, and `lra-knowledge-explorer/README.md`.
 
 ## Ownership
 
@@ -15,7 +15,7 @@ independent `lra-volume-*` repos are the canonical TeX source.
 The rebuild is orchestrated from `lra-governance`, which reads the independent
 volume repos directly. There is no monorepo and no fan-in sync, so there is no
 mono-side dispatch point; the governance refresh is the single trigger (see
-`docs/workflows/knowledge-extraction.md`).
+`capabilities/extract-knowledge/capability.md`).
 
 ## Extraction Inputs
 

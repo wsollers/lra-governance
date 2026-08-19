@@ -26,7 +26,7 @@ heading.
 4. Pin target-volume and governance commits.
 5. Enter plan mode before edits.
 6. Process exactly one artifact at a time, in source order.
-7. Pass the external-review preflight in `docs/workflows/external-gpt-reviewer.md`.
+7. Pass the external-review preflight in `capabilities/reference/external-gpt-reviewer.md`.
 
 If external API credentials, Responses API access, or the governed reviewer executors are unavailable, stop. Codex must not substitute its own reasoning or a subagent.
 
@@ -38,7 +38,7 @@ For `<prefix>:<root>`, use `notes/<topic>/<prefix>-<root>/`. A reviewed folder c
 
 ## Required external reviewer
 
-All model review is governed by `docs/workflows/external-gpt-reviewer.md`. Required evidence is:
+All model review is governed by `capabilities/reference/external-gpt-reviewer.md`. Required evidence is:
 
 ```yaml
 provider: openai_responses_api

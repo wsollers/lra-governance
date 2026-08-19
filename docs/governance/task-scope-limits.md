@@ -24,6 +24,6 @@ Stop and ask before:
 ## Generated Wrapper Scope
 
 Generated wrapper work follows the controlled workflow in
-`docs/workflows/generated-wrapper-sync.md`. Preview and drift reports are safe
+`capabilities/generate-governance-wrappers/capability.md`. Preview and drift reports are safe
 when requested. Downstream writes require explicit repo selection and explicit
 authorization for the write step.

@@ -328,9 +328,7 @@ python -m tools.governance.test_tex_generator.cli --config tools\governance\fixt
 python tools\governance\validate_test_tex_generator_ast.py --cases build\semantic-audit\test-tex-generator\deep-generated-tests.yaml --output build\semantic-audit\test-tex-generator\deep-parser-roundtrip-report.json
 ```
 
-See `docs/workflows/semantic-ast-test-universe.md` for the full workflow and
-`docs/workflows/semantic-ast-test-universe-handoff-prompt.md` for a continuation
-prompt.
+See `tools/governance/semantic-ast-test-universe.md` for the full workflow.
 
 ## Stub Generation
 

@@ -55,14 +55,14 @@ prose and verification links, but they do not own Lean proof source.
 - `decoration-audit-standards.md`
 - `repo-overlays/`
 
-Workflow-specific instructions, including Docker validation, live under
-`docs/workflows/`.
+Task procedures live in `capabilities/<route>/capability.md`, routed by
+`capabilities/manifest.yaml`.
 
 ## Source Compatibility
 
 Current policy should be added to the smallest applicable modular document in
-this directory or in `docs/architecture/`, `capabilities/overlays/`, or
-`docs/workflows/`. Do not add large rule blocks to `DESIGN.md`.
+this directory, in `docs/architecture/`, in `capabilities/overlays/`, or in
+the owning `capabilities/<route>/capability.md`.
 
 ## Rule Boundaries
 

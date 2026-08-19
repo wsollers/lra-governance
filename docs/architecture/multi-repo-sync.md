@@ -18,7 +18,7 @@ volume-to-monorepo content sync.
 - `lra-lean` and `lra-nurbs` are independent specialist repos. They do not sync
   into a monorepo.
 - The theorem-explorer rebuild is orchestrated from `lra-governance`, reading the
-  independent volume repos (see `docs/workflows/knowledge-extraction.md`).
+  independent volume repos (see `capabilities/extract-knowledge/capability.md`).
 - `Learning-Real-Analysis`, the former assembled monorepo, is retired.
 - `lra-pdf-extractor` is an independent tool repo and is not a source of direct
   sync into notes.
@@ -48,7 +48,7 @@ Docker image, and fail with an actionable message if none is available.
 Generated wrapper work is local and wrapper-only. It must not copy canonical
 governance implementations or shared docs into downstream repos. Wrapper
 generation is dry-run by default and full-replace only after review (see
-`docs/workflows/generated-wrapper-sync.md`).
+`capabilities/generate-governance-wrappers/capability.md`).
 
 ## Emergency Local Edits
 

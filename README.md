@@ -61,7 +61,7 @@ on.
 
 Governance owns a lightweight deterministic test image for Python validator
 tests and mounted volume validation. See
-`docs/workflows/docker-validation.md`.
+`capabilities/build-repo/docker-validation.md`.
 
 ## Independence (No More Sync)
 

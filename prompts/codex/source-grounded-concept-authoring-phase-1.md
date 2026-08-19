@@ -25,7 +25,7 @@ Inspect the live repositories before relying on this summary.
 
 In `F:\repos\lra-governance`:
 
-- `docs/workflows/content-generation-from-source.md` has an uncommitted
+- `capabilities/author-mathematics/content-generation-from-source.md` has an uncommitted
   proposed `Concept Authoring Gate`.
 - `pilots/lean-authoring/` is an existing untracked disposable pilot tree.
 - The legacy package schema is `lra.lean-concept-package/0.1`.

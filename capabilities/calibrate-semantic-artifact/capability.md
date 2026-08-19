@@ -16,7 +16,7 @@ semantic YAML plus governed LaTeX.
 
 ## Do
 
-1. Follow `docs/workflows/semantic-artifact-calibration.md`.
+1. Follow `capabilities/calibrate-semantic-artifact/calibration-workflow.md`.
 2. Use `constitution/prompts/calibrate-semantic-artifact.md`.
 3. Process one atomic environment during calibration.
 4. Validate returned YAML before source changes.

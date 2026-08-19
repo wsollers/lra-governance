@@ -9,8 +9,8 @@ LRA audit topic <topic>
 Begin in plan mode. Follow:
 
 - `capabilities/audit-semantic-topic/capability.md`;
-- `docs/workflows/topic-semantic-audit-loop.md`;
-- `docs/workflows/external-gpt-reviewer.md`.
+- `capabilities/audit-semantic-topic/audit-loop.md`;
+- `capabilities/reference/external-gpt-reviewer.md`.
 
 ## Non-negotiable reviewer boundary
 

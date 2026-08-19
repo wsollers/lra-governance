@@ -240,7 +240,7 @@ SQLite database for each family present in the payload. C/C++ indexing follows
 the same rule in `tools/governance/index_cpp_objects.py`.
 
 The delta workflow is documented in
-`docs/workflows/internal-object-index-delta.md`. After adding or revising a TeX
+`capabilities/prepare-lean-tex-lookup/capability.md`. After adding or revising a TeX
 formal artifact or Lean declaration, rerun the updater before relying on lookup
 results. A newly added TeX definition should be searchable by label or display
 name in the generated internal object index.

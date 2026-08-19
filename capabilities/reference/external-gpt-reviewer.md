@@ -58,7 +58,7 @@ structures.yaml
 notation.yaml
 relations.yaml
 docs/architecture/semantic-artifact-record.md
-docs/workflows/semantic-artifact-calibration.md
+capabilities/calibrate-semantic-artifact/calibration-workflow.md
 ```
 
 A missing authority file stops the request before an API call. The calling input

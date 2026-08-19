@@ -10,7 +10,7 @@ For `lookup-lra`:
 
 - Source authority and index ownership: `docs/governance/source-indexing-policy.md`
 - Canonical vocabulary authority: `docs/architecture/canonical-yaml.md`
-- Internal index refresh: `docs/workflows/internal-object-index-delta.md`
+- Internal index refresh: `capabilities/prepare-lean-tex-lookup/capability.md`
 
 Run the lookup tool before opening these references. Open only the reference
 needed to interpret, refresh, or validate the returned lane.
@@ -24,8 +24,8 @@ For `author-mathematics`:
 - Proof stubs and proof file layers: `docs/governance/proof-standards.md`
 - Statement atomicity: `docs/governance/atomic-artifact-standards.md`
 - Notation and canonical symbols: `docs/governance/notation-standards.md`
-- Add theorem workflow: `docs/workflows/add-theorem-with-proof-stub.md`
-- Proof layout validator usage: `docs/workflows/proof-layout-audit.md`
+- Add theorem workflow: `capabilities/author-mathematics/add-theorem-workflow.md`
+- Proof layout validator usage: `capabilities/audit-proof-layout/capability.md`
 - Definition atomicity: `docs/governance/atomic-artifact-standards.md`
 - Predicate and notation discipline: `docs/governance/notation-standards.md`
 - Extraction-facing labels and identity: `docs/governance/extraction-standards.md`
@@ -38,14 +38,14 @@ For `author-stub-chapter`:
 - Volume structure: `docs/governance/volume-structure.md`
 - Repository layout: `docs/architecture/repository-layout.md`
 - Chapter stub standard: `docs/governance/stub-chapter-standards.md`
-- Layout audit workflow: `docs/workflows/volume-layout-audit.md`
+- Layout audit workflow: `capabilities/refactor-volume-layout/capability.md`
 
 For `author-stub-section`:
 
 - Volume structure: `docs/governance/volume-structure.md`
 - Section stub standard: `docs/governance/stub-section-standards.md`
 - File splitting and routing: `docs/governance/file-splitting-standards.md`
-- Layout audit workflow: `docs/workflows/volume-layout-audit.md`
+- Layout audit workflow: `capabilities/refactor-volume-layout/capability.md`
 
 ## Lean Work
 
@@ -71,10 +71,10 @@ For `build-repo`:
 
 - Build and rendering standards: `docs/governance/build-render-standards.md`
 - LaTeX build architecture: `docs/architecture/latex-build-and-rendering.md`
-- Volume layout validation: `docs/workflows/volume-layout-audit.md`
-- Proof layout validation: `docs/workflows/proof-layout-audit.md`
+- Volume layout validation: `capabilities/refactor-volume-layout/capability.md`
+- Proof layout validation: `capabilities/audit-proof-layout/capability.md`
 - Shared code layout and style: `docs/governance/code-repo-standards.md`
-- Governance audit workflow: `docs/workflows/governance-audit.md`
+- Governance audit workflow: `capabilities/audit-governance/capability.md`
 
 The repository overlay's `Success gates` section names the gates that apply;
 open a reference here only to interpret a failing gate.
@@ -86,5 +86,5 @@ ownership is unclear:
 
 - Multi-repo sync: `docs/architecture/multi-repo-sync.md`
 - Generated-file policy: `docs/architecture/generated-file-policy.md`
-- Generated wrapper sync: `docs/workflows/generated-wrapper-sync.md`
+- Generated wrapper sync: `capabilities/generate-governance-wrappers/capability.md`
 - Agent task index: `docs/agent-task-index.md`
