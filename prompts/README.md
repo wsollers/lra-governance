@@ -1,17 +1,11 @@
 # LRA Prompts
 
-This directory will hold migrated and provider-scoped prompt sources.
+Working prompt sources that are not constitution audit/generation prompts.
 
-Current prompt sources remain under `constitution/prompts/` until a later
-migration phase.
+- `codex/` — long-form authoring prompts driven through external Codex
+  sessions (e.g. source-grounded concept authoring).
+- `mathematician-medallion-prompts.md` — image-generation prompt sheet for
+  the mathematician frontispiece medallions.
 
-Planned groups:
-
-- `codex/`
-- `claude/`
-- `copilot/`
-- `gemini/`
-- `local/`
-
-Provider prompt directories should contain source prompts, not generated
-downstream instruction files.
+Canonical generation and audit prompts consumed by routes live in
+`constitution/prompts/` and are loaded lazily by the owning route.

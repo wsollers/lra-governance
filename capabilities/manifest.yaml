@@ -133,7 +133,7 @@ routes:
     applies_to: [volume, library]
     triggers: ["tikz figure", "revise figure", "add figure"]
     eager_instructions: [capabilities/add-tikz-figure/capability.md]
-    lazy_references: [capabilities/reference/atomic-artifact-standards.md, capabilities/reference/architecture/latex-build-and-rendering.md]
+    lazy_references: [capabilities/add-tikz-figure/style-guide.md, capabilities/reference/atomic-artifact-standards.md, capabilities/reference/architecture/latex-build-and-rendering.md]
     tools: [tools/governance/validate_volume.py]
     schemas: [constitution/schema/file-schema.yaml]
     examples: [nearby:rendered-figure, external:lra-common/common/figures-macros.tex]

@@ -74,7 +74,7 @@ Figure artifact rules are governed by
 lives in a dedicated figure source file and is input by the owning note, proof,
 or exercise file.
 
-Figure visual style is governed by `capabilities/add-tikz-figure/capability.md`.
+Figure visual style is governed by `capabilities/add-tikz-figure/style-guide.md`.
 Figure colors, boxes, TikZ keys, and legend macros come from shared
 infrastructure in `lra-common` rather than local ad hoc definitions.
 

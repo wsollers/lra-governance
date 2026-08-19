@@ -106,10 +106,10 @@ For agent lookup spanning primary sources and LRA-authored material, use the
 governance facade instead of loading or invoking each index separately:
 
 ```sh
-python F:\repos\lra-governance\tools/governance/lra_lookup.py "least upper bound"
-python F:\repos\lra-governance\tools/governance/lra_lookup.py "compactness" --scope sources --volume volume-iii
-python F:\repos\lra-governance\tools/governance/lra_lookup.py "derivative def from zorich" --scope sources
-python F:\repos\lra-governance\tools/governance/lra_lookup.py "tao sigma algebra" --scope sources
+python ../lra-governance/tools/governance/lra_lookup.py "least upper bound"
+python ../lra-governance/tools/governance/lra_lookup.py "compactness" --scope sources --volume volume-iii
+python ../lra-governance/tools/governance/lra_lookup.py "derivative def from zorich" --scope sources
+python ../lra-governance/tools/governance/lra_lookup.py "tao sigma algebra" --scope sources
 ```
 
 `lra_lookup.py` resolves the catalog pointers above, delegates the primary
@@ -121,7 +121,7 @@ For source-grounded concept-authoring discovery, the same facade may run the
 typed discovery protocol without searching internal LRA discovery lanes:
 
 ```sh
-python F:\repos\lra-governance\tools/governance/lra_lookup.py --candidate-discovery-config <reviewed-config.json> --output <discovery-receipt.json>
+python ../lra-governance/tools/governance/lra_lookup.py --candidate-discovery-config <reviewed-config.json> --output <discovery-receipt.json>
 ```
 
 This mode consumes reviewed source-index or fixture-style records, applies the
@@ -254,7 +254,7 @@ payload into agent context.
 Example:
 
 ```sh
-python F:\repos\lra-governance\tools/governance/search_internal_object_index.py --index D:\Readings\indexes\lra\internal\sqlite\tex-search.sqlite --source-family tex --limit 8 "supremum sum at most sum suprema"
+python ../lra-governance/tools/governance/search_internal_object_index.py --index <index-root>/sqlite/tex-search.sqlite --source-family tex --limit 8 "supremum sum at most sum suprema"
 ```
 
 Point `--index` at `lean-search.sqlite` or `cpp-search.sqlite` for those

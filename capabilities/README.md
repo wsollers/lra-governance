@@ -18,12 +18,13 @@ ONE capability = ONE folder = trigger + procedure + bound verifier.
 - `reference-index.md`       shared lazy reference map
 - `generate_task_index.py`   regenerates the human route view
                              (`capabilities/task-index.md`)
-- `index.md`                 routing pointer
 
 ## Hard invariant
 
-A generate capability is NOT complete until its bound verifier exits 0 on the
-written artifact.
+A generate capability is NOT complete until its bound verification passes on
+the written artifact. The route's `verify:` commands in `manifest.yaml` are
+that bound verifier; a capability folder may add its own `verify.py` when a
+route needs a check no shared tool provides.
 
 ## Adding the next capability
 
