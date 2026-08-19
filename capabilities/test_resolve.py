@@ -31,8 +31,8 @@ def expect(repo, task, cap):
 
 
 # --- ordinary mathematical kinds share one typed authoring route ---
-def test_define_routes_to_author_mathematics():
-    expect("lra-volume-i", "define X", "author-mathematics")
+def test_add_definition_routes_to_author_mathematics():
+    expect("lra-volume-i", "add definition of continuity", "author-mathematics")
 
 
 def test_generate_the_definition_routes_to_author_mathematics():
@@ -43,12 +43,18 @@ def test_write_the_definition_routes_to_author_mathematics():
     expect("lra-volume-i", "write the definition for a Cauchy sequence", "author-mathematics")
 
 
-def test_append_the_definition_routes_to_author_mathematics():
-    expect("lra-volume-i", "append the definition", "author-mathematics")
+def test_bare_define_falls_to_volume_default_with_reroute_warning():
+    resolved = R.resolve(GOV, "lra-volume-i", "define X", {})
+    assert resolved.route_id == "work-leaf-volume"
+    assert resolved.match_type == "default"
+    assert resolved.warnings and "--route" in resolved.warnings[0]
 
 
-def test_append_the_lemma_routes_to_author_mathematics():
-    expect("lra-volume-i", "append the lemma", "author-mathematics")
+def test_noun_phrase_falls_to_volume_default_with_reroute_warning():
+    resolved = R.resolve(GOV, "lra-volume-i", "append the lemma", {})
+    assert resolved.route_id == "work-leaf-volume"
+    assert resolved.match_type == "default"
+    assert resolved.warnings
 
 
 def test_the_theorem_routes_to_author_mathematics():
@@ -91,8 +97,8 @@ def test_stub_chapter_routes_to_deterministic_chapter_capability():
     expect("lra-volume-i", "stub a chapter", "author-stub-chapter")
 
 
-def test_the_axiom_routes_to_author_mathematics():
-    expect("lra-volume-i", "the axiom of completeness", "author-mathematics")
+def test_the_axiom_noun_phrase_falls_to_volume_default():
+    expect("lra-volume-i", "the axiom of completeness", "work-leaf-volume")
 
 
 def test_example_routes_to_author_mathematics():
@@ -107,8 +113,8 @@ def test_model_theory_routes_to_author_mathematics_with_lazy_specialization():
     expect("lra-volume-viii", "author mathematics for a first-order structure", "author-mathematics")
 
 
-def test_model_theory_subject_phrase_routes_to_author_mathematics():
-    expect("lra-volume-vii", "author model theory L-structure mathematics", "author-mathematics")
+def test_model_theory_subject_phrase_falls_to_volume_default():
+    expect("lra-volume-vii", "author model theory L-structure mathematics", "work-leaf-volume")
 
 
 # --- semantic audit routing ---
@@ -198,8 +204,17 @@ def test_reading_categorizer_build_routes_to_build_repo():
     expect("lra-reading-categorizer", "validate repo", "build-repo")
 
 
-def test_exercises_build_routes_to_build_repo():
-    expect("lra-exercises", "build pdf", "build-repo")
+def test_exercises_bare_build_falls_to_exercises_default():
+    expect("lra-exercises", "build pdf", "work-lra-exercises")
+
+
+def test_trigger_and_explicit_resolutions_carry_no_warnings():
+    triggered = R.resolve(GOV, "lra-volume-i", "add theorem", {})
+    assert triggered.match_type == "trigger" and not triggered.warnings
+    explicit = R.resolve(
+        GOV, "lra-volume-i", "anything", {"route": "author-mathematics"}
+    )
+    assert explicit.match_type == "explicit" and not explicit.warnings
 
 
 def test_statement_does_not_leak_into_exercises():

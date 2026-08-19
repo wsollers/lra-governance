@@ -5,6 +5,12 @@ entrypoint: capabilities/ENTRYPOINT.md
 # generated human view of this file. Only eager_instructions enter the initial
 # context packet; every other class is a pointer or command. token_budget covers
 # the generated/root wrapper plus the resolver's eager packet.
+#
+# Trigger policy: triggers are a deterministic fast path for imperative,
+# unambiguous phrasings only ("add theorem", "run ci"). Do not add bare verbs,
+# broad noun phrases, or subject terms — ambiguous phrasing is carried by each
+# route's description, the per-kind default route (which resolves with a
+# re-route warning), and the --list / --route selection catalog.
 token_estimator: unicode_chars_div_4_ceil
 default_token_budget: 6000
 
@@ -27,7 +33,7 @@ routes:
     title: Build or validate a repository
     description: "Build or validate the current repository by running its overlay's success gates in order and reporting each outcome. Use for any build, validate, check, or CI request."
     applies_to: [volume, lean, cpp, library, vault, python_tool, latex_artifact, governance]
-    triggers: ["dispatch workflow", "dispatch workflows", "monitor workflow", "monitor workflows", "github action", "github actions", "build repo", "build repository", "validate repo", "validate repository", "check repo", "check repository", "run ci", "build", "validate"]
+    triggers: ["dispatch workflow", "dispatch workflows", "monitor workflow", "monitor workflows", "github action", "github actions", "build repo", "build repository", "validate repo", "validate repository", "check repo", "check repository", "run ci"]
     eager_instructions: [capabilities/build-repo/capability.md]
     lazy_references: [capabilities/reference-index.md]
     tools: [tools/governance/validate_code_repo_layout.py, tools/governance/validate_volume.py]
@@ -69,7 +75,7 @@ routes:
     title: Author typed mathematical content
     description: "Write new typed mathematical content in a volume: definitions, theorem-like statements, axioms, examples, exposition, and proof STUBS via the typed payload generator. Full proof bodies belong to author-full-proof."
     applies_to: [volume]
-    triggers: ["author mathematics", "mathematical content", "source text into mathematics", "screenshot mathematics", "model theory", "universal algebra", "author statement", "generate the latex", "generate the definition", "generate definition", "add definition", "write the definition", "define ", "generate a theorem statement", "generate theorem", "add theorem", "generate lemma", "add lemma", "generate proposition", "add proposition", "generate corollary", "add corollary", "generate axiom", "add axiom", "generate proof stub", "create proof stub", "generate a theorem proof stub", "create a theorem proof stub", "generate a lemma proof stub", "create a lemma proof stub", "generate a proposition proof stub", "create a proposition proof stub", "generate a corollary proof stub", "create a corollary proof stub", "generate an example", "author example", "write exposition", "write motivation", "the definition", "the theorem", "the lemma", "the proposition", "the corollary", "the axiom"]
+    triggers: ["author mathematics", "author statement", "generate the definition", "generate definition", "add definition", "write the definition", "generate a theorem statement", "generate theorem", "add theorem", "generate lemma", "add lemma", "generate proposition", "add proposition", "generate corollary", "add corollary", "generate axiom", "add axiom", "generate proof stub", "create proof stub", "generate a theorem proof stub", "create a theorem proof stub", "generate a lemma proof stub", "create a lemma proof stub", "generate a proposition proof stub", "create a proposition proof stub", "generate a corollary proof stub", "create a corollary proof stub", "generate an example", "author example", "write exposition", "write motivation"]
     eager_instructions: [capabilities/author-mathematics/capability.md]
     lazy_references: [capabilities/author-mathematics/model-theory-universal-algebra.md, capabilities/reference-index.md, capabilities/author-mathematics/add-theorem-workflow.md, capabilities/author-mathematics/content-generation-from-source.md, capabilities/reference/active-content-promotion-gate.md, capabilities/reference/authoring-standards.md, capabilities/reference/proof-standards.md, capabilities/reference/dependency-standards.md, capabilities/reference/notation-standards.md, capabilities/reference/architecture/local-semantic-logic-verifier.md, capabilities/reference/source-indexing-policy.md]
     tools: [tools/governance/generators/mathematical_tex.py, tools/governance/generators/proof_stub.py, tools/governance/lra_lookup.py, tools/governance/validate_volume.py, tools/governance/audit_proof_layout.py, tools/governance/validate_semantic_artifact.py, tools/governance/validate_semantic_logic.py, tools/governance/compare_semantic_ast_extractors.py, tools/governance/update_internal_object_index.py]
@@ -407,7 +413,7 @@ routes:
     description: "Any Lean formalization work in lra-lean: model statements and definitions, add or organize declarations and modules, attach verification metadata. Proof bodies only on explicit request."
     applies_to: [lean]
     default: true
-    triggers: ["formalize", "lean theorem", "add lean", "formalise", "work in lra-lean", "lean"]
+    triggers: ["formalize", "formalise", "lean theorem", "add lean"]
     eager_instructions: [capabilities/author-lean-theorem/capability.md]
     lazy_references: [capabilities/reference-index.md, capabilities/reference/architecture/lra-lean-architecture.md, capabilities/reference/architecture/semantic-artifact-record.md]
     tools: [external:lra-lean/build.ps1, external:lake]
@@ -437,7 +443,7 @@ routes:
     applies_to: [python_tool]
     repos: [lra-knowledge-explorer]
     default: true
-    triggers: ["knowledge explorer", "explorer ui", "graph data"]
+    triggers: []
     eager_instructions: []
     lazy_references: [capabilities/reference/code-repo-standards.md, capabilities/reference/extraction-standards.md, capabilities/reference/architecture/knowledge-pipeline.md, capabilities/reference/architecture/theorem-explorer-pipeline.md, capabilities/reference/architecture/local-semantic-logic-verifier.md, capabilities/extract-knowledge/capability.md]
     tools: [tools/governance/validate_code_repo_layout.py, external:lra-knowledge-explorer/python-pytest]
@@ -453,7 +459,7 @@ routes:
     applies_to: [python_tool]
     repos: [lra-pdf-extractor]
     default: true
-    triggers: ["pdf extractor", "pdf ingestion", "candidate extraction"]
+    triggers: []
     eager_instructions: []
     lazy_references: [capabilities/reference/code-repo-standards.md, capabilities/reference/authoring-standards.md, capabilities/reference/architecture/repository-layout.md, capabilities/reference/architecture/knowledge-pipeline.md, capabilities/reference/architecture/multi-repo-sync.md]
     tools: [tools/governance/validate_code_repo_layout.py, external:lra-pdf-extractor/python-pytest]
@@ -469,7 +475,7 @@ routes:
     applies_to: [python_tool]
     repos: [lra-reading-categorizer]
     default: true
-    triggers: ["reading categorizer", "categorization ui", "reading taxonomy"]
+    triggers: []
     eager_instructions: []
     lazy_references: [capabilities/reference/code-repo-standards.md, capabilities/overlays/lra-pdf-extractor.md, capabilities/overlays/lra-source-profiles.md, capabilities/reference/architecture/repository-layout.md, capabilities/reference/architecture/multi-repo-sync.md]
     tools: [tools/governance/validate_code_repo_layout.py, external:lra-reading-categorizer/python-tests]
@@ -485,7 +491,7 @@ routes:
     applies_to: [python_tool]
     repos: [lra-source-profiles]
     default: true
-    triggers: ["source profiles", "source index", "active sources", "ingest source"]
+    triggers: []
     eager_instructions: []
     lazy_references: [capabilities/reference/code-repo-standards.md, capabilities/reference/source-indexing-policy.md, capabilities/overlays/lra-pdf-extractor.md, capabilities/reference/architecture/repository-layout.md, capabilities/reference/architecture/knowledge-pipeline.md, capabilities/reference/architecture/multi-repo-sync.md]
     tools: [tools/governance/validate_code_repo_layout.py, external:lra-source-profiles/scripts/validate_source_indexes.py]
@@ -501,7 +507,7 @@ routes:
     applies_to: [latex_artifact]
     repos: [lra-exercises]
     default: true
-    triggers: ["lra exercises", "exercise sheet", "workbook"]
+    triggers: []
     eager_instructions: []
     lazy_references: [capabilities/reference/architecture/repository-layout.md]
     tools: [external:docker-latexmk, external:chktex]
@@ -516,7 +522,7 @@ routes:
     description: "General volume-repo work that no more specific route covers (builds, small fixes, wiring). Default route for volume repos."
     applies_to: [volume]
     default: true
-    triggers: ["work in volume", "leaf volume", "volume repo"]
+    triggers: []
     eager_instructions: []
     lazy_references: [capabilities/reference/architecture/volume-architecture.md, capabilities/generate-chapter-artifacts/capability.md, capabilities/local-tex-devcontainer/capability.md]
     tools: [tools/governance/validate_volume.py, external:volume-build]
@@ -531,7 +537,7 @@ routes:
     description: "Ingest a handwritten proof photo or artifact into the proof vault through the Docker photo pipeline, with sanitization, OCR, and metadata."
     applies_to: [vault]
     default: true
-    triggers: ["handwritten proof", "proof vault", "memorialize proof", "proof photo"]
+    triggers: []
     eager_instructions: []
     lazy_references: [capabilities/reference/handwritten-proof-vault-standards.md, external:lra-proof-vault/AGENTS.md, external:lra-proof-vault/README.md]
     tools: [external:lra-proof-vault/scripts/vault_photo_pipeline.py, external:lra-proof-vault/scripts/apply_leaf_backlinks.py, external:lra-proof-vault/scripts/validate_vault.py]
@@ -574,7 +580,7 @@ routes:
     description: "Audit, shrink, or deduplicate the governance corpus itself: routing integrity, token budgets, duplication, constitution size. Governance repo only."
     applies_to: [governance]
     default: true
-    triggers: ["audit governance", "governance review", "governance bloat", "tokenally light", "context audit", "shrink constitution", "move architecture facts", "constitution bloat", "workflow duplication", "deduplicate workflow", "reduce workflow", "prompts consume schema", "prompt schema", "schema driven prompt"]
+    triggers: []
     eager_instructions: [capabilities/audit-governance/capability.md]
     lazy_references: [docs/reports/governance-bloat-audit.md, capabilities/task-index.md, constitution/master.md]
     tools: [tools/governance/audit_governance_context.py, tools/governance/validate_volume.py]
@@ -589,7 +595,7 @@ routes:
     description: "Any implementation task in a C++ numerical repo: write code and tests per the overlay's standards, then run its success gates. Default route for cpp repos."
     applies_to: [cpp]
     default: true
-    triggers: ["do task", "implement", "build task", "c++", "cpp"]
+    triggers: []
     eager_instructions: [capabilities/cpp-build-task/capability.md]
     lazy_references: [capabilities/reference-index.md, capabilities/reference/code-repo-standards.md]
     tools: [external:repo-success-gates]

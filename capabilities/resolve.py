@@ -525,6 +525,14 @@ def resolve(gov: Path, repo: str, task: str, args: dict[str, Any]) -> Resolution
             f"exceeding budget {budget}"
         )
 
+    warnings: list[str] = []
+    if match.match_type == "default":
+        warnings.append(
+            f"no trigger matched; resolved to the default route {route['id']!r}. "
+            "If another applicable route's description fits the task better, "
+            "re-run with --route <id> (use --list to compare descriptions)."
+        )
+
     return Resolution(
         repo=repo,
         repo_kind=kind,
@@ -546,7 +554,7 @@ def resolve(gov: Path, repo: str, task: str, args: dict[str, Any]) -> Resolution
         examples=list(route.get("examples", [])),
         outputs=list(route.get("outputs", [])),
         verify=verify,
-        warnings=[],
+        warnings=warnings,
         estimated_tokens=estimated,
         token_budget=budget,
     )
@@ -627,6 +635,8 @@ def _print_human(resolution: Resolution, packet: dict[str, Any]) -> None:
         for value in values:
             prefix = "$ " if heading == "verification" else ""
             print(f"  - {prefix}{value}")
+    for warning in resolution.warnings:
+        print(f"\nwarning: {warning}")
 
 
 def _emit(resolution: Resolution, gov: Path) -> None:
