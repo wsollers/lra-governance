@@ -99,7 +99,7 @@ recursion architecture but should not redefine foundational concepts.
 ## Formalization Policy
 
 Agent-facing Lean implementation standards live in
-`docs/governance/repo-overlays/lra-lean.md`. This architecture document records
+`capabilities/overlays/lra-lean.md`. This architecture document records
 ownership, layout, and import boundaries.
 
 Volume II construction modules must remain Mathlib-free. Mathlib imports are

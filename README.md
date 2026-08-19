@@ -79,7 +79,7 @@ content sync are both retired:
 Each repo may carry a local overlay document that adds repo-specific context on
 top of the canonical governance. Overlays are additive: they refine the global
 rules for that repo's owned work and must not fork or weaken them. The canonical
-overlay sources live in `docs/governance/repo-overlays/`.
+overlay sources live in `capabilities/overlays/`.
 
 ## Where To Edit
 

@@ -1,7 +1,8 @@
 # Capability Reference Index
 
-Use this file only after loading one capability and one repo overlay. Open the
-smallest referenced document that answers the concrete question.
+Use this file only after loading one capability and one repo overlay (the
+resolver eager-loads `capabilities/overlays/<repo>.md` for every task). Open
+the smallest referenced document that answers the concrete question.
 
 ## Indexed LRA Lookup
 
@@ -50,7 +51,6 @@ For `author-stub-section`:
 
 For `author-lean-theorem`:
 
-- Lean repo overlay: `docs/governance/repo-overlays/lra-lean.md`
 - General task scope: `docs/governance/task-scope-limits.md`
 
 Prefer nearby Lean files and project commands before opening broader docs.
@@ -59,8 +59,6 @@ Prefer nearby Lean files and project commands before opening broader docs.
 
 For `cpp-build-task`:
 
-- Numerical-analysis overlay: `docs/governance/repo-overlays/lra-numerical-analysis.md`
-- NURBS overlay, when working in `lra-nurbs`: `docs/governance/repo-overlays/lra-nurbs.md`
 - Shared code layout and style: `docs/governance/code-repo-standards.md`
 - Build/render standards: `docs/governance/build-render-standards.md`
 - Repository layout: `docs/architecture/repository-layout.md`
@@ -75,9 +73,6 @@ For `build-repo`:
 - LaTeX build architecture: `docs/architecture/latex-build-and-rendering.md`
 - Volume layout validation: `docs/workflows/volume-layout-audit.md`
 - Proof layout validation: `docs/workflows/proof-layout-audit.md`
-- Lean overlay: `docs/governance/repo-overlays/lra-lean.md`
-- C++ numerical overlay: `docs/governance/repo-overlays/lra-numerical-analysis.md`
-- NURBS overlay: `docs/governance/repo-overlays/lra-nurbs.md`
 - Shared code layout and style: `docs/governance/code-repo-standards.md`
 - Governance audit workflow: `docs/workflows/governance-audit.md`
 

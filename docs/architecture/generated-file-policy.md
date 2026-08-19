@@ -15,7 +15,7 @@ Source repo: wsollers/lra-governance
 Generated from:
 - docs/governance/...
 - docs/architecture/...
-- docs/governance/repo-overlays/<overlay>.md
+- capabilities/overlays/<repo>.md
 
 Regenerate from lra-governance.
 Emergency downstream edits must be ported upstream.

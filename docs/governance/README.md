@@ -61,7 +61,7 @@ Workflow-specific instructions, including Docker validation, live under
 ## Source Compatibility
 
 Current policy should be added to the smallest applicable modular document in
-this directory or in `docs/architecture/`, `docs/governance/repo-overlays/`, or
+this directory or in `docs/architecture/`, `capabilities/overlays/`, or
 `docs/workflows/`. Do not add large rule blocks to `DESIGN.md`.
 
 ## Rule Boundaries

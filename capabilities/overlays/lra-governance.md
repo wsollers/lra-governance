@@ -4,9 +4,10 @@ Repo identity: Governance, capabilities, validators, and wrapper tooling.
 
 Owned concerns:
 
-- capability resolver and capability docs,
-- governance validators and tests,
+- capability resolver, route manifest, and capability docs,
+- governance validators, generators, and their tests,
 - repo overlays and generated wrapper tooling,
+- canonical YAML registries, schemas, and prompts,
 - standards, reports, and migration plans.
 
 Success gates:

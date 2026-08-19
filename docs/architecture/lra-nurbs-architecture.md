@@ -61,5 +61,5 @@ libc++, and the project C++23 feature set.
 ## Design Policy
 
 Agent-facing C++ / Vulkan / geometry / simulation implementation standards live
-in `docs/governance/repo-overlays/lra-nurbs.md`. This architecture document
+in `capabilities/overlays/lra-nurbs.md`. This architecture document
 records ownership, layout, service boundaries, and build architecture.

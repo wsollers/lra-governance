@@ -114,7 +114,7 @@ def classify(
 
 
 def pointer_errors(repo: str, text: str) -> list[str]:
-    overlay = f"docs/governance/repo-overlays/{overlay_for_repo(repo)}"
+    overlay = f"capabilities/overlays/{overlay_for_repo(repo)}"
     checks = [
         ("generated pointer header", "GENERATED POINTER WRAPPER" in text),
         ("repo pointer", f"Repository: `{repo}`" in text),

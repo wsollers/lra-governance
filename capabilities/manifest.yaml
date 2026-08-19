@@ -20,7 +20,7 @@ routes:
     examples: [capabilities/lookup-lra/capability.md]
     outputs: [ranked source, TeX, Lean, C++, and vocabulary hits]
     verify: ["python {canonical}/tools/governance/lra_lookup.py --status"]
-    token_budget: 3000
+    token_budget: 3500
 
   - id: build-repo
     title: Build or validate a repository
@@ -131,7 +131,7 @@ routes:
     applies_to: [volume]
     triggers: ["latex devcontainer", "tex devcontainer", "edit latex locally"]
     eager_instructions: [docs/workflows/local-tex-devcontainer.md]
-    lazy_references: [docs/governance/repo-overlays/lra-volume.md]
+    lazy_references: []
     tools: [tools/governance/edit_latex.py, tools/governance/install_volume_devcontainer.py, tools/governance/set_latex_root_comments.py]
     schemas: []
     examples: []
@@ -365,7 +365,7 @@ routes:
     applies_to: [governance]
     triggers: ["generate wrappers", "governance wrappers", "wrapper sync", "agent wrappers"]
     eager_instructions: [docs/workflows/generated-wrapper-sync.md]
-    lazy_references: [docs/governance/agent-instruction-policy.md, docs/governance/repo-overlays/README.md, docs/architecture/generated-file-policy.md]
+    lazy_references: [docs/governance/agent-instruction-policy.md, docs/architecture/generated-file-policy.md]
     tools: [tools/governance/generate_agent_wrappers.py, tools/governance/report_wrapper_drift.py, tools/governance/validate_repo_rules.py]
     schemas: [capabilities/overlays-config.yaml]
     examples: [tools/governance/templates/AGENTS.md.j2]
@@ -378,7 +378,7 @@ routes:
     applies_to: [library]
     default: true
     triggers: ["shared latex", "latex infrastructure", "common macros", "edit macro"]
-    eager_instructions: [docs/governance/repo-overlays/lra-common.md]
+    eager_instructions: []
     lazy_references: [docs/architecture/repository-layout.md, docs/governance/notation-standards.md, docs/governance/decoration-box-standards.md]
     tools: [external:target-build]
     schemas: []
@@ -393,7 +393,7 @@ routes:
     default: true
     triggers: ["formalize", "lean theorem", "add lean", "formalise", "work in lra-lean", "lean"]
     eager_instructions: [capabilities/author-lean-theorem/capability.md]
-    lazy_references: [capabilities/reference-index.md, docs/governance/repo-overlays/lra-lean.md, docs/architecture/lra-lean-architecture.md, docs/architecture/semantic-artifact-record.md]
+    lazy_references: [capabilities/reference-index.md, docs/architecture/lra-lean-architecture.md, docs/architecture/semantic-artifact-record.md]
     tools: [external:lra-lean/build.ps1, external:lake]
     schemas: []
     examples: [external:lra-lean/LRA]
@@ -406,7 +406,7 @@ routes:
     applies_to: [lean, volume, governance]
     triggers: ["lean tex lookup", "lean verification lookup", "tex verification lookup", "lean crosswalk"]
     eager_instructions: [docs/workflows/internal-object-index-delta.md]
-    lazy_references: [docs/governance/source-indexing-policy.md, docs/governance/repo-overlays/lra-lean.md, docs/architecture/lra-lean-architecture.md, docs/governance/repo-overlays/lra-volume.md]
+    lazy_references: [docs/governance/source-indexing-policy.md, docs/architecture/lra-lean-architecture.md]
     tools: [tools/governance/update_internal_object_index.py, tools/governance/index_internal_objects.py, tools/governance/search_internal_object_index.py]
     schemas: [docs/governance/source-indexing-policy.yaml]
     examples: [nearby:lean-declaration, nearby:tex-label]
@@ -420,7 +420,7 @@ routes:
     repos: [lra-knowledge-explorer]
     default: true
     triggers: ["knowledge explorer", "explorer ui", "graph data"]
-    eager_instructions: [docs/governance/repo-overlays/lra-knowledge-explorer.md]
+    eager_instructions: []
     lazy_references: [docs/governance/code-repo-standards.md, docs/governance/extraction-standards.md, docs/architecture/knowledge-pipeline.md, docs/architecture/theorem-explorer-pipeline.md, docs/architecture/local-semantic-logic-verifier.md, docs/workflows/knowledge-extraction.md]
     tools: [tools/governance/validate_code_repo_layout.py, external:lra-knowledge-explorer/python-pytest]
     schemas: [external:lra-knowledge-explorer/local-schemas]
@@ -435,7 +435,7 @@ routes:
     repos: [lra-pdf-extractor]
     default: true
     triggers: ["pdf extractor", "pdf ingestion", "candidate extraction"]
-    eager_instructions: [docs/governance/repo-overlays/lra-pdf-extractor.md]
+    eager_instructions: []
     lazy_references: [docs/governance/code-repo-standards.md, docs/governance/authoring-standards.md, docs/architecture/repository-layout.md, docs/architecture/knowledge-pipeline.md, docs/architecture/multi-repo-sync.md]
     tools: [tools/governance/validate_code_repo_layout.py, external:lra-pdf-extractor/python-pytest]
     schemas: [external:lra-pdf-extractor/staged-output-schemas]
@@ -450,8 +450,8 @@ routes:
     repos: [lra-reading-categorizer]
     default: true
     triggers: ["reading categorizer", "categorization ui", "reading taxonomy"]
-    eager_instructions: [docs/governance/repo-overlays/lra-reading-categorizer.md]
-    lazy_references: [docs/governance/code-repo-standards.md, docs/governance/repo-overlays/lra-pdf-extractor.md, docs/governance/repo-overlays/lra-source-profiles.md, docs/architecture/repository-layout.md, docs/architecture/multi-repo-sync.md]
+    eager_instructions: []
+    lazy_references: [docs/governance/code-repo-standards.md, capabilities/overlays/lra-pdf-extractor.md, capabilities/overlays/lra-source-profiles.md, docs/architecture/repository-layout.md, docs/architecture/multi-repo-sync.md]
     tools: [tools/governance/validate_code_repo_layout.py, external:lra-reading-categorizer/python-tests]
     schemas: [external:lra-reading-categorizer/taxonomy/subjects.yaml]
     examples: [external:lra-reading-categorizer/README.md]
@@ -465,8 +465,8 @@ routes:
     repos: [lra-source-profiles]
     default: true
     triggers: ["source profiles", "source index", "active sources", "ingest source"]
-    eager_instructions: [docs/governance/repo-overlays/lra-source-profiles.md]
-    lazy_references: [docs/governance/code-repo-standards.md, docs/governance/source-indexing-policy.md, docs/governance/repo-overlays/lra-pdf-extractor.md, docs/architecture/repository-layout.md, docs/architecture/knowledge-pipeline.md, docs/architecture/multi-repo-sync.md]
+    eager_instructions: []
+    lazy_references: [docs/governance/code-repo-standards.md, docs/governance/source-indexing-policy.md, capabilities/overlays/lra-pdf-extractor.md, docs/architecture/repository-layout.md, docs/architecture/knowledge-pipeline.md, docs/architecture/multi-repo-sync.md]
     tools: [tools/governance/validate_code_repo_layout.py, external:lra-source-profiles/scripts/validate_source_indexes.py]
     schemas: [docs/governance/source-indexing-policy.yaml, external:lra-source-profiles/source-index.yaml]
     examples: [external:lra-source-profiles/README.md]
@@ -480,7 +480,7 @@ routes:
     repos: [lra-exercises]
     default: true
     triggers: ["lra exercises", "exercise sheet", "workbook"]
-    eager_instructions: [docs/governance/repo-overlays/lra-exercises.md]
+    eager_instructions: []
     lazy_references: [docs/architecture/repository-layout.md]
     tools: [external:docker-latexmk, external:chktex]
     schemas: []
@@ -494,7 +494,7 @@ routes:
     applies_to: [volume]
     default: true
     triggers: ["work in volume", "leaf volume", "volume repo"]
-    eager_instructions: [docs/governance/repo-overlays/lra-volume.md]
+    eager_instructions: []
     lazy_references: [docs/architecture/volume-architecture.md, docs/workflows/artifact-payload-generation.md, docs/workflows/local-tex-devcontainer.md]
     tools: [tools/governance/validate_volume.py, external:volume-build]
     schemas: [constitution/schema/file-schema.yaml]
@@ -508,7 +508,7 @@ routes:
     applies_to: [vault]
     default: true
     triggers: ["handwritten proof", "proof vault", "memorialize proof", "proof photo"]
-    eager_instructions: [docs/governance/repo-overlays/lra-proof-vault.md]
+    eager_instructions: []
     lazy_references: [docs/governance/handwritten-proof-vault-standards.md, external:lra-proof-vault/AGENTS.md, external:lra-proof-vault/README.md]
     tools: [external:lra-proof-vault/scripts/vault_photo_pipeline.py, external:lra-proof-vault/scripts/apply_leaf_backlinks.py, external:lra-proof-vault/scripts/validate_vault.py]
     schemas: [external:lra-proof-vault/routing/theorem-routes.json]

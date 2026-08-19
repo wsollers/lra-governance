@@ -38,7 +38,7 @@ def generated_header(overlay_name: str) -> str:
 GENERATED POINTER WRAPPER — DO NOT EDIT BY HAND.
 
 Source repo: wsollers/lra-governance
-Canonical overlay: docs/governance/repo-overlays/{overlay_name}
+Canonical overlay: capabilities/overlays/{overlay_name}
 
 Regenerate from lra-governance.
 Emergency downstream edits must be ported upstream before regeneration.
@@ -83,7 +83,7 @@ def write_preview(root: Path, repo: str, out_dir: Path) -> list[Path]:
         values = {
             "GENERATED_HEADER": generated_header(overlay_name),
             "REPO_NAME": repo,
-            "OVERLAY_PATH": f"docs/governance/repo-overlays/{overlay_name}",
+            "OVERLAY_PATH": f"capabilities/overlays/{overlay_name}",
             "GOVERNANCE_RESOLUTION": governance_resolution(),
             "PROVIDER_NOTES": provider_notes(template_name),
         }

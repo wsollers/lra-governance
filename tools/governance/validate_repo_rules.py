@@ -7,7 +7,7 @@ import argparse
 import sys
 from pathlib import Path
 
-from merge_repo_overlays import REPO_OVERLAY_MAP, overlay_for_repo, overlay_path, repo_names
+from merge_repo_overlays import overlay_for_repo, overlay_path, repo_names
 
 
 REQUIRED_SOURCE_DOCS = [
@@ -123,7 +123,6 @@ def validate_sources(root: Path, errors: list[str]) -> None:
     for relative in REQUIRED_SOURCE_DOCS:
         require((root / relative).exists(), f"missing source doc: {relative}", errors)
     for repo in repo_names():
-        require(repo in REPO_OVERLAY_MAP, f"missing overlay map for repo: {repo}", errors)
         path = overlay_path(repo, root)
         require(path.exists(), f"missing overlay for {repo}: {path}", errors)
     template_dir = root / "tools" / "governance" / "templates"
@@ -133,7 +132,7 @@ def validate_sources(root: Path, errors: list[str]) -> None:
 
 def validate_preview(preview: Path, errors: list[str]) -> None:
     for repo in repo_names():
-        overlay = f"docs/governance/repo-overlays/{overlay_for_repo(repo)}"
+        overlay = f"capabilities/overlays/{overlay_for_repo(repo)}"
         for relative in PREVIEW_FILES:
             path = preview / repo / relative
             require(path.exists(), f"missing preview file: {path}", errors)

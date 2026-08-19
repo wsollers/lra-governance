@@ -55,7 +55,7 @@ def _render_wrappers(repo: str) -> dict[str, str]:
     values = {
             "GENERATED_HEADER": generated_header(overlay_name),
             "REPO_NAME": repo,
-            "OVERLAY_PATH": f"docs/governance/repo-overlays/{overlay_name}",
+            "OVERLAY_PATH": f"capabilities/overlays/{overlay_name}",
             "GOVERNANCE_RESOLUTION": governance_resolution(),
     }
     template_dir = ROOT / "tools" / "governance" / "templates"
