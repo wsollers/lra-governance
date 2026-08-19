@@ -12,7 +12,7 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "capabilities" / "manifest.yaml"
-DEFAULT_OUTPUT = ROOT / "docs" / "agent-task-index.md"
+DEFAULT_OUTPUT = ROOT / "capabilities" / "task-index.md"
 
 
 def _cell(values: list[object] | None) -> str:

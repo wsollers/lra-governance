@@ -6,6 +6,6 @@
 python capabilities/resolve.py --repo <repo> --task "<user task>" --root <repo-root>
 ```
 
-The generated human view is `docs/agent-task-index.md`; it is a lazy reference,
+The generated human view is `capabilities/task-index.md`; it is a lazy reference,
 not an instruction bundle. Regenerate it with
 `python capabilities/generate_task_index.py`.

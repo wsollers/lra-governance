@@ -1,14 +1,15 @@
 # Agent Instruction Policy
 
-Canonical rules live under `docs/governance/`, `docs/architecture/`, and
+Canonical rules live under `capabilities/reference/`,
+`capabilities/reference/architecture/`, and
 `capabilities/overlays/`.
 
 ## Canonical Sources
 
 Canonical agent-instruction sources are:
 
-- `docs/governance/*.md`
-- `docs/architecture/*.md`
+- `capabilities/reference/*.md`
+- `capabilities/reference/architecture/*.md`
 - `capabilities/overlays/*.md`
 
 The root `AGENTS.md` in `lra-governance` is the local router for agents working

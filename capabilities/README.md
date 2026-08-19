@@ -17,7 +17,7 @@ ONE capability = ONE folder = trigger + procedure + bound verifier.
                              verifier
 - `reference-index.md`       shared lazy reference map
 - `generate_task_index.py`   regenerates the human route view
-                             (`docs/agent-task-index.md`)
+                             (`capabilities/task-index.md`)
 - `index.md`                 routing pointer
 
 ## Hard invariant

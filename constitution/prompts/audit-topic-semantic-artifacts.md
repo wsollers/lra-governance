@@ -22,7 +22,7 @@ Do not use parallel reviewers.
 
 1. target repository `AGENTS.md`;
 2. `lra-governance/AGENTS.md`;
-3. `docs/agent-task-index.md`;
+3. `capabilities/task-index.md`;
 4. `capabilities/audit-semantic-topic/capability.md`;
 5. `capabilities/audit-semantic-topic/audit-loop.md`;
 6. `capabilities/calibrate-semantic-artifact/calibration-workflow.md`;

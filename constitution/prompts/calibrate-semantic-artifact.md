@@ -7,7 +7,7 @@ Operate in one LRA split volume repository with `lra-governance` available throu
 
 1. target repo `AGENTS.md`;
 2. `lra-governance/AGENTS.md`;
-3. `docs/agent-task-index.md`;
+3. `capabilities/task-index.md`;
 4. `capabilities/calibrate-semantic-artifact/calibration-workflow.md`;
 5. `capabilities/reference/architecture/semantic-artifact-record.md`;
 6. `constitution/schema/semantic-artifact.schema.json`;

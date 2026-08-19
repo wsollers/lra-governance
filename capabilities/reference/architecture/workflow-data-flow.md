@@ -2,7 +2,7 @@
 
 This document maps the operational workflows across the LRA repository family.
 It is a routing aid: ownership rules remain in the focused architecture and
-governance documents linked from `docs/architecture/README.md`.
+governance documents linked from `capabilities/reference/README.md`.
 
 Repositories are independent. Governance and shared LaTeX infrastructure are
 consumed directly from `lra-governance` and `lra-common`; nothing is fanned out,

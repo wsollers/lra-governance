@@ -87,4 +87,4 @@ ownership is unclear:
 - Multi-repo sync: `capabilities/reference/architecture/multi-repo-sync.md`
 - Generated-file policy: `capabilities/reference/architecture/generated-file-policy.md`
 - Generated wrapper sync: `capabilities/generate-governance-wrappers/capability.md`
-- Agent task index: `docs/agent-task-index.md`
+- Agent task index: `capabilities/task-index.md`

@@ -9,12 +9,17 @@ workspace.
 
 - `AGENTS.md`
 - `.gitignore`
-- `capabilities/` (task routing, entrypoint, overlays, capability packets)
-- `constitution/`
-- `docs/`
-- `tools/`
+- `capabilities/` — task routing (`manifest.yaml`), the global entrypoint,
+  per-repo overlays, per-task capability packets, and shared reference
+  standards/architecture docs under `capabilities/reference/`
+- `constitution/` — content-validity invariants, prompts, schemas, and
+  structured registries (including `schema/book-registry.json`)
+- `tools/` — validators, generators, and audits
 - canonical YAML: `predicates.yaml`, `structures.yaml`, `notation.yaml`,
   `relations.yaml`, `semantic-aliases.yaml`, `lean-crosswalk.yaml`
+- `docs/` — history only (reports, plans, handoffs, archive), plus
+  `docs/governance/source-indexing-policy.yaml`, whose path is pinned by
+  `lra-source-profiles`
 
 These files are consumed in place. They are **not** copied or synced into the
 other repositories.

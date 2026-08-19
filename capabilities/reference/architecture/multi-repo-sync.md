@@ -1,6 +1,6 @@
 # Multi-Repo Integration
 
-Source: `REPOSITORY_STRUCTURE.md` and current GitHub Actions workflows.
+Source: current GitHub Actions workflows.
 
 ## Integration Direction
 

@@ -1,7 +1,7 @@
 version: 4
 packet_version: 1
 entrypoint: capabilities/ENTRYPOINT.md
-# Single source of truth for agent task routing. docs/agent-task-index.md is a
+# Single source of truth for agent task routing. capabilities/task-index.md is a
 # generated human view of this file. Only eager_instructions enter the initial
 # context packet; every other class is a pointer or command. token_budget covers
 # the generated/root wrapper plus the resolver's eager packet.
@@ -536,7 +536,7 @@ routes:
     default: true
     triggers: ["audit governance", "governance review", "governance bloat", "tokenally light", "context audit", "shrink constitution", "move architecture facts", "constitution bloat", "workflow duplication", "deduplicate workflow", "reduce workflow", "prompts consume schema", "prompt schema", "schema driven prompt"]
     eager_instructions: [capabilities/audit-governance/capability.md]
-    lazy_references: [docs/reports/governance-bloat-audit.md, docs/agent-task-index.md, constitution/master.md]
+    lazy_references: [docs/reports/governance-bloat-audit.md, capabilities/task-index.md, constitution/master.md]
     tools: [tools/governance/audit_governance_context.py, tools/governance/validate_volume.py]
     schemas: [capabilities/manifest.yaml, constitution/schema, constitution/schemas]
     examples: []

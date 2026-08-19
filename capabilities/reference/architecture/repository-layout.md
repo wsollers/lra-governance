@@ -1,6 +1,6 @@
 # Repository Layout
 
-Source: `REPOSITORY_STRUCTURE.md`.
+Source: consolidated repository map (formerly REPOSITORY_STRUCTURE.md).
 
 ## Source Of Truth Map
 

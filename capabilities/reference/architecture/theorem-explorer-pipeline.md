@@ -1,6 +1,6 @@
 # Theorem Explorer Pipeline
 
-Source: `REPOSITORY_STRUCTURE.md`, `capabilities/extract-knowledge/capability.md`, and `lra-knowledge-explorer/README.md`.
+Source: `capabilities/extract-knowledge/capability.md` and `lra-knowledge-explorer/README.md`.
 
 ## Ownership
 
@@ -21,3 +21,11 @@ mono-side dispatch point; the governance refresh is the single trigger (see
 
 Extractor runs point at the split `lra-volume-*` clones. The pipeline depends on
 stable labels, dependency blocks, and canonical chapter structure.
+
+## Published Explorer
+
+The live explorer is published at
+`https://wsollers.github.io/lra-knowledge-explorer/`. Rebuild by running the
+governance refresh from `lra-governance`, or trigger
+**Actions -> Rebuild Knowledge Explorer -> Run workflow** in
+`lra-knowledge-explorer`.

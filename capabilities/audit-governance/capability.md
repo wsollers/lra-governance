@@ -8,7 +8,7 @@ routing, prompt size, or duplicate rule descriptions.
 Read the full governance corpus only when the user explicitly asks for a
 governance audit or consolidation task. Ordinary implementation tasks should
 start with `AGENTS.md` and the route resolver; the generated
-`docs/agent-task-index.md` is a lazy human reference and is not preloaded.
+`capabilities/task-index.md` is a lazy human reference and is not preloaded.
 
 Do not create a new governance document unless no existing authority layer can
 reasonably own the content.

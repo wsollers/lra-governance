@@ -1,3 +1,7 @@
+# NOTE: this file deliberately remains at docs/governance/ — the path is a
+# cross-repo contract: lra-source-profiles/scripts/source_index_policy.py
+# resolves it governance-relative. Coordinate with that repo before moving.
+# Guidance lives in capabilities/reference/source-indexing-policy.md.
 schema: lra-source-indexing-policy-v1
 library_root:
   host_default: D:\Readings

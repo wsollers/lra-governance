@@ -83,7 +83,7 @@ def _generated_index_is_current(manifest: dict) -> bool:
         from generate_task_index import render
     finally:
         sys.path.pop(0)
-    path = ROOT / "docs" / "agent-task-index.md"
+    path = ROOT / "capabilities" / "task-index.md"
     return path.exists() and _load_text(path) == render(manifest)
 
 
@@ -172,8 +172,8 @@ def audit() -> dict:
                     )
             lowered = text.lower()
             if (
-                "read `docs/agent-task-index.md`" in lowered
-                or "load `docs/agent-task-index.md`" in lowered
+                "read `capabilities/task-index.md`" in lowered
+                or "load `capabilities/task-index.md`" in lowered
                 or "read the canonical task router" in lowered
             ):
                 errors.append(f"{route_id}: eager guidance preloads the generated task index")
@@ -240,7 +240,7 @@ def audit() -> dict:
             warnings.append(f"{repo}: no default route; unmatched tasks fail closed")
 
     if not _generated_index_is_current(manifest):
-        errors.append("docs/agent-task-index.md is stale; run capabilities/generate_task_index.py")
+        errors.append("capabilities/task-index.md is stale; run capabilities/generate_task_index.py")
 
     for name in ("AGENTS.md.j2", "CLAUDE.md.j2", "GEMINI.md.j2", "copilot-instructions.md.j2", "github-instructions.md.j2"):
         text = _load_text(ROOT / "tools" / "governance" / "templates" / name)
