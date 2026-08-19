@@ -19,10 +19,10 @@ on:
       - "constitution/auditor/config.py"
       - "constitution/auditor/generators/**"
       - "constitution/schemas/audit-report.json"
-      - "capabilities/manifest.yaml"
-      - "capabilities/author-mathematics/**"
-      - "capabilities/author-full-proof/**"
-      - "capabilities/author-stub-*/**"
+      - "capabilities/**"
+      - "docs/governance/**"
+      - "docs/workflows/**"
+      - "docs/architecture/**"
       - "tools/governance/test_stub_generator_validator_contract.py"
       - ".github/workflows/governance-core-tests.yml"
   workflow_dispatch:
@@ -108,6 +108,12 @@ jobs:
 
       - name: Test capability routing
         run: python capabilities/test_resolve.py
+
+      - name: Check generated task index is current
+        run: python capabilities/generate_task_index.py --check
+
+      - name: Audit governance context and manifest integrity
+        run: python tools/governance/audit_governance_context.py
 
       - name: Test stub generator-validator contracts
         run: |

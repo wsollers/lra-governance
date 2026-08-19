@@ -25,6 +25,7 @@
 # Build output
 build/
 build-*/
+!capabilities/build-repo/
 out/
 dist/
 

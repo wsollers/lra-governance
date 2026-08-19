@@ -10,7 +10,8 @@ Layout gate:
 - `python tools/governance/validate_code_repo_layout.py --root <repo-root> --repo lra-numerical-analysis --governance-root <lra-governance>`
 
 Success gates:
-- `powershell -ExecutionPolicy Bypass -File tools\build-msvc.ps1 -Configuration Debug`
+- `powershell -ExecutionPolicy Bypass -File tools\build-msvc.ps1`
+- `powershell -ExecutionPolicy Bypass -File tools\build-docker-clang.ps1`
 
 Capabilities (domain-specific to this repo; same author -> validate spine as the volumes):
 - cpp-build-task: do the requested task and run the success gates below.

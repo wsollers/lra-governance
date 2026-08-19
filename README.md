@@ -7,10 +7,9 @@ workspace.
 
 ## Source Of Truth
 
-- `DESIGN.md`
-- `REPOSITORY_STRUCTURE.md`
 - `AGENTS.md`
 - `.gitignore`
+- `capabilities/` (task routing, entrypoint, overlays, capability packets)
 - `constitution/`
 - `docs/`
 - `tools/`
@@ -86,5 +85,6 @@ overlay sources live in `docs/governance/repo-overlays/`.
 
 Make every governance change here, in the smallest applicable document. Do not
 treat a downstream repo's generated wrappers or local overlay as a source of
-truth; those are generated or additive artifacts. See `DESIGN.md` for the task
-router.
+truth; those are generated or additive artifacts. Task routing is owned by
+`capabilities/manifest.yaml`; resolve a task with
+`python capabilities/resolve.py --repo <repo> --task "<task>" --root <repo-root>`.

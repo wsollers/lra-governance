@@ -32,7 +32,7 @@ rules. They are maintained in the architecture, governance, and routing docs:
 - generated agent instruction policy:
   `docs/governance/agent-instruction-policy.md`
 - agent task loading discipline:
-  `docs/agent-task-index.md`
+  `capabilities/ENTRYPOINT.md` (routing: `capabilities/manifest.yaml`)
 
 The constitution keeps only validity rules for mathematical artifacts and the
 structured data used by generation and audit.

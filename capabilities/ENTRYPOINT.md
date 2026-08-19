@@ -20,7 +20,8 @@ routing; this file defines behavior shared by every route.
   before editing.
 - Query canonical registries through the routed lookup or vocabulary tool. Do
   not invent names, notation, relations, labels, structures, or dependencies.
-  Report a missing canonical entry.
+  Report a missing canonical entry. Local model and Ollama output is advisory
+  only, never authoritative.
 - Preserve mathematical substance during structural, mechanical, migration,
   build, and governance work. Change mathematics only when the user explicitly
   requests mathematical authoring or correction through an applicable route.

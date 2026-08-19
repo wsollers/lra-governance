@@ -12,7 +12,8 @@ Owned concerns:
 Success gates:
 
 - `python capabilities/test_resolve.py`
-- `python -m py_compile capabilities/resolve.py capabilities/build-repo/build_repo.py`
+- `python capabilities/generate_task_index.py --check`
+- `python tools/governance/audit_governance_context.py`
 - run focused validator tests for changed validator code.
 
 Build and validation work in this repo should use the `build-repo` capability.

@@ -28,11 +28,11 @@ routes:
     triggers: ["dispatch workflow", "dispatch workflows", "monitor workflow", "monitor workflows", "github action", "github actions", "build repo", "build repository", "validate repo", "validate repository", "check repo", "check repository", "run ci", "build", "validate"]
     eager_instructions: [capabilities/build-repo/capability.md]
     lazy_references: [capabilities/reference-index.md]
-    tools: [capabilities/build-repo/build_repo.py]
+    tools: [tools/governance/validate_code_repo_layout.py, tools/governance/validate_volume.py]
     schemas: []
     examples: []
     outputs: [build and validation report]
-    verify: ["python {canonical}/capabilities/build-repo/build_repo.py --root {root}"]
+    verify: ["Run the repo overlay success gates in order and report each outcome."]
     token_budget: 3500
 
   - id: audit-semantic-topic

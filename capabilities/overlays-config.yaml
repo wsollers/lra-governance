@@ -38,8 +38,12 @@ repos:
   - repo: lra-lean
     kind: lean
     title: "Lean formalization"
+    # Docker is the reproducible validation path; native `lake build` is
+    # acceptable only when the pinned lean-toolchain is installed locally.
+    # Local Windows: `.\build.ps1 docker-build` then `.\build.ps1 build-all`.
     success_gates:
-      - "lake build"
+      - "docker build -t lra-lean ."
+      - "docker run --rm -v \"$PWD:/workspace\" -w /workspace lra-lean lake build LRAVolumeI LRAVolumeII"
   - repo: lra-numerical-analysis
     kind: cpp
     title: "C++ / numerical companion"
@@ -49,21 +53,25 @@ repos:
       required_dirs: ["cmake", "docker", "tools"]
       code_roots: ["include", "src", "projects"]
       test_roots: ["tests", "projects/*/tests"]
+    # Both platform gates must be green before push: MSVC validates the
+    # Windows toolchain; the Docker gate validates Linux Clang/Ninja and runs
+    # CTest inside the container. Run MSVC commands from a VS developer
+    # environment (build-msvc.ps1 initializes vcvars64.bat).
     success_gates:
-      - "powershell -ExecutionPolicy Bypass -File tools\\build-msvc.ps1 -Configuration Debug"
+      - "powershell -ExecutionPolicy Bypass -File tools\\build-msvc.ps1"
+      - "powershell -ExecutionPolicy Bypass -File tools\\build-docker-clang.ps1"
   - repo: lra-nurbs
     kind: cpp
     title: "NURBS / numerical geometry"
-    build_environment: "MSVC x64 developer environment"
+    build_environment: "CI matrix of Windows x64 MSVC + Vulkan SDK and Linux Clang via docker/linux-clang.Dockerfile; the Docker gates below are the portable path when MSVC is unavailable, with Release matching CI"
     layout:
       language: cpp
       required_dirs: ["cmake", "docker", "tools"]
       code_roots: ["include", "src", "projects"]
       test_roots: ["tests", "projects/*/tests"]
     success_gates:
-      - "cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug"
-      - "cmake --build build"
-      - "ctest --test-dir build --output-on-failure"
+      - "docker build -t lra-nurbs-linux -f docker/linux-clang.Dockerfile ."
+      - "docker run --rm -v \"$PWD:/workspace\" -w /workspace lra-nurbs-linux bash -lc 'cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=clang-18 -DCMAKE_CXX_COMPILER=clang++-18 -DCMAKE_CXX_FLAGS=\"-stdlib=libc++ -fexperimental-library\" -DCMAKE_EXE_LINKER_FLAGS=\"-stdlib=libc++ -fexperimental-library\" -DENABLE_SANITIZERS=OFF -DNDDE_ENABLE_CLANG_TIDY=OFF && cmake --build build --parallel && ctest --test-dir build --output-on-failure --parallel 4'"
   - repo: lra-proof-vault
     kind: vault
     title: "Handwritten proof records"

@@ -81,8 +81,8 @@ For `build-repo`:
 - Shared code layout and style: `docs/governance/code-repo-standards.md`
 - Governance audit workflow: `docs/workflows/governance-audit.md`
 
-Prefer `capabilities/build-repo/build_repo.py --dry-run` before opening broader
-docs; the generated plan usually shows which local or remote gate applies.
+The repository overlay's `Success gates` section names the gates that apply;
+open a reference here only to interpret a failing gate.
 
 ## Cross-Repo Or Generated Files
 

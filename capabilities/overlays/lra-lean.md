@@ -5,7 +5,8 @@ Repo identity: Lean formalization.
 Lean formalization of the mathematics.
 
 Success gates:
-- `lake build`
+- `docker build -t lra-lean .`
+- `docker run --rm -v "$PWD:/workspace" -w /workspace lra-lean lake build LRAVolumeI LRAVolumeII`
 
 Capabilities (domain-specific to this repo; same author -> validate spine as the volumes):
 - author-lean-theorem: given "formalize X", add a descriptively-named theorem in the locally inferred file/namespace and run the success gates below.
