@@ -70,7 +70,7 @@ through sibling paths such as `../lra-volume-ii/build/volume-ii.aux`.
 ## Figures
 
 Figure artifact rules are governed by
-`docs/governance/atomic-artifact-standards.md`. Every nontrivial TikZ figure
+`capabilities/reference/atomic-artifact-standards.md`. Every nontrivial TikZ figure
 lives in a dedicated figure source file and is input by the owning note, proof,
 or exercise file.
 

@@ -89,7 +89,7 @@ python tools\governance\generate_stub.py promote-topic --source-chapter-root .\v
 ```
 
 Omit `--update-registry` to receive the exact required
-`docs/architecture/book-registry.json` patch instead of applying it.
+`constitution/schema/book-registry.json` patch instead of applying it.
 
 ## Canonical Stub-Chapter Skeleton
 

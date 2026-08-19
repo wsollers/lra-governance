@@ -41,7 +41,7 @@ def validate(volume_root: Path, files) -> list[Finding]:
 
 
 def _registry_for(volume_root: Path) -> dict | None:
-    path = Path(__file__).resolve().parents[3] / "docs" / "architecture" / "book-registry.json"
+    path = Path(__file__).resolve().parents[3] / "constitution" / "schema" / "book-registry.json"
     if not path.is_file():
         return None
     data = json.loads(path.read_text(encoding="utf-8"))
@@ -139,7 +139,7 @@ def _validate_registered_book_dirs(repo_root: Path, volume_root: Path, books: li
             findings.append(
                 finding(
                     "unregistered_book_dir",
-                    f"Book directory is not registered in docs/architecture/book-registry.json: {rel}.",
+                    f"Book directory is not registered in constitution/schema/book-registry.json: {rel}.",
                     path,
                     volume_root,
                 )

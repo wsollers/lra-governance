@@ -18,7 +18,7 @@ Implement one requested C++/numerical change.
 2. Make the smallest project-consistent code change.
 3. Add or update tests when the repo has a nearby test pattern.
 4. Preserve the shared C/C++ layout and style rules in
-   `docs/governance/code-repo-standards.md`.
+   `capabilities/reference/code-repo-standards.md`.
 
 ## Success Gates
 

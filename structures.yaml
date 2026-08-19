@@ -1,6 +1,6 @@
 # Canonical LRA structure registry.
-# Governed by docs/governance/predicate-standards.md and
-# docs/architecture/canonical-yaml.md.
+# Governed by capabilities/reference/predicate-standards.md and
+# capabilities/reference/architecture/canonical-yaml.md.
 
 structures:
   - id: struct:ordered-set

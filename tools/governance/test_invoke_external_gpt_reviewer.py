@@ -64,7 +64,7 @@ class ExternalReviewerTransportTests(unittest.TestCase):
             "structures.yaml",
             "notation.yaml",
             "relations.yaml",
-            "docs/architecture/semantic-artifact-record.md",
+            "capabilities/reference/architecture/semantic-artifact-record.md",
         }
         self.assertTrue(required.issubset(by_path))
         for path in required:
@@ -87,7 +87,7 @@ class ExternalReviewerTransportTests(unittest.TestCase):
         self.assertIn("constitution/schema/semantic-artifact.schema.json", input_text)
         self.assertIn("predicates.yaml", input_text)
         self.assertIn("structures.yaml", input_text)
-        self.assertIn("docs/architecture/semantic-artifact-record.md", input_text)
+        self.assertIn("capabilities/reference/architecture/semantic-artifact-record.md", input_text)
         self.assertIn("predicates:", input_text)
 
     def test_background_response_polls_until_completed(self):

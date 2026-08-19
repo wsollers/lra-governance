@@ -13,7 +13,7 @@ canonical vocabulary.
 
 For existence checks and record retrieval, query
 `tools/governance/vocabulary.py` as described in
-`docs/architecture/canonical-yaml.md`; do not place the complete predicate and
+`capabilities/reference/architecture/canonical-yaml.md`; do not place the complete predicate and
 structure registries in agent context. Load a full canonical YAML file only
 when the task requires a registry-wide audit or coordinated edit.
 

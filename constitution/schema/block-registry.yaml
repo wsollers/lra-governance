@@ -95,7 +95,7 @@ blocks:
       Predicate names typeset with \operatorname{...}. The title is always
       "Predicate reading" for definitions and theorem-like environments.
       Predicate signatures and ambient-structure arguments are governed by
-      docs/governance/predicate-standards.md; use the canonical ambient object
+      capabilities/reference/predicate-standards.md; use the canonical ambient object
       argument rather than inventing specialized names. Structure constructors
       are introduced with \mathsf{...} construction lines before the predicates
       that use them, and those construction lines expose parse/type

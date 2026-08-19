@@ -147,7 +147,7 @@ jobs:
           import json
           from pathlib import Path
 
-          registry = json.loads(Path("lra-governance/docs/architecture/book-registry.json").read_text())
+          registry = json.loads(Path("lra-governance/constitution/schema/book-registry.json").read_text())
           volume_count = len(registry["volumes"])
           book_count = sum(len(volume.get("books", [])) for volume in registry["volumes"])
           expected = {

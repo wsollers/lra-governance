@@ -134,8 +134,8 @@ extra commentary.
 | Volume VIII | `Applied and Computational Mathematics` | Isaac Newton | 1643-1727 | `images/newton.png` |
 
 Book-level frontmatter mathematicians are recorded in
-`docs/architecture/volume-architecture.md` and machine-readable form in
-`docs/architecture/book-registry.json`.
+`capabilities/reference/architecture/volume-architecture.md` and machine-readable form in
+`constitution/schema/book-registry.json`.
 
 ## Generation Boundary
 
@@ -171,7 +171,7 @@ explicitly requires it.
 
 `tools/governance/validate_volume.py` includes a focused
 `frontmatter_standard` validator. It compares every active PDF entry root
-against `docs/architecture/book-registry.json` and enforces:
+against `constitution/schema/book-registry.json` and enforces:
 
 - `volume-*/frontmatter.tex` exists and defines `\LRAFrontMatterPage`;
 - each `volume-{roman}.tex` root inputs `volume-*/frontmatter` and calls

@@ -1,6 +1,5 @@
 # Model View Standards
 
-Source sections: `DESIGN.md` sections 10 and 13 plus `constitution/schema/`.
 
 ## Model Layers
 

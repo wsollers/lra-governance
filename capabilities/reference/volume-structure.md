@@ -5,7 +5,7 @@ The volume validator treats the volume tree as the atomic validation target.
 run.
 
 The integrated volume-shape validator reads the compact machine contract in
-`docs/governance/volume-structure.schema.json`. The broader constitutional
+`constitution/schema/volume-structure.schema.json`. The broader constitutional
 layout contract for volume, chapter, topic, proof, stub, capstone, and
 breadcrumb rules lives in `constitution/schema/file-schema.yaml`.
 

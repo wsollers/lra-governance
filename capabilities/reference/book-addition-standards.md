@@ -7,7 +7,7 @@ coverage.
 
 ## Source Of Truth
 
-`docs/architecture/book-registry.json` is the canonical book inventory. Do not
+`constitution/schema/book-registry.json` is the canonical book inventory. Do not
 add an unregistered book root or route a book only by local convention.
 
 Every new book entry must define:
@@ -30,7 +30,7 @@ For volume `{roman}` and book `{slug}`, add or update:
 - `volume-{roman}-{slug}.tex`;
 - `bibliography/volume-{roman}-{slug}.bib`;
 - `volume-{roman}/index.tex`;
-- `docs/architecture/book-registry.json`;
+- `constitution/schema/book-registry.json`;
 - the owning volume `README.md` and `bibliography/README.md`.
 
 Each chapter listed under `expected_toc` must have:

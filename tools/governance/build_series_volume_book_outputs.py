@@ -24,7 +24,7 @@ def run(cmd: list[str], cwd: Path | None = None) -> None:
 
 
 def registry() -> dict:
-    path = Path(__file__).resolve().parents[2] / "docs" / "architecture" / "book-registry.json"
+    path = Path(__file__).resolve().parents[2] / "constitution" / "schema" / "book-registry.json"
     return json.loads(path.read_text(encoding="utf-8"))
 
 

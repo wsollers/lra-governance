@@ -9,7 +9,7 @@ Operate in one LRA split volume repository with `lra-governance` available throu
 2. `lra-governance/AGENTS.md`;
 3. `docs/agent-task-index.md`;
 4. `capabilities/calibrate-semantic-artifact/calibration-workflow.md`;
-5. `docs/architecture/semantic-artifact-record.md`;
+5. `capabilities/reference/architecture/semantic-artifact-record.md`;
 6. `constitution/schema/semantic-artifact.schema.json`;
 7. the target repo overlay;
 8. the four canonical root registries;

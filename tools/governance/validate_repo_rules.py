@@ -11,10 +11,10 @@ from merge_repo_overlays import overlay_for_repo, overlay_path, repo_names
 
 
 REQUIRED_SOURCE_DOCS = [
-    "docs/governance/agent-instruction-policy.md",
-    "docs/governance/task-scope-limits.md",
-    "docs/architecture/generated-file-policy.md",
-    "docs/architecture/multi-repo-sync.md",
+    "capabilities/reference/agent-instruction-policy.md",
+    "capabilities/reference/task-scope-limits.md",
+    "capabilities/reference/architecture/generated-file-policy.md",
+    "capabilities/reference/architecture/multi-repo-sync.md",
 ]
 TEMPLATE_FILES = [
     "AGENTS.md.j2",

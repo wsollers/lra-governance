@@ -34,7 +34,7 @@ The concept contract records:
 - contract status and review attribution.
 
 The contract is atomic under
-`docs/governance/atomic-artifact-standards.md`. If definition or ownership is
+`capabilities/reference/atomic-artifact-standards.md`. If definition or ownership is
 still ambiguous, keep the contract in a non-approved state and stop before
 candidate discovery.
 
@@ -468,10 +468,10 @@ refactor report.
 Apply the current constitution and governance standards while generating:
 
 - `constitution/master.md`
-- `docs/governance/authoring-standards.md`
-- `docs/governance/atomic-artifact-standards.md`
-- `docs/governance/notation-standards.md`
-- `docs/governance/extraction-standards.md`
+- `capabilities/reference/authoring-standards.md`
+- `capabilities/reference/atomic-artifact-standards.md`
+- `capabilities/reference/notation-standards.md`
+- `capabilities/reference/extraction-standards.md`
 
 Generated output is always staged candidate content for human review. It must
 not be treated as final note insertion.

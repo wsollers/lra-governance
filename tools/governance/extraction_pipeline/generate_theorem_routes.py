@@ -215,7 +215,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--book-registry",
         type=Path,
-        default=Path(__file__).resolve().parents[3] / "docs" / "architecture" / "book-registry.json",
+        default=Path(__file__).resolve().parents[3] / "constitution" / "schema" / "book-registry.json",
     )
     parser.add_argument("--out-dir", type=Path, help="Optional single output directory; only valid with one --repo.")
     return parser.parse_args()

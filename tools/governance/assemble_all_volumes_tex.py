@@ -95,7 +95,7 @@ def _parse_bibliography_stems(root_tex: Path) -> tuple[str, ...]:
 
 
 def discover_volumes(repos_root: Path, requested: list[str] | None = None) -> list[VolumeSpec]:
-    registry = json.loads((Path(__file__).resolve().parents[2] / "docs" / "architecture" / "book-registry.json").read_text(encoding="utf-8"))
+    registry = json.loads((Path(__file__).resolve().parents[2] / "constitution" / "schema" / "book-registry.json").read_text(encoding="utf-8"))
     registry_by_roman = {volume.get("roman"): volume for volume in registry.get("volumes", [])}
     romans = tuple(requested) if requested else ROMANS
     volumes: list[VolumeSpec] = []

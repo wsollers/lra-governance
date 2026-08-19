@@ -6,8 +6,8 @@ back to the canonical checkout.
 ## Source Flow
 
 The generated-file and local-edit rules live in
-`docs/architecture/generated-file-policy.md` and
-`docs/governance/agent-instruction-policy.md`.
+`capabilities/reference/architecture/generated-file-policy.md` and
+`capabilities/reference/agent-instruction-policy.md`.
 
 The generation formula is:
 

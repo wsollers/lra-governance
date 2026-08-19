@@ -124,7 +124,7 @@ python tools\governance\vocabulary.py add predicate candidate.yaml
 python tools\governance\vocabulary.py add predicate candidate.yaml --write
 ```
 
-See `docs/architecture/canonical-yaml.md` for index resolution and authority
+See `capabilities/reference/architecture/canonical-yaml.md` for index resolution and authority
 rules.
 
 ## Unified LRA Lookup

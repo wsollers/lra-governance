@@ -22,15 +22,15 @@ canonical YAML storage, and agent loading discipline are not constitutional
 rules. They are maintained in the architecture, governance, and routing docs:
 
 - repository and repo ownership map:
-  `docs/architecture/repository-layout.md`
+  `capabilities/reference/architecture/repository-layout.md`
 - multi-repo integration boundaries and emergency downstream edits:
-  `docs/architecture/multi-repo-sync.md`
+  `capabilities/reference/architecture/multi-repo-sync.md`
 - canonical predicate, structure, notation, and relation YAML storage:
-  `docs/architecture/canonical-yaml.md`
+  `capabilities/reference/architecture/canonical-yaml.md`
 - generated downstream file policy:
-  `docs/architecture/generated-file-policy.md`
+  `capabilities/reference/architecture/generated-file-policy.md`
 - generated agent instruction policy:
-  `docs/governance/agent-instruction-policy.md`
+  `capabilities/reference/agent-instruction-policy.md`
 - agent task loading discipline:
   `capabilities/ENTRYPOINT.md` (routing: `capabilities/manifest.yaml`)
 
@@ -42,7 +42,7 @@ structured data used by generation and audit.
 ## Structured Constitution Files
 
 The structured files below are loaded directly by tools and prompts. Detailed
-task routing belongs in `docs/agent-task-index.md`.
+task routing belongs in `capabilities/manifest.yaml`.
 
 | File | Purpose |
 |------|---------|

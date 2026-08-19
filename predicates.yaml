@@ -1,5 +1,5 @@
 # Canonical LRA predicate registry.
-# Governed by docs/governance/predicate-standards.md.
+# Governed by capabilities/reference/predicate-standards.md.
 
 predicates:
   - id: pred:at-point-operation

@@ -42,8 +42,8 @@ The prompt must specify:
    instruct Codex to run `tools/governance/generate_stub.py` from the target
    repo when the wrapper exists, or the sibling
    `..\lra-governance\tools\governance\generate_stub.py` fallback otherwise.
-   The skeletons in `docs/governance/stub-section-standards.md` and
-   `docs/governance/stub-chapter-standards.md` are fallback/output contracts,
+   The skeletons in `capabilities/reference/stub-section-standards.md` and
+   `capabilities/reference/stub-chapter-standards.md` are fallback/output contracts,
    not the primary generation method.
 4. The exact index files to update.
 5. The exact topic files to populate.
@@ -56,7 +56,7 @@ The prompt must specify:
    prompt.
 8. The requirement to generate one proof stub per theorem-like artifact.
 9. The proof-stub requirements: every stub must match the canonical
-   proof-stub template in `docs/governance/proof-standards.md`, which is the
+   proof-stub template in `capabilities/reference/proof-standards.md`, which is the
    single source of truth and is enforced by
    `constitution/schema/file-schema.yaml` via
    `tools/governance/validate_volume.py`. Do not restate or improvise the stub

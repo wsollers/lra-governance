@@ -50,7 +50,7 @@ def _policy_path(repo_root: Path) -> Path | None:
     local = repo_root / "docs" / "governance" / "dependency-root-policy.yaml"
     if local.exists():
         return local
-    governance = repo_root.parent / "lra-governance" / "docs" / "governance" / "dependency-root-policy.yaml"
+    governance = repo_root.parent / "lra-governance" / "constitution" / "schema" / "dependency-root-policy.yaml"
     if governance.exists():
         return governance
     return None

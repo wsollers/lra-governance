@@ -63,7 +63,7 @@ There is exactly one authority for the proof-file shape, and it is enforced:
 `proof_file.required_layers_in_order` in `constitution/schema/file-schema.yaml`,
 checked by `tools/governance/validate_volume.py`. The same schema defines folder
 architecture, topic matching, and index reachability (mirrored in
-`docs/governance/volume-structure.schema.json`). Use
+`constitution/schema/volume-structure.schema.json`). Use
 `tools/governance/audit_proof_layout.py` for compliant/non-compliant proof-file
 lists.
 

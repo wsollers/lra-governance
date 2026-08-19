@@ -192,7 +192,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--policy",
         type=Path,
-        default=Path(__file__).resolve().parents[3] / "docs" / "governance" / "dependency-root-policy.yaml",
+        default=Path(__file__).resolve().parents[3] / "constitution" / "schema" / "dependency-root-policy.yaml",
         help="Dependency root policy used by validation.",
     )
     parser.add_argument("--run-id", default="", help="Optional run id. Defaults to extraction-YYYYMMDD-HHMMSS.")

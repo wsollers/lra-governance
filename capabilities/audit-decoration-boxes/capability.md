@@ -13,7 +13,7 @@ mathematical content.
 
 The audit classifies labels, decoration remarks, dependency blocks, proof
 links, predicate leakage, oversized environments, and one-object-per-environment
-risks according to `docs/governance/decoration-audit-standards.md`.
+risks according to `capabilities/reference/decoration-audit-standards.md`.
 
 Box status is reported as detected, not detected, or uncertain. Final
 box-worthiness remains a human authoring decision because structural importance

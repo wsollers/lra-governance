@@ -33,6 +33,6 @@ python tools\governance\audit_proof_layout.py --root F:\repos\lra-volume-ii --fo
 
 The audited rule set is the proof-file and proof-status portion of
 `constitution/schema/file-schema.yaml`, with human-facing context in
-`docs/governance/proof-standards.md`.
+`capabilities/reference/proof-standards.md`.
 
 The audit does not judge mathematical correctness.

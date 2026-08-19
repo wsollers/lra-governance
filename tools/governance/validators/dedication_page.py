@@ -28,7 +28,7 @@ def validate(volume_root: Path, files) -> list[Finding]:
 
 
 def _registry_for(volume_root: Path) -> dict | None:
-    path = Path(__file__).resolve().parents[3] / "docs" / "architecture" / "book-registry.json"
+    path = Path(__file__).resolve().parents[3] / "constitution" / "schema" / "book-registry.json"
     if not path.is_file():
         return None
     data = json.loads(path.read_text(encoding="utf-8"))

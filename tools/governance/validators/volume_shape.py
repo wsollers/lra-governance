@@ -30,7 +30,7 @@ DEFAULT_SCHEMA = {
 
 def _schema() -> dict:
     root = Path(__file__).resolve().parents[3]
-    path = root / "docs" / "governance" / "volume-structure.schema.json"
+    path = root / "constitution" / "schema" / "volume-structure.schema.json"
     if not path.exists():
         return DEFAULT_SCHEMA
     data = json.loads(path.read_text(encoding="utf-8"))

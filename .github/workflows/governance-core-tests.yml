@@ -21,8 +21,6 @@ on:
       - "constitution/schemas/audit-report.json"
       - "capabilities/**"
       - "docs/governance/**"
-      - "docs/workflows/**"
-      - "docs/architecture/**"
       - "tools/governance/test_stub_generator_validator_contract.py"
       - ".github/workflows/governance-core-tests.yml"
   workflow_dispatch:

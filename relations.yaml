@@ -1,5 +1,5 @@
 # Canonical LRA relation registry.
-# Governed by docs/architecture/canonical-yaml.md and predicate standards.
+# Governed by capabilities/reference/architecture/canonical-yaml.md and predicate standards.
 
 edge_kinds:
   - specializes

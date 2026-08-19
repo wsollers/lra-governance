@@ -1,6 +1,6 @@
 # Canonical YAML
 
-Source: `DESIGN.md` and `REPOSITORY_STRUCTURE.md`.
+Source: consolidated from the retired DESIGN.md router.
 
 The source-of-truth YAML files live in `lra-governance`:
 
@@ -64,4 +64,4 @@ No agent may invent predicate, structure, relation, or notation names locally in
 content files. Missing canonical vocabulary must be reported as a governance or
 YAML update need. Predicate names, structure constructors, signatures, and
 ambient-structure polymorphism are governed by
-`docs/governance/predicate-standards.md`.
+`capabilities/reference/predicate-standards.md`.

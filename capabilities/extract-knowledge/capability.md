@@ -35,8 +35,8 @@ statements and proofs are read from the split volume repos.
 
 ## Expected Source Shape
 
-Extraction assumes source follows `docs/governance/extraction-standards.md`,
-`docs/governance/dependency-standards.md`, and the structured rules in
+Extraction assumes source follows `capabilities/reference/extraction-standards.md`,
+`capabilities/reference/dependency-standards.md`, and the structured rules in
 `constitution/schema/block-registry.yaml`,
 `constitution/schema/artifact-matrix.yaml`, and
 `constitution/schema/file-schema.yaml`.

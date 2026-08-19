@@ -1,6 +1,5 @@
 # File Splitting Standards
 
-Source sections: `DESIGN.md` sections 2.5, 2.6, 2.7, 8, 9, 10.1, and 15.
 
 ## Atomicity
 

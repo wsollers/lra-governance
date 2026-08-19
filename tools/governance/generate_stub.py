@@ -89,7 +89,7 @@ def _print_result(result: dict, as_json: bool) -> None:
         for router in result.get("routers_updated", []):
             print(f"  updated router: {router}")
         if result.get("registry_updated"):
-            print("  updated registry: docs/architecture/book-registry.json")
+            print("  updated registry: constitution/schema/book-registry.json")
         elif "registry_patch" in result:
             print("  registry patch required:")
             print(json.dumps(result["registry_patch"], indent=2, sort_keys=True))
@@ -252,7 +252,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     promote.add_argument("--title", required=True, help="new chapter display title")
     promote.add_argument("--destination-topic", help="topic slug inside the new chapter; defaults to --topic")
     promote.add_argument("--include-capstone", action="store_true", help="create placeholder capstone files/routes")
-    promote.add_argument("--update-registry", action="store_true", help="update docs/architecture/book-registry.json")
+    promote.add_argument("--update-registry", action="store_true", help="update constitution/schema/book-registry.json")
     promote.set_defaults(func=_cmd_promote_topic)
 
     args = parser.parse_args(argv)

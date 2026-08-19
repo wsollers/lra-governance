@@ -26,7 +26,7 @@ Do not use parallel reviewers.
 4. `capabilities/audit-semantic-topic/capability.md`;
 5. `capabilities/audit-semantic-topic/audit-loop.md`;
 6. `capabilities/calibrate-semantic-artifact/calibration-workflow.md`;
-7. `docs/architecture/semantic-artifact-record.md`;
+7. `capabilities/reference/architecture/semantic-artifact-record.md`;
 8. semantic-artifact, artifact-audit-validation, and topic-audit schemas;
 9. the target volume overlay;
 10. canonical root registries;

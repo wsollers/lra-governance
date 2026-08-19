@@ -8,12 +8,12 @@ frontmatter asset.
 
 | Concern | Authority |
 | --- | --- |
-| Book and volume registry data, root names, expected TOC, migration aliases | `docs/architecture/book-registry.json` |
-| Volume, book, chapter, topic, proof, capstone, and breadcrumb shape | `docs/governance/volume-structure.md` |
-| Integrated volume-shape validator schema | `docs/governance/volume-structure.schema.json` |
+| Book and volume registry data, root names, expected TOC, migration aliases | `constitution/schema/book-registry.json` |
+| Volume, book, chapter, topic, proof, capstone, and breadcrumb shape | `capabilities/reference/volume-structure.md` |
+| Integrated volume-shape validator schema | `constitution/schema/volume-structure.schema.json` |
 | Broader constitutional layout/proof/stub schema | `constitution/schema/file-schema.yaml` |
-| Frontmatter, frontispiece, title, image, and dedication rules | `docs/architecture/frontmatter-and-frontispiece-standard.md` and `docs/architecture/dedication-page-standard.md` |
-| Build and render behavior | `docs/architecture/latex-build-and-rendering.md` |
+| Frontmatter, frontispiece, title, image, and dedication rules | `capabilities/reference/architecture/frontmatter-and-frontispiece-standard.md` and `capabilities/reference/architecture/dedication-page-standard.md` |
+| Build and render behavior | `capabilities/reference/architecture/latex-build-and-rendering.md` |
 
 ## Architecture
 
@@ -57,7 +57,7 @@ monorepo and no volume-to-monorepo sync.
 
 Run `tools/governance/validate_volume.py` through the local volume wrapper or
 the governance Docker/build helpers as the acceptance gate. The first validator,
-`volume_shape`, uses `docs/governance/volume-structure.schema.json`; broader
+`volume_shape`, uses `constitution/schema/volume-structure.schema.json`; broader
 layout, proof, stub, and capstone contracts are documented in
 `constitution/schema/file-schema.yaml`.
 

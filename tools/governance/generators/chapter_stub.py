@@ -15,7 +15,7 @@ from generators.section_stub import append_once, slugify, stub_section, write_ne
 
 
 GOVERNANCE_ROOT = Path(__file__).resolve().parents[3]
-BOOK_REGISTRY = GOVERNANCE_ROOT / "docs" / "architecture" / "book-registry.json"
+BOOK_REGISTRY = GOVERNANCE_ROOT / "constitution" / "schema" / "book-registry.json"
 
 
 @dataclass(frozen=True)

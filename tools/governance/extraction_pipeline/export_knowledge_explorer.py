@@ -706,7 +706,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--book-registry",
         type=Path,
-        default=Path(__file__).resolve().parents[3] / "docs" / "architecture" / "book-registry.json",
+        default=Path(__file__).resolve().parents[3] / "constitution" / "schema" / "book-registry.json",
         help="Canonical book registry used for volume/book/chapter/section metadata.",
     )
     return parser.parse_args()

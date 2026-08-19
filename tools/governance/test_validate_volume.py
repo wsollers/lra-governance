@@ -406,7 +406,7 @@ class ValidateVolumeTests(unittest.TestCase):
         self.assertIn("missing_matching_proofs_topic", codes)
 
     def test_volume_shape_schema_declares_exercises_allowlist(self):
-        schema = json.loads((HERE.parents[1] / "docs" / "governance" / "volume-structure.schema.json").read_text(encoding="utf-8"))
+        schema = json.loads((HERE.parents[1] / "constitution" / "schema" / "volume-structure.schema.json").read_text(encoding="utf-8"))
 
         self.assertEqual(schema["required_chapter_files"], ["index.tex", "chapter.yaml", "notes/index.tex", "proofs/index.tex"])
         self.assertEqual(schema["required_chapter_dirs"], ["notes", "proofs"])

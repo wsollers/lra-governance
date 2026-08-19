@@ -8,7 +8,7 @@ TODO proof bodies with canonical proof content.
 1. Work in the leaf volume repository that owns the proof file.
 2. Locate the existing proof file by theorem label and `\LRAProofFor{...}`.
 3. Preserve the durable proof container (see "Proof Stub Durability" in
-   `docs/governance/proof-standards.md`, enforced by
+   `capabilities/reference/proof-standards.md`, enforced by
    `constitution/schema/file-schema.yaml`).
 4. Before writing proof content, verify that the unnumbered proof restatement
    matches the current theorem-like source. If it does not, synchronize the

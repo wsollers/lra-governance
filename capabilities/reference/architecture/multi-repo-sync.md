@@ -81,7 +81,7 @@ canonical mathematical or bibliographic content owner.
 
 When `lra-sources` is absent, tools and agents should fall back to
 `lra-source-profiles` and the configured readings/index roots described in
-`docs/governance/source-indexing-policy.md`.
+`capabilities/reference/source-indexing-policy.md`.
 
 ## lra-reading-categorizer
 

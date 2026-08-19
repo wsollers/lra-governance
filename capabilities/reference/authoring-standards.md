@@ -1,6 +1,5 @@
 # Authoring Standards
 
-Source sections: `DESIGN.md` sections 1, 4, 5, 6, 6.1, 7, 12, and 15.
 
 ## Purpose
 
@@ -153,7 +152,7 @@ registry, or validator rule is repaired under governance.
 
 ## Chapter Entries
 
-Chapter openings use the canonical entry pattern from `DESIGN.md`: breadcrumb,
+Chapter openings use the canonical entry pattern: breadcrumb,
 status when needed, roadmap, and chapter structure. Breadcrumbs are structural
 dependency statements, not motivational prose.
 

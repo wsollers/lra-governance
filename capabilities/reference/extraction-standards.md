@@ -130,7 +130,7 @@ Preserve mathematical meaning; normalize mathematical notation.
 When converting copied text, OCR text, or image-derived mathematical content
 into LRA-ready candidate LaTeX, extraction tools shall normalize notation into
 house style while preserving the source meaning. The standard normalization
-table lives in `docs/governance/notation-standards.md` under
+table lives in `capabilities/reference/notation-standards.md` under
 `Standard Notation Normalizations`.
 
 The extractor should not reproduce OCR notation mechanically. It should rewrite

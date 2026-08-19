@@ -6,9 +6,9 @@
 #
 # Repository ownership, governance/common resolution, and canonical YAML
 # discovery are architecture/tooling facts. See:
-# - docs/architecture/repository-layout.md
-# - docs/architecture/multi-repo-sync.md
-# - docs/architecture/canonical-yaml.md
+# - capabilities/reference/architecture/repository-layout.md
+# - capabilities/reference/architecture/multi-repo-sync.md
+# - capabilities/reference/architecture/canonical-yaml.md
 
 # ---------------------------------------------------------------------------
 # Volume Structure (within an independent volume repo)

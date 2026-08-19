@@ -1,5 +1,5 @@
 # Canonical LRA notation registry.
-# Governed by docs/governance/notation-standards.md.
+# Governed by capabilities/reference/notation-standards.md.
 
 notation:
   - id: not:natural-numbers

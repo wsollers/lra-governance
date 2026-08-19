@@ -22,6 +22,6 @@ primitive_definitions: []
 # - id: ext:classical-logic
 #   title: Classical first-order logic
 #   scope: all-volumes
-#   documented_in: docs/governance/dependency-standards.md
+#   documented_in: capabilities/reference/dependency-standards.md
 #   reason: Background proof system assumed by the exposition.
 external_assumptions: []
