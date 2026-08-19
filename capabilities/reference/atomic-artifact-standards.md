@@ -92,6 +92,20 @@ When auditing existing content, multi-concept definitions shall be split into
 atomic definitions, each new concept shall receive its own stable label, and
 all references and extraction records shall be updated to the new labels.
 
+## Atomic Axioms
+
+Axioms follow the same atomicity discipline as definitions and theorem-like
+items.
+
+- One axiom environment contains exactly one independently nameable axiom.
+- Distinct axioms must not be bundled into a single axiom block merely because
+  they belong to the same axiomatic system.
+- An axiomatic family may be introduced by topic-level exposition, but the
+  individual axioms must still appear as separate labeled axiom environments.
+- If a chapter presents a named axiom system such as the Peano axioms, the
+  system name may appear at the topic level, while the formal mathematical
+  items inside the topic remain atomic.
+
 ## Atomic Figures
 
 Every nontrivial TikZ figure shall exist as an independent figure source file.

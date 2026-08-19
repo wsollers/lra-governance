@@ -221,6 +221,10 @@ with `\DefinitionalRoot`; otherwise write an explicit dependency block.
 
 Do not print a visible dependency block that says only "No local dependencies."
 The silent marker is structural metadata, not prose, and should render nothing.
+It applies to note-body statement artifacts only; it does not change the
+existing practice for proof-file dependency remarks. Generation and audit
+treat the marker as satisfying the dependency requirement for qualifying
+items.
 
 ## TODO Dependencies
 

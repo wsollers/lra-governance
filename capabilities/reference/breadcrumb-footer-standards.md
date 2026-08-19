@@ -33,6 +33,22 @@ Examples:
 - topic chrome ends at `Topic`;
 - book-opening chrome ends at `Book`.
 
+## Placement
+
+Breadcrumbs are wrapper-level navigation, not note-body mathematics.
+
+- A breadcrumb box belongs in the local `index.tex` file for the chapter,
+  section cluster, or subsection cluster it introduces.
+- In an `index.tex` wrapper, the breadcrumb should appear before the
+  `\input{...}` chain for the note content it navigates.
+- Breadcrumbs should not be interspersed with exposition, definitions,
+  theorems, remarks, examples, or consequences inside the main note body
+  file.
+- The main note body file should begin directly with sectioning and
+  mathematical content, not with navigation furniture.
+- Proof files do not receive breadcrumbs unless there is an explicit
+  repository-level wrapper rule for proof navigation.
+
 ## Metadata Rule
 
 Breadcrumb and footer text must come from one metadata source. Do not hand-type

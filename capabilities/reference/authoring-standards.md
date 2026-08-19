@@ -331,3 +331,82 @@ This is distinct from the topic-level `exposition` environment used inside
 topic boxes. The environment `exposition` orients a topic cluster; the
 `remark*` block titled `Exposition` makes item-adjacent conceptual narrative
 extractable.
+
+## Topicbox Containers
+
+The repository supports an optional local structural container called a
+`topicbox`: a pedagogical container inside a topic's body files.
+
+- A `topicbox` is not a numbered mathematical claim.
+- It is not a replacement for `\section`, `\subsection`, or
+  `\subsubsection`.
+- It does not participate in theorem numbering, proof linking, dependency
+  labeling, or extraction identity. Those continue to belong to the
+  theorem-like environments contained inside it.
+
+Topicbox rules:
+
+1. Use `\section` and `\subsection` for the actual chapter hierarchy.
+2. Use `topicbox` only inside a subsection-level cluster.
+3. A `topicbox` groups exactly one coherent concept cluster.
+4. A `topicbox` may contain exposition, remarks, examples, definitions,
+   theorems, propositions, lemmas, corollaries, and consequences.
+5. A `topicbox` must not replace atomic theorem-like environments.
+6. Every definition/theorem-like item inside a `topicbox` must still use its
+   own separate environment.
+7. Do not combine multiple definitions or theorems into one theorem-like
+   environment merely because they live in the same topic.
+8. `topicbox` containers must not be nested.
+9. Avoid one-item `topicbox` containers unless the concept genuinely needs
+   local framing or contrast.
+10. Topicboxes are not used in proof files. Proof files keep the existing
+    professional-standard / detailed-learning structure without topic
+    containers.
+11. The topic title is the concept title itself. Do not prefix topic titles
+    with decorative labels such as `Topic:`.
+12. When a subsection begins immediately with a `topicbox`, do not add a
+    separate introductory prose block that merely repeats the exposition that
+    belongs inside the topic. The topic exposition is the primary local
+    framing device.
+
+### Required Topic Exposition
+
+If a subsection uses a `topicbox`, that topic must begin with a required
+`exposition` environment.
+
+- The exposition is mandatory, not optional.
+- The exposition explains the mathematical role of the concept cluster: what
+  structure, principle, formulation, or distinction is being isolated there.
+- The exposition should describe what the topic establishes, axiomatizes,
+  characterizes, or prepares for mathematically, not merely announce that the
+  material has been grouped together.
+- The exposition environment is intentionally not boxed.
+- The exposition may be short, but it must perform real mathematical
+  orienting work rather than decorative throat-clearing or transition prose.
+- Do not duplicate that same orienting work in a separate pre-topic blurb in
+  the subsection body unless there is genuinely broader subsection-level
+  context that covers multiple topics at once.
+- Prefer mathematically substantive opening sentences such as:
+  "These axioms characterize ...",
+  "This theorem identifies ...",
+  "This topic isolates the distinction between ...",
+  "This formulation makes precise ...".
+- Avoid weak meta-introductions such as:
+  "This topic gathers ...",
+  "The grouping matters because ...",
+  or similar prose that mainly comments on the organization instead of the
+  mathematics.
+
+Preferred local order inside a `topicbox`:
+
+1. `exposition`
+2. definitions
+3. primary theorems
+4. structural remark blocks
+5. interpretation remarks
+6. examples and non-examples
+7. consequences
+
+When a subsection contains multiple related formulations of one concept,
+generation shall use separate `topicbox` containers over creating extra
+subsections or flattening all formulations into one uninterrupted block.
