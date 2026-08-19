@@ -17,9 +17,7 @@ workspace.
 - `tools/` — validators, generators, and audits
 - canonical YAML: `predicates.yaml`, `structures.yaml`, `notation.yaml`,
   `relations.yaml`, `semantic-aliases.yaml`, `lean-crosswalk.yaml`
-- `docs/` — history only (reports, plans, handoffs, archive), plus
-  `docs/governance/source-indexing-policy.yaml`, whose path is pinned by
-  `lra-source-profiles`
+- `docs/` — history only (reports, plans, handoffs, archive)
 
 These files are consumed in place. They are **not** copied or synced into the
 other repositories.

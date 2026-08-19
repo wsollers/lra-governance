@@ -2,7 +2,7 @@
 
 This policy governs which personal reading-library PDFs are eligible for the
 Learning Real Analysis source index. The machine-readable authority is
-`docs/governance/source-indexing-policy.yaml` (path pinned: `lra-source-profiles/scripts/source_index_policy.py` resolves it governance-relative; coordinate before moving); tools should consume that file
+`constitution/schema/source-indexing-policy.yaml` (consumed governance-relative by `lra-source-profiles/scripts/source_index_policy.py`); tools should consume that file
 instead of hard-coding subject folder decisions.
 
 ## Responsibility Boundary
