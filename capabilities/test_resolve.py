@@ -309,6 +309,170 @@ def test_emit_mode_outputs_only_eager_files():
     assert "repo:         " not in text
 
 
+# --- LLM-facing selection surface: --list, --route, and selection catalogs ---
+def test_list_flag_prints_catalog_with_descriptions():
+    output = io.StringIO()
+    with contextlib.redirect_stdout(output):
+        code = R.main(["--repo", "lra-governance", "--list", "--root", str(GOV)])
+    text = output.getvalue()
+    assert code == 0
+    assert "routes for lra-governance:" in text
+    assert "audit-governance (default)" in text
+    assert "Audit, shrink, or deduplicate the governance corpus" in text
+
+
+def test_list_json_catalog_is_structured():
+    output = io.StringIO()
+    with contextlib.redirect_stdout(output):
+        code = R.main(["--repo", "lra-lean", "--list", "--json", "--root", str(GOV)])
+    assert code == 0
+    payload = json.loads(output.getvalue())
+    assert payload["repo"] == "lra-lean"
+    ids = {entry["id"] for entry in payload["routes"]}
+    assert "author-lean-theorem" in ids
+    assert all(entry["description"] for entry in payload["routes"])
+
+
+def test_explicit_route_selection_bypasses_trigger_matching():
+    resolved = R.resolve(
+        GOV,
+        "lra-volume-i",
+        "flesh out the missing pieces in chapter three",
+        {"route": "author-full-proof"},
+    )
+    assert resolved.route_id == "author-full-proof"
+    assert resolved.match_type == "explicit"
+    assert resolved.matched_trigger is None
+
+
+def test_explicit_route_json_packet_reports_explicit_match():
+    output = io.StringIO()
+    with contextlib.redirect_stdout(output):
+        code = R.main(
+            [
+                "--repo",
+                "lra-governance",
+                "--task",
+                "tidy the manifest",
+                "--route",
+                "audit-governance",
+                "--root",
+                str(GOV),
+                "--json",
+            ]
+        )
+    assert code == 0
+    packet = json.loads(output.getvalue())
+    assert packet["route"] == "audit-governance"
+    assert packet["match_type"] == "explicit"
+    assert packet["description"]
+
+
+def test_explicit_route_rejects_inapplicable_repo_kind():
+    try:
+        R.resolve(GOV, "lra-lean", "do the thing", {"route": "author-mathematics"})
+    except ValueError as exc:
+        assert "does not apply" in str(exc)
+        assert "applicable routes" in str(exc)
+    else:
+        raise AssertionError("explicit route accepted an inapplicable repo kind")
+
+
+def test_explicit_unknown_route_lists_known_ids():
+    try:
+        R.resolve(GOV, "lra-lean", "do the thing", {"route": "no-such-route"})
+    except ValueError as exc:
+        assert "unknown route" in str(exc)
+    else:
+        raise AssertionError("explicit route accepted an unknown id")
+
+
+def _synthetic_manifest() -> dict:
+    return {
+        "routes": [
+            {
+                "id": "alpha",
+                "title": "Alpha",
+                "description": "First synthetic route.",
+                "applies_to": ["volume"],
+                "triggers": ["run alpha"],
+            },
+            {
+                "id": "beta",
+                "title": "Beta",
+                "description": "Second synthetic route.",
+                "applies_to": ["volume"],
+                "triggers": ["run  beta"],
+            },
+        ]
+    }
+
+
+def test_trigger_tie_raises_selection_needed_with_candidates():
+    manifest = _synthetic_manifest()
+    # both 9-char triggers appear in the task -> equal-length tie
+    try:
+        R._match("please run alpha and run  beta", manifest, "volume", "lra-volume-i")
+    except R.RouteSelectionNeeded as exc:
+        assert {route["id"] for route in exc.candidates} == {"alpha", "beta"}
+    else:
+        raise AssertionError("equal-length trigger tie did not request selection")
+
+
+def test_no_match_without_default_raises_selection_needed_with_catalog():
+    manifest = _synthetic_manifest()
+    try:
+        R._match("something unrelated", manifest, "volume", "lra-volume-i")
+    except R.RouteSelectionNeeded as exc:
+        assert "no trigger matched" in exc.reason
+        assert {route["id"] for route in exc.candidates} == {"alpha", "beta"}
+    else:
+        raise AssertionError("unmatched task without default did not request selection")
+
+
+def test_selection_needed_exits_2_with_actionable_catalog():
+    original = R._match
+
+    def force_selection(task, manifest, kind, repo):
+        raise R.RouteSelectionNeeded(
+            "synthetic", R._catalog(manifest, kind, repo)
+        )
+
+    R._match = force_selection
+    try:
+        output = io.StringIO()
+        with contextlib.redirect_stdout(output):
+            code = R.main(
+                ["--repo", "lra-lean", "--task", "mystery work", "--root", str(GOV)]
+            )
+    finally:
+        R._match = original
+    text = output.getvalue()
+    assert code == 2
+    assert "route selection needed" in text
+    assert "--route <id>" in text
+    assert "author-lean-theorem" in text
+
+
+def test_every_route_has_a_distinct_description():
+    manifest = R._load_manifest(GOV)
+    descriptions = [route["description"] for route in manifest["routes"]]
+    assert all(descriptions)
+    assert len(set(descriptions)) == len(descriptions)
+
+
+def test_manifest_schema_requires_description():
+    manifest = copy.deepcopy(R._load_manifest(GOV))
+    del manifest["routes"][0]["description"]
+    schema = GOV / "constitution" / "schemas" / "capability-manifest.schema.json"
+    try:
+        R._validate_json(manifest, schema, "test manifest")
+    except ValueError as exc:
+        assert "description" in str(exc)
+    else:
+        raise AssertionError("manifest schema accepted a route without description")
+
+
 def test_manifest_schema_rejects_unknown_fields():
     manifest = copy.deepcopy(R._load_manifest(GOV))
     manifest["unexpected"] = True

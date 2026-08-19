@@ -44,13 +44,15 @@ def render(manifest: dict) -> str:
         "",
         "## Task Routes",
         "",
-        "| Task (`route id`) | Eager instructions | Lazy references | Executable tools | Schemas/data | Examples | Context budget |",
-        "| --- | --- | --- | --- | --- | --- | ---: |",
+        "| Task (`route id`) | When to use | Eager instructions | Lazy references | Executable tools | Schemas/data | Examples | Context budget |",
+        "| --- | --- | --- | --- | --- | --- | --- | ---: |",
     ]
     for route in manifest.get("routes", []):
         title = str(route["title"]).replace("|", "&#124;")
+        description = str(route.get("description", "")).replace("|", "&#124;")
         lines.append(
             f"| {title} (`{route['id']}`) | "
+            f"{description} | "
             f"{_cell(route.get('eager_instructions'))} | "
             f"{_cell(route.get('lazy_references'))} | "
             f"{_cell(route.get('tools'))} | "

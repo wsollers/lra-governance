@@ -45,6 +45,7 @@
       "required": [
         "id",
         "title",
+        "description",
         "applies_to",
         "triggers",
         "eager_instructions",
@@ -59,6 +60,7 @@
       "properties": {
         "id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
         "title": {"$ref": "#/$defs/nonemptyString"},
+        "description": {"type": "string", "minLength": 20, "maxLength": 300},
         "applies_to": {"$ref": "#/$defs/stringList"},
         "repos": {"$ref": "#/$defs/stringList"},
         "default": {"type": "boolean"},

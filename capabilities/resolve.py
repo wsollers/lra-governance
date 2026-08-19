@@ -343,6 +343,57 @@ class Match:
     matched_trigger: str | None
 
 
+class RouteSelectionNeeded(Exception):
+    """Deterministic matching could not pick one route; the caller must choose.
+
+    Raised instead of a fatal error so an LLM agent can read the candidate
+    catalog, pick the route whose description matches the task's intent, and
+    re-resolve with ``--route <id>``.
+    """
+
+    def __init__(self, reason: str, candidates: list[dict[str, Any]]):
+        super().__init__(reason)
+        self.reason = reason
+        self.candidates = candidates
+
+
+def _catalog(manifest: dict[str, Any], kind: str, repo: str) -> list[dict[str, Any]]:
+    """Return the routes applicable to (kind, repo) for selection displays."""
+    return [
+        route for route in manifest["routes"] if _applicable(route, kind, repo)
+    ]
+
+
+def _catalog_entries(routes: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    return [
+        {
+            "id": route["id"],
+            "title": str(route.get("title", "")),
+            "description": str(route.get("description", "")),
+            "example_triggers": [str(t) for t in route.get("triggers", [])[:3]],
+            "default": bool(route.get("default", False)),
+        }
+        for route in routes
+    ]
+
+
+def _explicit_route(
+    route_id: str, manifest: dict[str, Any], kind: str, repo: str
+) -> Match:
+    by_id = {route["id"]: route for route in manifest["routes"]}
+    route = by_id.get(route_id)
+    if route is None:
+        known = sorted(by_id)
+        raise ValueError(f"unknown route {route_id!r}; routes: {known}")
+    if not _applicable(route, kind, repo):
+        applicable = [r["id"] for r in _catalog(manifest, kind, repo)]
+        raise ValueError(
+            f"route {route_id!r} does not apply to repo {repo!r} "
+            f"(kind {kind!r}); applicable routes: {applicable}"
+        )
+    return Match(route, "explicit", None)
+
+
 def _match(task: str, manifest: dict[str, Any], kind: str, repo: str) -> Match:
     lowered = task.lower()
     best: dict[str, Any] | None = None
@@ -372,7 +423,10 @@ def _match(task: str, manifest: dict[str, Any], kind: str, repo: str) -> Match:
 
     if best is not None:
         if len(ties) > 1:
-            raise ValueError(f"ambiguous task {task!r} matches {ties}; be more specific")
+            tied = [route for route in routes if route["id"] in ties]
+            raise RouteSelectionNeeded(
+                f"task {task!r} matches routes {ties} equally", tied
+            )
         return Match(best, "trigger", best_trigger)
 
     defaults = [
@@ -383,14 +437,19 @@ def _match(task: str, manifest: dict[str, Any], kind: str, repo: str) -> Match:
     if len(defaults) == 1:
         return Match(defaults[0], "default", None)
     if len(defaults) > 1:
-        raise ValueError(
-            f"ambiguous defaults for task {task!r}, repo {repo!r}: "
-            f"{[route['id'] for route in defaults]}"
+        raise RouteSelectionNeeded(
+            f"multiple default routes apply to repo {repo!r}", defaults
         )
-    applicable = [route["id"] for route in routes if _applicable(route, kind, repo)]
-    raise ValueError(
-        f"no route matches task {task!r} for repo kind {kind!r}; "
-        f"routes here: {applicable or 'none defined yet'}"
+    applicable = _catalog(manifest, kind, repo)
+    if not applicable:
+        raise ValueError(
+            f"no routes are defined for repo kind {kind!r}; "
+            "add a route to capabilities/manifest.yaml"
+        )
+    raise RouteSelectionNeeded(
+        f"no trigger matched task {task!r} for repo kind {kind!r} "
+        "and no default route applies",
+        applicable,
     )
 
 
@@ -403,6 +462,7 @@ class Resolution:
     core: Path
     overlay: Path
     route_id: str
+    description: str
     match_type: str
     matched_trigger: str | None
     manifest_version: int
@@ -438,7 +498,11 @@ def resolve(gov: Path, repo: str, task: str, args: dict[str, Any]) -> Resolution
             "create it or run generate_overlays.py"
         )
 
-    match = _match(task, manifest, kind, repo)
+    explicit = args.get("route")
+    if explicit:
+        match = _explicit_route(str(explicit), manifest, kind, repo)
+    else:
+        match = _match(task, manifest, kind, repo)
     route = match.route
     substitutions = {
         "root": args.get("root") or "<root>",
@@ -469,6 +533,7 @@ def resolve(gov: Path, repo: str, task: str, args: dict[str, Any]) -> Resolution
         core=core,
         overlay=overlay,
         route_id=route["id"],
+        description=str(route.get("description", "")),
         match_type=match.match_type,
         matched_trigger=match.matched_trigger,
         manifest_version=int(manifest["version"]),
@@ -499,6 +564,7 @@ def _as_dict(resolution: Resolution, gov: Path) -> dict[str, Any]:
         "repo_kind": resolution.repo_kind,
         "task": resolution.task,
         "route": resolution.route_id,
+        "description": resolution.description,
         "match_type": resolution.match_type,
         "matched_trigger": resolution.matched_trigger,
         "governance_root": resolution.gov_root.as_posix(),
@@ -532,8 +598,12 @@ def _print_human(resolution: Resolution, packet: dict[str, Any]) -> None:
     print(f"repo:         {resolution.repo} ({resolution.repo_kind})")
     print(f"task:         {resolution.task!r}")
     print(f"route:        {resolution.route_id}")
+    if resolution.description:
+        print(f"about:        {resolution.description}")
     if resolution.match_type == "trigger":
         print(f"matched:      {resolution.matched_trigger!r}")
+    elif resolution.match_type == "explicit":
+        print("matched:      explicit --route selection")
     else:
         print("matched:      default route")
     print(f"entrypoint:   {packet['entrypoint']}")
@@ -567,12 +637,58 @@ def _emit(resolution: Resolution, gov: Path) -> None:
             print()
 
 
+def _print_catalog(
+    entries: list[dict[str, Any]], repo: str, reason: str | None, as_json: bool
+) -> None:
+    """Print applicable routes so an agent can pick one by description."""
+    if as_json:
+        payload: dict[str, Any] = {"repo": repo, "routes": entries}
+        if reason is not None:
+            payload["selection_needed"] = True
+            payload["reason"] = reason
+            payload["next_step"] = (
+                "Pick the route whose description matches the task's intent, "
+                f"then re-run with: --repo {repo} --route <id> --task \"<user task>\""
+            )
+        print(json.dumps(payload, indent=2))
+        return
+    if reason is not None:
+        print(f"route selection needed: {reason}")
+        print(
+            "Pick the route whose description matches the task's intent, then"
+        )
+        print(
+            f"re-run: python capabilities/resolve.py --repo {repo} "
+            "--route <id> --task \"<user task>\" --root <repo-root>"
+        )
+        print()
+    print(f"routes for {repo}:")
+    for entry in entries:
+        marker = " (default)" if entry["default"] else ""
+        print(f"  {entry['id']}{marker} — {entry['title']}")
+        if entry["description"]:
+            print(f"      {entry['description']}")
+        if entry["example_triggers"]:
+            hints = ", ".join(repr(t) for t in entry["example_triggers"])
+            print(f"      e.g. {hints}")
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         description="Resolve (repo, task) to a bounded governance packet."
     )
     parser.add_argument("--repo", required=True)
-    parser.add_argument("--task", required=True)
+    parser.add_argument("--task", help="the user's task; required unless --list")
+    parser.add_argument(
+        "--route",
+        help="explicit route id (from --list or a selection catalog); "
+        "skips trigger matching but keeps validation and budgets",
+    )
+    parser.add_argument(
+        "--list",
+        action="store_true",
+        help="print the applicable route catalog for --repo and exit",
+    )
     parser.add_argument("--gov-root")
     parser.add_argument("--root")
     parser.add_argument("--chapter")
@@ -599,9 +715,26 @@ def main(argv: list[str] | None = None) -> int:
             file=sys.stderr,
         )
         return 1
+    if not args.list and not args.task:
+        parser.error("--task is required unless --list is given")
     try:
+        if args.list:
+            manifest = _load_manifest(gov)
+            repo = _canonical_repo_name(gov, args.repo, args.root)
+            kind = _repo_kind(gov, repo)
+            entries = _catalog_entries(_catalog(manifest, kind, repo))
+            _print_catalog(entries, repo, None, args.json)
+            return 0
         resolution = resolve(gov, args.repo, args.task, vars(args))
         packet = _as_dict(resolution, gov)
+    except RouteSelectionNeeded as exc:
+        repo = args.repo
+        try:
+            repo = _canonical_repo_name(gov, args.repo, args.root)
+        except ValueError:
+            pass
+        _print_catalog(_catalog_entries(exc.candidates), repo, exc.reason, args.json)
+        return 2
     except (FileNotFoundError, OSError, ValueError, KeyError) as exc:
         print(f"fatal: {exc}", file=sys.stderr)
         return 1

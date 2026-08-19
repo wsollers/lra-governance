@@ -123,7 +123,7 @@ def audit() -> dict:
     if duplicates:
         errors.append(f"duplicate route ids: {duplicates}")
 
-    required = {"id", "title", "applies_to", "triggers", *RESOURCE_CLASSES, "outputs", "verify", "token_budget"}
+    required = {"id", "title", "description", "applies_to", "triggers", *RESOURCE_CLASSES, "outputs", "verify", "token_budget"}
     local_paths: set[str] = set()
     for route in routes:
         route_id = route.get("id", "<missing-id>")

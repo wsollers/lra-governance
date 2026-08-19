@@ -10,5 +10,8 @@ user's task before doing task work:
 python <governance-root>/capabilities/resolve.py --repo <repo> --task "<user task>" --root <repo-root>
 ```
 
-If the command succeeds, follow its output. If governance cannot be located or
-the resolver exits unsuccessfully, stop and report the error.
+If the command succeeds, follow its output. If it prints a route catalog
+instead (exit code 2), pick the route whose description matches the task's
+intent and re-run with `--route <id>` added; `--list` shows the catalog at any
+time. If governance cannot be located or the resolver fails otherwise, stop
+and report the error.

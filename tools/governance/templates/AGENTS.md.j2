@@ -14,6 +14,9 @@ Human route index (lazy reference only): `capabilities/task-index.md`
 
 After resolving canonical governance, run the route resolver. Load its eager
 packet only; follow lazy references, tools, schemas, and examples on demand.
+If the resolver prints a route catalog instead of a packet (exit code 2), pick
+the route whose description matches the task's intent and re-run with
+`--route <id>` added.
 Do not treat this wrapper as a local source of truth.
 
 Provider note: {{ PROVIDER_NOTES }}

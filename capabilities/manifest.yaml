@@ -11,6 +11,7 @@ default_token_budget: 6000
 routes:
   - id: lookup-lra
     title: Look up LRA source, code, or vocabulary
+    description: "Search indexed LRA sources, TeX artifacts, Lean declarations, C++ objects, and canonical vocabulary. Read-only lookup before authoring or citing; creates nothing."
     applies_to: [volume, lean, cpp, library, vault, python_tool, latex_artifact, governance]
     triggers: ["lookup lra", "search lra", "source lookup", "search source index", "search lra sources", "look up theorem", "look up this theorem", "lookup this theorem", "look up definition", "look up this definition", "search our code", "search indexed code", "search lean and tex"]
     eager_instructions: [capabilities/lookup-lra/capability.md]
@@ -20,10 +21,11 @@ routes:
     examples: [capabilities/lookup-lra/capability.md]
     outputs: [ranked source, TeX, Lean, C++, and vocabulary hits]
     verify: ["python {canonical}/tools/governance/lra_lookup.py --status"]
-    token_budget: 3500
+    token_budget: 4000
 
   - id: build-repo
     title: Build or validate a repository
+    description: "Build or validate the current repository by running its overlay's success gates in order and reporting each outcome. Use for any build, validate, check, or CI request."
     applies_to: [volume, lean, cpp, library, vault, python_tool, latex_artifact, governance]
     triggers: ["dispatch workflow", "dispatch workflows", "monitor workflow", "monitor workflows", "github action", "github actions", "build repo", "build repository", "validate repo", "validate repository", "check repo", "check repository", "run ci", "build", "validate"]
     eager_instructions: [capabilities/build-repo/capability.md]
@@ -33,10 +35,11 @@ routes:
     examples: []
     outputs: [build and validation report]
     verify: ["Run the repo overlay success gates in order and report each outcome."]
-    token_budget: 3500
+    token_budget: 4000
 
   - id: audit-semantic-topic
     title: Audit semantic artifacts for a topic
+    description: "Batch-audit every semantic artifact in one topic and assemble a topic audit manifest with external reviewer evidence. For a single artifact use calibrate-semantic-artifact."
     applies_to: [volume]
     triggers: ["lra audit topic", "audit semantic topic", "topic semantic audit", "validate topic artifacts", "audit topic artifacts"]
     eager_instructions: [capabilities/audit-semantic-topic/capability.md]
@@ -50,6 +53,7 @@ routes:
 
   - id: calibrate-semantic-artifact
     title: Calibrate a semantic artifact
+    description: "Create or recalibrate the semantic YAML record for one mathematical artifact, with external reviewer evidence. For a whole topic use audit-semantic-topic."
     applies_to: [volume]
     triggers: ["calibrate semantic artifact", "semantic artifact", "review semantic artifact", "artifact yaml", "calibrate definition", "calibrate theorem"]
     eager_instructions: [capabilities/calibrate-semantic-artifact/capability.md]
@@ -63,6 +67,7 @@ routes:
 
   - id: author-mathematics
     title: Author typed mathematical content
+    description: "Write new typed mathematical content in a volume: definitions, theorem-like statements, axioms, examples, exposition, and proof STUBS via the typed payload generator. Full proof bodies belong to author-full-proof."
     applies_to: [volume]
     triggers: ["author mathematics", "mathematical content", "source text into mathematics", "screenshot mathematics", "model theory", "universal algebra", "author statement", "generate the latex", "generate the definition", "generate definition", "add definition", "write the definition", "define ", "generate a theorem statement", "generate theorem", "add theorem", "generate lemma", "add lemma", "generate proposition", "add proposition", "generate corollary", "add corollary", "generate axiom", "add axiom", "generate proof stub", "create proof stub", "generate a theorem proof stub", "create a theorem proof stub", "generate a lemma proof stub", "create a lemma proof stub", "generate a proposition proof stub", "create a proposition proof stub", "generate a corollary proof stub", "create a corollary proof stub", "generate an example", "author example", "write exposition", "write motivation", "the definition", "the theorem", "the lemma", "the proposition", "the corollary", "the axiom"]
     eager_instructions: [capabilities/author-mathematics/capability.md]
@@ -76,6 +81,7 @@ routes:
 
   - id: generate-chapter-artifacts
     title: Generate chapter artifacts from payload
+    description: "Rehydrate a prepared machine-ingested chapter payload (JSON/JSONL) into registries, LaTeX blocks, proof stubs, and a chapter manifest through the volume importer."
     applies_to: [volume]
     triggers: ["generate chapter artifacts", "artifact payload", "import artifact payload"]
     eager_instructions: [capabilities/generate-chapter-artifacts/capability.md]
@@ -89,6 +95,7 @@ routes:
 
   - id: generate-section-codex-loop
     title: Generate a section through the Codex loop
+    description: "Generate one whole section iteratively through the Codex loop, from scaffolding to promoted content with validation between passes."
     applies_to: [volume]
     triggers: ["generate section", "codex loop", "section generation"]
     eager_instructions: [capabilities/generate-section-codex-loop/capability.md]
@@ -102,6 +109,7 @@ routes:
 
   - id: validate-volume-house-rules
     title: Validate volume house rules
+    description: "Run the integrated house-rule validator over a volume and report findings. Report-only; makes no edits."
     applies_to: [volume]
     triggers: ["volume house rules", "validate volume", "volume validation"]
     eager_instructions: [capabilities/validate-volume/capability.md]
@@ -115,6 +123,7 @@ routes:
 
   - id: add-tikz-figure
     title: Add or revise a TikZ figure
+    description: "Create or revise a TikZ figure as a dedicated figure source file, styled per the figure guide, with the inclusion block at the call site."
     applies_to: [volume, library]
     triggers: ["tikz figure", "revise figure", "add figure"]
     eager_instructions: [capabilities/add-tikz-figure/capability.md]
@@ -128,6 +137,7 @@ routes:
 
   - id: local-tex-devcontainer
     title: Edit LaTeX locally in a volume devcontainer
+    description: "Install or launch the governance-owned VS Code LaTeX devcontainer for local volume editing; this is what 'edit latex' means in a volume repo."
     applies_to: [volume]
     triggers: ["latex devcontainer", "tex devcontainer", "edit latex locally"]
     eager_instructions: [capabilities/local-tex-devcontainer/capability.md]
@@ -141,6 +151,7 @@ routes:
 
   - id: author-full-proof
     title: Author a full mathematical proof
+    description: "Write the complete mathematical proof body for an existing proof stub (professional-standard and detailed-learning layers). Creating the stub itself belongs to author-mathematics."
     applies_to: [volume]
     triggers: ["generate full proof", "write full proof", "author full proof", "populate proof stub", "add proof", "write proof", "fill proof stub", "full proof"]
     eager_instructions: [capabilities/author-full-proof/capability.md]
@@ -154,6 +165,7 @@ routes:
 
   - id: migrate-proof-stubs
     title: Validate or migrate proof stubs
+    description: "Validate or mechanically migrate existing proof stubs to the current stub invariant. Structural only; never writes proof mathematics."
     applies_to: [volume]
     triggers: ["migrate proof stubs", "validate proof stubs", "proof stub invariant"]
     eager_instructions: [capabilities/migrate-proof-stubs/capability.md]
@@ -167,6 +179,7 @@ routes:
 
   - id: audit-proof-layout
     title: Audit proof layout
+    description: "Deterministically audit proof-file layer layout across a volume and report violations. Report-only."
     applies_to: [volume]
     triggers: ["audit proof layout", "proof layout audit"]
     eager_instructions: [capabilities/audit-proof-layout/capability.md]
@@ -180,6 +193,7 @@ routes:
 
   - id: refactor-chapter
     title: Refactor a chapter
+    description: "Reorganize an existing chapter's sections, topics, files, and routers while preserving all mathematical content unchanged."
     applies_to: [volume]
     triggers: ["refactor chapter", "reorganize chapter"]
     eager_instructions: [capabilities/reference/refactoring-standards.md]
@@ -193,6 +207,7 @@ routes:
 
   - id: refactor-volume-layout
     title: Refactor volume folders or source layout
+    description: "Audit or migrate a volume's folder and source layout to the topic-mirrored standard, including routers and route metadata."
     applies_to: [volume]
     triggers: ["refactor volume", "volume folders", "source layout", "volume layout migration"]
     eager_instructions: [capabilities/refactor-volume-layout/capability.md]
@@ -206,6 +221,7 @@ routes:
 
   - id: author-stub-chapter
     title: Create a stub chapter
+    description: "Scaffold a new empty chapter skeleton (metadata, notes and proofs routers) with the deterministic generator. No mathematical content."
     applies_to: [volume]
     triggers: ["stub a chapter", "stub chapter", "scaffold a chapter", "scaffold chapter", "new chapter"]
     eager_instructions: [capabilities/author-stub-chapter/capability.md]
@@ -219,6 +235,7 @@ routes:
 
   - id: author-capstone
     title: Author a full chapter capstone
+    description: "Author a full chapter capstone exercise through the deterministic capstone generator and validators."
     applies_to: [volume]
     triggers: ["generate full capstone", "write full capstone", "author full capstone", "full capstone", "chapter capstone"]
     eager_instructions: []
@@ -228,10 +245,11 @@ routes:
     examples: []
     outputs: [validated theorem-shaped chapter capstone]
     verify: ["python {canonical}/tools/governance/validate_volume.py {root} --fail-on-errors"]
-    token_budget: 2500
+    token_budget: 3000
 
   - id: author-stub-volume
     title: Create a stub volume
+    description: "Scaffold a new volume shell with an ordered chapter registry via the deterministic generator. No mathematical content."
     applies_to: [governance, volume]
     triggers: ["stub a volume", "stub volume", "scaffold a volume", "scaffold volume", "new volume"]
     eager_instructions: [capabilities/author-stub-volume/capability.md]
@@ -245,6 +263,7 @@ routes:
 
   - id: author-stub-section
     title: Create a stub section
+    description: "Scaffold a new empty section (paired notes and proofs topic folders plus routers) with the deterministic generator. No mathematical content."
     applies_to: [volume]
     triggers: ["stub a section", "stub section", "scaffold a section", "new section"]
     eager_instructions: [capabilities/author-stub-section/capability.md]
@@ -258,6 +277,7 @@ routes:
 
   - id: memorialize-exercises
     title: Memorialize exercise artifacts
+    description: "Record completed exercise artifacts (source photo, TeX exercise set, ledger entries) into the exercise vault."
     applies_to: [volume, latex_artifact]
     triggers: ["memorialize exercise", "exercise artifacts", "exercise ledger"]
     eager_instructions: [capabilities/memorialize-exercises/capability.md]
@@ -271,6 +291,7 @@ routes:
 
   - id: extract-knowledge
     title: Extract knowledge
+    description: "Run knowledge extraction over volume source to produce or validate knowledge-graph and theorem-route artifacts for the explorer."
     applies_to: [volume, vault, python_tool]
     triggers: ["extract knowledge", "knowledge extraction", "theorem routes", "generate routes", "validate routes"]
     eager_instructions: [capabilities/extract-knowledge/capability.md]
@@ -284,6 +305,7 @@ routes:
 
   - id: update-vocabulary
     title: Update predicates, structures, relations, or notation
+    description: "Add or change canonical predicates, structures, relations, or notation in the governance-owned YAML registries. Query existing entries first with vocabulary.py."
     applies_to: [governance]
     triggers: ["update predicates", "update structures", "update relations", "update notation", "canonical vocabulary", "vocabulary entry"]
     eager_instructions: [capabilities/reference/architecture/canonical-yaml.md]
@@ -297,6 +319,7 @@ routes:
 
   - id: audit-chapter-symbols
     title: Audit chapter symbols deterministically
+    description: "Deterministically audit one chapter's symbols and notation against the canonical registries. Report-only."
     applies_to: [governance, volume]
     triggers: ["audit chapter symbols", "audit symbols", "symbol audit", "notation audit"]
     eager_instructions: []
@@ -306,10 +329,11 @@ routes:
     examples: []
     outputs: [deterministic chapter symbol audit report]
     verify: ["python {canonical}/tools/governance/validate_registry_contract.py", "python {canonical}/tools/governance/audit_chapter_symbols.py --chapter {chapter}"]
-    token_budget: 2000
+    token_budget: 2500
 
   - id: audit-statement
     title: Audit a statement with deterministic structure checks
+    description: "Deterministically audit one statement's logical block structure against the artifact matrix. Report-only."
     applies_to: [governance, volume]
     triggers: ["audit a statement", "audit statement", "statement audit", "audit theorem statement", "audit definition statement"]
     eager_instructions: []
@@ -319,10 +343,11 @@ routes:
     examples: []
     outputs: [deterministic statement structure report and optional compact semantic review]
     verify: ["python {canonical}/tools/governance/validate_volume.py {root} --fail-on-errors"]
-    token_budget: 2000
+    token_budget: 2500
 
   - id: audit-proof
     title: Audit a proof with deterministic twelve-layer checks
+    description: "Deterministically audit one proof file's twelve-layer structure. Report-only; for volume-wide checks use audit-proof-layout."
     applies_to: [governance, volume]
     triggers: ["audit a proof", "audit proof", "proof audit", "audit proof file"]
     eager_instructions: []
@@ -332,10 +357,11 @@ routes:
     examples: []
     outputs: [deterministic twelve-layer proof report and optional compact mathematical review]
     verify: ["python {canonical}/tools/governance/audit_proof_layout.py --root {root} --strict"]
-    token_budget: 2000
+    token_budget: 2500
 
   - id: plan-toolkits
     title: Plan section toolkits deterministically
+    description: "Deterministically plan or audit the section Toolkit boxes for a chapter. Report-only."
     applies_to: [governance, volume]
     triggers: ["plan toolkits", "plan toolkit", "toolkit plan", "audit toolkits"]
     eager_instructions: []
@@ -345,10 +371,11 @@ routes:
     examples: []
     outputs: [deterministic toolkit plan and audit report]
     verify: ["python {canonical}/constitution/auditor/__main__.py --repoDir {canonical} audit toolkits {chapter} --fail-on-findings", "python {canonical}/tools/governance/validate_volume.py {root} --fail-on-errors"]
-    token_budget: 2000
+    token_budget: 2500
 
   - id: generate-governance-wrappers
     title: Generate local governance wrappers
+    description: "Regenerate the downstream AGENTS/CLAUDE/GEMINI/copilot pointer wrappers from templates, check drift, and validate previews. Governance repo only."
     applies_to: [governance]
     triggers: ["generate wrappers", "governance wrappers", "wrapper sync", "agent wrappers"]
     eager_instructions: [capabilities/generate-governance-wrappers/capability.md]
@@ -362,6 +389,7 @@ routes:
 
   - id: edit-shared-latex
     title: Edit shared LaTeX infrastructure
+    description: "Change shared LaTeX macros, boxes, environments, colors, or preambles in lra-common. Changes affect every volume; smoke-build affected targets."
     applies_to: [library]
     default: true
     triggers: ["shared latex", "latex infrastructure", "common macros", "edit macro"]
@@ -376,6 +404,7 @@ routes:
 
   - id: author-lean-theorem
     title: Work in lra-lean
+    description: "Any Lean formalization work in lra-lean: model statements and definitions, add or organize declarations and modules, attach verification metadata. Proof bodies only on explicit request."
     applies_to: [lean]
     default: true
     triggers: ["formalize", "lean theorem", "add lean", "formalise", "work in lra-lean", "lean"]
@@ -390,6 +419,7 @@ routes:
 
   - id: prepare-lean-tex-lookup
     title: Prepare Lean and TeX verification lookup
+    description: "Refresh or rebuild the governed internal object index that links Lean declarations and TeX labels for verification lookup."
     applies_to: [lean, volume, governance]
     triggers: ["lean tex lookup", "lean verification lookup", "tex verification lookup", "lean crosswalk"]
     eager_instructions: [capabilities/prepare-lean-tex-lookup/capability.md]
@@ -403,6 +433,7 @@ routes:
 
   - id: work-knowledge-explorer
     title: Work in lra-knowledge-explorer
+    description: "General implementation work in lra-knowledge-explorer: extractor code, graph generation, or explorer UI. Default route for that repo."
     applies_to: [python_tool]
     repos: [lra-knowledge-explorer]
     default: true
@@ -418,6 +449,7 @@ routes:
 
   - id: work-pdf-extractor
     title: Work in lra-pdf-extractor
+    description: "General implementation work in lra-pdf-extractor: ingestion, OCR/cleanup, bibliography normalization, staged candidate outputs. Default route for that repo."
     applies_to: [python_tool]
     repos: [lra-pdf-extractor]
     default: true
@@ -433,6 +465,7 @@ routes:
 
   - id: work-reading-categorizer
     title: Work in lra-reading-categorizer
+    description: "General implementation work in lra-reading-categorizer: categorization UI, taxonomy, queue, review exports. Default route for that repo."
     applies_to: [python_tool]
     repos: [lra-reading-categorizer]
     default: true
@@ -448,6 +481,7 @@ routes:
 
   - id: work-source-profiles
     title: Work in lra-source-profiles
+    description: "General implementation work in lra-source-profiles: profiles, source indexes, active exports, import/scan workflows. Default route for that repo."
     applies_to: [python_tool]
     repos: [lra-source-profiles]
     default: true
@@ -463,6 +497,7 @@ routes:
 
   - id: work-lra-exercises
     title: Work in lra-exercises
+    description: "Author or build standalone exercise sheets and workbooks in lra-exercises using the Docker LaTeX image. Default route for that repo."
     applies_to: [latex_artifact]
     repos: [lra-exercises]
     default: true
@@ -478,6 +513,7 @@ routes:
 
   - id: work-leaf-volume
     title: Work in a leaf volume repository
+    description: "General volume-repo work that no more specific route covers (builds, small fixes, wiring). Default route for volume repos."
     applies_to: [volume]
     default: true
     triggers: ["work in volume", "leaf volume", "volume repo"]
@@ -492,6 +528,7 @@ routes:
 
   - id: memorialize-handwritten-proof
     title: Memorialize handwritten proof artifacts
+    description: "Ingest a handwritten proof photo or artifact into the proof vault through the Docker photo pipeline, with sanitization, OCR, and metadata."
     applies_to: [vault]
     default: true
     triggers: ["handwritten proof", "proof vault", "memorialize proof", "proof photo"]
@@ -506,6 +543,7 @@ routes:
 
   - id: audit-decoration-boxes
     title: Audit decoration boxes
+    description: "Inventory and audit decoration boxes across LaTeX source against the block registry. Report-only."
     applies_to: [volume, library, governance]
     triggers: ["audit decoration", "decoration boxes", "box audit"]
     eager_instructions: [capabilities/audit-decoration-boxes/capability.md]
@@ -519,6 +557,7 @@ routes:
 
   - id: add-bibliography
     title: Add bibliography entries
+    description: "Add or fix BibTeX entries in the owning book's bibliography shard, deduplicating candidates first."
     applies_to: [volume, latex_artifact]
     triggers: ["bibliography entry", "add bibliography", "add citation", "bibtex"]
     eager_instructions: [capabilities/add-bibliography/capability.md]
@@ -532,6 +571,7 @@ routes:
 
   - id: audit-governance
     title: Audit governance
+    description: "Audit, shrink, or deduplicate the governance corpus itself: routing integrity, token budgets, duplication, constitution size. Governance repo only."
     applies_to: [governance]
     default: true
     triggers: ["audit governance", "governance review", "governance bloat", "tokenally light", "context audit", "shrink constitution", "move architecture facts", "constitution bloat", "workflow duplication", "deduplicate workflow", "reduce workflow", "prompts consume schema", "prompt schema", "schema driven prompt"]
@@ -546,6 +586,7 @@ routes:
 
   - id: cpp-build-task
     title: Work in a C++ numerical repository
+    description: "Any implementation task in a C++ numerical repo: write code and tests per the overlay's standards, then run its success gates. Default route for cpp repos."
     applies_to: [cpp]
     default: true
     triggers: ["do task", "implement", "build task", "c++", "cpp"]
