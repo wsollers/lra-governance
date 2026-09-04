@@ -45,6 +45,11 @@ try:
 except ModuleNotFoundError:
     from tools.governance.internal_object_sqlite import build_family_databases
 
+try:
+    from internal_tex_fulltext import build_database as build_tex_fulltext_database
+except ModuleNotFoundError:
+    from tools.governance.internal_tex_fulltext import build_database as build_tex_fulltext_database
+
 
 STATE_SCHEMA = "lra.internal-object-index-state/1.0"
 DELTA_SCHEMA = "lra.internal-object-index-delta/1.0"
@@ -275,6 +280,14 @@ def main() -> int:
             payload["objects"], families=families, sqlite_dir=sqlite_dir, source_path=args.output
         ):
             print(f"{result['family']} SQLite index written: objects={result['objects']} database={result['database']}")
+        if args.tex_root:
+            result = build_tex_fulltext_database(
+                args.tex_root,
+                sqlite_dir=sqlite_dir,
+                artifact_source=args.tex_artifact_source,
+                source_path=args.output,
+            )
+            print(f"TeX full-text SQLite index written: chunks={result['chunks']} database={result['database']}")
     delta = payload["delta"]["files"]
     print(
         "internal object index updated: "

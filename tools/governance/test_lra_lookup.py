@@ -16,6 +16,7 @@ if str(HERE) not in sys.path:
 
 import lra_lookup
 from internal_object_sqlite import build_database
+from internal_tex_fulltext import build_database as build_tex_fulltext_database
 
 DISCOVERY_FIXTURE = Path(__file__).resolve().parents[2] / "constitution" / "schema" / "examples" / "concept-discovery" / "cauchy-sequence-discovery-input.json"
 
@@ -57,11 +58,11 @@ class LookupTests(unittest.TestCase):
 
     def test_scope_expansion(self) -> None:
         self.assertEqual(
-            lra_lookup.expand_scopes(["internal"]), {"tex", "lean", "cpp"}
+            lra_lookup.expand_scopes(["internal"]), {"tex", "tex-fulltext", "lean", "cpp"}
         )
         self.assertEqual(
             lra_lookup.expand_scopes(None),
-            {"sources", "tex", "lean", "cpp", "vocabulary"},
+            {"sources", "tex", "tex-fulltext", "lean", "cpp", "vocabulary"},
         )
 
     def test_internal_search_returns_compact_records(self) -> None:
@@ -94,6 +95,19 @@ class LookupTests(unittest.TestCase):
 
         self.assertEqual(results["tex"][0]["label"], "thm:least-upper-bound")
         self.assertNotIn("search_text", results["tex"][0])
+
+    def test_tex_fulltext_search_returns_file_and_line_range(self) -> None:
+        tex_root = self.root / "lra-volume-iii"
+        source = tex_root / "volume-iii" / "book-analysis" / "functions" / "notes" / "source.tex"
+        source.parent.mkdir(parents=True)
+        source.write_text("A function has a single value for each input.\n", encoding="utf-8")
+        build_tex_fulltext_database([tex_root], sqlite_dir=self.index_root / "internal" / "sqlite", artifact_source="source")
+        locations = lra_lookup.LookupLocations(self.catalog, self.profiles, self.index_root)
+
+        hits = lra_lookup.search_tex_fulltext(locations, "single value input", limit=3, volume="volume-iii")
+
+        self.assertEqual(hits[0]["path"], "volume-iii/book-analysis/functions/notes/source.tex")
+        self.assertEqual(hits[0]["line_start"], 1)
 
     def test_lookup_preserves_other_lanes_when_one_is_unavailable(self) -> None:
         args = Namespace(

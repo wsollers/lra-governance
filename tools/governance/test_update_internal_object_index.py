@@ -6,6 +6,7 @@ import yaml
 
 from tools.governance.update_internal_object_index import main
 from tools.governance.internal_object_sqlite import metadata
+from tools.governance.internal_tex_fulltext import metadata as fulltext_metadata, search_database
 
 
 def write_source(path: Path, body: str) -> None:
@@ -55,6 +56,9 @@ A function is a single-valued relation.
     assert first["counts"] == {"objects": 1, "tex": 1, "lean": 0}
     assert first["delta"]["mode"] == "full"
     assert metadata(tmp_path / "sqlite" / "tex-search.sqlite")["object_count"] == "1"
+    fulltext = tmp_path / "sqlite" / "tex-fulltext-search.sqlite"
+    assert fulltext_metadata(fulltext)["chunk_count"] == "1"
+    assert search_database(fulltext, "single valued relation")[0]["line_start"] == 1
 
     write_source(
         source,

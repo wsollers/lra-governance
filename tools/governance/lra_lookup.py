@@ -26,10 +26,11 @@ DEFAULT_INDEX_ROOT = Path(r"D:\Readings\indexes\lra")
 INTERNAL_SQLITE_DIR = Path("internal") / "sqlite"
 INTERNAL_DATABASES = {
     "tex": INTERNAL_SQLITE_DIR / "tex-search.sqlite",
+    "tex-fulltext": INTERNAL_SQLITE_DIR / "tex-fulltext-search.sqlite",
     "lean": INTERNAL_SQLITE_DIR / "lean-search.sqlite",
     "cpp": INTERNAL_SQLITE_DIR / "cpp-search.sqlite",
 }
-SCOPES = ("sources", "tex", "lean", "cpp", "vocabulary", "internal", "all")
+SCOPES = ("sources", "tex", "tex-fulltext", "lean", "cpp", "vocabulary", "internal", "all")
 
 for stream in (sys.stdout, sys.stderr):
     if hasattr(stream, "reconfigure"):
@@ -115,6 +116,7 @@ def status_payload(locations: LookupLocations) -> dict[str, Any]:
         "source_theorem_yaml": index_root / "omnibus" / "theorem-index.yaml"
         if index_root else None,
         "tex_sqlite": index_root / INTERNAL_DATABASES["tex"] if index_root else None,
+        "tex_fulltext_sqlite": index_root / INTERNAL_DATABASES["tex-fulltext"] if index_root else None,
         "lean_sqlite": index_root / INTERNAL_DATABASES["lean"] if index_root else None,
         "cpp_sqlite": index_root / INTERNAL_DATABASES["cpp"] if index_root else None,
     }
@@ -129,6 +131,7 @@ def status_payload(locations: LookupLocations) -> dict[str, Any]:
     lanes = {
         "sources": bool(source_script and source_index_available),
         "tex": bool(paths["tex_sqlite"] and paths["tex_sqlite"].exists()),
+        "tex-fulltext": bool(paths["tex_fulltext_sqlite"] and paths["tex_fulltext_sqlite"].exists()),
         "lean": bool(paths["lean_sqlite"] and paths["lean_sqlite"].exists()),
         "cpp": bool(paths["cpp_sqlite"] and paths["cpp_sqlite"].exists()),
         "vocabulary": all((GOVERNANCE_ROOT / name).exists() for name in (
@@ -493,6 +496,21 @@ def search_internal(
     return results
 
 
+def search_tex_fulltext(
+    locations: LookupLocations, query: str, *, limit: int, volume: str | None
+) -> list[dict[str, Any]]:
+    if locations.index_root is None:
+        raise LookupError("TeX full-text search requires an LRA index root")
+    path = locations.index_root / INTERNAL_DATABASES["tex-fulltext"]
+    if not path.exists():
+        raise LookupError(f"TeX full-text SQLite index is missing: {path}")
+    try:
+        import internal_tex_fulltext as module
+    except ModuleNotFoundError:
+        from tools.governance import internal_tex_fulltext as module
+    return module.search_database(path, query, limit=limit, volume=volume)
+
+
 def search_vocabulary(query: str, *, limit: int) -> list[dict[str, Any]]:
     try:
         import vocabulary
@@ -509,10 +527,10 @@ def search_vocabulary(query: str, *, limit: int) -> list[dict[str, Any]]:
 def expand_scopes(raw_scopes: list[str] | None) -> set[str]:
     scopes = set(raw_scopes or ["all"])
     if "all" in scopes:
-        return {"sources", "tex", "lean", "cpp", "vocabulary"}
+        return {"sources", "tex", "tex-fulltext", "lean", "cpp", "vocabulary"}
     if "internal" in scopes:
         scopes.remove("internal")
-        scopes.update(("tex", "lean", "cpp"))
+        scopes.update(("tex", "tex-fulltext", "lean", "cpp"))
     return scopes
 
 
@@ -555,6 +573,14 @@ def lookup(args: argparse.Namespace, locations: LookupLocations) -> dict[str, An
         except (LookupError, OSError, ValueError, yaml.YAMLError) as exc:
             payload["warnings"].append(f"{family}: {exc}")
 
+    if "tex-fulltext" in scopes:
+        try:
+            payload["results"]["tex-fulltext"] = search_tex_fulltext(
+                locations, args.query, limit=args.limit, volume=args.volume
+            )
+        except (LookupError, OSError, ValueError, yaml.YAMLError) as exc:
+            payload["warnings"].append(f"tex-fulltext: {exc}")
+
     if "vocabulary" in scopes:
         try:
             payload["results"]["vocabulary"] = search_vocabulary(
@@ -571,12 +597,12 @@ def print_text(payload: dict[str, Any]) -> None:
         hits = value.get("hits", []) if lane == "sources" else value
         print(f"\n{lane}: {len(hits)} hit(s)")
         for index, hit in enumerate(hits, start=1):
-            title = hit.get("title") or hit.get("name") or hit.get("id") or ""
+            title = hit.get("title") or hit.get("name") or hit.get("path") or hit.get("id") or ""
             identity = hit.get("source_id") or hit.get("label") or hit.get("declaration") or hit.get("object_id") or hit.get("id")
             print(f"  {index}. {hit.get('kind', '')} {title} [{identity}]")
             path = hit.get("path")
             if path:
-                print(f"     {path}:{hit.get('line') or ''}")
+                print(f"     {path}:{hit.get('line') or hit.get('line_start') or ''}")
             detail = hit.get("snippet") or hit.get("statement") or hit.get("description")
             if detail:
                 print(f"     {detail}")
