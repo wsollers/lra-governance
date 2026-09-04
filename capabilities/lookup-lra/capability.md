@@ -13,11 +13,25 @@ python <governance-root>\tools/governance/lra_lookup.py "<query>"
 ```
 
 The default searches separate result lanes for primary reading sources,
-authored TeX, Lean declarations, C++ objects, and canonical vocabulary. Use
-`--scope sources`, `tex`, `lean`, `cpp`, `vocabulary`, or `internal`; repeat
+authored TeX full text, authored TeX formal objects, Lean declarations, C++
+objects, and canonical vocabulary. Use `--scope sources`, `tex-fulltext`,
+`tex`, `lean`, `cpp`, `vocabulary`, or `internal`; repeat
 `--scope` to combine lanes. Use `--volume`, `--book`, `--chapter`, `--author`,
 `--source-id`, `--source-list`, or `--profile` to constrain primary-source
 lookup. Run `--status` to inspect index availability.
+
+Use the two TeX lanes together when the query could be either ordinary prose
+or a named formal object:
+
+```powershell
+python <governance-root>\tools\governance\lra_lookup.py "single valued relation" `
+  --scope tex-fulltext `
+  --scope tex `
+  --volume volume-iii
+```
+
+`tex-fulltext` returns a TeX file and line range from the full authored source;
+`tex` is the ranked lookup for definitions, theorems, labels, and display names.
 
 Primary-source lookup is strict first and loose by default. If the source lane
 returns no hits, `lra_lookup.py` automatically retries bounded looser forms of
@@ -30,7 +44,8 @@ Pass `--no-loose-sources` only when a strict zero-hit result is required.
 ## Refresh
 
 When a lane is stale or unavailable, refresh one independent family or all
-families through the source-profile orchestrator:
+families through the source-profile orchestrator. The TeX refresh rebuilds both
+the formal-object and full-text TeX databases:
 
 ```sh
 python <source-profiles-root>\scripts/refresh_lra_indexes.py --scope tex
@@ -51,6 +66,8 @@ their family database after successful CUD processing.
 - A hit is a discovery result, not automatic mathematical authority. Read the
   surrounding source text or repository file before quoting, changing, or
   relying on it.
+- Use raw `rg` only after indexed lookup identifies files to inspect, or for an
+  exact implementation check outside the ranked index.
 - Use `rg` after an indexed code/object hit when exact raw implementation text
   is needed. The C++ lane indexes declarations and objects, not every source
   line.

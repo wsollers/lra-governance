@@ -52,8 +52,10 @@ The updater writes:
 - a delta state file next to it by default, named `<output>.state.yaml`;
 - a `delta` report inside the index payload with changed, unchanged, and
   deleted file counts;
-- `tex-search.sqlite` and/or `lean-search.sqlite` under an adjacent `sqlite`
-  directory, unless `--sqlite-dir` selects another location.
+- `tex-search.sqlite`, `tex-fulltext-search.sqlite`, and/or `lean-search.sqlite`
+  under an adjacent `sqlite` directory, unless `--sqlite-dir` selects another
+  location. The TeX full-text database is chunked by source line range so it
+  can return raw authored context without replacing the formal-object index.
 
 Generated full indexes and state files belong in ignored build or external
 index locations unless a small curated crosswalk is intentionally reviewed and
@@ -73,3 +75,13 @@ label. If a matching Lean declaration exists, record the link immediately after
 the TeX formal artifact with `\LeanFormalizes{...}`. If Lean work does not yet
 exist, create an explicit `lra-lean` follow-up task instead of leaving the object
 silently untracked.
+
+For ordinary TeX prose, macros, or narrative context, use the full-text lane;
+combine it with the specific object lane when a formal artifact may also match:
+
+```powershell
+python F:\repos\lra-governance\tools\governance\lra_lookup.py "single valued relation" `
+  --scope tex-fulltext `
+  --scope tex `
+  --volume volume-iii
+```
