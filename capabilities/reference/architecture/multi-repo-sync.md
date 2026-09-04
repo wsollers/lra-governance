@@ -29,6 +29,10 @@ volume-to-monorepo content sync.
 - `lra-source-profiles` is an independent profile/staging repo and is not a
   source of direct sync into notes, bibliography shards, canonical YAML, or
   theorem-explorer data.
+- `lra-ingestion-harness` is an independent local-worker orchestration repo.
+  It coordinates deterministic commands and diagnostics but is not a source of
+  direct sync into profiles, indexes, notes, bibliography shards, canonical
+  YAML, or theorem-explorer data.
 - `lra-sources`, when present, is an optional private catalog repo for source
   lookup pointers. It is not a raw source archive and is not a source of direct
   sync into notes, bibliography shards, canonical YAML, source-profile records,

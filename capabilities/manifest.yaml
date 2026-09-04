@@ -590,6 +590,22 @@ routes:
     verify: ["python {canonical}/tools/governance/audit_governance_context.py"]
     token_budget: 5000
 
+  - id: work-ingestion-harness
+    title: Work in lra-ingestion-harness
+    description: "Maintain the model-neutral local worker harness: deterministic orchestration commands, worker configuration, diagnostics, and recoverable refresh workflows. Default route for that repo."
+    applies_to: [python_tool]
+    repos: [lra-ingestion-harness]
+    default: true
+    triggers: []
+    eager_instructions: []
+    lazy_references: [capabilities/reference/code-repo-standards.md, capabilities/reference/source-indexing-policy.md, capabilities/reference/architecture/repository-layout.md, capabilities/reference/architecture/multi-repo-sync.md]
+    tools: [tools/governance/validate_code_repo_layout.py, external:lra-ingestion-harness/python-unittest]
+    schemas: [external:lra-ingestion-harness/config/worker.example.toml]
+    examples: [external:lra-ingestion-harness/README.md]
+    outputs: [worker configuration, orchestration commands, diagnostics, and refresh reports]
+    verify: ["python -m unittest discover -s tests"]
+    token_budget: 5000
+
   - id: work-lra-sources
     title: Work in lra-sources
     description: "Maintain the private metadata-only source catalog: source records, hashes, path pointers, and topic/author/volume indexes. Never add raw PDFs or extracted text. Default route for that repo."

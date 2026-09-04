@@ -102,6 +102,13 @@ repos:
       language: python
       code_roots: ["src", "tools", "scripts"]
       test_roots: ["tests"]
+  - repo: lra-ingestion-harness
+    kind: python_tool
+    title: "Model-neutral ingestion worker orchestration"
+    layout:
+      language: python
+      code_roots: ["scripts"]
+      test_roots: ["tests"]
   - repo: lra-exercises
     kind: latex_artifact
     title: "Standalone exercise sheets, workbooks, and generated PDFs"
