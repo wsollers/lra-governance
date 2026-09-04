@@ -19,6 +19,7 @@ content sync; the "ownership" column below is authority, not a copy direction.
 | `lra-pdf-extractor` | PDF/source ingestion, bibliography extraction and normalization, candidate extraction, review workflow, staged outputs. Independent tool repo; reviewable candidates only. |
 | `lra-reading-categorizer` | Human-in-the-loop UI, taxonomy, queue state, review exports, and managed reading-folder scaffold for categorizing a local mathematical PDF collection. Independent collection-management repo. |
 | `lra-source-profiles` | Dynamic source profiles, candidate classification, active source indexes, attachment exports, source review workflow. Independent profile/staging repo; reviewed artifacts only. |
+| `lra-ingestion-harness` | Model-neutral local-worker orchestration: worker configuration, deterministic status/doctor/refresh commands, diagnostics, and recoverable workflow coordination. Does not own PDFs, extracted content, profiles, or indexer implementations. |
 | `lra-exercises` | Standalone exercise sheets, drill sheets, workbooks, and generated PDFs. Independent from volume content unless a separate volume task imports material. |
 | `lra-sources` | Private metadata-only source catalog and pointer indexes: source IDs, bibliographic metadata, hashes, path pointers, and topic/author/volume indexes for acquired and scanned sources. Must not contain raw PDFs or full extracted source text. |
 | `lra-dashboard` | Static validator-progress dashboard (GitHub Pages). Reads generated `dashboard-data.json` built from `lra-validator` issues via governance's issue-export tool. |
@@ -35,6 +36,12 @@ governance rules.
 `lra-source-profiles` is a source selection and profile staging tool. It does
 not own final LRA note content, final bibliography shards, canonical YAML,
 theorem explorer internals, or governance rules.
+
+`lra-ingestion-harness` is the local operational control plane. It invokes
+governance- and source-profile-owned tools using an explicit worker contract,
+records diagnostics, and verifies generated artifacts. It must not become a
+raw-PDF archive, source-profile authority, or duplicate implementation of
+indexers.
 
 `lra-sources`, when present as a private repo, is a lookup catalog only. It may
 help agents and tools find `lra-source-profiles`, `D:\Readings`, generated
