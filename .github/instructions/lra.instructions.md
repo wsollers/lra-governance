@@ -8,7 +8,7 @@ Regenerate from lra-governance.
 Emergency downstream edits must be ported upstream before regeneration.
 -->
 
-# Agent Instructions
+# LRA Repository Instructions
 
 This repository uses canonical LRA governance by pointer, not by copied rules.
 
@@ -27,11 +27,7 @@ Resolve canonical governance in this order:
 If canonical governance cannot be resolved, stop and report that
 `lra-governance` is not present.
 
-After resolving canonical governance, run the route resolver. Load its eager
-packet only; follow lazy references, tools, schemas, and examples on demand.
-If the resolver prints a route catalog instead of a packet (exit code 2), pick
-the route whose description matches the task's intent and re-run with
-`--route <id>` added.
-Do not treat this wrapper as a local source of truth.
+Follow `AGENTS.md` in this repository as the local pointer wrapper, then run
+the resolver. Do not treat this file as a local source of truth.
 
-Provider note: Codex reads this file as the local entrypoint, then follows canonical governance.
+Provider note: Keep provider-specific guidance concise and defer durable policy to canonical governance.
