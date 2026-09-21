@@ -13,6 +13,7 @@ content sync; the "ownership" column below is authority, not a copy direction.
 | `lra-common` | Shared LaTeX infrastructure: `common/`. Consumed directly by builds through the Docker image or an explicit checkout. |
 | `lra-volume-i` through `lra-volume-viii` | Volume content under `volume-N/`. Self-contained, Overleaf-ready, independently built; publishes PDFs to `lra-volumes-output`. |
 | `lra-lean` | Lean 4 formalization workspace. Independent. |
+| `lra-notes` | Lean/mathlib study notes, textbook translation exercises, examples, proof attempts, and distilled personal notes. Independent; not canonical verification metadata. |
 | `lra-nurbs` | C++ / Vulkan / geometry / simulation workspace. Independent. |
 | `lra-knowledge-explorer` | Extraction pipeline and HTML theorem explorer. Rebuilt by the governance-orchestrated refresh over the volume repos. |
 | `lra-numerical-analysis` | Numerical methods, experiments, benchmarks, plots, numerical reports. Independent. |
@@ -21,6 +22,7 @@ content sync; the "ownership" column below is authority, not a copy direction.
 | `lra-source-profiles` | Dynamic source profiles, candidate classification, active source indexes, attachment exports, source review workflow. Independent profile/staging repo; reviewed artifacts only. |
 | `lra-ingestion-harness` | Model-neutral local-worker orchestration: worker configuration, deterministic status/doctor/refresh commands, diagnostics, and recoverable workflow coordination. Does not own PDFs, extracted content, profiles, or indexer implementations. |
 | `lra-exercises` | Standalone exercise sheets, drill sheets, workbooks, and generated PDFs. Independent from volume content unless a separate volume task imports material. |
+| `lra-flashcards` | Flashcard decks, spaced-repetition exports, and the companion web/mobile study app. Independent consumer of governed source and volume metadata. |
 | `lra-sources` | Private metadata-only source catalog and pointer indexes: source IDs, bibliographic metadata, hashes, path pointers, and topic/author/volume indexes for acquired and scanned sources. Must not contain raw PDFs or full extracted source text. |
 | `lra-dashboard` | Static validator-progress dashboard (GitHub Pages). Reads generated `dashboard-data.json` built from `lra-validator` issues via governance's issue-export tool. |
 | `lra-volumes-output` | Published digital and print PDFs from independent volume builds. |
@@ -57,6 +59,19 @@ YAML, theorem explorer internals, or governance rules.
 `lra-exercises` owns standalone exercise PDFs and their `.tex` sources. Its
 Docker LaTeX build runtime is governed in `lra-governance`, but the exercise
 repo itself owns the student-facing source and generated PDF artifacts.
+
+`lra-notes` owns personal Lean/mathlib study material tied to active readings.
+It may use reviewed source-profile pointers and local reading extracts as
+references, but it must not store raw PDFs, large extracted source text, final
+volume prose, or `lra-lean` verification metadata. Promotion from notes into
+canonical formalization happens through reviewed changes in `lra-lean`.
+
+`lra-flashcards` owns study-card decks, generated card exports, and the
+companion web/mobile app scaffold. It may consume reviewed labels, statements,
+definitions, and source metadata from governed repositories, but it does not
+own canonical mathematical content, formal verification metadata, source
+profiles, or raw source extracts. Corrections to source artifacts must land in
+the owning `lra-volume-*`, `lra-lean`, or source-profile repository first.
 
 ## Governance And Common Resolution
 

@@ -96,6 +96,15 @@ attempts:
   date:
   medium: handwritten-photo
   source_path: attempts/proof-YYYY-MM-DD-001.jpg
+  scratch_work:
+  - title:
+    kind: handwritten-scratch-photo
+    source_path: attempts/proof-YYYY-MM-DD-001.scratch-001.jpg
+    rendered_html:
+    ocr_text_path:
+    markdown_path:
+    tex_path:
+    notes_path:
   rendered_html:
   ocr_text_path:
   markdown_path:
@@ -119,6 +128,14 @@ current route snapshots, not the legacy root `theorem-map.yaml` file. After any
 volume/book/chapter refactor, regenerate the affected volume route artifacts
 and import current routes into the proof vault before migrating vault paths. The
 proof vault must not run path migration against stale route artifacts.
+
+Attempt-level `scratch_work` records are optional archival companions to a
+handwritten proof attempt. They are intended for calculation-heavy work such as
+epsilon-delta estimates, algebraic rearrangements, or case-work planning. They
+attach to the same theorem and attempt as the proof artifact, inherit the same
+sanitization and privacy constraints, and are displayed by consumers as
+clickable supporting artifacts. Scratch work is not canonical proof content and
+does not replace the reviewed Markdown/TeX proof display.
 
 Allowed metadata includes:
 
@@ -299,11 +316,19 @@ Each reviewed proof attempt should carry three text artifacts:
 - `*.proof.md`: reviewed Markdown presentation of the proof;
 - `*.proof.tex`: reviewed TeX presentation suitable for KaTeX rendering.
 
+When scratch work has its own reviewed text companion, the corresponding
+`scratch_work` entry may carry `ocr_text_path`, `markdown_path`, and `tex_path`
+with the same source-faithful/transcription distinction used for the main
+proof attempt. Consumers should keep the scratch artifact clickable even when
+no scratch text companion exists.
+
 The governance extraction pipeline copies the contents of these files into
 `lra-knowledge-explorer/proof-vault-index.json` as `ocr_text`, `markdown`, and
-`tex`. The Knowledge Explorer renders `tex` with KaTeX and keeps the OCR and
-Markdown artifacts available for inspection. The deployable proof-vault index
-must include only attempts with `review_status: reviewed-correct` and
+`tex`, and copies optional scratch companions into each record's `scratch_work`
+array. The Knowledge Explorer renders `tex` with KaTeX, keeps the OCR and
+Markdown artifacts available for inspection, and presents scratch work as
+clickable supporting artifacts. The deployable proof-vault index must include
+only attempts with `review_status: reviewed-correct` and
 `text_review_status: accepted`.
 
 When OCR runs and produces usable text, the attempt metadata should use

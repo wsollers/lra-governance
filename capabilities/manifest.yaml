@@ -437,6 +437,21 @@ routes:
     verify: ["Generate the delta or full index and query each changed stable object."]
     token_budget: 6000
 
+  - id: work-lra-notes
+    title: Work in lra-notes
+    description: "General Lean/mathlib study-note work in lra-notes: textbook translation exercises, examples, proof attempts, and distilled notes. Not canonical lra-lean formalization metadata."
+    applies_to: [lean_notes]
+    default: true
+    triggers: ["lean notes", "study notes", "mathlib study"]
+    eager_instructions: []
+    lazy_references: [capabilities/reference-index.md, capabilities/reference/architecture/repository-layout.md, capabilities/reference/architecture/lra-lean-architecture.md]
+    tools: [external:lra-notes/lake]
+    schemas: []
+    examples: [external:lra-notes/README.md, external:lra-notes/Munkres]
+    outputs: [Lean study modules, examples, exercises, and personal study notes]
+    verify: ["Run the lra-notes overlay success gates."]
+    token_budget: 4500
+
   - id: work-knowledge-explorer
     title: Work in lra-knowledge-explorer
     description: "General implementation work in lra-knowledge-explorer: extractor code, graph generation, or explorer UI. Default route for that repo."
@@ -515,6 +530,22 @@ routes:
     examples: [external:lra-exercises/nearby-source]
     outputs: [standalone exercise source and PDF]
     verify: ["Run the Docker PDF build for every changed TeX source."]
+    token_budget: 5000
+
+  - id: work-lra-flashcards
+    title: Work in lra-flashcards
+    description: "Maintain flashcard decks, spaced-repetition exports, and the companion web/mobile study app. Default route for that repo."
+    applies_to: [web]
+    repos: [lra-flashcards]
+    default: true
+    triggers: ["flashcards", "flash cards", "study app", "mobile app"]
+    eager_instructions: []
+    lazy_references: [capabilities/reference/architecture/repository-layout.md]
+    tools: [external:lra-flashcards/repo-build]
+    schemas: []
+    examples: [external:lra-flashcards/README.md, external:lra-flashcards/nearby-source]
+    outputs: [flashcard decks, exports, app source, and study UI updates]
+    verify: ["Run the lra-flashcards overlay success gates."]
     token_budget: 5000
 
   - id: work-leaf-volume
@@ -625,6 +656,7 @@ routes:
     title: Work in lra-dashboard
     description: "Maintain the static validator-progress dashboard site: HTML/JS/CSS under public/ and its generated dashboard data. Issue export logic stays in lra-governance. Default route for that repo."
     applies_to: [web]
+    repos: [lra-dashboard]
     default: true
     triggers: []
     eager_instructions: []

@@ -156,6 +156,14 @@ def test_lean_routes_to_lean_capability():
     expect("lra-lean", "formalize addition commutativity", "author-lean-theorem")
 
 
+def test_notes_default_route():
+    expect("lra-notes", "add Munkres topology examples", "work-lra-notes")
+
+
+def test_notes_lean_trigger_stays_in_notes_route():
+    expect("lra-notes", "formalize a Munkres exercise as lean notes", "work-lra-notes")
+
+
 def test_numerical_analysis_routes_to_cpp_capability():
     expect("lra-numerical-analysis", "implement the solver", "cpp-build-task")
 
@@ -206,6 +214,14 @@ def test_reading_categorizer_build_routes_to_build_repo():
 
 def test_exercises_bare_build_falls_to_exercises_default():
     expect("lra-exercises", "build pdf", "work-lra-exercises")
+
+
+def test_flashcards_default_route():
+    expect("lra-flashcards", "add a compactness review card", "work-lra-flashcards")
+
+
+def test_flashcards_app_route():
+    expect("lra-flashcards", "update the mobile app deck view", "work-lra-flashcards")
 
 
 def test_trigger_and_explicit_resolutions_carry_no_warnings():

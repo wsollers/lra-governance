@@ -88,6 +88,54 @@ def read_optional_text(folder: Path, attempt: dict[str, Any], key: str, warnings
     return path.read_text(encoding="utf-8", errors="replace").strip()
 
 
+def read_optional_scratch_text(folder: Path, scratch: dict[str, Any], key: str) -> str:
+    value = str(scratch.get(key) or "").strip()
+    if not value:
+        return ""
+    path = resolve_attempt_path(folder, value)
+    if not path.exists():
+        return ""
+    return path.read_text(encoding="utf-8", errors="replace").strip()
+
+
+def optional_artifact_url(folder: Path, scratch: dict[str, Any], key: str, vault_root: Path) -> str:
+    value = str(scratch.get(key) or "").strip()
+    if not value:
+        return ""
+    path = resolve_attempt_path(folder, value)
+    if not path.exists():
+        return ""
+    return vault_blob_url(path, vault_root)
+
+
+def scratch_work_records(folder: Path, attempt: dict[str, Any], vault_root: Path) -> list[dict[str, Any]]:
+    scratch_work = attempt.get("scratch_work")
+    if not isinstance(scratch_work, list):
+        return []
+    records: list[dict[str, Any]] = []
+    for index, scratch in enumerate(scratch_work, start=1):
+        if not isinstance(scratch, dict):
+            continue
+        source_value = str(scratch.get("source_path") or "").strip()
+        source_path = resolve_attempt_path(folder, source_value) if source_value else None
+        rendered_url = optional_artifact_url(folder, scratch, "rendered_html", vault_root)
+        source_url = vault_blob_url(source_path, vault_root) if source_path and source_path.exists() else ""
+        records.append(
+            {
+                "title": str(scratch.get("title") or f"Scratch work {index}"),
+                "kind": str(scratch.get("kind") or "scratch-artifact"),
+                "path": rel_posix(source_path, vault_root) if source_path and source_path.exists() else source_value,
+                "url": rendered_url or source_url,
+                "rendered_url": rendered_url,
+                "markdown": read_optional_scratch_text(folder, scratch, "markdown_path"),
+                "tex": read_optional_scratch_text(folder, scratch, "tex_path"),
+                "ocr_text": read_optional_scratch_text(folder, scratch, "ocr_text_path"),
+                "notes": read_optional_scratch_text(folder, scratch, "notes_path") or str(scratch.get("notes") or "").strip(),
+            }
+        )
+    return records
+
+
 def attempt_record(
     metadata_path: Path,
     metadata: dict[str, Any],
@@ -155,6 +203,7 @@ def attempt_record(
         "attempt_id": attempt_id,
         "review_status": str(attempt.get("review_status") or ""),
         "images": image_links,
+        "scratch_work": scratch_work_records(folder, attempt, vault_root),
         "body": notes + tag_text,
         "ocr_text": ocr_text,
         "markdown": markdown,
@@ -227,6 +276,7 @@ def build_index(vault_root: Path, generated_at: str | None = None) -> dict[str, 
 
 
 def write_json(path: Path, payload: Any) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 

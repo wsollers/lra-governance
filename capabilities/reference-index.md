@@ -54,8 +54,19 @@ For `author-stub-section`:
 For `author-lean-theorem`:
 
 - General task scope: `capabilities/reference/task-scope-limits.md`
+- Human-facing document design: `capabilities/reference/document-design-system.md`
+- Lean explorer declaration records and edge kinds:
+  `capabilities/reference/lean-knowledge-explorer-records.md`
 
 Prefer nearby Lean files and project commands before opening broader docs.
+
+For `work-lra-notes`:
+
+- Repo ownership map: `capabilities/reference/architecture/repository-layout.md`
+- Lean formalization boundaries: `capabilities/reference/architecture/lra-lean-architecture.md`
+
+Prefer the `lra-notes` README, nearby Lean files, and Lake targets before
+opening broader docs.
 
 ## C++ Numerical Work
 

@@ -15,8 +15,9 @@ volume-to-monorepo content sync.
   or an explicit checkout. It does not fan out `common/` into other repos.
 - `lra-volume-*` build independently and publish PDFs to `lra-volumes-output`.
   They do not sync content into any monorepo.
-- `lra-lean` and `lra-nurbs` are independent specialist repos. They do not sync
-  into a monorepo.
+- `lra-lean`, `lra-notes`, and `lra-nurbs` are independent specialist repos.
+  They do not sync into a monorepo. `lra-notes` is a study workspace; promotion
+  into canonical formalization is reviewed work in `lra-lean`.
 - The theorem-explorer rebuild is orchestrated from `lra-governance`, reading the
   independent volume repos (see `capabilities/extract-knowledge/capability.md`).
 - `Learning-Real-Analysis`, the former assembled monorepo, is retired.
@@ -37,6 +38,9 @@ volume-to-monorepo content sync.
   lookup pointers. It is not a raw source archive and is not a source of direct
   sync into notes, bibliography shards, canonical YAML, source-profile records,
   extractor outputs, or theorem-explorer data.
+- `lra-notes` owns personal Lean/mathlib study modules and distilled notes. It
+  is not a source of direct sync into volume prose, bibliography shards,
+  canonical YAML, source-profile records, or theorem-explorer data.
 
 ## Governance Resolution
 
@@ -67,6 +71,19 @@ synced into downstream repos.
 
 Integration into `lra-common`, `lra-volume-*`, or `lra-knowledge-explorer` must
 occur through reviewable PRs in the owning repo.
+
+Generated agent wrappers for this repo, if needed, must delegate to
+`lra-governance` instead of copying governance implementations.
+
+## lra-notes
+
+`lra-notes` is a Lean/mathlib study workspace. It may reference source-profile
+IDs, local reading paths, and reviewed extracts while turning current reading
+into Lean examples, exercises, proof attempts, and independently written notes.
+
+It must not store raw PDFs, large extracted source text, final volume content,
+canonical YAML, or theorem-explorer verification records. Any material promoted
+to canonical formalization must move through reviewed changes in `lra-lean`.
 
 Generated agent wrappers for this repo, if needed, must delegate to
 `lra-governance` instead of copying governance implementations.

@@ -55,6 +55,9 @@ repos:
   - repo: lra-lean
     kind: lean
     title: "Lean formalization"
+  - repo: lra-notes
+    kind: lean_notes
+    title: "Lean/mathlib study notes"
   - repo: lra-numerical-analysis
     kind: cpp
     title: "C++ / numerical companion"
@@ -112,6 +115,9 @@ repos:
   - repo: lra-exercises
     kind: latex_artifact
     title: "Standalone exercise sheets, workbooks, and generated PDFs"
+  - repo: lra-flashcards
+    kind: web
+    title: "Flashcard decks and companion web/mobile app"
   - repo: lra-sources
     kind: catalog
     title: "Private source catalog and pointer indexes"
