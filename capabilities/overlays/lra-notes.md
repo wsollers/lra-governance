@@ -47,6 +47,30 @@ upload, or commit them, and never publish Drive links in this repository. Proofs
 and explanations committed here should be independently written personal work
 or short factual summaries, not copied source prose.
 
+## Naming
+
+`lra-notes` follows the Lean and mathlib naming conventions
+(<https://leanprover-community.github.io/contribute/naming.html>):
+
+- Types, structures, classes, and `Prop`-valued definitions are UpperCamelCase
+  (`IsUpperBound`); theorems and other proofs are snake_case; other functions
+  are lowerCamelCase.
+- Call things what they are in Lean. A theorem whose statement is already a
+  core or mathlib declaration takes that declaration's name, in the track's
+  namespace: Laczkovich–Sós Theorem 3.28 (uniqueness of the additive inverse) is
+  `neg_unique`; Theorem 3.2 (a rational between two reals) is `exists_rat_btwn`.
+- Match by statement, never by how a name sounds. Check the Lean declaration with
+  `#check` before reusing its name: mathlib's `add_lt_add_right` adds on the
+  left (`a + b < a + c`), so a book's "add on the right" axiom is
+  `add_lt_add_left`.
+- With no Lean counterpart, build the name by the same conventions, using
+  mathlib's vocabulary for symbols (`add`, `mul`, `neg`, `inv`, `zero`, `one`,
+  `lt`, `le`) and `_of_` before hypotheses.
+- A `Prop` that states a single law or axiom is named in UpperCamelCase after the
+  Lean name of its statement (`AddComm` for `∀ a b, a + b = b + a`).
+- Book labels and numbers go in the docstring (`**Theorem 3.28** [..., p. 48]`),
+  never in the name.
+
 ## Track Layout
 
 A track mirrors its book's own numbering, using one of three layouts:
