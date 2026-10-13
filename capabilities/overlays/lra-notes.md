@@ -67,7 +67,12 @@ Each unit (a chapter, or a section where the book has them) holds
 `Definitions.lean`, optional `Connections.lean` (iff bridges from local
 definitions to mathlib), `Theorems.lean`, `Examples.lean`, and
 `Exercises.lean`, importing in that order. Create section folders only when the
-work reaches them; do not pre-scaffold empty ones.
+work reaches them; do not pre-scaffold empty ones. Material that precedes a
+chapter's first section lives in the chapter-level unit files. The book's
+axioms belong in `Definitions.lean` with its definitions, since later
+definitions may be built from them. When moving or relabelling material, check
+it against the book: labels, numbering, and section follow the book, not the
+file it happened to be written in.
 
 Namespaces stop at the chapter (`Bruckner.RealAnalysis.Chapter01`), or at the
 book for section-only tracks (`Halmos.SetTheory`), so moving a result between
