@@ -78,6 +78,33 @@ Namespaces stop at the chapter (`Bruckner.RealAnalysis.Chapter01`), or at the
 book for section-only tracks (`Halmos.SetTheory`), so moving a result between
 sections never renames it.
 
+## Source Verification
+
+Every formalized statement is checked against its book. Each track root
+(`Author/Topic/`) has a `SOURCE.md` naming the book's source record, local PDF,
+Markdown extract, and Google Drive folder; it is generated from the
+`lra-source-profiles` manifest by `scripts/source_files.py`, so fix the manifest
+rather than the file. Read the book through the extract or the Google Drive
+connector.
+
+Whenever a task adds, moves, or changes a definition, axiom, theorem, example,
+or exercise:
+
+- **Verify the statement, not the proof.** The Lean statement must mean what
+  the book states: the same hypotheses, quantifiers, strict or non-strict
+  inequalities, domains and conventions (for example ℕ starting at 1). An
+  intended deviation is named in the docstring.
+- **Verify, insert, or update the location comment.** The docstring opens with
+  the book's own label and number, section, and printed page, for example
+  `**Definition 1.1** [Thomson2008, §1.5, p. 11]`. Insert one when missing and
+  correct one that is wrong; material that is not in the book says so.
+- **Place it by the book.** Label, number, and section decide the unit and file,
+  not where the declaration happened to be written.
+- **Report mathematical mismatches; do not silently fix them.** Change a
+  statement only when the user asks for a mathematical correction. Otherwise
+  record the problem and the book-faithful statement in `study/source-audit.md`.
+- **Paraphrase the book.** Docstring quotations stay under 15 words.
+
 ## TeX Notes
 
 Prose — intuition, recollections, why a proof works — is written in TeX in the
