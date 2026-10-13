@@ -130,6 +130,19 @@ are marked unproved. Build notes with `scripts/build-notes.sh <notes.tex>`
 - Do not commit `.lake/`, build products, raw source PDFs, large extracted
   source text, or private reading-library artifacts.
 
+## Documentation Site and Toolchain Upgrades
+
+`scripts/build-docs.sh` builds the doc-gen4 site, published to GitHub Pages by
+the `Documentation` workflow. doc-gen4 is a dev-only dependency
+(`meta if get_config? env = some "dev"` in `lakefile.lean`), fetched only with
+`lake -R -Kenv=dev`.
+
+`lean-toolchain`, the mathlib tag, and the doc-gen4 tag move together: doc-gen4
+is tagged per Lean release and must equal the toolchain version. A toolchain
+upgrade updates all three in one change, refreshes the manifest with
+`lake -R -Kenv=dev update` (plain `lake update` drops the doc-gen4 entries),
+and passes both `lake build` and `scripts/build-docs.sh`.
+
 ## Success Gates
 
 Run the narrowest Lake build that covers the changed material, then a broader
