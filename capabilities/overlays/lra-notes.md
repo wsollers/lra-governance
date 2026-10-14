@@ -89,10 +89,12 @@ authors who share a surname get distinct roots (`MendelsonE`, `MendelsonB`).
 
 Each unit (a chapter, or a section where the book has them) holds
 `Definitions.lean`, optional `Connections.lean` (iff bridges from local
-definitions to mathlib), `Theorems.lean`, `Examples.lean`, and
-`Exercises.lean`, importing in that order. Create section folders only when the
-work reaches them; do not pre-scaffold empty ones. Material that precedes a
-chapter's first section lives in the chapter-level unit files. The book's
+definitions to mathlib), optional `Observations.lean` (facts we derive that the
+book does not state), `Theorems.lean` (only what the book states, each with its
+page), `Examples.lean`, and `Exercises.lean`, importing in that order. Create section folders only when the
+work reaches them; do not pre-scaffold empty ones. In a chapter with sections,
+every unit is a folder and no unit files sit at chapter level: material that
+precedes the chapter's first section goes in `ChapterNN/Prelude/`. The book's
 axioms belong in `Definitions.lean` with its definitions, since later
 definitions may be built from them. When moving or relabelling material, check
 it against the book: labels, numbering, and section follow the book, not the
