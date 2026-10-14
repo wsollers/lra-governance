@@ -70,6 +70,12 @@ or short factual summaries, not copied source prose.
   Lean name of its statement (`AddComm` for `∀ a b, a + b = b + a`).
 - Book labels and numbers go in the docstring (`**Theorem 3.28** [..., p. 48]`),
   never in the name.
+- Exception: a hypothesis that assumes one of the book's axioms is named
+  `h_ax<N>_<content>`, and one that ties a symbol to the book's definition is
+  named `d_<content>`, so the proof state reads like the book without
+  cross-referencing: `h_ax10_trichotomy`, `h_ax11_lt_trans`, `h_ax_field`
+  (Axioms 1–9), `d_le` (the definition of `≤`). Other hypotheses follow Lean's
+  short `h`, `hab`, `ha` habit.
 
 ## Track Layout
 
