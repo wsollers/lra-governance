@@ -167,6 +167,7 @@ recursive_scan:
     - Sources/Analysis
     - Sources/Applied
     - Sources/Computer Science
+    - Sources/Combinatorics and Graph Theory
     - Sources/Differential Equations
     - Sources/Foundations
     - Sources/Geometry

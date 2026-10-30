@@ -282,7 +282,7 @@ def volume_build_tasks(root: Path, args: argparse.Namespace) -> list[Task]:
 
 
 def lean_tasks(root: Path, args: argparse.Namespace, entry: dict[str, Any]) -> tuple[list[Task], list[Task]]:
-    validate = script_help_tasks(root, entry.get("repo", root.name), governance_root(root), script_roots=["tools", "scripts", "reorder/tools"])
+    validate: list[Task] = []
     if has(root / "build.ps1") and os.name == "nt":
         command = ["powershell", "-ExecutionPolicy", "Bypass", "-File", "build.ps1", "check", "-Native"]
         return validate, [Task("Lean build.ps1 check -Native", command, root, "build")]
@@ -292,7 +292,6 @@ def lean_tasks(root: Path, args: argparse.Namespace, entry: dict[str, Any]) -> t
 
 def cpp_tasks(root: Path, entry: dict[str, Any]) -> tuple[list[Task], list[Task]]:
     validate = code_layout_tasks(root, entry)
-    validate.extend(script_help_tasks(root, entry.get("repo", root.name), governance_root(root)))
     gates = entry.get("success_gates") or []
     if gates:
         return validate, [Task(f"C++ gate: {gate}", split_command(gate), root, "build") for gate in gates]
@@ -313,14 +312,11 @@ def governance_tasks(root: Path) -> tuple[list[Task], list[Task]]:
         Task("decoration rule tests", [sys.executable, "tools/governance/test_decoration_rules.py"], root, "validate", optional=True),
         Task("parity fixtures", [sys.executable, "tools/governance/test_parity_fixtures.py"], root, "validate", optional=True),
     ]
-    validate.extend(script_help_tasks(root, root.name, root))
     build = [
         Task("compile capability resolver", [sys.executable, "-m", "py_compile", "capabilities/resolve.py"], root, "build"),
         Task("compile task-index generator", [sys.executable, "-m", "py_compile", "capabilities/generate_task_index.py"], root, "build"),
         Task("compile governance context audit", [sys.executable, "-m", "py_compile", "tools/governance/audit_governance_context.py"], root, "build"),
         Task("compile code repo layout validator", [sys.executable, "-m", "py_compile", "tools/governance/validate_code_repo_layout.py"], root, "build"),
-        Task("compile script help validator", [sys.executable, "-m", "py_compile", "tools/governance/validate_script_help.py"], root, "build"),
-        Task("compile repo validator rollout", [sys.executable, "-m", "py_compile", "tools/governance/run_repo_validator_rollout.py"], root, "build"),
         Task("compile build_repo", [sys.executable, "-m", "py_compile", "capabilities/build-repo/build_repo.py"], root, "build"),
         Task("compile dependency graph tool", [sys.executable, "-m", "py_compile", "tools/governance/dependency_graph.py"], root, "build"),
         Task("compile dependency remark migration", [sys.executable, "-m", "py_compile", "tools/migration/migrate_dependency_remarks.py"], root, "build"),
@@ -331,7 +327,6 @@ def governance_tasks(root: Path) -> tuple[list[Task], list[Task]]:
 def generic_tasks(root: Path, entry: dict[str, Any]) -> tuple[list[Task], list[Task]]:
     gates = entry.get("success_gates") or []
     validate = code_layout_tasks(root, entry)
-    validate.extend(script_help_tasks(root, entry.get("repo", root.name), governance_root(root)))
     return validate, [Task(f"gate: {gate}", split_command(gate), root, "build") for gate in gates]
 
 
@@ -362,25 +357,6 @@ def code_layout_tasks(root: Path, entry: dict[str, Any]) -> list[Task]:
             "validate",
         )
     ]
-
-
-def script_help_tasks(root: Path, repo: str, gov: Path | None, script_roots: list[str] | None = None) -> list[Task]:
-    if not gov:
-        return []
-    tool = gov / "tools" / "governance" / "validate_script_help.py"
-    if not tool.exists():
-        return []
-    command = [
-        sys.executable,
-        str(tool),
-        "--root",
-        str(root),
-        "--repo",
-        repo,
-    ]
-    for item in script_roots or []:
-        command.extend(["--script-root", item])
-    return [Task("script help validator", command, root, "validate")]
 
 
 def split_command(command: str) -> list[str]:

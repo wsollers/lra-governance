@@ -190,6 +190,10 @@ reuse existing extraction, OCR, theorem, and chunk artifacts.
 By default, recursive index runs include the subject roots listed as
 `recursive_scan.indexable_roots` in the YAML policy.
 
+The top-level `Sources/Combinatorics and Graph Theory` shelf is indexable even
+when a source has no reviewed LRA volume/chapter assignment; those sources
+remain available through the global category and omnibus indexes.
+
 The following roots are library-only by default and should not enter LRA source
 indexes during recursive scans:
 
